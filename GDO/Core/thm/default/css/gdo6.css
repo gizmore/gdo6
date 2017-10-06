@@ -1,0 +1,29 @@
+* { margin: 0; padding: 0; text-decoration: none; box-sizing: border-box; list-style: none; }
+span, img { display: inline-block; }
+.b { display: block; }
+.ib { display: inline-block!important; }
+.n { display: none; }
+
+.c:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
+
+/** Main Layout **/
+body { min-height: 100%; }
+html { height: 100%; }
+body { display: flex; flex-direction: column; }
+.gdo-body { display: flex; flex: 1; }
+#gdo-left-bar, #gdo-right-bar { flex: 0 0 18.5%; }
+main { flex: 1; }
+
+/** Core\Debug.php **/
+/** Error **/
+.gdo-exception {
+	font-family: monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/** Template/GDT_Bar.php **/
+.gdo-bar { display: flex; }
+.gdo-bar-row { flex-direction: row; }
+.gdo-bar-column { flex-direction: column; text-align: center;}
+
