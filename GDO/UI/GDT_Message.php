@@ -33,12 +33,12 @@ class GDT_Message extends GDT_Text
 	    if (!isset($purifier))
 	    {
 	        require GWF_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
-	        $config = HTMLPurifier_Config::createDefault();
+	        $config = \HTMLPurifier_Config::createDefault();
 	        $config->set('Attr.AllowedClasses', 'b');
 	        $config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
 	        $config->set('HTML.SafeObject', true);
 	        $config->set('HTML.Nofollow', true);
-	        $purifier = new HTMLPurifier($config);
+	        $purifier = new \HTMLPurifier($config);
 	    }
 	    return $purifier;
 	}
