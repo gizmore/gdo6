@@ -5,7 +5,7 @@ namespace GDO\Core;
  * You can control the content type with the &fmt=json|html GET parameter.
  * 
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  */
 final class GDT_Response extends GDT
 {

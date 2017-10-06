@@ -14,7 +14,7 @@ use GDO\UI\GDT_Panel;
  * Create a GDO config with this form.
  * @author gizmore
  * @since 3.00
- * @version 7.00
+ * @version 6.05
  */
 class Configure extends MethodForm
 {

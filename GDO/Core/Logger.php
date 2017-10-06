@@ -7,7 +7,7 @@ use Exception;
  * The GDO Logger.
  * @author gizmore
  * @author spaceone
- * @version 7.00
+ * @version 6.05
  * @since 1.00
  */
 final class Logger

@@ -6,7 +6,7 @@ use GDO\Core\GDT_Template;
  * A horizontal divider.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 class GDT_Divider extends GDT
 {

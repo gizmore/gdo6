@@ -7,7 +7,7 @@ use GDO\DB\Cache;
 /**
  * Language table
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 3.00
  */
 class GDO_Language extends GDO

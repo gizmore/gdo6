@@ -6,7 +6,7 @@ use GDO\Core\GDT_Template;
  * A label with a counter.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 class GDT_Badge extends GDT
 {

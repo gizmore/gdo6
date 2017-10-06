@@ -6,7 +6,7 @@ use GDO\DB\GDT_String;
 /**
  * Module config table.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 3.00
  */
 class GDO_ModuleVar extends GDO

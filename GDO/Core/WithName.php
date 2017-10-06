@@ -5,7 +5,7 @@ use GDO\Util\Strings;
  * Adds naming conventions
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 trait WithName
 {

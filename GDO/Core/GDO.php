@@ -8,7 +8,7 @@ use GDO\DB\Result;
 /**
  * 
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 1.00
  */
 abstract class GDO

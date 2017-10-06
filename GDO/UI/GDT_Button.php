@@ -4,7 +4,7 @@ use GDO\Core\GDT_Template;
 use GDO\Form\WithFormFields;
 /**
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  */
 class GDT_Button extends GDT_Label
 {

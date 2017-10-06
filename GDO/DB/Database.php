@@ -10,7 +10,7 @@ use GDO\Core\GDT;
  * @see Query
  * @see Result
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 3.00
  */
 class Database

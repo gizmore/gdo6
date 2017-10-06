@@ -8,7 +8,7 @@ use GDO\Core\GDT;
  * Generic method that uses a GDT_Form.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 abstract class MethodForm extends Method
 {

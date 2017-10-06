@@ -7,7 +7,7 @@ use GDO\DB\GDT_Text;
  * 
  * @author gizmore
  * @see \GDO\User\GDO_Session
- * @version 7.00
+ * @version 6.05
  * @since 5.00
  */
 class GDT_Serialize extends GDT_Text

@@ -3,7 +3,7 @@ namespace GDO\DB;
 /**
  * A version string.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 6.01
  */
 class GDT_Version extends GDT_Decimal

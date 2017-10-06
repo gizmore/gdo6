@@ -4,7 +4,7 @@ use GDO\DB\GDT_String;
 /**
  * A path variable with existance validator.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 6.00
  */
 final class GDT_Path extends GDT_String

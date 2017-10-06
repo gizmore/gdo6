@@ -4,7 +4,7 @@ namespace GDO\DB;
  * Named identifier.
  * Is unique among their table and case-s ascii.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 6.01
  */
 class GDT_Name extends GDT_String

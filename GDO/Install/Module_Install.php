@@ -9,7 +9,7 @@ use GDO\Core\GDO_Module;
  * 
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 class Module_Install extends GDO_Module
 {

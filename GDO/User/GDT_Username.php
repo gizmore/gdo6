@@ -5,7 +5,7 @@ use GDO\DB\GDT_String;
 /**
  * Username field with optional ajax completion.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 5.00
  */
 class GDT_Username extends GDT_String

@@ -7,7 +7,7 @@ use GDO\DB\GDT_String;
 /**
  * Similiar to modulevars, this table is for user vars.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 6.00
  */
 final class GDO_UserSetting extends GDO

@@ -6,7 +6,7 @@ use GDO\DB\GDT_String;
  * Color selection type
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 class GDT_Color extends GDT_String
 {

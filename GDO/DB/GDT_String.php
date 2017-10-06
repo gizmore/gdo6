@@ -11,7 +11,7 @@ use GDO\Core\GDT;
 /**
  * Basic String type with database support.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 6.00
  */
 class GDT_String extends GDT

@@ -4,7 +4,7 @@ use GDO\Core\GDO;
 use GDO\Core\GDT;
 /**
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 6.00
  */
 class Result

@@ -8,7 +8,7 @@ use GDO\DB\GDT_Text;
  * User settings for larger blob values, e.g. PMSignature.
  * 
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 6.02
  */
 final class GDO_UserSettingBlob extends GDO

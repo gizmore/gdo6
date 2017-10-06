@@ -7,7 +7,7 @@ use GDO\Core\GDT_Hook;
 /**
  * A bar is a collection of fields that can be arranged either horizontally or vertically.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  */
 class GDT_Bar extends GDT
 {

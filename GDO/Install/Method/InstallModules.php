@@ -12,7 +12,7 @@ use GDO\UI\GDT_Panel;
  * Install selected modules.
  * @author gizmore
  * @since 3.00
- * @version 7.00
+ * @version 6.05
  */
 final class InstallModules extends Method
 {

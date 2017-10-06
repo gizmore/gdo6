@@ -4,7 +4,7 @@ use GDO\DB\GDT_UInt;
 /**
  * Display int as human readable filesize.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 6.01
  */
 final class GDT_Filesize extends GDT_UInt

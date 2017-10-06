@@ -4,7 +4,7 @@ namespace GDO\Language;
  * Very cheap i18n.
  * @author gizmore
  * @since 1.00
- * @version 7.00
+ * @version 6.05
  */
 final class Trans
 {

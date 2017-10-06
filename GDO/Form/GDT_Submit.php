@@ -8,7 +8,7 @@ use GDO\UI\WithLabel;
  * Form submit button.
  * @author gizmore
  * @since 1.00
- * @version 7.00
+ * @version 6.05
  */
 class GDT_Submit extends GDT
 {

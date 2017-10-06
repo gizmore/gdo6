@@ -5,7 +5,7 @@ use GDO\DB\GDT_String;
 /**
  * A hidden form field.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  * @since 3.00
  */
 class GDT_Hidden extends GDT_String

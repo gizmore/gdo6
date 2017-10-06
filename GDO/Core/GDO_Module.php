@@ -17,14 +17,14 @@ use GDO\User\GDO_UserSettingBlob;
  * GDO base module class.
  * @author gizmore
  * @since 1.00
- * @version 7.00
+ * @version 6.05
  */
 class GDO_Module extends GDO
 {
     ################
     ### Override ###
     ################
-    public $module_version = "7.00";
+    public $module_version = "6.05";
     public $module_author = "Christian Busch <gizmore@wechall.net>";
     public $module_license = "GDO7";
     public $module_priority = 50;

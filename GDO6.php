@@ -11,7 +11,7 @@ use GDO\Core\Method;
  * GDO autoloader and public functions.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 define('GWF_PERF_START', microtime(true));
 

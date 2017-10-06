@@ -5,7 +5,7 @@ use GDO\UI\GDT_Panel;
  * A success message, the pedant to GDT_Error.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  * @see GDT_Error
  */
 class GDT_Success extends GDT_Panel

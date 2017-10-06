@@ -12,7 +12,7 @@ use GDO\Core\GDT_Response;
  * Performance statistics panel.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 final class GDT_PerfBar extends GDT_Panel
 {

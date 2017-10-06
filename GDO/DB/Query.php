@@ -7,7 +7,7 @@ use GDO\Core\Logger;
  * 
  * @author gizmore
  * @since 5.00
- * @version 7.00
+ * @version 6.05
  */
 class Query
 {

@@ -7,7 +7,7 @@ use GDO\User\GDO_Session;
  * 
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 class Application
 {

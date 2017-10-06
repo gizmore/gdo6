@@ -16,7 +16,7 @@ use GDO\UI\GDT_Link;
  * 
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 final class Module_Core extends GDO_Module
 {

@@ -7,7 +7,7 @@ use GDO\Core\GDT_Template;
  * Country selection field.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 final class GDT_Country extends GDT_ObjectSelect
 {

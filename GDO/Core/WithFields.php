@@ -4,7 +4,7 @@ namespace GDO\Core;
  * Used by types that have collections of fields.
  * E.g.: GDT_Bar, GDO, GDT_Form
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  */
 trait WithFields
 {

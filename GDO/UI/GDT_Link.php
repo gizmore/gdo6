@@ -6,7 +6,7 @@ use GDO\Core\GDT_Template;
  * An anchor for menus or paragraphs.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 class GDT_Link extends GDT
 {

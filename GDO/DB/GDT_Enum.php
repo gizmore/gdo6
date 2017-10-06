@@ -10,7 +10,7 @@ use GDO\Core\GDT_Template;
  * For the database, and enum column will be created.
  * @author gizmore
  * @since 5.00
- * @version 7.00
+ * @version 6.05
  */
 class GDT_Enum extends GDT
 {

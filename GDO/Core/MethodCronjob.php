@@ -5,7 +5,7 @@ namespace GDO\Core;
  * 
  * @author gizmore
  * @since 5.0
- * @version 7.00
+ * @version 6.05
  */
 abstract class MethodCronjob extends Method
 {

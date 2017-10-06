@@ -7,7 +7,7 @@ use GDO\Country\GDT_Country;
  * Autocomplete adapter for countries.
  * @author gizmore
  * @since 6.00
- * @version 7.00
+ * @version 6.05
  */
 final class Completion extends MethodCompletion
 {

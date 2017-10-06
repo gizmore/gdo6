@@ -3,7 +3,7 @@ namespace GDO\Util;
 /**
  * Array utility.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  */
 final class Arrays
 {

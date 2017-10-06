@@ -6,7 +6,7 @@ use GDO\DB\GDT_UInt;
  * The table module allows some default settings for table responses.
  * Currently only ItemsPerPage is configurable.
  * @author gizmore
- * @version 7.00
+ * @version 6.05
  */
 final class Module_Table extends GDO_Module
 {
