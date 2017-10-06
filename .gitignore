@@ -1,0 +1,32 @@
+# Eclipse
+.buildpath
+.project
+.settings/
+ 
+# Generated folders
+files/
+protected/
+temp/
+
+# Install hta
+install/*
+!install/wizard.php
+
+# Ignore all modules...
+GDO/*
+# ...except core modules
+!GDO/Core/
+!GDO/Country/
+!GDO/Date/
+!GDO/DB/
+!GDO/File/
+!GDO/Form/
+!GDO/Install/
+!GDO/Language/
+!GDO/Mail/
+!GDO/Net/
+!GDO/Table/
+!GDO/UI/
+!GDO/User/
+!GDO/Util/
+
