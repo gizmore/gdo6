@@ -29,6 +29,11 @@ trait WithHeaders
     ###############
     ### Sorting ###
     ###############
+    /**
+     * PHP Sorting is unstable.
+     * This method does a stable multisort on an ArrayResult.
+     * @param ArrayResult $result
+     */
     public function multisort(ArrayResult $result)
     {
         $sort = $this->make_cmp(Common::getRequestArray($this->headers->name));

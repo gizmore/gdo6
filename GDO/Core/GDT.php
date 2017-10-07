@@ -75,7 +75,7 @@ abstract class GDT
 	public $gdo;
 	public $var;
 	public $initial;
-	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $this->val($gdo->getVar($this->name)); }
+	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $gdo === null ? $this->val(null) : $this->val($gdo->getVar($this->name)); }
 	public function val($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
 	public function toVar($value) { return $value === null ? null : (string) $value; }
