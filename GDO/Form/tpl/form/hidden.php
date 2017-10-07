@@ -1,9 +1,6 @@
-<?php
-use GDO\Form\GDT_Hidden;
-$field instanceof GDT_Hidden;
-?>
+<?php /** @var $field \GDO\Form\GDT_Hidden **/ ?>
 <input
  class="n"
- name="form[<?= $field->name?>]"
+ name="form[<?= $field->name; ?>]"
  value="<?= $field->displayVar(); ?>"
  type="hidden" />

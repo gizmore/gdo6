@@ -8,6 +8,8 @@ use GDO\Core\GDO_Module;
 use GDO\Install\Installer;
 use GDO\Install\Config;
 use GDO\UI\GDT_Panel;
+use GDO\Core\GDT_Response;
+use GDO\Core\GDT_Success;
 /**
  * Install selected modules.
  * @author gizmore
@@ -66,6 +68,6 @@ final class InstallModules extends Method
             throw $e;
         }
         
-        return GDT_Panel::make()->html(t('install_modules_completed', [Config::linkStep(5)]));
+        return GDT_Success::with(t('install_modules_completed', [Config::linkStep(5)]));
     }
 }
