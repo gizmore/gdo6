@@ -54,7 +54,7 @@ class Config
         if (!defined('GWF_SITENAME')) define('GWF_SITENAME', 'GDO6');
         if (!defined('GWF_SITECREATED')) define('GWF_SITECREATED', Time::getDate());
         if (!defined('GWF_LANGUAGE')) define('GWF_LANGUAGE', 'en');
-        if (!defined('GWF_THEMES')) define('GWF_THEMES', '[material,default]');
+        if (!defined('GWF_THEMES')) define('GWF_THEMES', '[default]');
         if (!defined('GWF_MODULE')) define('GWF_MODULE', 'Core');
         if (!defined('GWF_METHOD')) define('GWF_METHOD', 'Welcome');
         if (!defined('GWF_IPC')) define('GWF_IPC', 0);
@@ -99,8 +99,7 @@ class Config
     
     public static function fields()
     {
-        $themes = GDT_Template::themeNames();
-        
+        $themes = array_diff(GDT_Template::themeNames(), ['install']);
         return array(
             GDT_Hidden::make('configured')->val('1'),
 
@@ -125,7 +124,7 @@ class Config
             # Logging
             GDT_Divider::make()->label('install_config_section_logging'),
             GDT_Hidden::make('error_level')->initial(GWF_ERROR_LEVEL),
-            GDT_Checkbox::make('error_stacktrace')->initial(GWF_ERROR_STACKTRACE),
+            GDT_Checkbox::make('error_stacktrace')->initialValue(GWF_ERROR_STACKTRACE),
             GDT_Checkbox::make('error_die')->initial(GWF_ERROR_DIE),
             GDT_Checkbox::make('error_mail')->initial(GWF_ERROR_MAIL),
             # Database

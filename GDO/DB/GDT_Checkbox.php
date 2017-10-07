@@ -49,8 +49,10 @@ class GDT_Checkbox extends GDT_Select
             {
                 $this->emptyInitial(t('please_choose'), $this->emptyValue);
             }
-            $this->choices['0'] = t('no');
-            $this->choices['1'] = t('yes');
+            $this->choices(array(
+                '0' => t('no'),
+                '1' => t('yes'),
+            ));
         }
         return $this;
     }
