@@ -137,7 +137,7 @@ class GDT_Int extends GDT
     {
         $va = $a->getVar($this->name);
         $vb = $b->getVar($this->name);
-        return $va == $vb ? true : ($va < $vb ? 1 : -1);
+        return $va == $vb ? true : ($va > $vb ? 1 : -1);
     }
     
     public function htmlClass()

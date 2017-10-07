@@ -75,19 +75,29 @@ abstract class GDT
 	public $var;
 	public $initial;
 	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $this->val($gdo->getVar($this->name)); }
-	public function val($var=null) { $this->var = (string)$var; return $this; }
+	public function val($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
 	public function toVar($value) { return $value === null ? null : (string) $value; }
 	public function toValue($var) { return $var === null ? null : (string) $var; }
 	public function getVar() { return $this->getRequestVar('form', $this->var); }
 	public function getValue() { return $this->toValue($this->getVar()); }
-	public function initial($var=null) { $this->initial = (string)$var; return $this->val($var); }
+	public function initial($var=null) { $this->initial = $var === null ? null : (string)$var; return $this->val($var); }
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }
 	public function displayVar() { return html($this->getVar()); }
+	public function displayJSON() { return json_encode($this->renderJSON()); }
 
 	public function getFields() {}
 	public function hasChanged() { return $this->initial !== $this->getVar(); }
 	public function getValidationValue() { return $this->getValue(); }
+	
+	#################
+	### GDO Value ###
+	#################
+	public function blankData() {}
+	public function getGDOData() {}
+	public function setGDOData(GDO $gdo=null) { return $this; }
+	public function setGDOVar($var) { $this->gdo->setVar($this->name, $var); return $this; }
+	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
 	
 	public function getRequestVar($firstLevel=null, $default=null)
 	{
@@ -176,14 +186,16 @@ abstract class GDT
 	public function filterQuery(Query $query) {}
 	public function filterGDO(GDO $gdo) {}
 	
-	###
+	################
+	### Database ###
+	################
+	public $unique;
+	public $primary;
+	public function gdoColumnDefine() {}
 	
-// 	public function blankData() {}
-	public function getGDOData() {}
-// 	public function setGDOData(GDO $gdo=null) { return $this; }
-// 	public function setGDOVar($var) { $this->gdo->setVar($this->name, $var; return $this; }
-// 	public function setGDOValue($value) { $this->gdo->setVar($this->name, $this->toVar($value)); return $this; }
+
 	
+	#######
 // 	public function displayFilterValue() { return html($this->filterValue()); }
 // 	public function displayHeaderLabel() { return $this->label; }
 // 	public function displayTableOrder(GDT_Table $table) {}

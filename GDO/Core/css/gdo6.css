@@ -12,7 +12,7 @@ html { height: 100%; }
 body { display: flex; flex-direction: column; }
 .gdo-body { display: flex; flex: 1; }
 #gdo-left-bar, #gdo-right-bar { flex: 0 0 18.5%; }
-main { flex: 1; }
+.gdo-main { flex: 1; }
 
 /** Core\Debug.php **/
 /** Error **/

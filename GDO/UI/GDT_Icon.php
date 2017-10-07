@@ -12,5 +12,9 @@ class GDT_Icon extends GDT
 {
     use WithIcon;
 
-    public static $iconProvider = ['GDO\UI\GDT_Icon', 'utf8Icon'];
+    /**
+     * Loaded icon providers change this
+     * @var callable
+     */
+    public static $iconProvider = ['GDO\UI\GDT_IconUTF8', 'iconS'];
 }

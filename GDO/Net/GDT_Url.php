@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Net;
 use GDO\DB\GDT_String;
-use GDO\Util\HTTP;
 /**
  * HTTP Url field.
  * Features link checking.

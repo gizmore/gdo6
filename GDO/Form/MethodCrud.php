@@ -31,9 +31,9 @@ abstract class MethodCrud extends MethodForm
 	public function canUpdate(GDO $gdo) { return true; }
 	public function canDelete(GDO $gdo) { return true; }
 	
-	public function afterCreate(GDT_Form $form, GDO $gdo) { $this->resetForm(); }
-	public function afterUpdate(GDT_Form $form) {}
-	public function afterDelete(GDT_Form $form) {}
+	public function afterCreate(GDT_Form $form, GDO $gdo) {}
+	public function afterUpdate(GDT_Form $form, GDO $gdo) {}
+	public function afterDelete(GDT_Form $form, GDO $gdo) {}
 	
 	public function getCRUDID() { return Common::getRequestString('id'); }
 	
@@ -170,6 +170,7 @@ abstract class MethodCrud extends MethodForm
 	{
 		$table = $this->gdoTable();
 		$gdo = $table->blank($form->getFormData())->insert();
+		$this->resetForm();
 		return
 			$this->message('msg_crud_created', [$gdo->gdoClassName()])->
 			add($this->afterCreate($form, $gdo))->
@@ -182,7 +183,7 @@ abstract class MethodCrud extends MethodForm
 	    $this->resetForm();
 		return
 			$this->message('msg_crud_updated', [$this->gdo->gdoClassName()])->
-			add($this->afterUpdate($form))->
+			add($this->afterUpdate($form, $this->gdo))->
 			add($this->renderPage());
 	}
 	
@@ -191,7 +192,7 @@ abstract class MethodCrud extends MethodForm
 	    $this->crudMode = self::DELETED;
 		$this->gdo->delete();
 		return $this->message('msg_crud_deleted', [$this->gdo->gdoClassName()])->
-			add($this->afterDelete($form))->
+			add($this->afterDelete($form, $this->gdo))->
 			add(Website::redirectMessage($this->hrefList()));
 	}
 }

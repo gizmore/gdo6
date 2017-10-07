@@ -5,6 +5,8 @@ use GDO\DB\GDT_UInt;
 use GDO\File\GDT_Path;
 use GDO\UI\GDT_Divider;
 use GDO\UI\GDT_Link;
+use GDO\User\GDO_User;
+use GDO\Util\Javascript;
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
  * simply because it installs the module table.
@@ -12,7 +14,7 @@ use GDO\UI\GDT_Link;
  * Also this module provides the default theme,
  * which is almost empty and is using the default tpl of the modules.
  * 
- * Config vars are kept here for ItemsPerPage and SuggestionsPerPage (ipp/spp).
+ * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
  * @since 6.00
@@ -60,4 +62,41 @@ final class Module_Core extends GDO_Module
     public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
     public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
     public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
+    
+    ##################
+    ### Javascript ###
+    ##################
+    public function onIncludeScripts()
+    {
+        $this->addCSS('css/gdo6.css');
+        $this->addJavascript('js/gdo-string-util.js');
+        $this->addJavascript('js/gdo-user.js');
+        Javascript::addJavascriptInline($this->gdoConfigJS());
+        Javascript::addJavascriptInline($this->gdoUserJS());
+    }
+    
+    public function gdoConfigJS()
+    {
+        return "window.GDO_CONFIG = {};";
+    }
+    
+    public function gdoUserJS()
+    {
+        $json = json_encode($this->gdoUserJSON());
+        return "window.GDO_USER = new GDO_User($json);";
+    }
+    
+    public function gdoUserJSON()
+    {
+        $user = GDO_User::current();
+        return array(
+            'user_id' => (int)$user->getID(),
+            'user_name' => $user->getName(),
+            'user_guest_name' => $user->getGuestName(),
+            'user_type' => $user->getType(),
+            'user_level' => (int)$user->getLevel(),
+            'user_credits' => (int)$user->getCredits(),
+            'permissions' => $user->loadPermissions(),
+        );
+    }
 }

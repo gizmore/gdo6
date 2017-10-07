@@ -9,7 +9,6 @@ use GDO\Core\GDT_Template;
 use GDO\DB\Database;
 use GDO\Core\GDOException;
 use GDO\Core\Website;
-use GDO\UI\GDT_Panel;
 /**
  * Create a GDO config with this form.
  * @author gizmore

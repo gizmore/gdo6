@@ -42,7 +42,6 @@ class InstallAdmins extends MethodForm
             'user_type' => GDO_User::MEMBER,
         ))->insert();
         
-        
         $permissions = ['admin', 'staff', 'cronjob'];
         foreach ($permissions as $permission)
         {

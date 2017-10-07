@@ -12,19 +12,16 @@ class GDT_Select extends GDT_ComboBox
         {
             $value = $this->multiple ? '[]' : null;
         }
-        if ($this->multiple)
+        elseif ($this->multiple)
         {
             if (is_array($value))
             {
                 $value = json_encode($value);
             }
         }
-        else # Single
+        elseif ($value === $this->emptyValue)
         {
-            if ($value === $this->emptyValue)
-            {
-                $value = null;
-            }
+            $value = null;
         }
         return $value;
     }

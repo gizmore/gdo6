@@ -1,46 +1,28 @@
 <?php
-namespace GDO\Util;
+namespace GDO\Net;
+use GDO\Util\Strings;
 use GDO\Core\GDT_Error;
-
 /**
  * HTTP functions using curl.
+ * Nocache helper.
  * 
  * @author gizmore
- * @version 3.0
+ * @version 6.05
  */
 final class HTTP
 {
-	const DEFAULT_TIMEOUT = 60;
-	const DEFAULT_TIMEOUT_CONNECT = 10;
+	const DEFAULT_TIMEOUT = 20;
+	const DEFAULT_TIMEOUT_CONNECT = 6;
 	const USERAGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0';
+	public static $TIMEOUT = self::DEFAULT_TIMEOUT;
+	public static $TIMEOUT_CONNECT = self::DEFAULT_TIMEOUT_CONNECT;
 
-	private static $TIMEOUT = self::DEFAULT_TIMEOUT;
-	private static $TIMEOUT_CONNECT = self::DEFAULT_TIMEOUT_CONNECT;
-	
-	/**
-	 * Set the global curl timeout. If no argument is given, a default timeout of 60 seconds is used.
-	 * @param int $timeout
-	 */
-	public static function setTimeout($timeout=self::DEFAULT_TIMEOUT)
-	{
-		self::$TIMEOUT = $timeout;
-	}
-	
-	/**
-	 * Set the global curl timeout. If no argument is given, a default timeout of 60 seconds is used.
-	 * @param int $timeout
-	 */
-	public static function setConnectTimeout($timeout=self::DEFAULT_TIMEOUT_CONNECT)
-	{
-		self::$TIMEOUT_CONNECT = $timeout;
-	}
-	
 	/**
 	 * Check if a page exists.
 	 * @param string $url
 	 * @return true|false
 	 */
-	public static function pageExists($url=null)
+	public static function pageExists( $url=null)
 	{
 		if ($url === null)
 		{
@@ -164,7 +146,7 @@ final class HTTP
 		
 		if (false === ($received = curl_exec($ch)))
 		{
-			echo GDT_Error::withHTML(curl_errno($ch).' - '.curl_error($ch));
+		    echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
 		}
 		
 		curl_close($ch);
@@ -237,7 +219,7 @@ final class HTTP
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
 		if (false === ($received = curl_exec($ch)))
 		{
-		    echo GDT_Error::withHTML(curl_errno($ch).' - '.curl_error($ch));
+		    echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
 		}
 		curl_close($ch);
 		return $received;		
@@ -250,20 +232,7 @@ final class HTTP
 	public static function noCache()
 	{
 		header('Cache-Control: no-cache, no-store, must-revalidate, pre-check=0, post-check=0, max-age=0');
-		#header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
 		header('Pragma: no-cache');
 		header('Expires: 0');
-		#header('Cache-Control: no-control, messup-Opera, spontanious-revalidation, redirect-at-will, hidden-execute-malware-mode');
-	}
-
-	/**
-	 * @param string $url
-	 * @return string
-	 */
-	public static function getDomain($url)
-	{
-		$url = Common::substrFrom($url, '://', $url);
-		$url = Common::substrUntil($url, '/', $url);
-		return Common::regex('#([^\\.]+\\.[^\\.]+)$#D', $url);
 	}
 }

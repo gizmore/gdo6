@@ -184,8 +184,9 @@ class GDO_Module extends GDO
     {
         switch (Application::instance()->getFormat())
         {
-            case 'json': return new GDT_Response($tVars);
-            case 'html': default: return new GDT_Response(GDT_Template::php($this->getName(), $file, $tVars));
+            case 'json': return $tVars;
+            case 'html':
+            default: return GDT_Template::php($this->getName(), $file, $tVars);
         }
     }
     public function templateFile($file) { return GDT_Template::file($this->getName(), $file); }
@@ -293,11 +294,6 @@ class GDO_Module extends GDO
         $klass = "GDO\\{$this->getName()}\\Method\\{$methodName}";
         return new $klass;
     }
-    
-//     public function getMethodHREF($methodName, $append='')
-//     {
-//         return href($this->getName(), $methodName, $append);
-//     }
     
     ##############
     ### Assets ###

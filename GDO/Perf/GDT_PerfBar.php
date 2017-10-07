@@ -7,7 +7,6 @@ use GDO\Core\GDT_Template;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_Panel;
-use GDO\Core\GDT_Response;
 /**
  * Performance statistics panel.
  * @author gizmore
@@ -49,6 +48,5 @@ final class GDT_PerfBar extends GDT_Panel
         );
     }
 
-    public function render() { return GDT_Response::make($this->renderCell()); }
-    public function renderCell() { return GDT_Template::php('Perf', 'cell/perfbar.php', ['bar' => $this]); }
+    public function render() { return GDT_Template::php('Perf', 'cell/perfbar.php', ['bar' => $this]); }
 }

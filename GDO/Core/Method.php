@@ -4,7 +4,6 @@ use GDO\DB\Database;
 use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Util\Strings;
-use Exception;
 /**
  * Abstract baseclass for all methods.
  * There are some derived method classes for forms, tables and cronjobs.
@@ -87,7 +86,7 @@ abstract class Method
     public function module() { return ModuleLoader::instance()->getModule($this->getModuleName()); }
     public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
     public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args); }
-    public function message($key, array $args=null) { return GDT_Success::responseWith($key, $args); }
+    public function message($key, array $args=null, $log=true) { return GDT_Success::responseWith($key, $args); }
     public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
     public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
     

@@ -558,6 +558,7 @@ abstract class GDO
 		$gdoVars = [];
 		foreach ($table->gdoColumnsCache() as $column)
 		{
+		    /** @var $column \GDO\Core\GDT **/
 			if ($data = $column->blankData())
 			{
 				$gdoVars = array_merge($gdoVars, $data);
@@ -754,7 +755,7 @@ abstract class GDO
 	public function truncate() { return Database::instance()->truncateTable($this); }
 	
 	/**
-	 * @return GDT[]
+	 * @return \GDO\Core\GDT[]
 	 */
 	public function gdoColumnsCache() { return Database::columnsS($this->gdoClassName()); }
 	

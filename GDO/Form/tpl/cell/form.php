@@ -1,4 +1,7 @@
-<?php $form instanceof GDO\Form\GDT_Form; ?>
+<?php use GDO\Avatar\GDT_Avatar; ?>
+
+<?php /** @var $form \GDO\Form\GDT_Form **/ ?>
+
 <!-- Begin Form -->
 <div class="gdo-form">
   <div class="md-whiteframe-8dp">
@@ -12,12 +15,13 @@
        action="<?= $form->action; ?>"
        method="<?= $form->method; ?>"
        enctype="<?= $form->encoding; ?>">
-      <?php foreach ($form->fields as $field) : ?>
+      <?php foreach ($form->getFields() as $field) : ?>
         <?php if ($field->writable) : ?>
+        <?php $field instanceof GDT_Avatar; ?>
           <?= $field->renderForm(); ?>
         <?php endif; ?>
       <?php endforeach; ?>
-    </form>
+      </form>
     </div>
   </div>
 </div>

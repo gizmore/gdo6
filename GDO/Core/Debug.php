@@ -81,18 +81,11 @@ final class Debug
      */
     public static function shutdown_function()
     {
-//         if (error_reporting())
-//         {
-            if (self::$enabled)
-            {
-                $error = error_get_last();
-//                 var_dump($error);
-                if ($error['type'] === 1)
-                {
-                    self::error_handler(1, $error['message'], self::shortpath($error['file']), $error['line'], NULL);
-                }
-            }
-//         }
+        $error = error_get_last();
+        if ($error['type'] === 1)
+        {
+            self::error_handler(1, $error['message'], self::shortpath($error['file']), $error['line'], NULL);
+        }
     }
     
     /**
@@ -184,10 +177,9 @@ final class Debug
         }
         else
         {
-            $message = $is_html ? sprintf('<div class="gdo-exception">%s</div>', $message) : $message;
             $message = GWF_ERROR_STACKTRACE ? self::backtrace($message, $is_html) : $message;
-            // echo $is_html? self::renderError($message) : $message;
             echo self::renderError($message);
+//             echo $message;
         }
         
         if (self::$die)
@@ -242,10 +234,8 @@ final class Debug
     {
         if (!self::$exception)
         {
-            set_exception_handler(array(
-                'GDO\\Core\\Debug',
-                'exception_handler'));
             self::$exception = true;
+            set_exception_handler(array('GDO\\Core\\Debug', 'exception_handler'));
         }
     }
     
@@ -345,8 +335,8 @@ final class Debug
         {
             $arg = json_encode($arg, 1);
         }
-        $app = mb_strlen($arg) > 48 ? '…' : '';
-        return mb_substr($arg, 0, 48) . $app;
+        $app = mb_strlen($arg) > 48 ? '…' : ' ';
+        return mb_substr($arg, 0, 47) . $app;
     }
     private static function backtraceMessage($message, $html = true, array $stack)
     {
@@ -355,7 +345,7 @@ final class Debug
         // Fix full path disclosure
         $message = self::shortpath($message);
         
-        if (! GWF_ERROR_STACKTRACE)
+        if (!GWF_ERROR_STACKTRACE)
         {
             return $html ? sprintf('<div class="gdo-exception">%s</div>', $message) : $message;
         }

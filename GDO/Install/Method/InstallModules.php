@@ -24,7 +24,10 @@ final class InstallModules extends Method
     public function execute()
     {
         Database::init();
-        $this->modules = ModuleLoader::instance()->loadModules(false, true);
+        $loader = ModuleLoader::instance();
+        $loader->loadModules(false, true);
+        $loader->sortModules('module_priority');
+        $this->modules = $loader->getModules();
         
         if (isset($_GET['btn_install']))
         {
