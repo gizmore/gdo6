@@ -1,26 +1,21 @@
-<?php
-use GDO\Table\GDT_List;
+<?php /** @var $field \GDO\Table\GDT_List **/
 use GDO\Util\Common;
-$field instanceof GDT_List;
-?>
-<?php
 $result = $field->getResult();
 ?>
 <div class="gdo-list-card">
-  <div class="title"><?= $field->label; ?></div>
+  <div class="title"><?= $field->title; ?></div>
   <ul>
     <li>
-  <?php
+<?php
 $template = $field->getItemTemplate();
 while ($gdo = $result->fetchObject())
 {
 	echo $template->gdo($gdo)->renderCard();
-}
-?>
+}?>
     </li>
   </ul>
 </div>
-
+<?php if ($field->headers && count($field->headers->fields)) : $fields = $field->headers->fields; ?>
 <!-- Filter Dialog -->
 <div style="visibility: hidden">
   <div class="md-dialog-container" id="gdo-filter-dialog">
@@ -30,14 +25,12 @@ while ($gdo = $result->fetchObject())
           <md-tab label="Filters">
             <md-content class="md-padding">
               <form method="get" action="<?= $field->href ?>">
-<?php if ($field->fields) : ?>
-<?php foreach ($field->fields as $gdoType) : ?>
+<?php foreach ($fields as $gdoType) : ?>
                 <md-input-container>
                   <label><?= $gdoType->label; ?></label>
                   <?= $gdoType->renderFilter(); ?>
                 </md-input-container>
 <?php endforeach; ?>
-<?php endif; ?>
                 <input type="hidden" name="mo" value="<?= html(Common::getGetString('mo')); ?>">
                 <input type="hidden" name="me" value="<?= html(Common::getGetString('me')); ?>">
                 <input type="submit" class="n" />
@@ -46,12 +39,10 @@ while ($gdo = $result->fetchObject())
           </md-tab>
           <md-tab label="Sorting">
             <md-content class="md-padding">
-<?php if ($field->fields) : ?>
-<?php foreach ($field->fields as $gdoType) : ?>
+<?php foreach ($fields as $gdoType) : ?>
               <label><?= $gdoType->label; ?></label>
               <?= $gdoType->displayTableOrder($field)?>
 <?php endforeach; ?>
-<?php endif; ?>
             </md-content>
           </md-tab>
         </md-tabs>
@@ -60,3 +51,4 @@ while ($gdo = $result->fetchObject())
   </div>
 </div>
 <!-- End Filter Dialog -->
+<?php endif; ?>

@@ -12,7 +12,7 @@ trait WithFields
     ### Fields ###
     ##############
     /**
-     * @var GDT[]
+     * @var \GDO\Core\GDT[]
      */
     public $fields = [];
     public function addField(GDT $field) { $this->fields[$field->name] = $field; return $this; }
@@ -29,7 +29,7 @@ trait WithFields
     }
     /**
      * @param string $key
-     * @return GDT
+     * @var \GDO\Core\GDT[]
      */
     public function getField($name) { return @$this->fields[$name]; }
     public function getFields() { return $this->fields; }

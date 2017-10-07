@@ -138,12 +138,15 @@ abstract class GDO
 		return $markDirty ? $this->markDirty($key) : $this;
 	}
 	
-	public function setVars(array $vars, $markDirty=true)
+	public function setVars(array $vars=null, $markDirty=true)
 	{
-		foreach ($vars as $key => $value)
-		{
-			$this->setVar($key, $value, $markDirty);
-		}
+	    if ($vars)
+	    {
+    		foreach ($vars as $key => $value)
+    		{
+    			$this->setVar($key, $value, $markDirty);
+    		}
+	    }
 		return $this;
 	}
 	

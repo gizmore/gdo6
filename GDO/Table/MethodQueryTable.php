@@ -5,6 +5,7 @@ use GDO\Core\Method;
 use GDO\DB\Query;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Response;
+use GDO\Core\GDT_Fields;
 /**
  * A method that displays a table.
  * 
@@ -43,7 +44,7 @@ abstract class MethodQueryTable extends Method
 	public function execute()
 	{
 		$table = GDT_Table::make();
-		$table->addFields($this->getHeaders());
+		$table->headers(GDT_Fields::make('o')->addFields($this->getHeaders()));
 // 		$table->href($this->href());
 		$table->query($this->getQuery());
 		$table->gdo($table->query->table);

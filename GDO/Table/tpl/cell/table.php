@@ -1,32 +1,29 @@
-<?php
+<?php /** @var $field \GDO\Table\GDT_Table **/
 use GDO\Util\Common;
 use GDO\Table\GDT_Table;
 use GDO\Core\GDT;
-$field instanceof GDT_Table;
-
-$headers = $field->fields;
-
+$headers = $field->headers;
 if ($pagemenu = $field->getPageMenu())
 {
 	echo $pagemenu->renderCell();
 }
 $result = $field->getResult();
 ?>
-<form method="get" action="<?= $field->href; ?>" flex class="b">
+<form method="get" action="<?= $field->href; ?>" class="b">
 <div
- class="gdo-table table-responsive"
+ class="gdo-table"
  layout="column" flex layout-fill
  ng-controller="GDOTableCtrl"
- ng-init='init(<?= $field->initJSON(); ?>)'>
+ ng-init='init(<?= $field->displayJSON(); ?>)'>
   <input type="hidden" name="mo" value="<?= html(Common::getGetString('mo','')); ?>" />
   <input type="hidden" name="me" value="<?= html(Common::getGetString('me','')); ?>" />
-  <?php if ($field->label) : ?>
-  <h3><?= $field->label; ?></h3>
+  <?php if ($field->title) : ?>
+  <h3><?= $field->title; ?></h3>
   <?php endif; ?>
   <table id="gwfdt-<?= $field->name; ?>" class="table">
     <thead>
       <tr>
-      <?php foreach($headers as $gdoType) : ?>
+      <?php foreach($headers->getFields() as $gdoType) : ?>
         <th<?= $gdoType->htmlClass(); ?>>
           <label>
             <?= $gdoType->renderHeader(); ?>
@@ -44,7 +41,7 @@ $result = $field->getResult();
     <tbody>
     <?php while ($gdo = $result->fetchAs($field->fetchAs)) : ?>
     <tr gdo-id="<?= $gdo->getID()?>">
-      <?php foreach($headers as $gdoType) : $gdoType instanceof GDT; ?>
+      <?php foreach($headers->getFields() as $gdoType) : ?>
         <td<?= $gdoType->htmlClass(); ?>><?= $gdoType->gdo($gdo)->renderCell(); ?></td>
       <?php endforeach; ?>
     </tr>

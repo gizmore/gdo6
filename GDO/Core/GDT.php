@@ -142,7 +142,7 @@ abstract class GDT
 	public function renderHeader() {}
 	public function renderJSON() {}
 	public function renderList() { return $this->render(); }
-	public function renderOrder() {}
+	public function renderOrder() { return 'aa'; }
 
 	# Render debug data by default.
 	private function renderDebug() { return print_r($this, true); }
@@ -178,7 +178,7 @@ abstract class GDT
 	
 	public function gdoCompare(GDO $a, GDO $b)
 	{
-		return strcmp($a->getVar($this->name), $b->getVar($this->name));
+		return strcasecmp($a->getVar($this->name), $b->getVar($this->name));
 	}
 	
 	##############
@@ -194,8 +194,4 @@ abstract class GDT
 	public $unique;
 	public $primary;
 	public function gdoColumnDefine() {}
-	
-	#######
-// 	public function displayHeaderLabel() { return $this->label; }
-	
 }

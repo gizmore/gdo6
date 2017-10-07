@@ -4,6 +4,7 @@ use GDO\Core\GDT;
 use GDO\Core\GDO;
 use GDO\Core\GDT_Response;
 use GDO\DB\Query;
+use GDO\Core\GDT_Fields;
 
 /**
  * Abstract class that renders a list.
@@ -52,16 +53,15 @@ abstract class MethodQueryList extends MethodQuery
     public function renderPage()
     {
         $list = GDT_List::make();
-        $list->label('list_'.strtolower($this->gdoShortName()), [sitename()]);
-        $list->addFields($this->gdoFilters());
-        $list->addFields($this->gdoParameters());
-        
+        $list->title(t('list_'.strtolower($this->gdoShortName()), [sitename()]));
+        $headers = GDT_Fields::make('o')->addFields($this->gdoFilters())->addFields($this->gdoParameters());
+        $list->headers($headers);
         $list->query($this->gdoFilteredQuery());
         $list->listMode($this->gdoListMode());
         $list->paginate();
         $list->href($this->href());
         $this->gdoDecorateList($list);
-        return GDT_Response::make($list->renderCell());
+        return GDT_Response::makeWith($list);
     }
 }
 

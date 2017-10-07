@@ -24,3 +24,7 @@ body { display: flex; flex-direction: column; }
 
 /** UI/GDT_Message **/
 .gdt-message textarea { width: 100%; height: 180px; }
+
+/** Table/GDT_Table **/
+.gdo-tblorder a { color: #000; }
+.gdo-tblorder a.sel { color: gold; }

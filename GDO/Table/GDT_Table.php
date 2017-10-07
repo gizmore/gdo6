@@ -11,12 +11,14 @@ use GDO\Core\GDT;
 use GDO\UI\GDT_Bar;
 use GDO\Core\GDT_Template;
 use GDO\UI\WithHREF;
+use GDO\Core\GDT_Fields;
+use GDO\UI\WithTitle;
 
 class GDT_Table extends GDT
 {
-	use WithFields;
 	use WithHREF;
-	use WithLabel;
+	use WithTitle;
+	use WithHeaders;
 	
 	public function __construct()
 	{
@@ -24,8 +26,6 @@ class GDT_Table extends GDT
 	}
 	public $action;
 	public function action($action=null) { $this->action = $action; return $this; }
-	public function defaultLabel() { return $this->noLabel(); }
-
 	
 	private $sortable;
 	private $sortableURL;
@@ -99,7 +99,7 @@ class GDT_Table extends GDT
 		{
 			if (!($this->result = $this->queryResult()))
 			{
-				return new ArrayResult([]);
+			    $this->result = new ArrayResult([]);
 			}
 		}
 		return $this->result;
@@ -126,12 +126,17 @@ class GDT_Table extends GDT
 		$query = $this->getQuery();
 		if ($this->filtered)
 		{
-			foreach ($this->getFields() as $gdoType)
+			foreach ($this->getHeaderFields() as $gdoType)
 			{
 				$gdoType->filterQuery($query);
 			}
 		}
 		return $query;
+	}
+	
+	public function getHeaderFields()
+	{
+	    return $this->headers->getFields();
 	}
 	
 	private $countItems = false;
@@ -149,9 +154,10 @@ class GDT_Table extends GDT
 	public function queryResult()
 	{
 		$query = $this->query;
+	    $headers = $this->headers;
 		if ($this->filtered)
 		{
-			foreach ($this->getFields() as $gdoType)
+			foreach ($headers->fields as $gdoType)
 			{
 				$gdoType->filterQuery($query);
 			}
@@ -159,9 +165,9 @@ class GDT_Table extends GDT
 		if ($this->ordered)
 		{
 		    $hasCustomOrder = false;
-			foreach (Common::getRequestArray('o') as $name => $asc)
+		    foreach (Common::getRequestArray($headers->name) as $name => $asc)
 			{
-				if ($field = $this->getField($name))
+			    if ($field = $headers->getField($name))
 				{
 					if ($field->orderable)
 					{
@@ -229,13 +235,13 @@ class GDT_Table extends GDT
 	    return GDT_Template::php('Table', 'cell/table.php', ['field'=>$this]);
 	}
 	
-	public function initJSON()
+	public function renderJSON()
 	{
-		return json_encode(array(
+		return array(
 			'tableName' => $this->result->table->gdoClassName(),
 			'pagemenu' => $this->pagemenu ? $this->getPageMenu()->initJSON() : null,
 			'sortable' => $this->sortable,
 			'sortableURL' => $this->sortableURL,
-		));
+		);
 	}
 }

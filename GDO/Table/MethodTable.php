@@ -6,6 +6,7 @@ use GDO\DB\ArrayResult;
 use GDO\Core\GDT;
 use GDO\Util\Common;
 use GDO\Core\GDT_Response;
+use GDO\Core\GDT_Fields;
 /**
  * A method that displays a table.
  * 
@@ -24,7 +25,7 @@ abstract class MethodTable extends Method
 	### Abstract ###
 	################
 	/**
-	 * @return GDT
+	 * @return GDT_Fields
 	 */
 	public abstract function getHeaders();
 	
@@ -46,22 +47,17 @@ abstract class MethodTable extends Method
 	public function renderTable()
 	{
 		$table = GDT_Table::make();
-		$table->addFields($this->getHeaders());
+		$headers = GDT_Fields::make('o')->addFields($this->getHeaders());
+		$table->headers($headers);
 		$this->createTable($table);
 		$table->ordered($this->isOrdered());
 		$table->filtered($this->isFiltered());
 		$table->paginate($this->isPaginated(), $this->ipp());
-		
 		$result = $this->getResult();
-		foreach (array_reverse(Common::getRequestArray('o'), true) as $name => $asc)
-		{
-			if ($gdoType = $table->getField($name))
-			{
-				$result->data = $gdoType->sort($result->data, !!$asc);
-			}
-		}
+		$table->multisort($result);
 		$result->data = array_values($result->data);
 		$table->result($result);
 		return GDT_Response::makeWith($table);
 	}
+	
 }

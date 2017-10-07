@@ -189,6 +189,18 @@ class GDO_Module extends GDO
             default: return GDT_Template::php($this->getName(), $file, $tVars);
         }
     }
+    
+    public function responsePHP($file, array $tVars=null)
+    {
+        switch (Application::instance()->getFormat())
+        {
+            case 'json': return $tVars;
+            case 'html':
+            default: return GDT_Template::responsePHP($this->getName(), $file, $tVars);
+        }
+    }
+    
+    
     public function templateFile($file) { return GDT_Template::file($this->getName(), $file); }
     public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args); }
     public function message($key, array $args=null) { return GDT_Success::responseWith($key, $args); }

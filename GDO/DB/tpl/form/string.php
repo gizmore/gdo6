@@ -1,6 +1,6 @@
-<?php /** @var $field \GDO\DB\GDT_String; **/ ?>
+<?php /** @var $field \GDO\DB\GDT_String **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <?= $field->icon; ?>
+  <?= $field->htmlIcon(); ?>
   <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
   <input
    type="text"
@@ -11,6 +11,6 @@
    max="<?= $field->max; ?>"
    size="<?= min($field->max, 32); ?>"
    name="form[<?= $field->name; ?>]"
-   value="<?= $field->getVar(); ?>" />
+   value="<?= $field->displayVar(); ?>" />
   <div class="gdo-form-error"><?= $field->error; ?></div>
 </div>

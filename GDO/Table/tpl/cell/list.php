@@ -1,12 +1,11 @@
-<?php
-use GDO\Table\GDT_List;
+<?php /** @var $field \GDO\Table\GDT_List */ 
 use GDO\Util\Common;
-$field instanceof GDT_List;
+$headers = $field->headers;
 ?>
 <!-- List -->
 <div class="gdo-list">
-<?php if ($field->label) : ?>
-  <h3><?= $field->label; ?></h3>
+<?php if ($field->title) : ?>
+  <h3><?= $field->title; ?></h3>
 <?php endif; ?>
   <ul>
 <?php
@@ -21,6 +20,7 @@ endwhile; ?>
 <?= $field->pagemenu ? $field->pagemenu->renderCell() : ''; ?>
 <!-- End of List -->
 
+<?php if ($headers && count($headers->fields)) : ?>
 <!-- Filter Dialog -->
 <div style="visibility: hidden">
   <div class="md-dialog-container" id="gdo-filter-dialog">
@@ -30,14 +30,12 @@ endwhile; ?>
           <md-tab label="Filters">
             <md-content class="md-padding">
               <form method="get" action="<?= $field->href ?>">
-<?php if ($field->fields) : ?>
-<?php foreach ($field->fields as $gdoType) : ?>
+<?php foreach ($headers->fields as $gdoType) : ?>
                 <md-input-container>
                   <label><?= @$gdoType->label; ?></label>
                   <?= $gdoType->renderFilter(); ?>
                 </md-input-container>
 <?php endforeach; ?>
-<?php endif; ?>
                 <input type="hidden" name="mo" value="<?= html(Common::getGetString('mo')); ?>">
                 <input type="hidden" name="me" value="<?= html(Common::getGetString('me')); ?>">
                 <input type="submit" class="n" />
@@ -46,12 +44,10 @@ endwhile; ?>
           </md-tab>
           <md-tab label="Sorting">
             <md-content class="md-padding">
-<?php if ($field->fields) : ?>
-<?php foreach ($field->fields as $gdoType) : ?>
+<?php foreach ($headers->fields as $gdoType) : ?>
               <label><?= @$gdoType->label; ?></label>
               <?= $gdoType->displayTableOrder($field)?>
 <?php endforeach; ?>
-<?php endif; ?>
             </md-content>
           </md-tab>
         </md-tabs>
@@ -60,3 +56,4 @@ endwhile; ?>
   </div>
 </div>
 <!-- End Filter Dialog -->
+<?php endif; ?>

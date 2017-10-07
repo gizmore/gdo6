@@ -4,6 +4,7 @@ use GDO\DB\Database;
 use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Util\Strings;
+use GDO\UI\WithTitle;
 /**
  * Abstract baseclass for all methods.
  * There are some derived method classes for forms, tables and cronjobs.
@@ -15,17 +16,14 @@ use GDO\Util\Strings;
 abstract class Method
 {
     use WithName;
-    
+    use WithTitle;
+
     abstract public function execute();
     
     /**
      * @return self
      */
-    public static function make()
-    {
-        $class = get_called_class();
-        return new $class();
-    }
+    public static function make() { $class = get_called_class(); return new $class(); }
     
     ################
     ### Override ###
@@ -89,13 +87,6 @@ abstract class Method
     public function message($key, array $args=null, $log=true) { return GDT_Success::responseWith($key, $args); }
     public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
     public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
-    
-    
-    ###########
-    ### SEO ###
-    ###########
-    public $title;
-    public function title($title=null) { $this->title = $title; return $this; }
     
     ############
     ### Exec ###

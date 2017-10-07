@@ -27,7 +27,11 @@ trait WithDatabase
         return $this->virtual ? $query->having($condition) : $query->where($condition);
     }
     
-    ### GDO
+    public function renderHeader() { return $this->label; }
+    
+    ###########
+    ### GDO ###
+    ###########
     public function gdoColumnDefine() {}
     public function gdoNullDefine() { return $this->notNull ? ' NOT NULL' : ''; }
     public function gdoInitialDefine() { return isset($this->initial) ? (" DEFAULT ".GDO::quoteS($this->initial)) : ''; }
