@@ -173,7 +173,7 @@ abstract class MethodCrud extends MethodForm
 		$this->resetForm();
 		return
 			$this->message('msg_crud_created', [$gdo->gdoClassName()])->
-			add($this->afterCreate($form, $gdo))->
+			addField($this->afterCreate($form, $gdo))->
 			add(Website::redirectMessage($this->hrefList()));
 	}
 	

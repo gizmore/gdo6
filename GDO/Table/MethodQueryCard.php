@@ -33,7 +33,9 @@ abstract class MethodQueryCard extends Method
 	
 	public function renderCard()
 	{
-		$object = $this->gdoQueryCard();
-		return $object->renderCard();
+		if ($object = $this->gdoQueryCard())
+		{
+		    return $object->responseCard();
+		}
 	}
 }

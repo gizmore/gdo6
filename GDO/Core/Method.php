@@ -18,6 +18,9 @@ abstract class Method
     use WithName;
     use WithTitle;
 
+    /**
+     * @return \GDO\Core\GDT_Response
+     */
     abstract public function execute();
     
     /**

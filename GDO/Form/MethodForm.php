@@ -23,13 +23,19 @@ abstract class MethodForm extends Method
     
     public abstract function createForm(GDT_Form $form);
     
+    /**
+     * {@inheritDoc}
+     * @see \GDO\Core\Method::execute()
+     * @return \GDO\Core\GDT_Response
+     */
     public function execute()
     {
         return $this->executeForm();
     }
     
     /**
-     * @return GDT_Response
+     * Render this form as response.
+     * @return \GDO\Core\GDT_Response
      */
     public function renderPage()
     {
@@ -43,6 +49,10 @@ abstract class MethodForm extends Method
         return $this->title(t("ft_{$module}_{$method}", [sitename()]));
     }
     
+    /**
+     * Validate the form and execute it.
+     * @return \GDO\Core\GDT_Response
+     */
     public function executeForm()
     {
         $response = null;

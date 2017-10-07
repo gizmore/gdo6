@@ -18,7 +18,7 @@ class GDT_Int extends GDT
     use WithFormFields;
     use WithDatabase;
     use WithOrder;
-    
+
     public function toValue($var) { return $var === null ? null : (int) $var; }
     public function setGDOData(GDO $gdo=null) { return $gdo ? $this->val($gdo->getVar($this->name)) : $this; }
     

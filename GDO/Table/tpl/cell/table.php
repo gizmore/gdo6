@@ -1,7 +1,5 @@
 <?php /** @var $field \GDO\Table\GDT_Table **/
 use GDO\Util\Common;
-use GDO\Table\GDT_Table;
-use GDO\Core\GDT;
 $headers = $field->headers;
 if ($pagemenu = $field->getPageMenu())
 {

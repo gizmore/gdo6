@@ -28,7 +28,7 @@ class GDT_Enum extends GDT
         return "{$this->identifier()} ENUM ($values){$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
     }
     
-    public function renderForm() { return GDT_Template::php('Form', 'form/enum.php', ['field' => $this]); }
+    public function renderForm() { return GDT_Template::php('DB', 'form/enum.php', ['field' => $this]); }
     public function renderCell() { return $this->enumLabel($this->getVar()); }
     public function renderJSON()
     {
@@ -72,7 +72,7 @@ class GDT_Enum extends GDT
     /**
      * Render select filter header.
      */
-    public function renderFilter() { return GDT_Template::php('Form', 'filter/enum.php', ['field' => $this]); }
+    public function renderFilter() { return GDT_Template::php('DB', 'filter/enum.php', ['field' => $this]); }
     
     /**
      * Filter value is an array.

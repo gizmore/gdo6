@@ -1,32 +1,39 @@
 <?php
 namespace GDO\Table;
-use GDO\UI\WithLabel;
 use GDO\Util\Common;
 use GDO\DB\ArrayResult;
 use GDO\Core\GDO;
 use GDO\DB\Query;
 use GDO\DB\Result;
-use GDO\Core\WithFields;
 use GDO\Core\GDT;
-use GDO\UI\GDT_Bar;
 use GDO\Core\GDT_Template;
 use GDO\UI\WithHREF;
-use GDO\Core\GDT_Fields;
 use GDO\UI\WithTitle;
-
+use GDO\UI\WithActions;
+/**
+ * A sortable, orderable, filterable, paginatable collection of GDT[] in headers.
+ * Supports queried and GDO\Core\ArrayResult.
+ * @author gizmore
+ * @since 6.00
+ * @version 6.05
+ */
 class GDT_Table extends GDT
 {
 	use WithHREF;
 	use WithTitle;
 	use WithHeaders;
+	use WithActions;
 	
-	public function __construct()
-	{
-	    $this->action = $_SERVER['REQUEST_URI'];
-	}
+	################
+	### Endpoint ###
+	################
 	public $action;
+	public function __construct() { $this->action = $_SERVER['REQUEST_URI']; }
 	public function action($action=null) { $this->action = $action; return $this; }
-	
+
+	######################
+	### Drag&Drop sort ###
+	######################
 	private $sortable;
 	private $sortableURL;
 	public function sortable($sortableURL=null)
@@ -36,6 +43,9 @@ class GDT_Table extends GDT
 		return $this;
 	}
 	
+	#################
+	### Filtering ###
+	#################
 	public $filtered;
 	public function filtered($filtered=true)
 	{
@@ -43,6 +53,9 @@ class GDT_Table extends GDT
 		return $this;
 	}
 	
+	################
+	### Ordering ###
+	################
 	public $ordered;
 	public $orderDefault;
 	public $orderDefaultAsc = true;
@@ -54,12 +67,14 @@ class GDT_Table extends GDT
 		return $this;
 	}
 	
+	##################
+	### Pagination ###
+	##################
 	public $pagemenu;
 	public function paginateDefault($href=null)
 	{
 	    return $this->paginate(true, $href, Module_Table::instance()->cfgItemsPerPage());
 	}
-	
 	public function paginate($paginate=true, $href=null, $ipp=10)
 	{
 		if ($paginate)
@@ -71,7 +86,10 @@ class GDT_Table extends GDT
 		}
 		return $this->ipp($ipp);
 	}
-	
+
+	####################
+	### ItemsPerPage ###
+	####################
 	private $ipp = 10;
 	public function ipp($ipp)
 	{
@@ -79,6 +97,7 @@ class GDT_Table extends GDT
 		return $this;
 	}
 	
+	###
 	public $result;
 	public function result(Result $result)
 	{
@@ -139,10 +158,16 @@ class GDT_Table extends GDT
 	    return $this->headers->getFields();
 	}
 	
-	private $countItems = false;
+	/**
+	 * @var int
+	 */
+	private $countItems = null;
+	/**
+	 * @return int the total number of matching rows. 
+	 */
 	public function countItems()
 	{
-		if ($this->countItems === false)
+		if ($this->countItems === null)
 		{
 			$this->countItems = $this->query ? 
 				$this->getFilteredQuery()->select('COUNT(*)')->exec()->fetchValue() :
@@ -151,6 +176,10 @@ class GDT_Table extends GDT
 		return $this->countItems;
 	}
 	
+	/**
+	 * Query the final result.
+	 * @return \GDO\DB\Result
+	 */
 	public function queryResult()
 	{
 		$query = $this->query;
@@ -212,19 +241,6 @@ class GDT_Table extends GDT
 	{
 		$this->fetchAs = $fetchAs;
 		return $this;
-	}
-	
-	###############
-	### Actions ###
-	###############
-	private $actions;
-	public function actions()
-	{
-		if (!$this->actions)
-		{
-		    $this->actions = GDT_Bar::make();
-		}
-		return $this->actions;
 	}
 	
 	##############

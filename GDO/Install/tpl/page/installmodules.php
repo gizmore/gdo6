@@ -11,9 +11,9 @@ use GDO\UI\GDT_Panel;
 echo GDT_Panel::make()->html(t('install_modules_info_text'))->render();
 
 $table = GDT_Table::make()->result(new ArrayResult($modules, GDO_Module::table()));
-$table->addField(GDT_Template::make()->template('Install', 'cell/installcbx.php'));
-$table->addField(GDO_Module::table()->gdoColumn('module_name'));
-$table->addField(GDO_Module::table()->gdoColumn('module_priority'));
+$table->addHeader(GDT_Template::make()->template('Install', 'cell/installcbx.php'));
+$table->addHeader(GDO_Module::table()->gdoColumn('module_name'));
+$table->addHeader(GDO_Module::table()->gdoColumn('module_priority'));
 
 $install = GDT_Submit::make('btn_install');
 $hiddenStep = GDT_Hidden::make('step')->val('4');

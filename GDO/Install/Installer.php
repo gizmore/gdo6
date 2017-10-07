@@ -156,6 +156,7 @@ class Installer
 	 * @param GDO_Module $module
 	 * @param string $path
 	 * @return Method
+	 * @deprecated because the naming is horrible. Also the logic is not nice.
 	 */
 	public static function loopMethod(GDO_Module $module, $path)
 	{

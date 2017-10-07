@@ -1,7 +1,4 @@
-<?php use GDO\Avatar\GDT_Avatar; ?>
-
 <?php /** @var $form \GDO\Form\GDT_Form **/ ?>
-
 <!-- Begin Form -->
 <div class="gdo-form">
   <div class="md-whiteframe-8dp">
@@ -17,10 +14,10 @@
        enctype="<?= $form->encoding; ?>">
       <?php foreach ($form->getFields() as $field) : ?>
         <?php if ($field->writable) : ?>
-        <?php $field instanceof GDT_Avatar; ?>
           <?= $field->renderForm(); ?>
         <?php endif; ?>
       <?php endforeach; ?>
+        <input type="hidden" name="nojs" value="1" />
       </form>
     </div>
   </div>

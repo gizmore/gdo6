@@ -15,7 +15,7 @@ final class GDO_UserSetting extends GDO
 	/**
 	 * @var GDT[]
 	 */
-	private static $settings;
+	private static $settings = [];
 	public static function register(GDT $gdoType)
 	{
 		self::$settings[$gdoType->name] = $gdoType;

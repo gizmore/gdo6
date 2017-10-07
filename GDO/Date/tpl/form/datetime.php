@@ -8,11 +8,11 @@ $id = 'date_'.$field->name;
   <?= $field->htmlIcon(); ?>
   <?= $field->htmlTooltip(); ?>
   <label for="<?=$id;?>"><?=$field->label;?></label>
-  <div class="gdo-form-error"><?= $field->error; ?></div>
   <input
    id="<?= $id; ?>"
    type="datetime"
    name="form[<?= $field->name; ?>]"
    value="<?= $field->displayVar(); ?>" />
+  <div class="gdo-form-error"><?= $field->error; ?></div>
 </div>
  

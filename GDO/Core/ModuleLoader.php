@@ -4,6 +4,7 @@ use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
+use GDO\DB\Database;
 /**
  * Module loader.
  *
@@ -18,23 +19,25 @@ final class ModuleLoader
      */
     public static function instance() { return self::$instance; }
     private static $instance;
+    
     /**
      * Base modules path, the modules folder.
      * @var string
      */
     private $path;
-    /**
-     * @var GDO_Module[]
-     */
-    private $modules = [];
-    
-    private $loadedFS = false;
-    
     public function __construct($path)
     {
         $this->path = $path;
         self::$instance = $this;
     }
+    
+    #############
+    ### Cache ###
+    #############
+    /**
+     * @var GDO_Module[]
+     */
+    private $modules = [];
     
     /**
      * Get all loaded modules.
@@ -69,6 +72,9 @@ final class ModuleLoader
         }
     }
     
+    #################
+    ### Cacheload ###
+    #################
     /**
      * Load active modules, preferably from cache.
      * Sorted by priority to be spinlock free.
@@ -78,7 +84,7 @@ final class ModuleLoader
     {
         if (false === ($cache = Cache::get('gdo_modules')))
         {
-            $cache = $this->loadModules(true);
+            $cache = $this->loadModules();
             Cache::set('gdo_modules', $cache);
         }
         else
@@ -108,6 +114,11 @@ final class ModuleLoader
         Trans::inited();
     }
     
+    ##################
+    ### Massloader ###
+    ##################
+    private $loadedDB = false;
+    private $loadedFS = false;
     /**
      * @param $loadDB
      * @param $loadFS
@@ -115,33 +126,37 @@ final class ModuleLoader
      */
     public function loadModules($loadDB=true, $loadFS=false)
     {
+    	# Load maybe 0, 1 or 2 sources
         $loaded = false;
-        if ($loadDB)
+        if ($loadDB && (!$this->loadedDB) )
         {
             $this->loadModulesDB();
-            $loaded = true;
+        	$this->loadedDB = true;
         }
-        if ( ($loadFS) && (!$this->loadedFS) )
+        if ($loadFS && (!$this->loadedFS) )
         {
             $this->loadModulesFS();
-            $this->loadedFS = $loaded = true;
+            $loaded = $this->loadedFS = true;
         }
+        
+        # Loaded one?
         if ($loaded)
         {
+        	if ($this->loadedDB)
+        	{
+        		$this->initModuleVars();
+        	}
+
             $this->sortModules('module_priority');
-            if ($loadDB)
-            {
-                $this->initModuleVars();
-            }
             $this->initModules();
-            $this->sortModules('module_sort');
+//             $this->sortModules('module_sort');
         }
         return $this->modules;
     }
     
     public function loadModulesDB()
     {
-        $result = GDO_Module::table()->select('*')->order('module_priority')->exec();
+        $result = GDO_Module::table()->select('*')->exec();
         while ($moduleData = $result->fetchAssoc())
         {
             $moduleName = $moduleData['module_name'];
@@ -165,11 +180,17 @@ final class ModuleLoader
     {
         if (FileUtil::isFile("$path/Module_$entry.php"))
         {
-            $this->loadModuleFS($entry);
+            $this->loadModuleFS($entry, false);
         }
     }
     
-    public function loadModuleFS($name, $init=false)
+    /**
+     * Load a module from filesystem if it is not loaded yet.
+     * @param string $name
+     * @param boolean $init
+     * @return \GDO\Core\GDO_Module
+     */
+    public function loadModuleFS($name, $init=true)
     {
         if (!isset($this->modules[$name]))
         {
@@ -182,8 +203,8 @@ final class ModuleLoader
                     $this->modules[$name] = $module;
                     if ($init)
                     {
-                        $module->initModule();
                         $module->registerThemes();
+                        $module->initModule();
                     }
                 }
             }
@@ -191,7 +212,14 @@ final class ModuleLoader
         return @$this->modules[$name];
     }
     
-    public static function instanciate(array $moduleData, $dirty = null)
+    /**
+     * Instanciate a module from gdoVars/loaded data.
+     * @param array $moduleData
+     * @param bool $dirty
+     * @throws GDOError
+     * @return \GDO\Core\GDO_Module
+     */
+    public static function instanciate(array $moduleData, $dirty = false)
     {
         $name = $moduleData['module_name'];
         $klass = "GDO\\$name\\Module_$name";
@@ -208,9 +236,16 @@ final class ModuleLoader
     ############
     ### Vars ###
     ############
+    /**
+     * Load module vars from database.
+     */
     public function initModuleVars()
     {
-        $result = GDO_ModuleVar::table()->select('module_name, mv_name, mv_value')->join('LEFT JOIN gdo_module ON module_id=mv_module_id')->exec();
+    	# Query all module vars
+        $result = GDO_ModuleVar::table()->
+        	select('module_name, mv_name, mv_value')->
+        	join('LEFT JOIN gdo_module ON module_id=mv_module_id')->exec();
+        # Assign them to the modules
         while ($row = $result->fetchRow())
         {
             if ($module = @$this->modules[$row[0]])
@@ -221,7 +256,6 @@ final class ModuleLoader
                 }
             }
         }
-        
     }
     
     public function sortModules($columnName, $ascending=true)

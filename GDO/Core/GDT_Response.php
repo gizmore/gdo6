@@ -1,5 +1,8 @@
 <?php
 namespace GDO\Core;
+use GDO\UI\GDT_HTML;
+use GDO\UI\WithHTML;
+
 /**
  * The response class renders fields according to the request content-type.
  * You can control the content type with the &fmt=json|html GET parameter.
@@ -15,12 +18,13 @@ final class GDT_Response extends GDT
 	### Factory ###
 	###############
 	/**
-	 * @param GDT ...$fields
-	 * @return self
+	 * Create a response from plain html by adding a GDT_HTML field containing your html.
+	 * @param string $html
+	 * @return \GDO\Core\GDT_Response
 	 */
-	public static function makeWith(GDT ...$fields)
+	public static function makeWithHTML($html)
 	{
-	    return self::make()->addFields($fields);
+	    return self::make()->addHTML($html);
 	}
 	
 	##############
@@ -58,8 +62,16 @@ final class GDT_Response extends GDT
 	    die(json_encode($back));
 	}
 	
-	public function add(GDT_Response $response)
+	################
+	### Chaining ###
+	################
+	public function add(GDT_Response $response=null)
 	{
-	    return $this->addFields($response->getFields());
+	    return $response ? $this->addFields($response->getFields()) : $this;
+	}
+	
+	public function addHTML($html)
+	{
+	    return $html ? $this->addField(GDT_HTML::withHTML($html)) : $this;
 	}
 }

@@ -100,8 +100,9 @@ abstract class GDT
 	public function setGDOVar($var) { $this->gdo->setVar($this->name, $var); return $this; }
 	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
 	
-	public function getRequestVar($firstLevel=null, $default=null)
+	public function getRequestVar($firstLevel=null, $default=null, $name=null)
 	{
+	    $name = $name === null ? $this->name : $name;
 	    $path = '';
 	    if ($firstLevel)
 	    {
@@ -113,7 +114,7 @@ abstract class GDT
 	    }
 	    $arr = $_REQUEST;
 	    # Allow nested form checkboxes and stuff
-	    $path .= '['.$this->name;
+	    $path .= '['.$name;
 	    $path = explode('][', $path);
 	    foreach ($path as $child)
 	    {

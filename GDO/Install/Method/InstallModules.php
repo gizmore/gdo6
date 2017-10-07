@@ -7,9 +7,8 @@ use GDO\Util\Common;
 use GDO\Core\GDO_Module;
 use GDO\Install\Installer;
 use GDO\Install\Config;
-use GDO\UI\GDT_Panel;
-use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Success;
+use GDO\DB\Cache;
 /**
  * Install selected modules.
  * @author gizmore
@@ -25,7 +24,7 @@ final class InstallModules extends Method
     
     public function execute()
     {
-        Database::init();
+        $db = Database::init();
         $loader = ModuleLoader::instance();
         $loader->loadModules(false, true);
         $loader->sortModules('module_priority');
@@ -66,6 +65,10 @@ final class InstallModules extends Method
         {
             Database::instance()->transactionRollback();
             throw $e;
+        }
+        finally
+        {
+        	Cache::flush();
         }
         
         return GDT_Success::with(t('install_modules_completed', [Config::linkStep(5)]));

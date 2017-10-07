@@ -209,7 +209,7 @@ class GDO_Module extends GDO
     ### Init ###
     ############
     public function __wakeup() { $this->inited = false; } # TODO: wakeup knows that language and settings are also memcached soon? :)
-    private $inited = false;
+    private $inited;
     public function initModule()
     {
         if (!$this->inited)
@@ -217,7 +217,8 @@ class GDO_Module extends GDO
             $this->inited = true;
             $this->onLoadLanguage();
             $this->registerSettings();
-            if ($this->isPersisted() && $this->isEnabled())
+//             if ($this->isPersisted() && $this->isEnabled())
+            if ($this->isEnabled())
             {
                 $app = Application::instance();
                 if ( (!$app->isInstall()) && (!$app->isCLI()) )
@@ -268,30 +269,25 @@ class GDO_Module extends GDO
      * @return GDT[]
      */
     public function getUserSettings(){}
+    /**
+     * @return GDT[]
+     */
     public function getUserSettingBlobs(){}
     public function registerSettings()
     {
-        if ($settings = $this->getUserConfig())
-        {
-            foreach ($settings as $setting)
-            {
-                GDO_UserSetting::register($setting);
-            }
-        }
-        if ($settings = $this->getUserSettings())
-        {
-            foreach ($settings as $setting)
-            {
-                GDO_UserSetting::register($setting);
-            }
-        }
-        if ($settings = $this->getUserSettingBlobs())
-        {
-            foreach ($settings as $setting)
-            {
-                GDO_UserSettingBlob::register($setting);
-            }
-        }
+    	$this->_registerSettings($this->getUserConfig());
+    	$this->_registerSettings($this->getUserSettings());
+    	$this->_registerSettings($this->getUserSettingBlobs(), true);
+    }
+    private function _registerSettings(array $settings=null, $blob=false)
+    {
+    	if ($settings)
+    	{
+    		foreach ($settings as $setting)
+    		{
+    			$blob ? GDO_UserSettingBlob::register($setting) : GDO_UserSetting::register($setting);
+    		}
+    	}
     }
     
     ##############

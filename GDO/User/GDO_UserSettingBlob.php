@@ -13,18 +13,15 @@ use GDO\DB\GDT_Text;
  */
 final class GDO_UserSettingBlob extends GDO
 {
+	################
+	### Settings ###
+	################
 	/**
-	 * @var GDT[]
+	 * @var \GDO\Core\GDT
 	 */
 	private static $settings;
-	public static function register(GDT $gdoType)
-	{
-		self::$settings[$gdoType->name] = $gdoType;
-	}
-	public static function isRegistered($name)
-	{
-	    return isset(self::$settings[$name]);
-	}
+	public static function register(GDT $gdoType) { self::$settings[$gdoType->name] = $gdoType; }
+	public static function isRegistered($name) { return isset(self::$settings[$name]); }
 	
 	###########
 	### GDO ###
@@ -57,7 +54,6 @@ final class GDO_UserSettingBlob extends GDO
 		    $settings = self::load($user);
 			$user->tempSet('gdo_setting_blob', $settings);
 			$user->recache();
-			
 		}
 		$gdoType = self::$settings[$key];
 		return isset($settings[$key]) ? $gdoType->initial($settings[$key]) : $gdoType;

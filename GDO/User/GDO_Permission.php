@@ -19,7 +19,7 @@ final class GDO_Permission extends GDO
 	
 	public static function getByName($name) { return self::getBy('perm_name', $name); }
 	
-	public static function getOrCreateByName($name) { return ($perm = self::getByName($name)) ? $perm : self::create($name); }
+	public static function getOrCreateByName($name) { return self::create($name); }
 	
 	public static function create($name)
 	{

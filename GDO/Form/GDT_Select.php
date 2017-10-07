@@ -137,12 +137,6 @@ class GDT_Select extends GDT_ComboBox
         }
         else 
         {
-//             if ($this->name === 'error_stacktrace')
-//             {
-//                     var_dump($this->choices);
-//                     die(1);
-                
-//             }
             return $this->getVar() === $value ? ' selected="selected"' : '';
         }
     }

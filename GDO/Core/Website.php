@@ -1,6 +1,8 @@
 <?php
 namespace GDO\Core;
 use GDO\UI\GDT_Link;
+use GDO\UI\GDT_Panel;
+use GDO\UI\WithHTML;
 /**
  * General Website utility.
  * @author gizmore
@@ -22,7 +24,7 @@ final class Website
             case 'html':
                 if (Application::instance()->isAjax())
                 {
-                    return new GDT_Response(self::ajaxRedirect($url));
+                    return GDT_Response::makeWith(GDT_Panel::withHTML(self::ajaxRedirect($url, $time)));
                 }
                 else
                 {
@@ -37,13 +39,13 @@ final class Website
                     
                     return GDT_Success::responseWith('msg_redirect', [GDT_Link::anchor($url), $time]);
                 }
-            case 'json': return new GDT_Response(['redirect' => $url, 'redirectWait' => $time]);
+            case 'json': return ['redirect' => $url, 'redirectWait' => $time];
         }
     }
-    private static function ajaxRedirect($url)
+    private static function ajaxRedirect($url, $time)
     {
         # Don't do this at home kids!
-        return sprintf('<script type="text/javascript">setTimeout(function(){ window.location.href="%s" }, 1);</script>', $url);
+        return sprintf('<script type="text/javascript">setTimeout(function(){ window.location.href="%s" }, %d);</script>', $url, $time*1000);
     }
     
     public static function addInlineCSS($css) { self::$_inline_css .= $css; }

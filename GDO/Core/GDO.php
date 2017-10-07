@@ -2,17 +2,15 @@
 namespace GDO\Core;
 use GDO\DB\Cache;
 use GDO\DB\Database;
-use GDO\DB\GDT_AutoInc;
 use GDO\DB\Query;
 use GDO\DB\Result;
-use GDO\DB\GDT_Name;
 /**
- * 
+ * A gdo is a container for GDTs which values are backed by a database and cache.
  * @author gizmore
- * @version 6.05
+ * @version 6.06
  * @since 1.00
  */
-abstract class GDO
+abstract class GDO #extends GDT
 {
 	use WithName;
 
@@ -27,6 +25,7 @@ abstract class GDO
 	
 	public function gdoCached() { return true; }
 	public function memCached() { return $this->gdoCached(); }
+	
 	public function gdoTableName() { return strtolower(self::gdoShortNameS()); }
 	public function gdoDependencies() { return null; }
 	
@@ -85,43 +84,9 @@ abstract class GDO
 	public function tempSet($key, $value) { if (!$this->temp) $this->temp = []; $this->temp[$key] = $value; }
 	public function tempUnset($key) { unset($this->temp[$key]); }
 	
-	############
-	### Vars ###
-	############
-	private $gdoVars;
-	private $dirty = false;
-	
-	public function getGDOVars() { return $this->gdoVars; }
-	/**
-	 * Get the Type for a key.
-	 * @param string $key
-	 * @return GDT
-	 */
-	public function gdoColumn($key)
-	{
-		return $this->gdoColumnsCache()[$key]->gdo($this);
-	}
-	
-	public function gdoColumnsExcept(...$except)
-	{
-		$columns = $this->gdoColumnsCache();
-		foreach ($except as $ex)
-		{
-			unset($columns[$ex]);
-		}
-		return $columns;
-	}
-	
-	public function hasVar($key=null)
-	{
-		return ($key === null) || ($this->gdoVars === null) ? false : array_key_exists($key, $this->gdoVars);
-	}
-	
-	public function getVar($key)
-	{
-		return @$this->gdoVars[$key];
-	}
-	
+	##############
+	### Render ###
+	##############
 	public function display($key)
 	{
 		return html($this->gdoVars[$key]);
@@ -130,6 +95,36 @@ abstract class GDO
 	public function edisplay($key)
 	{
 		echo $this->display($key);
+	}
+	
+	public function toJSON()
+	{
+		$values = [];
+		foreach ($this->gdoColumnsCache() as $key => $gdoType)
+		{
+			if ($data = $gdoType->gdo($this)->getGDOData())
+			{
+				$values = array_merge($values, $data);
+			}
+		}
+		return $values;
+	}
+	
+	############
+	### Vars ###
+	############
+	private $gdoVars;
+	private $dirty = false;
+	public function getGDOVars() { return $this->gdoVars; }
+	
+	public function hasVar($key=null)
+	{
+		return isset($this->gdoVars[$key]);
+	}
+	
+	public function getVar($key)
+	{
+		return @$this->gdoVars[$key];
 	}
 	
 	public function setVar($key, $value, $markDirty=true)
@@ -154,41 +149,9 @@ abstract class GDO
 	{
 		if ($vars = $this->gdoColumn($key)->value($value)->getGDOData())
 		{
-			$this->setVars($vars);
+			$this->setVars($vars, $markDirty);
 		}
 		return $this;
-	}
-	
-	public function markClean($key)
-	{
-		if ($this->dirty === false)
-		{
-			$this->dirty = array_keys($this->gdoVars);
-			unset($this->dirty[$key]);
-		}
-		elseif (is_array($this->dirty))
-		{
-			unset($this->dirty[$key]);
-		}
-		return $this;
-	}
-	
-	public function markDirty($key)
-	{
-		if ($this->dirty === false)
-		{
-			$this->dirty = [];
-		}
-		if ($this->dirty !== true)
-		{
-			$this->dirty[$key] = true;
-		}
-		return $this;
-	}
-	
-	public function isDirty()
-	{
-		return $this->dirty === false ? false : (count($this->dirty) > 0);
 	}
 	
 	public function setGDOVars(array $vars, $dirty=false)
@@ -225,6 +188,41 @@ abstract class GDO
 		return $this->gdoColumn($key)->getValue();
 	}
 	
+	#############
+	### Dirty ###
+	#############
+	public function markClean($key)
+	{
+		if ($this->dirty === false)
+		{
+			$this->dirty = array_keys($this->gdoVars);
+			unset($this->dirty[$key]);
+		}
+		elseif (is_array($this->dirty))
+		{
+			unset($this->dirty[$key]);
+		}
+		return $this;
+	}
+	
+	public function markDirty($key)
+	{
+		if ($this->dirty === false)
+		{
+			$this->dirty = [];
+		}
+		if ($this->dirty !== true)
+		{
+			$this->dirty[$key] = true;
+		}
+		return $this;
+	}
+	
+	public function isDirty()
+	{
+		return $this->dirty === false ? false : (count($this->dirty) > 0);
+	}
+	
 	/**
 	 * Get gdoVars that have been changed.
 	 * @return string[]
@@ -243,6 +241,95 @@ abstract class GDO
 		{
 			return $this->getVars(array_keys($this->dirty));
 		}
+	}
+	
+	###############
+	### Columns ###
+	###############
+	/**
+	 * Get the primary key columns for a table.
+	 * @return GDT[]
+	 */
+	public function gdoPrimaryKeyColumns()
+	{
+		$columns = [];
+		foreach ($this->gdoColumnsCache() as $column)
+		{
+			if ($column->isPrimary())
+			{
+				$columns[$column->name] = $column;
+			}
+			else
+			{
+				break; # XXX: early break is only possible if we start all tables with their PKs.
+			}
+		}
+		return $columns;
+	}
+	
+	/**
+	 * Get the first primary key column
+	 * @return GDT
+	 */
+	public function gdoPrimaryKeyColumn()
+	{
+		foreach ($this->gdoColumnsCache() as $column)
+		{
+			if ($column->isPrimary())
+			{
+				return $column;
+			}
+		}
+	}
+	
+	/**
+	 * Get the first column of a specified GDT.
+	 * Useful to make GDTs more automated. E.g. The auto inc column syncs itself on gdoAfterCreate.
+	 *
+	 * @param string $className
+	 * @return \GDO\Core\GDT
+	 */
+	public function gdoColumnOf($className)
+	{
+		foreach ($this->gdoColumnsCache() as $name => $gdoType)
+		{
+			if (is_a($gdoType, $className))
+			{
+				return $gdoType;
+			}
+		}
+	}
+	
+	/**
+	 * Get the GDOs AutoIncrement column, if any.
+	 * @return \GDO\DB\GDT_AutoInc
+	 */
+	public function gdoAutoIncColumn() { return $this->gdoColumnOf('GDO\DB\GDT_AutoInc'); }
+	
+	/**
+	 * Get the GDOs name identifier column, if any.
+	 * @return \GDO\DB\GDT_Name
+	 */
+	public function gdoNameColumn() { return $this->gdoColumnOf('GDO\DB\GDT_Name'); }
+	
+	/**
+	 * Get the Type for a key.
+	 * @param string $key
+	 * @return GDT
+	 */
+	public function gdoColumn($key)
+	{
+		return $this->gdoColumnsCache()[$key]->gdo($this);
+	}
+	
+	public function gdoColumnsExcept(...$except)
+	{
+		$columns = $this->gdoColumnsCache();
+		foreach ($except as $ex)
+		{
+			unset($columns[$ex]);
+		}
+		return $columns;
 	}
 	
 	##########
@@ -422,19 +509,6 @@ abstract class GDO
 		return $this->saveVars($vars);
 	}
 	
-	public function toJSON()
-	{
-		$values = [];
-		foreach ($this->gdoColumnsCache() as $key => $gdoType)
-		{
-		    if ($data = $gdoType->gdo($this)->getGDOData())
-		    {
-    			$values = array_merge($values, $data);
-		    }
-		}
-		return $values;
-	}
-	
 	/**
 	 * @return Query
 	 */
@@ -489,70 +563,6 @@ abstract class GDO
 	}
 	
 	public function quoted($key) { return self::quoteS($this->getVar($key)); }
-	
-	/**
-	 * Get the primary key columns for a table.
-	 * @return GDT[]
-	 */
-	public function gdoPrimaryKeyColumns()
-	{
-		$columns = [];
-		foreach ($this->gdoColumnsCache() as $column)
-		{
-			if ($column->isPrimary())
-			{
-				$columns[$column->name] = $column;
-			}
-			else
-			{
-			    # XXX: early break is only possible if we start all tables with their PKs.
-			    break;
-			}
-		}
-		return $columns;
-	}
-	
-	/**
-	 * @return GDT
-	 */
-	public function gdoPrimaryKeyColumn()
-	{
-		foreach ($this->gdoColumnsCache() as $column)
-		{
-			if ($column->isPrimary())
-			{
-				return $column;
-			}
-		}
-	}
-	
-	/**
-	 * @return GDT_AutoInc
-	 */
-	public function gdoAutoIncColumn()
-	{
-	    foreach ($this->gdoColumnsCache() as $column)
-	    {
-	        if ($column instanceof GDT_AutoInc)
-	        {
-	            return $column;
-	        }
-	    }
-	}
-	
-	/**
-	 * @return GDT_AutoInc
-	 */
-	public function gdoNameColumn()
-	{
-	    foreach ($this->gdoColumnsCache() as $column)
-	    {
-	        if ($column instanceof GDT_Name)
-	        {
-	            return $column;
-	        }
-	    }
-	}
 	
 	################
 	### Instance ###
@@ -709,8 +719,9 @@ abstract class GDO
 	#############
 	### Cache ###
 	#############
+	public function __wakeup() { $this->table(); }
 	/**
-	 * @var Cache
+	 * @var \GDO\DB\Cache
 	 */
 	public $cache;
 	public function initCache() { $this->cache = new Cache($this); }
@@ -738,13 +749,8 @@ abstract class GDO
 		}
 	}
 	
-	public function __wakeup()
-	{
-		$this->table();
-	}
-	
 	/**
-	 * @return GDO[]
+	 * @return self[]
 	 */
 	public function all()
 	{
@@ -752,7 +758,7 @@ abstract class GDO
 	}
 	
 	/**
-	 * @return GDO[]
+	 * @return self[]
 	 */
 	public function allWhere($condition='true')
 	{
@@ -779,7 +785,7 @@ abstract class GDO
 	public function gdoColumnsCache() { return Database::columnsS($this->gdoClassName()); }
 	
 	/**
-	 * @return GDT[]
+	 * @return \GDO\Core\GDT[]
 	 */
 	public function getGDOColumns(array $names)
 	{
@@ -839,11 +845,11 @@ abstract class GDO
 	##############
 	### Render ###
 	##############
-	//     public function renderList() { return GDT_Template::php("listitem/gdo.php", ['gdo'=>$this]); }
-	//     public function renderCard() { return GDT_Template::responsePHP("card/{$this->gdoTableName()}.php", ['gdo'=>$this]); }
-	//     public function renderCell() { return $this->renderChoice(); }
-	//     public function renderChoice() { return sprintf('%s-%s', $this->getID(), $this->displayName()); }
-	
+	/**
+	 * Create a response from card rendering.
+	 * @return \GDO\Core\GDT_Response
+	 */
+	public function responseCard() { return GDT_Response::makeWithHTML($this->renderCard()); }
 	###############
 	### Sorting ###
 	###############
