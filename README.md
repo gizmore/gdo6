@@ -43,16 +43,18 @@ Then remove the modules you do not want and clone some modules.
     git clone --recursive https://github.com/gizmore/gdo6-cors CORS
     git clone --recursive https://github.com/gizmore/gdo6-country-coordinates CountryCoordinates
     git clone --recursive https://github.com/gizmore/gdo6-currency Currency
-    git clone --recursive https://github.com/gizmore/gdo6-dog Dog
+    # git clone --recursive https://github.com/gizmore/gdo6-dog Dog
     git clone --recursive https://github.com/gizmore/gdo6-download Download
     git clone --recursive https://github.com/gizmore/gdo6-facebook Facebook
     git clone --recursive https://github.com/gizmore/gdo6-forum Forum
     git clone --recursive https://github.com/gizmore/gdo6-friends Friends
-    git clone --recursive https://github.com/gizmore/gdo6-gallery Gallery 
+    git clone --recursive https://github.com/gizmore/gdo6-gallery Gallery
     git clone --recursive https://github.com/gizmore/gdo6-geo2country Geo2Country
+    git clone --recursive https://github.com/gizmore/gdo6-guestbook Guestbook
     git clone --recursive https://github.com/gizmore/gdo6-helpdesk Helpdesk
     git clone --recursive https://github.com/gizmore/gdo6-import-gwf3 ImportGWF3
     git clone --recursive https://github.com/gizmore/gdo6-ip2country IP2Country
+    git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
     git clone --recursive https://github.com/gizmore/gdo6-links Links
     git clone --recursive https://github.com/gizmore/gdo6-login Login
     git clone --recursive https://github.com/gizmore/gdo6-logs Logs
