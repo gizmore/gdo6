@@ -175,7 +175,7 @@ class GDT_Select extends GDT_ComboBox
         return GDT_Template::php('Form', 'form/select.php', ['field' => $this]);
     }
     
-    public function toJSON()
+    public function renderJSON()
     {
         return array(
             'name' => $this->name,

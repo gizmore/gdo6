@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Core;
 use GDO\DB\Query;
+use GDO\Table\GDT_Table;
 use GDO\Util\Strings;
 abstract class GDT
 {
@@ -164,6 +165,7 @@ abstract class GDT
 	############
 	### Sort ###
 	############
+	public function displayTableOrder(GDT_Table $table) {}
 	private static $SORT_COLUMN;
 	public function sort(array &$array, $ascending=true)
 	{
@@ -193,11 +195,7 @@ abstract class GDT
 	public $primary;
 	public function gdoColumnDefine() {}
 	
-
-	
 	#######
-// 	public function displayFilterValue() { return html($this->filterValue()); }
 // 	public function displayHeaderLabel() { return $this->label; }
-// 	public function displayTableOrder(GDT_Table $table) {}
 	
 }

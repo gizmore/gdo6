@@ -21,3 +21,6 @@ body { display: flex; flex-direction: column; }
 .gdo-bar, .gdo-bar > * { display: flex; flex-grow: 1; justify-content: center; }
 .gdo-bar-column { flex-direction: column; text-align: center; }
 .gdo-bar-row { flex-direction: row; }
+
+/** UI/GDT_Message **/
+.gdt-message textarea { width: 100%; height: 180px; }

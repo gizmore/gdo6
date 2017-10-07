@@ -31,6 +31,8 @@ final class GDT_IP extends GDT_String
     public $encoding = self::ASCII;
     public $caseSensitive = true;
     public $pattern = "/^[.:0-9a-f]{3,45}$/";
+    public $writable = false;
+    public $editable = false;
     public function defaultLabel() { return $this->label('ip'); }
     public function renderForm() { return GDT_Template::php('Net', 'form/ip.php', ['field' => $this]); }
     

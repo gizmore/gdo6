@@ -423,7 +423,10 @@ abstract class GDO
 		$values = [];
 		foreach ($this->gdoColumnsCache() as $key => $gdoType)
 		{
-			$values = array_merge($values, $gdoType->gdo($this)->getGDOData());
+		    if ($data = $gdoType->gdo($this)->getGDOData())
+		    {
+    			$values = array_merge($values, $data);
+		    }
 		}
 		return $values;
 	}

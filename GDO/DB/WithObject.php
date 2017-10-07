@@ -12,27 +12,67 @@ use GDO\Core\GDT;
  */
 trait WithObject
 {
+    ###################
+    ### With Object ###
+    ###################
     public $table;
     public function table(GDO $table) { $this->table = $table; return $this; }
     public function foreignTable() { return $this->table; }
+    
+    ###################
+    ### Var / Value ###
+    ###################
     public function getVar()
     {
-        return $this->getRequestVar('form', $this->var);
+        $var = $this->getRequestVar('form', $this->var);
+        return empty($var) ? null : $var;
     }
+
     public function getValue()
     {
         return $this->toValue($this->getVar());
+    }
+    
+    public function toVar($value)
+    {
+        return $value !== null ? $value->getID() : null;
     }
     
     public function toValue($var)
     {
         if (!empty($var))
         {
+            if (isset($_POST['nojs']))
+            {
+                return $this->findByName($var);
+            }
             return $this->table->findById(...explode(':', $var));
         }
     }
     
-    public function toVar($value) { return $value !== null ? $value->getID() : null; }
+    public function findByName($name)
+    {
+        return $this->table->findById($name);
+    }
+    
+    ################
+    ### Validate ###
+    ################
+    public function validate($value)
+    {
+        if ($value === null)
+        {
+            if (null !== ($var = $this->getVar()))
+            {
+                return $this->error('err_gdo_not_found', [$this->table->gdoHumanName(), html($var)]);
+            }
+            elseif ($this->isRequired())
+            {
+                return $this->errorNotNull();
+            }
+        }
+        return true;
+    }
     
     ###############
     ### Cascade ###
@@ -54,8 +94,10 @@ trait WithObject
         $this->fkOn = $on;
         return $this;
     }
-    
-    
+
+    ################
+    ### Database ###
+    ################
     /**
      * Take the foreign key primary key definition and str_replace to convert to foreign key definition.
      *

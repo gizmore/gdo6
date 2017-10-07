@@ -125,4 +125,22 @@ return array(
 'msg_crud_created' => 'Your %s has been created.',
 'msg_crud_updated' => 'Your %s has been updated.',
 'msg_crud_deleted' => 'Your %s has been deleted.',
+
+# Sidebar
+'gdo_sidebar_version' => 'gdo %s',
+'sidenav_left_title' => 'Application',
+'sidenav_right_title' => 'Settings',
+    
+# Config
+'ipp' => 'Items per page (ipp)',
+'minify_js' => 'Minify Javascript On-the-fly?',
+'enum_no' => 'No',
+'enum_yes' => 'Yes',
+'enum_concat' => 'Concatenate',
+################################################
+'link_node_detect' => 'Detect uglify binaries…',
+'msg_nodejs_detected' => 'The nodejs binary has been detected: <i>%s</i>',
+'msg_annotate_detected' => 'The ng-annotate binary has been detected: <i>%s</i>',
+'msg_uglify_detected' => 'The uglify-js binary has been detected: <i>%s</i>',
+    
 );

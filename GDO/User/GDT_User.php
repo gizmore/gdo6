@@ -1,6 +1,12 @@
 <?php
 namespace GDO\User;
 use GDO\DB\GDT_Object;
+/**
+ * An autocomplete enabled user field.
+ * @author gizmore
+ * @since 6.00
+ * @version 6.05
+ */
 class GDT_User extends GDT_Object
 {
     public function defaultLabel() { return $this->label('user'); }
@@ -16,7 +22,15 @@ class GDT_User extends GDT_Object
     {
         return $this->completionHref(href('User', 'Completion'));
     }
-
+    
+    public function findByName($name)
+    {
+        if (!($user = GDO_User::getByName($name)))
+        {
+        }
+        return $user;
+    }
+    
     private $ghost = false;
     public function ghost($ghost=true)
     {
@@ -47,6 +61,4 @@ class GDT_User extends GDT_Object
         }
         return t('unknown');
     }
-
-    
 }

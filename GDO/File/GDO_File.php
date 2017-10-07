@@ -76,11 +76,9 @@ final class GDO_File extends GDO
             'name' => $this->getName(),
             'type' => $this->getType(),
             'size' => $this->getSize(),
-//             'href' => $this->getHref(),
             'initial' => true
         ));
     }
-    
     
     ###############
     ### Factory ###

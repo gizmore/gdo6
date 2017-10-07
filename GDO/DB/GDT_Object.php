@@ -8,10 +8,10 @@ class GDT_Object extends GDT_UInt
     use WithObject;
     use WithCompletion;
     
-    public function toJSON()
+    public function renderJSON()
     {
         $gdo = $this->getValue();
-        return array_merge(parent::toJSON(), array(
+        return array_merge(parent::renderJSON(), array(
             'selected' => ($gdo ? array(
                 'id' => $gdo->getID(),
                 'display' => $gdo->displayName(),
@@ -33,11 +33,11 @@ class GDT_Object extends GDT_UInt
     {
         if ($this->completionHref)
         {
-            return GDT_Template::php('GWF', 'form/object_completion.php', ['field'=>$this]);
+            return GDT_Template::php('DB', 'form/object_completion.php', ['field'=>$this]);
         }
         else
         {
-            return GDT_Template::php('GWF', 'form/object.php', ['field'=>$this]);
+            return GDT_Template::php('DB', 'form/object.php', ['field'=>$this]);
         }
     }
 }

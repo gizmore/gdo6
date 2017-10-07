@@ -30,7 +30,7 @@ class GDT_Enum extends GDT
     
     public function renderForm() { return GDT_Template::php('Form', 'form/enum.php', ['field' => $this]); }
     public function renderCell() { return $this->enumLabel($this->getVar()); }
-    public function toJSON()
+    public function renderJSON()
     {
         return array(
             'enumValues' => $this->enumValues,
@@ -89,8 +89,6 @@ class GDT_Enum extends GDT
         return [];
     }
     
-    public function displayFilterValue() { return $this->filterValue(); }
-    
     /**
      * Add where clause to query on filter.
      */
@@ -99,7 +97,7 @@ class GDT_Enum extends GDT
         $filter = $this->filterValue();
         if (!empty($filter))
         {
-            $filter = array_map(['GDO\\DB\\GDO', 'escapeS'], $filter);
+            $filter = array_map(['GDO\\Core\\GDO', 'escapeS'], $filter);
             $condition = sprintf('%s IN ("%s")', $this->identifier(), implode('","', $filter));
             $this->filterQueryCondition($query, $condition);
         }

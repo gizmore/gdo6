@@ -5,6 +5,7 @@ use GDO\Core\Method;
 use GDO\DB\ArrayResult;
 use GDO\Core\GDT;
 use GDO\Util\Common;
+use GDO\Core\GDT_Response;
 /**
  * A method that displays a table.
  * 
@@ -61,6 +62,6 @@ abstract class MethodTable extends Method
 		}
 		$result->data = array_values($result->data);
 		$table->result($result);
-		return $table->render();
+		return GDT_Response::makeWith($table);
 	}
 }

@@ -118,7 +118,7 @@ class GDT_Table extends GDT
 	
 	public function getQuery()
 	{
-		return $this->query->clone();
+		return $this->query->copy();
 	}
 	
 	public function getFilteredQuery()

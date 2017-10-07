@@ -4,6 +4,7 @@ namespace GDO\Table;
 use GDO\Core\Method;
 use GDO\DB\Query;
 use GDO\Core\GDT;
+use GDO\Core\GDT_Response;
 /**
  * A method that displays a table.
  * 
@@ -48,8 +49,8 @@ abstract class MethodQueryTable extends Method
 		$table->gdo($table->query->table);
 		$table->ordered($this->isOrdered());
 		$table->filtered($this->isFiltered());
-		$table->paginate($this->isPaginated(), $this->ipp());
+		$table->paginate($this->isPaginated(), $_SERVER['REQUEST_URI'], $this->ipp());
 		$this->onDecorateTable($table);
-		return $table->render();
+		return GDT_Response::makeWith($table);
 	}
 }

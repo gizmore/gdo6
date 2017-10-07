@@ -33,7 +33,7 @@ abstract class MethodForm extends Method
      */
     public function renderPage()
     {
-        return $this->getForm();
+        return GDT_Response::makeWith($this->getForm());
     }
     
     public function defaultTitle()

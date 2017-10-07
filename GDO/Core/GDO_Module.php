@@ -291,8 +291,7 @@ class GDO_Module extends GDO
      */
     public function getMethod($methodName)
     {
-        $klass = "GDO\\{$this->getName()}\\Method\\{$methodName}";
-        return new $klass;
+        return method($this->getName(), $methodName);
     }
     
     ##############

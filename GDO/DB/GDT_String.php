@@ -147,7 +147,7 @@ class GDT_String extends GDT
     ##############
     public function renderFilter()
     {
-        return GDT_Template::php('Type', 'filter/string.php', ['field'=>$this]);
+        return GDT_Template::php('DB', 'filter/string.php', ['field'=>$this]);
     }
     
     public function filterQuery(Query $query)
@@ -165,7 +165,7 @@ class GDT_String extends GDT
         if ($filter = $this->filterValue())
         {
             $pattern = chr(1).preg_quote($filter, chr(1)).chr(1);
-            if (!$this->caseSensitive) { $pattern .= 'i'; } # Switch to case-i if necessary
+            if ($this->caseSensitive) { $pattern .= 'i'; } # Switch to case-i if necessary
             return !preg_match($pattern, $this->getVar());
         }
     }

@@ -108,7 +108,7 @@ class GDT_Int extends GDT
     
     public function renderFilter()
     {
-        return GDT_Template::php('Type', 'filter/int.php', ['field'=>$this]);
+        return GDT_Template::php('DB', 'filter/int.php', ['field'=>$this]);
     }
     
     public function filterQuery(Query $query)
@@ -142,7 +142,7 @@ class GDT_Int extends GDT
     
     public function htmlClass()
     {
-        return sprintf(' class="gdo-num %s"', parent::htmlClass());
+        return sprintf(' class="gdt-num %s"', parent::htmlClass());
     }
 
 }

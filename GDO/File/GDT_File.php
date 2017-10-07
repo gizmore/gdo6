@@ -105,10 +105,9 @@ class GDT_File extends GDT_Object
         return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this->getValue()]);
     }
     
-    public function toJSON()
+    public function renderJSON()
     {
         return array(
-//             'label' => $this->label,
             'mimes' => $this->mimes,
             'minsize' => $this->minsize,
             'maxsize' => $this->maxsize,
@@ -124,9 +123,9 @@ class GDT_File extends GDT_Object
     {
         $json = [];
         $files = Arrays::arrayed($this->getValue());
+        /** @var $files \GDO\File\GDO_File **/
         foreach ($files as $file)
         {
-            $file instanceof GDO_File;
             $file->tempHref($this->href);
             $json[] = $file->toJSON();
         }

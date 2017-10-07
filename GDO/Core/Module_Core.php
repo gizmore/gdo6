@@ -53,7 +53,7 @@ final class Module_Core extends GDO_Module
             GDT_Path::make('nodejs_path')->initial('nodejs')->label('nodejs_path'),
             GDT_Path::make('uglifyjs_path')->initial('uglifyjs')->label('uglifyjs_path'),
             GDT_Path::make('ng_annotate_path')->initial('ng-annotate')->label('ng_annotate_path'),
-            GDT_Link::make('link_node_detect')->href(href('GWF', 'DetectNode')),
+            GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
         );
     }
     public function cfgIPP() { return $this->getConfigVar('ipp'); }

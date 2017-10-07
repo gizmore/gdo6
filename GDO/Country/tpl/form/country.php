@@ -1,8 +1,5 @@
-<?php
-use GDO\Country\GDO_Country;
-use GDO\Country\GDT_Country;
-$field instanceof GDT_Country;
-?>
+<?php /** @var $field \GDO\Country\GDT_Country **/ ?>
+
 <md-input-container class="md-block md-float md-icon-left<?= $field->classError(); ?>" flex>
   <label><?= $field->displayLabel(); ?></label>
   <md-select

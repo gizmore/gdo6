@@ -31,7 +31,7 @@ class GDT_ObjectSelect extends GDT_Select
         return parent::renderForm();
     }
     
-    public function toJSON()
+    public function renderJSON()
     {
         return array(
             'name' => $this->name,
