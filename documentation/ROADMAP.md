@@ -6,8 +6,9 @@
 
 - Change parameter order $code=200, $log=true in GDT_Error and GDT_Success.
 
--  
+- allow switch to myisam
 
+- queries in perf bar
 
 # Nice Modules
 

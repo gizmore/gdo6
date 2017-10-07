@@ -1,11 +1,10 @@
 <?php
-namespace GDO\GWF\Method;
-
+namespace GDO\Core\Method;
+use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Core\Website;
-use GDO\GWF\Module_GWF;
-use GDO\Template\Response;
 use GDO\Admin\MethodAdmin;
+use GDO\Core\Module_Core;
 /**
  * Auto-detect nodejs_path, uglifyjs_path and ng_annotate_path.
  * @author gizmore
@@ -28,7 +27,7 @@ final class DetectNode extends Method
 	
 	/**
 	 * Detect node/nodejs binary and save to config.
-	 * @return Response
+	 * @return GDT_Response
 	 */
 	public function detectNodeJS()
 	{
@@ -59,13 +58,13 @@ final class DetectNode extends Method
 			return $this->error('err_nodejs_not_found');
 		}
 		
-		Module_GWF::instance()->saveConfigVar('nodejs_path', $path);
+		Module_Core::instance()->saveConfigVar('nodejs_path', $path);
 		return $this->message('msg_nodejs_detected', [htmlspecialchars($path)]);
 	}
 	
 	/**
 	 * Detect node/nodejs binary and save to config.
-	 * @return Response
+	 * @return GDT_Response
 	 */
 	public function detectAnnotate()
 	{
@@ -85,13 +84,13 @@ final class DetectNode extends Method
 			return $this->error('err_annotate_not_found');
 		}
 		
-		Module_GWF::instance()->saveConfigVar('ng_annotate_path', $path);
+		Module_Core::instance()->saveConfigVar('ng_annotate_path', $path);
 		return $this->message('msg_annotate_detected', [htmlspecialchars($path)]);
 	}
 	
 	/**
 	 * Detect node/nodejs binary and save to config.
-	 * @return Response
+	 * @return GDT_Response
 	 */
 	public function detectUglify()
 	{
@@ -111,7 +110,7 @@ final class DetectNode extends Method
 			return $this->error('err_uglify_not_found');
 		}
 		
-		Module_GWF::instance()->saveConfigVar('uglifyjs_path', $path);
+		Module_Core::instance()->saveConfigVar('uglifyjs_path', $path);
 		return $this->message('msg_uglify_detected', [htmlspecialchars($path)]);
 	}
 	

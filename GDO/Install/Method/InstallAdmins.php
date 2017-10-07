@@ -45,8 +45,7 @@ class InstallAdmins extends MethodForm
         $permissions = ['admin', 'staff', 'cronjob'];
         foreach ($permissions as $permission)
         {
-            GDO_Permission::getOrCreateByName($permission);
-            GDO_UserPermission::grant($user, $permission);
+            GDO_UserPermission::grantPermission($user, GDO_Permission::getOrCreateByName($permission));
         }
         
         return parent::formValidated($form)->add($this->renderPage());

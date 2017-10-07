@@ -1,12 +1,8 @@
 <?php
-namespace GDO\GWF\Method;
-
+namespace GDO\Core\Method;
 use GDO\Core\Method;
 use GDO\Core\GDO_Module;
 use GDO\Core\ModuleLoader;
-use GDO\Template\Response;
-use GDO\Type\GDT_Secret;
-use GDO\DB\DBType;
 /**
  * API Request to get all module configs.
  * Useful for JS Apps.
@@ -22,7 +18,7 @@ final class Config extends Method
         {
             $json[$module->getName()] = $this->getModuleConfig($module);
         }
-        return new Response($json);
+        return $json;
     }
     
     private function getModuleConfig(GDO_Module $module)
@@ -30,11 +26,7 @@ final class Config extends Method
         $json = [];
         foreach ($module->getConfigCache() as $type)
         {
-            if ( ($type instanceof DBType) && 
-                 (!$type instanceof GDT_Secret) )
-            {
-                $json[$type->name] = $module->getConfigValue($type->name);
-            }
+            $json[$type->name] = $module->getConfigValue($type->name);
         }
         return $json;
     }

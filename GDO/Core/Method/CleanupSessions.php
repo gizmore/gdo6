@@ -1,9 +1,8 @@
 <?php
-namespace GDO\GWF\Method;
-
-use GDO\Cronjob\MethodCronjob;
+namespace GDO\Core\Method;
 use GDO\DB\Database;
 use GDO\User\GDO_Session;
+use GDO\Core\MethodCronjob;
 /**
  * Cronjob that deletes old sessions.
  * 

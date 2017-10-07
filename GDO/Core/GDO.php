@@ -590,18 +590,15 @@ abstract class GDO
 	##############
 	### Get ID ###
 	##############
-	private $id; # cache
 	public function getID()
 	{
-		if ($this->id === null)
+	    $id = '';
+		foreach ($this->gdoPrimaryKeyColumns() as $name => $column)
 		{
-			foreach ($this->gdoPrimaryKeyColumns() as $name => $column)
-			{
-				$id = $this->getVar($name);
-				$this->id = $this->id ? "{$this->id}:$id" : $id;
-			}
+			$id2 = $this->getVar($name);
+			$id .= $id ? "{$id}:$id2" : $id2;
 		}
-		return $this->id;
+		return $id;
 	}
 	
 	public function displayName()

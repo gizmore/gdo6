@@ -1,5 +1,5 @@
 <?php
-namespace GDO\GWF\Method;
+namespace GDO\Core\Method;
 
 use GDO\Core\Method;
 

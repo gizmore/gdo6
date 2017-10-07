@@ -1,10 +1,9 @@
 <?php
-namespace GDO\GWF\Method;
-
+namespace GDO\Core\Method;
 use GDO\Core\Method;
-use GDO\DB\GDO;
-use GDO\Form\GDT_Enum;
 use GDO\Core\ModuleLoader;
+use GDO\Core\GDO;
+use GDO\DB\GDT_Enum;
 /**
  * Get enum values for all tables
  * @author gizmore

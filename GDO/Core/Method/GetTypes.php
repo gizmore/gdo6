@@ -1,9 +1,8 @@
 <?php
-namespace GDO\GWF\Method;
-
+namespace GDO\Core\Method;
 use GDO\Core\Method;
-use GDO\DB\GDO;
 use GDO\Core\ModuleLoader;
+use GDO\Core\GDO;
 /**
  * Get all types used in all tables.
  * @author gizmore
