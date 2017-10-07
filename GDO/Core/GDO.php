@@ -5,6 +5,7 @@ use GDO\DB\Database;
 use GDO\DB\GDT_AutoInc;
 use GDO\DB\Query;
 use GDO\DB\Result;
+use GDO\DB\GDT_Name;
 /**
  * 
  * @author gizmore
@@ -501,7 +502,8 @@ abstract class GDO
 			}
 			else
 			{
-				break;
+			    # XXX: early break is only possible if we start all tables with their PKs.
+			    break;
 			}
 		}
 		return $columns;
@@ -526,13 +528,27 @@ abstract class GDO
 	 */
 	public function gdoAutoIncColumn()
 	{
-		foreach ($this->gdoColumnsCache() as $column)
-		{
-			if ($column instanceof GDT_AutoInc)
-			{
-				return $column;
-			}
-		}
+	    foreach ($this->gdoColumnsCache() as $column)
+	    {
+	        if ($column instanceof GDT_AutoInc)
+	        {
+	            return $column;
+	        }
+	    }
+	}
+	
+	/**
+	 * @return GDT_AutoInc
+	 */
+	public function gdoNameColumn()
+	{
+	    foreach ($this->gdoColumnsCache() as $column)
+	    {
+	        if ($column instanceof GDT_Name)
+	        {
+	            return $column;
+	        }
+	    }
 	}
 	
 	################

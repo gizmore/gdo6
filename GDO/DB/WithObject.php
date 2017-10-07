@@ -42,6 +42,7 @@ trait WithObject
     {
         if (!empty($var))
         {
+            # Without javascript, convert the name input
             if (isset($_POST['nojs']))
             {
                 return $this->findByName($var);
@@ -50,9 +51,34 @@ trait WithObject
         }
     }
     
+    /**
+     * Override this with a real byName method.
+     * @param string $name
+     * @return \GDO\Core\GDO
+     */
     public function findByName($name)
     {
+        if ($column = $this->table->gdoNameColumn())
+        {
+            return $this->table->getBy($column->name, $name);
+        }
         return $this->table->findById($name);
+    }
+    
+    /**
+     * @return \GDO\Core\GDO
+     */
+    public function getObject()
+    {
+        return $this->getValue();
+    }
+    
+    public function getGDOData()
+    {
+        if ($object = $this->getObject())
+        {
+            return [$this->name => $object->getID()];
+        }
     }
     
     ################

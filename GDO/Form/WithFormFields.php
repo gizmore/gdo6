@@ -16,4 +16,11 @@ trait WithFormFields
     public $disabled = false;
     public function disabled($disabled=true) { $this->disabled = $disabled; return $this; }
     public function htmlDisabled() { return $this->disabled ? ' disabled="disabled"' : ''; }
+
+    public function changeRequestVar($value)
+    {
+        $_REQUEST['form'][$this->name] = $value;
+        $_POST['form'][$this->name] = $value;
+    }
+    
 }
