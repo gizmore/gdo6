@@ -602,6 +602,7 @@ abstract class GDO #extends GDT
 			# Merge only existing keys
 			$gdoVars = array_intersect_key($initial, $gdoVars) + $gdoVars;
 		}
+		
 		return $gdoVars;
 	}
 	

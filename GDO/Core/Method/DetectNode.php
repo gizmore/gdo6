@@ -21,7 +21,7 @@ final class DetectNode extends Method
 		$response->add($this->detectAnnotate());
 		$response->add($this->detectUglify());
 		
-		$url = href('Admin', 'Configure', '&module=GWF');
+		$url = href('Admin', 'Configure', '&module=Core');
 		return $this->renderNavBar('GWF')->add($response)->add(Website::redirectMessage($url));
 	}
 	

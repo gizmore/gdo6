@@ -12,7 +12,7 @@ use GDO\User\GDO_User;
  */
 final class GDT_CreatedBy extends GDT_User
 {
-// 	public $notNull = true;
+	public $notNull = true;
 	public $writable = false;
 	public $editable = false;
 	
@@ -23,8 +23,8 @@ final class GDT_CreatedBy extends GDT_User
 		return [$this->name => Application::instance()->isInstall() ? '1' : GDO_User::current()->persistent()->getID()];
 	}
 
-	public function getGDOData()
-	{
-		return $this->blankData();
-	}
+// 	public function getGDOData()
+// 	{
+// 		return $this->blankData();
+// 	}
 }

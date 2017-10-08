@@ -31,7 +31,7 @@ endwhile; ?>
             <md-content class="md-padding">
               <form method="get" action="<?= $field->href ?>">
 <?php foreach ($headers->fields as $gdoType) : ?>
-                  <label><?= $gdoType->label; ?></label>
+                  <label><?= $gdoType->renderHeader(); ?></label>
                   <?= $gdoType->renderFilter(); ?>
                 </md-input-container>
 <?php endforeach; ?>
@@ -44,7 +44,7 @@ endwhile; ?>
           <md-tab label="Sorting">
             <md-content class="md-padding">
 <?php foreach ($headers->fields as $gdoType) : ?>
-              <label><?= $gdoType->label; ?></label>
+              <label><?= $gdoType->renderHeader(); ?></label>
               <?= $gdoType->displayTableOrder($field)?>
 <?php endforeach; ?>
             </md-content>
