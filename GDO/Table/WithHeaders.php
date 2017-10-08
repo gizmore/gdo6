@@ -23,8 +23,8 @@ trait WithHeaders
     private function makeHeaders() { if (!$this->headers) $this->headers = GDT_Fields::make(); return $this->headers; }
     public function headers(GDT_Fields $headers) { $this->headers = $headers; }
     public function headersWith(array $fields) { return $this->addHeaders($fields); }
-	public function addHeaders(array $fields) { return $this->makeHeaders()->addField($header); }
-    public function addHeader(GDT $header) { return $this->makeHeaders()->addField($header); }
+    public function addHeaders(array $fields) { return $this->makeHeaders()->addFields($fields); }
+    public function addHeader(GDT $field) { return $this->makeHeaders()->addField($field); }
     
     ###############
     ### Sorting ###

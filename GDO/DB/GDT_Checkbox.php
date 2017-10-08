@@ -12,6 +12,7 @@ class GDT_Checkbox extends GDT_Select
     public function __construct()
     {
         $this->emptyValue = '2';
+        $this->min = $this->max = 1;
     }
     
     public function gdoColumnDefine()

@@ -4,7 +4,6 @@ use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
-use GDO\DB\Database;
 /**
  * Module loader.
  *
@@ -154,7 +153,7 @@ final class ModuleLoader
         return $this->modules;
     }
     
-    public function loadModulesDB()
+    private function loadModulesDB()
     {
         $result = GDO_Module::table()->select('*')->exec();
         while ($moduleData = $result->fetchAssoc())
@@ -171,7 +170,7 @@ final class ModuleLoader
         return $this->modules;
     }
     
-    public function loadModulesFS()
+    private function loadModulesFS()
     {
         Filewalker::traverse($this->path, false, array($this, '_loadModuleFS'), false);
     }
