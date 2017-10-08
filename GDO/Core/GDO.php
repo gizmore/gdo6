@@ -337,7 +337,7 @@ abstract class GDO #extends GDT
 	##########
 	/**
 	 * Create a new query for this GDO table.
-	 * @return Query
+	 * @return \GDO\DB\Query
 	 */
 	public function query()
 	{
@@ -348,7 +348,6 @@ abstract class GDO #extends GDT
 	 * Find a row by AutoInc Id.
 	 * @param string $id
 	 * @return self
-	 * @see GDO
 	 */
 	public function find($id=null, $exception=true)
 	{
@@ -382,7 +381,7 @@ abstract class GDO #extends GDT
 	
 	/**
 	 * @param string $columns
-	 * @return Query
+	 * @return \GDO\DB\Query
 	 */
 	public function select($columns=null)
 	{
@@ -391,7 +390,7 @@ abstract class GDO #extends GDT
 	
 	/**
 	 * @param string $condition
-	 * @return Query
+	 * @return \GDO\DB\Query
 	 */
 	public function deleteWhere($condition)
 	{
@@ -510,7 +509,7 @@ abstract class GDO #extends GDT
 	}
 	
 	/**
-	 * @return Query
+	 * @return \GDO\DB\Query
 	 */
 	public function entityQuery()
 	{
@@ -774,6 +773,11 @@ abstract class GDO #extends GDT
 	 * @return self
 	 */
 	public static function tableFor($className) { return Database::tableS($className); }
+	
+	/**
+	 * Return the GDO instance that is used as table struct.
+	 * @return \GDO\Core\GDO
+	 */
 	public static function table() { return self::tableFor(get_called_class()); }
 	
 	public function createTable() { return Database::instance()->createTable($this); }

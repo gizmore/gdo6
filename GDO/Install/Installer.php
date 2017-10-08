@@ -102,7 +102,7 @@ class Installer
 		{
 			foreach (array_reverse($module->getClasses()) as $class)
 			{
-				if (is_subclass_of($class, 'GDO\\DB\\GDO'))
+				if (is_subclass_of($class, 'GDO\\Core\\GDO'))
 				{
 					$gdo = $class::table();
 					/** @var $gdo \GDO\Core\GDO **/

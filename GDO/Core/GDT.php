@@ -70,7 +70,7 @@ abstract class GDT
 	### Var/Value ###
 	#################
 	/**
-	 * @var GDO - Current row / gdo
+	 * @var \GDO\Core\GDO - Current row / gdo
 	 */
 	public $gdo;
 	public $var;

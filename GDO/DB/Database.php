@@ -137,7 +137,7 @@ class Database
 	/**
 	 * @param string $classname
 	 * @throws GDOError
-	 * @return GDO
+	 * @return \GDO\Core\GDO
 	 */
 	public static function tableS($classname)
 	{

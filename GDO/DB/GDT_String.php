@@ -116,9 +116,22 @@ class GDT_String extends GDT
                 {
                     return $this->patternError();
                 }
+                if (!$this->validateUnique($value))
+                {
+                	return $this->error('err_db_unique');
+                }
             }
             return true;
         }
+    }
+    
+    private function validateUnique($value)
+    {
+    	if ($this->unique)
+    	{
+    		return $this->gdo->table()->select('COUNT(*)')->where("{$this->identifier()}=".GDO::quoteS($value))->first()->exec()->fetchValue() === '0';
+    	}
+    	return true;
     }
     
     private function patternError()

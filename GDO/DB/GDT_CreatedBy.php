@@ -23,8 +23,4 @@ final class GDT_CreatedBy extends GDT_User
 		return [$this->name => Application::instance()->isInstall() ? '1' : GDO_User::current()->persistent()->getID()];
 	}
 
-// 	public function getGDOData()
-// 	{
-// 		return $this->blankData();
-// 	}
 }

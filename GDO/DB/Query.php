@@ -94,7 +94,7 @@ class Query
 	/**
 	 * @param string $condition
 	 * @param string $op
-	 * @return Query
+	 * @return self
 	 */
 	public function where($condition, $op="AND")
 	{
@@ -117,7 +117,7 @@ class Query
 	/**
 	 * @param string $condition
 	 * @param string $op
-	 * @return Query
+	 * @return self
 	 */
 	public function having($condition, $op="AND")
 	{
@@ -183,6 +183,10 @@ class Query
 		return $this;
 	}
 	
+	/**
+	 * Limit results to one.
+	 * @return self
+	 */
 	public function first()
 	{
 		return $this->limit(1);
@@ -319,7 +323,7 @@ class Query
 
 	/**
 	 * 
-	 * @return Result
+	 * @return \GDO\DB\Result
 	 */
 	public function exec()
 	{

@@ -58,9 +58,9 @@ trait WithObject
      */
     public function findByName($name)
     {
-        if ($column = $this->table->gdoNameColumn())
+    	if ($column = $this->table->gdoNameColumn())
         {
-            return $this->table->getBy($column->name, $name);
+        	return $this->table->getBy($column->name, $name);
         }
         return $this->table->findById($name);
     }

@@ -23,7 +23,7 @@ final class GetEnums extends Method
 			{
 				foreach ($classes as $class)
 				{
-					if (is_subclass_of($class, 'GDO\\DB\\GDO'))
+					if (is_subclass_of($class, 'GDO\\Core\\GDO'))
 					{
 						if ($table = GDO::tableFor($class))
 						{

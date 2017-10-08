@@ -45,9 +45,22 @@ class GDT_Int extends GDT
                 {
                     return $this->intError();
                 }
+                if (!$this->validateUnique($value))
+                {
+                	return $this->error('err_db_unique');
+                }
             }
             return true;
         }
+    }
+    
+    protected function validateUnique($value)
+    {
+    	if ($this->unique)
+    	{
+	    	return $this->gdo->table()->select('COUNT(*)')->where("{$this->identifier()}={$value}")->first()->exec()->fetchValue() === '0';
+    	}
+    	return true;
     }
     
     private function intError()
