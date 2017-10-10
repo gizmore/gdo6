@@ -95,9 +95,9 @@ class GDT_Select extends GDT_ComboBox
     
     protected function validateSingle($value)
     {
-        if ( (!$value) || (empty($value)) || ($value === $this->emptyValue) )
+        if ( ($value === null) || ($value === $this->emptyValue) )
         {
-            return $this->notNull ? $this->errorNotNull() : true;
+            return $this->isRequired() ? $this->errorNotNull() : true;
         }
         
         if (!isset($this->choices[$value]))

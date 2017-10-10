@@ -1,9 +1,9 @@
 <?php
 return array(
-    'err_db' => "Database Error: %s\n%s",
-    'err_template_file' => 'A template file is missing: %s.',
+//     'err_db' => "Database Error: %s\n%s",
+//     'err_template_file' => 'A template file is missing: %s.',
     
-    'core_welcome_box_info' => 'Welcome to GDO6, %s.',
+//     'core_welcome_box_info' => 'Welcome to GDO6, %s.',
 
     
 

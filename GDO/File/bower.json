@@ -1,0 +1,26 @@
+{
+  "name": "gdo6-file",
+  "homepage": "https://github.com/gizmore/gdo6",
+  "authors": [
+    "gizmore <gizmore@wechall.net>"
+  ],
+  "description": "gdo6-file js components",
+  "main": "Module_File.php",
+  "keywords": [
+    "gdo6",
+    "file",
+    "upload"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "flow.js": "~2"
+  }
+}

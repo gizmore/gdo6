@@ -31,14 +31,6 @@ class GDT_File extends GDT_Object
         return $this;
     }
     
-    public function imageFile()
-    {
-        $this->mime('image/jpeg');
-        $this->mime('image/gif');
-        $this->mime('image/png');
-        return $this->preview();
-    }
-    
     public $minsize = 1024;
     public function minsize($minsize)
     {
@@ -157,6 +149,10 @@ class GDT_File extends GDT_Object
         return $this->toVar($this->getValue());
     }
     
+	/**
+	 * Get all initial files for this file gdt.
+	 * @return \GDO\File\GDO_File[]
+	 */    
     public function getInitialFiles()
     {
         return $this->multiple ? $this->getMultiInitialFiles() : Arrays::arrayed($this->getInitialFile());
@@ -188,8 +184,9 @@ class GDT_File extends GDT_Object
      */
     public function getValidationValue()
     {
-        $files = array_merge($this->getInitialFiles(), $this->getFiles($this->name));
-        return $this->multiple ? $files : array_pop($files);
+//     	$files = array_merge($this->getInitialFiles(), $this->getFiles($this->name));
+    	$files = $this->getFiles($this->name);
+    	return $this->multiple ? $files : array_pop($files);
     }
     
     public function getValue()
@@ -222,6 +219,11 @@ class GDT_File extends GDT_Object
             foreach ($files as $file)
             {
                 $file instanceof GDO_File;
+                if (!$file->getSize())
+                {
+                	return $this->error('err_file_not_ok', [$file->display('file_name')]);
+                }
+                	
                 if (!$file->isPersisted())
                 {
                     $file->copy();
@@ -285,6 +287,21 @@ class GDT_File extends GDT_Object
                     }
                 }
             }
+        }
+        if (isset($_FILES[$key]))
+        {
+        	if ($_FILES[$key]['name'])
+        	{
+        		$name = $_FILES[$key]['name'];
+	        	$files[$name] = GDO_File::fromForm(array(
+	        		'name' => $_FILES[$key]['name'],
+	        		'mime' => $_FILES[$key]['type'],
+	        		'size' => $_FILES[$key]['size'],
+	        		'dir' => dirname($_FILES[$key]['tmp_name']),
+	        		'path' => $_FILES[$key]['tmp_name'],
+	        		'error' => $_FILES[$key]['error'],
+	        	));
+        	}
         }
         return $files;
     }
@@ -436,17 +453,13 @@ class GDT_File extends GDT_Object
         @file_put_contents($finalFile, file_get_contents($fullpath), FILE_APPEND);
     }
     
-    private function onFlowFinishTests($key, $file)
+    protected function onFlowFinishTests($key, $file)
     {
         if (false !== ($error = $this->onFlowTestChecksum($key, $file)))
         {
             return $error;
         }
         if (false !== ($error = $this->onFlowTestMime($key, $file)))
-        {
-            return $error;
-        }
-        if (false !== ($error = $this->onFlowTestImageDimension($key, $file)))
         {
             return $error;
         }
@@ -466,11 +479,6 @@ class GDT_File extends GDT_Object
         if ((!in_array($mime, $this->mimes, true)) && (count($this->mimes)>0)) {
             return "$key: Unsupported MIME TYPE: $mime";
         }
-        return false;
-    }
-    
-    private function onFlowTestImageDimension($key, $file)
-    {
         return false;
     }
     

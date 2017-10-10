@@ -10,6 +10,7 @@ use GDO\DB\Database;
 use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Error;
+use GDO\Core\GDT_Response;
 
 @include 'protected/config.php';
 if (!defined('GWF_CONFIGURED'))
@@ -46,7 +47,8 @@ try
 }
 catch (Exception $e)
 {
-    $response = GDT_Error::responseException($e);
+	Logger::logException($e);
+    $response = GDT_Response::makeWithHTML(Debug::backtraceException($e));
 }
 finally
 {
