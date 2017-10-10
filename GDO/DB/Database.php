@@ -50,7 +50,7 @@ class Database
 	public static function init()
 	{
 	    Cache::init();
-	    return new self(GWF_DB_HOST, GWF_DB_NAME, GWF_DB_PASS, GWF_DB_NAME, GWF_DB_DEBUG);
+	    return new self(GWF_DB_HOST, GWF_DB_USER, GWF_DB_PASS, GWF_DB_NAME, GWF_DB_DEBUG);
 	}
 	
 	public function __construct($host, $user, $pass, $db, $debug=false)

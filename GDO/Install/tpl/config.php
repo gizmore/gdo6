@@ -37,7 +37,8 @@ else
     }
     elseif (is_array($value))
     {
-        $value = json_encode($value);
+    	$value = implode(',', $value);
+    	$value = "'$value'";
     }
     elseif (is_bool($value))
     {

@@ -4,6 +4,7 @@ use GDO\Core\Method;
 use GDO\Core\GDO;
 use GDO\Core\GDT;
 use GDO\DB\GDT_AutoInc;
+use GDO\Util\Common;
 
 abstract class MethodQueryCard extends Method
 {
@@ -22,8 +23,7 @@ abstract class MethodQueryCard extends Method
 	
 	public function gdoQueryCard()
 	{
-		$params = $this->gdoParameters();
-		return $this->gdoTable()->find(array_shift($params)->getParameterVar());
+		return $this->gdoTable()->find(Common::getGetString('id'));
 	}
 	
 	public function execute()

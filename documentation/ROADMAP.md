@@ -19,3 +19,5 @@
 - Convert Module_Usergroup and Module_Guestbook
 - Re-implement Avatar Gallery?
 - OpenTimes
+- Memcached alternative Filecache – on windows just serialize to fs. still some stuff might be worth caching, like LDAP.
+- Change cachemiss return type of Memcached to null.
