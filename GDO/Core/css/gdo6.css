@@ -28,3 +28,8 @@ body { display: flex; flex-direction: column; }
 /** Table/GDT_Table **/
 .gdo-tblorder a { color: #000; }
 .gdo-tblorder a.sel { color: gold; }
+
+/** Core/GDOException **/
+.gdo-exception {
+	text-align: left;
+}

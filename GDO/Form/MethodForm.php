@@ -62,6 +62,10 @@ abstract class MethodForm extends Method
             return $form->getField($flowField)->flowUpload();
         }
         
+        $this->form->withFields(function(GDT $field){
+        	$field->var = $field->initial;
+        });
+        
         foreach ($form->fields as $field)
         {
             if ($field instanceof GDT_Submit)
