@@ -125,9 +125,12 @@ abstract class MethodCrud extends MethodForm
 		{
 			$form->addField(GDT_Submit::make('delete')->icon('delete'));
 		}
-		if ($this->gdo)
+		
+		$gdo = $this->gdo ? $this->gdo : $this->gdoTable();
+// 		if ($this->gdo)
 		{
-			$form->withGDOValuesFrom($this->gdo);
+// 			$form->withGDOValuesFrom($this->gdo);
+			$form->withGDOValuesFrom($gdo);
 		}
 		
 		if ($this->gdo)

@@ -15,18 +15,44 @@ class GDT_Checkbox extends GDT_Select
         $this->min = $this->max = 1;
     }
     
+    public function initChoices()
+    {
+    	if (!$this->choices)
+    	{
+    		$this->choices = [];
+    		if ($this->undetermined)
+    		{
+    			$this->emptyInitial(t('please_choose'), $this->emptyValue);
+    		}
+    		$this->choices(array(
+    			'0' => t('no'),
+    			'1' => t('yes'),
+    		));
+    	}
+    	return $this;
+    }
+    
+    ################
+    ### Database ###
+    ################
     public function gdoColumnDefine()
     {
         return "{$this->identifier()} TINYINT UNSIGNED {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
     }
     
+    ####################
+    ### Undetermined ###
+    ####################
     public $undetermined;
     public function undetermined($undetermined)
     {
         $this->undetermined = $undetermined;
         return $this;
     }
-   
+    
+    ###################
+    ### Var / Value ###
+    ###################
     public function toVar($value)
     {
         if ($value === true) { return '1'; }
@@ -41,23 +67,6 @@ class GDT_Checkbox extends GDT_Select
         else { return null; }
     }
     
-    public function initChoices()
-    {
-        if (!$this->choices)
-        {
-            $this->choices = [];
-            if ($this->undetermined)
-            {
-                $this->emptyInitial(t('please_choose'), $this->emptyValue);
-            }
-            $this->choices(array(
-                '0' => t('no'),
-                '1' => t('yes'),
-            ));
-        }
-        return $this;
-    }
-    
     ################
     ### Validate ###
     ################
@@ -67,10 +76,23 @@ class GDT_Checkbox extends GDT_Select
         return parent::validate($value);
     }
     
+    ##############
+    ### Render ###
+    ##############
     public function renderForm()
     {
         $this->initChoices();
         return parent::renderForm();
     }
     
+    public function renderCell()
+    {
+    	switch ($this->getVar())
+    	{
+    		case '0': return t('enum_no');
+    		case '1': return t('enum_yes');
+    		default: return t('enum_undetermined_yes_no');
+    	}
+    }
+
 }

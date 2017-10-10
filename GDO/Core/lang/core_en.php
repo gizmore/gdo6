@@ -1,14 +1,5 @@
 <?php
 return array(
-//     'err_db' => "Database Error: %s\n%s",
-//     'err_template_file' => 'A template file is missing: %s.',
-    
-//     'core_welcome_box_info' => 'Welcome to GDO6, %s.',
-
-    
-
-
-
 'sitename' => GWF_SITENAME,
 
 'no_selection' => 'No selection',
@@ -93,6 +84,7 @@ return array(
 'err_int_not_between' => 'This number has to be between %s and %s.',
 'err_min_date' => 'This date has to be after %s.',
 'err_max_date' => 'This date has to be before %s.',
+'err_db_unique' => 'This entry already exists.',
 # Permissions
 'perm_admin' => 'Administrator',
 'perm_cronjob' => 'Cronjob',
