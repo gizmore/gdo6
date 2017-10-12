@@ -20,6 +20,15 @@ class GDT_Object extends GDT_UInt
         ));
     }
 
+    public function renderCell()
+    {
+    	if ($obj = $this->getValue())
+    	{
+    		return $obj->renderCell();
+    	}
+    	return $this->getValue();
+    }
+    
     public function renderChoice()
     {
         if ($obj = $this->gdo)
