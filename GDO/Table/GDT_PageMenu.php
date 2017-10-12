@@ -130,6 +130,19 @@ class GDT_PageMenu extends GDT
                 $pages[] = new PageMenuItem($page, $this->replaceHREF($page));
             }
         }
+        
+        if (($curr - $this->shown) > 1)
+        {
+        	array_unshift($pages, PageMenuItem::dotted());
+        	array_unshift($pages, new PageMenuItem(1, $this->replaceHREF(1)));
+        }
+
+        if (($curr + $this->shown) < $nPages)
+        {
+        	$pages[] = PageMenuItem::dotted();
+        	$pages[] = new PageMenuItem($nPages, $this->replaceHREF($nPages));
+        }
+        
         return $pages;
     }
 }

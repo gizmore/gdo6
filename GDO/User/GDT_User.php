@@ -15,6 +15,7 @@ class GDT_User extends GDT_Object
     
     public function __construct()
     {
+        $this->orderField = 'user_name';
         $this->table(GDO_User::table());
         $this->withCompletion();
         $this->icon('face');
@@ -63,14 +64,6 @@ class GDT_User extends GDT_Object
     		$filter = GDO::escapeS($filter);
     		$this->filterQueryCondition($query, "user_name LIKE '%$filter%'");
     	}
-    }
-    
-    #############
-    ### Order ###
-    #############
-    public function gdoOrderFieldname()
-    {
-    	return 'user_name';
     }
 
 }

@@ -6,7 +6,7 @@ $pagemenu instanceof GDT_PageMenu;
 <div class="gdo-pagemenu">
   <ul class="pagination">
     <?php foreach ($pages as $page) : $page instanceof PageMenuItem; ?>
-      <li<?= $page->htmlClass(); ?>><a href="<?= html($page->href); ?>"><?= $page->page; ?></a></li>
+      <li class="<?=$page->htmlClass()?>"><a href="<?= html($page->href); ?>"><?= $page->page; ?></a></li>
     <?php endforeach; ?>
   </ul>
 </div>

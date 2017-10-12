@@ -50,8 +50,34 @@ class GDT_Object extends GDT_UInt
         }
     }
     
+    ##############
+    ### Render ###
+    ##############
     public function renderFilter()
     {
     	return GDT_Template::php('DB', 'filter/object.php', ['field'=>$this]);
     }
+    
+    ##############
+    ### Filter ###
+    ##############
+    /**
+     * Proxy filter to the filterColumn.
+     * {@inheritDoc}
+     * @see \GDO\DB\GDT_Int::filterQuery()
+     * @see \GDO\DB\GDT_String::filterQuery()
+     */
+    public function filterQuery(Query $query)
+    {
+    	if ($field = $this->filterField)
+    	{
+    		$this->table->gdoColumn($this->filterField)->filterQuery($query);
+    		return $this;
+    	}
+    	else
+    	{
+    		return parent::filterQuery($query);
+    	}
+    }
+    
 }

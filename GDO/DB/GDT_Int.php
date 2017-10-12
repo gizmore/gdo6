@@ -154,7 +154,7 @@ class GDT_Int extends GDT
     
     public function htmlClass()
     {
-        return sprintf(' class="gdt-num %s"', parent::htmlClass());
+        return sprintf('gdt-num %s', parent::htmlClass());
     }
 
 }

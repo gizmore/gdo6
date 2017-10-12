@@ -17,7 +17,7 @@ class GDT_Button extends GDT_Label
 	##############
 	public function htmlClass()
 	{
-		return sprintf(' class="gdo-button %s"', str_replace('\\', '-', strtolower(get_class($this))));
+		return sprintf('gdo-button %s', str_replace('\\', '-', strtolower(get_class($this))));
 	}
 	
 	public function renderForm()

@@ -23,7 +23,7 @@ Install core:
 Install modules:
 
 It is a good strategy to paste the below clone lines to a text file.
-Then remove the modules you do not want and clone some modules.
+Then remove the modules you do not want and clone the remaining modules.
 
 
     cd www/gdo6/GDO # switch to modules dir
@@ -82,3 +82,11 @@ Then remove the modules you do not want and clone some modules.
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
 
     
+### Write own modules
+
+There is a tutorial in the gdo6-helpdesk module, which is worth a read.
+There is a tutorial section in gdo6/tutorial.
+
+### Known Bugs / TODO
+
+There is a ROADMAP.md in gdo6/documentation

@@ -24,6 +24,6 @@ final class PageMenuItem
 	
 	public function htmlClass()
 	{
-		return $this->selected ? ' class="page-selected"' : '';
+		return $this->selected ? 'page-selected' : '';
 	}
 }

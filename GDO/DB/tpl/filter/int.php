@@ -4,4 +4,4 @@
  type="text"
  pattern="^[-0-9]*$"
  value="<?= html($field->filterValue()); ?>"
- size="5" />
+ size="1" />

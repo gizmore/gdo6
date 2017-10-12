@@ -22,7 +22,7 @@ $result = $field->getResult();
     <thead>
       <tr>
       <?php foreach($headers->getFields() as $gdoType) : ?>
-        <th<?= $gdoType->htmlClass(); ?>>
+        <th class="<?=$gdoType->htmlClass()?>">
           <label>
             <?= $gdoType->renderHeader(); ?>
             <?php if ($field->ordered) : ?>
@@ -30,7 +30,7 @@ $result = $field->getResult();
             <?php endif; ?>
           </label>
           <?php if ($field->filtered) : ?>
-          <br/><?= $gdoType->renderFilter(); ?>
+            <?= $gdoType->renderFilter(); ?>
           <?php endif; ?>
         </th>
       <?php endforeach; ?>
@@ -40,7 +40,7 @@ $result = $field->getResult();
     <?php while ($gdo = $result->fetchAs($field->fetchAs)) : ?>
     <tr gdo-id="<?= $gdo->getID()?>">
       <?php foreach($headers->getFields() as $gdoType) : ?>
-        <td<?= $gdoType->htmlClass(); ?>><?= $gdoType->gdo($gdo)->renderCell(); ?></td>
+        <td class="<?=$gdoType->htmlClass()?>"><?= $gdoType->gdo($gdo)->renderCell(); ?></td>
       <?php endforeach; ?>
     </tr>
     <?php endwhile; ?>

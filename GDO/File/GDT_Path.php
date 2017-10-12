@@ -14,7 +14,7 @@ final class GDT_Path extends GDT_String
     public function defaultLabel() { return $this->label('path'); }
     public function htmlClass()
     {
-        return FileUtil::isFile($this->getValue()) ? ' class="gdo-file-valid"' : ' class="gdo-file-invalid"';
+        return FileUtil::isFile($this->getValue()) ? 'gdo-file-valid' : 'gdo-file-invalid';
     }
     
     public $existing = false;
