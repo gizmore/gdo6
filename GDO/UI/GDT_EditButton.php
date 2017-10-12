@@ -12,6 +12,6 @@ class GDT_EditButton extends GDT_Button
 	public function __construct()
 	{
 		$this->name = "edit";
-		$this->icon('create');
+		$this->icon('edit');
 	}
 }

@@ -11,12 +11,43 @@ namespace GDO\UI;
  */
 final class GDT_IconUTF8
 {
-    public static function iconS($icon)
+    public static function iconS($icon, $style)
     {
         static $map = array(
-            'create' => '+',
+            'account_box' => '[]',
+            'add' => '✚',
+            'add_alert' => '◴',
+            'alarm_on' => '☄',
+            'arrow_drop_down' => '▼',
+            'arrow_drop_up' => '▲',
+            'arrow_right' => '‣',
+            'audio' => '♬',
+            'check' => '✔',
+            'create' => '✚',
+            'credits' => '¢',
+            'cut' => '✂',
+            'date_range' => '◴',
+            'delete' => '✖',
+            'delete_sweep' => '✖',
+            'edit' => '✎',
+            'email' => '✉',
+            'enhanced_encryption' => '⚷',
+            'face' => '☺',
+            'female' => '♀',
+        	'language' => '🌐',
+            'link' => '⚓',
+            'male' => '♂',
+            'message' => '☶',
+        	'money' => '€',
+            'password' => '⚷',
+            'phone' => '☎',
+        	'plus_one' => '+1',
+            'quote' => '↶',
+            'reply' => '☞',
+            'settings' => '⚙',
+            'stars' => '★',
         );
         $icon = isset($map[$icon]) ? $map[$icon] : $icon;
-        return "<span gdo-icon>{$icon}</span>";
+        return "<span class=\"gdo-icon\"$style>$icon</span>";
     }
 }

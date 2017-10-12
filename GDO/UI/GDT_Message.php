@@ -14,12 +14,12 @@ class GDT_Message extends GDT_Text
 {
 	public function renderForm()
 	{
-		return GDT_Template::php('Type', 'form/message.php', ['field'=>$this]);
+		return GDT_Template::php('UI', 'form/message.php', ['field'=>$this]);
 	}
 	
 	public function renderCell()
 	{
-	    return GDT_Template::php('Type', 'cell/message.php', ['field'=>$this]);
+	    return GDT_Template::php('UI', 'cell/message.php', ['field'=>$this]);
 	}
 	
 	public function renderList()
@@ -51,12 +51,6 @@ class GDT_Message extends GDT_Text
 	        $this->changeRequestVar($value);
 	        return true;
 	    }
-	}
-	
-	public function changeRequestVar($value)
-	{
-	    $_REQUEST['form'][$this->name] = $value;
-	    $_POST['form'][$this->name] = $value;
 	}
 	
 }

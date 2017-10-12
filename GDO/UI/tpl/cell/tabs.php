@@ -1,12 +1,8 @@
+<?php /** @var $field \GDO\UI\GDT_Tabs **/ ?>
+<div class="gdo-tabs">
 <?php
-use GDO\UI\GDT_Tabs;
-$field instanceof GDT_Tabs;
+foreach ($field->getTabs() as $tab) :
+  echo $cell ? $tab->renderCell() : $tab->renderForm();
+endforeach;
 ?>
-<md-tabs md-dynamic-height md-border-bottom>
-<?php foreach ($field->getTabs() as $tab) : ?>
-<?php if ($cell) : ?>
-<?= $tab->renderCell(); ?>
-<?php endif; ?>
-<?= $tab->renderForm(); ?>
-<?php endforeach; ?>
-</md-tabs>
+</div>
