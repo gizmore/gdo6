@@ -65,5 +65,12 @@ class GDT_User extends GDT_Object
     	}
     }
     
-    
+    #############
+    ### Order ###
+    #############
+    public function gdoOrderFieldname()
+    {
+    	return 'user_name';
+    }
+
 }

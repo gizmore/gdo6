@@ -182,6 +182,14 @@ abstract class GDT
 		return strcasecmp($a->getVar($this->name), $b->getVar($this->name));
 	}
 	
+	#############
+	### Order ###
+	#############
+	public function gdoOrderFieldname()
+	{
+		return $this->name;
+	}
+	
 	##############
 	### Filter ###
 	##############

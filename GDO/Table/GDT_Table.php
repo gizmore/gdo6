@@ -200,7 +200,8 @@ class GDT_Table extends GDT
 				{
 					if ($field->orderable)
 					{
-						$query->order($name, !!$asc);
+						var_dump($field->gdoOrderFieldname());
+						$query->order($field->gdoOrderFieldname(), !!$asc);
 						$hasCustomOrder = true;
 					}
 				}
