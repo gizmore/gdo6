@@ -1,6 +1,7 @@
 <?php
 namespace GDO\DB;
 use GDO\Core\GDO;
+use GDO\Core\GDT_Template;
 use GDO\Form\GDT_Select;
 class GDT_ObjectSelect extends GDT_Select
 {
@@ -42,6 +43,20 @@ class GDT_ObjectSelect extends GDT_Select
         );
     }
     
+    public function renderCell()
+    {
+    	if ($obj = $this->getValue())
+    	{
+    		# TODO: Multiple
+    		return $obj->renderCell();
+    	}
+    	return $this->getValue();
+    }
+    
+    public function renderFilter()
+    {
+    	return GDT_Template::php('DB', 'filter/object.php', ['field'=>$this]);
+    }
     #############
     ### Value ###
     #############

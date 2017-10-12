@@ -4,6 +4,7 @@ use GDO\Core\GDO;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
 use GDO\Core\Debug;
+use GDO\Core\GDT_Template;
 /**
  * You would expect this to be GDT_Object,
  * but this is also mixed into GDT_ObjectSelect.
@@ -153,4 +154,31 @@ trait WithObject
             ",FOREIGN KEY ({$this->identifier()}) REFERENCES $tableName($on) ON DELETE {$this->cascade} ON UPDATE CASCADE";
     }
 
+    ##############
+    ### Filter ###
+    ##############
+    public function renderFilter()
+    {
+    	return GDT_Template::php('DB', 'filter/object.php', ['field'=>$this]);
+    }
+    
+    /**
+     * Proxy filter to the filterColumn.
+     * {@inheritDoc}
+     * @see \GDO\DB\GDT_Int::filterQuery()
+     * @see \GDO\DB\GDT_String::filterQuery()
+     */
+    public function filterQuery(Query $query)
+    {
+    	if ($field = $this->filterField)
+    	{
+    		$this->table->gdoColumn($this->filterField)->filterQuery($query);
+    		return $this;
+    	}
+    	else
+    	{
+    		return parent::filterQuery($query);
+    	}
+    }
+    
 }
