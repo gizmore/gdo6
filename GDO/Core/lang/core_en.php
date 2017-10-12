@@ -100,7 +100,7 @@ return array(
 'tu_y' => 'y',
 
 # Files
-'fsiso' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),
+'filesize' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),
 
 # Email formats
 'enum_html' => 'HTML',
