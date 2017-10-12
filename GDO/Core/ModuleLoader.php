@@ -130,7 +130,7 @@ final class ModuleLoader
         if ($loadDB && (!$this->loadedDB) )
         {
             $this->loadModulesDB();
-        	$this->loadedDB = true;
+            $loaded = $this->loadedDB = true;
         }
         if ($loadFS && (!$this->loadedFS) )
         {
