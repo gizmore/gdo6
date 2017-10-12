@@ -231,4 +231,5 @@ final class GDO_User extends GDO
         exec()->
         fetchAllObjectsAs(self::table());
     }
+    
 }

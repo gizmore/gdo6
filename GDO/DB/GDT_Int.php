@@ -118,7 +118,6 @@ class GDT_Int extends GDT
         );
     }
     
-    
     public function renderFilter()
     {
         return GDT_Template::php('DB', 'filter/int.php', ['field'=>$this]);

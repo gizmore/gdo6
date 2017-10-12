@@ -40,4 +40,9 @@ class GDT_Object extends GDT_UInt
             return GDT_Template::php('DB', 'form/object.php', ['field'=>$this]);
         }
     }
+    
+    public function renderFilter()
+    {
+    	return GDT_Template::php('DB', 'filter/object.php', ['field'=>$this]);
+    }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace GDO\User;
 use GDO\DB\GDT_Object;
+use GDO\DB\Query;
+use GDO\Core\GDO;
 /**
  * An autocomplete enabled user field.
  * @author gizmore
@@ -53,4 +55,15 @@ class GDT_User extends GDT_Object
         }
         return t('unknown');
     }
+    
+    public function filterQuery(Query $query)
+    {
+    	if ($filter = $this->filterValue())
+    	{
+    		$filter = GDO::escapeS($filter);
+    		$this->filterQueryCondition($query, "user_name LIKE '%$filter%'");
+    	}
+    }
+    
+    
 }
