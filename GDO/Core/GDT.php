@@ -185,9 +185,15 @@ abstract class GDT
 	#############
 	### Order ###
 	#############
-	public function gdoOrderFieldname()
+	public $orderField;
+	public function orderField($orderField)
 	{
-		return $this->name;
+		$this->orderField = $orderField;
+		return $this;
+	}
+	public function orderFieldName()
+	{
+		return $this->orderField ? $this->orderField : $this->name;
 	}
 	
 	##############
