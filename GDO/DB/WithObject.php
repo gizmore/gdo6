@@ -3,6 +3,7 @@ namespace GDO\DB;
 use GDO\Core\GDO;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
+use GDO\Core\Debug;
 /**
  * You would expect this to be GDT_Object,
  * but this is also mixed into GDT_ObjectSelect.

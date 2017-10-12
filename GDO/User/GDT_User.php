@@ -23,14 +23,6 @@ class GDT_User extends GDT_Object
         return $this->completionHref(href('User', 'Completion'));
     }
     
-    public function findByName($name)
-    {
-        if (!($user = GDO_User::getByName($name)))
-        {
-        }
-        return $user;
-    }
-    
     private $ghost = false;
     public function ghost($ghost=true)
     {

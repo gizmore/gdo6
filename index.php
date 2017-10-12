@@ -60,12 +60,12 @@ finally
 switch (Application::instance()->getFormat())
 {
     case 'json':
-        die(json_encode($response->html));
+        die(json_encode($response->render()));
         
     case 'html':
         if (Application::instance()->isAjax())
         {
-            die($response->html);
+            die($response->render());
         }
         else
         {

@@ -62,10 +62,6 @@ abstract class MethodForm extends Method
             return $form->getField($flowField)->flowUpload();
         }
         
-        $this->form->withFields(function(GDT $field){
-        	$field->var = $field->initial;
-        });
-        
         foreach ($form->fields as $field)
         {
             if ($field instanceof GDT_Submit)
@@ -74,8 +70,8 @@ abstract class MethodForm extends Method
                 {
                     if ($form->validateForm())
                     {
-                    	unset($_POST['nojs']);
                     	$response = call_user_func([$this, "onSubmit_{$field->name}"], $form);
+                     	unset($_POST['nojs']);
                         $form->formValidated();
                     }
                     else
