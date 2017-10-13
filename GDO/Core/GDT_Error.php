@@ -39,6 +39,8 @@ class GDT_Error extends GDT_Panel
 	##############
 	### Render ###
 	##############
+	public function renderCell() { return GDT_Template::php('Core', 'cell/error.php', ['field' => $this]); }
+	
 	public function renderJSON()
 	{
 	    return array(

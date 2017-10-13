@@ -36,4 +36,29 @@ final class GDT_ImageFile extends GDT_File
 		return false;
 	}
 	
+	##############
+	### Resize ###
+	##############
+	public $minWidth;
+	public function minWidth($minWidth) { $this->minWidth = $minWidth; return $this; }
+	public $maxWidth;
+	public function maxWidth($maxWidth) { $this->maxWidth = $maxWidth; return $this; }
+	public $minHeight;
+	public function minHeight($minHeight) { $this->minHeight = $minHeight; return $this; }
+	public $maxHeight;
+	public function maxHeight($maxHeight) { $this->maxHeight = $maxHeight; return $this; }
+	public $resize;
+	public function resize($resize=true) { $this->resize = $resize; return $this; }
+	public function resizeTo($width, $height)
+	{
+	    $this->minWidth = $this->maxWidth = $width;
+	    $this->minHeight = $this->maxHeight = $height;
+	    return $this->resize();
+	}
+	protected function beforeCopy(GDO_File $file)
+	{
+	    var_dump($file);
+	    
+	}
+	
 }

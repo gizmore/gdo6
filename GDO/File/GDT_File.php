@@ -226,6 +226,7 @@ class GDT_File extends GDT_Object
                 	
                 if (!$file->isPersisted())
                 {
+                    $this->beforeCopy($file);
                     $file->copy();
                 }
             }

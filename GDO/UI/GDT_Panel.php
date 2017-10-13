@@ -14,6 +14,6 @@ class GDT_Panel extends GDT
     use WithHTML;
     use WithTitle;
 
-    public function render() { return $this->html; }
+//     public function render() { return $this->HTML; }
     public function renderCell() { return GDT_Template::php('UI', 'cell/panel.php', ['field' => $this]); }
 }

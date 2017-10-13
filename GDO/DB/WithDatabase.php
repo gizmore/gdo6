@@ -6,7 +6,7 @@ use GDO\Core\GDT;
 
 trait WithDatabase
 {
-// 	public $notNull = false;
+	public $notNull = false;
 	public function notNull($notNull=true) { $this->notNull = $notNull; return $this; }
 	
 // 	public $unique = false;
