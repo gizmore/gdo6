@@ -47,11 +47,22 @@ final class GDO_UserPermission extends GDO
 	
 	public static function grantPermission(GDO_User $user, GDO_Permission $permission)
 	{
-		return self::blank(array('perm_user_id' => $user->getID(), 'perm_perm_id' => $permission->getID()))->replace();
+	    return self::blank(array('perm_user_id' => $user->getID(), 'perm_perm_id' => $permission->getID()))->replace();
 	}
 	
 	public static function grant(GDO_User $user, $permission)
 	{
 	    return self::grantPermission($user, GDO_Permission::getByName($permission));
 	}
+	
+	public static function revokePermission(GDO_User $user, GDO_Permission $permission)
+	{
+	    return self::table()->deleteWhere("perm_user_id={$user->getID()} AND perm_perm_id={$permission->getID()}")->exec();
+	}
+	
+	public static function revoke(GDO_User $user, $permission)
+	{
+	    return self::revokePermission($user, GDO_Permission::getByName($permission));
+	}
+	
 }
