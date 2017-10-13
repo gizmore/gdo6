@@ -143,7 +143,7 @@ abstract class GDT
 	public function renderHeader() {}
 	public function renderJSON() {}
 	public function renderList() { return $this->render(); }
-	public function renderOrder() { return 'aa'; }
+// 	public function renderOrder() { return 'aa'; }
 
 	# Render debug data by default.
 	private function renderDebug() { return print_r($this, true); }

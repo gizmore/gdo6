@@ -30,7 +30,7 @@ final class GDT_Response extends GDT
 	##############
 	### Render ###
 	##############
-	public function render()
+	public function renderCell()
 	{
 	    switch (Application::instance()->getFormat())
 	    {

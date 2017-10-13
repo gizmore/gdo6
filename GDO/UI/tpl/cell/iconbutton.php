@@ -1,6 +1,7 @@
 <?php /** @var $field \GDO\UI\GDT_IconButton **/ ?>
 <?php if ($href) : ?>
-<a href="<?= $href; ?>"
- title=""
- <?= $field->htmlDisabled(); ?>><?= html($field->label); ?><?= $field->htmlIcon(); ?></a>
+<a class="gdo-icon-button"
+ href="<?= $href; ?>"
+ title="<?= html($field->label); ?>"
+ <?= $field->htmlDisabled(); ?>><?= html($field->label); ?>&nbsp;<?= $field->htmlIcon(); ?></a>
 <?php endif; ?>

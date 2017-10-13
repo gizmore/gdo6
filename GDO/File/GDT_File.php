@@ -239,6 +239,10 @@ class GDT_File extends GDT_Object
         return $valid;
     }
     
+    protected function beforeCopy(GDO_File $file)
+    {
+    }
+    
     ###################
     ### Flow upload ###
     ###################
