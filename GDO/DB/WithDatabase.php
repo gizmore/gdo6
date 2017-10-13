@@ -6,13 +6,13 @@ use GDO\Core\GDT;
 
 trait WithDatabase
 {
-	public $notNull = false;
+// 	public $notNull = false;
 	public function notNull($notNull=true) { $this->notNull = $notNull; return $this; }
 	
-	public $unique = false;
+// 	public $unique = false;
     public function unique($unique=true) { $this->unique = $unique; return $this; }
     
-    public $primary = false;
+//     public $primary = false;
     public function primary($primary=true) { $this->primary = $primary; return $this->notNull(); }
     public function isPrimary() { return $this->primary; }
     

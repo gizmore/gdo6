@@ -11,7 +11,7 @@ use GDO\Core\GDT_Template;
  */
 final class GDT_Country extends GDT_ObjectSelect
 {
-    use WithCompletion;
+//     use WithCompletion;
     
     public function __construct()
     {
