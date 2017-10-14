@@ -10,6 +10,7 @@ return array(
 'folder' => 'Ordner',
 'title' => 'Titel',
 'description' => 'Beschreibung',
+'tooltip' => 'Tooltip',
 'info' => 'Info',
 'message' => 'Nachricht',
 'captcha' => 'Captcha',
