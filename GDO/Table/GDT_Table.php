@@ -82,6 +82,7 @@ class GDT_Table extends GDT
 		    $href = $href === null ? $_SERVER['REQUEST_URI'] : $href;
 		    $this->pagemenu = GDT_PageMenu::make($this->name.'_page');
 			$this->pagemenu->href($href);
+			$this->pagemenu->ipp($ipp);
 			$this->href($href);
 		}
 		return $this->ipp($ipp);

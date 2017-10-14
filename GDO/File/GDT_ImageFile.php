@@ -7,8 +7,9 @@ final class GDT_ImageFile extends GDT_File
 {
 	public function __construct()
 	{
-		$this->mime('image/jpeg');
+		$this->mime('image/bmp');
 		$this->mime('image/gif');
+		$this->mime('image/jpeg');
 		$this->mime('image/png');
 		parent::__construct();
 	}
@@ -55,10 +56,15 @@ final class GDT_ImageFile extends GDT_File
 	    $this->minHeight = $this->maxHeight = $height;
 	    return $this->resize();
 	}
+
+	public $convert;
+	public function convertTo($mime) { $this->convert = $mime; return $this; }
 	protected function beforeCopy(GDO_File $file)
 	{
-	    var_dump($file);
-	    
+		if ( ($this->maxWidth !== null) || ($this->convert !== null) )
+		{
+			ImageResize::resize($file, $this->maxWidth, $this->maxHeight, $this->convert);
+		}
 	}
 	
 }

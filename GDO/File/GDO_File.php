@@ -43,7 +43,7 @@ final class GDO_File extends GDO
     public function displaySize() { return FileUtil::humanFilesize($this->getSize()); }
     public function isImageType() { return Strings::startsWith($this->getType(), 'image/'); }
     
-    private $path;
+    public $path;
     public function tempPath($path=null)
     {
         $this->path = $path;
