@@ -22,5 +22,5 @@ $sel = 'selected="selected"';
       <option value="<?= html($value); ?>" <?=$field->htmlSelected((string)$value);?>><?= $choice instanceof GDO ? $choice->renderChoice() : $choice; ?></option>
     <?php endforeach; ?>
   </select>
-  <div class="gdo-form-error"><?= $field->error; ?></div>
+  <?= $field->htmlError(); ?>
 </div>

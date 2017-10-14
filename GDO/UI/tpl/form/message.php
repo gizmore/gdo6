@@ -8,5 +8,5 @@
    maxRows="6"
    <?= $field->htmlRequired(); ?>
    <?= $field->htmlDisabled(); ?>><?= $field->displayVar(); ?></textarea>
-  <div class="gdo-form-error"><?= $field->error; ?></div>
+  <?= $field->htmlError(); ?>
 </div>

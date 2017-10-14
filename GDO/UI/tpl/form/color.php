@@ -8,5 +8,5 @@
    value="<?= html($field->getVar()); ?>"
    <?= $field->htmlRequired(); ?>
    <?= $field->htmlDisabled(); ?>/>
-  <div class="gdo-form-error"><?= $field->error; ?></div>
+  <?= $field->htmlError(); ?>
 </div>

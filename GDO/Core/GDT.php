@@ -48,6 +48,7 @@ abstract class GDT
 	public function error($key, array $args=null) { return $this->rawError(t($key, $args)); }
 	public function rawError($html=null) { $this->error = $html; return false; }
 	public function hasError() { return is_string($this->error); }
+	public function htmlError() { return $this->error ? ('<div class="gdo-form-error">' . $this->error . '</div>') : ''; }
 	public function classError()
 	{
 		$class = ' '.str_replace('_', '-', strtolower($this->gdoShortName()));

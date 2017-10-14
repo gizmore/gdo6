@@ -13,9 +13,5 @@ $id = 'gwfac_'.$field->name; ?>
    id="<?= $id; ?>"
    name="form[<?= $field->name; ?>]"
    value="<?= html($field->getVar()); ?>" />
-  <input
-   type="hidden"
-   name="nojs"
-   value="1" />
-  <div class="gdo-form-error"><?= $field->error; ?></div>
+  <?= $field->htmlError(); ?>
 </div>

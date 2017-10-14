@@ -12,5 +12,5 @@
    size="<?= min($field->max, 32); ?>"
    name="form[<?= $field->name; ?>]"
    value="<?= $field->displayVar(); ?>" />
-  <div class="gdo-form-error"><?= $field->error; ?></div>
+  <?= $field->htmlError(); ?>
 </div>

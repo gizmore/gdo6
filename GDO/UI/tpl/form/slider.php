@@ -20,5 +20,5 @@
    name="form[<?= $field->name; ?>]"
    value="<?= $field->getVar(); ?>" />
  <?php endif; ?>
-  <div class="gdo-form-error"><?= $field->error; ?></div>
+  <?= $field->htmlError(); ?>
 </div>

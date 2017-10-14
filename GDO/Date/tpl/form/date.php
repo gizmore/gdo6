@@ -10,6 +10,5 @@ $id = 'date_'.$field->name; ?>
    type="datetime"
    name="form[<?= $field->name; ?>]"
    value="<?= $field->displayVar(); ?>" />
-  <div class="gdo-form-error"><?= $field->error; ?></div>
+  <?= $field->htmlError(); ?>
 </div>
- 
