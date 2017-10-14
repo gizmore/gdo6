@@ -7,6 +7,7 @@ use GDO\Core\GDT_Template;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_Panel;
+use GDO\Mail\Mail;
 /**
  * Performance statistics panel.
  * @author gizmore
@@ -45,6 +46,7 @@ final class GDT_PerfBar extends GDT_Panel
             'gdoLangFiles' => Trans::numFiles(),
             'gdoTemplates' => GDT_Template::$CALLS,
             'gdoHooks' => GDT_Hook::$CALLS,
+        	'gdoMails' => Mail::$SENT,
         );
     }
 

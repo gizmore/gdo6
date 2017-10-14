@@ -81,6 +81,10 @@ trait WithObject
         {
             return [$this->name => $object->getID()];
         }
+        else
+        {
+        	return [$this->name => null];
+        }
     }
     
     ################

@@ -48,6 +48,11 @@ class GDT_User extends GDT_Object
         return $user;
     }
     
+    public function findByName($name)
+    {
+    	return GDO_User::getByName($name);
+    }
+    
     public function renderCell()
     {
         if ($user = $this->getUser())

@@ -18,6 +18,7 @@ use GDO\User\GDO_User;
 use GDO\User\GDO_PublicKey;
 final class Mail
 {
+	public static $SENT = 0;
 	public static $DEBUG = GWF_DEBUG_EMAIL;
 	
 	const HEADER_NEWLINE = "\n";
@@ -197,6 +198,7 @@ final class Mail
 
 	public function send($cc, $bcc, $message, $html=true)
 	{
+		self::$SENT++;
 		if (count($this->attachments) > 0)
 		{
 			return $this->sendWithAttachments($cc, $bcc);
