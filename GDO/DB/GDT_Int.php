@@ -58,9 +58,18 @@ class GDT_Int extends GDT
     {
     	if ($this->unique)
     	{
-	    	return $this->gdo->table()->select('COUNT(*)')->where("{$this->identifier()}={$value}")->first()->exec()->fetchValue() === '0';
+    		$condition = "{$this->identifier()}=".GDO::quoteS($value);
+    		if ($this->gdo->getID())
+    		{
+    			foreach ($this->gdo->table()->gdoPrimaryKeyColumns() as $gdoType)
+    			{
+    				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
+    			}
+    		}
+    		return $this->gdo->table()->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
     	}
     	return true;
+    	
     }
     
     private function intError()
