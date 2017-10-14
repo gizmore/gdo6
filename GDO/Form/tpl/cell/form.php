@@ -2,11 +2,11 @@
 <!-- Begin Form -->
 <div class="gdo-form">
   <div class="md-whiteframe-8dp">
-    <div class="gdo-form-head">
-      <h2 class="gdo-form-title"><?= $form->title; ?></h2>
-      <p><?= $form->info; ?></p>
-    </div>
     <div class="gdo-form-inner">
+      <div class="gdo-form-head">
+        <h2 class="gdo-form-title"><?= $form->title; ?></h2>
+        <p><?= $form->info; ?></p>
+      </div>
       <form
        id="form_<?=$form->name;?>"
        action="<?= $form->action; ?>"

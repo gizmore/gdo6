@@ -1,7 +1,9 @@
-<?php /** @var $gdo \GDO\File\GDO_File **/ ?>
+<?php /** @var $gdo \GDO\File\GDO_File **/
+use GDO\UI\GDT_Icon;
+?>
 <div class="gdo-file">
 <?php if ($gdo) : ?>
-  <span class="gdo-file-name"><?= html($gdo->getName()); ?></span>
+  <?= GDT_Icon::iconS('file'); ?>
   <span class="gdo-file-size"><?= $gdo->displaySize(); ?></span>
   <span class="gdo-file-type"><?= $gdo->getType(); ?></span>
 <?php endif; ?>

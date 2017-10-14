@@ -85,6 +85,8 @@ return array(
 'err_min_date' => 'Das Datum muss nach %s sein.',
 'err_max_date' => 'Das Datum muss bevor %s sein.',
 'err_db_unique' => 'Dieser Eintrag existiert bereits.',
+'err_image_format_not_supported' => 'Das Bildformat %s wird nicht unterstützt.',
+	
 # Permissions
 'perm_admin' => 'Administrator',
 'perm_cronjob' => 'Cronjob',
