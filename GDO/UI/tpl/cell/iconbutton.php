@@ -3,5 +3,5 @@
 <a class="gdo-icon-button"
  href="<?= $href; ?>"
  title="<?= html($field->label); ?>"
- <?= $field->htmlDisabled(); ?>><?= html($field->label); ?>&nbsp;<?= $field->htmlIcon(); ?></a>
+ <?= $field->htmlDisabled(); ?>><?= $field->label; ?>&nbsp;<?= $field->htmlIcon(); ?></a>
 <?php endif; ?>

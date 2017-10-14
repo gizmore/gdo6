@@ -22,6 +22,7 @@ final class GDT_IconUTF8
             'arrow_drop_up' => '▲',
             'arrow_right' => '‣',
             'audio' => '♬',
+        	'back' => '↶',
             'check' => '✔',
             'create' => '✚',
             'credits' => '¢',

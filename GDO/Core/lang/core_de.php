@@ -43,6 +43,7 @@ return array(
 'created_by' => 'Erstellt vom',
 
 # Generic Buttons
+'btn_back' => 'Zurück',
 'btn_send' => 'Senden',
 'btn_save' => 'Speichern',
 'btn_upload' => 'Hochladen',
