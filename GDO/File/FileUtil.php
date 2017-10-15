@@ -56,7 +56,7 @@ final class FileUtil
     
     public static function humanFilesize($bytes, $factor='1024', $digits='2')
     {
-        $txt = t('filesize');
+        $txt = t('_filesize');
         $i = 0;
         $rem = '0';
         while (bccomp($bytes, $factor) >= 0)

@@ -335,8 +335,12 @@ final class Debug
         {
             $arg = json_encode($arg, 1);
         }
-        $app = mb_strlen($arg) > 48 ? '…' : ' ';
-        return mb_substr($arg, 0, 47) . $app;
+        
+        if (mb_strlen($arg) > 48)
+        {
+        	return mb_substr($arg, 0, 23) . '…' . mb_substr($arg, -23);
+        }
+        return $arg;
     }
     private static function backtraceMessage($message, $html = true, array $stack)
     {

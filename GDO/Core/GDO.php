@@ -776,7 +776,7 @@ abstract class GDO #extends GDT
 	
 	/**
 	 * Return the GDO instance that is used as table struct.
-	 * @return \GDO\Core\GDO
+	 * @return self
 	 */
 	public static function table() { return self::tableFor(get_called_class()); }
 	

@@ -103,7 +103,7 @@ return array(
 'tu_y' => 'y',
 
 # Files
-'filesize' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),
+'_filesize' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),
 
 # Email formats
 'enum_html' => 'HTML',

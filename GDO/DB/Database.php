@@ -82,7 +82,7 @@ class Database
 		return $this->link;
 	}
 	
-	private function connect()
+	public function connect()
 	{
 	    return @mysqli_connect($this->host, $this->user, $this->pass, $this->db);
 	}
