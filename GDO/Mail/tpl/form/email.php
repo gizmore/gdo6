@@ -4,8 +4,8 @@ use GDO\UI\GDT_Icon;
 $field instanceof GDT_Email;
 ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <?= GDT_Icon::iconS('email'); ?>
   <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
+  <?= GDT_Icon::iconS('email'); ?>
   <input
    type="email"
    name="form[<?= $field->name; ?>]"

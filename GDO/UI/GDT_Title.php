@@ -11,4 +11,8 @@ class GDT_Title extends GDT_String
 	public function defaultLabel() { return $this->label('title'); }
 	public $min = 3;
 	public $max = 64;
+	public function __construct()
+	{
+		$this->icon('title');
+	}
 }

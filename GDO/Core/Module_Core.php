@@ -46,8 +46,7 @@ final class Module_Core extends GDO_Module
     public function getConfig()
     {
         return array(
-        	GDT_Divider::make()->label('div_core'),
-        	GDT_User::make('system_user'),
+        	GDT_User::make('system_user')->editable(false),
             GDT_Divider::make()->label('div_pagination'),
             GDT_UInt::make('ipp')->max(1000)->initial('20'),
             GDT_UInt::make('spp')->max(1000)->initial('10'),
@@ -82,7 +81,8 @@ final class Module_Core extends GDO_Module
     
     public function gdoConfigJS()
     {
-        return "window.GDO_CONFIG = {};";
+        return sprintf("window.GDO_CONFIG = {}; window.GWF_PROTOCOL = '%s'; window.GWF_DOMAIN = '%s'; window.GWF_WEB_ROOT = '%s';",
+        	GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT);
     }
     
     public function gdoUserJS()

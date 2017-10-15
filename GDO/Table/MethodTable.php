@@ -3,8 +3,6 @@ namespace GDO\Table;
 
 use GDO\Core\Method;
 use GDO\DB\ArrayResult;
-use GDO\Core\GDT;
-use GDO\Util\Common;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Fields;
 /**

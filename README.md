@@ -51,6 +51,7 @@ Modules with # are not ready for production yet.
     ## git clone --recursive https://github.com/gizmore/gdo6-dog Dog
     git clone --recursive https://github.com/gizmore/gdo6-download Download
     git clone --recursive https://github.com/gizmore/gdo6-facebook Facebook
+    git clone --recursive https://github.com/gizmore/gdo6-font-awesome FontAwesome
     git clone --recursive https://github.com/gizmore/gdo6-forum Forum
     git clone --recursive https://github.com/gizmore/gdo6-friends Friends
     git clone --recursive https://github.com/gizmore/gdo6-gallery Gallery
@@ -80,6 +81,7 @@ Modules with # are not ready for production yet.
     git clone --recursive https://github.com/gizmore/gdo6-register Register
     # git clone --recursive https://github.com/gizmore/gdo6-shoutbox Shoutbox
     git clone --recursive https://github.com/gizmore/gdo6-tag Tag
+    git clone --recursive https://github.com/gizmore/gdo6-tinymce TinyMCE
     # git clone --recursive https://github.com/gizmore/gdo6-usergroup Usergroup
     git clone --recursive https://github.com/gizmore/gdo6-vote Vote
     git clone --recursive https://github.com/gizmore/gdo6-websocket Websocket

@@ -1,48 +1,36 @@
 <?php
 namespace GDO\UI;
+
 use GDO\Core\GDT_Template;
 use GDO\DB\GDT_Text;
+
 /**
- * A message is GDT_Text with an editor.
- * Currently, no nice md editor is to be found on the webs?
+ * A message is a GDT_Text with an editor.
+ * The content is html, filtered through a whitelist with html-purifier.
+ * The default editor is simply a textarea.
  * 
+ * @see \GDO\TinyMCE\Module_TinyMCE
  * @author gizmore
  * @since 3.0
- * @version 5.0
+ * @version 6.05
  */
 class GDT_Message extends GDT_Text
 {
-	public function renderForm()
+	public function __construct()
 	{
-		return GDT_Template::php('UI', 'form/message.php', ['field'=>$this]);
+		$this->icon('message');
 	}
 	
-	public function renderCell()
-	{
-	    return GDT_Template::php('UI', 'cell/message.php', ['field'=>$this]);
-	}
+	##############
+	### Render ###
+	##############
+	public function renderCell() { return GDT_Template::php('UI', 'cell/message.php', ['field'=>$this]); }
+	public function renderForm() { return GDT_Template::php('UI', 'form/message.php', ['field'=>$this]); }
+	public function renderList() { return '<div class="gdo-message-condense">'.$this->renderCell().'</div>'; }
 	
-	public function renderList()
-	{
-	    return '<div class="gdo-message-condense">'.$this->renderCell().'</div>';
-	}
-	
-	private function getPurifier()
-	{
-	    static $purifier;
-	    if (!isset($purifier))
-	    {
-	        require GWF_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
-	        $config = \HTMLPurifier_Config::createDefault();
-	        $config->set('Attr.AllowedClasses', 'b');
-	        $config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
-	        $config->set('HTML.SafeObject', true);
-	        $config->set('HTML.Nofollow', true);
-	        $purifier = new \HTMLPurifier($config);
-	    }
-	    return $purifier;
-	}
-	
+	################
+	### Validate ###
+	################
 	public function validate($value)
 	{
 	    if (parent::validate($value))
@@ -51,6 +39,22 @@ class GDT_Message extends GDT_Text
 	        $this->changeRequestVar($value);
 	        return true;
 	    }
+	}
+	
+	private function getPurifier()
+	{
+		static $purifier;
+		if (!isset($purifier))
+		{
+			require GWF_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
+			$config = \HTMLPurifier_Config::createDefault();
+			$config->set('Attr.AllowedClasses', 'b');
+			$config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
+			$config->set('HTML.SafeObject', true);
+			$config->set('HTML.Nofollow', true);
+			$purifier = new \HTMLPurifier($config);
+		}
+		return $purifier;
 	}
 	
 }

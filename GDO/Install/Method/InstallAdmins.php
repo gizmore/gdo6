@@ -1,13 +1,11 @@
 <?php
 namespace GDO\Install\Method;
+
 use GDO\DB\Database;
 use GDO\Form\MethodForm;
 use GDO\Core\GDT_Template;
 use GDO\User\GDO_User;
-use GDO\User\GDT_Password;
 use GDO\Core\Debug;
-use GDO\User\GDT_Username;
-use GDO\Mail\GDT_Email;
 use GDO\Form\GDT_Form;
 use GDO\Form\GDT_Submit;
 use GDO\User\GDO_UserPermission;

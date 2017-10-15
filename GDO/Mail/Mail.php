@@ -133,7 +133,7 @@ final class Mail
 	
 	public function nestedHTMLBody()
 	{
-		if (!class_exists('GDO\Template\GDT_Template'))
+		if (!class_exists('GDO\Core\GDT_Template'))
 		{
 			return $this->body;
 		}

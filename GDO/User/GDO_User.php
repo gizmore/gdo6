@@ -76,7 +76,7 @@ final class GDO_User extends GDO
     
     public function getLevel() { return $this->getVar('user_level'); }
     public function getCredits() { return $this->getVar('user_credits'); }
-    public function isAuthenticated() { return $this->isGuest() || $this->isMember(); }
+    public function isAuthenticated() { return !$this->isGhost(); }
     
     public function hasMail() { return !!$this->getMail(); }
     public function getMail() { return $this->getVar('user_email'); }

@@ -17,7 +17,7 @@ $page instanceof GDO\UI\GDT_Page;
     <?= GDT_Template::php('Install', 'crumb/progress.php'); ?>
   </header>
   <div class="gdo-body">
-    <main><?= $page->html; ?></main>
+    <div class="gdo-main"><?= $page->html; ?></div>
   </div>
   <footer>
     &copy;2017, 2018 by <?= GDT_Email::make()->val('Christian <gizmore@wechall.net>')->renderCell(); ?>
