@@ -83,7 +83,7 @@ trait WithObject
         }
         else
         {
-        	return [$this->name => null];
+        	return [$this->name => $this->getVar()];
         }
     }
     

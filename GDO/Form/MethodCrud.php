@@ -127,7 +127,7 @@ abstract class MethodCrud extends MethodForm
 		}
 		
 		$gdo = $this->gdo ? $this->gdo : $this->gdoTable();
-		if ($gdo)
+		if ($this->gdo)
 		{
 			$form->withGDOValuesFrom($gdo);
 		}

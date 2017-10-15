@@ -36,7 +36,7 @@ trait WithDatabase
     public function gdoNullDefine() { return $this->notNull ? ' NOT NULL' : ''; }
     public function gdoInitialDefine() { return isset($this->initial) ? (" DEFAULT ".GDO::quoteS($this->initial)) : ''; }
     public function identifier() { return $this->name; }
-    public function blankData() { return [$this->name => $this->getVar()]; }
+    public function blankData() { return [$this->name => $this->initial]; }
     public function getGDOData() { return [$this->name => $this->getVar()]; }
     
     /**
