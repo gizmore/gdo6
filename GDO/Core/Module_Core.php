@@ -7,6 +7,7 @@ use GDO\UI\GDT_Divider;
 use GDO\UI\GDT_Link;
 use GDO\User\GDO_User;
 use GDO\Util\Javascript;
+use GDO\User\GDT_User;
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
  * simply because it installs the module table.
@@ -45,6 +46,8 @@ final class Module_Core extends GDO_Module
     public function getConfig()
     {
         return array(
+        	GDT_Divider::make()->label('div_core'),
+        	GDT_User::make('system_user'),
             GDT_Divider::make()->label('div_pagination'),
             GDT_UInt::make('ipp')->max(1000)->initial('20'),
             GDT_UInt::make('spp')->max(1000)->initial('10'),
@@ -56,6 +59,8 @@ final class Module_Core extends GDO_Module
             GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
         );
     }
+    public function cfgSystemUser() { return $this->getConfigValue('system_user'); }
+    public function cfgSystemUserID() { return $this->getConfigVar('system_user'); }
     public function cfgIPP() { return $this->getConfigVar('ipp'); }
     public function cfgSPP() { return $this->getConfigVar('spp'); }
     public function cfgMinifyJS() { return $this->getConfigVar('minify_js'); }

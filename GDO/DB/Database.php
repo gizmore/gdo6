@@ -262,4 +262,21 @@ class Database
 	{
 		return mysqli_rollback($this->getLink());
 	}
+	
+	############
+	### Lock ###
+	############
+	
+	###############
+	### FKCheck ###
+	###############
+	public function enableForeignKeyCheck($check="1")
+	{
+		return $this->query("SET foreign_key_checks = $check");
+	}
+
+	public function disableForeignKeyCheck()
+	{
+		return $this->enableForeignKeyCheck("0");
+	}
 }

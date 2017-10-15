@@ -1,13 +1,15 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDO;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
-use GDO\Core\Debug;
 use GDO\Core\GDT_Template;
+
 /**
  * You would expect this to be GDT_Object,
- * but this is also mixed into GDT_ObjectSelect.
+ * but this is also mixed into GDT_ObjectSelect, hence it is a trait.
+ * 
  * @author gizmore
  * @see GDT_Object
  * @see GDT_ObjectSelect
@@ -155,7 +157,7 @@ trait WithObject
         $define = preg_replace('#,FOREIGN KEY .* ON UPDATE CASCADE#', '', $define);
         $on = $this->fkOn ? $this->fkOn : $primaryKey->identifier();
         return "$define{$this->gdoNullDefine()}".
-            ",FOREIGN KEY ({$this->identifier()}) REFERENCES $tableName($on) ON DELETE {$this->cascade} ON UPDATE CASCADE";
+            ",FOREIGN KEY ({$this->identifier()}) REFERENCES $tableName($on) ON DELETE {$this->cascade} ON UPDATE {$this->cascade}";
     }
 
     ##############

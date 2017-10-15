@@ -8,8 +8,9 @@ class GDT_Object extends GDT_UInt
     use WithObject;
     use WithCompletion;
     
-//     public function blankData() { return [$this->name => $this->getValue()->getID()]; }  
-    
+    ##############
+    ### Render ###
+    ##############
     public function renderJSON()
     {
         $gdo = $this->getValue();

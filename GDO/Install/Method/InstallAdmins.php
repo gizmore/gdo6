@@ -13,6 +13,8 @@ use GDO\Form\GDT_Submit;
 use GDO\User\GDO_UserPermission;
 use GDO\Util\BCrypt;
 use GDO\User\GDO_Permission;
+use GDO\Core\ModuleLoader;
+use GDO\Form\GDT_AntiCSRF;
 
 class InstallAdmins extends MethodForm
 {
@@ -20,11 +22,14 @@ class InstallAdmins extends MethodForm
     {
         Debug::init();
         Database::init();
+        ModuleLoader::instance()->loadModules();
+        $users = GDO_User::table();
         $form->addFields(array(
-            GDT_Username::make('user_name'),
-            GDT_Email::make('user_email'),
-            GDT_Password::make('user_password'),
+        	$users->gdoColumn('user_name'),
+        	$users->gdoColumn('user_email'),
+        	$users->gdoColumn('user_password'),
             GDT_Submit::make(),
+        	GDT_AntiCSRF::make(),
         ));
     }
     

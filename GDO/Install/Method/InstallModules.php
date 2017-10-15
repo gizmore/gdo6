@@ -9,6 +9,7 @@ use GDO\Install\Installer;
 use GDO\Install\Config;
 use GDO\Core\GDT_Success;
 use GDO\DB\Cache;
+use GDO\Core\GDT_Response;
 /**
  * Install selected modules.
  * @author gizmore
@@ -48,22 +49,26 @@ final class InstallModules extends Method
     
     public function onInstall(array $toInstall)
     {
+    	$response = GDT_Response::make();
         try
         {
             foreach ($this->modules as $module)
             {
-                Database::instance()->transactionBegin();
                 $name = $module->getName();
                 if (isset($toInstall[$name]))
                 {
+	                Database::instance()->transactionBegin();
+	                $response->addHTML("Installing $name...");
                     Installer::installModule($module);
+                    $response->addHTML("Done!<br/>\n");
+                    Database::instance()->transactionEnd();
                 }
-                Database::instance()->transactionEnd();
             }
         }
         catch (\Exception $e)
         {
             Database::instance()->transactionRollback();
+//             echo $response->renderHTML();
             throw $e;
         }
         finally
@@ -71,6 +76,6 @@ final class InstallModules extends Method
         	Cache::flush();
         }
         
-        return GDT_Success::with(t('install_modules_completed', [Config::linkStep(5)]));
+        return $response->addField(GDT_Success::with(t('install_modules_completed', [Config::linkStep(5)])));
     }
 }

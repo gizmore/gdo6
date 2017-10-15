@@ -908,9 +908,9 @@ abstract class GDO #extends GDT
 			}
 			$values[] = implode(',', $brow);
 		}
-		$values = implode('), (', $values);
+		$values = implode("),\n(", $values);
 		
-		$query = "$insert INTO {$table->gdoTableIdentifier()} (`$names`) VALUES ($values)";
+		$query = "$insert INTO {$table->gdoTableIdentifier()} (`$names`)\n VALUES\n($values)";
 		Database::instance()->queryWrite($query);
 	}
 	

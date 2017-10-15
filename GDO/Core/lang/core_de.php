@@ -56,6 +56,8 @@ return array(
 
 # Generic Errors
 'err_db' => "Databank Fehler: %s<br/>\n%s<br/>\n",
+'err_exception' => 'Exception: %s',
+'err_gdo_object_no_table' => '%s ist ein GDT_Object ohne Tabelle.',
 'err_token' => 'Ihr Token ist ungültig.',
 'err_csrf' => 'Ihr Formular-Token ist ungültig. Haben Sie versucht ein Formular zweimal abzusenden? Eventuell haben Sie auch Cookies deaktiviert.',
 'err_field_invalid' => 'Ihr Wert für %s wurde nicht akzeptiert.',

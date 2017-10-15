@@ -9,7 +9,7 @@ use GDO\DB\GDT_String;
  * @version 6.05
  * @since 3.00
  */
-class GDO_ModuleVar extends GDO
+final class GDO_ModuleVar extends GDO
 {
 	public function gdoCached() { return false; }
 	###########
