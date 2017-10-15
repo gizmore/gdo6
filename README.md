@@ -35,6 +35,7 @@ Then remove the modules you do not want and clone the remaining modules.
     git clone --recursive https://github.com/gizmore/gdo6-avatar Avatar
     git clone --recursive https://github.com/gizmore/gdo6-backup Backup
     # git clone --recursive https://github.com/gizmore/gdo6-backup Blog
+    git clone --recursive https://github.com/gizmore/gdo6-bootstrap Bootstrap
     # git clone --recursive https://github.com/gizmore/gdo6-buzzerapp Buzzerapp
     git clone --recursive https://github.com/gizmore/gdo6-captcha Captcha
     git clone --recursive https://github.com/gizmore/gdo6-category Category
