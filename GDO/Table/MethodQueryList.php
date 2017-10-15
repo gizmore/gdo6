@@ -16,7 +16,7 @@ use GDO\Core\GDT_Fields;
 abstract class MethodQueryList extends MethodQuery
 {
     /**
-     * @return GDO
+     * @return \GDO\Core\GDO
      */
     public abstract function gdoTable();
     
@@ -25,7 +25,7 @@ abstract class MethodQueryList extends MethodQuery
     public function gdoDecorateList(GDT_List $list) {}
     
     /**
-     * @return Query
+     * @return \GDO\DB\Query
      */
     public function gdoQuery() { return $this->gdoTable()->select(); }
     

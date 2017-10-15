@@ -11,4 +11,9 @@ trait WithTooltip
     {
         return $this->tooltip ? GDT_Template::php('UI', 'cell/tooltip.php', ['field' => $this]) : null;
     }
+    
+    public static function with($tooltip)
+    {
+    	return self::make()->tooltip($tooltip)->render();
+    }
 }
