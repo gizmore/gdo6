@@ -131,4 +131,10 @@ final class Website
         }
         return $back;
     }
+    
+    public static function renderJSON($json)
+    {
+    	header('Content-Type: application/json');
+    	die(json_encode($json));
+    }
 }

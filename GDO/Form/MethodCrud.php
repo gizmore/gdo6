@@ -6,6 +6,8 @@ use GDO\Core\GDO;
 use GDO\User\PermissionException;
 use GDO\Util\Common;
 use GDO\File\GDT_File;
+use GDO\Core\WithFields;
+use GDO\Core\GDT;
 /**
  * Abstract CReate|Update|Delete for a GDO.
  * @author gizmore
@@ -126,11 +128,11 @@ abstract class MethodCrud extends MethodForm
 			$form->addField(GDT_Submit::make('delete')->icon('delete'));
 		}
 		
-		$gdo = $this->gdo ? $this->gdo : $this->gdoTable();
-		if ($this->gdo)
-		{
+		$gdo = $this->gdo ? $this->gdo : $this->blank();
+// 		if ($this->gdo)
+// 		{
 			$form->withGDOValuesFrom($gdo);
-		}
+// 		}
 		
 		if ($this->gdo)
 		{
@@ -138,8 +140,16 @@ abstract class MethodCrud extends MethodForm
 		}
 		else
 		{
+			$this->blank();
 		    $this->crudCreateTitle();
 		}
+	}
+	
+	private function blank()
+	{
+		$this->getForm()->withFields(function(GDT $gdoType){
+			$gdoType->initial($gdoType->initial);
+		});
 	}
 	
 	protected function crudCreateTitle()

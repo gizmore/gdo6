@@ -138,7 +138,7 @@ abstract class GDT
 	public function render() { return $this->renderCell(); }
 	public function renderCard() { return $this->renderDebug(); }
 	public function renderCell() { return html($this->getVar()); }
-	public function renderChoice() { return $this->render(); }
+	public function renderChoice($choice) { return $choice instanceof GDO ? $choice->renderChoice() : $choice; }
 	public function renderFilter() {}
 	public function renderForm() { return $this->render(); }
 	public function renderHeader() {}

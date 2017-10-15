@@ -8,6 +8,7 @@ use GDO\UI\GDT_Link;
 use GDO\User\GDO_User;
 use GDO\Util\Javascript;
 use GDO\User\GDT_User;
+use GDO\Language\Trans;
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
  * simply because it installs the module table.
@@ -81,8 +82,11 @@ final class Module_Core extends GDO_Module
     
     public function gdoConfigJS()
     {
-        return sprintf("window.GDO_CONFIG = {}; window.GWF_PROTOCOL = '%s'; window.GWF_DOMAIN = '%s'; window.GWF_WEB_ROOT = '%s';",
-        	GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT);
+        return sprintf("
+window.GDO_CONFIG = {};
+window.GWF_PROTOCOL = '%s'; window.GWF_DOMAIN = '%s'; window.GWF_WEB_ROOT = '%s';
+window.GWF_LANGUAGE = '%s';",
+        	GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT, Trans::$ISO);
     }
     
     public function gdoUserJS()

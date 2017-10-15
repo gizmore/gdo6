@@ -28,8 +28,11 @@ trait WithIcon
     
     public static function rawIconS($icon, $size=null, $color=null)
     {
-        $style = self::iconStyle($size, $color);
-        return sprintf('<span class="gdo-icon"%s>%s</span>', $style, $icon);
+    	if ($icon)
+    	{
+	        $style = self::iconStyle($size, $color);
+	        return sprintf('<span class="gdo-icon"%s>%s</span>', $style, $icon);
+    	}
     }
     
     private static function iconStyle($size, $color)
@@ -42,16 +45,16 @@ trait WithIcon
     ############
     ### Icon ###
     ############
-    private $icon;
+    protected $icon;
     public function icon($icon) { $this->icon = $icon; return $this; }
     
-    private $rawIcon;
+    protected $rawIcon;
     public function rawIcon($rawIcon) { $this->rawIcon = $rawIcon; return $this; }
 
-    private $size;
+    protected $size;
     public function size($size) { $this->size = $size; return $this; }
 
-    private $color;
+    protected $color;
     public function color($color) { $this->color = $color; return $this; }
     
     ##############

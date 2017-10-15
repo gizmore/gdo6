@@ -47,7 +47,7 @@ trait WithObject
         if (!empty($var))
         {
             # Without javascript, convert the name input
-            if (isset($_POST['nojs']))
+            if (isset($_REQUEST['nocompletion']))
             {
                 return $this->findByName($var);
             }

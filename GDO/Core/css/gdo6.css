@@ -5,7 +5,7 @@ span, img { display: inline-block; }
 .ib { display: inline-block; }
 .n { display: none; }
 .cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
-
+.ce { text-align: center; margin: auto; }
 /** Main Layout **/
 body { min-height: 100%; }
 html { height: 100%; }

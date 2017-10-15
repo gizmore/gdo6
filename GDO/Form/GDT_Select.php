@@ -6,6 +6,8 @@ use GDO\Core\GDO;
 
 class GDT_Select extends GDT_ComboBox
 {
+	const SELECTED = ' selected="selected"';
+	
     public function getVar()
     {
         if (null === ($value = $this->getRequestVar('form', $this->var)))
@@ -126,18 +128,18 @@ class GDT_Select extends GDT_ComboBox
     {
         $this->emptyValue = $emptyValue;
         $this->emptyLabel = $emptyLabel;
-        return $this->val($emptyValue);
+        return $this->initial($emptyValue);
     }
     
     public function htmlSelected($value)
     {
         if ($this->multiple)
         {
-            return in_array($value, $this->getValue(), 1) ? ' selected="selected"' : '';
+            return array_key_exists((string)$value, $this->getValue()) ? self::SELECTED : '';
         }
         else 
         {
-            return $this->getVar() === $value ? ' selected="selected"' : '';
+            return $this->getVar() === $value ? self::SELECTED : '';
         }
     }
     

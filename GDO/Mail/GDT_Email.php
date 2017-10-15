@@ -6,6 +6,7 @@ use GDO\Core\GDT_Template;
 class GDT_Email extends GDT_String
 {
     public $pattern = "/^[^@]+@[^@]+$/i";
+    protected $icon = 'email';
     
     public function defaultLabel() { return $this->label('email'); }
     

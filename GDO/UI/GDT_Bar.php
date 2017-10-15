@@ -18,7 +18,7 @@ class GDT_Bar extends GDT
 
     public function renderCell() { return GDT_Template::php('UI', 'cell/bar.php', ['bar' => $this]); }
     
-    public $direction = self::HORIZONTAL;
+    public $direction = self::VERTICAL;
     public function direction($direction) { $this->direction = $direction; return $this; }
     public function vertical() { return $this->direction(self::VERTICAL); }
     public function horizontal() { return $this->direction(self::HORIZONTAL); }

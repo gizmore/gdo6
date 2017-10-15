@@ -87,7 +87,7 @@ abstract class MethodForm extends Method
     }
     
     /**
-     * @return GDT_Form
+     * @return \GDO\Form\GDT_Form
      */
     public function getForm()
     {

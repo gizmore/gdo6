@@ -1,18 +1,13 @@
-<?php
-use GDO\Date\GDT_Timestamp;
-$field instanceof GDT_Timestamp;
-$id = 'date_'.$field->name;
-?>
-<div class="gdo-container<?= $field->classError(); ?>"
- ng-controller="GDODatepickerCtrl">
-  <?= $field->htmlIcon(); ?>
-  <?= $field->htmlTooltip(); ?>
-  <label for="<?=$id;?>"><?=$field->label;?></label>
+<?php /** @var $field \GDO\Date\GDT_Timestamp; **/
+$id = 'date_'.$field->name; ?>
+<div class="gdo-container<?=$field->classError()?>">
+  <?=$field->htmlTooltip()?>
+  <label for="<?=$id?>"><?=$field->label?></label>
+  <?=$field->htmlIcon()?>
   <input
-   id="<?= $id; ?>"
+   id="<?=$id?>"
    type="datetime"
    name="form[<?= $field->name; ?>]"
-   value="<?= $field->displayVar(); ?>" />
-  <?= $field->htmlError(); ?>
+   value="<?=$field->displayVar()?>" />
+  <?=$field->htmlError()?>
 </div>
- 

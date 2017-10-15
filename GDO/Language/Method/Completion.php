@@ -20,7 +20,7 @@ final class Completion extends Method
 				$response[] = array(
 					'id' => $iso,
 					'text' => $language->displayName(),
-					'display' => $cell->gdo($language)->renderChoice(),
+					'display' => $cell->gdo($language)->renderChoice($language),
 				);
 			}
 		}

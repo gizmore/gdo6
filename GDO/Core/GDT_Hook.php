@@ -70,10 +70,13 @@ final class GDT_Hook extends GDT
         $method_name = "hook$event";
         foreach (ModuleLoader::instance()->getModules() as $module)
         {
-            if (method_exists($module, $method_name))
-            {
-                call_user_func([$module, $method_name], ...$args);
-            }
+        	if ($module->isEnabled())
+        	{
+	            if (method_exists($module, $method_name))
+	            {
+	                call_user_func([$module, $method_name], ...$args);
+	            }
+        	}
         }
         
         # Call IPC hooks

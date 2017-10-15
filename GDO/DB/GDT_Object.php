@@ -29,17 +29,16 @@ class GDT_Object extends GDT_UInt
     	{
     		return $obj->renderCell();
     	}
-    	return $this->getValue();
+    	return $this->getVar();
     }
     
-    public function renderChoice()
-    {
-        if ($obj = $this->gdo)
-        {
-            return $obj->renderChoice();
-        }
-        return $this->getValue();
-    }
+//     public function renderChoice($choice)
+//     {
+//         if ($obj = $this->getValue())
+//         {
+//             return $obj->renderChoice();
+//         }
+//     }
     
     public function renderForm()
     {

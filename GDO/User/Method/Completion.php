@@ -5,6 +5,7 @@ use GDO\Core\GDO;
 use GDO\User\GDT_User;
 use GDO\User\GDO_User;
 use GDO\Util\Common;
+use GDO\Core\Website;
 
 /**
  * Auto completion for GDT_User types.
@@ -27,9 +28,9 @@ final class Completion extends Method
 			$response[] = array(
 				'id' => $user->getID(),
 				'text' => $user->displayNameLabel(),
-				'display' => $cell->gdo($user)->renderChoice(),
+				'display' => $cell->renderChoice($user),
 			);
 		}
-		die(json_encode($response));
+		Website::renderJSON($response);
 	}
 }

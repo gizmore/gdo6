@@ -156,7 +156,7 @@ class GDT_Table extends GDT
 	
 	public function getHeaderFields()
 	{
-	    return $this->headers->getFields();
+	    return $this->headers ? $this->headers->getFields() : null;
 	}
 	
 	/**

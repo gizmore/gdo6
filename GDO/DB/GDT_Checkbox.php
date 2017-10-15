@@ -20,14 +20,15 @@ class GDT_Checkbox extends GDT_Select
     	if (!$this->choices)
     	{
     		$this->choices = [];
-    		if ($this->undetermined)
-    		{
-    			$this->emptyInitial(t('please_choose'), $this->emptyValue);
-    		}
     		$this->choices(array(
     			'0' => t('no'),
     			'1' => t('yes'),
     		));
+    		if ($this->undetermined)
+    		{
+    			$this->emptyInitial(t('please_choose'), $this->emptyValue);
+    			$this->choices[$this->emptyValue] = $this->emptyLabel;
+    		}
     	}
     	return $this;
     }

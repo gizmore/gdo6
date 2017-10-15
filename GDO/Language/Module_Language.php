@@ -1,9 +1,22 @@
 <?php
 namespace GDO\Language;
+
 use GDO\Core\GDO_Module;
 use GDO\UI\GDT_Bar;
 use GDO\Util\Strings;
 use GDO\Core\Application;
+use GDO\User\GDO_User;
+
+/**
+ * Internationalization Module.
+ * - Detect language by cookie or http_accept_language
+ * - Provide lang switcher via cookie
+ * - Provide language select
+ * - Provide GDO_Language table
+ * @author gizmore
+ * @since 2.0
+ * @version 6.06
+ */
 class Module_Language extends GDO_Module
 {
     public $module_priority = 2;
@@ -12,6 +25,9 @@ class Module_Language extends GDO_Module
     public function onInstall() { LanguageData::onInstall(); }
     public function onLoadLanguage() { $this->loadLanguage('lang/language'); }
 
+    ##############
+    ### Config ###
+    ##############
     public function getConfig()
     {
         return array(
@@ -33,6 +49,9 @@ class Module_Language extends GDO_Module
         return $supported;
     }
     
+    ############
+    ### Init ###
+    ############
     public function onInit()
     {
         if (!Application::instance()->isCLI())
@@ -41,30 +60,44 @@ class Module_Language extends GDO_Module
         }
     }
     
+    #################
+    ### Detection ###
+    #################
     public function detectISO()
     {
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-        {
-            $languages = GDO_Language::table()->allSupported();
-            if (preg_match_all("/[-a-zA-Z,]+;q=[.\d]+/", $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches))
-            {
-                foreach ($matches[0] as $match)
-                {
-                    list($isos, $q) = explode(';', ltrim($match, ','));
-                    foreach (explode(',', $isos) as $iso)
-                    {
-                        $iso = strtolower(Strings::substrTo($iso, '-', $iso));
-                        if (isset($languages[$iso]))
-                        {
-                            return $iso;
-                        }
-                    }
-                }
-            }
-        }
-        return GWF_LANGUAGE;
+    	if (!($iso = $this->detectAcceptLanguage()))
+    	{
+    		$iso = GDO_User::current()->getLangISO();
+    	}
+        return $iso ? $iso : GWF_LANGUAGE;
     }
     
+    public function detectAcceptLanguage()
+    {
+    	if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+    	{
+    		$languages = GDO_Language::table()->allSupported();
+    		if (preg_match_all("/[-a-zA-Z,]+;q=[.\d]+/", $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches))
+    		{
+    			foreach ($matches[0] as $match)
+    			{
+    				list($isos, $q) = explode(';', ltrim($match, ','));
+    				foreach (explode(',', $isos) as $iso)
+    				{
+    					$iso = strtolower(Strings::substrTo($iso, '-', $iso));
+    					if (isset($languages[$iso]))
+    					{
+    						return $iso;
+    					}
+    				}
+    			}
+    		}
+    	}
+    }
+    
+    #############
+    ### Hooks ###
+    #############
     public function hookRightBar(GDT_Bar $navbar)
     {
         $this->templatePHP('rightbar.php', ['navbar'=>$navbar]);

@@ -61,6 +61,7 @@ Modules with # are not ready for production yet.
     git clone --recursive https://github.com/gizmore/gdo6-import-gwf3 ImportGWF3
     git clone --recursive https://github.com/gizmore/gdo6-ip2country IP2Country
     git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
+    git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
     git clone --recursive https://github.com/gizmore/gdo6-links Links
     git clone --recursive https://github.com/gizmore/gdo6-login Login
     git clone --recursive https://github.com/gizmore/gdo6-logs Logs

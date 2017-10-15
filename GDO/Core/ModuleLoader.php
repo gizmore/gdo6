@@ -47,6 +47,13 @@ final class ModuleLoader
         return $this->modules;
     }
     
+    public function getEnabledModules()
+    {
+    	return array_filter($this->modules, function(GDO_Module $module){
+    		return $module->isEnabled();
+    	});
+    }
+    
     /**
      * @param string $moduleName
      * @return GDO_Module

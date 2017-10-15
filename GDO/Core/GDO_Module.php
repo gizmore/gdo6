@@ -148,6 +148,7 @@ class GDO_Module extends GDO
     public function getName() { return $this->getVar('module_name'); }
     public function getVersion() { return $this->getVar('module_version'); }
     public function isEnabled() { return !!$this->getVar('module_enabled'); }
+    public function isInstalled() { return $this->isPersisted(); }
     public function isCoreModule() { return false; }
     public function getSiteName() { return sitename(); }
     

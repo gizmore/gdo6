@@ -13,5 +13,6 @@ $id = 'gwfac_'.$field->name; ?>
    id="<?= $id; ?>"
    name="form[<?= $field->name; ?>]"
    value="<?= html($field->getVar()); ?>" />
+  <input type="hidden" name="nocomplete" value="1" />
   <?= $field->htmlError(); ?>
 </div>

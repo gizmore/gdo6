@@ -5,7 +5,7 @@ $field instanceof GDT_Email;
 ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
-  <?= GDT_Icon::iconS('email'); ?>
+  <?=$field->htmlIcon()?>
   <input
    type="email"
    name="form[<?= $field->name; ?>]"
