@@ -128,11 +128,11 @@ abstract class MethodCrud extends MethodForm
 			$form->addField(GDT_Submit::make('delete')->icon('delete'));
 		}
 		
-		$gdo = $this->gdo ? $this->gdo : $this->blank();
-// 		if ($this->gdo)
-// 		{
+		$gdo = $this->gdo ? $this->gdo : $this->gdoTable();
+		if ($this->gdo)
+		{
 			$form->withGDOValuesFrom($gdo);
-// 		}
+		}
 		
 		if ($this->gdo)
 		{
@@ -140,15 +140,15 @@ abstract class MethodCrud extends MethodForm
 		}
 		else
 		{
-			$this->blank();
+			$this->blank($form);
 		    $this->crudCreateTitle();
 		}
 	}
 	
-	private function blank()
+	private function blank(GDT_Form $form)
 	{
-		$this->getForm()->withFields(function(GDT $gdoType){
-			$gdoType->initial($gdoType->initial);
+		$form->withFields(function(GDT $gdoType){
+			$gdoType->val($gdoType->initial);
 		});
 	}
 	

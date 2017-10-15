@@ -17,10 +17,8 @@
           <?= $field->renderForm(); ?>
         <?php endif; ?>
       <?php endforeach; ?>
-        <input type="hidden" name="nojs" id="nojs_<?=$form->name?>" value="1" />
       </form>
     </div>
   </div>
 </div>
-<script type="text/javascript">document.getElementById('nojs_<?=$form->name?>').disabled = 'disabled';</script>
 <!-- End of Form -->

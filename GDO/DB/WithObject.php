@@ -47,8 +47,9 @@ trait WithObject
         if (!empty($var))
         {
             # Without javascript, convert the name input
-            if (isset($_REQUEST['nocompletion']))
+            if (isset($_REQUEST['nocompletion_'.$this->name]))
             {
+//             	unset($_REQUEST['nocompletion_'.$this->name]);
                 return $this->findByName($var);
             }
             return $this->table->findById(...explode(':', $var));

@@ -8,7 +8,7 @@ use GDO\Install\Config;
 $steps = Config::steps();
 $step = Math::clamp(Common::getGetInt('step', 1), 1, $steps);
 
-$bar = GDT_Bar::make();
+$bar = GDT_Bar::make()->horizontal();
 
 foreach ($steps as $step => $name)
 {
