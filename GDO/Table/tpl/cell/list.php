@@ -3,18 +3,18 @@ use GDO\Util\Common;
 $headers = $field->headers;
 ?>
 <!-- List -->
-<div class="gdo-list">
+<div class="gdt-list">
 <?php if ($field->title) : ?>
   <h3><?= $field->title; ?></h3>
 <?php endif; ?>
-  <ul>
+  <div class="gdt-list-inner">
 <?php
 $result = $field->getResult();
 $template = $field->getItemTemplate();
 while ($gdo = $result->fetchObject()) :
 	echo $template->gdo($gdo)->renderList();
 endwhile; ?>
-  </ul>
+  </div>
 </div>
 
 <?= $field->pagemenu ? $field->pagemenu->renderCell() : ''; ?>
