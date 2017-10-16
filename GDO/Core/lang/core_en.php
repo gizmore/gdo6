@@ -42,6 +42,8 @@ return array(
 'permission' => 'Permission',
 'created_at' => 'Created at',
 'created_by' => 'Created by',
+'module_sort' => 'Sort',
+'priority' => 'Priority',
 
 # Generic Buttons
 'btn_back' => 'Back',
@@ -90,6 +92,7 @@ return array(
 'err_max_date' => 'This date has to be before %s.',
 'err_db_unique' => 'This entry already exists.',
 'err_image_format_not_supported' => 'The image format is not supported: %s',
+
 # Permissions
 'perm_admin' => 'Administrator',
 'perm_cronjob' => 'Cronjob',

@@ -42,7 +42,9 @@ return array(
 'permission' => 'Berechtigung',
 'created_at' => 'Erstellt am',
 'created_by' => 'Erstellt vom',
-
+'module_sort' => 'Sort',
+'priority' => 'Priorität',
+    
 # Generic Buttons
 'btn_back' => 'Zurück',
 'btn_send' => 'Senden',
@@ -69,7 +71,7 @@ return array(
 'err_upload_min_files' => 'Sie müssen mindestens %s Datei(en) hochladen.',
 'err_upload_max_files' => 'Sie dürfen nicht mehr als %s Datei(en) hochladen.',
 'err_permission_required' => 'Sie brauchen die <i>%s</i> Berechtigung um auf diese Funktion zuzugreifen.',
-'err_save_unpersisted_entity' => 'Tried to save an unpersisted entity of type <i>%s</i>.',
+'err_save_unpersisted_entity' => 'Speichern eines Eintrags ausserhalb der Datenbank: <i>%s</i>.',
 'err_file' => 'Datei nicht gefunden: %s',
 'err_already_authenticated' => 'Sie sind bereits angemeldet.',
 'err_gdo_not_found' => 'Zeile %s mit ID %s konnte nicht gefunden werden.',
@@ -126,15 +128,15 @@ return array(
 
 # Sidebar
 'gdo_sidebar_version' => 'gdo %s',
-'sidenav_left_title' => 'Application',
-'sidenav_right_title' => 'Settings',
+'sidenav_left_title' => 'Applikation',
+'sidenav_right_title' => 'Einstellungen',
     
 # Config
-'ipp' => 'Items per page (ipp)',
-'minify_js' => 'Minify Javascript On-the-fly?',
-'enum_no' => 'No',
-'enum_yes' => 'Yes',
-'enum_concat' => 'Concatenate',
+'ipp' => 'Einträge pro Seite (ipp)',
+'minify_js' => 'Javascript verkleinern',
+'enum_no' => 'Nein',
+'enum_yes' => 'Ja',
+'enum_concat' => 'Ja, und verketten',
 ################################################
 'link_node_detect' => 'Detect uglify binaries…',
 'msg_nodejs_detected' => 'The nodejs binary has been detected: <i>%s</i>',
