@@ -1,25 +1,31 @@
 # GDO Roadmap
 
-# TODO
+Pull requests < gimme your ssh key. :)
 
-# Nice Module Ideas
 
-- Re-implement Avatar Gallery?
-- Convert Module_Usergroup and Module_Guestbook
+# Module Ideas or what is left to convert
+
+- AvatarGallery, Usergroups, Guestbook, Shoutbox
 - Memcached monitor module
-- OpenTimes 
+- OpenTimes
+- Updater module using GIT
+- Shell module for shell interaction (see core=>detect node)
+- Show query details for perf bar
+- Own Memcached alternative: Filecache – on windows just serialize to fs. still some stuff might be worth caching, like LDAP.
+
 
 # Still todo (issues)
 
-- Change parameter order $code=200, $log=true in GDT_Error and GDT_Success.
-- Show query details for perf bar
+- Markup for News,Forum,Links,Downloads is horrible in default design
 
-- Memcached alternative Filecache – on windows just serialize to fs. still some stuff might be worth caching, like LDAP.
 - Change cachemiss return type of Memcached to null.
+- Change parameter order $code=200, $log=true in GDT_Error and GDT_Success.
+- Make multiple forms per page really accurate possible by using $form->name[$field->name] in getVar and templates
+
+- GDT_Checkbox filter implementation. Also honor undetermined state 2 
 
 - Modules: 3 iconbuttons: install,configure,adminsection
-- Make multiple forms per page really accurate possible by using $form->name[$field->name] in getVar and templates
-- GDT_Checkbox filter implementation. Also honor undetermined state 2 
+
 - Pagemenu shows dot too early
 
 
