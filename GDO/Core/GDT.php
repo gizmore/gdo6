@@ -3,6 +3,7 @@ namespace GDO\Core;
 use GDO\DB\Query;
 use GDO\Table\GDT_Table;
 use GDO\Util\Strings;
+use GDO\Form\GDT_Form;
 abstract class GDT
 {
 	use WithName;
@@ -20,16 +21,23 @@ abstract class GDT
 	public static function make($name=null)
 	{
 		$type = get_called_class();
-		$obj = new $type;
-		return $obj->name($name);
+		$obj = new $type();
+		/** @var $obj self **/
+		return $obj->name($name === null ? $obj->name : $name);
 	}
 	
 	############
 	### Name ###
 	############
 	public $name;
-	public function name($name=null) { $this->name = $name ? $name : self::nextName(); return $this; }
+	public function name($name=null) { $this->name = $name === null ? self::nextName() : $name; return $this; }
 	public function htmlClass() { return " gdo-".strtolower(Strings::rsubstrFrom(get_called_class(), '\\')); }
+
+	##############
+	### FormID ###
+	##############
+	public function id() { return (GDT_Form::$CURRENT?GDT_Form::$CURRENT->name:'')."_".$this->name; }
+	public function htmlID() { return sprintf('id="%s"', $this->id()); }
 
 	###########
 	### RWE ###

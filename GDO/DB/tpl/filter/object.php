@@ -3,4 +3,5 @@
  name="f[<?= $field->filterField ? $field->filterField : $field->name; ?>]"
  type="text"
  value="<?= html($field->filterValue()); ?>"
- size="5" />
+ size="5"
+ placeholder="ID"  />

@@ -9,7 +9,7 @@ class GDT_Form extends GDT
 {
     public static $VALIDATING_INSTANCE; # ugly, but hey.
     public static $VALIDATING_SUCCESS; # ugly, but hey.
-    public static $CURRENT;
+    public static $CURRENT; # ugly, but hey?! performance :)
     
     public $validated = false;
     
@@ -18,6 +18,7 @@ class GDT_Form extends GDT
     
     public function __construct()
     {
+    	$this->name = 'form';
         $this->action = $_SERVER['REQUEST_URI'];
     }
     

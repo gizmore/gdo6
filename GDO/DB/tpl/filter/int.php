@@ -4,4 +4,5 @@
  type="text"
  pattern="^[-0-9]*$"
  value="<?= html($field->filterValue()); ?>"
+ placeholder="n,n-m"
  size="1" />

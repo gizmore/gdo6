@@ -1,4 +1,6 @@
-<?php /** @var $form \GDO\Form\GDT_Form **/ ?>
+<?php /** @var $form \GDO\Form\GDT_Form **/
+$firstEditableField = null;
+?>
 <!-- Begin Form -->
 <div class="gdo-form">
   <div class="md-whiteframe-8dp">
@@ -8,17 +10,21 @@
         <p><?= $form->info; ?></p>
       </div>
       <form
-       id="form_<?=$form->name;?>"
+       id="gdo_<?=$form->name;?>"
        action="<?= $form->action; ?>"
        method="<?= $form->method; ?>"
        enctype="<?= $form->encoding; ?>">
-      <?php foreach ($form->getFields() as $field) : ?>
-        <?php if ($field->writable) : ?>
+<?php foreach ($form->getFields() as $field) : ?>
+        <?php if ($field->writable) :
+if ($field->editable) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
           <?= $field->renderForm(); ?>
         <?php endif; ?>
-      <?php endforeach; ?>
+<?php endforeach; ?>
       </form>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+window.GDO_FIRST_EDITABLE_FIELD = window.GDO_FIRST_EDITABLE_FIELD||'<?=$firstEditableField->id()?>';
+</script>
 <!-- End of Form -->

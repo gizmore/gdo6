@@ -15,9 +15,10 @@ use GDO\DB\GDT_Checkbox;
 use GDO\User\GDO_UserSettingBlob;
 /**
  * GDO base module class.
+ * 
  * @author gizmore
  * @since 1.00
- * @version 6.05
+ * @version 6.06
  */
 class GDO_Module extends GDO
 {
@@ -306,9 +307,10 @@ class GDO_Module extends GDO
     ##############
     ### Assets ###
     ##############
-    public function addBowerJavascript($path) { return $this->addJavascript('bower_components/'.$path); }
-    public function addJavascript($path) { return Javascript::addJavascript($this->wwwPath($path)); }
-    public function addBowerCSS($path) { return $this->addCSS('bower_components/'.$path); }
-    public function addCSS($path) { return Website::addCSS($this->wwwPath($path)); }
+    public function nocacheVersion() { return "?v={$this->getVersion()}"; }
+    public function addBowerJavascript($path) { return $this->addJavascript('bower_components/'.$path.$this->nocacheVersion()); }
+    public function addJavascript($path) { return Javascript::addJavascript($this->wwwPath($path.$this->nocacheVersion())); }
+    public function addBowerCSS($path) { return $this->addCSS('bower_components/'.$path.$this->nocacheVersion()); }
+    public function addCSS($path) { return Website::addCSS($this->wwwPath($path.$this->nocacheVersion())); }
 
 }

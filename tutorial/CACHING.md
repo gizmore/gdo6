@@ -30,3 +30,6 @@ The GDO\DB\Cache also (optionally) stores entities in memcached to reduce databa
 
 There is also an API to use the memcached directly.
 Many modules store various results this way, Often the whole content of a database table, if the expected maximum rowcount is low.
+
+
+## Asset cache

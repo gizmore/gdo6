@@ -6,7 +6,6 @@ use GDO\Core\GDO;
 use GDO\User\PermissionException;
 use GDO\Util\Common;
 use GDO\File\GDT_File;
-use GDO\Core\WithFields;
 use GDO\Core\GDT;
 /**
  * Abstract CReate|Update|Delete for a GDO.
