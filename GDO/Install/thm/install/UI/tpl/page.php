@@ -10,6 +10,7 @@ $page instanceof GDO\UI\GDT_Page;
 <head>
   <link rel="stylesheet" href="../GDO/Core/css/gdo6.css" />
   <link rel="stylesheet" href="../GDO/Core/css/gdo6-classic.css" />
+  <link rel="stylesheet" href="../GDO/Install/css/install6.css" />
 </head>
 <body>
   <header>

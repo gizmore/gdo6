@@ -7,20 +7,20 @@ span, img { display: inline-block; }
 .cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
 .ce { text-align: center; margin: auto; }
 /** Main Layout **/
-body { min-height: 100%; }
+body { height: 100%; background: #fff; }
 html { height: 100%; }
-body { display: flex; flex-direction: column; }
-.gdo-body { display: flex; flex: 1; }
+.gdo-body { display: flex; }
 #gdo-left-bar, #gdo-right-bar { flex: 0 0 18.5%; }
-.gdo-main { flex: 1; flex-grow: 5; }
+.gdo-main { flex: 1; }
 
 /** Core/Debug.php **/
 .gdo-exception { font-family: monospace; white-space: pre-wrap; word-wrap: break-word; }
 
 /** UI/GDT_Bar.php **/
-.gdo-bar, .gdo-bar > * { display: flex; flex-grow: 1; justify-content: center; }
+.gdo-bar  { display: flex; flex-grow: 1; justify-content: center; }
 .gdo-bar-column { flex-direction: column; text-align: center; }
 .gdo-bar-row { flex-direction: row; }
+.gdo-bar > * { display: block; -ms-flexbox: 1 1 auto; flex: 1; }
 
 /** UI/GDT_Message **/
 .gdt-message textarea { width: 100%; height: 180px; }

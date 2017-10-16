@@ -27,5 +27,10 @@ trait WithActions
         }
         return $this->actions;
     }
+    
+    public function getActions()
+    {
+        return $this->actions;
+    }
 
 }

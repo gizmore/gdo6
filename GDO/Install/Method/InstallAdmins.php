@@ -13,6 +13,7 @@ use GDO\Util\BCrypt;
 use GDO\User\GDO_Permission;
 use GDO\Core\ModuleLoader;
 use GDO\Form\GDT_AntiCSRF;
+use GDO\User\GDO_Session;
 
 class InstallAdmins extends MethodForm
 {
@@ -21,6 +22,8 @@ class InstallAdmins extends MethodForm
         Debug::init();
         Database::init();
         ModuleLoader::instance()->loadModules();
+        GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
+
         $users = GDO_User::table();
         $form->addFields(array(
         	$users->gdoColumn('user_name'),

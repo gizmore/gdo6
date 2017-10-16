@@ -4,6 +4,12 @@ header {
 	vertical-align: bottom;
 }
 
+footer {
+/* 	position: absolute; */
+/* 	left: 0; */
+/* 	bottom: 0; */
+}
+
 .gdo-bar-column, .gdo-bar-column > *, .gdo-bar-row, .gdo-bar-row > * {
 	display: flex;
 	flex-grow: 1;

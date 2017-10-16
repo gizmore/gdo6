@@ -49,6 +49,8 @@ $result = $field->getResult();
   </table>
   <input type="submit" class="n" />
 </div>
-<?= $field->actions()->renderCell(); ?>
+<?php if ($actions = $field->getActions()) : ?>
+<?php echo $actions->render(); ?>
+<?php endif; ?>
 </form>
 <!-- END of GDT_Table -->

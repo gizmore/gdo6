@@ -129,11 +129,7 @@ abstract class MethodCrud extends MethodForm
 		}
 		
 		$gdo = $this->gdo ? $this->gdo : $this->gdoTable();
-		if ($this->gdo)
-		{
-			$form->withGDOValuesFrom($gdo);
-		}
-		
+		$form->withGDOValuesFrom($gdo);
 		if ($this->gdo)
 		{
 			$this->title(t('ft_crud_update', [sitename(), $this->gdoTable()->gdoHumanName()]));
