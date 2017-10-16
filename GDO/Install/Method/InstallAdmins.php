@@ -21,8 +21,8 @@ class InstallAdmins extends MethodForm
     {
         Debug::init();
         Database::init();
-        ModuleLoader::instance()->loadModules();
         GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
+        ModuleLoader::instance()->loadModules();
 
         $users = GDO_User::table();
         $form->addFields(array(
