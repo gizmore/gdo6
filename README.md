@@ -3,30 +3,48 @@
 Gizmore Data Objects 6
 
 
-## This is a big refactoring of gwf
+## Features
 
-gdo6 now allows to build sites without a database or install.
-gdo6 is using namespaces in the whole project.
-gdo6 makes use of traits, but php and Eclipse is a bit disappointing when it comes to trait having resolutions.
-gdo6 is module-only, means that there every piece of code is contained in a module.
+- allows to build sites without a database or install.
+- module-only, means that there every piece of code is contained in a module.
+- Code first dba
+- Two layer single identity cache.
+
+
+## Demo
+
+A demo site with (almost) the module set from below is here: http://gdo6.gizmore.org
+
 
 ### Modules
 
-For a quick install.
+For a "quick" install.
 
-Install core:
+1. Install core:
 
     mkdir www && cd www
     git clone --recursive https://github.com/gizmore/gdo6
 
 
+In case you forgot a recursive:
+
+    git submodule update --init --recursive
+
+
+
 Install modules:
+
+Switch to the GDO folder and clone or code submodules.
+
 
 It is a good strategy to paste the below clone lines to a text file.
 Then remove the modules you do not want and clone the remaining modules.
 
 Modules with ## are sites/projects, you probably don't want those.
 Modules with # are not ready for production yet.
+
+Be a bit careful with mixing theme/css modules like JQueryUI, Bootstrap and Material.
+The material design is tricky to setup atm and not recommended yet.
 
 
     cd www/gdo6/GDO # switch to modules dir
@@ -91,6 +109,8 @@ Modules with # are not ready for production yet.
     
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
 
+Do not forget the bower/js stuff.
+
     
 ### Write own modules
 
@@ -100,4 +120,4 @@ There is a tutorial section in gdo6/tutorial.
 
 ### Known Bugs / TODO
 
-There is a ROADMAP.md in gdo6/documentation
+There is a ROADMAP.md
