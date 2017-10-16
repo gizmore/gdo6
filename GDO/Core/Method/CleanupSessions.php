@@ -3,6 +3,7 @@ namespace GDO\Core\Method;
 use GDO\DB\Database;
 use GDO\User\GDO_Session;
 use GDO\Core\MethodCronjob;
+use GDO\Date\Time;
 /**
  * Cronjob that deletes old sessions.
  * 
@@ -19,8 +20,8 @@ final class CleanupSessions extends MethodCronjob
 {
 	public function run()
 	{
-		$cut = time() - GWF_SESS_TIME;
-		GDO_Session::table()->deleteWhere("sess_time < {$cut}")->exec();
+		$cut = Time::getDate(time() - GWF_SESS_TIME);
+		GDO_Session::table()->deleteWhere("sess_time < '{$cut}'")->exec();
 		if (0 < ($deleted = Database::instance()->affectedRows()))
 		{
 			$this->log("Deleted $deleted sessions.");
