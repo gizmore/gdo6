@@ -28,7 +28,7 @@ Pull requests < gimme your ssh key. :)
 - Change cachemiss return type of Memcached to null.
 - Change parameter order $code=200, $log=true in GDT_Error and GDT_Success.
 - Make multiple forms per page really accurate possible by using $form->name[$field->name] in getVar and templates
-
+- gdo_update.sh can do parallel to speed up
 - GDT_Checkbox filter implementation. Also honor undetermined state 2 
 
 - Modules: 3 iconbuttons: install,configure,adminsection
