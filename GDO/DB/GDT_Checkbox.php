@@ -80,6 +80,11 @@ class GDT_Checkbox extends GDT_Select
     ##############
     ### Render ###
     ##############
+    public function htmlClass()
+    {
+    	return parent::htmlClass() . " gdt-checkbox-{$this->getVar()}";
+    }
+    
     public function renderForm()
     {
         $this->initChoices();

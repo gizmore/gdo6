@@ -39,8 +39,8 @@ $result = $field->getResult();
     <tbody>
     <?php while ($gdo = $result->fetchAs($field->fetchAs)) : ?>
     <tr gdo-id="<?= $gdo->getID()?>">
-      <?php foreach($headers->getFields() as $gdoType) : ?>
-        <td class="<?=$gdoType->htmlClass()?>"><?= $gdoType->gdo($gdo)->renderCell(); ?></td>
+      <?php foreach($headers->getFields() as $gdoType) : $gdoType->gdo($gdo); ?>
+        <td class="<?=$gdoType->htmlClass()?>"><?= $gdoType->renderCell(); ?></td>
       <?php endforeach; ?>
     </tr>
     <?php endwhile; ?>
