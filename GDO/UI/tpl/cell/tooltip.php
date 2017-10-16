@@ -1,9 +1,3 @@
-<?php
-use GDO\UI\GDT_Icon;
-use GDO\UI\GDT_Tooltip;
-$field instanceof GDT_Tooltip;
-?>
-<div class="gdo-tooltip">
-  <?= GDT_Icon::iconS('help'); ?>
-  <md-tooltip md-direction="right"><?= $field->tooltip; ?></md-tooltip>
-</div>
+<?php /** @var $field \GDO\UI\GDT_Tooltip **/
+use GDO\UI\GDT_Icon; ?>
+<a class="gdo-tooltip" title="<?=html($field->tooltip)?>"><?=GDT_Icon::iconS('help')?></a>

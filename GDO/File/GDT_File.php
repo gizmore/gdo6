@@ -31,7 +31,7 @@ class GDT_File extends GDT_Object
         return $this;
     }
     
-    public $minsize = 1024;
+    public $minsize;
     public function minsize($minsize)
     {
         $this->minsize = $minsize;
@@ -201,6 +201,7 @@ class GDT_File extends GDT_Object
     public function validate($value)
     {
         $valid = true;
+        /** @var $files \GDO\File\GDO_File[] **/
         $files = Arrays::arrayed($value);
         if ( ($this->notNull) && (empty($files)) )
         {
@@ -218,16 +219,21 @@ class GDT_File extends GDT_Object
         {
             foreach ($files as $file)
             {
-                $file instanceof GDO_File;
-                if (!$file->getSize())
+                if (!($size = $file->getSize()))
                 {
-                	return $this->error('err_file_not_ok', [$file->display('file_name')]);
+                    $valid = $this->error('err_file_not_ok', [$file->display('file_name')]);
                 }
-                	
-                if (!$file->isPersisted())
+                elseif (!$this->validateFile($file))
                 {
-                    $this->beforeCopy($file);
-                    $file->copy();
+                    $valid = false;
+                }
+                else
+                {
+                    if (!$file->isPersisted())
+                    {
+                        $this->beforeCopy($file);
+                        $file->copy();
+                    }
                 }
             }
             $this->files = $files;
@@ -237,6 +243,19 @@ class GDT_File extends GDT_Object
             $this->cleanup();
         }
         return $valid;
+    }
+    
+    protected function validateFile(GDO_File $file)
+    {
+        if ( ($this->minsize !== null) && ($file->getSize() < $this->minsize) )
+        {
+            return $this->error('err_file_too_small', [FileUtil::humanFilesize($this->minsize)]);
+        }
+        if ( ($this->maxsize !== null) && ($file->getSize() > $this->maxsize) )
+        {
+            return $this->error('err_file_too_large', [FileUtil::humanFilesize($this->maxsize($maxsize))]);
+        }
+        return true;
     }
     
     protected function beforeCopy(GDO_File $file)
