@@ -14,7 +14,7 @@ final class GetTypes extends Method
 	public function execute()
 	{
 		# Add non abstract module tables
-		foreach (ModuleLoader::instance()->getModules() as $module)
+		foreach (ModuleLoader::instance()->getEnabledModules() as $module)
 		{
 			if ($classes = $module->getClasses())
 			{

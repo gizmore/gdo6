@@ -9,6 +9,8 @@ use GDO\UI\GDT_Panel;
  */
 class GDT_Error extends GDT_Panel
 {
+	public function isError() { return true; }
+	
     public static function responseException(\Exception $e)
     {
         Logger::logException($e);
@@ -18,7 +20,7 @@ class GDT_Error extends GDT_Panel
     
     public static function responseWith($key, array $args=null, $code=405, $log=true)
     {
-        return GDT_Response::makeWith(self::with($key, $args, $code, $log));
+        return GDT_Response::makeWith(self::with($key, $args, $code, $log))->code($code);
     }
     
     public static function with($key, array $args=null, $code=405, $log=true)

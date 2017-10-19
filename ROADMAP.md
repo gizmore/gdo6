@@ -22,7 +22,7 @@ Pull requests < gimme your ssh key. :)
 - No output buffering for ultra responsive pages?
 
 - Markup for News,Forum,Links,Downloads is horrible in default design
-- Reset ordering
+- Reset ordering by a small button
 
 - Installer: Theme choices are not loading correctly. (module_enabled check?)
 - Change cachemiss return type of Memcached to null.
@@ -34,7 +34,7 @@ Pull requests < gimme your ssh key. :)
 - Modules: 3 iconbuttons: install,configure,adminsection
 
 - Pagemenu shows dot too early
-
+- News edit does not show old input
 
 # More tuts?
 

@@ -134,7 +134,10 @@ final class Website
     
     public static function renderJSON($json)
     {
-    	header('Content-Type: application/json');
+    	if (!Application::instance()->isCLI())
+    	{
+	    	header('Content-Type: application/json');
+    	}
     	die(json_encode($json));
     }
 }

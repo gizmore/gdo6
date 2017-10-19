@@ -184,8 +184,7 @@ class GDT_File extends GDT_Object
      */
     public function getValidationValue()
     {
-//     	$files = array_merge($this->getInitialFiles(), $this->getFiles($this->name));
-    	$files = $this->getFiles($this->name);
+    	$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->files));
     	return $this->multiple ? $files : array_pop($files);
     }
     

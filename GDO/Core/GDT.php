@@ -106,7 +106,7 @@ abstract class GDT
 	public function blankData() {}
 	public function getGDOData() {}
 	public function setGDOData(GDO $gdo=null) { return $this; }
-	public function setGDOVar($var) { $this->gdo->setVar($this->name, $var); return $this; }
+	public function setGDOVar($var) { if ($this->gdo) $this->gdo->setVar($this->name, $var); return $this; }
 	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
 	
 	public function getRequestVar($firstLevel=null, $default=null, $name=null)

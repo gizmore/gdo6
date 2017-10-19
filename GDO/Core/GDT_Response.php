@@ -13,7 +13,15 @@ use GDO\UI\WithHTML;
 final class GDT_Response extends GDT
 {
 	use WithFields;
-
+	
+	##################
+	### Error code ###
+	##################
+	public $code = 200;
+	public function code($code) { $this->code = $code; return $this; }
+	public function errorCode($code=405) { return $this->code($code); }
+	public function isError() { return $this->code >= 400; }
+	
 	###############
 	### Factory ###
 	###############
@@ -48,18 +56,23 @@ final class GDT_Response extends GDT
 	    }
 	    return $html;
 	}
+	
+	public function displayJSON()
+	{
+		$back = [];
+		foreach ($this->getFields() as $field)
+		{
+			if ($json = $field->renderJSON())
+			{
+				$back = array_merge($back, $json);
+			}
+		}
+		return $back;
+	}
 
 	public function renderJSON()
 	{
-	    $back = [];
-	    foreach ($this->getFields() as $field)
-	    {
-            if ($json = $field->renderJSON())
-            {
-                $back = array_merge($back, $json);
-            }
-	    }
-	    die(json_encode($back));
+		Website::renderJSON($this->displayJSON());
 	}
 	
 	################

@@ -42,6 +42,19 @@ class GDT_Form extends GDT
     	return GDT_Template::php('Form', 'cell/form.php', ['form' => $this]);
     }
     
+//     public function renderJSON()
+//     {
+//     	$json = [];
+//     	foreach ($this->fields as $field)
+//     	{
+//     		if ($j = $field->renderJSON())
+//     		{
+//     			$j	= array_merge($json, $j);
+//     		}
+//     	}
+//     	return $json;
+//     }
+    
     public function validateForm()
     {
         self::$VALIDATING_INSTANCE = $this;
