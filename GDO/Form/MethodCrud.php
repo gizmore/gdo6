@@ -179,7 +179,7 @@ abstract class MethodCrud extends MethodForm
 		$gdo = $table->blank($form->getFormData())->insert();
 		$this->resetForm();
 		return
-			$this->message('msg_crud_created', [$gdo->gdoClassName()])->
+			$this->message('msg_crud_created', [$gdo->gdoHumanName()])->
 			addField($this->afterCreate($form, $gdo))->
 			add(Website::redirectMessage($this->hrefList()));
 	}
@@ -189,7 +189,7 @@ abstract class MethodCrud extends MethodForm
 	    $this->gdo->saveVars($form->getFormData());
 	    $this->resetForm();
 		return
-			$this->message('msg_crud_updated', [$this->gdo->gdoClassName()])->
+		$this->message('msg_crud_updated', [$this->gdo->gdoHumanName()])->
 			add($this->afterUpdate($form, $this->gdo))->
 			add($this->renderPage());
 	}
@@ -198,7 +198,7 @@ abstract class MethodCrud extends MethodForm
 	{
 	    $this->crudMode = self::DELETED;
 		$this->gdo->delete();
-		return $this->message('msg_crud_deleted', [$this->gdo->gdoClassName()])->
+		return $this->message('msg_crud_deleted', [$this->gdo->gdoHumanName()])->
 			add($this->afterDelete($form, $this->gdo))->
 			add(Website::redirectMessage($this->hrefList()));
 	}

@@ -4,4 +4,4 @@
  type="text"
  value="<?= html($field->filterValue()); ?>"
  size="5"
- placeholder="ID"  />
+ placeholder="<?=t('object_filter')?>"  />
