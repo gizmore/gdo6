@@ -56,7 +56,7 @@ class GDT_String extends GDT
         return empty($var) ? null : $var;
     }
     
-    public function setGDOData(GDO $gdo=null) { return $gdo && $gdo->hasVar($this->name) ? $this->val($gdo->getVar($this->name)) : $this; }
+//     public function setGDOData(GDO $gdo=null) { return $gdo && $gdo->hasVar($this->name) ? $this->val($gdo->getVar($this->name)) : $this; }
     
     ######################
     ### Table creation ###

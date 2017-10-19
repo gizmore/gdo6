@@ -119,7 +119,7 @@ abstract class GDO #extends GDT
 	
 	public function hasVar($key=null)
 	{
-		return isset($this->gdoVars[$key]);
+		return @array_key_exists($key, $this->gdoVars);
 	}
 	
 	public function getVar($key)

@@ -74,18 +74,6 @@ class GDT_ObjectSelect extends GDT_Select
         return $this->multiple ? $this->multipleToVar($value) : $value->getID();
     }
     
-    public function setGDOData(GDO $gdo=null)
-    {
-        if ($gdo)
-        {
-            if (null !== ($var = $gdo->getVar($this->name)))
-            {
-                return $this->val($var);
-            }
-        }
-        return $this;
-    }
-    
     /**
      * @param GDO[] $value
      * @return string

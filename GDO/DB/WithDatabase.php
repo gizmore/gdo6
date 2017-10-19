@@ -48,7 +48,7 @@ trait WithDatabase
      */
     public function setGDOData(GDO $gdo=null)
     {
-        if ($gdo->hasVar($this->name))
+        if ($gdo && $gdo->hasVar($this->name))
         {
             $this->var = $gdo->getVar($this->name);
         }

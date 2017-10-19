@@ -20,7 +20,7 @@ class GDT_Int extends GDT
     use WithOrder;
 
     public function toValue($var) { return $var === null ? null : (int) $var; }
-    public function setGDOData(GDO $gdo=null) { return $gdo ? $this->val($gdo->getVar($this->name)) : $this; }
+//     public function setGDOData(GDO $gdo=null) { return $gdo ? $this->val($gdo->getVar($this->name)) : $this; }
     
     public $min = null;
     public $max = null;
