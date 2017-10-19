@@ -14,6 +14,10 @@ final class GDT_Response extends GDT
 {
 	use WithFields;
 	
+	####################
+	### JSON Details ###
+	####################
+	
 	##################
 	### Error code ###
 	##################
