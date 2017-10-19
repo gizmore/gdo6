@@ -4,5 +4,5 @@
  type="text"
  pattern="^[-0-9]*$"
  value="<?= html($field->filterValue()); ?>"
- placeholder="n,n-m"
+ placeholder="<?=t('int_filter')?>"
  size="1" />
