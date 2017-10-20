@@ -158,7 +158,13 @@ abstract class GDT
 	public function renderFilter() {}
 	public function renderForm() { return $this->render(); }
 	public function renderHeader() {}
-	public function renderJSON() {}
+	public function renderJSON()
+	{
+		return array(
+			'error' => $this->error,
+		);
+	}
+	
 	public function renderList() { return $this->render(); }
 // 	public function renderOrder() { return 'aa'; }
 
