@@ -9,5 +9,5 @@ use GDO\DB\GDT_UInt;
  */
 class GDT_Duration extends GDT_UInt
 {
-	public function defaultLabel() { return $this->label('duration'); }
+// 	public function defaultLabel() { return $this->label('duration'); }
 }

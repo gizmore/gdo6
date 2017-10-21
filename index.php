@@ -11,6 +11,7 @@ use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Response;
+use GDO\Core\Website;
 
 @include 'protected/config.php';
 if (!defined('GWF_CONFIGURED'))
@@ -60,15 +61,15 @@ finally
 switch (Application::instance()->getFormat())
 {
     case 'json':
-        die(json_encode($response->render()));
+    	Website::renderJSON($response->renderJSON());
         
     case 'html':
         if (Application::instance()->isAjax())
         {
-            die($response->render());
+            die($response->renderHTML());
         }
         else
         {
-            echo GDT_Page::make()->html($content . $response->render())->render();
+            echo GDT_Page::make()->html($content . $response->renderHTML())->render();
         }
 }
