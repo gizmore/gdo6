@@ -23,6 +23,7 @@ final class GDT_IconUTF8
             'arrow_right' => '‣',
             'audio' => '♬',
         	'back' => '↶',
+        	'captcha' => 'CPT',
             'check' => '✔',
             'create' => '✚',
             'credits' => '¢',
@@ -33,6 +34,7 @@ final class GDT_IconUTF8
             'edit' => '✎',
             'email' => '✉',
             'enhanced_encryption' => '⚷',
+        	'error' => '⚠',
             'face' => '☺',
             'female' => '♀',
         	'language' => '🌐',
@@ -47,6 +49,7 @@ final class GDT_IconUTF8
             'reply' => '☞',
             'settings' => '⚙',
             'stars' => '★',
+        	'users' => 'USERS',
         );
         $icon = isset($map[$icon]) ? $map[$icon] : $icon;
         return "<span class=\"gdo-icon\"$style>$icon</span>";
