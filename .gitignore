@@ -2,6 +2,10 @@
 .buildpath
 .project
 .settings/
+
+# HTTP
+.htaccess
+.htpasswd
  
 # Generated folders
 files/
