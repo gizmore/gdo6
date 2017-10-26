@@ -174,17 +174,27 @@ class GDT_File extends GDT_Object
         }
     }
     
-//     public function getGDOData()
-//     {
-//         return parent::getGDOData();
-//     }
+    public function getGDOData()
+    {
+    	if ($this->multiple)
+    	{
+    		
+    	}
+    	else
+    	{
+    		if ($file = $this->getValidationValue())
+    		{
+    			return [$this->name => $this->getValue()->getID()];
+    		}
+    	}
+    }
     
     /**
      * @return GDO_File
      */
     public function getValidationValue()
     {
-    	$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->files));
+    	$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->getFiles($this->name)));
     	return $this->multiple ? $files : array_pop($files);
     }
     
