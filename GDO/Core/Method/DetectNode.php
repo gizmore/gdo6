@@ -3,7 +3,7 @@ namespace GDO\Core\Method;
 use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Core\Website;
-use GDO\Admin\MethodAdmin;
+use GDO\Core\MethodAdmin;
 use GDO\Core\Module_Core;
 /**
  * Auto-detect nodejs_path, uglifyjs_path and ng_annotate_path.

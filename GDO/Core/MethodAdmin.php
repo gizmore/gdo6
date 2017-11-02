@@ -1,6 +1,5 @@
 <?php
-namespace GDO\Admin;
-use GDO\Core\GDT_Template;
+namespace GDO\Core;
 /**
  * Admin method decorator trait.
  * @TODO: Add superuser pw check to admin methods.
