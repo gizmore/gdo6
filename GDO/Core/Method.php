@@ -134,17 +134,12 @@ abstract class Method
             return GDT_Error::responseWith('err_permission_required', [t('perm_'.$permission)]);
         }
         
-        return $this->execWrap();
+        return $this->execMethod();
     }
     
-    /**
-     * Execute a method by name. Convinience
-     * @param string $methodName
-     * @return GDT_Response
-     */
-    public function execMethod($methodName)
+    public function execMethod()
     {
-        return method($this->getModuleName(), $methodName)->execWrap();
+    	return $this->execWrap();
     }
     
     public function transactional()
