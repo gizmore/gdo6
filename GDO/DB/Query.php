@@ -232,16 +232,19 @@ class Query
 		return $this->set ? " SET {$this->set}" : "";
 	}
 	
-	public function order($column, $ascending=true)
+	public function order($column=null, $ascending=true)
 	{
-		$order = $column . ($ascending ? ' ASC' : ' DESC');
-		if ($this->order)
+		if ($column)
 		{
-			$this->order .= ',' . $order;
-		}
-		else
-		{
-			$this->order = $order;
+			$order = $column . ($ascending ? ' ASC' : ' DESC');
+			if ($this->order)
+			{
+				$this->order .= ',' . $order;
+			}
+			else
+			{
+				$this->order = $order;
+			}
 		}
 		return $this;
 	}

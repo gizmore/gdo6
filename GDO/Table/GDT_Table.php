@@ -84,6 +84,11 @@ class GDT_Table extends GDT
 			$this->pagemenu->href($href);
 			$this->pagemenu->ipp($ipp);
 			$this->href($href);
+			if ($this->result)
+			{
+				$this->countItems = count($this->result->fullData);
+				$this->result->data = array_slice($this->result->fullData, $this->getPageMenu()->getFrom(), $ipp);
+			}
 		}
 		return $this->ipp($ipp);
 	}

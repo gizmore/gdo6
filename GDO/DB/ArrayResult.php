@@ -15,13 +15,17 @@ final class ArrayResult extends Result
 	/**
 	 * @var GDO[]
 	 */
+	public $fullData;
+	/**
+	 * @var GDO[]
+	 */
 	public $data;
 	
 	private $index;
 	
 	public function __construct(array $data, GDO $table)
 	{
-		$this->data = array_values($data);
+		$this->data = $this->fullData = array_values($data);
 		$this->table = $table;
 		$this->reset();
 	}

@@ -447,10 +447,14 @@ abstract class GDO #extends GDT
 		}
 		if ($this->isDirty())
 		{
-			$this->updateQuery()->set($this->getSetClause())->exec();
+			if ($setClause = $this->getSetClause())
+			{
+				$this->updateQuery()->set($setClause)->exec();
+				$this->dirty = false;
+				$this->recache(); # save is the only action where we recache!
+				$this->gdoAfterUpdate();
+			}
 			$this->dirty = false;
-			$this->recache(); # save is the only action where we recache!
-			$this->gdoAfterUpdate();
 		}
 		return $this;
 	}
@@ -755,15 +759,15 @@ abstract class GDO #extends GDT
 	 */
 	public function all()
 	{
-		return self::allWhere();
+		return self::allWhere('true', $this->gdoPrimaryKeyColumn()->name);
 	}
 	
 	/**
 	 * @return self[]
 	 */
-	public function allWhere($condition='true')
+	public function allWhere($condition='true', $order=null, $asc=true)
 	{
-		return self::table()->select()->where($condition)->exec()->fetchAllArray2dObject();
+		return self::table()->select()->where($condition)->order($order, $asc)->exec()->fetchAllArray2dObject();
 	}
 	
 	###########################

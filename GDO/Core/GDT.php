@@ -224,7 +224,7 @@ abstract class GDT
 	##############
 	public $filterField;
 	public function filterField($filterField) { $this->filterField = $filterField; return $this; }
-	public function filterValue() { return $this->getRequestVar('f', null, $this->filterField); }
+	public function filterValue() { return $this->getRequestVar('f', null, $this->filterField ? $this->filterField : $this->name); }
 	public function filterQuery(Query $query) {}
 	public function filterGDO(GDO $gdo) {}
 	
