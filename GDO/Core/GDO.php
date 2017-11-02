@@ -319,7 +319,8 @@ abstract class GDO #extends GDT
 	 */
 	public function gdoColumn($key)
 	{
-		return $this->gdoColumnsCache()[$key]->gdo($this);
+		$column = clone $this->gdoColumnsCache()[$key];
+		return $column->gdo($this);
 	}
 	
 	public function gdoColumnsExcept(...$except)

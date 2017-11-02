@@ -135,17 +135,18 @@ abstract class MethodCrud extends MethodForm
 		}
 		else
 		{
-			$this->blank($form);
+// 			$this->blank($form);
 		    $this->crudCreateTitle();
 		}
 	}
 	
-	private function blank(GDT_Form $form)
-	{
-		$form->withFields(function(GDT $gdoType){
-			$gdoType->val($gdoType->initial);
-		});
-	}
+// 	private function blank(GDT_Form $form)
+// 	{
+// 		$form->withFields(function(GDT $gdoType){
+// 			$gdoType->gdo(null);
+// 			$gdoType->val($gdoType->initial);
+// 		});
+// 	}
 	
 	protected function crudCreateTitle()
 	{

@@ -17,6 +17,10 @@ window.GDO.autofocusForm = function() {
 	}
 };
 
+window.GDO.error = function(html, title) {
+	alert(html);
+};
+
 /**
  * Init GDO612js
  * @returns interest
@@ -26,3 +30,5 @@ document.addEventListener('DOMContentLoaded', function(){
 	window.GDO.autofocusForm();
 
 }, false);
+
+

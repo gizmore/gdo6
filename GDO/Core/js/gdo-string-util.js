@@ -6,15 +6,26 @@ String.prototype.startsWith = function(s) { return this.match(new RegExp('^'+s, 
 String.prototype.endsWith = function(s) { return this.match(new RegExp(s+'$', 'i')) !== null; };
 String.prototype.contains = function(s) { return this.match(new RegExp(s, 'i')) !== null; };
 String.prototype.substrFrom = function(s, d) { var i = this.indexOf(s); return i === -1 ? d : this.substr(i+s.length); };
+String.prototype.rsubstrFrom = function(s, d) { var i = this.lastIndexOf(s); return i === -1 ? d : this.substr(i+s.length); };
 String.prototype.substrUntil = function(s, d) { var i = this.indexOf(s); return i === -1 ? d : this.substring(0, i); };
+String.prototype.rsubstrUntil = function(s, d) { var i = this.lastIndexOf(s); return i === -1 ? d : this.substring(0, i); };
 //String.prototype.nibbleUntil = function(s) { var r = this.substrUntil(s); this.replace(this.substrFrom(s)); return r; };
 // -----------------------------------------------------------------------------
 
-function clamp(num, min, max)
-{
+function clamp(num, min, max) {
 	if ((min !== undefined) && (num < min)) return min;
 	if ((max !== undefined) && (num > max)) return max;
 	return num;
+}
+
+function urlParam(name, url) {
+	if (!url) url = window.location.href;
+	name = name.replace(/[\[\]]/g, "\\$&");
+	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		results = regex.exec(url);
+	if (!results) return null;
+	if (!results[2]) return '';
+	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
 /** PHP.JS BELOW HERE **/

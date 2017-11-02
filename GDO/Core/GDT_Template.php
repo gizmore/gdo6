@@ -121,10 +121,13 @@ class GDT_Template extends GDT
             foreach ($isos as $iso)
             {
                 $path1 = Strings::rsubstrTo($path, '.', $path) . $iso . '.' . Strings::rsubstrFrom($path, '.', '');
-                $path1 = self::$THEMES[$theme]."/$moduleName/tpl/$path1";
-                if (is_file($path1))
+                if (isset(self::$THEMES[$theme]))
                 {
-                    return $path1;
+	                $path1 = self::$THEMES[$theme]."/$moduleName/tpl/$path1";
+	                if (is_file($path1))
+	                {
+	                    return $path1;
+	                }
                 }
             }
         }

@@ -16,6 +16,7 @@ class GDT_Link extends GDT
     use WithIcon;
     use WithLabel;
     use WithHREF;
+    use WithHTMLClass;
     
     /**
      * Output a link / anchor.

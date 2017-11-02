@@ -70,4 +70,17 @@ trait WithFields
     		}
     	}
     }
+    
+    public function renderJSON()
+    {
+    	$json = [];
+    	foreach ($this->fields as $gdoType)
+    	{
+    		if ($data = $gdoType->renderJSON())
+    		{
+    			$json = array_merge($json, $data);
+    		}
+    	}
+    	return $json;
+    }
 }
