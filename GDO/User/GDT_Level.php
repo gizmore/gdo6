@@ -10,4 +10,9 @@ use GDO\DB\GDT_UInt;
 final class GDT_Level extends GDT_UInt
 {
 	public function defaultLabel() { return $this->label('level'); }
+	
+	public function __construct()
+	{
+		$this->icon('level');
+	}
 }
