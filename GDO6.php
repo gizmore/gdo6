@@ -26,10 +26,11 @@ ini_set('display_errors', 1);
 # Init GDO autoloader
 global $GDT_LOADED; $GDT_LOADED = 0; # perf
 spl_autoload_register(function($name){
-	if (($name[0] === 'G') && ($name[1] === 'D') && ($name[2] === 'O'))
+	$name = GWF_PATH . str_replace('\\', '/', $name) . '.php';
+	if (is_file($name))
 	{
 		global $GDT_LOADED; $GDT_LOADED++; # perf
-		include GWF_PATH . str_replace('\\', '/', $name) . '.php';
+		require $name;
 	}
 });
 	
