@@ -191,7 +191,7 @@ final class Debug
     }
     public static function exception_handler($e)
     {
-        $is_html = PHP_SAPI !== 'cli';
+        $is_html = Application::instance()->isHTML();
         $firstLine = sprintf("%s in %s Line %s", $e->getMessage(), $e->getFile(), $e->getLine());
         
         $mail = self::$MAIL_ON_ERROR;
@@ -217,6 +217,11 @@ final class Debug
     }
     private static function renderError($message)
     {
+    	if (Application::instance()->isJSON())
+    	{
+    		http_response_code(405);
+    		return json_encode(array('error' => $message));
+    	}
         $isHTML = Application::instance()->isHTML();
         return defined('GWF_CORE_STABLE') && $isHTML ?
         GDT_Page::make()->html(GDT_Error::withHTML($message)->render())->render() :
@@ -397,7 +402,7 @@ final class Debug
         }
         
         $back .= $html ? '<hr/>' : "\n";
-        $back .= sprintf('Backtrace starts in %s line %s.<br/>', self::shortpath($prefile), $preline) . "\n";
+        $back .= sprintf('Backtrace starts in %s line %s.', self::shortpath($prefile), $preline) . "\n";
         $back .= implode("\n", array_reverse($copy));
         $back .= $html ? '</div>' : '';
         return $back;
