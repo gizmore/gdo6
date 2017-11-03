@@ -129,7 +129,7 @@ abstract class GDO #extends GDT
 	
 	public function setVar($key, $value, $markDirty=true)
 	{
-		$this->gdoVars[$key] = $value;
+		$this->gdoVars[$key] = (string)$value;
 		return $markDirty ? $this->markDirty($key) : $this;
 	}
 	
@@ -633,7 +633,7 @@ abstract class GDO #extends GDT
 		foreach ($this->gdoPrimaryKeyColumns() as $name => $column)
 		{
 			$id2 = $this->getVar($name);
-			$id .= $id ? "{$id}:$id2" : $id2;
+			$id = $id ? "{$id}:$id2" : $id2;
 		}
 		return $id;
 	}

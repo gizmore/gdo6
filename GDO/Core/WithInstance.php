@@ -4,11 +4,16 @@ namespace GDO\Core;
 trait WithInstance
 {
 	private static $INSTANCE;
+	
+	/**
+	 * @return self
+	 */
 	public static function instance()
 	{
 		if (!self::$INSTANCE)
 		{
-			self::$INSTANCE = new self();
+			$klass = get_called_class();
+			self::$INSTANCE = new $klass();
 		}
 		return self::$INSTANCE;
 	}
