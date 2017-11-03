@@ -11,7 +11,7 @@ use GDO\DB\GDT_String;
 class GDT_Hidden extends GDT_String
 {
     public $readable = false;
-    public $writable = false;
+    public $writable = true;
     public $editable = false;
     
     public function renderForm() { return GDT_Template::php('Form', 'form/hidden.php', ['field' => $this]); }

@@ -5,6 +5,8 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\WithFields;
 use GDO\UI\WithTitle;
+use GDO\UI\GDT_Panel;
+use GDO\UI\WithHTML;
 class GDT_Form extends GDT
 {
     public static $VALIDATING_INSTANCE; # ugly, but hey.
@@ -26,7 +28,11 @@ class GDT_Form extends GDT
     public function info($info) { $this->info = $info; return $this; }
     
     public $method = 'POST';
-    public function method($method) { $this->method = $method; return $this; }
+    public function method($method)
+    {
+    	$this->method = $method;
+    	return $this;
+    }
     
     const URLENCODED = 'application/x-www-form-urlencoded';
     const MULTIPART = 'multipart/form-data';

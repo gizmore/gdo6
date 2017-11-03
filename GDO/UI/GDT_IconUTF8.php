@@ -16,7 +16,7 @@ final class GDT_IconUTF8
         static $map = array(
             'account_box' => '[]',
             'add' => '✚',
-            'add_alert' => '◴',
+            'alert' => '◴',
             'alarm_on' => '☄',
             'arrow_drop_down' => '▼',
             'arrow_drop_up' => '▲',
