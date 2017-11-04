@@ -9,6 +9,7 @@ use GDO\Core\GDT_Template;
 use GDO\DB\Database;
 use GDO\Core\GDOException;
 use GDO\Core\Website;
+use GDO\File\GDT_File;
 /**
  * Create a GDO config with this form.
  * @author gizmore
@@ -35,6 +36,7 @@ class Configure extends MethodForm
     public function onSubmit_save_config(GDT_Form $form)
     {
         $content = GDT_Template::php('Install', 'config.php', ['form' => $form]);
+        FileUtil::createDir(dirname($this->configPath()));
         file_put_contents($this->configPath(), $content);
         return Website::redirectMessage(Config::hrefStep(3), 2);
     }

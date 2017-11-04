@@ -80,6 +80,7 @@ class Cache
 	public function findCached(...$ids)
 	{
 		$id = implode(':', $ids);
+		
 		if (!isset($this->cache[$id]))
 		{
 			if ($mcached = self::get($this->klass . $id))

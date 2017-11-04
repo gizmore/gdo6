@@ -49,7 +49,8 @@ class GDT_Enum extends GDT
     public $enumValues;
     public function enumLabel($enumValue=null) { return $enumValue === null ? t("enum_$enumValue") : $enumValue; }
     public function enumValues(...$enumValues) { $this->enumValues = $enumValues; return $this; }
-    public function enumIndex() { $index = array_search($this->getVar(), $this->enumValues, true); return $index === false ? 0 : $index + 1; }
+    public function enumIndex() { return $this->enumIndexFor($this->getVar()); }
+    public function enumIndexFor($enumValue) { $index = array_search($enumValue, $this->enumValues, true); return $index === false ? 0 : $index + 1; }
     public function enumForId($index) { return $this->enumValues[$index-1]; }
     public function htmlSelected($enumValue) { return $this->getVar() === ((string)$enumValue) ? ' selected="selected"' : ''; }
     
