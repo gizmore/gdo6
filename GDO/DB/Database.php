@@ -4,6 +4,7 @@ use GDO\Core\GDO;
 use GDO\Core\Logger;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
+use Symfony\Component\Routing\Tests\Fixtures\OtherAnnotatedClasses\VariadicClass;
 /**
  * mySQLi abstraction.
  * 
@@ -145,6 +146,7 @@ class Database
 		{
 			self::$TABLES[$classname] = $gdo = new $classname();
 			self::$COLUMNS[$classname] = self::hashedColumns($gdo->gdoColumns());
+
 			/** @var $gdo \GDO\Core\GDO **/
 			if ($gdo->gdoCached() || $gdo->memCached())
 			{
