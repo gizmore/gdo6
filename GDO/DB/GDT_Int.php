@@ -166,4 +166,18 @@ class GDT_Int extends GDT
         return sprintf(' gdt-num %s', parent::htmlClass());
     }
 
+    ##############
+    ### Config ###
+    ##############
+    public function configJSON()
+    {
+    	return array(
+    		'min' => $this->min,
+    		'max' => $this->max,
+    		'unsigned' => $this->unsigned,
+    		'bytes' => $this->bytes,
+    		'step' => $this->step,
+    	);
+    }
+
 }

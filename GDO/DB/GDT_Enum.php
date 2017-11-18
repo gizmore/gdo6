@@ -121,4 +121,17 @@ class GDT_Enum extends GDT
             return true;
         }
     }
+    
+    ##############
+    ### Config ###
+    ##############
+    public function configJSON()
+    {
+    	return array(
+    		'enumValues' => $this->enumValues,
+    		'emptyLabel' => $this->emptyLabel,
+    		'emptyValue' => $this->emptyValue,
+    	);
+    }
+  
 }

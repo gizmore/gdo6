@@ -5,6 +5,7 @@ use GDO\Core\ModuleLoader;
 use GDO\Core\GDO;
 /**
  * Get all types used in all tables.
+ * Get the type class hierarchy.
  * @author gizmore
  */
 final class GetTypes extends Method
@@ -34,17 +35,30 @@ final class GetTypes extends Method
 			}
 		}
 		
-		# Add Enum values
-		$types = [];
+		# Sum table fields
+		$fields = [];
 		foreach ($tables as $table)
 		{
-			$types[$table->gdoClassName()] = [];
+			$fields[$table->gdoClassName()] = [];
 			foreach ($table->gdoColumnsCache() as $name => $gdoType)
 			{
-				$types[$table->gdoClassName()][$gdoType->name] = $gdoType->gdoClassName();
+				$fields[$table->gdoClassName()][$gdoType->name] = array(
+					'type' => $gdoType->gdoClassName(),
+					'options' => $gdoType->configJSON(),
+				);
 			}
 		}
 		
-		die(json_encode($types));
+		# Build type hiararchy
+		$types = [];
+		foreach (get_declared_classes() as $class)
+		{
+			if (is_subclass_of($class, "GDO\\Core\\GDT"))
+			{
+				$types[$class] = array_values(class_parents($class));
+			}
+		}
+		
+		die(json_encode(['fields' => $fields, 'types' => $types]));
 	}
 }

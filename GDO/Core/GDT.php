@@ -234,4 +234,9 @@ abstract class GDT
 	public $unique;
 	public $primary;
 	public function gdoColumnDefine() {}
+	
+	##############
+	### Config ###
+	##############
+	public function configJSON() { return null; }
 }

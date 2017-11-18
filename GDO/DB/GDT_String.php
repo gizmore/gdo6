@@ -190,4 +190,19 @@ class GDT_String extends GDT
             return !preg_match($pattern, $this->getVar());
         }
     }
+
+    ##############
+    ### Config ###
+    ##############
+    public function configJSON()
+    {
+    	return array(
+    		'min' => $this->min,
+    		'max' => $this->max,
+    		'pattern' => $this->pattern,
+    		'encoding' => $this->encoding,
+    		'caseS' => $this->caseSensitive,
+    	);
+    }
+
 }

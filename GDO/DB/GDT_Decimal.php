@@ -29,4 +29,12 @@ class GDT_Decimal extends GDT_Int
 	{
 		return round($var, $this->digitsAfter);
 	}
+	
+	public function configJSON()
+	{
+		return array_merge(parent::configJSON(), array(
+			'digitsBefore' => $this->digitsBefore,
+			'digitsAfter' => $this->digitsAfter,
+		));
+	}
 }

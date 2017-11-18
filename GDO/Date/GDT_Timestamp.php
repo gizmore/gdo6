@@ -133,4 +133,18 @@ class GDT_Timestamp extends GDT
 	##############
 	public function renderCell() { return Time::displayDate($this->getVar(), $this->format, '---'); }
 	public function renderForm() { return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]); }
+
+	##############
+	### Config ###
+	##############
+	public function configJSON()
+	{
+		return array(
+			'dateStartView' => $this->dateStartView,
+			'format' => $this->format,
+			'minDate' => $this->minDate,
+			'maxDate' => $this->maxDate,
+		);
+	}
+	
 }
