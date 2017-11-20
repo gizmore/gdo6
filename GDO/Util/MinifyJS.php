@@ -5,12 +5,12 @@ use GDO\Core\Module_Core;
 /**
  * Very basic on-the-fly javascript mangler.
  * Changes are detected by md5 only.
- * You can configure this feature in Module_GWF.
+ * You can configure this feature in Module_Core.
  * 
  * @author gizmore
  * @since 4.1
- * @version 5.0
- * @see Module_GWF
+ * @version 6.07
+ * @see Module_Core
  */
 final class MinifyJS
 {
@@ -138,6 +138,7 @@ final class MinifyJS
 					$annotate = $this->annotate;
 					$uglifyjs = $this->uglify;
 					$nodejs = $this->nodejs;
+					# TODO: remove console.log calls
 					$command = "$nodejs $annotate -ar $src | $nodejs $uglifyjs --compress --mangle -o $dest";
 					$return = 0;
 					$output = array();
