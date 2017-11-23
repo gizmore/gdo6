@@ -64,7 +64,7 @@ final class MinifyJS
 					$this->external[] = $path;
 				}
 			}
-			$this->external[] = "temp/minify/$earlyhash.js";
+			$this->external[] = "temp/minify/$earlyhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
 			return $this->external;
 		}
 		
@@ -91,11 +91,11 @@ final class MinifyJS
 			}
 		}
 		
-		# Copy to eary access
+		# Copy to early access
 		copy($finalpath, $earlypath);
 		
 		# Abuse external as small JS.
-		$this->external[] = "temp/minify/$finalhash.js";
+		$this->external[] = "temp/minify/$finalhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
 		return $this->external;
 	}
 	

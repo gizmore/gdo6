@@ -9,6 +9,7 @@ use GDO\User\GDO_User;
 use GDO\Util\Javascript;
 use GDO\User\GDT_User;
 use GDO\Language\Trans;
+use GDO\DB\GDT_Version;
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
  * simply because it installs the module table.
@@ -28,6 +29,7 @@ final class Module_Core extends GDO_Module
     ### Module ###
     ##############
     public $module_priority = 1;
+    public $module_version = '6.07';
     
     public function getThemes() { return ['default']; }
     
@@ -57,6 +59,7 @@ final class Module_Core extends GDO_Module
             GDT_Path::make('uglifyjs_path')->initial('uglifyjs')->label('uglifyjs_path'),
             GDT_Path::make('ng_annotate_path')->initial('ng-annotate')->label('ng_annotate_path'),
             GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
+        	GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
         );
     }
     public function cfgSystemUser() { return $this->getConfigValue('system_user'); }
@@ -67,6 +70,7 @@ final class Module_Core extends GDO_Module
     public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
     public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
     public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
+    public function cfgAssetVersion() { return $this->getConfigVar('asset_revision'); }
     
     ##################
     ### Javascript ###

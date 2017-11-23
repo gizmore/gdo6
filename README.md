@@ -116,6 +116,9 @@ Do not forget the bower/js stuff.
 
 There is a tutorial in the gdo6-helpdesk module, which is worth a read.
 
+https://github.com/gizmore/gdo6-helpdesk/blob/master/howto/HOWTO.md
+
+
 There is a tutorial section in gdo6/tutorial.
 
 ### Known Bugs / TODO
