@@ -37,6 +37,7 @@ final class GDT_IconUTF8
         	'error' => '⚠',
             'face' => '☺',
             'female' => '♀',
+        	'group' => '😂',
         	'language' => '🌐',
             'link' => '⚓',
             'male' => '♂',

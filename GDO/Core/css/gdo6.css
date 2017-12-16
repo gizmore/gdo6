@@ -33,3 +33,9 @@ html { height: 100%; }
 .gdo-exception {
 	text-align: left;
 }
+
+/** Table/Lists **/
+.gdt-list { border: 1px solid #000; border-radius: 3px; }
+.gdt-list-item { display: flex; flex: 1 1 auto; }
+.gdt-list-item > * { align-self: center; padding: 8px; }
+.gdt-list-item > *:nth-child(2) { flex-grow: 1 }

@@ -2,6 +2,7 @@
 namespace GDO\UI;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+use GDO\Core\WithFields;
 /**
  * 
  * @author gizmore
@@ -9,13 +10,14 @@ use GDO\Core\GDT_Template;
 final class GDT_Card extends GDT
 {
     use WithActions;
-    use WithTitle;
+    use WithFields;
     use WithIcon;
+    use WithTitle;
     
     ##############
     ### Render ###
     ##############
-    public function render() { return GDT_Template::php('UI', 'cell/card.php', [$field->this]); }
+    public function render() { return GDT_Template::php('UI', 'cell/card.php', ['field' => $this]); }
     
     ###############
     ### Creator ###

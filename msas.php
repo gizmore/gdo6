@@ -129,9 +129,9 @@ function Space() {
 	      }
 
 	      // Tick lamda
-	      for (var i in this.MASSES) {
-	    	  this.MASSES[i].X *= 1.000001123;
-		  }
+// 	      for (var i in this.MASSES) {
+// 	    	  this.MASSES[i].X *= 1.000001123;
+// 		  }
 	      
 	      // Draw differential space bending curve
 	      for (var x = 0; x < this.SW; x++) {
@@ -160,6 +160,22 @@ function Space() {
 	};
 
 	this.diff = function(x) {
+
+		var f = 0.0;
+		for (var i in this.MASSES) {
+			var mass = this.MASSES[i];
+			f += (mass.X - x) / mass.MASS;
+// 			f += mass.MASS / (mass.X - x);
+		}
+		return f;      
+			
+
+
+
+		
+
+
+		
 		var f = 0.0;
 		for (var i in this.MASSES) {
 			var oMass = this.MASSES[i];
