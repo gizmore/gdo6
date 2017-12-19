@@ -16,7 +16,7 @@ final class GDT_IconUTF8
         static $map = array(
             'account_box' => '[]',
             'add' => '✚',
-            'alert' => '◴',
+            'alert' => '!',
             'alarm_on' => '☄',
             'arrow_drop_down' => '▼',
             'arrow_drop_up' => '▲',
@@ -51,6 +51,7 @@ final class GDT_IconUTF8
             'settings' => '⚙',
             'stars' => '★',
         	'users' => 'USERS',
+        	'wait' => '◴',
         );
         $icon = isset($map[$icon]) ? $map[$icon] : $icon;
         return "<span class=\"gdo-icon\"$style>$icon</span>";

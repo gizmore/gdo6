@@ -28,6 +28,13 @@ class GDT_Message extends GDT_Text
 	public function renderForm() { return GDT_Template::php('UI', 'form/message.php', ['field'=>$this]); }
 	public function renderList() { return '<div class="gdo-message-condense">'.$this->renderCell().'</div>'; }
 	
+	##############
+	### Editor ###
+	##############
+	public $nowysiwyg = false;
+	public function nowysiwyg($nowysiwyg=true) { $this->nowysiwyg = $nowysiwyg; return $this; }
+	public function classEditor() { return $this->nowysiwyg ? 'as-is' : 'wysiwyg'; }
+	
 	################
 	### Validate ###
 	################

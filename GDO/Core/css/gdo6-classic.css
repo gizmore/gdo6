@@ -1,13 +1,17 @@
-.gdo-bar a {
-	padding: 4px 8px;
-}
+/** Bar **/
+.gdo-bar a { padding: 4px 8px; }
+.gdo-bar { border: 1px solid #666; }
+
+/** Buttons **/
+.gdo-icon-button:HOVER { text-decoration: none; }
 
 /** Form **/
 .gdo-has-error { background: #fa6; }
+.gdo-form { padding: 8px; border: 1px solid #000; }
 .gdo-form .gdo-container { padding: 16px; }
 .gdo-form .gdo-container > * { display: block; }
 .gdo-form .gdo-container > i.fa,
-.gdo-form .gdo-container > label { display: inline-block; }
+.gdo-form .gdo-container > label, .gdo-form .gdo-container > .gdo-icon { display: inline-block; }
 .gdo-form .gdo-required label:before { content: '*'; }
 .gdo-form .gdo-divider {
 	font-size: 28px;
@@ -16,11 +20,24 @@
     border-bottom: 1px dotted #aaa;
 }
 .gdo-form textarea { width: 100%; }
+.gdo-form select { min-width: 160px; }
+.gdo-form .gdo-link { text-decoration: underline; }
 
 /** Table **/
 .gdo-tblorder { display: inline-block; }
 .gdo-tblorder a.sel { color: gold; }
 
+/** Card **/
+.gdo-card { padding: 8px; border: 1px solid #000; }
+
 /** Message **/
-.gdo-error-box { background: red; padding: 24px; border: 1px dotted #eee; }
-.gdo-message-box { background: green; padding: 24px; border: 1px dotted #eee; }
+.gdo-error-box, .gdo-error.gdo-panel { background: #fcc; padding: 24px; border: 1px dotted #eee; }
+.gdo-message-box, .gdo-success.gdo-panel { background: #cfc; padding: 24px; border: 1px dotted #eee; }
+
+/** Header **/
+#gdo-pagewrap { width: 100%; min-height: 100%; padding-bottom: 64px; margin-bottom: -64px; }
+footer#gdo-footer { height: 64px; }
+header#gdo-header { height: 64px; }
+
+/** Panel **/
+.gdo-panel { border: 1px solid #444; padding: 8px 16px; }

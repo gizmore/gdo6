@@ -3,6 +3,7 @@
   <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
   <?= $field->htmlIcon(); ?>
   <textarea
+   class="<?=$field->classEditor()?>"
    name="form[<?= $field->name; ?>]"
    rows="6"
    maxRows="6"

@@ -242,14 +242,9 @@ class GDO_Session extends GDO
         }
     }
     
-    private static function createSession($cookieIP=true)
+    private static function createSession()
     {
         $session = self::table()->blank();
-        if ($cookieIP)
-        {
-            $cookieIP = $cookieIP === true ? GDT_IP::current() : $cookieIP;
-            $session->setVar('sess_ip', $cookieIP);
-        }
         $session->insert();
         $session->setCookie();
         return $session;

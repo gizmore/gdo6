@@ -10,18 +10,21 @@ $page instanceof GDO\UI\GDT_Page;
   <head>
     <?# Website::displayMeta(); ?>
     <?= Website::displayLink(); ?>
+    <link rel="stylesheet" href="GDO/Core/css/gdo6-classic.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="index, follow" />
   </head>
   <body>
-    <header><?= GDT_Bar::make()->horizontal()->yieldHook('TopBar'); ?></header>
-	<div class="gdo-body">
-	  <nav id="gdo-left-bar"><?= GDT_Bar::make()->vertical()->yieldHook('LeftBar'); ?></nav>
-	  <div class="gdo-main"><?= $page->html; ?></div>
-	  <nav id="gdo-right-bar"><?= GDT_Bar::make()->vertical()->yieldHook('RightBar'); ?></nav>
+	<div id="gdo-pagewrap">
+      <header id="gdo-header"><?= GDT_Bar::make()->horizontal()->yieldHook('TopBar'); ?></header>
+      <div class="gdo-body">
+	    <nav id="gdo-left-bar"><?= GDT_Bar::make()->vertical()->yieldHook('LeftBar'); ?></nav>
+	    <div class="gdo-main"><?= $page->html; ?></div>
+	    <nav id="gdo-right-bar"><?= GDT_Bar::make()->vertical()->yieldHook('RightBar'); ?></nav>
+	  </div>
 	</div>
-    <footer><?= GDT_Bar::make()->horizontal()->yieldHook('BottomBar'); ?></footer>
+    <footer id="gdo-footer"><?= GDT_Bar::make()->horizontal()->yieldHook('BottomBar'); ?></footer>
     <?= Javascript::displayJavascripts(Module_Core::instance()->cfgMinifyJS() === 'concat'); ?>
   </body>
 </html>

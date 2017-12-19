@@ -23,7 +23,7 @@ trait WithActions
     {
         if (!$this->actions)
         {
-            $this->actions = GDT_Bar::make()->horizontal();
+            $this->actions = GDT_Menu::make();
         }
         return $this->actions;
     }

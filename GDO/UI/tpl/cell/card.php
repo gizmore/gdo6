@@ -1,5 +1,5 @@
 <?php /** @var $field \GDO\UI\GDT_Card **/ ?>
-<div class="gdt-card">
+<div class="gdo-card">
 <?php if ($field->title) : ?>
   <div class="card-title"><?=$field->title?></div>
 <?php endif; ?>
