@@ -100,14 +100,7 @@ final class GDO_User extends GDO
     ###############
     public function displayName()
     {
-        if (Application::instance()->isHTML())
-        {
-            return GDT_Template::php('User', 'cell/username.php', ['user' => $this]);
-        }
-        else
-        {
-            return $this->displayNameLabel();
-        }
+    	return $this->getName();
     }
     
     public function displayNameLabel()

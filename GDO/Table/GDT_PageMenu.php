@@ -13,7 +13,7 @@ class GDT_PageMenu extends GDT
     use WithHREF;
     use WithLabel;
     
-    private $numItems = 0;
+    public $numItems = 0;
     public function items($numItems)
     {
         $this->numItems = $numItems;

@@ -341,9 +341,9 @@ final class Debug
             $arg = json_encode($arg, 1);
         }
         
-        if (mb_strlen($arg) > 48)
+        if (mb_strlen($arg) > 32)
         {
-        	return mb_substr($arg, 0, 23) . '…' . mb_substr($arg, -23);
+        	return mb_substr($arg, 0, 15) . '…' . mb_substr($arg, -15);
         }
         return $arg;
     }

@@ -1,4 +1,6 @@
 <?php /** @var $field \GDO\DB\GDT_Object **/
+/** @var \GDO\Core\GDO $gdo **/
+$gdo = $field->getValue();
 $id = 'gwfac_'.$field->name; ?>
 <div class="gdo-container<?= $field->classError(); ?>"
  ng-app="gdo6"
@@ -12,7 +14,7 @@ $id = 'gwfac_'.$field->name; ?>
    <?= $field->htmlDisabled(); ?>
    id="<?= $id; ?>"
    name="form[<?= $field->name; ?>]"
-   value="<?= html($field->getVar()); ?>" />
+   value="<?= html($gdo ? $gdo->displayName() : ''); ?>" />
   <input type="hidden" name="nocompletion_<?=$field->name?>" value="1" />
   <?= $field->htmlError(); ?>
 </div>
