@@ -3,6 +3,7 @@ namespace GDO\UI;
 
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+use GDO\DB\GDT_String;
 
 /**
  * An anchor for menus or paragraphs.
@@ -11,7 +12,7 @@ use GDO\Core\GDT_Template;
  * @since 6.00
  * @version 6.06
  */
-class GDT_Link extends GDT
+class GDT_Link extends GDT_String
 {
     use WithIcon;
     use WithLabel;
