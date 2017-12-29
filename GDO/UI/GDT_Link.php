@@ -19,6 +19,8 @@ class GDT_Link extends GDT_String
     use WithHREF;
     use WithHTMLClass;
     
+    public $caseSensitive = true;
+    
     /**
      * Output a link / anchor.
      * @deprecated
