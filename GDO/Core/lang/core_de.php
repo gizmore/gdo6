@@ -94,6 +94,7 @@ return array(
 'err_image_format_not_supported' => 'Das Bildformat %s wird nicht unterstützt.',
 	
 # Permissions
+'sel_no_permissions' => 'No permission required',
 'perm_admin' => 'Administrator',
 'perm_cronjob' => 'Cronjob',
 'perm_staff' => 'Staff',
@@ -137,6 +138,10 @@ return array(
 'enum_no' => 'Nein',
 'enum_yes' => 'Ja',
 'enum_concat' => 'Ja, und verketten',
+
+# Welcome
+'core_welcome_box_info' => 'Welcome to %s. You are authenticated as %s.',
+	
 ################################################
 'link_node_detect' => 'Detect uglify binaries…',
 'msg_nodejs_detected' => 'The nodejs binary has been detected: <i>%s</i>',

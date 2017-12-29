@@ -18,7 +18,7 @@ $result = $field->getResult();
   <?php if ($field->title) : ?>
   <h3><?= $field->title; ?></h3>
   <?php endif; ?>
-  <table id="gwfdt-<?= $field->name; ?>" class="table">
+  <table id="gwfdt-<?= $field->name; ?>" class="gdo-table">
     <thead>
       <tr>
       <?php foreach($headers->getFields() as $gdoType) : ?>

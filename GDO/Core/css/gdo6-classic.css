@@ -26,6 +26,7 @@
 /** Table **/
 .gdo-tblorder { display: inline-block; }
 .gdo-tblorder a.sel { color: gold; }
+.gdo-table th input { display: block; }
 
 /** Card **/
 .gdo-card { padding: 8px; border: 1px solid #000; }
@@ -36,8 +37,8 @@
 
 /** Header **/
 #gdo-pagewrap { width: 100%; min-height: 100%; padding-bottom: 64px; margin-bottom: -64px; }
-footer#gdo-footer { height: 64px; }
-header#gdo-header { height: 64px; }
+footer#gdo-footer, footer#gdo-footer .gdo-bar { height: 64px; }
+header#gdo-header, header#gdo-header .gdo-bar { height: 128px; }
 
 /** Panel **/
 .gdo-panel { border: 1px solid #444; padding: 8px 16px; }

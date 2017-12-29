@@ -17,10 +17,10 @@ html { height: 100%; }
 .gdo-exception { font-family: monospace; white-space: pre-wrap; word-wrap: break-word; }
 
 /** UI/GDT_Bar.php **/
-.gdo-bar  { display: flex; flex: 1; justify-content: center; }
+.gdo-bar  { display: flex; flex: 1; justify-content: space-around; align-content: center; }
 .gdo-bar-column { flex-direction: column; text-align: center; }
 .gdo-bar-row { flex-direction: row; }
-.gdo-bar > * { display: block; -ms-flexbox: 1 1 auto; flex: 1; }
+.gdo-bar > * { display: block; -ms-flexbox: 1 1 auto; flex: 1; align-self: center; text-align: center; }
 
 /** UI/GDT_Message **/
 .gdt-message textarea { width: 100%; height: 180px; }

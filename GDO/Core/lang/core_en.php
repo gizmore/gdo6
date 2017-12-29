@@ -13,6 +13,7 @@ return array(
 'tooltip' => 'Tooltip',
 'info' => 'Info',
 'message' => 'Message',
+'search' => 'Search',
 'captcha' => 'Captcha',
 'user' => 'User',
 'ip' => 'IP',
@@ -94,6 +95,7 @@ return array(
 'err_image_format_not_supported' => 'The image format is not supported: %s',
 
 # Permissions
+'sel_no_permissions' => 'No permission required',
 'perm_admin' => 'Administrator',
 'perm_cronjob' => 'Cronjob',
 'perm_staff' => 'Staff',
