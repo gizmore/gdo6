@@ -10,7 +10,7 @@ final class GDT_ImageFile extends GDT_File
 		$this->mime('image/gif');
 		$this->mime('image/jpeg');
 		$this->mime('image/png');
-		$this->icon('image_file');
+		$this->icon('image');
 		parent::__construct();
 	}
 	

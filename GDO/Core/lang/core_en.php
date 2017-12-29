@@ -109,7 +109,9 @@ return array(
 
 # Files
 '_filesize' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),
-
+'image' => 'Image',
+'icon' => 'Icon',
+	
 # Email formats
 'enum_html' => 'HTML',
 'enum_text' => 'Text',

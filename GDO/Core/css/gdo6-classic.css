@@ -41,3 +41,6 @@ header#gdo-header { height: 64px; }
 
 /** Panel **/
 .gdo-panel { border: 1px solid #444; padding: 8px 16px; }
+
+/** File **/
+.gdo-imagefile-preview img { max-width: 640px; max-height: 480px; }

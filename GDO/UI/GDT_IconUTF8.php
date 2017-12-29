@@ -38,6 +38,7 @@ final class GDT_IconUTF8
             'face' => '☺',
             'female' => '♀',
         	'group' => '😂',
+        	'image' => '📷',
         	'language' => '🌐',
             'link' => '⚓',
             'male' => '♂',
