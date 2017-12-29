@@ -51,7 +51,7 @@ final class GDT_IconUTF8
         	'plus_one' => '+1',
             'quote' => '↶',
             'reply' => '☞',
-        	'search' => '`o',
+        	'search' => '.o',
             'settings' => '⚙',
             'stars' => '★',
         	'users' => 'USERS',

@@ -93,6 +93,7 @@ return array(
 'err_max_date' => 'This date has to be before %s.',
 'err_db_unique' => 'This entry already exists.',
 'err_image_format_not_supported' => 'The image format is not supported: %s',
+'err_members_only' => 'This functionality is for registered members only.',
 
 # Permissions
 'sel_no_permissions' => 'No permission required',
