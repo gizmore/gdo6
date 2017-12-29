@@ -112,12 +112,13 @@ final class ModuleLoader
         foreach ($this->modules as $module)
         {
             $module->registerThemes();
+            $module->onLoadLanguage();
         }
+        Trans::inited();
         foreach ($this->modules as $module)
         {
             $module->initModule();
         }
-        Trans::inited();
     }
     
     ##################

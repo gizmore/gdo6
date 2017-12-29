@@ -217,7 +217,7 @@ class GDO_Module extends GDO
         if (!$this->inited)
         {
             $this->inited = true;
-            $this->onLoadLanguage();
+//             $this->onLoadLanguage();
             $this->registerSettings();
 //             if ($this->isPersisted() && $this->isEnabled())
             if ($this->isEnabled())

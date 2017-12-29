@@ -55,6 +55,7 @@ final class GDT_IconUTF8
         	'search' => '.o',
             'settings' => '⚙',
             'stars' => '★',
+        	'title' => 'T',
         	'users' => 'USERS',
         	'wait' => '◴',
         );

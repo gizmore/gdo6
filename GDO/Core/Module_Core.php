@@ -33,7 +33,7 @@ final class Module_Core extends GDO_Module
     
     public function getThemes() { return ['default']; }
     
-    public function onLoadLanguage() { $this->loadLanguage('lang/core'); }
+    public function onLoadLanguage() { return $this->loadLanguage('lang/core'); }
     
     public function getClasses()
     {

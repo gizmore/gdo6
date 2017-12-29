@@ -45,7 +45,6 @@ return array(
 'user_real_name' => 'Real Name',
 'version' => 'Version',
 
-
 # Generic Buttons
 'btn_back' => 'Back',
 'btn_send' => 'Send',
