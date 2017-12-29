@@ -237,6 +237,7 @@ final class ModuleLoader
         }
         $moduleData['module_priority'] = $instance->module_priority;
         $instance->setGDOVars($moduleData, $dirty);
+        $instance->onLoadLanguage();
         return $instance;
     }
     

@@ -36,7 +36,7 @@ final class GDO_User extends GDO
     ###########
     public function gdoColumns()
     {
-        return array(
+    	return array(
             GDT_AutoInc::make('user_id'),
             GDT_Enum::make('user_type')->enumValues(self::GHOST, self::BOT, self::GUEST, self::MEMBER)->label('type')->notNull()->initial(self::GUEST),
             GDT_Username::make('user_name')->unique(),

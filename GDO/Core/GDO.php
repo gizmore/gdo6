@@ -724,7 +724,8 @@ abstract class GDO #extends GDT
 	#############
 	### Cache ###
 	#############
-	public function __wakeup() { $this->table(); }
+	public function __wakeup() { #$this->table();
+	}
 	/**
 	 * @var \GDO\DB\Cache
 	 */

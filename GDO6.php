@@ -52,6 +52,7 @@ function tt($date=null, $format='short', $default='---') { return Time::displayD
 
 # Deprecated #
 /**
+ * Use GDO\\Module\\Method\\Class::make() instead
  * @param string $module
  * @param string $method
  * @return Method
