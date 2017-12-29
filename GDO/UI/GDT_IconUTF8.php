@@ -40,6 +40,7 @@ final class GDT_IconUTF8
         	'group' => '😂',
         	'image' => '📷',
         	'language' => '🌐',
+        	'level' => 'LVL',
             'link' => '⚓',
             'male' => '♂',
             'message' => '☶',
