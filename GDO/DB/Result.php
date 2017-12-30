@@ -149,13 +149,13 @@ class Result
 		return $array2d;
 	}
 	
-	public function fetchAllArray2dObject(GDO $table=null)
+	public function fetchAllArray2dObject(GDO $table=null, $json=false)
 	{
 	    $table = $table ? $table : $this->table;
 	    $array2d = [];
 	    while ($object = $this->fetchAs($table))
 	    {
-	        $array2d[$object->getID()] = $object;
+	        $array2d[$object->getID()] = $json ? $object->toJSON() : $object;
 	    }
 	    return $array2d;
 	}

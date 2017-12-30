@@ -79,6 +79,10 @@ final class Color
     
     public function complementary()
     {
+//     	if ( ($this->r == 0) && ($this->g == 0) && ($this->b == 0) )
+//     	{
+//     		return self::fromHex("#ffffff");
+//     	}
         list($h, $s, $v) = $this->asHSV();
         return self::fromHSV($this->hueShift($h, 180), $s, $v);
     }
