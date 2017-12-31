@@ -177,6 +177,7 @@ class Database
 	 */
 	public static function columnsS($classname)
 	{
+		self::tableS($classname);
 		return self::$COLUMNS[$classname];
 	}
 	

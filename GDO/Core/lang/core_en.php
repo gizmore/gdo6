@@ -8,6 +8,7 @@ return array(
 # util/gdo and util/gwf fields
 'birthdate' => 'Birthdate',
 'captcha' => 'Captcha',
+'color' => 'Color',
 'count' => 'Count',
 'country' => 'Country',
 'created_at' => 'Created at',

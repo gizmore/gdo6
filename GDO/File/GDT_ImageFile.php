@@ -7,11 +7,11 @@ final class GDT_ImageFile extends GDT_File
 {
 	public function __construct()
 	{
+		parent::__construct();
 		$this->mime('image/gif');
 		$this->mime('image/jpeg');
 		$this->mime('image/png');
 		$this->icon('image');
-		parent::__construct();
 	}
 	
 	public function renderForm() { return GDT_Template::php('File', 'form/imagefile.php', ['field'=>$this]); }

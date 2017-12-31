@@ -22,6 +22,7 @@ class GDT_File extends GDT_Object
     public function __construct()
     {
         $this->table(GDO_File::table());
+        $this->icon('file');
     }
     
     public $mimes = [];
