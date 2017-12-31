@@ -57,11 +57,17 @@ final class Mail
 	public function setAllowGPG($bool) { $this->allowGPG = $bool; }
 	public function setResendCheck($bool) { $this->resendCheck = $bool; }
 	public function addAttachment($title, $data, $mime='application/octet-stream', $encrypted=true) { $this->attachments[$title] = array($data, $mime, $encrypted); }
-	public function addAttachmentFile($title, $filename) { die('TODO: GET MIME TYPE AND LOAD FILE INTO MEMORY.'); }
 	public function removeAttachment($title) { unset($this->attachments[$title]); }
 	
 	private function escapeHeader($h) { return str_replace("\r", '', str_replace("\n", '', $h)); }
 	
+	public function addAttachmentFile($title, $filename)
+	{
+		$mime = mime_content_type($filename);
+		$data = file_get_contents($filename);
+		return $this->addAttachment($title, $data, $mime);
+	}
+
 	public static function botMail()
 	{
 		$mail = new self();
@@ -295,7 +301,7 @@ final class Mail
 		
 		if (self::$DEBUG)
 		{
-			Website::addDefaultOutput(sprintf('<h1>Local EMail:</h1><pre>%s<br/>%s</pre>', htmlspecialchars($this->subject), $message));
+			printf('<h1>Local EMail:</h1><pre>%s<br/>%s</pre>', htmlspecialchars($this->subject), $message);
 			return true;
 		}
 		else
