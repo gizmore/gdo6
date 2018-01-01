@@ -48,7 +48,6 @@ abstract class GDT
 	public function writable($writable) { $this->writable = $writable; return $this; }
 	public $editable = true;
 	public function editable($editable) { $this->editable = $editable; return $this->writable($editable); }
-	
 	#############
 	### Error ###
 	#############
@@ -99,6 +98,8 @@ abstract class GDT
 	public function getFields() {}
 	public function hasChanged() { return $this->initial !== $this->getVar(); }
 	public function getValidationValue() { return $this->getValue(); }
+	
+	public function isSerializable() { return true; }
 	
 	#################
 	### GDO Value ###
