@@ -18,4 +18,6 @@ class GDT_JSON extends GDT_Text
 	
 	public function toVar($value) { return $value === null ? null : self::encode($value); }
 	public function toValue($var) { return $var === null ? null : self::decode($var); }
+
+	public function renderJSON() { return (array)$this->toValue($this->getVar()); }
 }

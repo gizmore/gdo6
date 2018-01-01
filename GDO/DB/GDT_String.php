@@ -17,7 +17,6 @@ use GDO\Core\GDT;
 class GDT_String extends GDT
 {
     use WithLabel;
-    use WithIcon;
     use WithFormFields;
     use WithTooltip;
     use WithOrder;
@@ -93,7 +92,7 @@ class GDT_String extends GDT
     ##############
     public function renderCell() { return html($this->getVar()); }
     public function renderForm() { return GDT_Template::php('DB', 'form/string.php', ['field' => $this]); }
-    
+    public function renderJSON() { return array('text' => $this->var); }
     ################
     ### Validate ###
     ################

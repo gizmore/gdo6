@@ -11,7 +11,6 @@ use GDO\UI\WithTooltip;
 
 class GDT_Timestamp extends GDT
 {
-    use WithIcon;
     use WithLabel;
     use WithTooltip;
     use WithFormFields;

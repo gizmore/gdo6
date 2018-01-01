@@ -60,6 +60,11 @@ class Module_Language extends GDO_Module
         }
     }
     
+    public function onIncludeScripts()
+    {
+    	$this->addJavascript('js/gdo-trans.js');
+    }
+    
     #################
     ### Detection ###
     #################

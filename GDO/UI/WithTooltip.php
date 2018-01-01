@@ -1,19 +1,21 @@
 <?php
 namespace GDO\UI;
-use GDO\Core\GDT_Template;
 
 trait WithTooltip
 {
-    public $tooltip;
-    public function tooltip($tooltip=null) { $this->tooltip = $tooltip; return $this; }
-
-    public function htmlTooltip()
+	use WithIcon;
+	
+    public function tooltip($tooltipText=null)
     {
-        return $this->tooltip ? GDT_Template::php('UI', 'cell/tooltip.php', ['field' => $this]) : null;
+    	if (!$this->icon)
+    	{
+    		$this->icon('help');
+    	}
+    	return $this->iconText($tooltipText);
     }
-    
-    public static function with($tooltip)
+
+    public static function with($tooltipText)
     {
-    	return self::make()->tooltip($tooltip)->render();
+    	return self::make()->tooltip($tooltipText)->render();
     }
 }

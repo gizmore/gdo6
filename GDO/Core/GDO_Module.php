@@ -196,7 +196,7 @@ class GDO_Module extends GDO
     {
         switch (Application::instance()->getFormat())
         {
-            case 'json': return $tVars;
+            case 'json': return GDT_Response::makeWith(GDT_JSON::make()->value($tVars));
             case 'html':
             default: return GDT_Template::responsePHP($this->getName(), $file, $tVars);
         }

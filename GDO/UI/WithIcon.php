@@ -20,18 +20,18 @@ trait WithIcon
     ###########################
     ### Icon-Markup Factory ###
     ###########################
-    public static function iconS($icon, $size=null, $color=null)
+	public static function iconS($icon, $iconText=null, $size=null, $color=null)
     {
-        $style = self::iconStyle($size, $color);
-        return call_user_func(GDT_Icon::$iconProvider, $icon, $style);
+    	$style = self::iconStyle($size, $color);
+        return call_user_func(GDT_Icon::$iconProvider, $icon, $iconText, $style);
     }
     
-    public static function rawIconS($icon, $size=null, $color=null)
+    public static function rawIconS($icon, $iconText=null, $size=null, $color=null)
     {
     	if ($icon)
     	{
-	        $style = self::iconStyle($size, $color);
-	        return sprintf('<span class="gdo-icon"%s>%s</span>', $style, $icon);
+    		$style = self::iconStyle($size, $color);
+	        return sprintf('<a class="gdo-icon" title="%s"%s>%s</a>', html($iconText), $style, $icon);
     	}
     }
     
@@ -48,6 +48,9 @@ trait WithIcon
     protected $icon;
     public function icon($icon) { $this->icon = $icon; return $this; }
     
+    public $iconText;
+    public function iconText($text) { $this->iconText = $text; return $this; }
+    
     protected $rawIcon;
     public function rawIcon($rawIcon) { $this->rawIcon = $rawIcon; return $this; }
 
@@ -63,7 +66,7 @@ trait WithIcon
     public function htmlIcon()
     {
         return $this->icon ?
-            self::iconS($this->icon, $this->size, $this->color) :
+            self::iconS($this->icon, $this->iconText, $this->size, $this->color) :
             self::rawIconS($this->rawIcon, $this->size, $this->color);
     }
 }

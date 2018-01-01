@@ -52,5 +52,14 @@ class GDT_List extends GDT_Table
 // 			'sortableURL' => $this->sortableURL,
 		);
 	}
+
+	public function renderJSON()
+	{
+		$pagemenu = $this->getPageMenu();
+		return array(
+			'pagemenu' => $pagemenu ? $pagemenu->renderJSON() : null,
+			'result' => $this->getResult()->renderJSON($this->getFields()),
+		);
+	}
 	
 }

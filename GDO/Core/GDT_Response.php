@@ -61,23 +61,26 @@ final class GDT_Response extends GDT
 	    return $html;
 	}
 	
-// 	public function renderJSON()
-// 	{
-// 		$back = [];
-// 		foreach ($this->getFields() as $field)
-// 		{
-// 			if ($json = $field->renderJSON())
-// 			{
-// 				$back = array_merge($back, $json);
-// 			}
-// 		}
-// 		return $back;
-// 	}
-
-// 	public function displayJSON()
-// 	{
-// 		Website::renderJSON($this->renderJSON());
-// 	}
+	public function renderJSON()
+	{
+		return array(
+			'code' => $this->code,
+			'data' => $this->renderJSONFields(),
+		);
+	}
+	
+	private function renderJSONFields()
+	{
+		$back = [];
+		foreach ($this->getFields() as $field)
+		{
+			if ($json = $field->renderJSON())
+			{
+				$back = array_merge($back, $json);
+			}
+		}
+		return $back;
+	}
 	
 	################
 	### Chaining ###

@@ -55,7 +55,7 @@ function tt($date=null, $format='short', $default='---') { return Time::displayD
  * Use GDO\\Module\\Method\\Class::make() instead
  * @param string $module
  * @param string $method
- * @return Method
+ * @return \GDO\Core\Method
  * @deprecated
  */
 function method($module, $method) { $klass = "GDO\\$module\\Method\\$method"; return new $klass(); }

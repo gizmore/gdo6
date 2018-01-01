@@ -11,7 +11,7 @@ namespace GDO\UI;
  */
 final class GDT_IconUTF8
 {
-    public static function iconS($icon, $style)
+    public static function iconS($icon, $iconText, $style)
     {
         static $map = array(
             'account_box' => '[]',
@@ -60,6 +60,6 @@ final class GDT_IconUTF8
         	'wait' => '◴',
         );
         $icon = isset($map[$icon]) ? $map[$icon] : $icon;
-        return "<span class=\"gdo-icon\"$style>$icon</span>";
+        return "<span class=\"gdo-icon\"$style title=\"$iconText\">$icon</span>";
     }
 }

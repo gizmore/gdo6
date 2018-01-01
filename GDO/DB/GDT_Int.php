@@ -12,7 +12,6 @@ use GDO\UI\WithTooltip;
 use GDO\UI\WithIcon;
 class GDT_Int extends GDT
 {
-    use WithIcon;
     use WithLabel;
     use WithTooltip;
     use WithFormFields;
