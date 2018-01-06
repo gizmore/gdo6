@@ -3,8 +3,9 @@ namespace GDO\File;
 use GDO\DB\GDT_String;
 /**
  * A path variable with existance validator.
+ * 
  * @author gizmore
- * @version 6.05
+ * @version 6.07
  * @since 6.00
  */
 final class GDT_Path extends GDT_String
@@ -17,10 +18,16 @@ final class GDT_Path extends GDT_String
         return FileUtil::isFile($this->getValue()) ? 'gdo-file-valid' : 'gdo-file-invalid';
     }
     
+    #################
+    ### Existance ###
+    #################
     public $existing = false;
     public function existingDir() { $this->existing = 'is_dir'; return $this->icon('folder'); }
-    public function existingFile() { $this->existing = 'is_file'; return $this->icon('insert_drive_file'); }
+    public function existingFile() { $this->existing = 'is_file'; return $this->icon('file'); }
     
+    ################
+    ### Validate ###
+    ################
     public function validate($value)
     {
         return parent::validate($value) && $this->validatePath($value);

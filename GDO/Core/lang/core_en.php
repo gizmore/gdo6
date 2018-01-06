@@ -91,10 +91,11 @@ return array(
 'err_int_not_between' => 'This number has to be between %s and %s.',
 'err_min_date' => 'This date has to be after %s.',
 'err_max_date' => 'This date has to be before %s.',
+'err_db_connect' => 'Cannot connect to the database.',
 'err_db_unique' => 'This entry already exists.',
 'err_image_format_not_supported' => 'The image format is not supported: %s',
 'err_members_only' => 'This functionality is for registered members only.',
-
+'err_session_required' => 'Your session has expired.',
 # Permissions
 'sel_no_permissions' => 'No permission required',
 'perm_admin' => 'Administrator',

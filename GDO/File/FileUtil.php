@@ -46,12 +46,13 @@ final class FileUtil
                     }
                     else
                     {
-                        unlink($dir."/".$object);
+                        @unlink($dir."/".$object);
                     }
                 }
             }
-            rmdir($dir);
+            return @rmdir($dir);
         }
+        return false;
     }
     
     public static function humanFilesize($bytes, $factor='1024', $digits='2')
