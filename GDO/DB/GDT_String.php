@@ -201,6 +201,7 @@ class GDT_String extends GDT
     		'pattern' => $this->pattern,
     		'encoding' => $this->encoding,
     		'caseS' => $this->caseSensitive,
+    		'val' => $this->getVar(), 
     	);
     }
 

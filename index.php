@@ -21,6 +21,7 @@ if (!defined('GWF_CONFIGURED'))
 }
 
 include 'GDO6.php';
+GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
 
 # Bootstrap
 $app = new Application();
@@ -33,7 +34,6 @@ Debug::setDieOnError(GWF_ERROR_DIE);
 Debug::setMailOnError(GWF_ERROR_MAIL);
 Database::init();
 ModuleLoader::instance()->loadModulesCache();
-GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
 GDO_Session::instance();
 Logger::init(GDO_User::current()->getUserName(), GWF_ERROR_LEVEL); # 2nd init with username
 

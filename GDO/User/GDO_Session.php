@@ -82,7 +82,7 @@ class GDO_Session extends GDO
         self::$STARTED = false;
     }
     
-    public static function init($cookieName='GWF5', $domain='localhost', $seconds=-1, $httpOnly=true, $https = false)
+    public static function init($cookieName='GDO6', $domain='localhost', $seconds=-1, $httpOnly=true, $https = false)
     {
         self::$COOKIE_NAME = $cookieName;
         self::$COOKIE_DOMAIN = $domain;
