@@ -12,12 +12,7 @@ class GDT_Validator extends GDT
     public function validate($value)
     {
         $form = GDT_Form::$VALIDATING_INSTANCE;
-        $result = call_user_func($this->validator, $form, $this->validatorField(), $this->validatorField()->getValue());
-        if (!$result)
-        {
-            return $this->rawError('&nbsp;');
-        }
-        return true;
+        return call_user_func($this->validator, $form, $this->validatorField(), $this->validatorField()->getValue());
     }
     public function renderCell() { return ''; }
     public function validatorField() { return GDT_Form::$VALIDATING_INSTANCE->fields[$this->validateField]; }

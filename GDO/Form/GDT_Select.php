@@ -179,6 +179,7 @@ class GDT_Select extends GDT_ComboBox
             'minSelected' => $this->minSelected,
             'maxSelected' => $this->maxSelected,
             'selected' => $this->multiple ? $this->getValue() : $this->getSelectedVar(),
+        	'error' => $this->error,
         );
     }
     
