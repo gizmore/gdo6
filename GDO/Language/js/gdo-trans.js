@@ -14,7 +14,7 @@ function GDO_Trans() {
 	
 	this.t = function(key, ...args) {
 		key = this.CACHE[key] ? this.CACHE[key] : key;
-		
+		return vsprintf(key, args);
 	};
 	
 }

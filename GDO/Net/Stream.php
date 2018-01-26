@@ -1,7 +1,13 @@
 <?php
 namespace GDO\Net;
 use GDO\File\GDO_File;
-
+/**
+ * File utility to stream downloads in chunks.
+ * 
+ * @author gizmore
+ * @since 3.00
+ * @version 6.07
+ */
 final class Stream
 {
 	public static function path($path)
