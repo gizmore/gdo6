@@ -89,6 +89,8 @@ abstract class GDT
 	public function toVar($value) { return $value === null ? null : (string) $value; }
 	public function toValue($var) { return $var === null ? null : (string) $var; }
 	public function getVar() { return $this->getRequestVar('form', $this->var); }
+	public function getParameterVar() { return $this->getRequestVar(null, $this->var); }
+	public function getParameterValue() { return $this->toValue($this->getParameterVar()); }
 	public function getValue() { return $this->toValue($this->getVar()); }
 	public function initial($var=null) { $this->initial = $var === null ? null : (string)$var; return $this->val($var); }
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }

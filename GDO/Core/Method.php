@@ -48,14 +48,23 @@ abstract class Method
     ######################
     ### GET Parameters ###
     ######################
-    public function gdoParameters() {}
+    /**
+     * @return GDT[]
+     */
+    public function gdoParameters() { return []; }
     /**
      * @param string $key
      * @return GDT
      */
     public function gdoParameter($key)
     {
-        return $this->gdoParameters()[$key];
+    	foreach ($this->gdoParameters() as $gdt)
+    	{
+    		if ($gdt->name === $key)
+    		{
+    			return $gdt;
+    		}
+    	}
     }
     
     /**

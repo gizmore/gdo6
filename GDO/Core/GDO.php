@@ -721,6 +721,16 @@ abstract class GDO #extends GDT
 		return $result->fetchAs($this);
 	}
 	
+	public function fetchAll(Result $result)
+	{
+		$back = [];
+		while ($gdo = $this->fetch($result))
+		{
+			$back[] = $gdo;
+		}
+		return $back;
+	}
+	
 	#############
 	### Cache ###
 	#############
