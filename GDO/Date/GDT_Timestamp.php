@@ -5,10 +5,17 @@ use GDO\Core\GDT_Template;
 use GDO\Core\GDT;
 use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
-use GDO\UI\WithIcon;
 use GDO\DB\WithDatabase;
 use GDO\UI\WithTooltip;
 
+/**
+ * The GDT_Timestamp field is the baseclass for all datefields.
+ * The var type is a mysql date.
+ * The value type is an integer/timestamp.
+ *  
+ * @author gizmore
+ * @version 6.07
+ */
 class GDT_Timestamp extends GDT
 {
     use WithLabel;

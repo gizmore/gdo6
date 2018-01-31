@@ -12,7 +12,7 @@ use GDO\Core\GDT_Template;
  * @see GDT_Timestamp
  * 
  * @author gizmore
- * @version 5.0
+ * @version 6.07
  * @since 5.0
  */
 class GDT_Date extends GDT_Timestamp

@@ -7,6 +7,7 @@ use GDO\Core\GDT_Template;
 use GDO\Form\GDT_Submit;
 use GDO\Form\GDT_Hidden;
 use GDO\UI\GDT_Panel;
+use GDO\Install\GDT_ModuleFeature;
 
 echo GDT_Panel::make()->html(t('install_modules_info_text'))->render();
 
@@ -14,6 +15,7 @@ $table = GDT_Table::make()->result(new ArrayResult($modules, GDO_Module::table()
 $table->addHeader(GDT_Template::make()->template('Install', 'cell/installcbx.php'));
 $table->addHeader(GDO_Module::table()->gdoColumn('module_name'));
 $table->addHeader(GDO_Module::table()->gdoColumn('module_priority'));
+$table->addHeader(GDT_ModuleFeature::make('module_features'));
 
 $install = GDT_Submit::make('btn_install');
 $hiddenStep = GDT_Hidden::make('step')->val('4');

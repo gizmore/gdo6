@@ -259,11 +259,28 @@ class GDT_Table extends GDT
 	
 	public function renderJSON()
 	{
+		return array_merge($this->configJSON(), ['data'=>$this->renderJSONData()]);
+	}
+	
+	public function configJSON()
+	{
 		return array(
-			'tableName' => $this->result->table->gdoClassName(),
+			'tableName' => $this->getResult()->table->gdoClassName(),
 			'pagemenu' => $this->pagemenu ? $this->getPageMenu()->initJSON() : null,
 			'sortable' => $this->sortable,
 			'sortableURL' => $this->sortableURL,
 		);
+	}
+	
+	private function renderJSONData()
+	{
+		$data = [];
+		$result = $this->getResult();
+		$table = $result->table;
+		while ($gdo = $table->fetch($result))
+		{
+			$data[] = $gdo->getGDOVars();
+		}
+		return $data;
 	}
 }
