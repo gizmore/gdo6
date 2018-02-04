@@ -14,7 +14,7 @@ final class GDT_IconUTF8
     public static function iconS($icon, $iconText, $style)
     {
         static $map = array(
-            'account_box' => '[]',
+            'account_box' => '⛁',
             'add' => '✚',
             'alert' => '!',
         	'all' => '▤',

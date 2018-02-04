@@ -31,7 +31,7 @@ trait WithIcon
     	if ($icon)
     	{
     		$style = self::iconStyle($size, $color);
-	        return sprintf('<a class="gdo-icon" title="%s"%s>%s</a>', html($iconText), $style, $icon);
+	        return sprintf('<i class="gdo-icon" title="%s"%s>%s</i>', html($iconText), $style, $icon);
     	}
     }
     
