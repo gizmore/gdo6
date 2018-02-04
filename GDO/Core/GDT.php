@@ -242,4 +242,5 @@ abstract class GDT
 	### Config ###
 	##############
 	public function configJSON() { return null; }
+	public function displayConfigJSON() { return json_encode($this->configJSON()); }
 }

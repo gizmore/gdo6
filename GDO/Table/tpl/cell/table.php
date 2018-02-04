@@ -1,6 +1,6 @@
 <?php /** @var $field \GDO\Table\GDT_Table **/
 use GDO\Util\Common;
-$headers = $field->headers;
+$headers = $field->getHeaderFields();
 if ($pagemenu = $field->getPageMenu())
 {
 	echo $pagemenu->renderCell();
@@ -12,7 +12,7 @@ $result = $field->getResult();
  class="gdo-table"
  layout="column" flex layout-fill
  ng-controller="GDOTableCtrl"
- ng-init='init(<?= $field->displayJSON(); ?>)'>
+ ng-init='init(<?= $field->displayConfigJSON(); ?>)'>
   <input type="hidden" name="mo" value="<?= html(Common::getGetString('mo','')); ?>" />
   <input type="hidden" name="me" value="<?= html(Common::getGetString('me','')); ?>" />
   <?php if ($field->title) : ?>
@@ -21,7 +21,7 @@ $result = $field->getResult();
   <table id="gwfdt-<?= $field->name; ?>" class="gdo-table">
     <thead>
       <tr>
-      <?php foreach($headers->getFields() as $gdoType) : ?>
+      <?php foreach($headers as $gdoType) : ?>
         <th class="<?=$gdoType->htmlClass()?>">
           <label>
             <?= $gdoType->renderHeader(); ?>
@@ -39,7 +39,7 @@ $result = $field->getResult();
     <tbody>
     <?php while ($gdo = $result->fetchAs($field->fetchAs)) : ?>
     <tr gdo-id="<?= $gdo->getID()?>">
-      <?php foreach($headers->getFields() as $gdoType) : $gdoType->gdo($gdo); ?>
+      <?php foreach($headers as $gdoType) : $gdoType->gdo($gdo); ?>
         <td class="<?=$gdoType->htmlClass()?>"><?= $gdoType->renderCell(); ?></td>
       <?php endforeach; ?>
     </tr>
