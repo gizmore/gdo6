@@ -109,11 +109,6 @@ class Query
 		return $this;
 	}
 
-	public function or($condition)
-	{
-		return $this->where($condition, 'OR');
-	}
-
 	public function getWhere()
 	{
 		return $this->where ? " WHERE {$this->where}" : "";
