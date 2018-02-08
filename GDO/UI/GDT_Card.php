@@ -14,6 +14,12 @@ final class GDT_Card extends GDT
     use WithIcon;
     use WithTitle;
     
+    ################
+    ### Subtitle ###
+    ################
+    public $subtitle;
+    public function subtitle($subtitle) { $this->subtitle = $subtitle; return $this; }
+    
     ##############
     ### Render ###
     ##############
@@ -22,12 +28,15 @@ final class GDT_Card extends GDT
     ###############
     ### Creator ###
     ###############
+    public $withCreated;
+    public function withCreated($bool=true) { $this->withCreated = $bool; return $this; }
+
+    public $withCreator;
+    public function withCreator($bool=true) { $this->withCreator = $bool; return $this; }
+    
     public function gdoCreated()
     {
-    	if ($gdoType = $this->gdo->gdoColumnOf('GDO\DB\GDT_CreatedAt'))
-    	{
-    		return $gdoType->getVar();
-    	}
+    	return $this->gdo->gdoVarOf('GDO\DB\GDT_CreatedAt');
     }
 
     /**
@@ -35,9 +44,6 @@ final class GDT_Card extends GDT
      */
     public function gdoCreator()
     {
-    	if ($gdoType = $this->gdo->gdoColumnOf('GDO\DB\GDT_CreatedBy'))
-    	{
-    		return $gdoType->getValue();
-    	}
+    	return $this->gdo->gdoValueOf('GDO\DB\GDT_CreatedBy');
     }
 }

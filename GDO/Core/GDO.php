@@ -300,7 +300,17 @@ abstract class GDO #extends GDT
 		}
 	}
 	
-	/**
+	public function gdoVarOf($className)
+	{
+		return $this->getVar($this->gdoColumnOf($className)->name);
+	}
+	
+	public function gdoValueOf($className)
+	{
+		return $this->getValue($this->gdoColumnOf($className)->name);
+	}
+	
+/**
 	 * Get the GDOs AutoIncrement column, if any.
 	 * @return \GDO\DB\GDT_AutoInc
 	 */
