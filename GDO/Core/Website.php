@@ -17,6 +17,12 @@ final class Website
         return self::redirect($url, $time);
     }
     
+    public static function redirectBack($time=0)
+    {
+    	$url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : GWF_WEB_ROOT;
+    	return self::redirect($url, $time);
+    }
+    
     public static function redirect($url, $time=0)
     {
         switch (Application::instance()->getFormat())

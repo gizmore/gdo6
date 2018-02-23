@@ -152,5 +152,7 @@ return array(
 'msg_nodejs_detected' => 'The nodejs binary has been detected: <i>%s</i>',
 'msg_annotate_detected' => 'The ng-annotate binary has been detected: <i>%s</i>',
 'msg_uglify_detected' => 'The uglify-js binary has been detected: <i>%s</i>',
-    
+#
+'quote_by' => 'Quote by %s',
+'quote_at' => 'at %s',
 );

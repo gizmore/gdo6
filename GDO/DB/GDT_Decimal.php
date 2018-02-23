@@ -20,9 +20,9 @@ class GDT_Decimal extends GDT_Int
 		return "{$this->identifier()} DECIMAL($digits){$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 	
-	public function render()
+	public function renderForm()
 	{
-		return GDT_Template::php('Type', 'form/decimal.php', ['field'=>$this]);
+		return GDT_Template::php('DB', 'form/decimal.php', ['field'=>$this]);
 	}
 	
 	public function toValue($var)

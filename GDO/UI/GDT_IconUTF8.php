@@ -60,7 +60,7 @@ final class GDT_IconUTF8
             'reply' => '☞',
         	'search' => '.o',
             'settings' => '⚙',
-            'stars' => '★',
+            'star' => '★',
         	'title' => 'T',
         	'users' => 'USERS',
         	'wait' => '◴',
