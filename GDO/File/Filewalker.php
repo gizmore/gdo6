@@ -10,6 +10,15 @@ final class Filewalker
 	
 	public static function traverse($path, $callback_file=false, $callback_dir=false, $recursive=true, $args=null)
 	{
+		if (is_array($path))
+		{
+			foreach ($path as $_path)
+			{
+				self::traverse($_path, $callback_file, $callback_dir, $recursive, $args);
+			}
+			return;
+		}
+		
 		$path = rtrim($path, '/\\');
 		
 		# Readable?
