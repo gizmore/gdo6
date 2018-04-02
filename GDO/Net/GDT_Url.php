@@ -27,7 +27,7 @@ class GDT_Url extends GDT_String
 	
 	public function __construct()
 	{
-	    $this->icon('language');
+	    $this->icon('url');
 	}
 	
 	public function allowLocal($allowLocal=true)

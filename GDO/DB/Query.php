@@ -3,27 +3,39 @@ namespace GDO\DB;
 use GDO\Core\GDO;
 use GDO\Core\Logger;
 /**
- * Ugly query builder part of GDO database code
+ * Query builder.
+ * Part of the GDO DBA code.
+ * You should use GDO classes to create queries.
+ * 
+ * @example GDO_User::table()->select('*')->execute()->fetchAll();
+ * 
+ * @see GDO
+ * @see Result
+ * @see Database
  * 
  * @author gizmore
+ * @version 6.07
  * @since 5.00
- * @version 6.05
  */
 class Query
 {
+	# Type constants
     const SELECT = "SELECT";
     const INSERT = "INSERT INTO";
     const REPLACE = "REPLACE INTO";
     const UPDATE = "UPDATE";
     const DELETE = "DELETE FROM";
     
-	private $write = false; # Is it a write query?
-	private $debug = false;
 	/**
-	 * The table to manipulate
+	 * The table to manipulate.
 	 * @var GDO
 	 */
 	public $table;
+	
+	/**
+	 * The fetch object gdo table.
+	 * @var GDO
+	 */
 	public $fetchTable;
 	
 	# query parts
@@ -39,16 +51,43 @@ class Query
 	private $values;
 	private $limit;
 	
+	private $write = false; # Is it a write query?
+	
 	public function __construct(GDO $table)
 	{
 		$this->table = $table;
 		$this->fetchTable = $table;
 	}
 	
-	private $cached = true;
+	#############
+	### Cache ###
+	#############
+	/**
+	 * Use this to avoid using the GDO cache.
+	 * @return \GDO\DB\Query
+	 */
 	public function uncached() { return $this->cached(false); }
 	public function cached($cached=true) { $this->cached = $cached; return $this; }
+	private $cached = true;
+
+	#############
+	### Debug ###
+	#############
+	/**
+	 * Enable logging and verbose output.
+	 * @return \GDO\DB\Query
+	 */
+	public function debug() { $this->debug = true; return $this; }
+	private $debug = false;
 	
+	#############
+	### Clone ###
+	#############
+	/**
+	 * Copy this query.
+	 * Used to build pagination queries from selects.
+	 * @return \GDO\DB\Query
+	 */
 	public function copy()
 	{
 		$clone = new self($this->table);
@@ -64,6 +103,12 @@ class Query
 		return $clone;
 	}
 	
+	/**
+	 * Specify which GDO class is used for fetching.
+	 * @todo Rename function
+	 * @param GDO $fetchTable
+	 * @return \GDO\DB\Query
+	 */
 	public function fetchTable(GDO $fetchTable)
 	{
 		$this->fetchTable = $fetchTable;
@@ -108,7 +153,12 @@ class Query
 		}
 		return $this;
 	}
-
+	
+	public function orWhere($condition)
+	{
+		return $this->where($condition, "OR");
+	}
+	
 	public function getWhere()
 	{
 		return $this->where ? " WHERE {$this->where}" : "";
@@ -214,6 +264,11 @@ class Query
 		return $this->from($tableName);
 	}
 	
+	/**
+	 * Build part of the SET clause.
+	 * @param string $set
+	 * @return \GDO\DB\Query
+	 */
 	public function set($set)
 	{
 		if ($this->set)
@@ -262,6 +317,13 @@ class Query
 		return $this;
 	}
 	
+	/**
+	 * Automatically build a join based on a GDT_Object column of this queries GDO table.
+	 * @param string $key the GDO
+	 * @param string $join
+	 * @return \GDO\DB\Query
+	 * @see GDO
+	 */
 	public function joinObject($key, $join='JOIN')
 	{
 		$gdoType = $this->table->gdoColumn($key);
@@ -325,7 +387,9 @@ class Query
 	}
 
 	/**
-	 * 
+	 * Execute a query.
+	 * Returns boolean on writes and a Result on reads.
+	 * @see \GDO\DB\Result
 	 * @return \GDO\DB\Result
 	 */
 	public function exec()
@@ -350,22 +414,24 @@ class Query
 		}
 	}
 	
-	public function debug()
-	{
-		$this->debug = true;
-		return $this;
-	}
-	
+	/**
+	 * Build the query string.
+	 * @return string
+	 */
 	public function buildQuery()
 	{
-		return $this->type . $this->getSelect() . $this->getFrom() . 
+		return
+			$this->type .
+			$this->getSelect() .
+			$this->getFrom() . 
 			$this->getValues() .
 			$this->getJoin() .
 			$this->getSet() .
 			$this->getWhere() .
 			$this->getGroup() .
 			$this->getHaving() .
-			$this->getOrderBy() . $this->getLimit(); 
+			$this->getOrderBy() .
+			$this->getLimit(); 
 	}
 
 }

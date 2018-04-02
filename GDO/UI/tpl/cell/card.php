@@ -1,6 +1,9 @@
 <?php /** @var $field \GDO\UI\GDT_Card **/
 use GDO\Profile\GDT_ProfileLink;
 ?>
+<?php if ($field->gdo) : ?>
+<a name="card-<?=$field->gdo->getID()?>"></a>
+<?php endif; ?>
 <div class="gdo-card">
   <div class="card-upper">
 <?php if ($field->withCreator) : ?>

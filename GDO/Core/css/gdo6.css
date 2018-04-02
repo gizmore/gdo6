@@ -35,7 +35,10 @@ html { height: 100%; }
 }
 
 /** Table/Lists **/
-.gdt-list { border: 1px solid #000; border-radius: 3px; }
-.gdt-list-item { display: flex; flex: 1 1 auto; }
-.gdt-list-item > * { align-self: center; padding: 8px; }
-.gdt-list-item > *:nth-child(2) { flex-grow: 1 }
+.gdt-list { border: 1px solid #000; border-bottom: none; }
+.gdt-list-item { position relative; border-bottom: 1px solid #000; }
+.gdt-li-upper { display: flex; }
+.gdt-li-image { width: 48px; max-height: 48px; text-align: center; display: flex; align-items: center; align-content: center; }
+.gdt-li-image > * { margin: auto; }
+.gdt-li-content { flex-grow: 10; }
+.gdt-li-subtext { padding: 4px 8px; }

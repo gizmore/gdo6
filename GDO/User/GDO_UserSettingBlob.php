@@ -56,7 +56,7 @@ final class GDO_UserSettingBlob extends GDO
 			$user->recache();
 		}
 		$gdoType = self::$settings[$key];
-		return isset($settings[$key]) ? $gdoType->initial($settings[$key]) : $gdoType;
+		return $gdoType->initial(@$settings[$key]);
 	}
 
 	public static function set($key, $value)

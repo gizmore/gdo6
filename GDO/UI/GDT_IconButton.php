@@ -5,6 +5,7 @@ use GDO\Core\GDT_Template;
 class GDT_IconButton extends GDT_Button
 {
 	use WithTooltip;
+	use WithPHPJQuery;
 	
 	public function defaultLabel() { return $this; }
 	

@@ -4,3 +4,9 @@
   <input type="file" name="<?=$field->name?>" />
   <?= $field->htmlError(); ?>
 </div>
+
+<?php
+if ($file = $field->gdo->getValue($field->name))
+{
+// 	var_dump($file);
+}

@@ -45,7 +45,6 @@ final class GDT_IconUTF8
         	'gender' => '⚥',
         	'help' => '☛',
         	'image' => '📷',
-        	'language' => '🌐',
         	'level' => 'LVL',
         	'like' => '❤',
         	'link' => '⚓',
@@ -61,8 +60,11 @@ final class GDT_IconUTF8
         	'search' => '.o',
             'settings' => '⚙',
             'star' => '★',
+        	'time' => 'TIME',
         	'title' => 'T',
+        	'url' => '🌐',
         	'users' => 'USERS',
+        	'view' => '👁',
         	'wait' => '◴',
         );
         $icon = isset($map[$icon]) ? $map[$icon] : $icon;

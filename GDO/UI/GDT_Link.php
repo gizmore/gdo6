@@ -17,7 +17,8 @@ class GDT_Link extends GDT_String
     use WithIcon;
     use WithLabel;
     use WithHREF;
-    use WithHTMLClass;
+    use WithHTML;
+    use WithPHPJQuery;
     
     public $caseSensitive = true;
     public function isSerializable() { return false; }

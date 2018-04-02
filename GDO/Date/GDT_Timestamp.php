@@ -23,6 +23,11 @@ class GDT_Timestamp extends GDT
     use WithFormFields;
     use WithDatabase;
     
+    public function __construct()
+    {
+    	$this->icon('time');
+    }
+    
 	#############
 	### Value ###
 	#############
