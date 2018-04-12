@@ -77,8 +77,9 @@ final class Module_Core extends GDO_Module
     ##################
     public function onIncludeScripts()
     {
-        $this->addCSS('css/gdo6.css');
-        $this->addJavascript('js/gdo-string-util.js');
+    	$this->addCSS('css/gdo6.css');
+    	$this->addCSS('css/gdo6-sidebar.css');
+    	$this->addJavascript('js/gdo-string-util.js');
         $this->addJavascript('js/gdo-user.js');
         $this->addJavascript('js/gdo-core.js');
         Javascript::addJavascriptInline($this->gdoConfigJS());
