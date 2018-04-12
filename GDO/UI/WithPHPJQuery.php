@@ -56,18 +56,18 @@ trait WithPHPJQuery
 			if (!in_array($class, $classes, true))
 			{
 				$classes[] = $class;
-				$this->attr('class', implode(" ", $classes));
 			}
 		}
 		
-		return $this;
+		return $this->attr('class', implode(" ", $classes));
 	}
 	
 	# CSS
 	private $css;
-	public function css($attr, $value)
+	public function css($attr, $value=null)
 	{
 		if (!$this->css) $this->css = [];
+		if ($value === null) { return $this->css[$attr]; }
 		$this->css[$attr] = $value;
 		return $this->updateCSS();
 	}

@@ -2,6 +2,6 @@
 use GDO\UI\GDT_Icon;
 ?>
 <div class="gdo-tblorder">
-  <a href="<?= $url_asc; ?>" class="asc<?= $is_asc ? ' sel' : ''; ?>"><?=GDT_Icon::iconS('arrow_drop_up');?></a>
-  <a href="<?= $url_desc; ?>" class="desc<?= $is_desc ? ' sel' : ''; ?>"><?=GDT_Icon::iconS('arrow_drop_down');?></a>
+  <a href="<?= $url_asc; ?>" class="asc<?= $is_asc ? ' sel' : ''; ?>"><?=GDT_Icon::iconS('arrow_up');?></a>
+  <a href="<?= $url_desc; ?>" class="desc<?= $is_desc ? ' sel' : ''; ?>"><?=GDT_Icon::iconS('arrow_down');?></a>
 </div>

@@ -51,6 +51,8 @@ return array(
 'btn_send' => 'Send',
 'btn_save' => 'Save',
 'btn_upload' => 'Upload',
+'btn_edit' => 'Edit',
+'btn_view' => 'View',
 
 # Generic Messages
 'msg_form_saved' => 'Your data has been safed successfully.',
