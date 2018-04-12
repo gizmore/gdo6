@@ -10,7 +10,7 @@
    <?=$field->htmlDisabled()?>
    min="<?=$field->min?>"
    max="<?=$field->max?>"
-   size="<?=min($field->max, 64) ?>"
+   size="<?=min($field->max, 32) ?>"
    name="form[<?=$field->name?>]"
    value="<?= $field->displayVar(); ?>" />
   <?= $field->htmlError(); ?>

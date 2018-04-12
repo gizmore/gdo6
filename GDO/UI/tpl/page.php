@@ -16,15 +16,27 @@ $page instanceof GDO\UI\GDT_Page;
 	<meta name="robots" content="index, follow" />
   </head>
   <body>
+        <input type="checkbox" id="gdo-left-nav" class="gdo-nav" />
+        <input type="checkbox" id="gdo-right-nav" class="gdo-nav" />
+
+	    <nav id="gdo-left-bar" class="gdo-nav-bar"><?= GDT_Bar::make()->vertical()->yieldHook('LeftBar'); ?></nav>
+        <label for="gdo-left-nav"></label>
+
+	    <nav id="gdo-right-bar" class="gdo-nav-bar"><?= GDT_Bar::make()->vertical()->yieldHook('RightBar'); ?></nav>
+        <label for="gdo-right-nav"></label>
+  
 	<div id="gdo-pagewrap">
+    
       <header id="gdo-header"><?= GDT_Bar::make()->horizontal()->yieldHook('TopBar'); ?></header>
+    
       <div class="gdo-body">
-	    <nav id="gdo-left-bar"><?= GDT_Bar::make()->vertical()->yieldHook('LeftBar'); ?></nav>
 	    <div class="gdo-main"><?= $page->html; ?></div>
-	    <nav id="gdo-right-bar"><?= GDT_Bar::make()->vertical()->yieldHook('RightBar'); ?></nav>
 	  </div>
+
+      <footer id="gdo-footer"><?= GDT_Bar::make()->horizontal()->yieldHook('BottomBar'); ?></footer>
+	
 	</div>
-    <footer id="gdo-footer"><?= GDT_Bar::make()->horizontal()->yieldHook('BottomBar'); ?></footer>
+	
     <?= Javascript::displayJavascripts(Module_Core::instance()->cfgMinifyJS() === 'concat'); ?>
   </body>
 </html>

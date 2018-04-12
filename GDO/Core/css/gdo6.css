@@ -7,20 +7,126 @@ span, img { display: inline-block; }
 .cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
 .ce { text-align: center; margin: auto; }
 /** Main Layout **/
-body { height: 100%; background: #fff; }
+body { height: 100%; background: #fff; overflow-x: auto; width: 100%;}
 html { height: 100%; }
-.gdo-body { display: flex; }
-#gdo-left-bar, #gdo-right-bar { flex: 0 0 18.5%; }
-.gdo-main { flex: 1; }
-
-/** Core/Debug.php **/
-.gdo-exception { font-family: monospace; white-space: pre-wrap; word-wrap: break-word; }
+/* .gdo-body { display: flex; } */
+/* #gdo-left-bar, #gdo-right-bar { flex: 0 0 18.5%; } */
+/* .gdo-main { flex: 1; } */
 
 /** UI/GDT_Bar.php **/
 .gdo-bar  { display: flex; flex: 1 1 auto; justify-content: space-around; align-content: center; }
 .gdo-bar-column { flex-direction: column; text-align: center; }
 .gdo-bar-row { flex-direction: row; }
 .gdo-bar > * { display: block; text-align: center; align-self: center; flex-grow: 1; }
+
+
+/** NAV **/
+.gdo-nav-bar {
+    list-style: none;
+    background: #eee;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+#gdo-left-bar .gdo-bar > * {
+	align-self: left;
+	text-align: left;
+}
+#gdo-right-bar .gdo-bar > * {
+	align-self: right;
+	text-align: right;
+}
+#gdo-pagewrap {
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #fff;
+    position: relative;
+    top: 0;
+    bottom: 100%;
+    left: 0;
+    z-index: 2;
+/*     padding: 4em; */
+    background-image: linear-gradient(135deg, 
+                      rgb(254,255,255) 0%,
+                      rgb(221,241,249) 35%,
+                      rgb(160,216,239) 100%);
+    background-size: 200%;    
+}
+.gdo-nav {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+label[for="gdo-left-nav"]{
+    top: 0px;
+    left: 0px;
+}
+label[for="gdo-right-nav"]{
+    top: 0px;
+    right: 0px;
+}
+label[for="gdo-left-nav"],
+label[for="gdo-right-nav"] {
+    z-index: 3;
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    margin:	16px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+    background-size: contain;
+}
+
+
+#gdo-left-nav:checked ~ label[for="gdo-left-nav"] {
+	left: 256px;
+}
+#gdo-right-nav:checked ~ label[for="gdo-right-nav"] {
+	right: 256px;
+}
+#gdo-left-nav:checked ~ label[for="gdo-right-nav"] {
+	display: none;
+}
+#gdo-right-nav:checked ~ label[for="gdo-left-nav"] {
+	display: none;
+}
+#gdo-left-nav:checked ~ #gdo-right-bar {
+	z-index: 0;
+}
+#gdo-left-nav:checked ~ #gdo-pagewrap {
+    left: 256px;
+    box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
+    width: auto;
+}
+#gdo-right-nav:checked ~ #gdo-pagewrap {
+    left: -256px;
+    box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
+    width: auto;
+}
+#gdo-right-bar .gdo-bar {
+	display: block;
+}
+
+a {
+	color: #33f;
+	font-weight: 900;
+}
+
+/** Always show left menu on large devices */
+@media only screen and (min-width: 768px) {
+	body { padding-left: 256px; }
+	label[for="gdo-left-nav"] { display: none; }
+	#gdo-left-bar { z-index: 2; }
+	#gdo-right-nav:checked ~ #gdo-right-bar { z-index: 2; }
+}
+
+
+/** Core/Debug.php **/
+.gdo-exception { font-family: monospace; white-space: pre-wrap; word-wrap: break-word; }
 
 /** UI/GDT_Message **/
 .gdt-message textarea { width: 100%; height: 180px; }

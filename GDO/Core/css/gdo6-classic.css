@@ -44,9 +44,9 @@
 .gdo-message-box, .gdo-success.gdo-panel { background: #cfc; padding: 24px; border: 1px dotted #eee; }
 
 /** Header **/
-#gdo-pagewrap { width: 100%; min-height: 100%; padding-bottom: 64px; margin-bottom: -64px; }
-footer#gdo-footer, footer#gdo-footer .gdo-bar { height: 64px; }
-header#gdo-header, header#gdo-header .gdo-bar { height: 128px; }
+#gdo-pagewrap { width: 100%; min-height: 100%; }
+footer#gdo-footer, footer#gdo-footer .gdo-bar { min-height: 64px; }
+header#gdo-header, header#gdo-header .gdo-bar { min-height: 64px; }
 
 /** Panel **/
 .gdo-panel { border: 1px solid #444; padding: 8px 16px; }
