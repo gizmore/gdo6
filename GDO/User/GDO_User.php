@@ -119,7 +119,7 @@ final class GDO_User extends GDO
         }
         else
         {
-            return t('guest');
+            return '~~' . t('guest')  . '~~';
         }
     }
     
