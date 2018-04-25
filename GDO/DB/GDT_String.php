@@ -182,7 +182,7 @@ class GDT_String extends GDT
     
     public function filterGDO(GDO $gdo)
     {
-        if ($filter = $this->filterValue())
+        if ('' !== ($filter = $this->filterValue()))
         {
             $pattern = chr(1).preg_quote($filter, chr(1)).chr(1);
             if ($this->caseSensitive) { $pattern .= 'i'; } # Switch to case-i if necessary

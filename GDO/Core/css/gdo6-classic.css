@@ -26,7 +26,11 @@
 /** Table **/
 .gdo-tblorder { display: inline-block; }
 .gdo-tblorder a.sel { color: gold; }
-.gdo-table th input { display: block; }
+.gdo-table th input, .gdo-table th select { display: block; }
+
+/** Lists **/
+.gdo-list-card { margin: 4px; border: 1px solid #000; }
+.gdo-list-card > .title { padding: 4px 8px 0; }
 
 /** Pagemenu **/
 .gdo-pagemenu ul { display: flex; }

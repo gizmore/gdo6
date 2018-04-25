@@ -79,6 +79,7 @@ final class Module_Core extends GDO_Module
     {
     	$this->addCSS('css/gdo6.css');
     	$this->addCSS('css/gdo6-sidebar.css');
+    	$this->addCSS('css/gdo6-classic.css');
     	$this->addJavascript('js/gdo-string-util.js');
         $this->addJavascript('js/gdo-user.js');
         $this->addJavascript('js/gdo-core.js');

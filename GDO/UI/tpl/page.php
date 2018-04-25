@@ -10,7 +10,6 @@ $page instanceof GDO\UI\GDT_Page;
   <head>
     <?# Website::displayMeta(); ?>
     <?= Website::displayLink(); ?>
-    <link rel="stylesheet" href="GDO/Core/css/gdo6-classic.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="index, follow" />

@@ -1,6 +1,7 @@
 <?php
 namespace GDO\DB;
 use GDO\Form\GDT_Select;
+use GDO\Core\GDT_Template;
 /**
  * Boolean Checkbox
  * @author gizmore
@@ -99,6 +100,11 @@ class GDT_Checkbox extends GDT_Select
     		case '1': return t('enum_yes');
     		default: return t('enum_undetermined_yes_no');
     	}
+    }
+
+    public function renderFilter()
+    {
+    	return GDT_Template::php('DB', 'filter/boolean.php', ['field'=>$this]);
     }
 
 }

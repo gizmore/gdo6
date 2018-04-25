@@ -4,6 +4,7 @@ use GDO\DB\Query;
 use GDO\Table\GDT_Table;
 use GDO\Util\Strings;
 use GDO\Form\GDT_Form;
+use GDO\DB\GDT_String;
 abstract class GDT
 {
 	use WithName;
@@ -228,7 +229,18 @@ abstract class GDT
 	public $filterField;
 	public function filterField($filterField) { $this->filterField = $filterField; return $this; }
 	public function filterValue() { return $this->getRequestVar('f', null, $this->filterField ? $this->filterField : $this->name); }
+	
+	/**
+	 * Filter decorator function for database queries.
+	 * @see GDT_String
+	 */
 	public function filterQuery(Query $query) {}
+
+	/**
+	 * Filter for entities.
+	 * @see GDT_String
+	 * @param GDO $gdo
+	 */
 	public function filterGDO(GDO $gdo) {}
 	
 	################

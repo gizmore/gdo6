@@ -52,7 +52,7 @@ final class GDO_User extends GDO
             GDT_Language::make('user_language')->notNull()->initial('en'),
             GDT_Password::make('user_password'),
             GDT_DeletedAt::make('user_deleted_at'),
-            GDT_CreatedAt::make('user_last_activity'),
+    		GDT_CreatedAt::make('user_last_activity')->label('last_activity'),
             GDT_CreatedAt::make('user_register_time')->label('registered_at'),
             GDT_IP::make('user_register_ip'),
         );
