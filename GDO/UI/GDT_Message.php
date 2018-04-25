@@ -55,7 +55,7 @@ class GDT_Message extends GDT_Text
 		{
 			require GWF_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
 			$config = \HTMLPurifier_Config::createDefault();
-			$config->set('Attr.AllowedClasses', 'b,quote-from,quote-by');
+// 			$config->set('Attr.AllowedClasses', 'b,quote-from,quote-by');
 			$config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
 			$config->set('HTML.SafeObject', true);
 			$config->set('HTML.Nofollow', true);

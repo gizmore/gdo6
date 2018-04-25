@@ -5,6 +5,7 @@ use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Util\Strings;
 use GDO\UI\WithTitle;
+use GDO\Register\Module_Register;
 /**
  * Abstract baseclass for all methods.
  * There are some derived method classes for forms, tables and cronjobs.
@@ -122,15 +123,22 @@ abstract class Method
             return GDT_Error::responseWith('err_method_disabled');
         }
         
-        if ( ($this->isUserRequired()) && (!$user->isAuthenticated()) )
-        {
-            $hrefGuest = href('Register', 'Guest');
-            return GDT_Error::responseWith('err_user_required', [$hrefGuest]);
-        }
-        
         if ( (!$this->isGuestAllowed()) && (!$user->isMember()) )
         {
             return GDT_Error::responseWith('err_members_only');
+        }
+        
+        if ( ($this->isUserRequired()) && (!$user->isAuthenticated()) )
+        {
+        	if (module_enabled('Register') && Module_Register::instance()->cfgGuestSignup())
+        	{
+        		$hrefGuest = href('Register', 'Guest', "&backto=".urlencode($_SERVER['REQUEST_URI']));
+        		return GDT_Error::responseWith('err_user_required', [$hrefGuest]);
+        	}
+        	else
+        	{
+        		return GDT_Error::responseWith('err_members_only');
+        	}
         }
         
         if ( ($this->getUserType()) && ($this->getUserType() !== $user->getType()) )
