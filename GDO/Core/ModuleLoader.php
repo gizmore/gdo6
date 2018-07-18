@@ -4,6 +4,7 @@ use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
+use Exception;
 /**
  * Module loader.
  *
@@ -137,8 +138,8 @@ final class ModuleLoader
         $loaded = false;
         if ($loadDB && (!$this->loadedDB) )
         {
-            $this->loadModulesDB();
-            $loaded = $this->loadedDB = true;
+            $this->loadedDB = $this->loadModulesDB() !== false;
+            $loaded = true;
         }
         if ($loadFS && (!$this->loadedFS) )
         {
@@ -163,17 +164,24 @@ final class ModuleLoader
     
     private function loadModulesDB()
     {
-        $result = GDO_Module::table()->select('*')->exec();
-        while ($moduleData = $result->fetchAssoc())
+        try
         {
-            $moduleName = $moduleData['module_name'];
-            if (!isset($this->modules[$moduleName]))
+            $result = GDO_Module::table()->select('*')->exec();
+            while ($moduleData = $result->fetchAssoc())
             {
-                if ($module = self::instanciate($moduleData))
+                $moduleName = $moduleData['module_name'];
+                if (!isset($this->modules[$moduleName]))
                 {
-                    $this->modules[$moduleName] = $module->setPersisted(true);
+                    if ($module = self::instanciate($moduleData))
+                    {
+                        $this->modules[$moduleName] = $module->setPersisted(true);
+                    }
                 }
             }
+        }
+        catch (Exception $e)
+        {
+            return false;
         }
         return $this->modules;
     }

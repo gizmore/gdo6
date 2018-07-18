@@ -9,11 +9,12 @@ final class OnInstall
         if (!($user = GDO_User::getByName('system')))
         {
             $user = GDO_User::blank(array(
-                'user_name'=>'system',
+                'user_id' => 1,
+                'user_name' => 'system',
                 'user_email' => GWF_BOT_EMAIL,
-                'user_type' => 'bot',
+                'user_type' => 'system',
                 'user_password' => BCrypt::create('system')->__toString(),
-            ))->insert();
+            ))->replace();
         }
         Module_Core::instance()->saveConfigVar('system_user', $user->getID());
     }

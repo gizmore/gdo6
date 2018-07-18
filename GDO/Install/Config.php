@@ -132,7 +132,7 @@ class Config
             GDT_Hidden::make('salt')->initial(GWF_SALT),
             GDT_String::make('db_host')->initial(GWF_DB_HOST)->required(),
             GDT_String::make('db_user')->initial(GWF_DB_USER)->required(),
-            GDT_String::make('db_pass')->initial(GWF_DB_PASS)->required(),
+            GDT_String::make('db_pass')->initial(GWF_DB_PASS),
             GDT_String::make('db_name')->initial(GWF_DB_NAME)->required(),
 //             Text::make('db_prefix')->initial(GWF_DB_PREFIX)->required(),
             GDT_Checkbox::make('db_debug')->initial(GWF_DB_DEBUG),

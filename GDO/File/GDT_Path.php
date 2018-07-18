@@ -10,7 +10,7 @@ use GDO\DB\GDT_String;
  */
 final class GDT_Path extends GDT_String
 {
-    public $pattern = "#^[^?:]+$#";
+    public $pattern = "#^[^?]+$#";
     
     public function defaultLabel() { return $this->label('path'); }
     public function htmlClass()

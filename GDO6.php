@@ -16,7 +16,7 @@ use GDO\Core\Method;
 define('GWF_PERF_START', microtime(true));
 
 # Autoconf path
-define('GWF_PATH', __DIR__ . '/');
+define('GWF_PATH', str_replace('\\', '/', __DIR__) . '/');
 
 # Verbose error handling
 while (ob_get_level()>0) { ob_end_clean(); }

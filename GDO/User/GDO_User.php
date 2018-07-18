@@ -27,6 +27,7 @@ final class GDO_User extends GDO
     const SYSTEM_ID = '1'; # System user is always #1
     
     const BOT = 'bot';
+    const SYSTEM = 'system';
     const GHOST = 'ghost';
     const GUEST = 'guest';
     const MEMBER = 'member';
@@ -38,7 +39,7 @@ final class GDO_User extends GDO
     {
     	return array(
             GDT_AutoInc::make('user_id'),
-            GDT_Enum::make('user_type')->enumValues(self::GHOST, self::BOT, self::GUEST, self::MEMBER)->label('type')->notNull()->initial(self::GUEST),
+            GDT_Enum::make('user_type')->enumValues(self::SYSTEM, self::GHOST, self::BOT, self::GUEST, self::MEMBER)->label('type')->notNull()->initial(self::GUEST),
             GDT_Username::make('user_name')->unique(),
             GDT_Username::make('user_guest_name')->unique()->label('guestname'),
             GDT_Realname::make('user_real_name'),
@@ -167,6 +168,8 @@ final class GDO_User extends GDO
      * @return self
      */
     public static function ghost() { return self::table()->blank(['user_id' => '0', 'user_type' => 'ghost']); }
+    
+    public static function system() { return self::table()->findWhere("user_type='system'"); }
     
     /**
      * Get current user.

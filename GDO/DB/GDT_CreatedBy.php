@@ -27,7 +27,6 @@ final class GDT_CreatedBy extends GDT_User
 		$id = Application::instance()->isInstall()
 			? Module_Core::instance()->cfgSystemUserID()
 			: GDO_User::current()->persistent()->getID();
-		
 		return [$this->name => $id];
 	}
 

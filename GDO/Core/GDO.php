@@ -129,7 +129,7 @@ abstract class GDO #extends GDT
 	
 	public function setVar($key, $value, $markDirty=true)
 	{
-		$this->gdoVars[$key] = (string)$value;
+		$this->gdoVars[$key] = $value === null ? null : (string)$value;
 		return $markDirty ? $this->markDirty($key) : $this;
 	}
 	

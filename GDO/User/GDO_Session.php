@@ -202,7 +202,7 @@ class GDO_Session extends GDO
         # IP Check?
         if ( ($ip = $session->getIP()) && ($ip !== GDT_IP::current()) )
         {
-            Logger::logError("Invalid Sess IP!");
+            Logger::logError("Invalid Sess IP! $ip != ".GDT_IP::current());
             return false;
         }
         
