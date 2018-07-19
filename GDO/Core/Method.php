@@ -1,11 +1,11 @@
 <?php
 namespace GDO\Core;
 use GDO\DB\Database;
+use GDO\Register\Module_Register;
 use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Util\Strings;
 use GDO\UI\WithTitle;
-use GDO\Register\Module_Register;
 /**
  * Abstract baseclass for all methods.
  * There are some derived method classes for forms, tables and cronjobs.

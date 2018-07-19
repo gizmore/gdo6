@@ -20,12 +20,26 @@ class GDT_PageMenu extends GDT
         return $this;
     }
     
-    private $ipp = 10;
+    public $ipp = 10;
     public function ipp($ipp)
     {
         $this->ipp = $ipp;
         return $this;
     }
+    
+    /**
+     * Set num items via query.
+     * @optional
+     * @param Query $query
+     * @return \GDO\Table\GDT_PageMenu
+     */
+    public function query(Query $query)
+    {
+        $this->query = $query->copy()->select('COUNT(*)');
+        $this->numItems = $this->query->exec()->fetchValue();
+        return $this;
+    }
+    private $query = null;
     
     public function getPages()
     {
