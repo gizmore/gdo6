@@ -11,6 +11,8 @@ class GDT_Error extends GDT_Panel
 {
 	public function isError() { return true; }
 	
+	public function hasError() { return true; }
+	
     public static function responseException(\Exception $e)
     {
         Logger::logException($e);

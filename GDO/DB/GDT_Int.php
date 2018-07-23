@@ -123,6 +123,7 @@ class GDT_Int extends GDT
             'step' => $this->step,
             'bytes' => $this->bytes,
             'unsigned' => $this->unsigned,
+            'error' => $this->error,
         );
     }
     

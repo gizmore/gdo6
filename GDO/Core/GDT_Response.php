@@ -24,7 +24,21 @@ final class GDT_Response extends GDT
 	public $code = 200;
 	public function code($code) { $this->code = $code; return $this; }
 	public function errorCode($code=405) { return $this->code($code); }
-	public function isError() { return $this->code >= 400; }
+	public function isError()
+	{
+	    if ($this->code >= 400)
+	    {
+	        return true;
+	    }
+	    foreach ($this->fields as $gdt)
+	    {
+	        if ($gdt->hasError())
+	        {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 	
 	###############
 	### Factory ###
