@@ -425,7 +425,9 @@ abstract class GDO #extends GDT
 		{
 			return $this->insert();
 		}
-		$this->query()->replace($this->gdoTableIdentifier())->values($this->gdoVars)->exec();
+		$query = $this->query()->replace($this->gdoTableIdentifier())->values($this->gdoVars);
+		$this->beforeCreate($query);
+		$query->exec();
 		$this->dirty = false;
 		$this->persisted = true;
 		$this->gdoAfterUpdate();
@@ -434,7 +436,9 @@ abstract class GDO #extends GDT
 	
 	public function insert()
 	{
-		$this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars())->exec();
+	    $query = $this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars());
+	    $this->beforeCreate($query);
+		$query->exec();
 		$this->afterCreate();
 		return $this;
 	}
@@ -459,7 +463,9 @@ abstract class GDO #extends GDT
 		{
 			if ($setClause = $this->getSetClause())
 			{
-				$this->updateQuery()->set($setClause)->exec();
+			    $query = $this->updateQuery()->set($setClause);
+			    $this->beforeUpdate($query);
+			    $query->exec();
 				$this->dirty = false;
 				$this->recache(); # save is the only action where we recache!
 				$this->gdoAfterUpdate();
@@ -837,6 +843,16 @@ abstract class GDO #extends GDT
 		{
 			$gdoType->gdo($this)->gdoBeforeUpdate($query);
 		}
+		$this->gdoBeforeUpdate();
+	}
+	
+	private function beforeCreate(Query $query)
+	{
+	    foreach ($this->gdoColumnsCache() as $gdoType)
+	    {
+	        $gdoType->gdo($this)->gdoBeforeCreate($query);
+	    }
+	    $this->gdoBeforeCreate();
 	}
 	
 	private function afterCreate()
@@ -853,6 +869,8 @@ abstract class GDO #extends GDT
 	}
 	
 	# Overrides
+	public function gdoBeforeCreate() {}
+	public function gdoBeforeUpdate() {}
 	public function gdoAfterCreate() {}
 	public function gdoAfterUpdate()
 	{

@@ -61,8 +61,6 @@ class Database
 		$this->host = $host;
 		$this->user = $user;
 		$this->pass = $pass;
-// 		var_dump($pass);
-// 		die();
 		$this->db = $db;
 	}
 	

@@ -35,6 +35,8 @@ class Application
         GDO_Session::commit();
     }
     
+    public function isWindows() { return defined('PHP_WINDOWS_VERSION_MAJOR'); }
+    
     ################
     ### Override ###
     ################

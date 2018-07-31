@@ -6,6 +6,7 @@ use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Util\Strings;
 use GDO\UI\WithTitle;
+use GDO\User\GDO_Session;
 /**
  * Abstract baseclass for all methods.
  * There are some derived method classes for forms, tables and cronjobs.
@@ -45,6 +46,7 @@ abstract class Method
     public function init() {}
     public function beforeExecute() {}
     public function afterExecute() {}
+    public function saveLastUrl() { return true; }
     
     ######################
     ### GET Parameters ###
@@ -117,6 +119,14 @@ abstract class Method
         }
         
         $user = GDO_User::current();
+        
+        if ($session = GDO_Session::instance())
+        {
+            if ( ($this->saveLastUrl()) && (!Application::instance()->isAjax()) )
+            {
+                $session->setVar('sess_last_url', $_SERVER['REQUEST_URI']);
+            }
+        }
         
         if (!($this->isEnabled()))
         {

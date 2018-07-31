@@ -68,7 +68,7 @@ abstract class GDT
 	##############
 	### Events ###
 	##############
-	public function gdoBeforeCreate() {}
+	public function gdoBeforeCreate(Query $query) {}
 	public function gdoBeforeUpdate(Query $query) {}
 	public function gdoBeforeDelete() {}
 	public function gdoAfterCreate() {}

@@ -11,6 +11,7 @@ use GDO\DB\GDT_Token;
 use GDO\Util\Math;
 use GDO\Core\Logger;
 use GDO\Date\GDT_Timestamp;
+use GDO\Net\GDT_Url;
 /**
  * GDO Session handler.
  * @author gizmore
@@ -40,6 +41,7 @@ class GDO_Session extends GDO
             GDT_Object::make('sess_user')->table(GDO_User::table()),
             GDT_IP::make('sess_ip'),
             GDT_EditedAt::make('sess_time'),
+            GDT_Url::make('sess_last_url'),
             GDT_Serialize::make('sess_data'),
         );
     }

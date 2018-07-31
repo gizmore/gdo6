@@ -48,7 +48,7 @@ class Query
 	private $type;
 	private $set;
 	private $order;
-	private $values;
+	public  $values;
 	private $limit;
 	
 	private $write = false; # Is it a write query?
