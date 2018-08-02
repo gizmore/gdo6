@@ -392,14 +392,15 @@ class GDT_File extends GDT_Object
     private function onFlowUploadFile($key, $file)
     {
         $chunkDir = $this->getChunkDir($key);
+        
         if (!FileUtil::createDir($chunkDir))
         {
-            return $this->onFlowError('Create temp dir');
+            return $this->onFlowError('Upload failed: Cannot create temp dir ' . $chunkDir);
         }
         
         if (false !== ($error = $this->deniedFlowFile($key, $file)))
         {
-            return $this->onFlowError("Denied: $error");
+            return $this->onFlowError("Upload has been denied: $error");
         }
         
         if (!$this->onFlowCopyChunk($key, $file))
@@ -452,6 +453,10 @@ class GDT_File extends GDT_Object
     private function onFlowFinishFile($key, $file)
     {
         $chunkDir = $this->getChunkDir($key);
+         
+        # Clean old 0 file
+        $finalFile = $chunkDir.'/0';
+        @unlink($finalFile);
         
         # Merge chunks to single temp file
         $finalFile = $chunkDir.'/temp';
@@ -478,7 +483,7 @@ class GDT_File extends GDT_Object
             return "Cannot move temp file.";
         }
         
-        return false;
+        return false; # no error
     }
     
     public function onMergeFile($entry, $fullpath, $args)
@@ -508,7 +513,7 @@ class GDT_File extends GDT_Object
     private function onFlowTestMime($key, $file)
     {
         if (!($mime = @file_get_contents($this->getChunkDir($key).'/mime'))) {
-            return "$key: No mime found for file";
+            return "$key: No mime file found for $key";
         }
         if ((!in_array($mime, $this->mimes, true)) && (count($this->mimes)>0)) {
             return "$key: Unsupported MIME TYPE: $mime";
