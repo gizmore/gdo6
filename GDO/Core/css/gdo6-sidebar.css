@@ -17,11 +17,11 @@
     z-index: 1;
 }
 #gdo-left-bar .gdo-bar > * {
-	align-self: left;
+	align-self: flex-start;
 	text-align: left;
 }
 #gdo-right-bar .gdo-bar > * {
-	align-self: right;
+	align-self: flex-end;
 	text-align: right;
 }
 #gdo-pagewrap {
