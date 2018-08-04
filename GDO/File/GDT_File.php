@@ -7,6 +7,9 @@ use GDO\Core\Logger;
 use GDO\Core\GDO;
 use GDO\DB\GDT_Object;
 use GDO\UI\WithHREF;
+use GDO\Core\GDT_Response;
+use GDO\Core\GDT_Error;
+use GDO\Core\GDT_Success;
 /**
  * File input and upload backend for flow.js
  * @author gizmore
@@ -374,19 +377,12 @@ class GDT_File extends GDT_Object
     ############
     public function flowUpload()
     {
-        foreach ($_FILES as $key => $file)
-        {
-            $this->onFlowUploadFile($key, $file);
-        }
-        die();
+        return $this->onFlowUploadFile($this->name, $_FILES[$this->name]);
     }
     
     private function onFlowError($error)
     {
-        header("HTTP/1.0 413 $error");
-        Logger::logError("FLOW: $error");
-        echo $error;
-        return false;
+        return GDT_Error::responseWith($error, null, 413);
     }
     
     private function onFlowUploadFile($key, $file)
@@ -395,33 +391,27 @@ class GDT_File extends GDT_Object
         
         if (!FileUtil::createDir($chunkDir))
         {
-            return $this->onFlowError('Upload failed: Cannot create temp dir ' . $chunkDir);
+            return $this->onFlowError('err_create_dir');
         }
         
         if (false !== ($error = $this->deniedFlowFile($key, $file)))
         {
-            return $this->onFlowError("Upload has been denied: $error");
+            return $this->onFlowError("err_upload_denied", [$error]);
         }
         
         if (!$this->onFlowCopyChunk($key, $file))
         {
-            return $this->onFlowError("Copy chunk failed.");
+            return $this->onFlowError("err_copy_chunk_failed");
         }
         
         if ($_REQUEST['flowChunkNumber'] === $_REQUEST['flowTotalChunks'])
         {
             if ($error = $this->onFlowFinishFile($key, $file))
             {
-                return $this->onFlowError($error);
+                return $this->onFlowError("err_upload_failed", [$error]);
             }
         }
-        
-        # Announce result
-        $result = json_encode(array(
-            'success' => true,
-        ));
-        echo $result;
-        return true;
+        return GDT_Success::responseWith('msg_uploaded');
     }
     
     private function onFlowCopyChunk($key, $file)

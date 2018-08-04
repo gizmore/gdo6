@@ -59,10 +59,10 @@ class GDT_Username extends GDT_String
 	################
 	public function validate($value)
 	{
-		if ( ($value === null) && (!$this->notNull) )
-		{
-			return true;
-		}
+	    if (!parent::validate($value))
+	    {
+	        return false;
+	    }
 		
 		# Check existance
 		if ($this->exists)
@@ -70,14 +70,12 @@ class GDT_Username extends GDT_String
 			if ($user = GDO_User::getByLogin($value))
 			{
 				$this->gdo = $user;
-				return true;
 			}
 			else
 			{
 				return $this->error('err_user');
 			}
 		}
-		# Check name pattern validity
-		return parent::validate($value);
+		return true;
 	}
 }
