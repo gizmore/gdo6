@@ -48,6 +48,10 @@ final class ModuleLoader
         return $this->modules;
     }
     
+    /**
+     * Get all enabled and loaded modules.
+     * @return GDO_Module[]
+     */
     public function getEnabledModules()
     {
     	return array_filter($this->modules, function(GDO_Module $module){

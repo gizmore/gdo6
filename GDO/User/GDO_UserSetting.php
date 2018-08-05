@@ -21,6 +21,11 @@ final class GDO_UserSetting extends GDO
 		self::$settings[$gdoType->name] = $gdoType;
 	}
 	
+	public static function getSetting($name)
+	{
+	    return self::$settings[$name];
+	}
+	
 	###########
 	### GDO ###
 	###########
@@ -88,7 +93,7 @@ final class GDO_UserSetting extends GDO
 	        ))->replace();
 	    }
 	    $user->tempUnset('gdo_setting');
-	    $user->recache();
+// 	    $user->recache();
 	}
 	
 }

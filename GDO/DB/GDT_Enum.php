@@ -131,6 +131,7 @@ class GDT_Enum extends GDT
     		'enumValues' => $this->enumValues,
     		'emptyLabel' => $this->emptyLabel,
     		'emptyValue' => $this->emptyValue,
+    	    'value' => $this->var,
     	);
     }
   

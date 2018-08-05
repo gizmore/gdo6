@@ -177,6 +177,7 @@ class GDT_Int extends GDT
     		'unsigned' => $this->unsigned,
     		'bytes' => $this->bytes,
     		'step' => $this->step,
+    	    'value' => $this->var,
     	);
     }
 
