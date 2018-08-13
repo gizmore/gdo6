@@ -217,12 +217,13 @@ final class Debug
     }
     private static function renderError($message)
     {
-    	if (Application::instance()->isJSON())
+        http_response_code(405);
+        if (Application::instance()->isJSON())
     	{
-    		http_response_code(405);
     		return json_encode(array('error' => $message));
     	}
-        $isHTML = Application::instance()->isHTML();
+    	$app = Application::instance();
+        $isHTML = $app->isHTML() && (!$app->isAjax());
         return defined('GWF_CORE_STABLE') && $isHTML ?
         GDT_Page::make()->html(GDT_Error::withHTML($message)->render())->render() :
         ($message . PHP_EOL);

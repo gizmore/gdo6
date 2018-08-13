@@ -3,7 +3,7 @@ namespace GDO\Core;
 use Exception;
 use GDO\UI\WithLabel;
 use GDO\Util\Strings;
-use GDO\User\GDO_User;
+use GDO\Language\Trans;
 /**
  * GWF Template Engine.
  * Very cheap / basic
@@ -113,7 +113,7 @@ class GDT_Template extends GDT
      */
     private static function getPath($moduleName, $path)
     {
-        $isos = array_unique(['_'.GDO_User::current()->getLangISO(), '_'.GWF_LANGUAGE, '']);
+        $isos = array_unique(['_'.Trans::$ISO, '_'.GWF_LANGUAGE, '']);
 
         # Try themes first
         foreach (Application::instance()->getThemes() as $theme)

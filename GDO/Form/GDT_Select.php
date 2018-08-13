@@ -135,7 +135,7 @@ class GDT_Select extends GDT_ComboBox
     {
         if ($this->multiple)
         {
-            return array_key_exists((string)$value, $this->getValue()) ? self::SELECTED : '';
+            return in_array($value, $this->getValue()) ? self::SELECTED : '';
         }
         else 
         {

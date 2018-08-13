@@ -72,7 +72,7 @@ class GDT_Form extends GDT
     
     public function validateFormField(GDT $field)
     {
-        if ($field->writable)
+        if (($field->writable) && (!$field->error))
         {
             $value = $field->getValidationValue();
             if (!$field->validate($value))

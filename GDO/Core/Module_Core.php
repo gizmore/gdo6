@@ -10,6 +10,8 @@ use GDO\Util\Javascript;
 use GDO\User\GDT_User;
 use GDO\Language\Trans;
 use GDO\DB\GDT_Version;
+use GDO\DB\GDT_Checkbox;
+use GDO\UI\GDT_Bar;
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
  * simply because it installs the module table.
@@ -60,6 +62,7 @@ final class Module_Core extends GDO_Module
             GDT_Path::make('ng_annotate_path')->initial('ng-annotate')->label('ng_annotate_path'),
             GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
         	GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
+            GDT_Checkbox::make('show_impressum')->initial('1'),
         );
     }
     public function cfgSystemUser() { return $this->getConfigValue('system_user'); }
@@ -71,6 +74,19 @@ final class Module_Core extends GDO_Module
     public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
     public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
     public function cfgAssetVersion() { return $this->getConfigVar('asset_revision'); }
+    public function cfgShowImpressum() { return $this->getConfigValue('show_impressum'); }
+    
+    #############
+    ### Hooks ###
+    #############
+    public function HookBottomBar(GDT_Bar $navbar)
+    {
+        if ($this->cfgShowImpressum())
+        {
+            $navbar->addField(GDT_Link::make()->label(t('link_impressum'))->href(href('Core', 'Impressum')));
+        }
+    }
+    
     
     ##################
     ### Javascript ###

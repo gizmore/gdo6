@@ -49,7 +49,7 @@ try
 catch (Exception $e)
 {
 	Logger::logException($e);
-    $response = GDT_Response::makeWithHTML(Debug::backtraceException($e));
+    $response = GDT_Response::makeWithHTML(Debug::backtraceException($e))->code(405);
 }
 finally
 {
