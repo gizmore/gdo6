@@ -67,7 +67,7 @@ final class Color
         $dif = floatval($max - $this->min3($r, $g, $b));
         $s = $max === 0 ? 0 : (100*$dif/$max);
         if ($s === 0) $h = 0;
-        elseif ($dif === 0.0) $h = 360; # TODO: this fixes a crash but all is same color :(
+        elseif ($dif === 0.0) $h = 360; # FIXME: this fixes a crash but all is same color :(
         elseif ($r === $max) $h = 60.0 * ($g - $b) / $dif;
         elseif ($g === $max) $h = 120.0 + 60.0 * ($b - $r) / $dif;
         elseif ($b === $max) $h = 240.0 + 60.0 * ($r - $g) / $dif;
