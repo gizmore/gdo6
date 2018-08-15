@@ -66,8 +66,8 @@ cd www/gdo6<br/>
 ./gdo_bower.sh # Install module js dependencies<br/>
 </code>
 ',
-    
-    'install_title_7' => 'Install Security',
+	
+	'install_title_7' => 'Install Security',
 'ft_install_security' => 'Finish installation by removing access to install wizard and the protected folder',
-    
+	
 );

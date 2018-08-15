@@ -8,8 +8,8 @@ use GDO\Core\GDT;
  */
 class GDT_Index extends GDT
 {
-    use WithDatabase;
-    
+	use WithDatabase;
+	
 	private $indexColumns;
 	
 	public function indexColumns(...$indexColumns)

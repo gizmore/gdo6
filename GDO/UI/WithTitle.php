@@ -2,6 +2,6 @@
 namespace GDO\UI;
 trait WithTitle
 {
-    public $title;
-    public function title($title) { $this->title = $title; return $this; }
+	public $title;
+	public function title($title) { $this->title = $title; return $this; }
 }

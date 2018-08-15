@@ -28,7 +28,7 @@ final class GDT_RowNum extends GDT_Checkbox
 	
 	public function renderCell()
 	{
-	    return GDT_Template::php('Table', 'cell/rownum.php', ['field'=>$this]);
+		return GDT_Template::php('Table', 'cell/rownum.php', ['field'=>$this]);
 		
 	}
 }

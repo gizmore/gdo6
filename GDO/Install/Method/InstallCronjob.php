@@ -9,15 +9,15 @@ use GDO\Core\ModuleLoader;
  */
 final class InstallCronjob extends Method
 {
-    public function execute()
-    {
-        Database::init();
-        ModuleLoader::instance()->loadModules();
-        return $this->renderPage();
-    }
-    
-    public function renderPage()
-    {
-        return $this->templatePHP('page/installcronjob.php');
-    }
+	public function execute()
+	{
+		Database::init();
+		ModuleLoader::instance()->loadModules();
+		return $this->renderPage();
+	}
+	
+	public function renderPage()
+	{
+		return $this->templatePHP('page/installcronjob.php');
+	}
 }

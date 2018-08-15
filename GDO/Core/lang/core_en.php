@@ -138,7 +138,7 @@ return array(
 'gdo_sidebar_version' => 'gdo %s',
 'sidenav_left_title' => 'Application',
 'sidenav_right_title' => 'Settings',
-    
+	
 # Config
 'ipp' => 'Items per page (ipp)',
 'minify_js' => 'Minify Javascript On-the-fly?',

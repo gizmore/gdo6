@@ -33,7 +33,7 @@ class Installer
 		
 		if (!$module->isPersisted())
 		{
-		    GDO_Module::table()->deleteWhere('module_name = '.$module->quoted('module_name'))->exec();
+			GDO_Module::table()->deleteWhere('module_name = '.$module->quoted('module_name'))->exec();
 			$module->setVars(['module_enabled'=>'1', 'module_version'=>'6.00', 'module_priority' => $module->module_priority]);
 			$module->insert();
 			self::upgradeTo($module, '6.00');
@@ -55,7 +55,7 @@ class Installer
 	{
 		if ($classes = $module->getClasses())
 		{
-		    foreach ($classes as $class)
+			foreach ($classes as $class)
 			{
 				if (is_subclass_of($class, 'GDO\Core\GDO'))
 				{
@@ -63,7 +63,7 @@ class Installer
 					$gdo instanceof GDO;
 					if (!$gdo->gdoAbstract())
 					{
-					    self::installModuleClass($gdo);
+						self::installModuleClass($gdo);
 					}
 				}
 			}
@@ -77,23 +77,23 @@ class Installer
 	
 	public static function dropModule(GDO_Module $module)
 	{
-	    $db = Database::instance();
-	    try
-	    {
-	        $db->queryWrite('SET FOREIGN_KEY_CHECKS=0');
-    		$module->onWipe();
-    		self::dropModuleClasses($module);
-    		$module->delete();
-    		Cache::remove('gdo_modules');
-	    }
-	    catch (Exception $ex)
-	    {
-	        throw $ex;
-	    }
-	    finally
-	    {
-    	    $db->queryWrite('SET FOREIGN_KEY_CHECKS=1');
-	    }
+		$db = Database::instance();
+		try
+		{
+			$db->queryWrite('SET FOREIGN_KEY_CHECKS=0');
+			$module->onWipe();
+			self::dropModuleClasses($module);
+			$module->delete();
+			Cache::remove('gdo_modules');
+		}
+		catch (Exception $ex)
+		{
+			throw $ex;
+		}
+		finally
+		{
+			$db->queryWrite('SET FOREIGN_KEY_CHECKS=1');
+		}
 	}
 
 	public static function dropModuleClasses(GDO_Module $module)
@@ -160,8 +160,8 @@ class Installer
 	 */
 	public static function loopMethod(GDO_Module $module, $path)
 	{
-// 	    die($path."<br/>\n".GWF_PATH);
-	    $entry = Strings::substrTo(basename($path), '.');
+// 		die($path."<br/>\n".GWF_PATH);
+		$entry = Strings::substrTo(basename($path), '.');
 		$class_name = "GDO\\{$module->getName()}\\Method\\$entry";
 		if (!class_exists($class_name, false))
 		{
@@ -175,7 +175,7 @@ class Installer
 		$method = self::loopMethod($module, $path);
 		if ($permission = $method->getPermission())
 		{
-		    GDO_Permission::create($permission);
+			GDO_Permission::create($permission);
 		}
 	}
 	

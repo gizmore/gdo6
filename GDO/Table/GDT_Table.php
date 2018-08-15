@@ -73,14 +73,14 @@ class GDT_Table extends GDT
 	public $pagemenu;
 	public function paginateDefault($href=null)
 	{
-	    return $this->paginate(true, $href, Module_Table::instance()->cfgItemsPerPage());
+		return $this->paginate(true, $href, Module_Table::instance()->cfgItemsPerPage());
 	}
 	public function paginate($paginate=true, $href=null, $ipp=10)
 	{
 		if ($paginate)
 		{
-		    $href = $href === null ? $_SERVER['REQUEST_URI'] : $href;
-		    $this->pagemenu = GDT_PageMenu::make($this->name.'_page');
+			$href = $href === null ? $_SERVER['REQUEST_URI'] : $href;
+			$this->pagemenu = GDT_PageMenu::make($this->name.'_page');
 			$this->pagemenu->href($href);
 			$this->pagemenu->ipp($ipp);
 			$this->href($href);
@@ -124,7 +124,7 @@ class GDT_Table extends GDT
 		{
 			if (!($this->result = $this->queryResult()))
 			{
-			    $this->result = new ArrayResult([]);
+				$this->result = new ArrayResult([]);
 			}
 		}
 		return $this->result;
@@ -161,7 +161,7 @@ class GDT_Table extends GDT
 	
 	public function getHeaderFields()
 	{
-	    return $this->headers ? $this->headers->getFields() : null;
+		return $this->headers ? $this->headers->getFields() : null;
 	}
 	
 	/**
@@ -189,7 +189,7 @@ class GDT_Table extends GDT
 	public function queryResult()
 	{
 		$query = $this->query;
-	    $headers = $this->headers;
+		$headers = $this->headers;
 		if ($this->filtered)
 		{
 			foreach ($headers->fields as $gdoType)
@@ -199,10 +199,10 @@ class GDT_Table extends GDT
 		}
 		if ($this->ordered)
 		{
-		    $hasCustomOrder = false;
-		    foreach (Common::getRequestArray($headers->name) as $name => $asc)
+			$hasCustomOrder = false;
+			foreach (Common::getRequestArray($headers->name) as $name => $asc)
 			{
-			    if ($field = $headers->getField($name))
+				if ($field = $headers->getField($name))
 				{
 					if ($field->orderable)
 					{
@@ -213,13 +213,13 @@ class GDT_Table extends GDT
 			}
 			if (!$hasCustomOrder)
 			{
-			    if ($this->orderDefault)
-			    {
-			        $ascdesc = $this->orderDefaultAsc ? 1 : 0;
-// 			        $_REQUEST['o'] = [$this->orderDefault => $ascdesc];
-// 			        $_SERVER['REQUEST_URI'] .= "&o[$this->orderDefault]=$ascdesc";
-			        $query->order($this->orderDefault, $this->orderDefaultAsc);
-			    }
+				if ($this->orderDefault)
+				{
+					$ascdesc = $this->orderDefaultAsc ? 1 : 0;
+// 					$_REQUEST['o'] = [$this->orderDefault => $ascdesc];
+// 					$_SERVER['REQUEST_URI'] .= "&o[$this->orderDefault]=$ascdesc";
+					$query->order($this->orderDefault, $this->orderDefaultAsc);
+				}
 			}
 		}
 		if ($this->pagemenu)
@@ -254,7 +254,7 @@ class GDT_Table extends GDT
 	##############
 	public function renderCell()
 	{
-	    return GDT_Template::php('Table', 'cell/table.php', ['field'=>$this]);
+		return GDT_Template::php('Table', 'cell/table.php', ['field'=>$this]);
 	}
 	
 	public function renderJSON()

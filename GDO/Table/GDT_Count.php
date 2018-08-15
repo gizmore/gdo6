@@ -9,8 +9,8 @@ use GDO\UI\WithLabel;
  */
 class GDT_Count extends GDT
 {
-    use WithLabel;
-    
+	use WithLabel;
+	
 	public $virtual = true;
 	
 	public $orderable = false;

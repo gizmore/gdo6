@@ -266,14 +266,14 @@ final class Logger
 			$bool = $bool && @chmod($filename, GWF_CHMOD&0666);
 			if (false === $bool)
 			{
-			    return new GDOException(sprintf('Cannot create logfile "%s" in %s line %s.', $filename, __METHOD__, __LINE__));
+				return new GDOException(sprintf('Cannot create logfile "%s" in %s line %s.', $filename, __METHOD__, __LINE__));
 			}
 		}
 
 		# Write to file
 		if (false === file_put_contents($filename, $message, FILE_APPEND))
 		{
-		    return new GDOException(sprintf('Cannot write logs: logfile "%s" in %s line %s.', $filename, __METHOD__, __LINE__));
+			return new GDOException(sprintf('Cannot write logs: logfile "%s" in %s line %s.', $filename, __METHOD__, __LINE__));
 		}
 
 		return true;

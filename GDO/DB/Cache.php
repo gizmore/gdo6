@@ -110,10 +110,10 @@ class Cache
 	
 	public function recache(GDO $object)
 	{
-	    if ($object->gdoCached())
-	    {
-	        $this->cache[$object->getID()] = $object;
-	    }
+		if ($object->gdoCached())
+		{
+			$this->cache[$object->getID()] = $object;
+		}
 		if ($object->memCached())
 		{
 			self::$MEMCACHED->replace(GWF_MEMCACHE_PREFIX.$object->gkey(), $object, GWF_MEMCACHE_TTL);
@@ -127,7 +127,7 @@ class Cache
 
 	public function uncacheID($id)
 	{
-	    $className = $this->table->gdoClassName();
+		$className = $this->table->gdoClassName();
 		unset($this->cache[$id]);
 		self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$className . $id);
 	}
@@ -159,5 +159,5 @@ class Cache
 # No memcached stub
 if (!class_exists('Memcached', false))
 {
-    require 'memcached.php';
+	require 'memcached.php';
 }

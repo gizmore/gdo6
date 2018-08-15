@@ -9,9 +9,9 @@ use GDO\Util\Strings;
  */
 trait WithName
 {
-    public function gdoHumanName() { return t(strtolower(self::gdoShortNameS())); }
-    public function gdoClassName() { return self::gdoClassNameS(); }
-    public function gdoShortName() { return self::gdoShortNameS(); }
-    public static function gdoClassNameS() { return get_called_class(); }
-    public static function gdoShortNameS() { return Strings::rsubstrFrom(get_called_class(), '\\'); }
+	public function gdoHumanName() { return t(strtolower(self::gdoShortNameS())); }
+	public function gdoClassName() { return self::gdoClassNameS(); }
+	public function gdoShortName() { return self::gdoShortNameS(); }
+	public static function gdoClassNameS() { return get_called_class(); }
+	public static function gdoShortNameS() { return Strings::rsubstrFrom(get_called_class(), '\\'); }
 }

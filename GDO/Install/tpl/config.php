@@ -13,38 +13,38 @@ echo '<';echo '?';echo "php\n";
 <?php
 if ($field instanceof GDT_Divider)
 {
-    echo "\n";
-    echo str_repeat('#', mb_strlen($field->label) + 8) . "\n";
-    echo "### {$field->label} ###\n";
-    echo str_repeat('#', mb_strlen($field->label) + 8) . "\n";
+	echo "\n";
+	echo str_repeat('#', mb_strlen($field->label) + 8) . "\n";
+	echo "### {$field->label} ###\n";
+	echo str_repeat('#', mb_strlen($field->label) + 8) . "\n";
 }
 elseif ($field instanceof GDT_Submit)
 {
 }
 else
 {
-    $value = $field->getValue();
-    if (is_string($value))
-    {
-        if ($field->name === 'chmod')
-        {
-            $value = "0".Numeric::baseConvert($value, 10, 8);
-        }
-        else
-        {
-            $value = "'$value'";
-        }
-    }
-    elseif (is_array($value))
-    {
-    	$value = implode(',', $value);
-    	$value = "'$value'";
-    }
-    elseif (is_bool($value))
-    {
-        $value = $value ? 'true' : 'false';
-    }
-    printf("define('GWF_%s', %s);\n", strtoupper($field->name), $value);
+	$value = $field->getValue();
+	if (is_string($value))
+	{
+		if ($field->name === 'chmod')
+		{
+			$value = "0".Numeric::baseConvert($value, 10, 8);
+		}
+		else
+		{
+			$value = "'$value'";
+		}
+	}
+	elseif (is_array($value))
+	{
+		$value = implode(',', $value);
+		$value = "'$value'";
+	}
+	elseif (is_bool($value))
+	{
+		$value = $value ? 'true' : 'false';
+	}
+	printf("define('GWF_%s', %s);\n", strtoupper($field->name), $value);
 }
 ?>
 <?php endforeach; ?>

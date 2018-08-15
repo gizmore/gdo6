@@ -21,7 +21,7 @@ final class GetFile extends Method
 	
 	public function executeWithId( $id)
 	{
-	    if (!($file = GDO_File::getById($id)))
+		if (!($file = GDO_File::getById($id)))
 		{
 			return $this->error('err_unknown_file', null, 404);
 		}

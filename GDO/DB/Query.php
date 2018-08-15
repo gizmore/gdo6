@@ -20,12 +20,12 @@ use GDO\Core\Logger;
 class Query
 {
 	# Type constants
-    const SELECT = "SELECT";
-    const INSERT = "INSERT INTO";
-    const REPLACE = "REPLACE INTO";
-    const UPDATE = "UPDATE";
-    const DELETE = "DELETE FROM";
-    
+	const SELECT = "SELECT";
+	const INSERT = "INSERT INTO";
+	const REPLACE = "REPLACE INTO";
+	const UPDATE = "UPDATE";
+	const DELETE = "DELETE FROM";
+	
 	/**
 	 * The table to manipulate.
 	 * @var GDO
@@ -215,14 +215,14 @@ class Query
 		$this->type = self::SELECT;
 		if ($columns)
 		{
-    		if ($this->columns)
-    		{
-    			$this->columns .= ", $columns";
-    		}
-    		else
-    		{
-    			$this->columns = " $columns";
-    		}
+			if ($this->columns)
+			{
+				$this->columns .= ", $columns";
+			}
+			else
+			{
+				$this->columns = " $columns";
+			}
 		}
 		return $this;
 	}
@@ -254,7 +254,7 @@ class Query
 	
 	private function getSelectColumns()
 	{
-	    return $this->columns ? $this->columns : '*';
+		return $this->columns ? $this->columns : '*';
 	}
 	
 	public function delete($tableName)
@@ -329,14 +329,14 @@ class Query
 		$gdoType = $this->table->gdoColumn($key);
 		if ($gdoType instanceof GDT_Join)
 		{
-		    $join = $gdoType->join;
+			$join = $gdoType->join;
 		}
 		else # GDT_Object
 		{
-		    $table = $gdoType->foreignTable();
-		    $ftbl = $table->gdoTableIdentifier();
-		    $atbl = $this->table->gdoTableIdentifier();
-		    $join = "{$join} {$table->gdoTableIdentifier()} ON  $ftbl.{$table->gdoAutoIncColumn()->identifier()}=$atbl.{$gdoType->identifier()}";
+			$table = $gdoType->foreignTable();
+			$ftbl = $table->gdoTableIdentifier();
+			$atbl = $this->table->gdoTableIdentifier();
+			$join = "{$join} {$table->gdoTableIdentifier()} ON  $ftbl.{$table->gdoAutoIncColumn()->identifier()}=$atbl.{$gdoType->identifier()}";
 		}
 		return $this->join($join);
 	}

@@ -27,7 +27,7 @@ final class GDT_Tabs extends GDT
 	
 	public function getFields()
 	{
-	    return $this->tabs;
+		return $this->tabs;
 	}
 	
 	##############
@@ -40,6 +40,6 @@ final class GDT_Tabs extends GDT
 	
 	public function renderCell()
 	{
-	    return GDT_Template::php('UI', 'cell/tabs.php', ['field' => $this, 'cell' => true]);
+		return GDT_Template::php('UI', 'cell/tabs.php', ['field' => $this, 'cell' => true]);
 	}
 }

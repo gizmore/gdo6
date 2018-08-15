@@ -8,6 +8,6 @@ use GDO\DB\GDT_String;
  */
 class GDT_Secret extends GDT_String
 {
-    public $encoding = self::ASCII;
-    public $caseSensitive = true;
+	public $encoding = self::ASCII;
+	public $caseSensitive = true;
 }

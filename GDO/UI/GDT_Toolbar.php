@@ -6,10 +6,10 @@ use GDO\Core\WithFields;
 
 class GDT_Toolbar extends GDT
 {
-    use WithFields;
-    
-    public function renderCell()
-    {
-        return GDT_Template::php('UI', 'cell/toolbar.php', ['field' => $this]);
-    }
+	use WithFields;
+	
+	public function renderCell()
+	{
+		return GDT_Template::php('UI', 'cell/toolbar.php', ['field' => $this]);
+	}
 }

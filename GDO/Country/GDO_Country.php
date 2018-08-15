@@ -17,10 +17,10 @@ final class GDO_Country extends GDO
 	public function gdoColumns()
 	{
 		return array(
-		    GDT_Char::make('c_iso')->label('id')->size(2)->ascii()->caseS()->primary(),
-		    GDT_Char::make('c_iso3')->size(3)->ascii()->caseS()->notNull()->index(),
-		    GDT_String::make('c_phonecode')->min(2)->max(32),
-		    GDT_Int::make('c_population')->initial('0')->unsigned(),
+			GDT_Char::make('c_iso')->label('id')->size(2)->ascii()->caseS()->primary(),
+			GDT_Char::make('c_iso3')->size(3)->ascii()->caseS()->notNull()->index(),
+			GDT_String::make('c_phonecode')->min(2)->max(32),
+			GDT_Int::make('c_population')->initial('0')->unsigned(),
 		);
 	}
 	
@@ -35,8 +35,8 @@ final class GDO_Country extends GDO
 	 */
 	public static function getByISOOrUnknown($iso=null)
 	{
-	    
-	    if ( ($iso === null) || (!($country = self::getById($iso))) )
+		
+		if ( ($iso === null) || (!($country = self::getById($iso))) )
 		{
 			$country = self::unknownCountry();
 		}
@@ -45,7 +45,7 @@ final class GDO_Country extends GDO
 	
 	public static function unknownCountry()
 	{
-	    return self::blank(['c_iso'=>'zz']);
+		return self::blank(['c_iso'=>'zz']);
 	}
 	
 	/**
@@ -63,11 +63,11 @@ final class GDO_Country extends GDO
 
 	public function renderCell()
 	{
-	    return GDT_Template::php('Country', 'cell/country.php', ['field' => GDT_Country::make()->gdo($this), 'choice' => false]);
+		return GDT_Template::php('Country', 'cell/country.php', ['field' => GDT_Country::make()->gdo($this), 'choice' => false]);
 	}
 
 	public function renderChoice()
 	{
-	    return GDT_Template::php('Country', 'cell/country.php', ['field' => GDT_Country::make()->gdo($this), 'choice' => true]);
+		return GDT_Template::php('Country', 'cell/country.php', ['field' => GDT_Country::make()->gdo($this), 'choice' => true]);
 	}
 }

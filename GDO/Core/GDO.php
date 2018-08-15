@@ -135,13 +135,13 @@ abstract class GDO #extends GDT
 	
 	public function setVars(array $vars=null, $markDirty=true)
 	{
-	    if ($vars)
-	    {
-    		foreach ($vars as $key => $value)
-    		{
-    			$this->setVar($key, $value, $markDirty);
-    		}
-	    }
+		if ($vars)
+		{
+			foreach ($vars as $key => $value)
+			{
+				$this->setVar($key, $value, $markDirty);
+			}
+		}
 		return $this;
 	}
 	
@@ -436,8 +436,8 @@ abstract class GDO #extends GDT
 	
 	public function insert()
 	{
-	    $query = $this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars());
-	    $this->beforeCreate($query);
+		$query = $this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars());
+		$this->beforeCreate($query);
 		$query->exec();
 		$this->afterCreate();
 		return $this;
@@ -463,9 +463,9 @@ abstract class GDO #extends GDT
 		{
 			if ($setClause = $this->getSetClause())
 			{
-			    $query = $this->updateQuery()->set($setClause);
-			    $this->beforeUpdate($query);
-			    $query->exec();
+				$query = $this->updateQuery()->set($setClause);
+				$this->beforeUpdate($query);
+				$query->exec();
 				$this->dirty = false;
 				$this->recache(); # save is the only action where we recache!
 				$this->gdoAfterUpdate();
@@ -610,7 +610,7 @@ abstract class GDO #extends GDT
 		$gdoVars = [];
 		foreach ($table->gdoColumnsCache() as $column)
 		{
-		    /** @var $column \GDO\Core\GDT **/
+			/** @var $column \GDO\Core\GDT **/
 			if ($data = $column->blankData())
 			{
 				$gdoVars = array_merge($gdoVars, $data);
@@ -645,7 +645,7 @@ abstract class GDO #extends GDT
 	##############
 	public function getID()
 	{
-	    $id = '';
+		$id = '';
 		foreach ($this->gdoPrimaryKeyColumns() as $name => $column)
 		{
 			$id2 = $this->getVar($name);
@@ -848,11 +848,11 @@ abstract class GDO #extends GDT
 	
 	private function beforeCreate(Query $query)
 	{
-	    foreach ($this->gdoColumnsCache() as $gdoType)
-	    {
-	        $gdoType->gdo($this)->gdoBeforeCreate($query);
-	    }
-	    $this->gdoBeforeCreate();
+		foreach ($this->gdoColumnsCache() as $gdoType)
+		{
+			$gdoType->gdo($this)->gdoBeforeCreate($query);
+		}
+		$this->gdoBeforeCreate();
 	}
 	
 	private function afterCreate()

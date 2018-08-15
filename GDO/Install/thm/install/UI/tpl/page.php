@@ -14,16 +14,16 @@ $page instanceof GDO\UI\GDT_Page;
 </head>
 <body>
   <header>
-    <h1>GDO6 Setup</h1>
-    <?= GDT_Template::php('Install', 'crumb/progress.php'); ?>
+	<h1>GDO6 Setup</h1>
+	<?= GDT_Template::php('Install', 'crumb/progress.php'); ?>
   </header>
   <div class="gdo-body">
-    <div class="gdo-main"><?= $page->html; ?></div>
+	<div class="gdo-main"><?= $page->html; ?></div>
   </div>
   <footer>
-    &copy;2017, 2018 by <?= GDT_Email::make()->val('Christian <gizmore@wechall.net>')->renderCell(); ?>
-    <?= GDT_Divider::make()->renderCell(); ?>
-    <?= GDT_PerfBar::make()->renderCell(); ?>
+	&copy;2017, 2018 by <?= GDT_Email::make()->val('Christian <gizmore@wechall.net>')->renderCell(); ?>
+	<?= GDT_Divider::make()->renderCell(); ?>
+	<?= GDT_PerfBar::make()->renderCell(); ?>
   </footer>
 </body>
 </html>

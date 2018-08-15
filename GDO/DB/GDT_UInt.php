@@ -8,5 +8,5 @@ namespace GDO\DB;
  */
 class GDT_UInt extends GDT_Int
 {
-    public $unsigned = true;
+	public $unsigned = true;
 }

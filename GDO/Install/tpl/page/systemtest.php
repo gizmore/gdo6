@@ -10,8 +10,8 @@ use GDO\UI\GDT_Panel;
 $valid = true;
 foreach ($tests as $i => $test)
 {
-    printf("<tr><td>%s</td><td>%s</td></tr>", t("install_test_$i"), GDT_Checkbox::make()->val($test)->renderCell());
-    $valid = $valid ? $test : false;
+	printf("<tr><td>%s</td><td>%s</td></tr>", t("install_test_$i"), GDT_Checkbox::make()->val($test)->renderCell());
+	$valid = $valid ? $test : false;
 }
 ?>
 </table>
@@ -19,9 +19,9 @@ foreach ($tests as $i => $test)
 <?php
 if ($valid)
 {
-    echo GDT_Panel::make()->html(t('install_system_ok', [Config::linkStep(3)]))->render();
+	echo GDT_Panel::make()->html(t('install_system_ok', [Config::linkStep(3)]))->render();
 }
 else 
 {
-    echo GDT_Panel::make()->html(t('install_system_not_ok', [Config::linkStep(2)]))->render();
+	echo GDT_Panel::make()->html(t('install_system_not_ok', [Config::linkStep(2)]))->render();
 }

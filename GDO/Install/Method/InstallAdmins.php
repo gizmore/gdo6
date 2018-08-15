@@ -17,44 +17,44 @@ use GDO\User\GDO_Session;
 
 class InstallAdmins extends MethodForm
 {
-    public function createForm(GDT_Form $form)
-    {
-        Debug::init();
-        Database::init();
-        GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
-        ModuleLoader::instance()->loadModules();
+	public function createForm(GDT_Form $form)
+	{
+		Debug::init();
+		Database::init();
+		GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
+		ModuleLoader::instance()->loadModules();
 
-        $users = GDO_User::table();
-        $form->addFields(array(
-        	$users->gdoColumn('user_name'),
-        	$users->gdoColumn('user_email'),
-        	$users->gdoColumn('user_password'),
-            GDT_Submit::make(),
-        	GDT_AntiCSRF::make(),
-        ));
-    }
-    
-    public function renderPage()
-    {
-        return GDT_Template::responsePHP('Install', 'page/installadmins.php', ['form' => $this->getForm()]);
-    }
-    
-    public function formValidated(GDT_Form $form)
-    {
-        $password = $form->getField('user_password');
-        $password->val(BCrypt::create($password->getVar())->__toString());
-        
-        $user = GDO_User::blank($form->getFormData())->setVars(array(
-            'user_type' => GDO_User::MEMBER,
-        ))->insert();
-        
-        $permissions = ['admin', 'staff', 'cronjob'];
-        foreach ($permissions as $permission)
-        {
-            GDO_UserPermission::grantPermission($user, GDO_Permission::getOrCreateByName($permission));
-        }
-        
-        return parent::formValidated($form)->add($this->renderPage());
-    }
-    
+		$users = GDO_User::table();
+		$form->addFields(array(
+			$users->gdoColumn('user_name'),
+			$users->gdoColumn('user_email'),
+			$users->gdoColumn('user_password'),
+			GDT_Submit::make(),
+			GDT_AntiCSRF::make(),
+		));
+	}
+	
+	public function renderPage()
+	{
+		return GDT_Template::responsePHP('Install', 'page/installadmins.php', ['form' => $this->getForm()]);
+	}
+	
+	public function formValidated(GDT_Form $form)
+	{
+		$password = $form->getField('user_password');
+		$password->val(BCrypt::create($password->getVar())->__toString());
+		
+		$user = GDO_User::blank($form->getFormData())->setVars(array(
+			'user_type' => GDO_User::MEMBER,
+		))->insert();
+		
+		$permissions = ['admin', 'staff', 'cronjob'];
+		foreach ($permissions as $permission)
+		{
+			GDO_UserPermission::grantPermission($user, GDO_Permission::getOrCreateByName($permission));
+		}
+		
+		return parent::formValidated($form)->add($this->renderPage());
+	}
+	
 }

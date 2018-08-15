@@ -6,7 +6,7 @@ $id = $user->getID();
 # As it's a template you might want to add colors for permissions, a link to your profile or whatever.
 if ($user->isGhost())
 {
-    printf('<gdo-user id="%s" nickname="~GHOST~">~GUEST~</gdo-user>', $id, $user->getName());
+	printf('<gdo-user id="%s" nickname="~GHOST~">~GUEST~</gdo-user>', $id, $user->getName());
 }
 elseif ($realname = $user->getRealName())
 {

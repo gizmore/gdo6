@@ -9,11 +9,11 @@ $val = $field->getVar(); ?>
    <?= $field->htmlRequired(); ?>
    <?= $field->htmlDisabled(); ?>>
 <?php if ($field->emptyLabel) : ?>
-      <option value="<?= $field->emptyValue; ?>" <?= $field->emptyValue === $val ? $sel : ''; ?>><?= $field->emptyLabel; ?></option>
+	  <option value="<?= $field->emptyValue; ?>" <?= $field->emptyValue === $val ? $sel : ''; ?>><?= $field->emptyLabel; ?></option>
 <?php endif; ?>
-    <?php foreach ($field->enumValues as $enumValue) : ?>
-      <option value="<?= $enumValue; ?>" <?= $enumValue === $val ? $sel : ''; ?>><?= t('enum_'.$enumValue); ?></option>
-    <?php endforeach; ?>
+	<?php foreach ($field->enumValues as $enumValue) : ?>
+	  <option value="<?= $enumValue; ?>" <?= $enumValue === $val ? $sel : ''; ?>><?= t('enum_'.$enumValue); ?></option>
+	<?php endforeach; ?>
   </select>
   <div class="gdo-error"><?= $field->error; ?></div>
 </div>

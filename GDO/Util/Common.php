@@ -41,6 +41,6 @@ final class Common
 	 */
 	public static function regex($pattern, $s)
 	{
-	    return preg_match($pattern, $s, $matches) ? $matches[1] : false;
+		return preg_match($pattern, $s, $matches) ? $matches[1] : false;
 	}
 }

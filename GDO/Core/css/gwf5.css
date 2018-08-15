@@ -47,41 +47,41 @@ img.gdo-captcha-img {
 }
 .gdo-has-error, md-content.gdo-error {
 	background: #fff4f4;
-    border: 1px dotted #ccc;
-    overflow: hidden;
+	border: 1px dotted #ccc;
+	overflow: hidden;
 }
 .gdo-has-error { overflow: auto; }
 md-content.gdo-message {
 	background: #eeffee;
-    border: 1px dotted #ccc;
-    overflow: hidden;
+	border: 1px dotted #ccc;
+	overflow: hidden;
 }
 
 .gdo-error i.material-icons, .gdo-message i.material-icons {
-    display: inline-block;
-    width: 30px;
-    height: 28px;
-    line-height: 28px;
+	display: inline-block;
+	width: 30px;
+	height: 28px;
+	line-height: 28px;
 }
 
 .gdo-error p, .gdo-message p {
-    font-weight: bold;
-    margin: 0;
-    line-height: 28px;
+	font-weight: bold;
+	margin: 0;
+	line-height: 28px;
 }
 .gdo-error p {
-    color: #a11;
-    line-height: 28px;
+	color: #a11;
+	line-height: 28px;
 }
 .gdo-form-error {
-    color: #a11;
-    font-weight: bold;
-    opacity: 0.7;
-    clear: both;
+	color: #a11;
+	font-weight: bold;
+	opacity: 0.7;
+	clear: both;
 }
 md-input-container .gdo-form-error {
 	top: -12px;
-    position: relative;
+	position: relative;
 }
 
 md-input-container > md-select {

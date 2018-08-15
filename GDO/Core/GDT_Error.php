@@ -13,31 +13,31 @@ class GDT_Error extends GDT_Panel
 	
 	public function hasError() { return true; }
 	
-    public static function responseException(\Exception $e)
-    {
-        Logger::logException($e);
-        $html = Debug::backtraceException($e, Application::instance()->isHTML(), $e->getMessage());
-        return self::responseWith('err_exception', [$html], 500, false);
-    }
-    
-    public static function responseWith($key, array $args=null, $code=405, $log=true)
-    {
-        return GDT_Response::makeWith(self::with($key, $args, $code, $log))->code($code);
-    }
-    
-    public static function with($key, array $args=null, $code=405, $log=true)
+	public static function responseException(\Exception $e)
 	{
-	    http_response_code($code);
+		Logger::logException($e);
+		$html = Debug::backtraceException($e, Application::instance()->isHTML(), $e->getMessage());
+		return self::responseWith('err_exception', [$html], 500, false);
+	}
+	
+	public static function responseWith($key, array $args=null, $code=405, $log=true)
+	{
+		return GDT_Response::makeWith(self::with($key, $args, $code, $log))->code($code);
+	}
+	
+	public static function with($key, array $args=null, $code=405, $log=true)
+	{
+		http_response_code($code);
 		if ($log)
 		{
-		    Logger::logError(tiso('en', $key, $args));
+			Logger::logError(tiso('en', $key, $args));
 		}
 		return self::withHTML(t($key, $args));
 	}
 	
 	public static function withHTML($html)
 	{
-	    return self::make()->html($html)->icon('report_problem');
+		return self::make()->html($html)->icon('report_problem');
 	}
 	
 	##############
@@ -47,8 +47,8 @@ class GDT_Error extends GDT_Panel
 	
 	public function renderJSON()
 	{
-	    return array(
-	        'error' => $this->html,
-	    );
+		return array(
+			'error' => $this->html,
+		);
 	}
 }

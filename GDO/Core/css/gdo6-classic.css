@@ -15,9 +15,9 @@
 .gdo-form .gdo-required label:before { content: '*'; }
 .gdo-form .gdo-divider {
 	font-size: 28px;
-    padding-left: 24px;
-    background: #eee;
-    border-bottom: 1px dotted #aaa;
+	padding-left: 24px;
+	background: #eee;
+	border-bottom: 1px dotted #aaa;
 }
 .gdo-form textarea { width: 100%; }
 .gdo-form select { min-width: 160px; }

@@ -41,8 +41,8 @@ final class GDT_ImageFile extends GDT_File
 	### Bound  ###
 	##############
 	### XXX: Bound checking is done before a possible conversion.
-	###      It could make sense to set those values to 10,10,2048,2048 or something.
-	###      This could prevent DoS with giant images.
+	###	  It could make sense to set those values to 10,10,2048,2048 or something.
+	###	  This could prevent DoS with giant images.
 	### @see \GDO\File\GDT_File
 	##############
 	public $minWidth;
@@ -63,9 +63,9 @@ final class GDT_ImageFile extends GDT_File
 	public function resize($resize=true) { $this->resize = $resize; return $this; }
 	public function resizeTo($width, $height)
 	{
-	    $this->resizeWidth = $width;
-	    $this->resizeHeight = $height;
-	    return $this->resize();
+		$this->resizeWidth = $width;
+		$this->resizeHeight = $height;
+		return $this->resize();
 	}
 
 	###############
@@ -86,32 +86,32 @@ final class GDT_ImageFile extends GDT_File
 	##################
 	protected function validateFile(GDO_File $file)
 	{
-	    if (parent::validateFile($file))
-	    {
-	        return $this->validateImageFile($file);
-	    }
+		if (parent::validateFile($file))
+		{
+			return $this->validateImageFile($file);
+		}
 	}
 	
 	protected function validateImageFile(GDO_File $file)
 	{
-	    list($width, $height, $format) = getimagesize($file->getPath());
-	    if ( ($this->maxWidth !== null) && ($width > $this->maxWidth) )
-	    {
-	        return $this->error('err_image_too_wide', [$this->maxWidth]);
-	    }
-	    if ( ($this->minWidth !== null) && ($width < $this->minWidth) )
-	    {
-	        return $this->error('err_image_not_wide_enough', [$this->minWidth]);
-	    }
-	    if ( ($this->maxHeight !== null) && ($height > $this->maxHeight) )
-	    {
-	        return $this->error('err_image_too_high', [$this->maxHeight]);
-	    }
-	    if ( ($this->minHeight !== null) && ($height < $this->minHeight) )
-	    {
-	        return $this->error('err_image_not_high_enough', [$this->minHeight]);
-	    }
-	    return true;
+		list($width, $height, $format) = getimagesize($file->getPath());
+		if ( ($this->maxWidth !== null) && ($width > $this->maxWidth) )
+		{
+			return $this->error('err_image_too_wide', [$this->maxWidth]);
+		}
+		if ( ($this->minWidth !== null) && ($width < $this->minWidth) )
+		{
+			return $this->error('err_image_not_wide_enough', [$this->minWidth]);
+		}
+		if ( ($this->maxHeight !== null) && ($height > $this->maxHeight) )
+		{
+			return $this->error('err_image_too_high', [$this->maxHeight]);
+		}
+		if ( ($this->minHeight !== null) && ($height < $this->minHeight) )
+		{
+			return $this->error('err_image_not_high_enough', [$this->minHeight]);
+		}
+		return true;
 	}
 
 }

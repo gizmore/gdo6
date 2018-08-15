@@ -5,8 +5,8 @@
 <?php if (is_array($field->step)) : $var = $field->getVar(); ?>
   <select name="<?= $field->name; ?>">
 <?php foreach ($field->step as $value => $choice) : ?>
-    <?php $sel = $value === $var ? ' selected="selected"' : ''; ?>
-    <option value="<?= $value ?>"<?=$sel;?>><?= $choice ?>&nbsp;(<?=$value?>)</option>
+	<?php $sel = $value === $var ? ' selected="selected"' : ''; ?>
+	<option value="<?= $value ?>"<?=$sel;?>><?= $choice ?>&nbsp;(<?=$value?>)</option>
 <?php endforeach; ?>
   </select>
 <?php else : ?>

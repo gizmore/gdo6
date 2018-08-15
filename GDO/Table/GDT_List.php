@@ -44,7 +44,7 @@ class GDT_List extends GDT_Table
 	
 	public function initJSON()
 	{
-	    $pagemenu = $this->getPageMenu();
+		$pagemenu = $this->getPageMenu();
 		return array(
 			'tableName' => $this->getResult()->table->gdoClassName(),
 			'pagemenu' => $pagemenu ? $pagemenu->initJSON() : null,

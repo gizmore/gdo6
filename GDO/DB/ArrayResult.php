@@ -39,19 +39,19 @@ final class ArrayResult extends Result
 	 */
 	public static function filtered(array $data, GDO $table, array $filters)
 	{
-	    foreach ($filters as $filter)
-	    {
-    	    $filtered = [];
-	        foreach ($data as $gdo)
-	        {
-	            if (!$filter->gdo($gdo)->filterGDO($gdo))
-	            {
-	                $filtered[] = $gdo;
-	            }
-	        }
-	        $data = $filtered;
-	    }
-	    return new self($data, $table);
+		foreach ($filters as $filter)
+		{
+			$filtered = [];
+			foreach ($data as $gdo)
+			{
+				if (!$filter->gdo($gdo)->filterGDO($gdo))
+				{
+					$filtered[] = $gdo;
+				}
+			}
+			$data = $filtered;
+		}
+		return new self($data, $table);
 	}
 	
 	public function reset()

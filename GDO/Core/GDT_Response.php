@@ -26,18 +26,18 @@ final class GDT_Response extends GDT
 	public function errorCode($code=405) { return $this->code($code); }
 	public function isError()
 	{
-	    if ($this->code >= 400)
-	    {
-	        return true;
-	    }
-	    foreach ($this->fields as $gdt)
-	    {
-	        if ($gdt->hasError())
-	        {
-	            return true;
-	        }
-	    }
-	    return false;
+		if ($this->code >= 400)
+		{
+			return true;
+		}
+		foreach ($this->fields as $gdt)
+		{
+			if ($gdt->hasError())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	###############
@@ -50,7 +50,7 @@ final class GDT_Response extends GDT
 	 */
 	public static function makeWithHTML($html)
 	{
-	    return self::make()->addHTML($html);
+		return self::make()->addHTML($html);
 	}
 	
 	##############
@@ -58,21 +58,21 @@ final class GDT_Response extends GDT
 	##############
 	public function renderCell()
 	{
-	    switch (Application::instance()->getFormat())
-	    {
-	        case Application::HTML: return $this->renderHTML();
-	        case Application::JSON: return $this->renderJSON();
-	    }
+		switch (Application::instance()->getFormat())
+		{
+			case Application::HTML: return $this->renderHTML();
+			case Application::JSON: return $this->renderJSON();
+		}
 	}
 	
 	public function renderHTML()
 	{
-	    $html = '';
-	    foreach ($this->getFields() as $field)
-	    {
-	        $html .= $field->render();
-	    }
-	    return $html;
+		$html = '';
+		foreach ($this->getFields() as $field)
+		{
+			$html .= $field->render();
+		}
+		return $html;
 	}
 	
 	public function renderJSON()
@@ -101,11 +101,11 @@ final class GDT_Response extends GDT
 	################
 	public function add(GDT_Response $response=null)
 	{
-	    return $response ? $this->addFields($response->getFields()) : $this;
+		return $response ? $this->addFields($response->getFields()) : $this;
 	}
 	
 	public function addHTML($html)
 	{
-	    return $html ? $this->addField(GDT_HTML::withHTML($html)) : $this;
+		return $html ? $this->addField(GDT_HTML::withHTML($html)) : $this;
 	}
 }

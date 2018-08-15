@@ -10,7 +10,7 @@ use GDO\Core\WithFields;
  */
 final class GDT_Tab extends GDT
 {
-    use WithLabel;
+	use WithLabel;
 	use WithFields;
 
 	##############

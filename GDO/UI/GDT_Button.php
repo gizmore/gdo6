@@ -8,16 +8,16 @@ use GDO\Form\WithFormFields;
  */
 class GDT_Button extends GDT_Label
 {
-    use WithHREF;
-    use WithIcon;
-    use WithFormFields;
-    use WithPHPJQuery;
-    
-    public $primary = true;
-    public function primary() { $this->primary = true; return $this; }
+	use WithHREF;
+	use WithIcon;
+	use WithFormFields;
+	use WithPHPJQuery;
+	
+	public $primary = true;
+	public function primary() { $this->primary = true; return $this; }
 	public function secondary() { $this->primary = false; return $this; }
-    
-    ##############
+	
+	##############
 	### Render ###
 	##############
 	public function renderCell()

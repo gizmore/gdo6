@@ -59,10 +59,10 @@ class GDT_Username extends GDT_String
 	################
 	public function validate($value)
 	{
-	    if (!parent::validate($value))
-	    {
-	        return false;
-	    }
+		if (!parent::validate($value))
+		{
+			return false;
+		}
 		
 		# Check existance
 		if ($this->exists)

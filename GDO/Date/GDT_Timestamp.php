@@ -18,40 +18,40 @@ use GDO\UI\WithTooltip;
  */
 class GDT_Timestamp extends GDT
 {
-    use WithLabel;
-    use WithTooltip;
-    use WithFormFields;
-    use WithDatabase;
-    
-    public function __construct()
-    {
-    	$this->icon('time');
-    }
-    
+	use WithLabel;
+	use WithTooltip;
+	use WithFormFields;
+	use WithDatabase;
+	
+	public function __construct()
+	{
+		$this->icon('time');
+	}
+	
 	#############
 	### Value ###
 	#############
 	public function toValue($var)
 	{
-	    return $var === null ? null : Time::getTimestamp($var);
+		return $var === null ? null : Time::getTimestamp($var);
 	}
 	
 	public function toVar($value)
 	{
-	    return $value === null ? null : Time::getDate($value);
+		return $value === null ? null : Time::getDate($value);
 	}
 	
 	public function getVar()
 	{
-	    $var = trim(parent::getVar());
-	    return $var ? $var : null;
+		$var = trim(parent::getVar());
+		return $var ? $var : null;
 	}
 	
 	public function initialSnap($mod)
 	{
-	    $time = time();
-	    $time = $time - ($time % $mod) + $mod;
-	    return $this->initialValue($time);
+		$time = time();
+		$time = $time - ($time % $mod) + $mod;
+		return $this->initialValue($time);
 	}
 	
 	#####################
@@ -92,7 +92,7 @@ class GDT_Timestamp extends GDT
 	public $minDate;
 	public function minTimestamp($minTimestamp)
 	{
-	    return $this->minDate(Time::getDate($minTimestamp));
+		return $this->minDate(Time::getDate($minTimestamp));
 	}
 	public function minDate($minDate)
 	{
@@ -103,7 +103,7 @@ class GDT_Timestamp extends GDT
 	public $maxDate;
 	public function maxTimestamp($maxTimestamp)
 	{
-	    return $this->maxDate(Time::getDate($maxTimestamp));
+		return $this->maxDate(Time::getDate($maxTimestamp));
 	}
 	public function maxDate($maxDate)
 	{
@@ -116,10 +116,10 @@ class GDT_Timestamp extends GDT
 	################
 	public function validate($value)
 	{
-	    if ( ($value === null) && (!$this->notNull) )
-	    {
-	        return true;
-	    }
+		if ( ($value === null) && (!$this->notNull) )
+		{
+			return true;
+		}
 		if ( ($this->minDate !== null) && ($value < Time::getTimestamp($this->minDate)) )
 		{
 			return $this->error('err_min_date', [Time::displayDate($this->minDate, 'short')]);

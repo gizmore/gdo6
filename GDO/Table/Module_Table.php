@@ -10,11 +10,11 @@ use GDO\DB\GDT_UInt;
  */
 final class Module_Table extends GDO_Module
 {
-    public function getConfig()
-    {
-        return array(
-            GDT_UInt::make('ipp')->initial('10')->max(1000),
-        );
-    }
-    public function cfgItemsPerPage() { return $this->getConfigValue('ipp'); }
+	public function getConfig()
+	{
+		return array(
+			GDT_UInt::make('ipp')->initial('10')->max(1000),
+		);
+	}
+	public function cfgItemsPerPage() { return $this->getConfigValue('ipp'); }
 }

@@ -27,8 +27,8 @@ class GDT_Password extends GDT_String
 	
 	public function getGDOData()
 	{
-	    $pass = $this->toValue($this->var);
-	    return [$this->name => $pass ? $pass->__toString() : null];
+		$pass = $this->toValue($this->var);
+		return [$this->name => $pass ? $pass->__toString() : null];
 	}
 	
 	public function renderForm()
@@ -38,7 +38,7 @@ class GDT_Password extends GDT_String
 	
 	public function validate($value)
 	{
-	    if ( ($value === null) && ($this->notNull) )
+		if ( ($value === null) && ($this->notNull) )
 		{
 			return $this->errorNotNull();
 		}

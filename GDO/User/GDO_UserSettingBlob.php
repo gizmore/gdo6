@@ -31,9 +31,9 @@ final class GDO_UserSettingBlob extends GDO
 	public function gdoColumns()
 	{
 		return array(
-		    GDT_User::make('uset_user')->primary(),
-		    GDT_Name::make('uset_name')->primary(),
-		    GDT_Text::make('uset_value')->max(65535)->notNull(),
+			GDT_User::make('uset_user')->primary(),
+			GDT_Name::make('uset_name')->primary(),
+			GDT_Text::make('uset_value')->max(65535)->notNull(),
 		);
 	}
 	
@@ -51,7 +51,7 @@ final class GDO_UserSettingBlob extends GDO
 	{
 		if (null === ($settings = $user->tempGet('gdo_setting_blob')))
 		{
-		    $settings = self::load($user);
+			$settings = self::load($user);
 			$user->tempSet('gdo_setting_blob', $settings);
 			$user->recache();
 		}
@@ -66,20 +66,20 @@ final class GDO_UserSettingBlob extends GDO
 	
 	public static function userSet(GDO_User $user, $key, $value)
 	{
-	    $userid = $user->getID();
-	    if ($value === null)
-	    {
-	        self::table()->deleteWhere("uset_user=$userid AND uset_name=".quote($key))->exec();
-	    }
-	    else
-	    {
-	        self::blank(array(
-	            'uset_user' => $userid,
-	            'uset_name' => $key,
-	            'uset_value' => $value
-	        ))->replace();
-	    }
-	    $user->tempUnset('gdo_setting_blob');
-	    $user->recache();
+		$userid = $user->getID();
+		if ($value === null)
+		{
+			self::table()->deleteWhere("uset_user=$userid AND uset_name=".quote($key))->exec();
+		}
+		else
+		{
+			self::blank(array(
+				'uset_user' => $userid,
+				'uset_name' => $key,
+				'uset_value' => $value
+			))->replace();
+		}
+		$user->tempUnset('gdo_setting_blob');
+		$user->recache();
 	}
 }

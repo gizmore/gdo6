@@ -10,8 +10,8 @@ use GDO\User\GDO_User;
  */
 final class Welcome extends Method
 {
-    public function execute()
-    {
-        return $this->message('core_welcome_box_info', [sitename(), GDO_User::current()->displayNameLabel()]);
-    }
+	public function execute()
+	{
+		return $this->message('core_welcome_box_info', [sitename(), GDO_User::current()->displayNameLabel()]);
+	}
 }

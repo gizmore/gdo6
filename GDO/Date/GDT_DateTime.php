@@ -14,6 +14,6 @@ class GDT_DateTime extends GDT_Timestamp
 
 	public function renderForm()
 	{
-	    return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]);
+		return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]);
 	}
 }

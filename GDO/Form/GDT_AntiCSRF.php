@@ -13,9 +13,9 @@ use GDO\Util\Random;
  */
 class GDT_AntiCSRF extends GDT
 {
-    public $editable = false;
-    public function name($name=null) { return $this; }
-    ##############
+	public $editable = false;
+	public function name($name=null) { return $this; }
+	##############
 	### Expire ###
 	##############
 	public $csrfExpire = 7200; # 2 hours is a sensible default.
@@ -45,7 +45,7 @@ class GDT_AntiCSRF extends GDT
 		$csrf = '';
 		if (GDO_Session::instance())
 		{
-		    if (!($csrf = GDO_Session::get('xsrf')))
+			if (!($csrf = GDO_Session::get('xsrf')))
 			{
 				$csrf = Random::randomKey(8);
 				GDO_Session::set('xsrf', $csrf);
@@ -59,7 +59,7 @@ class GDT_AntiCSRF extends GDT
 	################
 	public function validate($value)
 	{
-	    if (!GDO_Session::instance())
+		if (!GDO_Session::instance())
 		{
 			return $this->error('err_session_required');
 		}

@@ -10,22 +10,22 @@ use GDO\File\FileUtil;
  */
 final class LanguageData
 {
-    public static function onInstall()
-    {
-        $bulkData = array();
-        foreach (self::getLanguages() as $data)
-        {
-            list($en, $native, $iso3, $iso2) = $data;
-            if (FileUtil::isFile(GWF_PATH . 'GDO/Language/img/'.strtolower($iso2).'.png'))
-            {
-              $bulkData[] = [strtolower($iso2)];
-            }
-        }
-        
-        $fields = [GDO_Language::table()->gdoColumn('lang_iso')];
-        GDO_Language::bulkReplace($fields, $bulkData);
-    }
-    
+	public static function onInstall()
+	{
+		$bulkData = array();
+		foreach (self::getLanguages() as $data)
+		{
+			list($en, $native, $iso3, $iso2) = $data;
+			if (FileUtil::isFile(GWF_PATH . 'GDO/Language/img/'.strtolower($iso2).'.png'))
+			{
+			  $bulkData[] = [strtolower($iso2)];
+			}
+		}
+		
+		$fields = [GDO_Language::table()->gdoColumn('lang_iso')];
+		GDO_Language::bulkReplace($fields, $bulkData);
+	}
+	
 	public static function getLanguages()
 	{
 		# English Name | Native Name | iso-639-3 | iso-639-1
@@ -33,9 +33,9 @@ final class LanguageData
 			array('English', 'English', 'eng', 'en'),
 			array('German', 'Deutsch', 'ger', 'de'),
 			array('French', 'Française', 'fre', 'fr'),
-		    array('Bulgarian', 'български език', 'bul', 'bg'),
-		    array('Brazil', 'Brazil', 'bra', 'br'),
-		    array('Spanish', 'español', 'spa', 'es'),
+			array('Bulgarian', 'български език', 'bul', 'bg'),
+			array('Brazil', 'Brazil', 'bra', 'br'),
+			array('Spanish', 'español', 'spa', 'es'),
 			array('Chinese', '汉语 / 漢語', 'chi', 'zh'),
 			array('Croatian', 'hrvatski', 'cro', 'hr'),
 			array('Albanian', 'Shqip', 'alb', 'sq'),

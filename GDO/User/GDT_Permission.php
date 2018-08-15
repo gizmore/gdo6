@@ -13,6 +13,6 @@ final class GDT_Permission extends GDT_ObjectSelect
 	
 	public function __construct()
 	{
-	    $this->table(GDO_Permission::table());
+		$this->table(GDO_Permission::table());
 	}
 }

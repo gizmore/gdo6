@@ -14,11 +14,11 @@ use GDO\Core\GDT;
  */
 abstract class MethodCrud extends MethodForm
 {
-    const ERROR = 0;
-    const CREATED = 1;
-    const EDITED = 2;
-    const DELETED = 3;
-    
+	const ERROR = 0;
+	const CREATED = 1;
+	const EDITED = 2;
+	const DELETED = 3;
+	
 	/**
 	 * @return GDO
 	 */
@@ -50,8 +50,8 @@ abstract class MethodCrud extends MethodForm
 	
 	public function execute()
 	{
-	    $this->crudMode = self::CREATED;
-	    $table = $this->gdoTable();
+		$this->crudMode = self::CREATED;
+		$table = $this->gdoTable();
 		if ($id = $this->getCRUDID())
 		{
 			$this->gdo = $table->find($id);
@@ -65,7 +65,7 @@ abstract class MethodCrud extends MethodForm
 		}
 		elseif (!$this->canCreate($table))
 		{
-		    throw new PermissionException('err_permission_create');
+			throw new PermissionException('err_permission_create');
 		}
 		
 		return parent::execute();
@@ -73,33 +73,33 @@ abstract class MethodCrud extends MethodForm
 	
 	public function executeEditMethods()
 	{
-	    if (count($_POST))
-	    {
-    	    foreach ($this->getForm()->getFields() as $field)
-    	    {
-    	        if ($field instanceof GDT_File)
-    	        {
-    	            $key = 'delete_' . $field->name;
-    	            if ( isset($_POST[$key]) && (is_array($ids = Common::getPostArray($key))) )
-    	            {
-    	                $this->onDeleteFiles($field, $ids);
-    	            }
-    	        }
-    	    }
-	    }
+		if (count($_POST))
+		{
+			foreach ($this->getForm()->getFields() as $field)
+			{
+				if ($field instanceof GDT_File)
+				{
+					$key = 'delete_' . $field->name;
+					if ( isset($_POST[$key]) && (is_array($ids = Common::getPostArray($key))) )
+					{
+						$this->onDeleteFiles($field, $ids);
+					}
+				}
+			}
+		}
 	}
 	
 	public function onDeleteFiles(GDT_File $gdoType, array $ids)
 	{
-	    if (!$gdoType->multiple)
-	    {
-    	    foreach ($ids as $id)
-    	    {
-    	        $this->gdo->saveVar($gdoType->name, null);
-    	        
-    	    }
-    	    $gdoType->initial(null);
-	    }
+		if (!$gdoType->multiple)
+		{
+			foreach ($ids as $id)
+			{
+				$this->gdo->saveVar($gdoType->name, null);
+				
+			}
+			$gdoType->initial(null);
+		}
 	}
 	
 	
@@ -136,7 +136,7 @@ abstract class MethodCrud extends MethodForm
 		else
 		{
 // 			$this->blank($form);
-		    $this->crudCreateTitle();
+			$this->crudCreateTitle();
 		}
 	}
 	
@@ -150,7 +150,7 @@ abstract class MethodCrud extends MethodForm
 	
 	protected function crudCreateTitle()
 	{
-	    $this->title(t('ft_crud_create', [sitename(), $this->gdoTable()->gdoHumanName()]));
+		$this->title(t('ft_crud_create', [sitename(), $this->gdoTable()->gdoHumanName()]));
 	}
 	
 	##############
@@ -187,8 +187,8 @@ abstract class MethodCrud extends MethodForm
 	
 	public function onUpdate(GDT_Form $form)
 	{
-	    $this->gdo->saveVars($form->getFormData());
-	    $this->resetForm();
+		$this->gdo->saveVars($form->getFormData());
+		$this->resetForm();
 		return
 		$this->message('msg_crud_updated', [$this->gdo->gdoHumanName()])->
 			add($this->afterUpdate($form, $this->gdo))->
@@ -197,7 +197,7 @@ abstract class MethodCrud extends MethodForm
 	
 	public function onDelete(GDT_Form $form)
 	{
-	    $this->crudMode = self::DELETED;
+		$this->crudMode = self::DELETED;
 		$this->gdo->delete();
 		return $this->message('msg_crud_deleted', [$this->gdo->gdoHumanName()])->
 			add($this->afterDelete($form, $this->gdo))->

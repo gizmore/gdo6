@@ -123,33 +123,33 @@ abstract class GDT
 	
 	public function getRequestVar($firstLevel=null, $default=null, $name=null)
 	{
-	    $name = $name === null ? $this->name : $name;
-	    $path = '';
-	    if ($firstLevel)
-	    {
-	        if (!isset($_REQUEST[$firstLevel]))
-	        {
-	            return $default;
-	        }
-	        $path = $firstLevel.']';
-	    }
-	    $arr = $_REQUEST;
-	    # Allow nested form checkboxes and stuff
-	    $path .= '['.$name;
-	    $path = explode('][', $path);
-	    foreach ($path as $child)
-	    {
-	        $child = trim($child, '[]');
-	        if (isset($arr[$child]))
-	        {
-	            $arr = $arr[$child];
-	        }
-	        else
-	        {
-	            return $default;
-	        }
-	    }
-	    return $arr;
+		$name = $name === null ? $this->name : $name;
+		$path = '';
+		if ($firstLevel)
+		{
+			if (!isset($_REQUEST[$firstLevel]))
+			{
+				return $default;
+			}
+			$path = $firstLevel.']';
+		}
+		$arr = $_REQUEST;
+		# Allow nested form checkboxes and stuff
+		$path .= '['.$name;
+		$path = explode('][', $path);
+		foreach ($path as $child)
+		{
+			$child = trim($child, '[]');
+			if (isset($arr[$child]))
+			{
+				$arr = $arr[$child];
+			}
+			else
+			{
+				return $default;
+			}
+		}
+		return $arr;
 	}
 	
 	##############

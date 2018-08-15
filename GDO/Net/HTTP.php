@@ -146,7 +146,7 @@ final class HTTP
 		
 		if (false === ($received = curl_exec($ch)))
 		{
-		    echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
+			echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
 		}
 		
 		curl_close($ch);
@@ -219,7 +219,7 @@ final class HTTP
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
 		if (false === ($received = curl_exec($ch)))
 		{
-		    echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
+			echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
 		}
 		curl_close($ch);
 		return $received;		

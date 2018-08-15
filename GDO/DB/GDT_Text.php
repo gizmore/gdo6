@@ -16,7 +16,7 @@ class GDT_Text extends GDT_String
 	
 	public function gdoColumnDefine()
 	{
-	    $collate = $this->gdoCollateDefine($this->caseSensitive);
+		$collate = $this->gdoCollateDefine($this->caseSensitive);
 		return "{$this->identifier()} TEXT({$this->max}) CHARSET {$this->gdoCharsetDefine()} {$collate}{$this->gdoNullDefine()}";
 	}
 }

@@ -50,8 +50,8 @@ class Database
 	
 	public static function init()
 	{
-	    Cache::init();
-	    return new self(GWF_DB_HOST, GWF_DB_USER, GWF_DB_PASS, GWF_DB_NAME, GWF_DB_DEBUG);
+		Cache::init();
+		return new self(GWF_DB_HOST, GWF_DB_USER, GWF_DB_PASS, GWF_DB_NAME, GWF_DB_DEBUG);
 	}
 	
 	public function __construct($host, $user, $pass, $db, $debug=false)
@@ -71,11 +71,11 @@ class Database
 			$t1 = microtime(true);
 			if ($this->link = $this->connect())
 			{
-    			$this->query("SET NAMES UTF8");
+				$this->query("SET NAMES UTF8");
 			}
 			else
 			{
-			    throw new DBException('err_db_connect');
+				throw new DBException('err_db_connect');
 			}
 			$timeTaken = microtime(true) - $t1;
 			$this->queryTime += $timeTaken; self::$QUERY_TIME += $timeTaken;
@@ -85,7 +85,7 @@ class Database
 	
 	public function connect()
 	{
-	    return @mysqli_connect($this->host, $this->user, $this->pass, $this->db);
+		return @mysqli_connect($this->host, $this->user, $this->pass, $this->db);
 	}
 	
 	#############
@@ -109,7 +109,7 @@ class Database
 		$t1 = microtime(true);
 		if (!($result = mysqli_query($this->getLink(), $query)))
 		{
-		    throw new DBException("err_db", [mysqli_error($this->link), htmlspecialchars($query)]);
+			throw new DBException("err_db", [mysqli_error($this->link), htmlspecialchars($query)]);
 		}
 		$t2 = microtime(true);
 		$timeTaken = $t2 - $t1;

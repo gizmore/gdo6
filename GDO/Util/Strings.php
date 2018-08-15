@@ -12,21 +12,21 @@ final class Strings
 	######################
 	### Start/End with ###
 	######################
-    public static function startsWith($s, $with)
-    {
-        return mb_strpos($s, $with) === 0;
-    }
-    
-    public static function endsWith($s, $with)
-    {
-        if ($length = mb_strlen($with))
-        {
-            return mb_substr($s, -$length) === $with;
-        }
-        return true;
-    }
-    
-    #########################
+	public static function startsWith($s, $with)
+	{
+		return mb_strpos($s, $with) === 0;
+	}
+	
+	public static function endsWith($s, $with)
+	{
+		if ($length = mb_strlen($with))
+		{
+			return mb_substr($s, -$length) === $with;
+		}
+		return true;
+	}
+	
+	#########################
 	### Substring to/from ###
 	#########################
 	public static function substrTo($s, $to, $default=null)

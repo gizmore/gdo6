@@ -7,9 +7,9 @@ use GDO\Core\Method;
  */
 class MethodPage extends Method
 {
-    public function execute()
-    {
-        $name = strtolower($this->gdoShortName());
-        return $this->templatePHP("page/{$name}.php");
-    }
+	public function execute()
+	{
+		$name = strtolower($this->gdoShortName());
+		return $this->templatePHP("page/{$name}.php");
+	}
 }

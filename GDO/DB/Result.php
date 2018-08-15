@@ -151,13 +151,13 @@ class Result
 	
 	public function fetchAllArray2dObject(GDO $table=null, $json=false)
 	{
-	    $table = $table ? $table : $this->table;
-	    $array2d = [];
-	    while ($object = $this->fetchAs($table))
-	    {
-	        $array2d[$object->getID()] = $json ? $object->toJSON() : $object;
-	    }
-	    return $array2d;
+		$table = $table ? $table : $this->table;
+		$array2d = [];
+		while ($object = $this->fetchAs($table))
+		{
+			$array2d[$object->getID()] = $json ? $object->toJSON() : $object;
+		}
+		return $array2d;
 	}
 	
 	public function fetchAllArrayAssoc2dObject(GDO $table=null)
@@ -167,13 +167,13 @@ class Result
 		$firstKey = '';
 		while ($object = $this->fetchAs($table))
 		{
-		    $firstKey = $firstKey ? $firstKey : array_keys($object->getGDOVars())[0];
-		    $array2d[$object->getVar($firstKey)] = $object;
+			$firstKey = $firstKey ? $firstKey : array_keys($object->getGDOVars())[0];
+			$array2d[$object->getVar($firstKey)] = $object;
 		}
 		return $array2d;
 	}
 	
-    /**
+	/**
 	 * Fetch all, but only a single column as simple array.
 	 * @return string[]
 	 */

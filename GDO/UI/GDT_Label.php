@@ -10,7 +10,7 @@ use GDO\Core\GDT_Template;
  */
 class GDT_Label extends GDT
 {
-    use WithLabel;
+	use WithLabel;
 	public function renderCell()
 	{
 		return GDT_Template::php('UI', 'cell/label.php', ['field'=>$this]);

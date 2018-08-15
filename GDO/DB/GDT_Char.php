@@ -13,7 +13,7 @@ class GDT_Char extends GDT_String
 
 	public function gdoColumnDefine()
 	{
-	    $collate = $this->gdoCollateDefine($this->caseSensitive);
+		$collate = $this->gdoCollateDefine($this->caseSensitive);
 		return
 		"{$this->identifier()} CHAR({$this->max}) CHARSET {$this->gdoCharsetDefine()} {$collate}" .
 		$this->gdoNullDefine() . $this->gdoInitialDefine();

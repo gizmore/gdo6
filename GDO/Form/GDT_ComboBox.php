@@ -12,12 +12,12 @@ use GDO\DB\GDT_String;
  */
 class GDT_ComboBox extends GDT_String
 {
-    use WithCompletion;
-    
-    public $choices;
-    public function choices(array $choices)
-    {
-        $this->choices = $choices;
-        return $this;
-    }
+	use WithCompletion;
+	
+	public $choices;
+	public function choices(array $choices)
+	{
+		$this->choices = $choices;
+		return $this;
+	}
 }

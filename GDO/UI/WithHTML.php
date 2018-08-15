@@ -6,15 +6,15 @@ namespace GDO\UI;
  */
 trait WithHTML
 {
-    /**
-     * @param $html
-     * @return self
-     */
-    public static function withHTML($html) { return self::make()->html($html); }
+	/**
+	 * @param $html
+	 * @return self
+	 */
+	public static function withHTML($html) { return self::make()->html($html); }
 
-    ############
-    ### HTML ###
-    ############
-    public $html;
-    public function html($html=null) { $this->html = $html; return $this; }
+	############
+	### HTML ###
+	############
+	public $html;
+	public function html($html=null) { $this->html = $html; return $this; }
 }

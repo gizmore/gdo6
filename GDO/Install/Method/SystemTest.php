@@ -10,24 +10,24 @@ use GDO\File\FileUtil;
  */
 final class SystemTest extends Method
 {
-    public function execute()
-    {
-        $tVars = array(
-            'tests' => array(
-                FileUtil::createDir(GWF_PATH . 'protected'),
-                FileUtil::createDir(GWF_PATH . 'files'),
-                FileUtil::createDir(GWF_PATH . 'temp'),
-                $this->testBower(),
-            ),
-            'optional' => array(
-            ),
-        );
-        return $this->templatePHP('page/systemtest.php', $tVars);
-    }
-    
-    private function testBower()
-    {
-        return false;
-    }
-    
+	public function execute()
+	{
+		$tVars = array(
+			'tests' => array(
+				FileUtil::createDir(GWF_PATH . 'protected'),
+				FileUtil::createDir(GWF_PATH . 'files'),
+				FileUtil::createDir(GWF_PATH . 'temp'),
+				$this->testBower(),
+			),
+			'optional' => array(
+			),
+		);
+		return $this->templatePHP('page/systemtest.php', $tVars);
+	}
+	
+	private function testBower()
+	{
+		return false;
+	}
+	
 }

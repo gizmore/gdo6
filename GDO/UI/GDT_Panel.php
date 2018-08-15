@@ -10,12 +10,12 @@ use GDO\Core\GDT_Template;
  */
 class GDT_Panel extends GDT
 {
-    use WithIcon;
-    use WithHTML;
-    use WithTitle;
-    
-    public function isError() { return false; }
+	use WithIcon;
+	use WithHTML;
+	use WithTitle;
+	
+	public function isError() { return false; }
 
-//     public function render() { return $this->HTML; }
-    public function renderCell() { return GDT_Template::php('UI', 'cell/panel.php', ['field' => $this]); }
+//	 public function render() { return $this->HTML; }
+	public function renderCell() { return GDT_Template::php('UI', 'cell/panel.php', ['field' => $this]); }
 }

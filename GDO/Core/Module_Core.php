@@ -27,109 +27,109 @@ use GDO\UI\GDT_Bar;
  */
 final class Module_Core extends GDO_Module
 {
-    ##############
-    ### Module ###
-    ##############
-    public $module_priority = 1;
-    public $module_version = '6.07';
-    
-    public function getThemes() { return ['default']; }
-    
-    public function onLoadLanguage() { return $this->loadLanguage('lang/core'); }
-    
-    public function getClasses()
-    {
-        return array(
-            'GDO\Core\GDO_Module',
-            'GDO\Core\GDO_ModuleVar',
-            'GDO\User\GDO_Permission'
-        );
-    }
-    ##############
-    ### Config ###
-    ##############
-    public function getConfig()
-    {
-        return array(
-        	GDT_User::make('system_user')->editable(false),
-            GDT_Divider::make()->label('div_pagination'),
-            GDT_UInt::make('ipp')->max(1000)->initial('20'),
-            GDT_UInt::make('spp')->max(1000)->initial('10'),
-            GDT_Divider::make()->label('div_javascript'),
-            GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial('no'),
-            GDT_Path::make('nodejs_path')->initial('nodejs')->label('nodejs_path'),
-            GDT_Path::make('uglifyjs_path')->initial('uglifyjs')->label('uglifyjs_path'),
-            GDT_Path::make('ng_annotate_path')->initial('ng-annotate')->label('ng_annotate_path'),
-            GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
-        	GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
-            GDT_Checkbox::make('show_impressum')->initial('1'),
-        );
-    }
-    public function cfgSystemUser() { return $this->getConfigValue('system_user'); }
-    public function cfgSystemUserID() { return $this->getConfigVar('system_user'); }
-    public function cfgIPP() { return $this->getConfigVar('ipp'); }
-    public function cfgSPP() { return $this->getConfigVar('spp'); }
-    public function cfgMinifyJS() { return $this->getConfigVar('minify_js'); }
-    public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
-    public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
-    public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
-    public function cfgAssetVersion() { return $this->getConfigVar('asset_revision'); }
-    public function cfgShowImpressum() { return $this->getConfigValue('show_impressum'); }
-    
-    #############
-    ### Hooks ###
-    #############
-    public function HookBottomBar(GDT_Bar $navbar)
-    {
-        if ($this->cfgShowImpressum())
-        {
-            $navbar->addField(GDT_Link::make()->label(t('link_impressum'))->href(href('Core', 'Impressum')));
-        }
-    }
-    
-    
-    ##################
-    ### Javascript ###
-    ##################
-    public function onIncludeScripts()
-    {
-    	$this->addCSS('css/gdo6.css');
-    	$this->addCSS('css/gdo6-sidebar.css');
-    	$this->addCSS('css/gdo6-classic.css');
-    	$this->addJavascript('js/gdo-string-util.js');
-        $this->addJavascript('js/gdo-user.js');
-        $this->addJavascript('js/gdo-core.js');
-        Javascript::addJavascriptInline($this->gdoConfigJS());
-        Javascript::addJavascriptInline($this->gdoUserJS());
-    }
-    
-    public function gdoConfigJS()
-    {
-        return sprintf("
+	##############
+	### Module ###
+	##############
+	public $module_priority = 1;
+	public $module_version = '6.07';
+	
+	public function getThemes() { return ['default']; }
+	
+	public function onLoadLanguage() { return $this->loadLanguage('lang/core'); }
+	
+	public function getClasses()
+	{
+		return array(
+			'GDO\Core\GDO_Module',
+			'GDO\Core\GDO_ModuleVar',
+			'GDO\User\GDO_Permission'
+		);
+	}
+	##############
+	### Config ###
+	##############
+	public function getConfig()
+	{
+		return array(
+			GDT_User::make('system_user')->editable(false),
+			GDT_Divider::make()->label('div_pagination'),
+			GDT_UInt::make('ipp')->max(1000)->initial('20'),
+			GDT_UInt::make('spp')->max(1000)->initial('10'),
+			GDT_Divider::make()->label('div_javascript'),
+			GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial('no'),
+			GDT_Path::make('nodejs_path')->initial('nodejs')->label('nodejs_path'),
+			GDT_Path::make('uglifyjs_path')->initial('uglifyjs')->label('uglifyjs_path'),
+			GDT_Path::make('ng_annotate_path')->initial('ng-annotate')->label('ng_annotate_path'),
+			GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
+			GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
+			GDT_Checkbox::make('show_impressum')->initial('1'),
+		);
+	}
+	public function cfgSystemUser() { return $this->getConfigValue('system_user'); }
+	public function cfgSystemUserID() { return $this->getConfigVar('system_user'); }
+	public function cfgIPP() { return $this->getConfigVar('ipp'); }
+	public function cfgSPP() { return $this->getConfigVar('spp'); }
+	public function cfgMinifyJS() { return $this->getConfigVar('minify_js'); }
+	public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
+	public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
+	public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
+	public function cfgAssetVersion() { return $this->getConfigVar('asset_revision'); }
+	public function cfgShowImpressum() { return $this->getConfigValue('show_impressum'); }
+	
+	#############
+	### Hooks ###
+	#############
+	public function HookBottomBar(GDT_Bar $navbar)
+	{
+		if ($this->cfgShowImpressum())
+		{
+			$navbar->addField(GDT_Link::make()->label(t('link_impressum'))->href(href('Core', 'Impressum')));
+		}
+	}
+	
+	
+	##################
+	### Javascript ###
+	##################
+	public function onIncludeScripts()
+	{
+		$this->addCSS('css/gdo6.css');
+		$this->addCSS('css/gdo6-sidebar.css');
+		$this->addCSS('css/gdo6-classic.css');
+		$this->addJavascript('js/gdo-string-util.js');
+		$this->addJavascript('js/gdo-user.js');
+		$this->addJavascript('js/gdo-core.js');
+		Javascript::addJavascriptInline($this->gdoConfigJS());
+		Javascript::addJavascriptInline($this->gdoUserJS());
+	}
+	
+	public function gdoConfigJS()
+	{
+		return sprintf("
 window.GDO_CONFIG = {};
 window.GWF_PROTOCOL = '%s'; window.GWF_DOMAIN = '%s'; window.GWF_WEB_ROOT = '%s';
 window.GWF_LANGUAGE = '%s';",
-        	GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT, Trans::$ISO);
-    }
-    
-    public function gdoUserJS()
-    {
-        $json = json_encode($this->gdoUserJSON());
-        return "window.GDO_USER = new GDO_User($json);";
-    }
-    
-    public function gdoUserJSON()
-    {
-        $user = GDO_User::current();
-        return array(
-            'user_id' => (int)$user->getID(),
-            'user_name' => $user->getName(),
-            'user_guest_name' => $user->getGuestName(),
-            'user_email' => $user->getMail(),
-            'user_type' => $user->getType(),
-            'user_level' => (int)$user->getLevel(),
-            'user_credits' => (int)$user->getCredits(),
-            'permissions' => $user->loadPermissions(),
-        );
-    }
+			GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT, Trans::$ISO);
+	}
+	
+	public function gdoUserJS()
+	{
+		$json = json_encode($this->gdoUserJSON());
+		return "window.GDO_USER = new GDO_User($json);";
+	}
+	
+	public function gdoUserJSON()
+	{
+		$user = GDO_User::current();
+		return array(
+			'user_id' => (int)$user->getID(),
+			'user_name' => $user->getName(),
+			'user_guest_name' => $user->getGuestName(),
+			'user_email' => $user->getMail(),
+			'user_type' => $user->getType(),
+			'user_level' => (int)$user->getLevel(),
+			'user_credits' => (int)$user->getCredits(),
+			'permissions' => $user->loadPermissions(),
+		);
+	}
 }

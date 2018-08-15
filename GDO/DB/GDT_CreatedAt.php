@@ -18,6 +18,6 @@ class GDT_CreatedAt extends GDT_DateTime
 
 	public function blankData()
 	{
-	    return [$this->name => Time::getDate()];
+		return [$this->name => Time::getDate()];
 	}
 }

@@ -11,6 +11,6 @@ final class GDT_LangSwitch extends GDT_Select
 	
 	public function renderCell()
 	{
-	    return GDT_Template::php('Language', 'cell/langswitch.php',['field'=>$this]);
+		return GDT_Template::php('Language', 'cell/langswitch.php',['field'=>$this]);
 	}
 }

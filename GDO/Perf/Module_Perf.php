@@ -9,8 +9,8 @@ use GDO\Core\GDO_Module;
  */
 final class Module_Perf extends GDO_Module
 {
-    public function hookBottomBar(GDT_Bar $bottomBar)
-    {
-        $bottomBar->addField(GDT_PerfBar::make());
-    }
+	public function hookBottomBar(GDT_Bar $bottomBar)
+	{
+		$bottomBar->addField(GDT_PerfBar::make());
+	}
 }

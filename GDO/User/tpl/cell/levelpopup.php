@@ -7,15 +7,15 @@ $user = GDO_User::current();
 $levelTooltip = '';
 if ($field->level > 0)
 {
-    $access = $user->getLevel() >= $field->level;
-    $accessClass = $access ? 'access-granted' : 'access-denied';
-    $levelHtml = '';
-    $levelHtml .= t('lvlpopup_item_level', [$field->level])."\n";
-    $levelHtml .= t('lvlpopup_your_level', [$user->getLevel()])."\n";
-    $levelHtml .= $access ? t('lvlpopup_ok') : t('lvlpopup_too_low');
-    $levelHtml .= "\n";
-    $levelIcon = GDT_Icon::iconS('security');
-    $levelTooltip = <<<EOT
+	$access = $user->getLevel() >= $field->level;
+	$accessClass = $access ? 'access-granted' : 'access-denied';
+	$levelHtml = '';
+	$levelHtml .= t('lvlpopup_item_level', [$field->level])."\n";
+	$levelHtml .= t('lvlpopup_your_level', [$user->getLevel()])."\n";
+	$levelHtml .= $access ? t('lvlpopup_ok') : t('lvlpopup_too_low');
+	$levelHtml .= "\n";
+	$levelIcon = GDT_Icon::iconS('security');
+	$levelTooltip = <<<EOT
 <md-button class="md-icon-button $accessClass">
   {$levelIcon}
   {$field->level}

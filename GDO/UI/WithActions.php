@@ -13,24 +13,24 @@ trait WithActions
 	/**
 	 * @var \GDO\UI\GDT_Bar
 	 */
-    private $actions;
+	private $actions;
 
-    /**
-     * Init or get action bar-
-     * @return \GDO\UI\GDT_Bar
-     */
-    public function actions()
-    {
-        if (!$this->actions)
-        {
-            $this->actions = GDT_Menu::make();
-        }
-        return $this->actions;
-    }
-    
-    public function getActions()
-    {
-        return $this->actions;
-    }
+	/**
+	 * Init or get action bar-
+	 * @return \GDO\UI\GDT_Bar
+	 */
+	public function actions()
+	{
+		if (!$this->actions)
+		{
+			$this->actions = GDT_Menu::make();
+		}
+		return $this->actions;
+	}
+	
+	public function getActions()
+	{
+		return $this->actions;
+	}
 
 }

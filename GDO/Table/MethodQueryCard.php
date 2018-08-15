@@ -18,7 +18,7 @@ abstract class MethodQueryCard extends Method
 	 */
 	public function gdoParameters()
 	{
-	    return [GDT_AutoInc::make('id')];
+		return [GDT_AutoInc::make('id')];
 	}
 	
 	public function gdoQueryCard()
@@ -35,7 +35,7 @@ abstract class MethodQueryCard extends Method
 	{
 		if ($object = $this->gdoQueryCard())
 		{
-		    return $object->responseCard();
+			return $object->responseCard();
 		}
 	}
 }

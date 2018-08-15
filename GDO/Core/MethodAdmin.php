@@ -8,12 +8,12 @@ namespace GDO\Core;
  */
 trait MethodAdmin
 {
-    public function getPermission()
-    {
-        return 'admin';
-    }
-    
-    public function renderNavBar($module=null)
+	public function getPermission()
+	{
+		return 'admin';
+	}
+	
+	public function renderNavBar($module=null)
 	{
 		return GDT_Template::responsePHP('Admin', 'navbar.php', ['moduleName' => $module]);
 	}

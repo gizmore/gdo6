@@ -40,12 +40,12 @@ class GDT_Message extends GDT_Text
 	################
 	public function validate($value)
 	{
-	    if (parent::validate($value))
-	    {
-	        $value = $this->getPurifier()->purify($value);
-	        $this->changeRequestVar($value);
-	        return true;
-	    }
+		if (parent::validate($value))
+		{
+			$value = $this->getPurifier()->purify($value);
+			$this->changeRequestVar($value);
+			return true;
+		}
 	}
 	
 	private function getPurifier()

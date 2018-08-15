@@ -11,8 +11,8 @@ use GDO\Core\Module_Core;
  */
 final class DetectNode extends Method
 {
-    use MethodAdmin;
-    
+	use MethodAdmin;
+	
 	public function getPermission() { return 'staff'; }
 
 	public function execute()

@@ -8,19 +8,19 @@ namespace GDO\Country;
  */
 final class CountryData
 {
-    public static function onInstall()
-    {
-        $bulkData = array();
-        foreach (self::getCountries() as $data)
-        {
-            list($name, $langs, $region, $iso2, $pop) = $data;
-            $bulkData[] = [strtolower($iso2), $pop];
-        }
-        $c = GDO_Country::table();
-        $fields = [$c->gdoColumn('c_iso'), $c->gdoColumn('c_population')];
-        GDO_Country::bulkReplace($fields, $bulkData);
-    }
-    
+	public static function onInstall()
+	{
+		$bulkData = array();
+		foreach (self::getCountries() as $data)
+		{
+			list($name, $langs, $region, $iso2, $pop) = $data;
+			$bulkData[] = [strtolower($iso2), $pop];
+		}
+		$c = GDO_Country::table();
+		$fields = [$c->gdoColumn('c_iso'), $c->gdoColumn('c_population')];
+		GDO_Country::bulkReplace($fields, $bulkData);
+	}
+	
 	public static function getCountries()
 	{
 		# id => name, langs (iso639-3), region, tld, pop
@@ -88,7 +88,7 @@ final class CountryData
 			'134' => array('Côte d’Ivoire', 'fre', 'af', 'CI', 0),
 			'48' => array('Croatia', 'cro', 'eu', 'HR', 4486881),
 			'62' => array('Cuba', 'spa', 'ma', 'CU', 11477459),
-		    '970' => array('Curaçao', 'spa', 'ma', 'CW', 160000),
+			'970' => array('Curaçao', 'spa', 'ma', 'CW', 160000),
 			'76' => array('Cyprus', 'gre:tur', 'eu', 'CY', 1102677),
 			'20' => array('Czech Republic', 'cze', 'eu', 'CZ', 10201707),
 			'21' => array('Denmark', 'dan', 'eu', 'DK', 5515575),
@@ -221,9 +221,9 @@ final class CountryData
 			'32' => array('Russian Federation', 'rus', 'as', 'RU', 139390205),
 			'218' => array('Rwanda', 'kin:fre:eng', 'af', 'RW', 11055976),
 			'219' => array('Saint Kitts And Nevis', 'eng', 'ma', 'KN', 49898),
-		    '220' => array('Saint Lucia', 'eng:ant', 'ma', 'LC', 160922),
-		    '980' => array('Saint Martin', 'eng:ant', 'ma', 'MF', 40000),
-		    '221' => array('Saint Vincent And The Grenadines', 'eng', 'ma', 'VC', 104217),
+			'220' => array('Saint Lucia', 'eng:ant', 'ma', 'LC', 160922),
+			'980' => array('Saint Martin', 'eng:ant', 'ma', 'MF', 40000),
+			'221' => array('Saint Vincent And The Grenadines', 'eng', 'ma', 'VC', 104217),
 			'222' => array('Samoa', 'eng:sam', 'ma', 'WS', 192001),
 			'223' => array('San Marino', 'ita', 'eu', 'SM', 31477),
 			'224' => array('Sao Tome And Principe', 'por', 'af', 'ST', 175808),

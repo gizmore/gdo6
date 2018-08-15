@@ -220,9 +220,9 @@ final class Mail
 			."MIME-Version: 1.0".self::HEADER_NEWLINE
 			."Content-Transfer-Encoding: 8bit".self::HEADER_NEWLINE
 			."X-Mailer: PHP".self::HEADER_NEWLINE
-		    .'From: '.$from.self::HEADER_NEWLINE
-        	.'Reply-To: '.$this->getUTF8Reply().self::HEADER_NEWLINE
-        	.'Return-Path: '.$this->getUTF8Return();
+			.'From: '.$from.self::HEADER_NEWLINE
+			.'Reply-To: '.$this->getUTF8Reply().self::HEADER_NEWLINE
+			.'Return-Path: '.$this->getUTF8Return();
 		$encrypted = $this->encrypt($message);
 		if (self::$DEBUG)
 		{
@@ -249,9 +249,9 @@ final class Mail
 			."MIME-Version: 1.0".self::HEADER_NEWLINE
 			."Content-Transfer-Encoding: 8bit".self::HEADER_NEWLINE
 			."X-Mailer: PHP".self::HEADER_NEWLINE
-		    .'From: '.$from.self::HEADER_NEWLINE
-        	.'Reply-To: '.$this->getUTF8Reply().self::HEADER_NEWLINE
-        	.'Return-Path: '.$this->getUTF8Return();
+			.'From: '.$from.self::HEADER_NEWLINE
+			.'Reply-To: '.$this->getUTF8Reply().self::HEADER_NEWLINE
+			.'Return-Path: '.$this->getUTF8Return();
 		
 		$message  = "--$bound_mix\n";
 		$message .= "Content-Type: multipart/alternative; boundary=\"$bound_alt\"\n";

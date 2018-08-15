@@ -10,34 +10,34 @@ use GDO\UI\GDT_Panel;
  */
 class GDT_Success extends GDT_Panel
 {
-    public static function responseWith($key, array $args=null, $code=200, $log=true)
-    {
-        return GDT_Response::makeWith(self::with($key, $args, $code, $log));
-    }
-    
-    public static function with($key, array $args=null, $code=200, $log=true)
-    {
-        if ($log)
-        {
-            Logger::logMessage(tiso('en', $key, $args));
-        }
-        return self::withHTML(t($key, $args));
-    }
-    
-    public static function withHTML($html)
-    {
-        return self::make()->html($html)->icon('check');
-    }
-    
-    ##############
-    ### Render ###
-    ##############
-    public function renderCell() { return GDT_Template::php('Core', 'cell/success.php', ['field' => $this]); }
-    
-    public function renderJSON()
-    {
-        return array(
-            'message' => $this->html,
-        );
-    }
+	public static function responseWith($key, array $args=null, $code=200, $log=true)
+	{
+		return GDT_Response::makeWith(self::with($key, $args, $code, $log));
+	}
+	
+	public static function with($key, array $args=null, $code=200, $log=true)
+	{
+		if ($log)
+		{
+			Logger::logMessage(tiso('en', $key, $args));
+		}
+		return self::withHTML(t($key, $args));
+	}
+	
+	public static function withHTML($html)
+	{
+		return self::make()->html($html)->icon('check');
+	}
+	
+	##############
+	### Render ###
+	##############
+	public function renderCell() { return GDT_Template::php('Core', 'cell/success.php', ['field' => $this]); }
+	
+	public function renderJSON()
+	{
+		return array(
+			'message' => $this->html,
+		);
+	}
 }
