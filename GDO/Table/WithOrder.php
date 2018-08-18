@@ -20,6 +20,9 @@ trait WithOrder
 			$is_asc = strpos($url, "&o[$name]=1") !== false;
 			$is_desc = strpos($url, "&o[$name]=0") !== false;
 			
+			$is_asc = $is_asc || isset($_REQUEST['o'][$name]) && $_REQUEST['o'][$name];
+			$is_desc = $is_desc || isset($_REQUEST['o'][$name]) && (!$_REQUEST['o'][$name]);
+			
 			# Clean url of my own ordering
 			$url = str_replace("&o[$name]=0", '', $url);
 			$url = str_replace("&o[$name]=1", '', $url);

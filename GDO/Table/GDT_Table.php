@@ -215,7 +215,7 @@ class GDT_Table extends GDT
 			{
 				if ($this->orderDefault)
 				{
-					$ascdesc = $this->orderDefaultAsc ? 1 : 0;
+// 					$ascdesc = $this->orderDefaultAsc ? 1 : 0;
 // 					$_REQUEST['o'] = [$this->orderDefault => $ascdesc];
 // 					$_SERVER['REQUEST_URI'] .= "&o[$this->orderDefault]=$ascdesc";
 					$query->order($this->orderDefault, $this->orderDefaultAsc);

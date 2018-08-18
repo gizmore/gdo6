@@ -3,11 +3,9 @@ namespace GDO\File;
 use GDO\Core\GDT_Template;
 use GDO\User\GDO_Session;
 use GDO\Util\Arrays;
-use GDO\Core\Logger;
 use GDO\Core\GDO;
 use GDO\DB\GDT_Object;
 use GDO\UI\WithHREF;
-use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Success;
 /**
@@ -58,7 +56,6 @@ class GDT_File extends GDT_Object
 	public function previewHREF($previewHREF=null) { $this->previewHREF = $previewHREF; return $this->preview($previewHREF!==null); }
 	public function displayPreviewHref(GDO_File $file) { return $this->previewHREF . $file->getID(); }
 	
-	public $multiple = false;
 	public $minfiles = 0;
 	public $maxfiles = 1;
 	public function minfiles($minfiles)
@@ -69,7 +66,6 @@ class GDT_File extends GDT_Object
 	public function maxfiles($maxfiles)
 	{
 		$this->maxfiles = $maxfiles;
-		$this->multiple = $maxfiles > 1;
 		return $this;
 	}
 	
@@ -136,15 +132,15 @@ class GDT_File extends GDT_Object
 	{
 		if ($value !== null)
 		{
-			return $this->multiple ? $this->toMultiVar($value) : $value->getID();
+			return $value->getID();
 		}
 	}
-	
+
 	public function toValue($var)
 	{
 		if ($var !== null)
 		{
-			return $this->multiple ? $this->toMultiValue($var) : GDO_File::getById($var);
+			return GDO_File::getById($var);
 		}
 	}
 	
@@ -159,7 +155,7 @@ class GDT_File extends GDT_Object
 	 */	
 	public function getInitialFiles()
 	{
-		return $this->multiple ? $this->getMultiInitialFiles() : Arrays::arrayed($this->getInitialFile());
+		return Arrays::arrayed($this->getInitialFile());
 	}
 	
 	public function getInitialFile()
@@ -172,24 +168,15 @@ class GDT_File extends GDT_Object
 	
 	public function setGDOData(GDO $gdo=null)
 	{
-		if (!$this->multiple)
-		{
-			return parent::setGDOData($gdo);
-		}
+		$this->var = $gdo->getVar($this->name);
+		return $this;
 	}
 	
 	public function getGDOData()
 	{
-		if ($this->multiple)
+		if ($file = $this->getValidationValue())
 		{
-			
-		}
-		else
-		{
-			if ($file = $this->getValidationValue())
-			{
-				return [$this->name => $this->getValue()->getID()];
-			}
+			return [$this->name => $file->getID()];
 		}
 	}
 	
@@ -199,13 +186,22 @@ class GDT_File extends GDT_Object
 	public function getValidationValue()
 	{
 		$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->getFiles($this->name)));
-		return $this->multiple ? $files : array_pop($files);
+		return array_pop($files);
 	}
 	
 	public function getValue()
 	{
 		$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->files));
-		return $this->multiple ? $files : array_pop($files);
+		return array_pop($files);
+	}
+	
+	##############
+	### Delete ###
+	##############
+	public function onDeleteFiles(array $ids)
+	{
+		$this->gdo->saveVar($this->name, null);
+		$this->initial(null);
 	}
 	
 	################
@@ -232,7 +228,7 @@ class GDT_File extends GDT_Object
 		{
 			foreach ($files as $file)
 			{
-				if (!($size = $file->getSize()))
+				if (!($file->getSize()))
 				{
 					$valid = $this->error('err_file_not_ok', [$file->display('file_name')]);
 				}
@@ -266,7 +262,7 @@ class GDT_File extends GDT_Object
 		}
 		if ( ($this->maxsize !== null) && ($file->getSize() > $this->maxsize) )
 		{
-			return $this->error('err_file_too_large', [FileUtil::humanFilesize($this->maxsize($maxsize))]);
+			return $this->error('err_file_too_large', [FileUtil::humanFilesize($this->maxsize)]);
 		}
 		return true;
 	}
@@ -308,7 +304,7 @@ class GDT_File extends GDT_Object
 		}
 	}
 	
-	private function getFiles($key)
+	protected function getFiles($key)
 	{
 		$files = array();
 		$path = $this->getTempDir($key);

@@ -501,14 +501,18 @@ abstract class GDO #extends GDT
 				}
 			}
 		}
+
+		if ($withHooks) $this->beforeUpdate($query); # Can do trickery here... not needed?
+
 		if ($worthy)
 		{
-			if ($withHooks) $this->beforeUpdate($query); # Can do trickery here... not needed?
 			$query->exec();
 			$this->gdoVars = array_merge($this->gdoVars, $vars);
-			$this->recache(); # save is the only action where we recache!
-			if ($withHooks) $this->gdoAfterUpdate();
+// 			$this->recache(); # save is the only action where we recache!
 		}
+		
+		if ($withHooks) $this->afterUpdate();
+		
 		return $this;
 	}
 	
@@ -864,6 +868,18 @@ abstract class GDO #extends GDT
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
 			$gdoType->gdo($this)->gdoAfterCreate();
+		}
+		$this->gdoAfterCreate();
+	}
+	
+	private function afterUpdate()
+	{
+		# Flags
+		$this->dirty = false;
+		# Trigger event for AutoCol, EditedAt, EditedBy, etc.
+		foreach ($this->gdoColumnsCache() as $gdoType)
+		{
+			$gdoType->gdo($this)->gdoAfterUpdate();
 		}
 		$this->gdoAfterCreate();
 	}

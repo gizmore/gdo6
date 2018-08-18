@@ -34,9 +34,26 @@ trait WithHeaders
 	 * This method does a stable multisort on an ArrayResult.
 	 * @param ArrayResult $result
 	 */
-	public function multisort(ArrayResult $result)
+	public function multisort(ArrayResult $result, $defaultOrder=null, $defaultOrderAsc=true, $orderName=null)
 	{
-		$sort = $this->make_cmp(Common::getRequestArray($this->headers->name));
+		# Get order from request
+		$orders = Common::getRequestArray($this->headers->name);
+		
+		# Apply default order if necessary
+		if (empty($orders) && $defaultOrder)
+		{
+			$order = $defaultOrderAsc ? '1' : '0';
+			$orders[$defaultOrder] = $order;
+			if ($orderName)
+			{
+				$_REQUEST[$orderName] = array($defaultOrder => $order);
+			}
+		}
+		
+		# Build sort func
+		$sort = $this->make_cmp($orders);
+		
+		# Use it
 		usort($result->data, $sort);
 	}
 	private function make_cmp(array $sorting)

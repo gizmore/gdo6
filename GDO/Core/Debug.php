@@ -417,6 +417,7 @@ final class Debug
 	 */
 	public static function shortpath($path)
 	{
+		$path = str_replace('\\', '/', $path);
 		$path = str_replace(GWF_PATH, '', $path);
 		return trim($path, ' /');
 	}

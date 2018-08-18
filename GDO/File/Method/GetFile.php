@@ -19,7 +19,7 @@ final class GetFile extends Method
 		return $this->executeWithId(Common::getRequestString('file'));
 	}
 	
-	public function executeWithId( $id)
+	public function executeWithId($id)
 	{
 		if (!($file = GDO_File::getById($id)))
 		{

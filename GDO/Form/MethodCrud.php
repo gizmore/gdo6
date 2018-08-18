@@ -6,7 +6,7 @@ use GDO\Core\GDO;
 use GDO\User\PermissionException;
 use GDO\Util\Common;
 use GDO\File\GDT_File;
-use GDO\Core\GDT;
+use GDO\File\GDO_File;
 /**
  * Abstract CReate|Update|Delete for a GDO.
  * @author gizmore
@@ -82,26 +82,12 @@ abstract class MethodCrud extends MethodForm
 					$key = 'delete_' . $field->name;
 					if ( isset($_POST[$key]) && (is_array($ids = Common::getPostArray($key))) )
 					{
-						$this->onDeleteFiles($field, $ids);
+						$field->onDeleteFiles(array_keys($ids));
 					}
 				}
 			}
 		}
 	}
-	
-	public function onDeleteFiles(GDT_File $gdoType, array $ids)
-	{
-		if (!$gdoType->multiple)
-		{
-			foreach ($ids as $id)
-			{
-				$this->gdo->saveVar($gdoType->name, null);
-				
-			}
-			$gdoType->initial(null);
-		}
-	}
-	
 	
 	public function createForm(GDT_Form $form)
 	{

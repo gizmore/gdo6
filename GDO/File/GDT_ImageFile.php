@@ -1,8 +1,6 @@
 <?php
 namespace GDO\File;
 
-use GDO\Core\GDT_Template;
-
 final class GDT_ImageFile extends GDT_File
 {
 	public function __construct()
@@ -13,8 +11,6 @@ final class GDT_ImageFile extends GDT_File
 		$this->mime('image/png');
 		$this->icon('image');
 	}
-	
-	public function renderForm() { return GDT_Template::php('File', 'form/imagefile.php', ['field'=>$this]); }
 	
 	#################
 	### Flow test ###
@@ -90,6 +86,7 @@ final class GDT_ImageFile extends GDT_File
 		{
 			return $this->validateImageFile($file);
 		}
+		return false;
 	}
 	
 	protected function validateImageFile(GDO_File $file)
