@@ -18,7 +18,7 @@ class GDT_File extends GDT_Object
 {
 	use WithHREF;
 	
-	public function defaultLabel() { return $this->label('file'); }
+// 	public function defaultLabel() { return $this->label('file'); }
 	
 	public function __construct()
 	{
@@ -200,7 +200,10 @@ class GDT_File extends GDT_Object
 	##############
 	public function onDeleteFiles(array $ids)
 	{
-		$this->gdo->saveVar($this->name, null);
+		if ( ($this->gdo) && ($this->gdo->isPersisted()) )
+		{
+			$this->gdo->saveVar($this->name, null);
+		}
 		$this->initial(null);
 	}
 	

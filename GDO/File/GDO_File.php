@@ -8,6 +8,7 @@ use GDO\DB\GDT_String;
 use GDO\Core\GDOError;
 use GDO\Core\GDT_Template;
 use GDO\Util\Strings;
+use GDO\Core\GDOException;
 /**
  * File database storage.
  * @author gizmore
@@ -125,15 +126,24 @@ final class GDO_File extends GDO
 		# Copy content to temp file
 		$tempPath = $tempDir . '/' . md5(md5($name).md5($content));
 		file_put_contents($tempPath, $content);
-		# Return fresh File.
+		return self::fromPath($name, $tempPath);
+	}
+	
+	public static function fromPath($name, $path)
+	{
+		if (!FileUtil::isFile($path))
+		{
+			throw new GDOException(t('err_file', [$path]));
+		}
 		$values = array(
 			'name' => $name,
-			'size' => strlen($content),
-			'mime' => mime_content_type($tempPath),
-			'path' => $tempPath,
+			'size' => filesize($path),
+			'mime' => mime_content_type($path),
+			'path' => $path,
 		);
 		return self::fromForm($values);
 	}
 	
 	public function renderCell() { return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this]); }
+	
 }

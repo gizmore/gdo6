@@ -5,12 +5,10 @@
 <?php if ($field->preview && $file->isImageType()) : ?>
 <?php printf('<div class="gdo-file-preview"><img src="%s" />%s (%s)</div>', $field->displayPreviewHref($file), $deleteButton, html($file->getName())); ?>
 <?php else : ?>
-<?php var_dump($file); ?>
 <?php printf('<div class="gdo-file-preview">%s %s</div>', html($file->getName()), $deleteButton); ?>
 <?php endif; ?>
 <?php endforeach; ?>
 </div>
-xxx
 <div class="gdo-container<?= $field->classError(); ?>">
   <label><?= $field->displayLabel() ?></label>
   <input type="file" name="<?=$field->name?>" />

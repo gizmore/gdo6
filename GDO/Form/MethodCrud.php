@@ -71,24 +71,6 @@ abstract class MethodCrud extends MethodForm
 		return parent::execute();
 	}
 	
-	public function executeEditMethods()
-	{
-		if (count($_POST))
-		{
-			foreach ($this->getForm()->getFields() as $field)
-			{
-				if ($field instanceof GDT_File)
-				{
-					$key = 'delete_' . $field->name;
-					if ( isset($_POST[$key]) && (is_array($ids = Common::getPostArray($key))) )
-					{
-						$field->onDeleteFiles(array_keys($ids));
-					}
-				}
-			}
-		}
-	}
-	
 	public function createForm(GDT_Form $form)
 	{
 		$table = $this->gdoTable();

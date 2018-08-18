@@ -4,6 +4,7 @@ use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Util\Common;
 use GDO\Core\GDT;
+use GDO\File\GDT_File;
 /**
  * Generic method that uses a GDT_Form.
  * @author gizmore
@@ -30,7 +31,26 @@ abstract class MethodForm extends Method
 	 */
 	public function execute()
 	{
+		$this->executeEditMethods();
 		return $this->executeForm();
+	}
+	
+	public function executeEditMethods()
+	{
+		if (count($_POST))
+		{
+			foreach ($this->getForm()->getFields() as $field)
+			{
+				if ($field instanceof GDT_File)
+				{
+					$key = 'delete_' . $field->name;
+					if ( isset($_POST[$key]) && (is_array($ids = Common::getPostArray($key))) )
+					{
+						$field->onDeleteFiles(array_keys($ids));
+					}
+				}
+			}
+		}
 	}
 	
 	/**
