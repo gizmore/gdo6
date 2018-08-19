@@ -4,23 +4,31 @@ namespace GDO\File;
 use GDO\Util\Arrays;
 
 /**
- * @author gizmore
+ * Use this GDT in a has_many files relationship.
+ * You have to create and specify a file table that is M:N for your GDO and the GDO_File entry.
+ * Upload is handled by inheritance of GDT_File.
+ * 
+ * @see GDT_File
+ * @see GDO_FileTable
+ * 
+ * @author gizmore@wechall.net
+ * 
  * @since 6.08
  * @version 6.08
  */
 class GDT_Files extends GDT_File
 {
-	public function gdoColumnDefine() { return null; }
-	
+	########################
+	### STUB GDT methods ###
+	########################
+	public function gdoColumnDefine() { return null; } # NO DB column. Your GDO_FileTable has the data.
 	public function getGDOData() { return null; } # Only relation table. Handled by onCreate and onUpdate.
+	public function toVar($value) { return null; } # cannot be saved as column.
+	public function isSerializable() { return false; } # cannot be transmitted or serialized.
 	
-	public function toVar($value)
-	{
-		return null;
-	}
-	
-	
-	
+	##################
+	### File Table ###
+	##################
 	public $fileTable;
 	public $fileObjectTable;
 	public function fileTable(GDO_FileTable $table)
@@ -30,12 +38,16 @@ class GDT_Files extends GDT_File
 		return $this;
 	}
 	
+	#########################
+	### GDT_File override ###
+	#########################
 	public function getInitialFiles()
 	{
 		if ( (!$this->gdo) || (!$this->gdo->isPersisted()) )
 		{
-			return array();
+			return array(); # has no stored files as its not even saved yet.
 		}
+		# Fetch all from relation table as GDO_File array.
 		return $this->fileTable->select('gdo_file.*')->fetchTable(GDO_File::table())->
 			where('files_object='.$this->gdo->getID())->
 			joinObject('files_file')->exec()->fetchAllObjects();
@@ -54,11 +66,20 @@ class GDT_Files extends GDT_File
 		return $this->files;
 	}
 	
+	#############
+	### Hooks ###
+	#############
+	/**
+	 * After creation and update we have to create the entry in the relation table.
+	 */
 	public function gdoAfterCreate()
 	{
 		$this->gdoAfterUpdate();
 	}
 	
+	/**
+	 * After creation and update we have to create the entry in the relation table.
+	 */
 	public function gdoAfterUpdate()
 	{
 		if ($files = $this->getValidationValue())
@@ -86,6 +107,9 @@ class GDT_Files extends GDT_File
 		}
 	}
 	
+	/**
+	 * This is the delete action that removes the files.
+	 */
 	public function onDeleteFiles(array $ids)
 	{
 		foreach ($ids as $id)

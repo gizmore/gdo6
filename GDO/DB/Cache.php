@@ -7,12 +7,12 @@ use GDO\Core\GDO;
  * This way you can never have two dangling out of sync users in your application.
  * It also saves a bit mem.
  * Of course this comes with a slight overhead.
- * As GDO5 was written from scratch with this in mind, the overhead is quite small.
+ * As GDO6 was written from scratch with this in mind, the overhead is quite small.
  * 
- * New and unplanned is the use of memcached :)
+ * Suprising is the additional use of memcached which adds a second layer of caching.
  * 
- * There are a few global memcached keys scattered across the application, fetching all rows.
- * Those GDOs dont use memcached on a per row basis
+ * There are a few global memcached keys scattered across the application, fetching all rows or similiar stuff.
+ * Those GDOs usually dont use memcached on a per row basis and gdoMemcached is false.
  * 
  * gdo_modules
  * gdo_country

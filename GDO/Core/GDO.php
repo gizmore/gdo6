@@ -1,14 +1,21 @@
 <?php
 namespace GDO\Core;
+
 use GDO\DB\Cache;
 use GDO\DB\Database;
 use GDO\DB\Query;
 use GDO\DB\Result;
+
 /**
- * A gdo is a container for GDTs which values are backed by a database and cache.
- * @author gizmore
- * @version 6.06
+ * A GDO is a container for GDTs, which values are backed by a database and cache.
+ * 
+ * @see GDT
+ * @see Cache
+ * @see Database
+ * 
  * @since 1.00
+ * @version 6.08
+ * @author gizmore@wechall.net
  */
 abstract class GDO #extends GDT
 {
@@ -38,30 +45,30 @@ abstract class GDO #extends GDT
 	################
 	public static function escapeIdentifierS($identifier) { return str_replace("`", "\`", $identifier); }
 	public static function quoteIdentifierS($identifier) { return "`" . self::escapeIdentifierS($identifier) . "`"; }
-	public static function escapeSearchS($value) { return str_replace(array('%', "'", '"'), array('\\%', "\\'", '\\"'), $value); }
+	public static function escapeSearchS($var) { return str_replace(['%', "'", '"', '\\'], ['\\%', "\\'", '\\"', '\\\\'], $var); }
 	
-	public static function escapeS($value) { return str_replace(array("'", '"'), array("\\'", '\\"'), $value); }
-	public static function quoteS($value)
+	public static function escapeS($var) { return str_replace(["'", '"', '\\'], ["\\'", '\\"', '\\\\'], $var); }
+	public static function quoteS($var)
 	{
-		if (is_string($value))
+		if (is_string($var))
 		{
-			return "'" . self::escapeS($value) . "'";
+			return "'" . self::escapeS($var) . "'";
 		}
-		elseif ($value === null)
+		elseif ($var === null)
 		{
 			return "NULL";
 		}
-		elseif (is_numeric($value))
+		elseif (is_numeric($var))
 		{
-			return "$value";
+			return "$var";
 		}
-		elseif (is_bool($value))
+		elseif (is_bool($var))
 		{
-			return $value ? '1' : '0';
+			return $var ? '1' : '0';
 		}
 		else
 		{
-			throw new GDOError('err_cannot_quote', [html($value)]);
+			throw new GDOError('err_cannot_quote', [html($var)]);
 		}
 	}
 	
@@ -412,9 +419,10 @@ abstract class GDO #extends GDT
 	{
 		if ($this->persisted)
 		{
-			$this->deleteWhere($this->getPKWhere())->exec();
-			$this->persisted = false;
-			$this->dirty = false;
+			$query = $this->deleteWhere($this->getPKWhere());
+			$this->beforeDelete($query);
+			$query->exec();
+			$this->afterDelete();
 		}
 		return $this;
 	}
@@ -754,27 +762,34 @@ abstract class GDO #extends GDT
 	#############
 	### Cache ###
 	#############
-	public function __wakeup() { #$this->table();
-	}
+// 	public function __wakeup()
+// 	{
+// 		#$this->table();
+// 	}
 	/**
 	 * @var \GDO\DB\Cache
 	 */
 	public $cache;
+	
 	public function initCache() { $this->cache = new Cache($this); }
+	
 	public function initCached(array $row)
 	{
 		return $this->memCached() ? $this->cache->initGDOMemcached($row) : $this->cache->initCached($row);
 	}
+	
 	public function gkey()
 	{
 		return $this->gdoClassName() . $this->getID();
 	}
+	
 	public function recache()
 	{
 		if ($this->table()->cache)
 		{
 			$this->table()->cache->recache($this);
 		}
+		$this->callRecacheHook();
 	}
 	
 	public function uncache()
@@ -783,8 +798,22 @@ abstract class GDO #extends GDT
 		{
 			$this->table()->cache->uncache($this);
 		}
+		$this->callRecacheHook();
 	}
 	
+	public function callRecacheHook()
+	{
+		if ($this->gdoCached() || $this->memCached())
+		{
+			GDT_Hook::call('CacheInvalidate', $this->gdoClassName(), $this->getID());
+		}
+	}
+	
+	
+	
+	###########
+	### All ###
+	###########
 	/**
 	 * @return self[]
 	 */
@@ -841,15 +870,6 @@ abstract class GDO #extends GDT
 	##############
 	### Events ###
 	##############
-	private function beforeUpdate(Query $query)
-	{
-		foreach ($this->gdoColumnsCache() as $gdoType)
-		{
-			$gdoType->gdo($this)->gdoBeforeUpdate($query);
-		}
-		$this->gdoBeforeUpdate();
-	}
-	
 	private function beforeCreate(Query $query)
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
@@ -859,6 +879,24 @@ abstract class GDO #extends GDT
 		$this->gdoBeforeCreate();
 	}
 	
+	private function beforeUpdate(Query $query)
+	{
+		foreach ($this->gdoColumnsCache() as $gdoType)
+		{
+			$gdoType->gdo($this)->gdoBeforeUpdate($query);
+		}
+		$this->gdoBeforeUpdate();
+	}
+
+	private function beforeDelete(Query $query)
+	{
+		foreach ($this->gdoColumnsCache() as $gdoType)
+		{
+			$gdoType->gdo($this)->gdoBeforeDelete($query);
+		}
+		$this->gdoBeforeDelete();
+	}
+
 	private function afterCreate()
 	{
 		# Flags
@@ -881,22 +919,34 @@ abstract class GDO #extends GDT
 		{
 			$gdoType->gdo($this)->gdoAfterUpdate();
 		}
-		$this->gdoAfterCreate();
+		$this->gdoAfterUpdate();
+	}
+	
+	private function afterDelete()
+	{
+		# Flags
+		$this->dirty = false;
+		$this->persisted = false;
+		# Trigger events on GDTs.
+		foreach ($this->gdoColumnsCache() as $gdoType)
+		{
+			$gdoType->gdo($this)->gdoAfterDelete();
+		}
+		$this->gdoAfterDelete();
 	}
 	
 	# Overrides
 	public function gdoBeforeCreate() {}
 	public function gdoBeforeUpdate() {}
+	public function gdoBeforeDelete() {}
+	
 	public function gdoAfterCreate() {}
-	public function gdoAfterUpdate()
-	{
-		if ($this->gdoCached() || $this->memCached())
-		{
-			GDT_Hook::call('CacheInvalidate', $this->gdoClassName(), $this->getID());
-		}
-	}
+	public function gdoAfterUpdate() {}
 	public function gdoAfterDelete() {}
 	
+	################
+	### Hashcode ###
+	################
 	public function gdoHashcode()
 	{
 		return self::gdoHashcodeS($this->gdoVars);

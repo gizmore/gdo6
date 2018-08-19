@@ -70,7 +70,7 @@ abstract class GDT
 	##############
 	public function gdoBeforeCreate(Query $query) {}
 	public function gdoBeforeUpdate(Query $query) {}
-	public function gdoBeforeDelete() {}
+	public function gdoBeforeDelete(Query $query) {}
 	public function gdoAfterCreate() {}
 	public function gdoAfterUpdate() {}
 	public function gdoAfterDelete() {}

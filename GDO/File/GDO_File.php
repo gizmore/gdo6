@@ -11,9 +11,10 @@ use GDO\Util\Strings;
 use GDO\Core\GDOException;
 /**
  * File database storage.
+ * 
  * @author gizmore
- * @version 6.0
- * @sinve 3.0
+ * @version 6.08
+ * @since 3.0
  *
  * @see GDT_File
  */
@@ -43,6 +44,8 @@ final class GDO_File extends GDO
 	public function getType() { return $this->getVar('file_type'); }
 	public function displaySize() { return FileUtil::humanFilesize($this->getSize()); }
 	public function isImageType() { return Strings::startsWith($this->getType(), 'image/'); }
+
+	public function renderCell() { return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this]); }
 	
 	public $path;
 	public function tempPath($path=null)
@@ -62,12 +65,9 @@ final class GDO_File extends GDO
 	public function getPath() { return $this->path ? $this->path : $this->getDestPath(); }
 	public function getDestPath() { return self::filesDir() . $this->getID(); }
 	
-//	 public function renderCell() { return Template::mainPHP('cell/file.php', ['gdo'=>$this]); }
-	
-	public function delete()
+	public function gdoAfterDelete()
 	{
 		@unlink($this->getDestPath());
-		return parent::delete();
 	}
 	
 	public function toJSON()
@@ -102,18 +102,6 @@ final class GDO_File extends GDO
 		))->tempPath($values['path']);
 	}
 	
-	public function copy()
-	{
-		FileUtil::createDir(self::filesDir());
-		$this->insert();
-		if (!@copy($this->path, $this->getDestPath()))
-		{
-			throw new GDOError('err_upload_move', [html($this->path), html($this->getDestPath())]);
-		}
-		$this->path = null;
-		return $this;
-	}
-	
 	/**
 	 * @param string $contents
 	 * @return self
@@ -129,6 +117,12 @@ final class GDO_File extends GDO
 		return self::fromPath($name, $tempPath);
 	}
 	
+	/**
+	 * @param string $name
+	 * @param string $path
+	 * @throws GDOException
+	 * @return \GDO\File\GDO_File
+	 */
 	public static function fromPath($name, $path)
 	{
 		if (!FileUtil::isFile($path))
@@ -144,6 +138,25 @@ final class GDO_File extends GDO
 		return self::fromForm($values);
 	}
 	
-	public function renderCell() { return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this]); }
+	############
+	### Copy ###
+	############
+	/**
+	 * This saves the uploaded file to the files folder and inserts the db row.
+	 * 
+	 * @throws GDOError
+	 * @return self
+	 */
+	public function copy()
+	{
+		FileUtil::createDir(self::filesDir());
+		$this->insert();
+		if (!@copy($this->path, $this->getDestPath()))
+		{
+			throw new GDOError('err_upload_move', [html($this->path), html($this->getDestPath())]);
+		}
+		$this->path = null;
+		return $this;
+	}
 	
 }

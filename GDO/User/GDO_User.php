@@ -7,7 +7,6 @@ use GDO\DB\GDT_DeletedAt;
 use GDO\Date\GDT_Date;
 use GDO\Date\Time;
 use GDO\DB\GDT_Enum;
-use GDO\Core\Application;
 use GDO\Core\GDT_Template;
 use GDO\Language\GDO_Language;
 use GDO\Language\GDT_Language;
