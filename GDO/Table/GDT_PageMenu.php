@@ -62,6 +62,7 @@ class GDT_PageMenu extends GDT
 	public function filterQuery(Query $query)
 	{
 		$query->limit($this->ipp, $this->getFrom());
+		return $this;
 	}
 	
 	public function getPage()
