@@ -18,6 +18,8 @@ class GDT_File extends GDT_Object
 {
 	use WithHREF;
 	
+	public $multiple = false;
+	
 // 	public function defaultLabel() { return $this->label('file'); }
 	
 	public function __construct()

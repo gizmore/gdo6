@@ -41,6 +41,8 @@ class GDT_Files extends GDT_File
 	#########################
 	### GDT_File override ###
 	#########################
+	public $multiple = true;
+	
 	public function getInitialFiles()
 	{
 		if ( (!$this->gdo) || (!$this->gdo->isPersisted()) )
