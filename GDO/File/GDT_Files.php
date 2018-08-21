@@ -94,6 +94,7 @@ class GDT_Files extends GDT_File
 		{
 			$this->updateFile($file);
 		}
+		$this->files = null;
 	}
 	
 	private function updateFile(GDO_File $file)
@@ -119,6 +120,7 @@ class GDT_Files extends GDT_File
 				$file->delete();
 			}
 		}
+		$this->files = null;
 	}
 	
 }
