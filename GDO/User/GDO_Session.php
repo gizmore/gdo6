@@ -162,7 +162,7 @@ class GDO_Session extends GDO
 			$session = self::createSession($cookieIP);
 		}
 		# Try to reload
-		elseif ($session = self::reload($cookieValue, $cookieIP))
+		elseif ($session = self::reloadCookie($cookieValue, $cookieIP))
 		{
 		}
 		# Set special first dummy cookie
@@ -180,7 +180,7 @@ class GDO_Session extends GDO
 		self::$INSTANCE = self::getById($id);
 	}
 	
-	public static function reload($cookieValue)
+	public static function reloadCookie($cookieValue)
 	{
 		if (!strpos($cookieValue, '-'))
 		{
