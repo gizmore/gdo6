@@ -91,6 +91,11 @@ class Cache
 		return @$this->cache[$id];
 	}
 	
+	public function hasID($id)
+	{
+		return isset($this->cache[$id]);
+	}
+	
 	/**
 	 * Only GDO Cache / No memcached initializer.
 	 * @param array $assoc
@@ -112,7 +117,16 @@ class Cache
 	{
 		if ($object->gdoCached())
 		{
-			$this->cache[$object->getID()] = $object;
+			if (isset($this->cache[$object->getID()]))
+			{
+				$old = $this->cache[$object->getID()];
+				$old->setGDOVars($object->getGDOVars());
+				$old->tempReset();
+			}
+			else
+			{
+				$this->cache[$object->getID()] = $object;
+			}
 		}
 		if ($object->memCached())
 		{

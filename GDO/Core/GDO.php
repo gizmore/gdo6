@@ -783,6 +783,22 @@ abstract class GDO #extends GDT
 		return $this->gdoClassName() . $this->getID();
 	}
 	
+	public function reload($id)
+	{
+		if ($this->cache && $this->cache->hasID($id))
+		{
+			$id = explode(':', $id);
+			$i = 0;
+			$query = $this->select();
+			foreach ($this->gdoPrimaryKeyColumns() as $column)
+			{
+				$query->where($column->identifier() . '=' . self::quoteS($id[$i++]));
+			}
+			$object = $query->uncached()->first()->exec()->fetchObject();
+			$this->cache->recache($object);
+		}
+	}
+	
 	public function recache()
 	{
 		if ($this->table()->cache)
