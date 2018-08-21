@@ -92,7 +92,7 @@ abstract class MethodForm extends Method
 					{
 					 	unset($_POST['nojs']);
 						$response = call_user_func([$this, "onSubmit_{$field->name}"], $form);
-						$form->formValidated();
+						$form->onValidated();
 					}
 					else
 					{

@@ -98,7 +98,7 @@ class GDT_Form extends GDT
 		}
 	}
 	
-	public function formValidated()
+	public function onValidated()
 	{
 		$this->validated = true;
 		foreach ($this->fields as $field)

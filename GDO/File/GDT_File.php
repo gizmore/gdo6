@@ -319,7 +319,7 @@ class GDT_File extends GDT_Object
 				{
 					if ($file = $this->getFileFromDir($path.'/'.$entry))
 					{
-						$files[$file->getName()] = $file;
+						$files[] = $file;
 					}
 				}
 			}
@@ -329,7 +329,7 @@ class GDT_File extends GDT_Object
 			if ($_FILES[$key]['name'])
 			{
 				$name = $_FILES[$key]['name'];
-				$files[$name] = GDO_File::fromForm(array(
+				$files[] = GDO_File::fromForm(array(
 					'name' => $_FILES[$key]['name'],
 					'mime' => $_FILES[$key]['type'],
 					'size' => $_FILES[$key]['size'],
