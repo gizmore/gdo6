@@ -117,9 +117,13 @@ final class GDO_User extends GDO
 		{
 			return $userName;
 		}
-		else
+		elseif ($this->isGuest())
 		{
 			return '~~' . t('guest')  . '~~';
+		}
+		else
+		{
+			return '~~' . t('ghost') . '~~';
 		}
 	}
 	
