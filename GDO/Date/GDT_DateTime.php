@@ -5,7 +5,7 @@ use GDO\Core\GDT_Template;
 
 class GDT_DateTime extends GDT_Timestamp
 {
-	public function defaultLabel() { return $this->label('date'); }
+// 	public function defaultLabel() { return $this->label('date'); }
 	
 	public function gdoColumnDefine()
 	{

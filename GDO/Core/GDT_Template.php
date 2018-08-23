@@ -4,6 +4,7 @@ use Exception;
 use GDO\UI\WithLabel;
 use GDO\Util\Strings;
 use GDO\Language\Trans;
+use GDO\User\GDO_User;
 /**
  * GWF Template Engine.
  * Very cheap / basic
@@ -63,6 +64,16 @@ class GDT_Template extends GDT
 	### Engine ###
 	##############
 	public static $CALLS = 0;
+	
+	public static function phpUser(GDO_User $user, $moduleName, $path, array $tVars=null)
+	{
+		$old = Trans::$ISO;
+		Trans::$ISO = $user->getLangISO();
+		$result = self::php($moduleName, $path, $tVars);
+		Trans::$ISO = $old;
+		return $result;
+	}
+	
 	public static function php($moduleName, $path, array $tVars=null)
 	{
 		try
@@ -113,7 +124,7 @@ class GDT_Template extends GDT
 	 */
 	private static function getPath($moduleName, $path)
 	{
-		$isos = array_unique(['_'.Trans::$ISO, '_'.GWF_LANGUAGE, '']);
+		$isos = array_unique(['_'.Trans::$ISO, '_'.GWF_LANGUAGE, 'en', '']);
 
 		# Try themes first
 		foreach (Application::instance()->getThemes() as $theme)

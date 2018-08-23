@@ -222,6 +222,15 @@ final class GDO_User extends GDO
 	}
 	
 	/**
+	 * Get all staff members.
+	 * @return self[]
+	 */
+	public static function staff()
+	{
+		return self::withPermission('staff');
+	}
+	
+	/**
 	 * Get all users with a permission.
 	 * @param string $permission
 	 * @return self[]
