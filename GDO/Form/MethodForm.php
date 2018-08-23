@@ -44,7 +44,7 @@ abstract class MethodForm extends Method
 				if ($field instanceof GDT_File)
 				{
 					$key = 'delete_' . $field->name;
-					if ( isset($_POST[$key]) && (is_array($ids = Common::getPostArray($key))) )
+					if ( isset($_REQUEST[$key]) && (is_array($ids = Common::getRequestArray($key))) )
 					{
 						$field->onDeleteFiles(array_keys($ids));
 					}

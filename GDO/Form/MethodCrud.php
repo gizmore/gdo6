@@ -60,8 +60,6 @@ abstract class MethodCrud extends MethodForm
 			{
 				throw new PermissionException('err_permission_update');
 			}
-			
-			$this->executeEditMethods();
 		}
 		elseif (!$this->canCreate($table))
 		{

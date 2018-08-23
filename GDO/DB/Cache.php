@@ -121,7 +121,7 @@ class Cache
 			{
 				$old = $this->cache[$object->getID()];
 				$old->setGDOVars($object->getGDOVars());
-				$old->tempReset();
+// 				$old->tempReset();
 			}
 			else
 			{

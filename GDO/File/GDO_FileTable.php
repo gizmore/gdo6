@@ -27,5 +27,6 @@ class GDO_FileTable extends GDO
 		);
 	}
 	
+	public function getFile() { return $this->getValue('files_file'); }
 
 }

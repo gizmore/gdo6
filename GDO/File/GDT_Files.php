@@ -117,8 +117,9 @@ class GDT_Files extends GDT_File
 	{
 		foreach ($ids as $id)
 		{
-			if ($file = $this->fileTable->getBy('files_file', $id))
+			if ($file = $this->fileTable->getBy('files_id', $id))
 			{
+				$file = $file->getFile();
 				$file->delete();
 			}
 		}
