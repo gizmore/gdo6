@@ -71,7 +71,7 @@ class GDT_String extends GDT
 	{
 		switch ($this->encoding)
 		{
-			case self::UTF8: return 'utf8';
+			case self::UTF8: return 'utf8mb4';
 			case self::ASCII: return 'ascii';
 			case self::BINARY: return 'binary';
 		}

@@ -2,8 +2,6 @@
 namespace GDO\UI;
 use GDO\DB\GDT_String;
 /**
- * A short utf8 title.
- * Pretty common.
  * @author gizmore
  */
 class GDT_SearchField extends GDT_String
