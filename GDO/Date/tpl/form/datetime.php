@@ -1,4 +1,4 @@
-<?php /** @var $field \GDO\Date\GDT_Timestamp; **/
+<?php /** @var $field \GDO\Date\GDT_DateTime; **/
 $id = 'date_'.$field->name; ?>
 <div class="gdo-container<?=$field->classError()?>">
   <label for="<?=$id?>"><?=$field->label?></label>

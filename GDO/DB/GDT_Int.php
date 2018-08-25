@@ -9,7 +9,6 @@ use GDO\Util\Strings;
 use GDO\Form\WithFormFields;
 use GDO\Table\WithOrder;
 use GDO\UI\WithTooltip;
-use GDO\UI\WithIcon;
 class GDT_Int extends GDT
 {
 	use WithLabel;
@@ -60,10 +59,7 @@ class GDT_Int extends GDT
 			$condition = "{$this->identifier()}=".GDO::quoteS($value);
 			if ($this->gdo->getID())
 			{
-				foreach ($this->gdo->table()->gdoPrimaryKeyColumns() as $gdoType)
-				{
-					$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
-				}
+				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}
 			return $this->gdo->table()->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
 		}

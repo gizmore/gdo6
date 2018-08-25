@@ -15,6 +15,7 @@ use GDO\Mail\GDT_Email;
 use GDO\Mail\GDT_EmailFormat;
 use GDO\Net\GDT_IP;
 use GDO\DB\GDT_UInt;
+use GDO\Date\GDT_Birthdate;
 /**
  * The holy user object.
  * @author gizmore
@@ -47,7 +48,7 @@ final class GDO_User extends GDO
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits'),
 			GDT_EmailFormat::make('user_email_fmt')->notNull()->initial(GDT_EmailFormat::HTML),
 			GDT_Gender::make('user_gender'),
-			GDT_Date::make('user_birthdate')->label('birthdate'),
+			GDT_Birthdate::make('user_birthdate'),
 			GDT_Country::make('user_country'),
 			GDT_Language::make('user_language')->notNull()->initial('en'),
 			GDT_Password::make('user_password'),

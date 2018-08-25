@@ -4,7 +4,6 @@ use GDO\Core\GDO;
 use GDO\Core\Logger;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
-use Symfony\Component\Routing\Tests\Fixtures\OtherAnnotatedClasses\VariadicClass;
 /**
  * mySQLi abstraction.
  * 
@@ -194,7 +193,7 @@ class Database
 		$columns = [];
 		$primary = [];
 		
-		foreach ($gdo->gdoColumnsCache() as $key => $column)
+		foreach ($gdo->gdoColumnsCache() as $column)
 		{
 			if ($define = $column->gdoColumnDefine())
 			{
@@ -212,7 +211,7 @@ class Database
 			$columns[] = "PRIMARY KEY ($primary)";
 		}
 
-		foreach ($gdo->gdoColumnsCache() as $key => $column)
+		foreach ($gdo->gdoColumnsCache() as $column)
 		{
 			if ($column->unique)
 			{

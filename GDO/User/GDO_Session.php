@@ -10,7 +10,6 @@ use GDO\Core\GDT_Serialize;
 use GDO\DB\GDT_Token;
 use GDO\Util\Math;
 use GDO\Core\Logger;
-use GDO\Date\GDT_Timestamp;
 use GDO\Net\GDT_Url;
 /**
  * GDO Session handler.

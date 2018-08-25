@@ -3,6 +3,13 @@ namespace GDO\File;
 use GDO\Core\GDO_Module;
 use GDO\Core\Module_Core;
 
+/**
+ * File related stuff is coverd by Module_File.
+ * 
+ * @author gizmore@wechall.net
+ * @version 6.08
+ *
+ */
 final class Module_File extends GDO_Module
 {
 	public $module_priority = 10;

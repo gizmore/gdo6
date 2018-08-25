@@ -3,7 +3,6 @@ namespace GDO\DB;
 use GDO\Table\WithOrder;
 use GDO\Core\GDT_Template;
 use GDO\UI\WithLabel;
-use GDO\UI\WithIcon;
 use GDO\Form\WithFormFields;
 use GDO\UI\WithTooltip;
 use GDO\Core\GDO;
@@ -131,10 +130,7 @@ class GDT_String extends GDT
 			$condition = "{$this->identifier()}=".GDO::quoteS($value);
 			if ($this->gdo->getID())
 			{
-				foreach ($this->gdo->table()->gdoPrimaryKeyColumns() as $gdoType)
-				{
-					$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
-				}
+				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}
 			return $this->gdo->table()->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
 		}

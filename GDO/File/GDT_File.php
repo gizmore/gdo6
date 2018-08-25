@@ -29,9 +29,9 @@ class GDT_File extends GDT_Object
 	}
 	
 	public $mimes = [];
-	public function mime($mime)
+	public function mime(...$mime)
 	{
-		$this->mimes[] = $mime;
+		$this->mimes = array_merge($this->mimes, $mime);
 		return $this;
 	}
 	

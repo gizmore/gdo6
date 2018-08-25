@@ -5,6 +5,8 @@ use GDO\Core\GDT_Template;
 
 class GDT_Email extends GDT_String
 {
+	public $max = 170; # Unique constraint
+
 	public $pattern = "/^[^@]+@[^@]+$/i";
 	protected $icon = 'email';
 	

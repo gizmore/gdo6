@@ -8,7 +8,13 @@ use GDO\Net\Stream;
 use GDO\Util\Common;
 /**
  * Server a file from partially db(meta) and fs.
+ * This method requires admin permission because it shall not be called directly.
+ * You have to write a wrapper that may call this method.
+ * 
+ * @see ImageUser
+ * 
  * @author gizmore
+ * @version 6.08
  */
 final class GetFile extends Method
 {

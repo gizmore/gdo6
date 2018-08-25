@@ -179,7 +179,7 @@ trait WithObject
 	{
 		if ($field = $this->filterField)
 		{
-			$this->table->gdoColumn($this->filterField)->filterQuery($query);
+			$this->table->gdoColumn($field)->filterQuery($query);
 			return $this;
 		}
 		else
