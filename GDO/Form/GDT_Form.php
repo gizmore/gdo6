@@ -140,11 +140,12 @@ class GDT_Form extends GDT
 
 	public function getFormVar($key)
 	{
-		return $this->fields[$key]->getVar();
+		return isset($this->fields[$key]) ? $this->fields[$key]->getVar() : null;
 	}
 	
 	public function getFormValue($key)
 	{
-		return $this->fields[$key]->getValue();
+		return isset($this->fields[$key]) ? $this->fields[$key]->getValue() : null;
 	}
+
 }

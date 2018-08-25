@@ -475,7 +475,8 @@ abstract class GDO #extends GDT
 				$this->beforeUpdate($query);
 				$query->exec();
 				$this->dirty = false;
-				$this->recache(); # save is the only action where we recache!
+// 				$this->recache(); # save is the only action where we recache!
+				$this->callRecacheHook();
 				$this->gdoAfterUpdate();
 			}
 			$this->dirty = false;
@@ -510,16 +511,16 @@ abstract class GDO #extends GDT
 			}
 		}
 
-		if ($withHooks) $this->beforeUpdate($query); # Can do trickery here... not needed?
-
 		if ($worthy)
 		{
+			if ($withHooks) $this->beforeUpdate($query); # Can do trickery here... not needed?
 			$query->exec();
 			$this->gdoVars = array_merge($this->gdoVars, $vars);
+			if ($withHooks) $this->callRecacheHook();
 // 			$this->recache(); # save is the only action where we recache!
+			if ($withHooks) $this->afterUpdate();
 		}
 		
-		if ($withHooks) $this->afterUpdate();
 		
 		return $this;
 	}
