@@ -796,7 +796,7 @@ abstract class GDO #extends GDT
 				$query->where($column->identifier() . '=' . self::quoteS($id[$i++]));
 			}
 			$object = $query->uncached()->first()->exec()->fetchObject();
-			$this->cache->recache($object);
+			return $this->cache->recache($object);
 		}
 	}
 	

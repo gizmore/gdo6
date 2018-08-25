@@ -115,13 +115,15 @@ class Cache
 	
 	public function recache(GDO $object)
 	{
+		$back = $object;
 		if ($object->gdoCached())
 		{
 			if (isset($this->cache[$object->getID()]))
 			{
 				$old = $this->cache[$object->getID()];
 				$old->setGDOVars($object->getGDOVars());
-				$old->tempReset();
+// 				$old->tempReset();
+				$back = $old;
 			}
 			else
 			{
@@ -132,6 +134,7 @@ class Cache
 		{
 			self::$MEMCACHED->replace(GWF_MEMCACHE_PREFIX.$object->gkey(), $object, GWF_MEMCACHE_TTL);
 		}
+		return $back;
 	}
 	
 	public function uncache(GDO $object)
