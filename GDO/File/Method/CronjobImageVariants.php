@@ -25,16 +25,32 @@ final class CronjobImageVariants extends MethodCronjob
 	private $numFiles = 0;
 	private $numVariantFiles = 0;
 	private $numConverted = 0;
+	private $numErased = 0;
 	
 	public function run()
 	{
 		foreach (ModuleLoader::instance()->getModules() as $module)
 		{
 			$this->createImageVariantsForModuleClasses($module);
+			$this->createImageVariantsForModuleConfig($module);
 		}
 		
+		$this->logStatistics();
+	}
+	
+	private function logStatistics()
+	{
 		$this->logNotice("There are {$this->numFiles} used files in the database in {$this->numVariantFiles} variants.");
-		$this->logNotice("I just created {$this->numConverted} new variant files.");
+		
+		if ($this->numConverted)
+		{
+			$this->logNotice("I just created {$this->numConverted} new variant files.");
+		}
+		
+		if ($this->numErased)
+		{
+			$this->logError("I had to delete {$this->numErased} files.");
+		}
 	}
 	
 	private function createImageVariantsForModuleClasses(GDO_Module $module)
@@ -51,6 +67,23 @@ final class CronjobImageVariants extends MethodCronjob
 						{
 							$this->createImageVariantsFor($table, $gdt);
 						}
+					}
+				}
+			}
+		}
+	}
+	
+	private function createImageVariantsForModuleConfig(GDO_Module $module)
+	{
+		if ($config = $module->getConfigCache())
+		{
+			foreach ($config as $gdt)
+			{
+				if ($gdt instanceof GDT_ImageFile)
+				{
+					if ($file = $gdt->getInitialFile())
+					{
+						$this->createImageVariantsForFile($file, $gdt);
 					}
 				}
 			}
@@ -82,7 +115,6 @@ final class CronjobImageVariants extends MethodCronjob
 		$result = $query->exec();
 		while ($file = $result->fetchObject())
 		{
-			$this->numFiles++;
 			$this->createImageVariantsForFile($file, $gdt);
 		}
 	}
@@ -94,13 +126,13 @@ final class CronjobImageVariants extends MethodCronjob
 		$result = $query->exec();
 		while ($file = $result->fetchObject())
 		{
-			$this->numFiles++;
 			$this->createImageVariantsForFile($file, $gdt);
 		}
 	}
 	
 	private function createImageVariantsForFile(GDO_File $file, GDT_File $gdt)
 	{
+		$this->numFiles++;
 		foreach ($gdt->scaledVersions as $name => $dim)
 		{
 			$this->numVariantFiles++;
