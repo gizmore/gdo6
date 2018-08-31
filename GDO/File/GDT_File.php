@@ -178,8 +178,13 @@ class GDT_File extends GDT_Object
 	{
 		if ($file = $this->getValidationValue())
 		{
+			var_dump("aaa", $file->getID());
 			return [$this->name => $file->getID()];
 		}
+// 		else
+// 		{
+// // 			die('Z');
+// 		}
 	}
 	
 	/**
@@ -188,7 +193,7 @@ class GDT_File extends GDT_Object
 	public function getValidationValue()
 	{
 		$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->getFiles($this->name)));
-		return array_pop($files);
+		return array_shift($files);
 	}
 	
 	public function getValue()
@@ -245,8 +250,10 @@ class GDT_File extends GDT_Object
 				{
 					if (!$file->isPersisted())
 					{
+						$file->insert();
 						$this->beforeCopy($file);
 						$file->copy();
+						$this->initial($file->getID());
 					}
 				}
 			}

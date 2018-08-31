@@ -9,6 +9,7 @@ use GDO\Core\GDOError;
 use GDO\Core\GDT_Template;
 use GDO\Util\Strings;
 use GDO\Core\GDOException;
+use GDO\Core\Logger;
 /**
  * File database storage.
  * 
@@ -64,6 +65,11 @@ final class GDO_File extends GDO
 	public function getHref() { return $this->href; }
 	public function getPath() { return $this->path ? $this->path : $this->getDestPath(); }
 	public function getDestPath() { return self::filesDir() . $this->getID(); }
+	public function getVariantPath($variant='')
+	{
+		if ($variant) $variant = "_$variant";
+		return $this->getDestPath() . $variant;
+	}
 	
 	public function gdoAfterDelete()
 	{
@@ -149,8 +155,8 @@ final class GDO_File extends GDO
 	 */
 	public function copy()
 	{
+		Logger::logDebug('GDO_File::copy(): ' . print_r($this, 1));
 		FileUtil::createDir(self::filesDir());
-		$this->insert();
 		if (!@copy($this->path, $this->getDestPath()))
 		{
 			throw new GDOError('err_upload_move', [html($this->path), html($this->getDestPath())]);

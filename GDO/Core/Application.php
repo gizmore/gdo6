@@ -42,6 +42,7 @@ class Application
 	################
 	public function isCLI() { return false; }
 	public function isInstall() { return false; }
+	public function isWebsocket() { return false; }
 
 	##############
 	### Format ###

@@ -9,7 +9,7 @@ use GDO\Core\GDO;
  * Of course this comes with a slight overhead.
  * As GDO6 was written from scratch with this in mind, the overhead is quite small.
  * 
- * Suprising is the additional use of memcached which adds a second layer of caching.
+ * Suprising is the additional use of memcached (did not plan this) which adds a second layer of caching.
  * 
  * There are a few global memcached keys scattered across the application, fetching all rows or similiar stuff.
  * Those GDOs usually dont use memcached on a per row basis and gdoMemcached is false.

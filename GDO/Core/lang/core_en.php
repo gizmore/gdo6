@@ -63,6 +63,7 @@ return array(
 'err_db' => "Database Error: %s<br/>\n%s<br/>\n",
 'err_exception' => 'Exception: %s',
 'err_gdo_object_no_table' => '%s is a GDT_Object without a table.',
+'err_column' => 'Unknown GDT column: %s.',
 'err_token' => 'Your token is invalid.',
 'err_csrf' => 'Your form token is invalid. Maybe you have tried to refresh a form submission or have cookie problems.',
 'err_field_invalid' => 'Your value for %s is not accepted.',

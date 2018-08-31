@@ -2,6 +2,7 @@
 namespace GDO\DB;
 use GDO\Core\GDO;
 use GDO\Core\Logger;
+use GDO\Core\GDOException;
 /**
  * Query builder.
  * Part of the GDO DBA code.
@@ -326,18 +327,27 @@ class Query
 	 */
 	public function joinObject($key, $join='JOIN')
 	{
-		$gdoType = $this->table->gdoColumn($key);
+		if (!($gdoType = $this->table->gdoColumn($key)))
+		{
+			throw new GDOException(t('err_column', [html($key)]));
+		}
+		
 		if ($gdoType instanceof GDT_Join)
 		{
 			$join = $gdoType->join;
 		}
-		else # GDT_Object
+		elseif ($gdoType instanceof GDT_Object)
 		{
 			$table = $gdoType->foreignTable();
 			$ftbl = $table->gdoTableIdentifier();
 			$atbl = $this->table->gdoTableIdentifier();
-			$join = "{$join} {$table->gdoTableIdentifier()} ON  $ftbl.{$table->gdoAutoIncColumn()->identifier()}=$atbl.{$gdoType->identifier()}";
+			$join = "{$join} {$table->gdoTableIdentifier()} ON $ftbl.{$table->gdoPrimaryKeyColumn()->identifier()}=$atbl.{$gdoType->identifier()}";
 		}
+		else
+		{
+			throw new GDOException(t('err_join_object', [html($key), html($this->table->displayName())]));
+		}
+		
 		return $this->join($join);
 	}
 	

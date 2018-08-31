@@ -19,8 +19,18 @@ trait WithObject
 	###################
 	### With Object ###
 	###################
+	/**
+	 * @var GDO
+	 */
 	public $table;
+	/**
+	 * @param GDO $table
+	 * @return self
+	 */
 	public function table(GDO $table) { $this->table = $table; return $this; }
+	/**
+	 * @return GDO
+	 */
 	public function foreignTable() { return $this->table; }
 	
 	###################

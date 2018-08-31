@@ -2,13 +2,18 @@
 namespace GDO\Core;
 use GDO\Form\GDT_Form;
 use GDO\UI\GDT_Bar;
+use GDO\Websocket\Server\GWS_Server;
+use GDO\Websocket\Server\GWS_Command;
+use GDO\Websocket\Server\GWS_Commands;
 /**
  * Hooks do not render any output.
  * Hooks add messages to the IPC queue 1, which are/can be consumed by the websocket server.
  *
  * Hooks follow this convetions.
  * 1) The hook name is camel-case, e.g: 'UserAuthenticated'.
- * 2) The hook name shall include the module name, e.g. LoginSuccess
+ * 2) The method name in your object has to be hookUserAuthenticated in this example.
+ * 3) The hook name should include the module name, e.g. LoginSuccess, FriendsAccepted.
+ * 4) Annotate your hooks somewhere in your code with @hook LoginSuccess.
  *
  * @see Module_Websocket
  * 
@@ -88,6 +93,11 @@ final class GDT_Hook extends GDT
 				self::callIPC($ipc, $event, $args);
 			}
 		}
+		
+// 		if (Application::instance()->isWebsocket())
+// 		{
+// 			GWS_Commands::webHook();
+// 		}
 	}
 	
 	###########
@@ -117,6 +127,7 @@ final class GDT_Hook extends GDT
 				}
 				elseif ( ($arg instanceof GDT_Form) || ($arg instanceof GDT_Bar) )
 				{
+					Logger::logDebug("Skipped IPC event $event");
 					return; # SKIP GDT_Form hooks, as they enrich forms only,
 					# which is currently not required on websocket IPC channels.
 				}

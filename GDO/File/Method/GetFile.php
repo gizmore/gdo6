@@ -6,15 +6,26 @@ use GDO\File\GDO_File;
 use GDO\File\FileUtil;
 use GDO\Net\Stream;
 use GDO\Util\Common;
+
 /**
- * Server a file from partially db(meta) and fs.
+ * Serve a file from partially db(meta) and fs.
  * This method requires admin permission because it shall not be called directly.
  * You have to write a wrapper that may call this method.
+ * In your fields you can choose between 4 major GDT: GDT_File, GDT_Files, GDT_ImageFile, GDT_ImageFiles
+ * The singe GDT_File and GDT_ImageFile add a column to your GDO.
+ * The multi GDT_Files and GDT_ImageFiles require you to implement a GDO table inheriting from GDT_FileTable.
  * 
- * @see ImageUser
+ * @see GDO_File
+ * @see GDO_FileTable
+ * @see GDT_File
+ * @see GDT_Files
+ * @see GDT_ImageFile
+ * @see GDT_ImageFiles
+ * @see WithImageFile
  * 
- * @author gizmore
+ * @author gizmore@wechall.net
  * @version 6.08
+ * @since 6.00
  */
 final class GetFile extends Method
 {
@@ -22,19 +33,24 @@ final class GetFile extends Method
 	
 	public function execute()
 	{
-		return $this->executeWithId(Common::getRequestString('file'));
+		return $this->executeWithId(
+			Common::getRequestString('file'),
+			Common::getRequestString('variant', ''));
 	}
 	
-	public function executeWithId($id)
+	public function executeWithId($id, $variant='')
 	{
 		if (!($file = GDO_File::getById($id)))
 		{
 			return $this->error('err_unknown_file', null, 404);
 		}
-		if (!FileUtil::isFile($file->getPath()))
+		
+		$path = $file->getVariantPath($variant);
+		if (!FileUtil::isFile($path))
 		{
-			return $this->error('err_file_not_found', [htmlspecialchars($file->getPath())]);
+			return $this->error('err_file_not_found', [htmlspecialchars($path)]);
 		}
-		Stream::serve($file);
+		Stream::serve($file, $variant);
 	}
+	
 }
