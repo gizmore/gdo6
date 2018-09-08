@@ -178,13 +178,8 @@ class GDT_File extends GDT_Object
 	{
 		if ($file = $this->getValidationValue())
 		{
-			var_dump("aaa", $file->getID());
 			return [$this->name => $file->getID()];
 		}
-// 		else
-// 		{
-// // 			die('Z');
-// 		}
 	}
 	
 	/**

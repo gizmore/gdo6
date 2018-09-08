@@ -153,8 +153,6 @@ abstract class MethodCrud extends MethodForm
 	
 	public function onUpdate(GDT_Form $form)
 	{
-		var_dump($form->getFormData());
-		
 		$this->gdo->saveVars($form->getFormData());
 		$this->resetForm();
 		return

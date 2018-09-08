@@ -88,6 +88,7 @@ class GDT_Files extends GDT_File
 		{
 			$this->updateFiles($files);
 		}
+		$this->files = null;
 	}
 	
 	private function updateFiles($files)
@@ -96,13 +97,13 @@ class GDT_Files extends GDT_File
 		{
 			$this->updateFile($file);
 		}
-		$this->files = null;
 	}
 	
 	private function updateFile(GDO_File $file)
 	{
 		if (!$this->fileTable->getBy('files_file', $file->getID()))
 		{
+			# Insert in relation table for GDT_Files
 			$this->fileTable->blank(array(
 				'files_object' => $this->gdo->getID(),
 				'files_file' => $file->getID(),
@@ -123,7 +124,6 @@ class GDT_Files extends GDT_File
 				$file->delete();
 			}
 		}
-		$this->files = null;
 	}
 	
 }

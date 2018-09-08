@@ -161,6 +161,7 @@ final class GDO_File extends GDO
 		{
 			throw new GDOError('err_upload_move', [html($this->path), html($this->getDestPath())]);
 		}
+// 		@unlink($this->path);
 		$this->path = null;
 		return $this;
 	}

@@ -434,19 +434,21 @@ abstract class GDO #extends GDT
 			return $this->insert();
 		}
 		$query = $this->query()->replace($this->gdoTableIdentifier())->values($this->gdoVars);
-		$this->beforeCreate($query);
-		$query->exec();
-		$this->dirty = false;
-		$this->persisted = true;
-		$this->gdoAfterUpdate();
-		return $this;
+		return $this->insertOrReplace($query);
 	}
 	
 	public function insert()
 	{
 		$query = $this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars());
+		return $this->insertOrReplace($query);
+	}
+	
+	private function insertOrReplace(Query $query)
+	{
 		$this->beforeCreate($query);
 		$query->exec();
+		$this->dirty = false;
+		$this->persisted = true;
 		$this->afterCreate();
 		return $this;
 	}
@@ -511,16 +513,19 @@ abstract class GDO #extends GDT
 			}
 		}
 
+		# Call hooks even when not needed. Because its needed on GDT_Files
+		if ($withHooks) $this->beforeUpdate($query); # Can do trickery here... not needed?
+
 		if ($worthy)
 		{
-			if ($withHooks) $this->beforeUpdate($query); # Can do trickery here... not needed?
 			$query->exec();
 			$this->gdoVars = array_merge($this->gdoVars, $vars);
 			if ($withHooks) $this->callRecacheHook();
 // 			$this->recache(); # save is the only action where we recache!
-			if ($withHooks) $this->afterUpdate();
 		}
-		
+
+		# Call hooks even when not needed. Because its needed on GDT_Files
+		if ($withHooks) $this->afterUpdate();
 		
 		return $this;
 	}
