@@ -350,7 +350,7 @@ final class Debug
 	}
 	private static function backtraceMessage($message, $html = true, array $stack)
 	{
-		$badformat = false;
+// 		$badformat = false;
 		
 		// Fix full path disclosure
 		$message = self::shortpath($message);

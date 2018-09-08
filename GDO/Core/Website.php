@@ -2,7 +2,6 @@
 namespace GDO\Core;
 use GDO\UI\GDT_Link;
 use GDO\UI\GDT_Panel;
-use GDO\UI\WithHTML;
 /**
  * General Website utility.
  * @author gizmore

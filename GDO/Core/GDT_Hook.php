@@ -2,9 +2,6 @@
 namespace GDO\Core;
 use GDO\Form\GDT_Form;
 use GDO\UI\GDT_Bar;
-use GDO\Websocket\Server\GWS_Server;
-use GDO\Websocket\Server\GWS_Command;
-use GDO\Websocket\Server\GWS_Commands;
 /**
  * Hooks do not render any output.
  * Hooks add messages to the IPC queue 1, which are/can be consumed by the websocket server.

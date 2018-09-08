@@ -41,7 +41,7 @@ class GDT_File extends GDT_Object
 		$this->minsize = $minsize;
 		return $this;
 	}
-	public $maxsize = 4096 * 1024;
+	public $maxsize = 4096 * 2048; # 8MB
 	public function maxsize($maxsize)
 	{
 		$this->maxsize = $maxsize;
@@ -332,7 +332,6 @@ class GDT_File extends GDT_Object
 		{
 			if ($_FILES[$key]['name'])
 			{
-				$name = $_FILES[$key]['name'];
 				$files[] = GDO_File::fromForm(array(
 					'name' => $_FILES[$key]['name'],
 					'mime' => $_FILES[$key]['type'],
@@ -434,12 +433,21 @@ class GDT_File extends GDT_Object
 		$chunkDir = $this->getChunkDir($key);
 		$already = FileUtil::dirsize($chunkDir);
 		$additive = filesize($file['tmp_name']);
-		$sumSize = $already + $additive;
+		
+		$substract = @filesize($chunkDir.'/0');
+		$substract += @filesize($chunkDir.'/temp');
+		$substract += @filesize($chunkDir.'/name');
+		$substract += @filesize($chunkDir.'/mime');
+		$substract += @filesize($chunkDir.'/denied');
+		
+		$sumSize = $already + $additive - $substract;
+
 		if ($sumSize > $this->maxsize)
 		{
 			$this->denyFlowFile($key, $file, "exceed size of {$this->maxsize}");
 			return false;
 		}
+
 		return true;
 	}
 	

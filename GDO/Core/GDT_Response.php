@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Core;
 use GDO\UI\GDT_HTML;
-use GDO\UI\WithHTML;
 
 /**
  * The response class renders fields according to the request content-type.

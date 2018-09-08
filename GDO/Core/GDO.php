@@ -107,7 +107,7 @@ abstract class GDO #extends GDT
 	public function toJSON()
 	{
 		$values = [];
-		foreach ($this->gdoColumnsCache() as $key => $gdoType)
+		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
 			if ($data = $gdoType->gdo($this)->getGDOData())
 			{
@@ -298,7 +298,7 @@ abstract class GDO #extends GDT
 	 */
 	public function gdoColumnOf($className)
 	{
-		foreach ($this->gdoColumnsCache() as $name => $gdoType)
+		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
 			if (is_a($gdoType, $className))
 			{

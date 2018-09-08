@@ -6,7 +6,6 @@ use GDO\Core\GDO;
 use GDO\Net\GDT_Url;
 use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
-use GDO\Core\Method;
 /**
  * GDO autoloader and public functions.
  * @author gizmore
