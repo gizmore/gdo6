@@ -4,7 +4,6 @@ use GDO\Core\GDO;
 use GDO\DB\GDT_AutoInc;
 use GDO\DB\GDT_CreatedAt;
 use GDO\DB\GDT_DeletedAt;
-use GDO\Date\GDT_Date;
 use GDO\Date\Time;
 use GDO\DB\GDT_Enum;
 use GDO\Core\GDT_Template;
@@ -91,6 +90,7 @@ final class GDO_User extends GDO
 	public function getCountry() { return $this->getValue('user_country'); }
 	public function getBirthdate() { return $this->getVar('user_birthdate'); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
+	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
 	
 	public function getRegisterDate() { return $this->getVar('user_register_time'); }
 	public function getRegisterIP() { return $this->getVar('user_register_ip'); }
@@ -108,7 +108,7 @@ final class GDO_User extends GDO
 	{
 		if ($realName = $this->getRealName())
 		{
-			return html("'$realName'");
+			return "´{$realName}`";
 		}
 		elseif ($guestName = $this->getGuestName())
 		{

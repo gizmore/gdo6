@@ -1,13 +1,20 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDT;
 use GDO\UI\WithIcon;
 use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
 use GDO\Core\GDT_Template;
+
 /**
  * ENUMs are similiar to a select, but only allow 1 item being chosen.
- * For the database, and enum column will be created.
+ * For the database an enum column will be created.
+ * 
+ * @example GDT_Enum::make()->enumValues('one', 'two')->notNull()->initial('one')
+ * 
+ * @see GDT_Select
+ * 
  * @author gizmore
  * @since 5.00
  * @version 6.05
