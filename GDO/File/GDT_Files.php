@@ -99,15 +99,24 @@ class GDT_Files extends GDT_File
 		}
 	}
 	
+	/**
+	 * Update relation table if
+	 * 1. File is persisted
+	 * 2. Not in relation table yet.
+	 * @param GDO_File $file
+	 */
 	private function updateFile(GDO_File $file)
 	{
-		if (!$this->fileTable->getBy('files_file', $file->getID()))
+		if ($file->isPersisted())
 		{
-			# Insert in relation table for GDT_Files
-			$this->fileTable->blank(array(
-				'files_object' => $this->gdo->getID(),
-				'files_file' => $file->getID(),
-			))->insert();
+			if (!$this->fileTable->getBy('files_file', $file->getID()))
+			{
+				# Insert in relation table for GDT_Files
+				$this->fileTable->blank(array(
+					'files_object' => $this->gdo->getID(),
+					'files_file' => $file->getID(),
+				))->insert();
+			}
 		}
 	}
 	

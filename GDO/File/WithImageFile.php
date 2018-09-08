@@ -132,4 +132,9 @@ trait WithImageFile
 		}
 		return true;
 	}
+	
+	#############
+	### Hooks ###
+	#############
+	
 }

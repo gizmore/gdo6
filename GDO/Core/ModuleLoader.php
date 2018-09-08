@@ -192,7 +192,7 @@ final class ModuleLoader
 	
 	private function loadModulesFS()
 	{
-		Filewalker::traverse($this->path, false, array($this, '_loadModuleFS'), false);
+		Filewalker::traverse($this->path, '*', false, array($this, '_loadModuleFS'), false);
 	}
 	
 	public function _loadModuleFS($entry, $path)

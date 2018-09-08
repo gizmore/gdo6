@@ -252,7 +252,6 @@ class GDT_File extends GDT_Object
 					}
 				}
 			}
-			$this->files = $files;
 		}
 		if (!$valid)
 		{
@@ -461,7 +460,7 @@ class GDT_File extends GDT_Object
 		
 		# Merge chunks to single temp file
 		$finalFile = $chunkDir.'/temp';
-		Filewalker::traverse($chunkDir, array($this, 'onMergeFile'), false, true, array($finalFile));
+		Filewalker::traverse($chunkDir, '*', array($this, 'onMergeFile'), false, true, array($finalFile));
 		
 		# Write user chosen name to a file for later
 		$nameFile = $chunkDir.'/name';

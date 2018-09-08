@@ -10,7 +10,6 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\User\GDO_Permission;
 use GDO\Util\Strings;
-use GDO\Core\GDOError;
 /**
  * Install helper.
  * @author gizmore
@@ -100,7 +99,7 @@ class Installer
 	{
 		if ($classes = $module->getClasses())
 		{
-			foreach (array_reverse($module->getClasses()) as $class)
+			foreach (array_reverse($classes) as $class)
 			{
 				if (is_subclass_of($class, 'GDO\\Core\\GDO'))
 				{
@@ -147,7 +146,7 @@ class Installer
 		$dir = $module->filePath('Method');
 		if (FileUtil::isDir($dir))
 		{
-			Filewalker::traverse($dir, $callback, false, false, $module);
+			Filewalker::traverse($dir, '*', $callback, false, false, $module);
 		}
 	}
 	
@@ -179,77 +178,77 @@ class Installer
 		}
 	}
 	
-	#####################
-	### GWF core util ###
-	#####################
-	private static $coreTables;
-	public static function coreInclude($entry, $path, $args)
-	{
-		$class = Strings::substrTo($entry, '.');
-		if (class_exists($class))
-		{
-			if (is_subclass_of($class, 'GDO'))
-			{
-				if ($table = GDO::tableFor($class))
-				{
-					if (!$table->gdoAbstract())
-					{
-						self::$coreTables[$class] = $table;
-					}
-				}
-			}
-		}
-	}
+// 	#####################
+// 	### GWF core util ###
+// 	#####################
+// 	private static $coreTables;
+// 	public static function coreInclude($entry, $path, $args)
+// 	{
+// 		$class = Strings::substrTo($entry, '.');
+// 		if (class_exists($class))
+// 		{
+// 			if (is_subclass_of($class, 'GDO'))
+// 			{
+// 				if ($table = GDO::tableFor($class))
+// 				{
+// 					if (!$table->gdoAbstract())
+// 					{
+// 						self::$coreTables[$class] = $table;
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
 	
-	/**
-	 * Get all core tables from inc folder.
-	 * @return GDO[]
-	 */
-	public static function includeCoreTables()
-	{
-		self::$coreTables = [];
-		Filewalker::traverse(GWF_PATH . 'inc/util/gwf', [__CLASS__, 'coreInclude'], false, false);
-		return self::$coreTables;
-	}
+// 	/**
+// 	 * Get all core tables from inc folder.
+// 	 * @return GDO[]
+// 	 */
+// 	public static function includeCoreTables()
+// 	{
+// 		self::$coreTables = [];
+// 		Filewalker::traverse(GWF_PATH . 'inc/util/gwf', '*', [__CLASS__, 'coreInclude'], false, false);
+// 		return self::$coreTables;
+// 	}
 	
-	public static function installCoreTables($dropTables=false)
-	{
-		$tables = self::includeCoreTables();
-		while (count($tables))
-		{
-			$changed = false;
-			foreach ($tables as $classname => $table)
-			{
-				$skip = false; 
-				if ($deps = $table->gdoDependencies())
-				{
-					foreach ($deps as $dep)
-					{
-						if (isset($tables[$dep]))
-						{
-							$skip = true;
-							break;
-						}
-					}
-				}
-				if ($skip)
-				{
-					continue;
-				}
-				if ($dropTables)
-				{
-					$table->dropTable();
-				}
-				$table->createTable();
-				$changed = true;
-				unset($tables[$classname]);
-				break;
-			}
-			if (!$changed)
-			{
-				throw new GDOError("err_gdo_dependency not met", [implode(', ', array_keys($tables))]);
-			}
-		}
-	}
+// 	public static function installCoreTables($dropTables=false)
+// 	{
+// 		$tables = self::includeCoreTables();
+// 		while (count($tables))
+// 		{
+// 			$changed = false;
+// 			foreach ($tables as $classname => $table)
+// 			{
+// 				$skip = false; 
+// 				if ($deps = $table->gdoDependencies())
+// 				{
+// 					foreach ($deps as $dep)
+// 					{
+// 						if (isset($tables[$dep]))
+// 						{
+// 							$skip = true;
+// 							break;
+// 						}
+// 					}
+// 				}
+// 				if ($skip)
+// 				{
+// 					continue;
+// 				}
+// 				if ($dropTables)
+// 				{
+// 					$table->dropTable();
+// 				}
+// 				$table->createTable();
+// 				$changed = true;
+// 				unset($tables[$classname]);
+// 				break;
+// 			}
+// 			if (!$changed)
+// 			{
+// 				throw new GDOError("err_gdo_dependency not met", [implode(', ', array_keys($tables))]);
+// 			}
+// 		}
+// 	}
 	
 }

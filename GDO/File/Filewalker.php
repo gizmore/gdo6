@@ -8,8 +8,14 @@ final class Filewalker
 {
 	public static function filewalker_stub($entry, $fullpath, $args=null) {}
 	
-	public static function traverse($path, $callback_file=false, $callback_dir=false, $recursive=true, $args=null)
+	public static function traverse($path, $pattern=null, $callback_file=false, $callback_dir=false, $recursive=true, $args=null)
 	{
+		if ($pattern)
+		{
+			$_pattern = str_replace(['.', '*', '/'], ['\\.', '.*', '\\/'], $pattern);
+			$_pattern = "/{$_pattern}/";
+		}
+		
 		if (is_array($path))
 		{
 			foreach ($path as $_path)
@@ -45,6 +51,14 @@ final class Filewalker
 			if ( (strpos($entry, '.') === 0) || (!is_readable($fullpath)) )
 			{
 				continue;
+			}
+			
+			if ($pattern)
+			{
+				if (!preg_match($_pattern, $entry))
+				{
+					continue;
+				}
 			}
 			
 			if (is_dir($fullpath))
