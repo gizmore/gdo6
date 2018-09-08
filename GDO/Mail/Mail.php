@@ -12,7 +12,6 @@ use GDO\Core\Debug;
  * @version 3.0
  * @since 2008
  * */
-use GDO\Core\Website;
 use GDO\Core\GDT_Template;
 use GDO\User\GDO_User;
 use GDO\User\GDO_PublicKey;
@@ -168,7 +167,7 @@ final class Mail
 	{
 		if ($mail = $user->getMail())
 		{
-			$this->setReceiver($user->getMail());
+			$this->setReceiver($mail);
 			$this->setReceiverName($user->displayName());
 			
 			$this->setupGPG($user);

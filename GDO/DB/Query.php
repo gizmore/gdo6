@@ -336,7 +336,8 @@ class Query
 		{
 			$join = $gdoType->join;
 		}
-		elseif ($gdoType instanceof GDT_Object)
+		elseif ( ($gdoType instanceof GDT_Object) ||
+			($gdoType instanceof GDT_ObjectSelect) )
 		{
 			$table = $gdoType->foreignTable();
 			$ftbl = $table->gdoTableIdentifier();
