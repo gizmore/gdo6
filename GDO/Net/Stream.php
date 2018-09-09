@@ -41,16 +41,19 @@ final class Stream
 		return false;
 	}
 	
-	public static function file(GDO_File $file, $variant)
+	public static function file(GDO_File $file, $variant='')
 	{
 		self::path($file->getVariantPath($variant));
 	}
 	
-	public static function serve(GDO_File $file, $variant='')
+	public static function serve(GDO_File $file, $variant='', $disposition=true)
 	{
 		header('Content-Type: '.$file->getType());
 		header('Content-Size: '.$file->getSize());
-		header('Content-Disposition: attachment; filename="'.htmlspecialchars($file->getName()).'"');
+		if ($disposition)
+		{
+			header('Content-Disposition: attachment; filename="'.htmlspecialchars($file->getName()).'"');
+		}
 		self::file($file, $variant);
 		die();
 	}

@@ -202,11 +202,19 @@ class GDT_File extends GDT_Object
 	##############
 	public function onDeleteFiles(array $ids)
 	{
-		if ( ($this->gdo) && ($this->gdo->isPersisted()) )
+		$id = array_shift($ids); # only first id
+		if ( ($this->gdo) && ($this->gdo->isPersisted()) ) # GDO possibly has a file
 		{
-			$this->gdo->saveVar($this->name, null);
+			if ($id === $this->gdo->getVar($this->name)) # It is the requested file to delete.
+			{
+				$this->gdo->saveVar($this->name, null); # Unrelate
+				if ($file = GDO_File::getById($id)) # Delete file physically
+				{
+					$file->delete();
+				}
+				$this->initial(null);
+			}
 		}
-		$this->initial(null);
 	}
 	
 	################

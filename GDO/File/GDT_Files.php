@@ -2,6 +2,7 @@
 namespace GDO\File;
 
 use GDO\Util\Arrays;
+use GDO\User\GDO_User;
 
 /**
  * Use this GDT in a has_many files relationship.
@@ -125,9 +126,10 @@ class GDT_Files extends GDT_File
 	 */
 	public function onDeleteFiles(array $ids)
 	{
-		foreach ($ids as $id)
+		$id = array_shift($ids);
+		if ($file = $this->fileTable->getBy('files_file', $id))
 		{
-			if ($file = $this->fileTable->getBy('files_id', $id))
+			if ($file->canDelete(GDO_User::current()))
 			{
 				$file = $file->getFile();
 				$file->delete();

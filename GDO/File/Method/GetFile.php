@@ -12,7 +12,7 @@ use GDO\Util\Common;
  * This method requires admin permission because it shall not be called directly.
  * You have to write a wrapper that may call this method.
  * In your fields you can choose between 4 major GDT: GDT_File, GDT_Files, GDT_ImageFile, GDT_ImageFiles
- * The singe GDT_File and GDT_ImageFile add a column to your GDO.
+ * The single GDT_File and GDT_ImageFile add a column to your GDO.
  * The multi GDT_Files and GDT_ImageFiles require you to implement a GDO table inheriting from GDT_FileTable.
  * 
  * @see GDO_File

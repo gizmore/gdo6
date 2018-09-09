@@ -2,9 +2,10 @@
 namespace GDO\Language;
 /**
  * Very cheap i18n.
+ * 
  * @author gizmore
  * @since 1.00
- * @version 6.05
+ * @version 6.08
  */
 final class Trans
 {
@@ -58,8 +59,8 @@ final class Trans
 			{
 				if (!($text = @vsprintf($text, $args)))
 				{
-					$text = @self::$CACHE[$iso][$key] . ': ';
-					$text .= print_r($args, true);
+					$text = self::$CACHE[$iso][$key] . ': ';
+					$text .= json_encode($args);
 				}
 			}
 		}
@@ -69,7 +70,7 @@ final class Trans
 			if ($args)
 			{
 				$text .= ": ";
-				$text .= print_r($args, true);
+				$text .= json_encode($args);
 			}
 		}
 		

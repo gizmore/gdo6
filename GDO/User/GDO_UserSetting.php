@@ -1,17 +1,27 @@
 <?php
 namespace GDO\User;
+
 use GDO\Core\GDO;
 use GDO\Core\GDT;
 use GDO\DB\GDT_Name;
 use GDO\DB\GDT_String;
+use GDO\Core\GDT_Hook;
+
 /**
  * Similiar to modulevars, this table is for user vars.
- * @author gizmore
- * @version 6.05
+ * When a setting is changed, a hook is called.
+ * 
+ * @hook UserSettingChange(GDO_User, key, var)
+ * 
+ * @author gizmore@wechall.net
+ * @version 6.08
  * @since 6.00
  */
 final class GDO_UserSetting extends GDO
 {
+	###############
+	### Factory ###
+	###############
 	/**
 	 * @var GDT[]
 	 */
@@ -40,6 +50,9 @@ final class GDO_UserSetting extends GDO
 		);
 	}
 	
+	###########
+	### API ###
+	###########
 	public static function load(GDO_User $user)
 	{
 		return self::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair();
@@ -93,7 +106,8 @@ final class GDO_UserSetting extends GDO
 			))->replace();
 		}
 		$user->tempUnset('gdo_setting');
-// 		$user->recache();
+		
+		GDT_Hook::call('UserSettingChange', $user, $key, $value);
 	}
 	
 }

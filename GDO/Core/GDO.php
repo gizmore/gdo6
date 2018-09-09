@@ -13,11 +13,11 @@ use GDO\DB\Result;
  * @see Cache
  * @see Database
  * 
- * @since 1.00
- * @version 6.08
  * @author gizmore@wechall.net
+ * @version 6.08
+ * @since 1.00
  */
-abstract class GDO #extends GDT
+abstract class GDO
 {
 	use WithName;
 
@@ -268,7 +268,7 @@ abstract class GDO #extends GDT
 			}
 			else
 			{
-				break; # XXX: early break is only possible if we start all tables with their PKs.
+				break; # XXX: early break is only possible because we start all tables with their PKs.
 			}
 		}
 		return $columns;
@@ -453,11 +453,19 @@ abstract class GDO #extends GDT
 		return $this;
 	}
 	
+	/**
+	 * Build a generic update query for the whole table.
+	 * @return Query
+	 */
 	public function update()
 	{
 		return $this->query()->update($this->gdoTableIdentifier());
 	}
 	
+	/**
+	 * Build an entity update query.
+	 * @return Query
+	 */
 	public function updateQuery()
 	{
 		return $this->entityQuery()->update($this->gdoTableIdentifier());
@@ -686,9 +694,25 @@ abstract class GDO #extends GDT
 	 * @param string $value
 	 * @return self
 	 */
-	public static function getBy($key, $value=null)
+	public static function getBy($key, $value)
 	{
 		return self::table()->findWhere(self::quoteIdentifierS($key) . '=' . self::quoteS($value));
+	}
+	
+	/**
+	 * Get a row by a single column value.
+	 * Throw exception if not found.
+	 * @param string $key
+	 * @param string $value
+	 * @return self
+	 */
+	public static function findBy($key, $value)
+	{
+		if ($gdo = self::getBy($key, $value))
+		{
+			return $gdo;
+		}
+		return self::notFoundException($value);
 	}
 	
 	public static function getByVars(array $vars)

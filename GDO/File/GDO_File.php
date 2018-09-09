@@ -9,7 +9,6 @@ use GDO\Core\GDOError;
 use GDO\Core\GDT_Template;
 use GDO\Util\Strings;
 use GDO\Core\GDOException;
-use GDO\Core\Logger;
 /**
  * File database storage.
  * 
@@ -47,6 +46,7 @@ final class GDO_File extends GDO
 	public function isImageType() { return Strings::startsWith($this->getType(), 'image/'); }
 
 	public function renderCell() { return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this]); }
+	public function renderCard() { return GDT_Template::php('File', 'card/file.php', ['gdo'=>$this]); }
 	
 	public $path;
 	public function tempPath($path=null)
@@ -161,13 +161,11 @@ final class GDO_File extends GDO
 	 */
 	public function copy()
 	{
-		Logger::logDebug('GDO_File::copy(): ' . print_r($this, 1));
 		FileUtil::createDir(self::filesDir());
 		if (!@copy($this->path, $this->getDestPath()))
 		{
 			throw new GDOError('err_upload_move', [html($this->path), html($this->getDestPath())]);
 		}
-// 		@unlink($this->path);
 		$this->path = null;
 		return $this;
 	}
