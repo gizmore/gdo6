@@ -174,7 +174,7 @@ class GDO_Module extends GDO
 	public function canInstall() { return !$this->isPersisted(); }
 	public function filePath($path='') { return GWF_PATH.$this->wwwPath($path); }
 	public function wwwPath($path='') { return "GDO/{$this->getName()}/$path"; }
-	public function includeClass($class) { require_once $this->filePath("$class.php"); }
+// 	public function includeClass($class) { require_once $this->filePath("$class.php"); }
 	
 	#################
 	### Templates ###
@@ -245,16 +245,16 @@ class GDO_Module extends GDO
 		}
 	}
 	
-	public function loadClasses()
-	{
-		if ($classes = $this->getClasses())
-		{
-			foreach ($classes as $class)
-			{
-				$this->includeClass($class);
-			}
-		}
-	}
+// 	public function loadClasses()
+// 	{
+// 		if ($classes = $this->getClasses())
+// 		{
+// 			foreach ($classes as $class)
+// 			{
+// 				$this->includeClass($class);
+// 			}
+// 		}
+// 	}
 	
 	public function loadLanguage($path)
 	{

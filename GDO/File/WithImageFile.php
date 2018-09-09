@@ -85,7 +85,7 @@ trait WithImageFile
 	
 	public function createFileToScale(GDO_File $original, $name)
 	{
-		$src = $original->path;
+		$src = $original->getPath();
 		$dest = $original->getDestPath() . "_$name";
 		if (copy($src, $dest))
 		{

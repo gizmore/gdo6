@@ -16,7 +16,7 @@ final class ImageResize
 			case "image/gif": $source = imagecreatefromgif($file->path); break;
 			case "image/jpeg": $source = imagecreatefromjpeg($file->path); break;
 			case "image/png": $source = imagecreatefrompng($file->path); break;
-			default: throw new GDOError('err_image_format_not_supported', [$file->getType()]);
+			default: throw new GDOError('err_image_format_not_supported', [$file->getType(), $source_type]);
 		}
 	
 		$source_aspect_ratio = $source_width / $source_height;
