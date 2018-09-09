@@ -32,7 +32,7 @@ class GDT_Enum extends GDT
 	public function gdoColumnDefine()
 	{
 		$values = implode(',', array_map(array('GDO\Core\GDO', 'quoteS'), $this->enumValues));
-		return "{$this->identifier()} ENUM ($values){$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
+		return "{$this->identifier()} ENUM ($values) CHARSET ascii COLLATE ascii_bin {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 	
 	public function renderForm() { return GDT_Template::php('DB', 'form/enum.php', ['field' => $this]); }
