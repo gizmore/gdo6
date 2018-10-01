@@ -143,6 +143,6 @@ final class Website
 		{
 			header('Content-Type: application/json');
 		}
-		die(json_encode($json));
+		die(json_encode($json, JSON_PRETTY_PRINT));
 	}
 }

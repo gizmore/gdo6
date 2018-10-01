@@ -23,7 +23,7 @@ use GDO\Date\GDT_Birthdate;
  */
 final class GDO_User extends GDO
 {
-	const SYSTEM_ID = '1'; # System user is always #1
+// 	const SYSTEM_ID = '1'; # System user is always #1
 	
 	const BOT = 'bot';
 	const SYSTEM = 'system';
