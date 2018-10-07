@@ -23,7 +23,7 @@ gdo6(PHP) runs on PHP 5.6 and later versions (7.2) and requires a few PHP module
 
 These modules are optional
 
-    apt-get install php-memcahed
+    apt-get install php-memcahed php-gmp
 
 
 ### Modules
