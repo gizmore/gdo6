@@ -124,7 +124,7 @@ final class GDT_Hook extends GDT
 				}
 				elseif ( ($arg instanceof GDT_Form) || ($arg instanceof GDT_Bar) )
 				{
-					Logger::logDebug("Skipped IPC event $event");
+// 					Logger::logDebug("Skipped IPC event $event");
 					return; # SKIP GDT_Form hooks, as they enrich forms only,
 					# which is currently not required on websocket IPC channels.
 				}

@@ -8,12 +8,22 @@ Gizmore Data Objects 6
 - allows to build sites without a database or install.
 - module-only, means that there every piece of code is contained in a module.
 - Code first dba
-- Two layer single identity cache.
+- Two-layer Single-identity cache.
 
 
 ## Demo
 
 A demo site with (almost) the module set from below is here: http://gdo6.gizmore.org
+
+### PHP Requirements
+
+gdo6(PHP) runs on PHP 5.6 and later versions (7.2) and requires a few PHP modules
+
+    apt-get install php-mbstring php-bcmath php-curl php-mysql php-gd
+
+These modules are optional
+
+    apt-get install php-memcahed
 
 
 ### Modules
@@ -25,17 +35,18 @@ For a "quick" install.
     mkdir www && cd www
     git clone --recursive https://github.com/gizmore/gdo6
 
-
 In case you forgot a recursive:
 
     git submodule update --init --recursive
+
+
+Install required PHP modules:
 
 
 
 Install modules:
 
 Switch to the GDO folder and clone or code submodules.
-
 
 It is a good strategy to paste the below clone lines to a text file.
 Then remove the modules you do not want and clone the remaining modules.
@@ -108,8 +119,6 @@ The material design is tricky to setup atm and not recommended yet.
     ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
     
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
-
-Do not forget the bower/js stuff.
 
     
 ### Write own modules
