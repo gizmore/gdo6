@@ -13,6 +13,7 @@ class GDT_Divider extends GDT
 	use WithLabel;
 	use WithIcon;
 	
+	public function isSerializable() { return false; }
 	public function defaultLabel() { return $this->noLabel(); }
 	
 	public function renderCell() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }

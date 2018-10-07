@@ -1,6 +1,5 @@
 <?php
 namespace GDO\Country;
-use GDO\Core\WithCompletion;
 use GDO\DB\GDT_ObjectSelect;
 use GDO\Core\GDT_Template;
 /**
@@ -11,8 +10,6 @@ use GDO\Core\GDT_Template;
  */
 final class GDT_Country extends GDT_ObjectSelect
 {
-//	 use WithCompletion;
-	
 	public function __construct()
 	{
 		$this->table(GDO_Country::table());

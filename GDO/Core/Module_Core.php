@@ -129,6 +129,9 @@ window.GWF_LANGUAGE = '%s';",
 			'user_type' => $user->getType(),
 			'user_level' => (int)$user->getLevel(),
 			'user_credits' => (int)$user->getCredits(),
+			'user_email_fmt' => $user->getMailFormat(),
+			'user_language' => $user->getLangISO(),
+			'user_country' => $user->getCountryISO(),
 			'permissions' => $user->loadPermissions(),
 		);
 	}
