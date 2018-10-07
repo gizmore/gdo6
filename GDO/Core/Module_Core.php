@@ -124,6 +124,7 @@ window.GWF_LANGUAGE = '%s';",
 		return array(
 			'user_id' => (int)$user->getID(),
 			'user_name' => $user->getName(),
+			'user_real_name' => $user->getRealName(),
 			'user_guest_name' => $user->getGuestName(),
 			'user_email' => $user->getMail(),
 			'user_type' => $user->getType(),
