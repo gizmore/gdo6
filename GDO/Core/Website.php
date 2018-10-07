@@ -90,6 +90,10 @@ final class Website
 		return $back;
 	}
 	
+	############
+	### Meta ###
+	############
+	private static $_meta = [];
 	/**
 	 * add an html <meta> tag
 	 * @param array $meta = array($name, $content, 0=>name;1=>http-equiv);
