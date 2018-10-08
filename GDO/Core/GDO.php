@@ -423,6 +423,7 @@ abstract class GDO
 			$this->beforeDelete($query);
 			$query->exec();
 			$this->afterDelete();
+			$this->uncache();
 		}
 		return $this;
 	}
@@ -450,6 +451,7 @@ abstract class GDO
 		$this->dirty = false;
 		$this->persisted = true;
 		$this->afterCreate();
+		$this->callRecacheHook();
 		return $this;
 	}
 	
@@ -834,17 +836,17 @@ abstract class GDO
 		if ($this->table()->cache)
 		{
 			$this->table()->cache->recache($this);
+			$this->callRecacheHook();
 		}
-		$this->callRecacheHook();
 	}
 	
 	public function uncache()
 	{
-		if ($this->gdoCached())
+		if ($this->table()->cache)
 		{
 			$this->table()->cache->uncache($this);
+			$this->callRecacheHook();
 		}
-		$this->callRecacheHook();
 	}
 	
 	public function callRecacheHook()
