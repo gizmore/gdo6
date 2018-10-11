@@ -487,7 +487,7 @@ abstract class GDO
 				$this->beforeUpdate($query);
 				$query->exec();
 				$this->dirty = false;
-// 				$this->recache(); # save is the only action where we recache!
+				$this->recache(); # save is the only action where we recache!
 				$this->callRecacheHook();
 				$this->gdoAfterUpdate();
 			}
@@ -530,8 +530,8 @@ abstract class GDO
 		{
 			$query->exec();
 			$this->gdoVars = array_merge($this->gdoVars, $vars);
+			$this->recache(); # save is the only action where we recache!
 			if ($withHooks) $this->callRecacheHook();
-// 			$this->recache(); # save is the only action where we recache!
 		}
 
 		# Call hooks even when not needed. Because its needed on GDT_Files
@@ -836,7 +836,7 @@ abstract class GDO
 		if ($this->table()->cache)
 		{
 			$this->table()->cache->recache($this);
-			$this->callRecacheHook();
+// 			$this->callRecacheHook();
 		}
 	}
 	
@@ -845,7 +845,7 @@ abstract class GDO
 		if ($this->table()->cache)
 		{
 			$this->table()->cache->uncache($this);
-			$this->callRecacheHook();
+// 			$this->callRecacheHook();
 		}
 	}
 	
