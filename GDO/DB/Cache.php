@@ -176,5 +176,5 @@ class Cache
 # No memcached stub
 if (!class_exists('Memcached', false))
 {
-	require 'memcached.php';
+	require 'Memcached.php';
 }
