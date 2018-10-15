@@ -2,6 +2,7 @@
 return array(
 # Welcome
 'install_title_1' => 'Welcome',
+'install_text_1' => 'Welcome to GDO6, Please continue here: %s',
 
 # System Test
 'install_title_2' => 'System–Test',

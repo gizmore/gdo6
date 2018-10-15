@@ -110,6 +110,10 @@ class Cache
 			$this->cache[$key] = $this->dummy->setPersisted();
 			$this->newDummy();
 		}
+		else
+		{
+			$this->cache[$key]->setGDOVars($assoc);
+		}
 		return $this->cache[$key];
 	}
 	
@@ -168,6 +172,10 @@ class Cache
 				$this->newDummy();
 			}
 			$this->cache[$key] = $mcached;
+		}
+		else
+		{
+			$this->cache[$key]->setGDOVars($assoc);
 		}
 		return $this->cache[$key];
 	}
