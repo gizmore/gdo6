@@ -38,9 +38,9 @@ class GDT_Password extends GDT_String
 	
 	public function validate($value)
 	{
-		if ( ($value === null) && ($this->notNull) )
+		if ($value === null)
 		{
-			return $this->errorNotNull();
+			return $this->notNull ? $this->errorNotNull() : true;
 		}
 		elseif (mb_strlen($value) < 4)
 		{

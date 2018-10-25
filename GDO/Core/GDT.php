@@ -60,7 +60,7 @@ abstract class GDT
 	public function classError()
 	{
 		$class = ' '.str_replace('_', '-', strtolower($this->gdoShortName()));
-		if ($this->isRequired()) $class .= ' gdo-required';
+		if ($this->notNull) $class .= ' gdo-required';
 		if ($this->hasError()) $class .= ' gdo-has-error';
 		return $class;
 	}
@@ -178,12 +178,13 @@ abstract class GDT
 	################
 	### Validate ###
 	################
-	public function isRequired() { return false; }
+	public $notNull = false;
+	public function notNull($notNull=true) { $this->notNull = $notNull; return $this; }
 	public function errorNotNull() { return $this->error('err_not_null'); }
 	public function onValidated() {}
 	public function validate($value)
 	{
-		if ( ($value === null) && ($this->isRequired()) )
+		if ( ($value === null) && ($this->notNull) )
 		{
 			return $this->errorNotNull();
 		}

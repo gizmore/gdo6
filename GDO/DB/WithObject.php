@@ -111,7 +111,7 @@ trait WithObject
 			{
 				return $this->error('err_gdo_not_found', [$this->table->gdoHumanName(), html($var)]);
 			}
-			elseif ($this->isRequired())
+			elseif ($this->notNull)
 			{
 				return $this->errorNotNull();
 			}

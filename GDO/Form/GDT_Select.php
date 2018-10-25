@@ -99,7 +99,7 @@ class GDT_Select extends GDT_ComboBox
 	{
 		if ( ($value === null) || ($value === $this->emptyValue) )
 		{
-			return $this->isRequired() ? $this->errorNotNull() : true;
+			return $this->notNull ? $this->errorNotNull() : true;
 		}
 		
 		if (!isset($this->choices[$value]))
