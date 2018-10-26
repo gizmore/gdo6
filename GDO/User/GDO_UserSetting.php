@@ -63,6 +63,11 @@ final class GDO_UserSetting extends GDO
 		return self::userGet(GDO_User::current(), $key);
 	}
 
+	/**
+	 * @param GDO_User $user
+	 * @param string $key
+	 * @return \GDO\Core\GDT
+	 */
 	public static function userGet(GDO_User $user, $key)
 	{
 		if (null === ($settings = $user->tempGet('gdo_setting')))

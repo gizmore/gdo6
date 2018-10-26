@@ -71,7 +71,10 @@ class Installer
 	
 	public static function installModuleClass(GDO $gdo)
 	{
-		$gdo->createTable();
+		if ($gdo->gdoIsTable())
+		{
+			$gdo->createTable();
+		}
 	}
 	
 	public static function dropModule(GDO_Module $module)

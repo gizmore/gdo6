@@ -38,6 +38,7 @@ abstract class GDO
 	
 	public function gdoEngine() { return self::INNODB; }
 	public function gdoAbstract() { return false; }
+	public function gdoIsTable() { return true; }
 	public function gdoTableIdentifier() { return self::quoteIdentifierS($this->gdoTableName()); }
 
 	################
