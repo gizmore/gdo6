@@ -1,7 +1,7 @@
 <?php /** @var $field \GDO\UI\GDT_Slider **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
-  <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
+  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
 <?php if (is_array($field->step)) : $var = $field->getVar(); ?>
   <select name="<?= $field->name; ?>">
 <?php foreach ($field->step as $value => $choice) : ?>

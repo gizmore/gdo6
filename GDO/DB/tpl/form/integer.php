@@ -1,7 +1,7 @@
 <?php /** @var $field \GDO\DB\GDT_Int **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
-  <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
+  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input
    type="number"
    name="form[<?= $field->name; ?>]"

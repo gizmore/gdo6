@@ -13,12 +13,15 @@ use GDO\Core\Module_Core;
 final class Module_File extends GDO_Module
 {
 	public $module_priority = 10;
+
 	public function getClasses()
 	{
 		return array(
-			'GDO\File\GDO_File',
+			'GDO\File\GDO_File', # File table.
 		);
 	}
+	
+	public function onLoadLanguage() { return $this->loadLanguage('lang/file'); }
 	
 	public function onIncludeScripts()
 	{

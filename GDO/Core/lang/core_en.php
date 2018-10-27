@@ -149,6 +149,7 @@ return array(
 	
 # Welcome
 'core_welcome_box_info' => 'Welcome to %s. You are authenticated as %s.',
+'link_impressum' => 'Imprint',
 
 ################################################
 'link_node_detect' => 'Detect uglify binaries…',

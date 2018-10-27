@@ -3,7 +3,7 @@ $sel = 'selected="selected"';
 $val = $field->getVar(); ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
-  <label><?= $field->label; ?></label>
+  <label><?= $field->displayLabel(); ?></label>
   <select
    name="form[<?=$field->name;?>]"
    <?= $field->htmlRequired(); ?>

@@ -77,7 +77,7 @@ final class GDO_UserSetting extends GDO
 			$user->recache();
 		}
 		$gdoType = self::$settings[$key];
-		return isset($settings[$key]) ? $gdoType->val($settings[$key]) : $gdoType->val($gdoType->initial);
+		return isset($settings[$key]) ? $gdoType->initial($settings[$key]) : $gdoType->initial($gdoType->initial);
 	}
 
 	public static function set($key, $value)

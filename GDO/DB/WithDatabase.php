@@ -27,7 +27,7 @@ trait WithDatabase
 		return $this->virtual ? $query->having($condition) : $query->where($condition);
 	}
 	
-	public function renderHeader() { return $this->label; }
+	public function renderHeader() { return $this->displayLabel(); }
 	
 	###########
 	### GDO ###

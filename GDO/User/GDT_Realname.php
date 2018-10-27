@@ -11,4 +11,6 @@ class GDT_Realname extends GDT_String
 {
 	public $min = 3;
 	public $max = 96;
+	
+	public function defaultLabel() { return $this->label('user_real_name'); }
 }

@@ -14,9 +14,9 @@ echo '<';echo '?';echo "php\n";
 if ($field instanceof GDT_Divider)
 {
 	echo "\n";
-	echo str_repeat('#', mb_strlen($field->label) + 8) . "\n";
-	echo "### {$field->label} ###\n";
-	echo str_repeat('#', mb_strlen($field->label) + 8) . "\n";
+	echo str_repeat('#', mb_strlen($field->displayLabel()) + 8) . "\n";
+	echo "### {$field->displayLabel()} ###\n";
+	echo str_repeat('#', mb_strlen($field->displayLabel()) + 8) . "\n";
 }
 elseif ($field instanceof GDT_Submit)
 {

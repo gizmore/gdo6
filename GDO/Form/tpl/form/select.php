@@ -1,6 +1,6 @@
 <?php /** @var $field \GDO\Form\GDT_Select **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <label><?= $field->label; ?></label><?=$field->htmlIcon()?>
+  <label><?= $field->displayLabel(); ?></label><?=$field->htmlIcon()?>
   <select
 <?php if ($field->multiple) : ?>
    name="form[<?= $field->name?>][]"

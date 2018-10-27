@@ -40,7 +40,7 @@ class GDT_Template extends GDT
 	public function renderCell() { return $this->renderTemplate(); }
 	public function renderForm() { return $this->renderTemplate(); }
 	public function renderFilter() { return $this->renderTemplate(); }
-	public function renderHeader() { return $this->label; }
+	public function renderHeader() { return $this->displayLabel(); }
 	public function renderTemplate()
 	{
 		$tVars = ['field'=>$this];

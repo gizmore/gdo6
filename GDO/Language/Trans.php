@@ -52,14 +52,14 @@ final class Trans
 	
 	public static function tiso($iso, $key, array $args=null)
 	{
-		self::load($iso);
-		if ($text = @self::$CACHE[$iso][$key])
+		$cache = self::load($iso);
+		if ($text = @$cache[$key])
 		{
 			if ($args)
 			{
 				if (!($text = @vsprintf($text, $args)))
 				{
-					$text = self::$CACHE[$iso][$key] . ': ';
+					$text = $cache[$key] . ': ';
 					$text .= json_encode($args);
 				}
 			}

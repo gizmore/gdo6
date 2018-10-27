@@ -1,7 +1,7 @@
 <?php /** @var $field \GDO\User\GDT_Password **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
-  <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
+  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input
    type="password"
    <?= $field->htmlRequired(); ?>

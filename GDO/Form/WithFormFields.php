@@ -13,9 +13,9 @@ trait WithFormFields
 	public function htmlRequired() { return $this->notNull ? ' required="required"' : ''; }
 // 	public function isRequired() { return $this->required || (isset($this->notNull)&&$this->notNull); }
 	
-	public $disabled = false;
-	public function disabled($disabled=true) { $this->disabled = $disabled; return $this; }
-	public function htmlDisabled() { return $this->disabled ? ' disabled="disabled"' : ''; }
+// 	public $disabled = false;
+	public function disabled($disabled=true) { return $this->writable(!$disabled); }
+	public function htmlDisabled() { return !$this->writable ? ' disabled="disabled"' : ''; }
 
 	public function changeRequestVar($value)
 	{

@@ -1,6 +1,6 @@
 <?php /** @var $field \GDO\DB\GDT_String **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
+  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <?= $field->htmlIcon(); ?>
   <input
    type="text"

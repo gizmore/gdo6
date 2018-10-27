@@ -3,5 +3,5 @@
  type="submit"
  class="md-button md-primary md-raised"
  name="<?= $field->name; ?>"
- value="<?= $field->label; ?>"
+ value="<?= $field->displayLabel(); ?>"
  <?= $field->htmlDisabled(); ?> /></input>

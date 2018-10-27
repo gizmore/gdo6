@@ -7,7 +7,7 @@ $id = 'gwfac_'.$field->name; ?>
  ng-controller="GDOAutoCompleteCtrl"
  ng-init='init(<?= $field->displayJSON(); ?>, "#<?= $id; ?>")'>
   <?= $field->htmlIcon(); ?>
-  <label for="form[<?= $field->name; ?>]"><?= $field->label; ?></label>
+  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input
    type="text"
    <?= $field->htmlRequired(); ?>

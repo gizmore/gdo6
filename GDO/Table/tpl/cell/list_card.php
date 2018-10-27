@@ -27,7 +27,7 @@ while ($gdo = $result->fetchObject())
 			  <form method="get" action="<?= $field->href ?>">
 <?php foreach ($fields as $gdoType) : ?>
 				<md-input-container>
-				  <label><?= $gdoType->label; ?></label>
+				  <label><?= $gdoType->displayLabel(); ?></label>
 				  <?= $gdoType->renderFilter(); ?>
 				</md-input-container>
 <?php endforeach; ?>
@@ -40,7 +40,7 @@ while ($gdo = $result->fetchObject())
 		  <md-tab label="Sorting">
 			<md-content class="md-padding">
 <?php foreach ($fields as $gdoType) : ?>
-			  <label><?= $gdoType->label; ?></label>
+			  <label><?= $gdoType->displayLabel(); ?></label>
 			  <?= $gdoType->displayTableOrder($field)?>
 <?php endforeach; ?>
 			</md-content>
