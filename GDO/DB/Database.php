@@ -4,6 +4,7 @@ use GDO\Core\GDO;
 use GDO\Core\Logger;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
+use Exception;
 /**
  * mySQLi abstraction.
  * 
@@ -63,28 +64,41 @@ class Database
 		$this->db = $db;
 	}
 	
+	public function __destruct()
+	{
+		if ($this->link)
+		{
+			mysqli_close($this->link);
+			$this->link = null;
+		}
+	}
+	
 	public function getLink()
 	{
 		if (!$this->link)
 		{
-			$t1 = microtime(true);
-			if ($this->link = $this->connect())
+			try
 			{
+				$t1 = microtime(true);
+				$this->link = $this->connect();
 				$this->query("SET NAMES UTF8");
 			}
-			else
+			catch (Exception $e)
 			{
-				throw new DBException('err_db_connect');
+				throw new DBException('err_db_connect', [$e->getMessage()]);
 			}
-			$timeTaken = microtime(true) - $t1;
-			$this->queryTime += $timeTaken; self::$QUERY_TIME += $timeTaken;
+			finally
+			{
+				$timeTaken = microtime(true) - $t1;
+				$this->queryTime += $timeTaken; self::$QUERY_TIME += $timeTaken;
+			}
 		}
 		return $this->link;
 	}
 	
 	public function connect()
 	{
-		return @mysqli_connect($this->host, $this->user, $this->pass, $this->db);
+		return mysqli_connect($this->host, $this->user, $this->pass, $this->db);
 	}
 	
 	#############

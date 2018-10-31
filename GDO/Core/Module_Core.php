@@ -23,7 +23,7 @@ use GDO\UI\GDT_Bar;
  * 
  * @author gizmore
  * @since 6.00
- * @version 6.05
+ * @version 6.08
  */
 final class Module_Core extends GDO_Module
 {
@@ -31,7 +31,6 @@ final class Module_Core extends GDO_Module
 	### Module ###
 	##############
 	public $module_priority = 1;
-	public $module_version = '6.07';
 	
 	public function getThemes() { return ['default']; }
 	

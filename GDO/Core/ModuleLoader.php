@@ -168,8 +168,8 @@ final class ModuleLoader
 	
 	private function loadModulesDB()
 	{
-		try
-		{
+// 		try
+// 		{
 			$result = GDO_Module::table()->select('*')->exec();
 			while ($moduleData = $result->fetchAssoc())
 			{
@@ -182,11 +182,11 @@ final class ModuleLoader
 					}
 				}
 			}
-		}
-		catch (Exception $e)
-		{
-			return false;
-		}
+// 		}
+// 		catch (Exception $e)
+// 		{
+// 			return false;
+// 		}
 		return $this->modules;
 	}
 	
