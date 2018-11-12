@@ -171,6 +171,7 @@ abstract class GDT
 	
 	public function renderList() { return $this->render(); }
 // 	public function renderOrder() { return 'aa'; }
+	public function displayLabel() { return t($this->name); }
 
 	# Render debug data by default.
 	private function renderDebug() { return print_r($this, true); }
