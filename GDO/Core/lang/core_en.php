@@ -99,6 +99,8 @@ return array(
 'err_image_format_not_supported' => 'The image format is not supported: %s',
 'err_members_only' => 'This functionality is for registered members only.',
 'err_session_required' => 'Your session has expired.',
+'err_not_allowed' => 'You do not have the required permissions.',
+
 # Permissions
 'sel_no_permissions' => 'No permission required',
 'perm_admin' => 'Administrator',
