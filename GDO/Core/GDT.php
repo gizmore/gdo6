@@ -87,8 +87,8 @@ abstract class GDT
 	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $gdo === null ? $this->val(null) : $this->setGDOData($gdo); }
 	public function val($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
-	public function toVar($value) { return $value === null ? null : (string) $value; }
-	public function toValue($var) { return $var === null ? null : (string) $var; }
+	public function toVar($value) { return ($value === null) || ($value === '') ? null : (string) $value; }
+	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
 	public function getVar() { return $this->getRequestVar('form', $this->var); }
 	public function getParameterVar() { return $this->getRequestVar(null, $this->var); }
 	public function getParameterValue() { return $this->toValue($this->getParameterVar()); }

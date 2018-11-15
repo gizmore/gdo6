@@ -89,7 +89,8 @@ final class GDT_Response extends GDT
 		{
 			if ($json = $field->renderJSON())
 			{
-				$back[] = array_merge($back, $json);
+				
+				$back = array_merge($back, $json);
 			}
 		}
 		return $back;
