@@ -11,6 +11,7 @@ use GDO\DB\GDT_Token;
 use GDO\Util\Math;
 use GDO\Core\Logger;
 use GDO\Net\GDT_Url;
+use GDO\Date\Time;
 /**
  * GDO Session handler.
  * @author gizmore
@@ -247,6 +248,7 @@ class GDO_Session extends GDO
 	private static function createSession()
 	{
 		$session = self::table()->blank();
+		$session->setVar('sess_time', Time::getDate());
 		$session->insert();
 		$session->setCookie();
 		return $session;
