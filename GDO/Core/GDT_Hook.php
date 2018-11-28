@@ -83,7 +83,9 @@ final class GDT_Hook extends GDT
 		}
 		
 		# Call IPC hooks
-		if ( (GWF_IPC) && (!Application::instance()->isInstall()) )
+		if ( (GWF_IPC) && 
+			(!Application::instance()->isInstall()) && 
+			(!Application::instance()->isCLI()) )
 		{
 			if ($ipc = self::ipc())
 			{
