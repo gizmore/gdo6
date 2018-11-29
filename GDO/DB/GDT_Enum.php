@@ -42,6 +42,7 @@ class GDT_Enum extends GDT
 		return array(
 			'enumValues' => $this->enumValues,
 			'selected' => $this->getVar(),
+			'error' => $this->error,
 		);
 	}
 	
