@@ -107,7 +107,8 @@ final class GDT_Hook extends GDT
 	{
 		if (!isset(self::$ipc))
 		{
-			self::$ipc = msg_get_queue(GWF_IPC);
+			$key = ftok(GWF_PATH.'temp/ipc.socket', 'G');
+			self::$ipc = msg_get_queue($key);
 		}
 		return self::$ipc;
 	}
