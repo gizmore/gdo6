@@ -138,7 +138,7 @@ final class Logger
 	########################
 	public static function logCron($message) { self::rawLog('cron', $message, 0); echo $message.PHP_EOL; } # TODO: remove echo
 	public static function logWebsocket($message) { self::rawLog('websocket', $message, 0); echo $message.PHP_EOL; }
-	public static function logDebug($message) { self::rawLog('debug', $message, self::DEBUG); echo $message.PHP_EOL; } # TODO: remove echo
+	public static function logDebug($message, $echo=true) { self::rawLog('debug', $message, self::DEBUG); if ($echo) echo $message.PHP_EOL; } # TODO: remove echo
 	public static function logError($message) { self::log('error', $message, self::GWF_ERROR); }
 	public static function logMessage($message) { self::log('message', $message, self::GWF_MESSAGE); }
 	public static function logWarning($message) { self::log('warning', $message, self::GWF_WARNING); }

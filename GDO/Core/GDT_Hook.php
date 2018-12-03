@@ -134,7 +134,7 @@ final class GDT_Hook extends GDT
 			}
 		}
 		
-		Logger::logDebug("Called IPC event $event");
+		Logger::logDebug("Called IPC event $event", false);
 		
 		# Send to IPC
 		msg_send($ipc, GWF_IPC, [$event, $args]);
