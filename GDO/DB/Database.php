@@ -80,8 +80,10 @@ class Database
 			try
 			{
 				$t1 = microtime(true);
-				$this->link = $this->connect();
-				$this->query("SET NAMES UTF8");
+				if ($this->link = $this->connect())
+				{
+					$this->query("SET NAMES UTF8");
+				}
 			}
 			catch (Exception $e)
 			{
