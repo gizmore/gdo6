@@ -854,7 +854,7 @@ abstract class GDO
 	{
 		if ($this->gdoCached() || $this->memCached())
 		{
-			GDT_Hook::call('CacheInvalidate', $this->gdoClassName(), $this->getID());
+			GDT_Hook::callWithIPC('CacheInvalidate', $this->gdoClassName(), $this->getID());
 		}
 	}
 	

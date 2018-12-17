@@ -112,7 +112,7 @@ final class GDO_UserSetting extends GDO
 		}
 		$user->tempUnset('gdo_setting');
 		
-		GDT_Hook::call('UserSettingChange', $user, $key, $value);
+		GDT_Hook::callWithIPC('UserSettingChange', $user, $key, $value);
 	}
 	
 }

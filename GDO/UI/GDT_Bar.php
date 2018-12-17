@@ -26,7 +26,7 @@ class GDT_Bar extends GDT
 	
 	public function yieldHook($hookName)
 	{
-		GDT_Hook::call($hookName, $this);
+		GDT_Hook::callHook($hookName, $this);
 		return $this->render();
 	}
 }

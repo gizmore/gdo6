@@ -60,14 +60,24 @@ final class GDT_Hook extends GDT
 	##############
 	### Engine ###
 	##############
-	/**
+	public static function callWithIPC($event, ...$args)
+	{
+		return self::call($event, true, $args);
+	}
+	
+	public static function callHook($event, ...$args)
+	{
+		return self::call($event, false, $args);
+	}
+	
+/**
 	 * Simply try to call a function on all active modules.
 	 * As on gwf5 all modules are always loaded, there is not much logic involved.
 	 *
 	 * @param string $event
 	 * @param array $args
 	 */
-	public static function call($event, ...$args)
+	private static function call($event, $ipc=true, ...$args)
 	{
 		self::$CALLS++;
 		$method_name = "hook$event";
@@ -83,7 +93,7 @@ final class GDT_Hook extends GDT
 		}
 		
 		# Call IPC hooks
-		if ( (GWF_IPC) && 
+		if ( ($ipc) && (GWF_IPC) && 
 			(!Application::instance()->isInstall()) && 
 			(!Application::instance()->isCLI()) )
 		{
@@ -92,11 +102,6 @@ final class GDT_Hook extends GDT
 				self::callIPC($ipc, $event, $args);
 			}
 		}
-		
-// 		if (Application::instance()->isWebsocket())
-// 		{
-// 			GWS_Commands::webHook();
-// 		}
 	}
 	
 	###########
