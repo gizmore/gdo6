@@ -60,7 +60,7 @@ return array(
 'msg_redirect' => 'You will be redirected to <i>%s</i> in %s seconds.',
 
 # Generic Errors
-'err_db' => "Database Error: %s<br/>\n%s<br/>\n",
+'err_db' => "Database Error(%s): %s<br/>\n%s<br/>\n",
 'err_exception' => 'Exception: %s',
 'err_gdo_object_no_table' => '%s is a GDT_Object without a table.',
 'err_column' => 'Unknown GDT column: %s.',

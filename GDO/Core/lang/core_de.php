@@ -60,7 +60,7 @@ return array(
 'msg_redirect' => 'Sie werden in %2$s Sekunden umgeleitet nach <i>%1$s</i>.',
 
 # Generic Errors
-'err_db' => "Datenbank Fehler: %s<br/>\n%s<br/>\n",
+'err_db' => "Datenbank Fehler(%s): %s<br/>\n%s<br/>\n",
 'err_exception' => 'Ausnahme: %s',
 'err_gdo_object_no_table' => '%s ist ein GDT_Object ohne Tabelle.',
 'err_column' => 'Unbekannte GDT Spalte: %s.',

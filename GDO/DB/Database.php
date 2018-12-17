@@ -66,9 +66,14 @@ class Database
 	
 	public function __destruct()
 	{
+		$this->closeLink();
+	}
+	
+	public function closeLink()
+	{
 		if ($this->link)
 		{
-			mysqli_close($this->link);
+			@mysqli_close($this->link);
 			$this->link = null;
 		}
 	}
@@ -124,7 +129,18 @@ class Database
 		$t1 = microtime(true);
 		if (!($result = mysqli_query($this->getLink(), $query)))
 		{
-			throw new DBException("err_db", [mysqli_error($this->link), htmlspecialchars($query)]);
+			if ($this->link)
+			{
+				$error = @mysqli_error($this->link);
+				$errno = @mysqli_errno($this->link);
+				$this->closeLink();
+			}
+			else
+			{
+				$error = t('err_db_no_link');
+				$errno = 0;
+			}
+			throw new DBException("err_db", [$errno, $error, htmlspecialchars($query)]);
 		}
 		$t2 = microtime(true);
 		$timeTaken = $t2 - $t1;
