@@ -74,6 +74,7 @@ return array(
 'err_user_required' => 'You need to be authenticated before using this function. It is also possible to <a href="%s" title="Choose nickname">continue as guest</a>.',
 'err_upload_min_files' => 'You have to upload at least %s file(s).',
 'err_upload_max_files' => 'You may not upload more than %s files(s).',
+'err_create_dir' => 'Could not create directory \'%s\'.',
 'err_permission_required' => 'You need <i>%s</i> permissions to access this function.',
 'err_save_unpersisted_entity' => 'Tried to save an unpersisted entity of type <i>%s</i>.',
 'err_file' => 'File not found: %s',
@@ -99,7 +100,7 @@ return array(
 'err_image_format_not_supported' => 'The image format is not supported: %s',
 'err_members_only' => 'This functionality is for registered members only.',
 'err_session_required' => 'Your session has expired.',
-'err_not_allowed' => 'You do not have the required permissions.',
+'err_not_allowed' => 'You do not have the required permissions: %s.',
 
 # Permissions
 'sel_no_permissions' => 'No permission required',

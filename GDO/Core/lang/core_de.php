@@ -74,6 +74,7 @@ return array(
 'err_user_required' => 'Für diese Funktion müssen Sie angemeldet sein. Es ist auch möglich sich <a href="%s" title="Nickname wählen">als Gast anzumelden</a>.',
 'err_upload_min_files' => 'Sie müssen mehr als %s Datei(en) hochladen.',
 'err_upload_max_files' => 'Sie dürfen nicht mehr als %s Datei(en) hochladen.',
+'err_create_dir' => 'Verzeichnis konnte nicht erstellt werden: %s.',
 'err_permission_required' => 'Sie benötigen die <i>%s</i> Berechtigung um diese Funktion aufzurufen.',
 'err_save_unpersisted_entity' => 'Es wurde versucht eine unpersitierte Entity des Typs <i>%s</i> zu speichern.',
 'err_file' => 'Datei nicht gefunden: %s',
@@ -99,7 +100,7 @@ return array(
 'err_image_format_not_supported' => 'Das Bildformat wird nicht unterstützt: %s',
 'err_members_only' => 'Diese Funktion steht nur Mitgliedern zur Verfügung.',
 'err_session_required' => 'Ihre Sitzung ist abgelaufen.',
-'err_not_allowed' => 'Ihnen fehlt die Berechtigung.',
+'err_not_allowed' => 'Ihnen fehlt die Berechtigung: %s.',
 
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',

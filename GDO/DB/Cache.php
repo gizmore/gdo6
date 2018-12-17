@@ -28,14 +28,17 @@ use GDO\Core\GDO;
 class Cache
 {
 	private static $MEMCACHED;
-	public static function get($key) { return self::$MEMCACHED->get(GWF_MEMCACHE_PREFIX.$key); }
-	public static function set($key, $value) { self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$key, $value); }
-	public static function remove($key) { self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$key); }
-	public static function flush() { self::$MEMCACHED->flush(); }
+	public static function get($key) { return GWF_MEMCACHE ? self::$MEMCACHED->get(GWF_MEMCACHE_PREFIX.$key) : false; }
+	public static function set($key, $value) { if (GWF_MEMCACHE) self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$key, $value); }
+	public static function remove($key) { if (GWF_MEMCACHE) self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$key); }
+	public static function flush() { if (GWF_MEMCACHE) self::$MEMCACHED->flush(); }
 	public static function init()
 	{
-		self::$MEMCACHED = new \Memcached();
-		self::$MEMCACHED->addServer(GWF_MEMCACHE_HOST, GWF_MEMCACHE_PORT);
+		if (GWF_MEMCACHE)
+		{
+			self::$MEMCACHED = new \Memcached();
+			self::$MEMCACHED->addServer(GWF_MEMCACHE_HOST, GWF_MEMCACHE_PORT);
+		}
 	}
 	
 	#################
@@ -134,7 +137,7 @@ class Cache
 				$this->cache[$object->getID()] = $object;
 			}
 		}
-		if ($object->memCached())
+		if (GWF_MEMCACHE && $object->memCached())
 		{
 			self::$MEMCACHED->replace(GWF_MEMCACHE_PREFIX.$object->gkey(), $object, GWF_MEMCACHE_TTL);
 		}
@@ -150,7 +153,10 @@ class Cache
 	{
 		$className = $this->table->gdoClassName();
 		unset($this->cache[$id]);
-		self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$className . $id);
+		if (GWF_MEMCACHE)
+		{
+			self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$className . $id);
+		}
 	}
 	
 	/**
@@ -165,10 +171,13 @@ class Cache
 		if (!isset($this->cache[$key]))
 		{
 			$gkey = $this->dummy->gkey();
-			if (!($mcached = self::$MEMCACHED->get(GWF_MEMCACHE_PREFIX.$gkey)))
+			if (false === ($mcached = self::get(GWF_MEMCACHE_PREFIX.$gkey)))
 			{
 				$mcached = $this->dummy->setPersisted();
-				self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$gkey, $mcached, GWF_MEMCACHE_TTL);
+				if (GWF_MEMCACHE)
+				{
+					self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$gkey, $mcached, GWF_MEMCACHE_TTL);
+				}
 				$this->newDummy();
 			}
 			$this->cache[$key] = $mcached;

@@ -389,9 +389,9 @@ class GDT_File extends GDT_Object
 		return $this->onFlowUploadFile($this->name, $_FILES[$this->name]);
 	}
 	
-	private function onFlowError($error)
+	private function onFlowError($error, ...$args)
 	{
-		return GDT_Error::responseWith($error, null, 413);
+		return GDT_Error::responseWith($error, $args, 413);
 	}
 	
 	private function onFlowUploadFile($key, $file)
@@ -400,12 +400,12 @@ class GDT_File extends GDT_Object
 		
 		if (!FileUtil::createDir($chunkDir))
 		{
-			return $this->onFlowError('err_create_dir');
+			return $this->onFlowError('err_create_dir', $chunkDir);
 		}
 		
 		if (false !== ($error = $this->deniedFlowFile($key, $file)))
 		{
-			return $this->onFlowError("err_upload_denied", [$error]);
+			return $this->onFlowError("err_upload_denied", $error);
 		}
 		
 		if (!$this->onFlowCopyChunk($key, $file))
@@ -417,7 +417,7 @@ class GDT_File extends GDT_Object
 		{
 			if ($error = $this->onFlowFinishFile($key, $file))
 			{
-				return $this->onFlowError("err_upload_failed", [$error]);
+				return $this->onFlowError("err_upload_failed", $error);
 			}
 		}
 		return GDT_Success::responseWith('msg_uploaded');

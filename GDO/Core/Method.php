@@ -76,7 +76,7 @@ abstract class Method
 	 */
 	public function gdoParameterVar($key)
 	{
-		$this->gdoParameter($key)->getRequestVar();
+		return $this->gdoParameter($key)->getRequestVar();
 	}
 	
 	/**
