@@ -1,7 +1,5 @@
 <?php
 namespace GDO\Core;
-use GDO\Form\GDT_Form;
-use GDO\UI\GDT_Bar;
 /**
  * Hooks do not render any output.
  * Hooks add messages to the IPC queue 1, which are/can be consumed by the websocket server.
@@ -129,12 +127,6 @@ final class GDT_Hook extends GDT
 				if ($arg instanceof GDO)
 				{
 					$args[$k] = $arg->getID();
-				}
-				elseif ( ($arg instanceof GDT_Form) || ($arg instanceof GDT_Bar) )
-				{
-// 					Logger::logDebug("Skipped IPC event $event");
-					return; # SKIP GDT_Form hooks, as they enrich forms only,
-					# which is currently not required on websocket IPC channels.
 				}
 			}
 		}
