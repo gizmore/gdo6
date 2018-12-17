@@ -60,12 +60,12 @@ final class GDT_Hook extends GDT
 	##############
 	public static function callWithIPC($event, ...$args)
 	{
-		return self::call($event, true, $args);
+		return self::call($event, true, ...$args);
 	}
 	
 	public static function callHook($event, ...$args)
 	{
-		return self::call($event, false, $args);
+		return self::call($event, false, ...$args);
 	}
 	
 /**

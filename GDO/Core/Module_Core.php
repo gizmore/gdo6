@@ -44,6 +44,12 @@ final class Module_Core extends GDO_Module
 			'GDO\User\GDO_Permission'
 		);
 	}
+	
+	public function onInstall()
+	{
+		touch(GWF_PATH.'temp/ipc.socket');
+	}
+	
 	##############
 	### Config ###
 	##############
