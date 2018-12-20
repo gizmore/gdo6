@@ -41,7 +41,7 @@ class GDT_String extends GDT
 	
 	public function pattern($pattern) { $this->pattern = $pattern; return $this; }
 	public function htmlPattern() { return $this->pattern ? " pattern=\"{$this->htmlPatternValue()}\"" : ''; }
-	public function htmlPatternValue() { return trim(rtrim($this->pattern, 'i'), $this->pattern[0].'^$'); }
+	public function htmlPatternValue() { return trim(rtrim($this->pattern, 'iuD'), $this->pattern[0].'^$'); }
 	public function caseI($caseInsensitive=true) { return $this->caseS(!$caseInsensitive); }
 	public function caseS($caseSensitive=true) { $this->caseSensitive = $caseSensitive; return $this; }
 	

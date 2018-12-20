@@ -14,7 +14,9 @@ class GDT_Username extends GDT_String
 	
 	public $min = 2;
 	public $max = 32;
-	public $pattern = "/^[a-z][_0-9a-z]{1,31}$/i";
+	
+	# Allow - _ LETTERS DIGITS
+	public $pattern = "/^[-_\\p{L}0-9]{2,32}$/iuD";
 
 	public function defaultLabel() { return $this->label('username'); }
 	
