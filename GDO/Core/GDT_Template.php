@@ -124,7 +124,7 @@ class GDT_Template extends GDT
 	 */
 	private static function getPath($moduleName, $path)
 	{
-		$isos = array_unique(['_'.Trans::$ISO, '_'.GWF_LANGUAGE, 'en', '']);
+		$isos = array_unique(['_'.Trans::$ISO, '_'.GWF_LANGUAGE, '_en', '']);
 
 		# Try themes first
 		foreach (Application::instance()->getThemes() as $theme)
