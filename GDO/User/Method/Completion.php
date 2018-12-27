@@ -19,7 +19,7 @@ final class Completion extends Method
 	{
 		$q = GDO::escapeS(Common::getRequestString('query'));
 		$condition = sprintf('user_type IN ("guest","member") AND user_name LIKE \'%%%1$s%%\' OR user_real_name LIKE \'%%%1$s%%\' OR user_guest_name LIKE \'%%%1$s%%\'', $q);
-		$result = GDO_User::table()->select('*')->where($condition)->exec();
+		$result = GDO_User::table()->select('*')->where($condition)->uncached()->exec();
 		$response = [];
 		$cell = GDT_User::make('user_id');
 		while ($user = $result->fetchObject())
