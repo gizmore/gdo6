@@ -9,14 +9,13 @@ use GDO\User\GDO_Session;
 use GDO\DB\Database;
 use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
-use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Response;
 use GDO\Core\Website;
 
 @include 'protected/config.php';
 if (!defined('GWF_CONFIGURED'))
 {
-    echo "<!doctype html><html><body><h1>GDO6</h1><p>Please create a config.php, preferrably with <a href=\"install/wizard.php\">the install wizard.</a></p></body></html>\n";
+    echo "<!DOCTYPE html><html><body><h1>GDO6</h1><p>Please create a config.php, preferrably with <a href=\"install/wizard.php\">the install wizard.</a></p></body></html>\n";
     die();
 }
 
@@ -35,7 +34,10 @@ Debug::setMailOnError(GWF_ERROR_MAIL);
 Database::init();
 ModuleLoader::instance()->loadModulesCache();
 GDO_Session::instance();
-Logger::init(GDO_User::current()->getUserName(), GWF_ERROR_LEVEL); # 2nd init with username
+if (GDO_User::current()->isAuthenticated())
+{
+	Logger::init(GDO_User::current()->getUserName(), GWF_ERROR_LEVEL); # 2nd init with username
+}
 
 # All fine!
 define('GWF_CORE_STABLE', 1);
