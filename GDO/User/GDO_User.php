@@ -245,4 +245,23 @@ final class GDO_User extends GDO
 		fetchAllObjectsAs(self::table());
 	}
 	
+	public function renderJSON()
+	{
+		return array(
+			'user_id' => (int)$this->getID(),
+			'user_name' => $this->getName(),
+			'user_real_name' => $this->getRealName(),
+			'user_guest_name' => $this->getGuestName(),
+			'user_email' => $this->getMail(),
+			'user_gender' => $this->getGender(),
+			'user_type' => $this->getType(),
+			'user_level' => (int)$this->getLevel(),
+			'user_credits' => (int)$this->getCredits(),
+			'user_email_fmt' => $this->getMailFormat(),
+			'user_language' => $this->getLangISO(),
+			'user_country' => $this->getCountryISO(),
+			'permissions' => $this->loadPermissions(),
+		);
+	}
+	
 }

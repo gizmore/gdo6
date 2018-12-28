@@ -13,20 +13,24 @@ use GDO\Core\Website;
  * @version 5.0
  * @since 5.0
  */
-final class Completion extends Method
+class Completion extends Method
 {
+	public static $MAXCOUNT = 20;
 	public function execute()
 	{
 		$q = GDO::escapeS(Common::getRequestString('query'));
 		$condition = sprintf('user_type IN ("guest","member") AND user_name LIKE \'%%%1$s%%\' OR user_real_name LIKE \'%%%1$s%%\' OR user_guest_name LIKE \'%%%1$s%%\'', $q);
-		$result = GDO_User::table()->select('*')->where($condition)->uncached()->exec();
+		$query = GDO_User::table()->select('*')->where($condition)->limit(self::$MAXCOUNT)->uncached();
+		$result = $query->exec();
 		$response = [];
 		$cell = GDT_User::make('user_id');
+		
 		while ($user = $result->fetchObject())
 		{
 			$user instanceof GDO_User;
 			$response[] = array(
 				'id' => $user->getID(),
+				'json' => $user->renderJSON(),
 				'text' => $user->displayNameLabel(),
 				'display' => $cell->renderChoice($user),
 			);

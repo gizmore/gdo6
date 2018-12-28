@@ -42,6 +42,10 @@ class Result
 	#############
 	### Fetch ###
 	#############
+	/**
+	 * Fetch the first value of the next row
+	 * @return string
+	 */
 	public function fetchValue()
 	{
 		if ($row = $this->fetchRow())

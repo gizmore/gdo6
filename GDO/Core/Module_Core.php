@@ -126,20 +126,6 @@ window.GWF_LANGUAGE = '%s';",
 	public function gdoUserJSON()
 	{
 		$user = GDO_User::current();
-		return array(
-			'user_id' => (int)$user->getID(),
-			'user_name' => $user->getName(),
-			'user_real_name' => $user->getRealName(),
-			'user_guest_name' => $user->getGuestName(),
-			'user_email' => $user->getMail(),
-			'user_gender' => $user->getGender(),
-			'user_type' => $user->getType(),
-			'user_level' => (int)$user->getLevel(),
-			'user_credits' => (int)$user->getCredits(),
-			'user_email_fmt' => $user->getMailFormat(),
-			'user_language' => $user->getLangISO(),
-			'user_country' => $user->getCountryISO(),
-			'permissions' => $user->loadPermissions(),
-		);
+		return $user->renderJSON();
 	}
 }
