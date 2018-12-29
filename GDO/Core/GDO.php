@@ -452,6 +452,7 @@ abstract class GDO
 		$this->dirty = false;
 		$this->persisted = true;
 		$this->afterCreate();
+		$this->recache();
 		$this->callRecacheHook();
 		return $this;
 	}

@@ -60,12 +60,12 @@ final class GDT_Hook extends GDT
 	##############
 	public static function callWithIPC($event, ...$args)
 	{
-		return self::call($event, true, ...$args);
+		return self::call($event, true, $args);
 	}
 	
 	public static function callHook($event, ...$args)
 	{
-		return self::call($event, false, ...$args);
+		return self::call($event, false, $args);
 	}
 	
 /**
@@ -75,7 +75,7 @@ final class GDT_Hook extends GDT
 	 * @param string $event
 	 * @param array $args
 	 */
-	private static function call($event, $ipc=true, ...$args)
+	private static function call($event, $ipc, array $args)
 	{
 		self::$CALLS++;
 		$method_name = "hook$event";
@@ -116,7 +116,7 @@ final class GDT_Hook extends GDT
 		return self::$ipc;
 	}
 	
-	private static function callIPC($ipc, $event, array $args=null)
+	private static function callIPC($ipc, $event, array $args)
 	{
 		# Map GDO Objects to IDs.
 		# The IPC Service will refetch the Objects on their end.
@@ -135,7 +135,7 @@ final class GDT_Hook extends GDT
 		
 		# Send to IPC
 		$error = 0;
-		$result = msg_send($ipc, 0x612, [$event, $args], true, false, $error);
+		$result = msg_send($ipc, 0x612, array_merge([$event], $args), true, false, $error);
 		if ( (!$result) || ($error) )
 		{
 			Logger::logError("IPC msg_send($event) failed with code $error");

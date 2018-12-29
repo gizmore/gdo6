@@ -144,7 +144,7 @@ final class HTTP
 			curl_setopt($ch, CURLOPT_SSLVERSION, 1);
 		}
 		
-		if (false === ($received = curl_exec($ch)))
+		if (!($received = curl_exec($ch)))
 		{
 			echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
 		}
