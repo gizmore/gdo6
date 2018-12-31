@@ -16,6 +16,9 @@ use GDO\Core\Website;
 class Completion extends Method
 {
 	public static $MAXCOUNT = 20;
+	
+	public function isGuestAllowed() { return false; }
+	
 	public function execute()
 	{
 		$q = GDO::escapeS(Common::getRequestString('query'));
