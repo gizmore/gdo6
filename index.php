@@ -47,6 +47,10 @@ try
     ob_start();
     $method = method(Common::getGetString('mo', GWF_MODULE), Common::getGetString('me', GWF_METHOD));
     $response = $method->exec();
+	if ($session = GDO_Session::instance())
+    {
+		$session->commit();
+    }
 }
 catch (Exception $e)
 {

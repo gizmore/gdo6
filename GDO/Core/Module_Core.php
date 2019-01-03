@@ -39,9 +39,10 @@ final class Module_Core extends GDO_Module
 	public function getClasses()
 	{
 		return array(
+			'GDO\Core\GDO_Hook',
 			'GDO\Core\GDO_Module',
 			'GDO\Core\GDO_ModuleVar',
-			'GDO\User\GDO_Permission'
+			'GDO\User\GDO_Permission',
 		);
 	}
 	

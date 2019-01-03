@@ -23,6 +23,8 @@ namespace GDO\Core;
 final class GDT_Hook extends GDT
 {
 	public static $CALLS = 0;
+	public static $IPC_CALLS = 0;
+	
 	###########
 	### API ###
 	###########
@@ -49,7 +51,7 @@ final class GDT_Hook extends GDT
 	{
 		$response = GDT_Response::make('');
 		$args = $this->eventArgs ? array_merge([$response], $this->eventArgs) : [$response];
-		self::call($this->event, ...$args);
+		self::call($this->event, false, $args);
 		return $response;
 	}
 	
@@ -95,7 +97,13 @@ final class GDT_Hook extends GDT
 			(!Application::instance()->isInstall()) && 
 			(!Application::instance()->isCLI()) )
 		{
-			if ($ipc = self::ipc())
+			self::$IPC_CALLS++;
+			
+			if (GWF_IPC === 'db')
+			{
+				self::callIPCDB($event, $args);
+			}
+			elseif ($ipc = self::ipc())
 			{
 				self::callIPC($ipc, $event, $args);
 			}
@@ -105,10 +113,10 @@ final class GDT_Hook extends GDT
 	###########
 	### IPC ###
 	###########
-	private static $ipc;
+	private static $ipc = null;
 	public static function ipc()
 	{
-		if (!isset(self::$ipc))
+		if (!self::$ipc)
 		{
 			$key = ftok(GWF_PATH.'temp/ipc.socket', 'G');
 			self::$ipc = msg_get_queue($key);
@@ -116,10 +124,13 @@ final class GDT_Hook extends GDT
 		return self::$ipc;
 	}
 	
-	private static function callIPC($ipc, $event, array $args)
+	/**
+	 * Map GDO Objects to IDs.
+	 * The IPC Service will refetch the Objects on their end.
+	 * @param array $args
+	 */
+	private static function encodeIPCArgs(array $args)
 	{
-		# Map GDO Objects to IDs.
-		# The IPC Service will refetch the Objects on their end.
 		if ($args)
 		{
 			foreach ($args as $k => $arg)
@@ -130,17 +141,37 @@ final class GDT_Hook extends GDT
 				}
 			}
 		}
-		
+		return $args;
+	}
+	
+	private static function callIPC($ipc, $event, array $args)
+	{
 		Logger::logDebug("Called IPC event $event", false);
+		
+		$args = self::encodeIPCArgs($args);
 		
 		# Send to IPC
 		$error = 0;
-		$result = msg_send($ipc, 0x612, array_merge([$event], $args), true, false, $error);
+		$result = @msg_send($ipc, 0x612, array_merge([$event], $args), true, false, $error);
 		if ( (!$result) || ($error) )
 		{
 			Logger::logError("IPC msg_send($event) failed with code $error");
 			msg_remove_queue(self::$ipc);
 			self::$ipc = null;
 		}
+	}
+
+	/**
+	 * Sends a message to another process via the db.
+	 * @param string $event
+	 * @param array $args
+	 */
+	private static function callIPCDB($event, array $args)
+	{
+		Logger::logDebug("Called IPC DB event $event", false);
+		$args = self::encodeIPCArgs($args);
+		GDO_Hook::blank(array(
+			'hook_message' => GDO_Hook::encodeHookMessage($event, $args),
+		))->insert();
 	}
 }

@@ -48,7 +48,7 @@ abstract class GDO
 	public static function quoteIdentifierS($identifier) { return "`" . self::escapeIdentifierS($identifier) . "`"; }
 	public static function escapeSearchS($var) { return str_replace(['%', "'", '"'], ['\\%', "\\'", '\\"'], $var); }
 	
-	public static function escapeS($var) { return str_replace(["'", '"'], ["\\'", '\\"'], $var); }
+	public static function escapeS($var) { return str_replace(['\\', "'", '"'], ['\\\\', "\\'", '\\"'], $var); }
 	public static function quoteS($var)
 	{
 		if (is_string($var))
