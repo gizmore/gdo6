@@ -132,9 +132,16 @@ class GDT_File extends GDT_Object
 	private $files = [];
 	public function toVar($value)
 	{
-		if ($value !== null)
+		if ($value)
 		{
-			return $value->getID();
+			if (is_array($value))
+			{
+				return $value[0]->getID();
+			}
+			else
+			{
+				return $value->getID();
+			}
 		}
 	}
 
@@ -176,7 +183,7 @@ class GDT_File extends GDT_Object
 	
 	public function getGDOData()
 	{
-		if ($file = $this->getValidationValue())
+		if ($file = $this->getValue())
 		{
 			return [$this->name => $file->getID()];
 		}
@@ -187,8 +194,16 @@ class GDT_File extends GDT_Object
 	 */
 	public function getValidationValue()
 	{
-		$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->getFiles($this->name)));
-		return array_shift($files);
+		$new = $this->getFiles($this->name);
+		if (count($new))
+		{
+			return $new;
+		}
+		else
+		{
+			$old = $this->getInitialFiles();
+			return $old;
+		}
 	}
 	
 	public function getValue()
@@ -205,7 +220,7 @@ class GDT_File extends GDT_Object
 		$id = array_shift($ids); # only first id
 		if ( ($this->gdo) && ($this->gdo->isPersisted()) ) # GDO possibly has a file
 		{
-			if ($id === $this->gdo->getVar($this->name)) # It is the requested file to delete.
+			if ($id == $this->gdo->getVar($this->name)) # It is the requested file to delete.
 			{
 				$this->gdo->saveVar($this->name, null); # Unrelate
 				if ($file = GDO_File::getById($id)) # Delete file physically
@@ -225,6 +240,8 @@ class GDT_File extends GDT_Object
 		$valid = true;
 		/** @var $files \GDO\File\GDO_File[] **/
 		$files = Arrays::arrayed($value);
+		$this->files = [];
+		
 		if ( ($this->notNull) && (empty($files)) )
 		{
 			$valid = $this->error('err_upload_min_files', [1]);
@@ -256,15 +273,18 @@ class GDT_File extends GDT_Object
 						$file->insert();
 						$this->beforeCopy($file);
 						$file->copy();
-						$this->initial($file->getID());
+// 						$this->gdo->setVar($this->name, $file->getID());
+						$this->val($file->getID());
+						$this->files[] = $file;
 					}
 				}
 			}
 		}
-		if (!$valid)
+// 		if (!$valid)
 		{
 			$this->cleanup();
 		}
+
 		return $valid;
 	}
 	
