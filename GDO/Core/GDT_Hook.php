@@ -146,7 +146,7 @@ final class GDT_Hook extends GDT
 	
 	private static function callIPC($ipc, $event, array $args)
 	{
-		Logger::logDebug("Called IPC event $event", false);
+// 		Logger::logDebug("Called IPC event $event");
 		
 		$args = self::encodeIPCArgs($args);
 		
@@ -168,7 +168,7 @@ final class GDT_Hook extends GDT
 	 */
 	private static function callIPCDB($event, array $args)
 	{
-		Logger::logDebug("Called IPC DB event $event", false);
+// 		Logger::logDebug("Called IPC DB event $event");
 		$args = self::encodeIPCArgs($args);
 		GDO_Hook::blank(array(
 			'hook_message' => GDO_Hook::encodeHookMessage($event, $args),

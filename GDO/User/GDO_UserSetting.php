@@ -6,6 +6,7 @@ use GDO\Core\GDT;
 use GDO\DB\GDT_Name;
 use GDO\DB\GDT_String;
 use GDO\Core\GDT_Hook;
+use GDO\Core\Logger;
 
 /**
  * Similiar to modulevars, this table is for user vars.
@@ -70,6 +71,7 @@ final class GDO_UserSetting extends GDO
 	 */
 	public static function userGet(GDO_User $user, $key)
 	{
+// 		Logger::logDebug("GDO_UserSetting::userGet({$user->displayName()}, $key)");
 		if (null === ($settings = $user->tempGet('gdo_setting')))
 		{
 			$settings = self::load($user);
@@ -77,7 +79,9 @@ final class GDO_UserSetting extends GDO
 			$user->recache();
 		}
 		$gdoType = self::$settings[$key];
-		return isset($settings[$key]) ? $gdoType->val($settings[$key]) : $gdoType->val($gdoType->initial);
+		$value = isset($settings[$key]) ? $settings[$key] : $gdoType->initial;
+// 		Logger::logDebug("GDO_UserSetting::userGet({$user->displayName()}, $key) == {$value}");
+		return $gdoType->val($value);
 	}
 
 	public static function set($key, $value)
