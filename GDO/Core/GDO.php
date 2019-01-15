@@ -411,6 +411,7 @@ abstract class GDO
 	/**
 	 * @param string $condition
 	 * @return \GDO\DB\Query
+	 * @deprecated Better delete one by one with events!
 	 */
 	public function deleteWhere($condition)
 	{

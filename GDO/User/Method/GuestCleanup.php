@@ -5,6 +5,7 @@ use GDO\User\GDO_Session;
 use GDO\User\GDO_User;
 use GDO\Date\Time;
 use GDO\DB\Database;
+use GDO\Core\GDT_Hook;
 
 final class GuestCleanup extends MethodCronjob
 {
@@ -18,8 +19,15 @@ final class GuestCleanup extends MethodCronjob
 		$sessions = $db->affectedRows();
 		$this->logNotice("Deleted $sessions sessions");
 		
-		GDO_User::table()->deleteWhere("user_type='guest' AND ( SELECT 1 FROM gdo_session WHERE user_id=sess_user ) IS NULL")->exec();
-		$guests = $db->affectedRows();
+		
+		$guests = 0;
+		$result = GDO_User::table()->select("user_type='guest' AND ( SELECT 1 FROM gdo_session WHERE user_id=sess_user ) IS NULL")->exec();
+		while ($user = $result->fetchObject())
+		{
+			$user->delete();
+			GDT_Hook::callWithIPC("UserDeleted", $user);
+			$guests++;
+		}
 		$this->logNotice("Deleted $guests guest users");
 	}
 	
