@@ -91,6 +91,7 @@ return array(
 'err_invalid_choice' => 'Ihre Auswahl ist ungültig.',
 'err_permission_create' => 'Sie dürfen das Objekt nicht anlegen.',
 'err_permission_update' => 'Sie dürfen dieses Objekt nicht bearbeiten.',
+'err_permission_delete' => 'Sie dürfen dieses Objekt nicht löschen.',
 'err_path_not_exists' => 'Der angegebene Pfad ist kein %s: %s',
 'err_int_not_between' => 'Diese Zahl muss zwischen %s und %s betragen.',
 'err_min_date' => 'Dieses Datum muss nach %s sein.',

@@ -91,6 +91,7 @@ return array(
 'err_invalid_choice' => 'Your selection is not applicable.',
 'err_permission_create' => 'You do not have permissions to create data of this type.',
 'err_permission_update' => 'You do not have permissions to edit this object.',
+'err_permission_delete' => 'You do not have permissions to delete this object.',
 'err_path_not_exists' => 'The specified path does not qualify as %s: %s',
 'err_int_not_between' => 'This number has to be between %s and %s.',
 'err_min_date' => 'This date has to be after %s.',

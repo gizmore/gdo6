@@ -287,6 +287,16 @@ class Query
 	{
 		return $this->set ? " SET {$this->set}" : "";
 	}
+
+	public function orderASC($column=null)
+	{
+		return $this->order($column);
+	}
+	
+	public function orderDESC($column=null)
+	{
+		return $this->order($column, false);
+	}
 	
 	public function order($column=null, $ascending=true)
 	{
