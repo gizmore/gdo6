@@ -152,7 +152,8 @@ final class Mail
 	{
 		$body = $this->body;
 		#$body = preg_replace('/<[^>]+>([^<]+)<[^>+]>/', '$1', $body);
-		$body = preg_replace('/<[^>]+>/', '', $body);
+		$body = preg_replace('/<a .*href="([^"]+)".*>([^<]+)<\\/a>/iu', "$1 ($2)", $body);
+		$body = preg_replace('/<[^>]*>/i', '', $body);
 		$body = self::br2nl($body);
 		$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
 		return $body;
