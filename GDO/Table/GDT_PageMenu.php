@@ -80,6 +80,16 @@ class GDT_PageMenu extends GDT
 		return ($page - 1) * $ipp;
 	}
 	
+	public function indexToPage($index)
+	{
+		return self::indexToPageS($index, $this->ipp);
+	}
+	
+	public static function indexToPageS($index, $ipp)
+	{
+		return intval($index / $ipp) + 1;
+	}
+	
 	##############
 	### Render ###
 	##############
