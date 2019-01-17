@@ -56,6 +56,10 @@ final class GDO_UserSetting extends GDO
 	###########
 	public static function load(GDO_User $user)
 	{
+		if (!$user->isPersisted())
+		{
+			return array();
+		}
 		return self::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair();
 	}
 	
