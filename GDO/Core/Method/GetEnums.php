@@ -14,7 +14,7 @@ final class GetEnums extends Method
 	
 	public function execute()
 	{
-		$tables = [];
+		$columns = [];
 		
 		# Add non abstract module tables
 		foreach (ModuleLoader::instance()->getEnabledModules() as $module)
@@ -29,23 +29,49 @@ final class GetEnums extends Method
 						{
 							if (!$table->gdoAbstract())
 							{
-								$tables[] = $table;
+								foreach ($table->gdoColumnsCache() as $name => $gdoType)
+								{
+									if ($gdoType instanceof GDT_Enum)
+									{
+										$columns[$table->gdoClassName().'.'.$name] = $gdoType->enumValues;
+									}
+								}
 							}
 						}
 					}
 				}
 			}
-		}
-		
-		# Add Enum values
-		$columns = [];
-		foreach ($tables as $table)
-		{
-			foreach ($table->gdoColumnsCache() as $name => $gdoType)
+			
+			if ($config = $module->getConfigCache())
 			{
-				if ($gdoType instanceof GDT_Enum)
+				foreach ($config as $gdoType)
 				{
-					$columns[$table->gdoClassName().'.'.$name] = $gdoType->enumValues;
+					if ($gdoType instanceof GDT_Enum)
+					{
+						$columns[$module->getName().'.config.'.$name] = $gdoType->enumValues;
+					}
+				}
+			}
+		
+			if ($config = $module->getUserConfig())
+			{
+				foreach ($config as $gdoType)
+				{
+					if ($gdoType instanceof GDT_Enum)
+					{
+						$columns[$module->getName().'.userconfig.'.$name] = $gdoType->enumValues;
+					}
+				}
+			}
+
+			if ($config = $module->getUserSettings())
+			{
+				foreach ($config as $gdoType)
+				{
+					if ($gdoType instanceof GDT_Enum)
+					{
+						$columns[$module->getName().'.settings.'.$name] = $gdoType->enumValues;
+					}
 				}
 			}
 		}
