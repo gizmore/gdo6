@@ -12,7 +12,7 @@ use GDO\Core\GDT_Template;
  * @see GDT_Timestamp
  * 
  * @author gizmore
- * @version 6.07
+ * @version 6.09
  * @since 5.0
  */
 class GDT_Date extends GDT_Timestamp
@@ -27,4 +27,8 @@ class GDT_Date extends GDT_Timestamp
 	public function renderCell() { return Time::displayDate($this->gdo->getVar($this->name)); }
 	public function renderForm() { return GDT_Template::php('Date', 'form/date.php', ['field'=>$this]); }
 	
+	public function toVar($value)
+	{
+		return substr(parent::toVar($value), 0, 10);
+	}
 }
