@@ -33,7 +33,10 @@ class Completion extends Method
 			$user instanceof GDO_User;
 			$response[] = array(
 				'id' => $user->getID(),
-				'json' => $user->renderJSON(),
+				'json' => array(
+					'user_name' => $user->getName(),
+					'user_country' => $user->getCountryISO()
+				),
 				'text' => $user->displayNameLabel(),
 				'display' => $cell->renderChoice($user),
 			);

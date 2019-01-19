@@ -1,5 +1,10 @@
 <?php
 namespace GDO\Country;
+
+/**
+ * Install country data.
+ * @author gizmore
+ */
 final class InstallCountries
 {
 	public static function install()
@@ -22,9 +27,9 @@ final class InstallCountries
 				if (count($row) > 3)
 				{
 					$bulkData[] = array(
-						strtolower($row[$cca2]),
-						strtolower($row[$cca3]),
-						$row[$phone],
+						trim(strtolower($row[$cca2])),
+						trim(strtolower($row[$cca3])),
+						trim($row[$phone]),
 						null,
 					);
 				}
@@ -33,13 +38,13 @@ final class InstallCountries
 			fclose($fh);
 		}
 	
+		# Bulk insert
 		$c = GDO_Country::table();
 		$fields = array(
 			$c->gdoColumn('c_iso'),
 			$c->gdoColumn('c_iso3'),
 			$c->gdoColumn('c_phonecode'),
 			$c->gdoColumn('c_population'),
-			
 		);
 		GDO_Country::bulkReplace($fields, $bulkData);
 	}

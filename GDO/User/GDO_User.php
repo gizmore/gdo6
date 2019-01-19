@@ -260,6 +260,7 @@ final class GDO_User extends GDO
 			'user_email_fmt' => $this->getMailFormat(),
 			'user_language' => $this->getLangISO(),
 			'user_country' => $this->getCountryISO(),
+			'user_birthdate' => Time::getTimestamp($this->getBirthdate()),
 			'permissions' => $this->loadPermissions(),
 		);
 	}

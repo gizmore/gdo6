@@ -28,6 +28,7 @@ final class Completion extends MethodCompletion
 				);
 			}
 		}
+		
 		die(json_encode($response));
 	}
 }
