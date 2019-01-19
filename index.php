@@ -43,7 +43,13 @@ if (GDO_User::current()->isAuthenticated())
 define('GWF_CORE_STABLE', 1);
 try
 {
-    # Exec
+	$rqmethod = $_SERVER['REQUEST_METHOD'];
+	if (!in_array($rqmethod, ['GET', 'POST'], true))
+	{
+		die('METHOD not processed: ' . $rqmethod);
+	}
+
+	# Exec
     ob_start();
     $method = method(Common::getGetString('mo', GWF_MODULE), Common::getGetString('me', GWF_METHOD));
     $response = $method->exec();
