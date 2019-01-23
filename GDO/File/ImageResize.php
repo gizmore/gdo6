@@ -3,13 +3,39 @@ namespace GDO\File;
 use GDO\Core\GDOError;
 
 /**
+ * Utility that resizes images.
+ * 
  * @see http://salman-w.blogspot.de/2009/04/crop-to-fit-image-using-aspphp.html
+ * @see https://stackoverflow.com/questions/7489742/php-read-exif-data-and-adjust-orientation
+ * 
+ * @author gizmore
+ * @version 6.09
+ * @since 3.00
  */
 final class ImageResize
 {
 	public static function resize(GDO_File $file, $toWidth, $toHeight, $toFormat=null)
 	{
+		// Gather metadata
 		list($source_width, $source_height, $source_type) = getimagesize($file->path);
+		$rotation = self::orientation($file);
+		$toFormat = $toFormat == null ? $file->getType() : $toFormat;
+		if ( ($rotation == 8) || ($rotation == 6) )
+		{
+			// Rotate metadata by 90 degree
+			$t = $source_width;
+			$source_width = $source_height;
+			$source_height = $t;
+		}
+		
+		// No change keep file
+		if ( ($source_width == $toWidth) && 
+			 ($source_height == $toHeight) &&
+			 ($file->getType() == $toFormat) )
+		{
+			return true;
+		}
+		
 		switch ($file->getType())
 		{
 // 			case "image/bmp": $source = ImageFromBMP::load($file->path); break;
@@ -18,52 +44,73 @@ final class ImageResize
 			case "image/png": $source = imagecreatefrompng($file->path); break;
 			default: throw new GDOError('err_image_format_not_supported', [$file->getType(), $source_type]);
 		}
-	
-		$source_aspect_ratio = $source_width / $source_height;
-		$desired_aspect_ratio = $toWidth / $toHeight;
 		
-		if ($source_aspect_ratio > $desired_aspect_ratio) {
-			$temp_height = $toHeight;
-			$temp_width = (int) ($toHeight * $source_aspect_ratio);
-		} else {
-			$temp_width = $toWidth;
-			$temp_height = (int) ($toWidth / $source_aspect_ratio);
+		// Rotate image if desired
+		$source2 = null;
+		switch ($rotation)
+		{
+		case 8: $source2 = imagerotate($source, 90, 0); break;
+		case 6: $source2 = imagerotate($source, -90, 0); break;
+		case 3: $source2 = imagerotate($source, 180, 0); break;
+		}
+		if ($source2)
+		{
+			imagedestroy($source);
+			$source = $source2;
 		}
 		
-		/*
-		 * Resize the image into a temporary GD image
-		 */
-		$temp_gdim = imagecreatetruecolor($temp_width, $temp_height);
-		imagecopyresampled(
-			$temp_gdim,
-			$source,
-			0, 0,
-			0, 0,
-			$temp_width, $temp_height,
-			$source_width, $source_height
-		);
+		// Crop and resize
+		if ( ($source_width != $toWidth) ||
+			 ($source_height != $toHeight) )
+		{
+			// Calc aspect ratio
+			$source_aspect_ratio = $source_width / $source_height;
+			$desired_aspect_ratio = $toWidth / $toHeight;
+			
+			if ($source_aspect_ratio > $desired_aspect_ratio) {
+				$temp_height = $toHeight;
+				$temp_width = (int) ($toHeight * $source_aspect_ratio);
+			} else {
+				$temp_width = $toWidth;
+				$temp_height = (int) ($toWidth / $source_aspect_ratio);
+			}
+			
+			/*
+			 * Resize the image into a temporary GD image
+			 */
+			$temp_gdim = imagecreatetruecolor($temp_width, $temp_height);
+			imagecopyresampled(
+				$temp_gdim,
+				$source,
+				0, 0,
+				0, 0,
+				$temp_width, $temp_height,
+				$source_width, $source_height
+				);
+			
+			imagedestroy($source);
+			
+			/*
+			 * Copy cropped region from temporary image into the desired GD image
+			 */
+			$x0 = ($temp_width - $toWidth) / 2;
+			$y0 = ($temp_height - $toHeight) / 2;
+			$desired_gdim = imagecreatetruecolor($toWidth, $toHeight);
+			imagecopy(
+				$desired_gdim,
+				$temp_gdim,
+				0, 0,
+				$x0, $y0,
+				$toWidth, $toHeight
+				);
+			imagedestroy($temp_gdim);
+		}
+		else
+		{
+			$desired_gdim = $source;
+		}
 		
-		imagedestroy($source);
-		
-		/*
-		 * Copy cropped region from temporary image into the desired GD image
-		 */
-		$x0 = ($temp_width - $toWidth) / 2;
-		$y0 = ($temp_height - $toHeight) / 2;
-		$desired_gdim = imagecreatetruecolor($toWidth, $toHeight);
-		imagecopy(
-			$desired_gdim,
-			$temp_gdim,
-			0, 0,
-			$x0, $y0,
-			$toWidth, $toHeight
-		);
-		imagedestroy($temp_gdim);
-		
-		/*
-		 * Convert and save image.
-		 */
-		$toFormat = $toFormat === null ? $file->getType() : $toFormat;
+		// Detect format change
 		$file->setVar('file_type', $toFormat);
 		switch ($toFormat)
 		{
@@ -74,7 +121,25 @@ final class ImageResize
 			default: throw new GDOError('err_image_format_not_supported', [$toFormat]);
 		}
 		imagedestroy($desired_gdim);
-		
+		return true;
+	}
+	
+	private static function orientation(GDO_File $file)
+	{
+		if (!function_exists('exif_read_data'))
+		{
+			return -1;
+		}
+		try
+		{
+			$exif = @exif_read_data($file->path);
+			return (int)$exif['Orientation'];
+		}
+		catch (\Exception $e)
+		{
+			return -2;
+		}
+		return 0;
 	}
 	
 }

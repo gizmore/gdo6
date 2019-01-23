@@ -7,7 +7,7 @@ use GDO\DB\GDT_Text;
  * 
  * @author gizmore
  * @see \GDO\User\GDO_Session
- * @version 6.05
+ * @version 6.09
  * @since 5.00
  */
 class GDT_Serialize extends GDT_Text
@@ -20,6 +20,6 @@ class GDT_Serialize extends GDT_Text
 	public $encoding = self::ASCII;
 	public $caseSensitive = true;
 	
-	public function toVar($value) { return $value === null ? null : self::serialize($value); }
+	public function toVar($value) { return empty($value) ? null : self::serialize($value); }
 	public function toValue($var) { return $var === null ? null : self::unserialize($var); }
 }

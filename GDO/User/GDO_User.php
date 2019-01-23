@@ -18,13 +18,11 @@ use GDO\Date\GDT_Birthdate;
 /**
  * The holy user object.
  * @author gizmore
- * @since 1.0
- * @version 6.0
+ * @since 1.00
+ * @version 6.09
  */
 final class GDO_User extends GDO
 {
-// 	const SYSTEM_ID = '1'; # System user is always #1
-	
 	const BOT = 'bot';
 	const SYSTEM = 'system';
 	const GHOST = 'ghost';
@@ -49,7 +47,7 @@ final class GDO_User extends GDO
 			GDT_Gender::make('user_gender'),
 			GDT_Birthdate::make('user_birthdate'),
 			GDT_Country::make('user_country'),
-			GDT_Language::make('user_language')->notNull()->initial('en'),
+			GDT_Language::make('user_language')->notNull()->initial(GWF_LANGUAGE),
 			GDT_Password::make('user_password'),
 			GDT_DeletedAt::make('user_deleted_at'),
 			GDT_CreatedAt::make('user_last_activity')->label('last_activity'),
