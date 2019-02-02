@@ -133,7 +133,7 @@ final class ImageResize
 		try
 		{
 			$exif = @exif_read_data($file->path);
-			return (int)$exif['Orientation'];
+			return (int)(@$exif['Orientation']);
 		}
 		catch (\Exception $e)
 		{
