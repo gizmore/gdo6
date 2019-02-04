@@ -86,7 +86,7 @@ final class Filewalker
 			
 			if ($recursive)
 			{
-				self::traverse($d[1], $callback_file, $callback_dir, $recursive, $args);
+				self::traverse($d[1], $pattern, $callback_file, $callback_dir, $recursive, $args);
 			}
 		}
 	}
