@@ -106,6 +106,7 @@ final class GDO_UserSetting extends GDO
 	public static function userSet(GDO_User $user, $key, $value)
 	{
 		$userid = $user->getID();
+		
 		if ($value === null)
 		{
 			self::table()->deleteWhere("uset_user=$userid AND uset_name=".quote($key))->exec();
