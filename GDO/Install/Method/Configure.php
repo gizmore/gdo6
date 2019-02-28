@@ -9,12 +9,11 @@ use GDO\Core\GDT_Template;
 use GDO\DB\Database;
 use GDO\Core\GDOException;
 use GDO\Core\Website;
-use GDO\File\GDT_File;
 /**
  * Create a GDO config with this form.
  * @author gizmore
  * @since 3.00
- * @version 6.05
+ * @version 6.09
  */
 class Configure extends MethodForm
 {

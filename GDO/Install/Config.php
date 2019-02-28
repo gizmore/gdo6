@@ -58,6 +58,7 @@ class Config
 		if (!defined('GWF_MODULE')) define('GWF_MODULE', 'Core');
 		if (!defined('GWF_METHOD')) define('GWF_METHOD', 'Welcome');
 		if (!defined('GWF_IPC')) define('GWF_IPC', 0);
+		if (!defined('GWF_IPC_DEBUG')) define('GWF_IPC_DEBUG', 0);
 		# HTTP
 		if (!defined('GWF_DOMAIN')) define('GWF_DOMAIN', $_SERVER['HTTP_HOST']);
 		if (!defined('GWF_SERVER')) define('GWF_SERVER', $_SERVER['SERVER_SOFTWARE'] === 'Apache' ? 'apache2.4' : 'nginx');
@@ -112,6 +113,7 @@ class Config
 			GDT_String::make('module')->required()->initial(GWF_MODULE),
 			GDT_String::make('method')->required()->initial(GWF_METHOD),
 			GDT_Checkbox::make('ipc')->initial(GWF_IPC),
+			GDT_Checkbox::make('ipc_debug')->initial(GWF_IPC_DEBUG),
 			# HTTP
 			GDT_Divider::make()->label('install_config_section_http'),
 			GDT_String::make('domain')->required()->initial(GWF_DOMAIN),

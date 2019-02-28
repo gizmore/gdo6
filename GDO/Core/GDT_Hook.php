@@ -99,6 +99,11 @@ final class GDT_Hook extends GDT
 		{
 			self::$IPC_CALLS++;
 			
+			if (GWF_IPC_DEBUG)
+			{
+				Logger::log('ipc', GDO_Hook::encodeHookMessage($event, $args));
+			}
+			
 			if (GWF_IPC === 'db')
 			{
 				self::callIPCDB($event, $args);
