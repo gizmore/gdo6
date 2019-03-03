@@ -4,6 +4,10 @@ return array(
 'gdo_user' => 'User',
 'gdo_session' => 'Session',
 'gender' => 'Gender',
+'gender_none' => 'not specified',
+'gender_male' => 'male',
+'gender_female' => 'female',
+	
 
 'user_name' => 'Username',
 'user_real_name' => 'Real Name',

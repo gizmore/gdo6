@@ -7,7 +7,7 @@ class GDT_Email extends GDT_String
 {
 	public $max = 170; # Unique constraint
 
-	public $pattern = "/^[^@]+@[^@]+$/i";
+	public $pattern = "/^[^@]+@[^@]+$/iD";
 	protected $icon = 'email';
 	
 	public function defaultLabel() { return $this->label('email'); }

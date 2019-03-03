@@ -21,7 +21,7 @@ final class GuestCleanup extends MethodCronjob
 		
 		
 		$guests = 0;
-		$result = GDO_User::table()->select("user_type='guest' AND ( SELECT 1 FROM gdo_session WHERE user_id=sess_user ) IS NULL")->exec();
+		$result = GDO_User::table()->select()->where("user_type='guest' AND ( SELECT 1 FROM gdo_session WHERE user_id=sess_user ) IS NULL")->exec();
 		while ($user = $result->fetchObject())
 		{
 			$user->delete();

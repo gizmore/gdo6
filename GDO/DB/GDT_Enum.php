@@ -55,7 +55,7 @@ class GDT_Enum extends GDT
 	### Enum ###
 	############
 	public $enumValues;
-	public function enumLabel($enumValue=null) { return $enumValue === null ? t("enum_$enumValue") : $enumValue; }
+	public function enumLabel($enumValue=null) { return $enumValue === null ? $this->emptyLabel : t("enum_$enumValue"); }
 	public function enumValues(...$enumValues) { $this->enumValues = $enumValues; return $this; }
 	public function enumIndex() { return $this->enumIndexFor($this->getVar()); }
 	public function enumIndexFor($enumValue) { $index = array_search($enumValue, $this->enumValues, true); return $index === false ? 0 : $index + 1; }

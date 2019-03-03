@@ -1,8 +1,10 @@
 <?php
 use GDO\Country\GDO_Country;
 use GDO\Country\GDT_Country;
-$field instanceof GDT_Country;
-$country = $field->gdo;
+/**
+ * @var GDT_Country $field
+ */
+$country = $field->getValue();
 ?>
 <?php if ($country instanceof GDO_Country) : ?>
 <img
