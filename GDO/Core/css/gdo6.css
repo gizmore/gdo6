@@ -55,3 +55,8 @@ a { color: #33f; font-weight: 900; }
 .gdt-li-image > * { margin: auto; }
 .gdt-li-content { flex-grow: 10; }
 .gdt-li-subtext { padding: 4px 8px; }
+
+/** File **/
+.gdo-file img { max-width: 100%; max-height: 1024px; }
+table .gdo-file img { max-width: 64px; max-height: 48px; }
+table .gdo-file span { display: none; }
