@@ -117,6 +117,9 @@ return array(
 'tu_h' => 'h',
 'tu_d' => 'd',
 'tu_y' => 'y',
+	
+# Checkbox
+'enum_undetermined_yes_no' => 'unknown',
 
 # Files
 '_filesize' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),

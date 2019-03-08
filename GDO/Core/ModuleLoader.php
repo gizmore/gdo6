@@ -131,6 +131,13 @@ final class ModuleLoader
 	##################
 	private $loadedDB = false;
 	private $loadedFS = false;
+	
+	public function loadModulesA()
+	{
+		$hasdb = GWF_DB_HOST !== null;
+		return $this->loadModules($hasdb, !$hasdb);
+	}
+	
 	/**
 	 * @param $loadDB
 	 * @param $loadFS

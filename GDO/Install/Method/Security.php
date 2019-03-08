@@ -17,7 +17,7 @@ final class Security extends MethodForm
 	public function execute()
 	{
 		Database::init();
-		ModuleLoader::instance()->loadModules();
+		ModuleLoader::instance()->loadModulesA();
 		if (isset($_POST['submit']))
 		{
 			$this->onProtect();

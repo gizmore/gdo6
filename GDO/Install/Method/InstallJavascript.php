@@ -12,7 +12,7 @@ final class InstallJavascript extends Method
 	public function execute()
 	{
 		Database::init();
-		ModuleLoader::instance()->loadModules();
+		ModuleLoader::instance()->loadModulesA();
 		return $this->renderPage();
 	}
 	

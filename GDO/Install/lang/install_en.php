@@ -6,9 +6,16 @@ return array(
 
 # System Test
 'install_title_2' => 'System–Test',
-'install_test_0' => 'Is the protected folder writable?',
-'install_test_1' => 'Is the files folder writable?',
-'install_test_2' => 'Is the temp folder writable?',
+'install_title_2_tests' => 'Mandatory Requirements',
+'install_test_0' => 'Is PHP Version '.PHP_VERSION.'supported?',
+'install_test_1' => 'Is the protected folder writable?',
+'install_test_2' => 'Is the files folder writable?',
+'install_test_3' => 'Is the temp folder writable?',
+'install_test_4' => 'Is nodejs, npm and bower available?',
+'install_test_5' => 'Is PHP mbstring installed?',
+'install_title_2_optionals' => 'Optional Features',
+'install_optional_0' => 'Is PHP gd installed?',
+'install_optional_1' => 'Is PHP memcached installed?',
 'install_system_ok' => 'Your system is able to run GDO6. You can continue with %s.',
 'install_system_not_ok' => 'Your system is currently not able to run GDO6. You can try again to run %s.',
 
@@ -34,11 +41,11 @@ return array(
 'err_db_connect' => 'The connection to the database server failed. Note that only mysql/maria is supported.',
 'install_config_boxinfo_success' => 'Your system looks solid. You can continue with %s',
 # Modules
-'install_title_3' => 'GDO Modules',
+'install_title_4' => 'GDO Modules',
 'install_modules_info_text' => 'Here you can choose the modules to install. Dependencies are not resolved yet.',
 'install_modules_completed' => 'Your modules have been installed. You can continue with %s',
 # Cronjob
-'install_title_4' => 'Cronjob Configuration',
+'install_title_5' => 'Cronjob Configuration',
 'install_cronjob_info' => '
 You should create a cronjob on your server.
 You can paste this into your crontab file:
@@ -48,10 +55,11 @@ You can paste this into your crontab file:
 You can then continue with %s.',
 
 # Admins 
-'install_title_5' => 'Create Admins',
-
-'install_title_6' => 'Install Javascript',
-'install_content_6' => '
+'install_title_6' => 'Create Admins',
+'ft_install_installadmins' => '[%s] Create Admins',
+	
+'install_title_7' => 'Install Javascript',
+'install_content_7' => '
 <p>You should now install node,npm,bower and other javascript components.</p>
 <p>Alternatively you have to upload these dependencies individually.</p>
 <p>Run the following commands on your debian machine:<p>
@@ -68,7 +76,7 @@ cd www/gdo6<br/>
 </code>
 ',
 	
-	'install_title_7' => 'Install Security',
+	'install_title_8' => 'Install Security',
 'ft_install_security' => 'Finish installation by removing access to install wizard and the protected folder',
 	
 );

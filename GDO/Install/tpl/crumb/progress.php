@@ -13,7 +13,7 @@ $bar = GDT_Bar::make()->horizontal();
 foreach ($steps as $step => $name)
 {
 	$step++;
-	$link = GDT_Link::make("step$step")->href(Config::hrefStep($step));
+	$link = GDT_Link::make("install_title_$step")->href(Config::hrefStep($step));
 	$bar->addField($link);
 }
 

@@ -30,7 +30,8 @@ class Config
 	### Method Steps ###
 	####################
 	public static function hrefStep($step) { return $_SERVER['SCRIPT_NAME'] . '?step=' . $step; }
-	public static function linkStep($step) { return GDT_Link::make("step$step")->href(self::hrefStep($step))->label("link_step_$step")->renderCell(); }
+	public static function linkStep($step) { return self::linkStepGDT($step)->renderCell(); }
+	public static function linkStepGDT($step) { return GDT_Link::make("step$step")->href(self::hrefStep($step))->label("install_title_$step"); }
 	public static function steps()
 	{
 		return array(
@@ -48,6 +49,29 @@ class Config
 	#############################
 	### Config File Generator ###
 	#############################
+	private static function detectServerSoftware()
+	{
+		$software = $_SERVER['SERVER_SOFTWARE'];
+		if (stripos($software, 'Apache') >= 0)
+		{
+			if (strpos($software, '2.4') >= 0)
+			{
+				return 'apache2.4';
+			}
+			if (strpos($software, '2.2') >= 0)
+			{
+				return 'apache2.2';
+			}
+			return 'apache2.4';
+		}
+		if (stripos($software, 'nginx') >= 0)
+		{
+			return 'nginx';
+			
+		}
+		return 'apache2.4';
+	}
+	
 	public static function configure()
 	{
 		# Site
@@ -61,7 +85,7 @@ class Config
 		if (!defined('GWF_IPC_DEBUG')) define('GWF_IPC_DEBUG', 0);
 		# HTTP
 		if (!defined('GWF_DOMAIN')) define('GWF_DOMAIN', $_SERVER['HTTP_HOST']);
-		if (!defined('GWF_SERVER')) define('GWF_SERVER', $_SERVER['SERVER_SOFTWARE'] === 'Apache' ? 'apache2.4' : 'nginx');
+		if (!defined('GWF_SERVER')) define('GWF_SERVER', self::detectServerSoftware());
 		if (!defined('GWF_PROTOCOL')) define('GWF_PROTOCOL', isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS']) === 'on');
 		if (!defined('GWF_WEB_ROOT')) define('GWF_WEB_ROOT', Strings::substrTo($_SERVER['SCRIPT_NAME'], 'install/wizard.php'));
 		# Files
@@ -109,10 +133,10 @@ class Config
 			GDT_String::make('sitename')->initial(GWF_SITENAME)->max(8)->label('cfg_sitename'),
 			GDT_Hidden::make('sitecreated')->val(GWF_SITECREATED),
 			GDT_Enum::make('language')->enumValues('en', 'de')->initial(GWF_LANGUAGE)->required(),
-			GDT_Select::make('themes')->multiple()->choices(array_combine($themes, $themes))->required()->initialValue($themes),
+			GDT_Select::make('themes')->multiple()->choices(array_combine($themes, $themes))->required()->initialValue(array('default')),
 			GDT_String::make('module')->required()->initial(GWF_MODULE),
 			GDT_String::make('method')->required()->initial(GWF_METHOD),
-			GDT_Checkbox::make('ipc')->initial(GWF_IPC),
+			GDT_Select::make('ipc')->choices(['db' => 'Database', '1' => 'IPC', '0' => 'none'])->initial(GWF_IPC),
 			GDT_Checkbox::make('ipc_debug')->initial(GWF_IPC_DEBUG),
 			# HTTP
 			GDT_Divider::make()->label('install_config_section_http'),
@@ -132,10 +156,10 @@ class Config
 			# Database
 			GDT_Divider::make()->label('install_config_section_database'),
 			GDT_Hidden::make('salt')->initial(GWF_SALT),
-			GDT_String::make('db_host')->initial(GWF_DB_HOST)->required(),
-			GDT_String::make('db_user')->initial(GWF_DB_USER)->required(),
+			GDT_String::make('db_host')->initial(GWF_DB_HOST),
+			GDT_String::make('db_user')->initial(GWF_DB_USER),
 			GDT_String::make('db_pass')->initial(GWF_DB_PASS),
-			GDT_String::make('db_name')->initial(GWF_DB_NAME)->required(),
+			GDT_String::make('db_name')->initial(GWF_DB_NAME),
 //			 Text::make('db_prefix')->initial(GWF_DB_PREFIX)->required(),
 			GDT_Checkbox::make('db_debug')->initial(GWF_DB_DEBUG),
 			# Cache

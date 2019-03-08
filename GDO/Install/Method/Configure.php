@@ -24,7 +24,10 @@ class Configure extends MethodForm
 	
 	public function createForm(GDT_Form $form)
 	{
-		$form->addFields(Config::fields());
+		foreach (Config::fields() as $gdt)
+		{
+			$form->addField($gdt->label('cfg_'.$gdt->name));
+		}
 		$form->addField(GDT_Submit::make('save_config'));
 		if (FileUtil::isFile($this->configPath()))
 		{

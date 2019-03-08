@@ -42,7 +42,7 @@ GDO_User::$CURRENT = GDO_User::ghost();
 # Load only two basic modules from FS for installation process.
 $modCore = ModuleLoader::instance()->loadModuleFS('Core', 1);
 $modInstall = ModuleLoader::instance()->loadModuleFS('Install', 1);
-
+ModuleLoader::instance()->loadModules(false, true);
 Trans::inited();
 
 define('GWF_CORE_STABLE', 1);

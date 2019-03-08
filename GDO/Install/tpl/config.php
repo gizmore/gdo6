@@ -35,6 +35,10 @@ else
 			$value = "'$value'";
 		}
 	}
+	elseif ($value === null)
+	{
+		$value = 'null';
+	}
 	elseif (is_array($value))
 	{
 		$value = implode(',', $value);
