@@ -7,6 +7,8 @@ use GDO\Form\WithFormFields;
 use GDO\UI\WithTooltip;
 use GDO\Core\GDO;
 use GDO\Core\GDT;
+use GDO\UI\WithHTML;
+use GDO\UI\WithPHPJQuery;
 /**
  * Basic String type with database support.
  * @author gizmore
@@ -20,6 +22,7 @@ class GDT_String extends GDT
 	use WithTooltip;
 	use WithOrder;
 	use WithDatabase;
+	use WithPHPJQuery;
 	
 	const UTF8 = 1;
 	const ASCII = 2;

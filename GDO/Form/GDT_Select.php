@@ -166,6 +166,11 @@ class GDT_Select extends GDT_ComboBox
 	##############
 	### Render ###
 	##############
+	public function renderCell()
+	{
+		return GDT_Template::php('Form', 'cell/select.php', ['field' => $this]);
+	}
+	
 	public function renderForm()
 	{
 		return GDT_Template::php('Form', 'form/select.php', ['field' => $this]);

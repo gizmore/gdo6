@@ -42,4 +42,18 @@ final class Arrays
 		}
 		return implode($glue, $retVal);
 	}
+	
+	/**
+	 * Reverse an array but keep keys.
+	 * @param array $array
+	 * @return array
+	 */
+	public static function reverse(array $array)
+	{
+		$k = array_keys($array);
+		$v = array_values($array);
+		$rv = array_reverse($v);
+		$rk = array_reverse($k);
+		return array_combine($rk, $rv);
+	}
 }
