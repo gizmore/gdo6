@@ -1,30 +1,18 @@
 <?php /** @var $field \GDO\Form\GDT_Select **/ ?>
-<md-input-container class="md-block md-float md-icon-left<?=$field->classError()?>" flex>
-  <label><?= $field->displayLabel(); ?></label>
-  <md-select
+  <select
+<?php echo $field->htmlAttributes(); ?>
 <?php if ($field->multiple) : ?>
-   multiple
+   name="form[<?= $field->name?>][]"
+   multiple="multiple"
+   size="8"
+<?php else : ?>
+   name="form[<?= $field->name?>]"
 <?php endif; ?>
-   ng-controller="GDOSelectCtrl"
-   ng-model="selection"
-   ng-init='init(<?=$field->displayJSON()?>)'
-   ng-change="multiValueSelected('#gwfsel_<?= $field->name; ?>')"
    <?= $field->htmlDisabled(); ?>>
-   <?php if ($field->emptyLabel) : ?>
-   <md-option value="<?= $field->emptyValue; ?>"><?= $field->emptyLabel; ?></md-option>
-   <?php endif; ?>
-	<?php foreach ($field->choices as $value => $choice) : ?>
-	  <md-option value="<?= htmlspecialchars($value); ?>">
-		<?= $field->renderChoice($choice); ?>
-	  </md-option>
-	<?php endforeach; ?>
-  </md-select>
-  <div class="gdo-form-error"><?= $field->error; ?></div>
-  <input
-   class="n"
-   type="hidden"
-   <?php echo $field->htmlAttributes(); ?>
-   id="gwfsel_<?= $field->name; ?>"
-   value="<?= html($field->getSelectedVar()); ?>"
-   name="form[<?= $field->name?>]" />
-</md-input-container>
+<?php if ($field->emptyLabel) : ?>
+	<option value="<?=$field->emptyValue?>"<?=$field->htmlSelected($field->emptyValue)?>><?=$field->emptyLabel?></option>
+<?php endif; ?>
+<?php foreach ($field->choices as $value => $choice) : ?>
+	<option value="<?=html($value)?>"<?=$field->htmlSelected($value);?>><?=$field->renderChoice($choice)?></option>
+<?php endforeach; ?>
+  </select>

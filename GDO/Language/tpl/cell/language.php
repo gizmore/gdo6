@@ -3,7 +3,6 @@ use GDO\Language\GDO_Language;
 /**
  * @var $language GDO_Language
  */
-var_dump($language);
 ?>
 <img
 class="gdo-language"

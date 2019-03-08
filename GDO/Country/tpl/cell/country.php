@@ -1,6 +1,5 @@
 <?php
 use GDO\Country\GDO_Country;
-use GDO\Country\GDT_Country;
 /**
  * @var GDT_Country $field
  */
@@ -12,11 +11,12 @@ $country = $field->getValue();
  alt="<?= $country->displayName(); ?>"
  title="<?= $country->displayName(); ?>"
  src="GDO/Country/img/<?= $country->getID(); ?>.png" />
-<?= $country->displayName(); ?>
+<span><?= $country->displayName(); ?></span>
 <?php else : ?>
 <img
  class="gdo-country"
  title="<?= t('unknown_country'); ?>"
  alt="<?= t('unknown_country'); ?>"
  src="GDO/Country/img/zz.png" />
+<span><?= t('unknown_country'); ?></span>
 <?php endif;?>

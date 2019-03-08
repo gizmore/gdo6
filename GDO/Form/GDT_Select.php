@@ -135,7 +135,14 @@ class GDT_Select extends GDT_ComboBox
 	{
 		if ($this->multiple)
 		{
-			return in_array($value, $this->getValue()) ? self::SELECTED : '';
+			if ($selected = @json_decode($this->getVar()))
+			{
+				if (in_array($value, $selected, true))
+				{
+					return self::SELECTED;
+				}
+			}
+			return '';
 		}
 		else 
 		{
