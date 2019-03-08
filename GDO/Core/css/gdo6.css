@@ -25,10 +25,10 @@ a { color: #33f; font-weight: 900; }
 
 /** Always show left menu on large devices */
 @media only screen and (min-width: 768px) {
-	body { padding-left: 256px; }
+	#gdo-pagewrap { margin-left: 256px; }
 	label[for="gdo-left-nav"] { display: none; }
 	#gdo-left-bar { z-index: 2; }
-	#gdo-right-nav:checked ~ #gdo-right-bar { z-index: 2; }
+	#gdo-right-nav:checked ~ #gdo-right-bar { z-index: 3; left: auto; width: 256px;}
 }
 
 

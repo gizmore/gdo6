@@ -95,7 +95,7 @@ final class ModuleLoader
 	{
 		if (false === ($cache = Cache::get('gdo_modules')))
 		{
-			$cache = $this->loadModules();
+			$cache = $this->loadModulesA();
 			Cache::set('gdo_modules', $cache);
 		}
 		else
