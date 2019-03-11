@@ -36,14 +36,7 @@ final class ImageResize
 			return true;
 		}
 		
-		switch ($file->getType())
-		{
-// 			case "image/bmp": $source = ImageFromBMP::load($file->path); break;
-			case "image/gif": $source = imagecreatefromgif($file->path); break;
-			case "image/jpeg": $source = imagecreatefromjpeg($file->path); break;
-			case "image/png": $source = imagecreatefrompng($file->path); break;
-			default: throw new GDOError('err_image_format_not_supported', [$file->getType(), $source_type]);
-		}
+		$source = self::getGDImage($file);
 		
 		// Rotate image if desired
 		$source2 = null;
@@ -142,4 +135,48 @@ final class ImageResize
 		return 0;
 	}
 	
+	public static function getGDImage(GDO_File $file)
+	{
+		switch ($file->getType())
+		{
+// 			case "image/bmp": $source = ImageFromBMP::load($file->path); break;
+			case "image/gif": $source = imagecreatefromgif($file->path); break;
+			case "image/jpeg": $source = imagecreatefromjpeg($file->path); break;
+			case "image/png": $source = imagecreatefrompng($file->path); break;
+			default: throw new GDOError('err_image_format_not_supported', [$file->getType(), $source_type]);
+		}
+		return $source;
+	}
+	
+	public static function derotate(GDO_File $file)
+	{
+		$rotation = self::orientation($file);
+		
+		switch ($rotation)
+		{
+			case 8: $rotate = 90; break;
+			case 6: $rotate = -90; break;
+			case 3: $rotate = 180; break;
+			default: return $file;
+		}
+		
+		$image = self::getGDImage($file);
+		
+		$image2 = imagerotate($image, $rotate, 0);
+		
+		imagedestroy($image);
+		
+		switch ($file->getType())
+		{
+// 			case "image/bmp": imagewbmp($desired_gdim, $file->path); break;
+			case "image/gif": imagegif($image2, $file->path); break;
+			case "image/jpeg": imagejpeg($image2, $file->path); break;
+			case "image/png": imagepng($image2, $file->path); break;
+			default: throw new GDOError('err_image_format_not_supported', [$toFormat]);
+		}
+		
+		imagedestroy($image2);
+		
+		return $file;
+	}
 }

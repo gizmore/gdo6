@@ -64,6 +64,8 @@ trait WithImageFile
 // 	public function convertTo($mime) { $this->convert = $mime; return $this; }
 	protected function beforeCopy(GDO_File $file)
 	{
+		ImageResize::derotate($file);
+		
 		$this->createScaledVersions($file);
 
 // 		if ($this->resize)
