@@ -428,6 +428,11 @@ class GDT_File extends GDT_Object
 			return $this->onFlowError("err_upload_denied", $error);
 		}
 		
+		if (!$this->onFlowCheckSizeBeforeCopy($key, $file))
+		{
+			return $this->onFlowError("err_file_too_large", $this->maxsize);
+		}
+		
 		if (!$this->onFlowCopyChunk($key, $file))
 		{
 			return $this->onFlowError("err_copy_chunk_failed");
@@ -445,10 +450,6 @@ class GDT_File extends GDT_Object
 	
 	private function onFlowCopyChunk($key, $file)
 	{
-		if (!$this->onFlowCheckSizeBeforeCopy($key, $file))
-		{
-			return false;
-		}
 		$chunkDir = $this->getChunkDir($key);
 		$chunkNumber = (int) $_REQUEST['flowChunkNumber'];
 		$chunkFile = $chunkDir.'/'.$chunkNumber;
