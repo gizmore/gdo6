@@ -398,7 +398,7 @@ class GDT_File extends GDT_Object
 	public function cleanup()
 	{
 		$this->files = null;
-		FileUtil::removeDir($this->getTempDir());
+		FileUtil::removeDir($this->getTempDir($this->name));
 	}
 	
 	############
