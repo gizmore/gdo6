@@ -8,6 +8,6 @@ return array(
 		'TB',
 		'PB',
 	),
-	'err_file_too_large' => 'Die Datei überschreitet die maximale Größe von %s.',
-	'err_copy_chunk_failed' => 'Ein Teil des Bildes konnte innerhalb des Servers nicht kopiert werden.',
+	'err_file_too_large' => 'The file exceeds the maximum size of %s.',
+	'err_copy_chunk_failed' => 'A part of the image could not be copied within the server.',
 );
