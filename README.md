@@ -93,6 +93,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
     git clone --recursive https://github.com/gizmore/gdo6-links Links
     git clone --recursive https://github.com/gizmore/gdo6-login Login
+    git clone --recursive https://github.com/gizmore/gdo6-login-as LoginAs
     git clone --recursive https://github.com/gizmore/gdo6-logs Logs
     git clone --recursive https://github.com/gizmore/gdo6-maps Maps
     # git clone --recursive https://github.com/gizmore/gdo6-material Material
