@@ -30,6 +30,7 @@ GDO/*
 !GDO/Language/
 !GDO/Mail/
 !GDO/Net/
+!GDO/PHPInfo/
 !GDO/Table/
 !GDO/UI/
 !GDO/User/

@@ -1,5 +1,5 @@
 <?php
-namespace GDO\Core\Method;
+namespace GDO\PHPInfo\Method;
 use GDO\Core\Method;
 
 final class PHPInfo extends Method
