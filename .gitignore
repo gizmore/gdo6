@@ -21,6 +21,7 @@ GDO/*
 # ...except core modules
 !GDO/Core/
 !GDO/Country/
+!GDO/Cronjob/
 !GDO/Date/
 !GDO/DB/
 !GDO/File/
