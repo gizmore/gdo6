@@ -3,6 +3,7 @@ namespace GDO\Core;
 
 use GDO\Install\Installer;
 use GDO\DB\Database;
+use GDO\Cronjob\MethodCronjob;
 
 
 /**

@@ -2,8 +2,8 @@
 namespace GDO\Core\Method;
 use GDO\DB\Database;
 use GDO\User\GDO_Session;
-use GDO\Core\MethodCronjob;
 use GDO\Date\Time;
+use GDO\Cronjob\MethodCronjob;
 /**
  * Cronjob that deletes old sessions.
  * 

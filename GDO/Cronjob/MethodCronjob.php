@@ -1,5 +1,8 @@
 <?php
-namespace GDO\Core;
+namespace GDO\Cronjob;
+
+use GDO\Core\Logger;
+use GDO\Core\Method;
 /**
  * Baseclass method for a cronjob.
  * 

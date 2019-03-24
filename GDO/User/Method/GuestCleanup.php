@@ -1,6 +1,6 @@
 <?php
 namespace GDO\User\Method;
-use GDO\Core\MethodCronjob;
+use GDO\Cronjob\MethodCronjob;
 use GDO\User\GDO_Session;
 use GDO\User\GDO_User;
 use GDO\Date\Time;

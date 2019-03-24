@@ -1,7 +1,6 @@
 <?php
 namespace GDO\File\Method;
 
-use GDO\Core\MethodCronjob;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDO_Module;
 use GDO\Core\GDO;
@@ -11,6 +10,7 @@ use GDO\File\GDT_ImageFiles;
 use GDO\File\GDO_File;
 use GDO\File\FileUtil;
 use GDO\File\ImageResize;
+use GDO\Cronjob\MethodCronjob;
 
 /**
  * This cronjob creates missing image variants for GDT_Files.
