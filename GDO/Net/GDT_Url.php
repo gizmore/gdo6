@@ -30,6 +30,11 @@ class GDT_Url extends GDT_String
 		$this->icon('url');
 	}
 	
+	public function toValue($var)
+	{
+		return new URL($var);
+	}
+	
 	public function allowLocal($allowLocal=true)
 	{
 		$this->allowLocal = $allowLocal;

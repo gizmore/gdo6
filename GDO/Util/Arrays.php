@@ -56,4 +56,22 @@ final class Arrays
 		$rk = array_reverse($k);
 		return array_combine($rk, $rv);
 	}
+	
+	/**
+	 * Return comma seperated and a final "and" like foo, bar and boo.
+	 * @param array $array
+	 * @return string
+	 */
+	public static function implodeHuman(array $array)
+	{
+		switch (count($array))
+		{
+			case 0: return '';
+			case 1: return $array[0];
+			default:
+				$last = array_pop($array);
+				return implode(', ', $array) . t('and') . $last;
+		}
+	}
+	
 }

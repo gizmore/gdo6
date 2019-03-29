@@ -10,19 +10,19 @@ final class Filewalker
 	
 	public static function traverse($path, $pattern=null, $callback_file=false, $callback_dir=false, $recursive=true, $args=null)
 	{
-		if ($pattern)
-		{
-			$_pattern = str_replace(['.', '*', '/'], ['\\.', '.*', '\\/'], $pattern);
-			$_pattern = "/{$_pattern}/";
-		}
-		
 		if (is_array($path))
 		{
 			foreach ($path as $_path)
 			{
-				self::traverse($_path, $callback_file, $callback_dir, $recursive, $args);
+				self::traverse($_path, $pattern, $callback_file, $callback_dir, $recursive, $args);
 			}
 			return;
+		}
+		
+		if ($pattern)
+		{
+			$_pattern = str_replace(['.', '*', '/'], ['\\.', '.*', '\\/'], $pattern);
+			$_pattern = "/{$_pattern}/";
 		}
 		
 		$path = rtrim($path, '/\\');
