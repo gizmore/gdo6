@@ -67,7 +67,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-audio Audio
     git clone --recursive https://github.com/gizmore/gdo6-avatar Avatar
     git clone --recursive https://github.com/gizmore/gdo6-backup Backup
-    ## git clone --recursive https://github.com/gizmore/gdo6-backup Blog
+    ## git clone --recursive https://github.com/gizmore/gdo6-blog Blog
     git clone --recursive https://github.com/gizmore/gdo6-bootstrap Bootstrap
     ## git clone --recursive https://github.com/gizmore/gdo6-buzzerapp Buzzerapp
     git clone --recursive https://github.com/gizmore/gdo6-captcha Captcha
