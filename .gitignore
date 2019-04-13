@@ -36,3 +36,6 @@ GDO/*
 !GDO/User/
 !GDO/Util/
 
+# Ignore yarn
+**/node_modules
+**/yarn.lock

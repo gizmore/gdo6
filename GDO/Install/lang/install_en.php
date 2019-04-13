@@ -60,7 +60,7 @@ You can then continue with %s.',
 	
 'install_title_7' => 'Install Javascript',
 'install_content_7' => '
-<p>You should now install node,npm,bower and other javascript components.</p>
+<p>You should now install node,npm,bower,yarn and other javascript components.</p>
 <p>Alternatively you have to upload these dependencies individually.</p>
 <p>Run the following commands on your debian machine:<p>
 <code>
@@ -68,11 +68,15 @@ As Root:<br/>
 <br/>
 aptitude install nodejs nodejs-dev npm # Install javascript<br/>
 npm install -g bower # Install bower<br/>
+npm install -g yarn # Install yarn<br/>
 <br/>
 As gdo6 user:<br/>
 <br/>
 cd www/gdo6<br/>
 ./gdo_bower.sh # Install module js dependencies<br/>
+./gdo_yarn.sh # Install module js dependencies<br/>
+<br/>
+Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 </code>
 ',
 	
