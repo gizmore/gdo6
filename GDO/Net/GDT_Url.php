@@ -35,6 +35,11 @@ class GDT_Url extends GDT_String
 		return new URL($var);
 	}
 	
+	public function toVar($value)
+	{
+	    return $value ? $value->raw : null;
+	}
+	
 	public function allowLocal($allowLocal=true)
 	{
 		$this->allowLocal = $allowLocal;
@@ -49,13 +54,15 @@ class GDT_Url extends GDT_String
 
 	public function validate($value)
 	{
-		return parent::validate($value) ? $this->validateUrl($value) : false;
+		return parent::validate($value->raw) ? $this->validateUrl($value) : false;
 	}
 	
 	public function validateUrl($value)
 	{
 		if ($value !== null)
 		{
+		    $value = $value->raw;
+		    
 			if ( (!$this->allowLocal) && ($value[0] === '/') )
 			{
 				return $this->error('err_local_url_not_allowed', [htmlspecialchars($value)]);
