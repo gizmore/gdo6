@@ -166,4 +166,12 @@ return array(
 #
 'quote_by' => 'Quote by %s',
 'quote_at' => 'at %s',
+	
+# Filter
+'int_filter' => 'num',
+'string_filter' => 'text',
+'object_filter' => 'filter',
+'sel_all' => 'all',
+'sel_checked' => 'active',
+'sel_unchecked' => 'inactive',
 );

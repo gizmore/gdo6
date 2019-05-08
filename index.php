@@ -7,7 +7,6 @@ use GDO\UI\GDT_Page;
 use GDO\User\GDO_User;
 use GDO\User\GDO_Session;
 use GDO\DB\Database;
-use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Response;
 use GDO\Core\Website;
@@ -51,7 +50,7 @@ try
 
 	# Exec
     ob_start();
-    $method = method(Common::getGetString('mo', GWF_MODULE), Common::getGetString('me', GWF_METHOD));
+    $method = $app->getMethod();
     $response = $method->exec();
 	if ($session = GDO_Session::instance())
     {
@@ -70,13 +69,13 @@ finally
 }
 
 # Render Page
-switch (Application::instance()->getFormat())
+switch ($app->getFormat())
 {
     case 'json':
     	Website::renderJSON($response->renderJSON());
         
     case 'html':
-        if (Application::instance()->isAjax())
+        if ($app->isAjax())
         {
             die($response->renderHTML());
         }

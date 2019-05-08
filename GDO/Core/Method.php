@@ -10,9 +10,10 @@ use GDO\User\GDO_Session;
 /**
  * Abstract baseclass for all methods.
  * There are some derived method classes for forms, tables and cronjobs.
+ * Provides transaction wrapping and permission checks.
  *
  * @author gizmore
- * @version 6.0
+ * @version 6.09
  * @since 1.0
  */
 abstract class Method

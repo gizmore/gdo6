@@ -18,6 +18,7 @@ echo $pagemenu ? $pagemenu->renderCell() : null;
 while ($gdo = $result->fetchObject()) :
 	echo $template->gdo($gdo)->renderList();
 endwhile;
-echo $pagemenu ? $pagemenu->renderCell() : null;
 ?>
 </ul>
+<?php
+echo $pagemenu ? $pagemenu->renderCell() : null;

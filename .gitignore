@@ -19,6 +19,7 @@ install/*
 # Ignore all modules...
 GDO/*
 # ...except core modules
+!GDO/Classic/
 !GDO/Core/
 !GDO/Country/
 !GDO/Cronjob/

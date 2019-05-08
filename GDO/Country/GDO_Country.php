@@ -60,6 +60,11 @@ final class GDO_Country extends GDO
 		}
 		return $cache;
 	}
+	
+	public function renderFlag()
+	{
+		return GDT_Template::php('Country', 'cell/flag.php', ['field' => GDT_Country::make()->gdo($this), 'choice' => false]);
+	}
 
 	public function renderCell()
 	{

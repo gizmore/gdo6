@@ -3,7 +3,7 @@ use GDO\Country\GDO_Country;
 /**
  * @var GDT_Country $field
  */
-$country = $field->getValue();
+$country = $field->gdo;
 ?>
 <?php if ($country instanceof GDO_Country) : ?>
 <img

@@ -15,7 +15,7 @@ class Application
 	const JSON = 'json';
 	
 	/**
-	 * @return \GDO\Core\Application
+	 * @return self
 	 */
 	public static function instance() { return self::$instance; }
 	private static $instance;
@@ -36,6 +36,11 @@ class Application
 	}
 	
 	public function isWindows() { return defined('PHP_WINDOWS_VERSION_MAJOR'); }
+	
+	/**
+	 * @return \GDO\Core\Method
+	 */
+	public function getMethod() { return method(Common::getGetString('mo', GWF_MODULE), Common::getGetString('me', GWF_METHOD)); }
 	
 	################
 	### Override ###

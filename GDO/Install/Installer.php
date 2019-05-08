@@ -26,9 +26,9 @@ class Installer
 		}
 	}
 	
-	public static function installModule(GDO_Module $module)
+	public static function installModule(GDO_Module $module, $reinstall=false)
 	{
-		self::installModuleClasses($module);
+		self::installModuleClasses($module, $reinstall);
 		
 		if (!$module->isPersisted())
 		{
@@ -50,7 +50,7 @@ class Installer
 		Cache::remove('gdo_modules');
 	}
 	
-	public static function installModuleClasses(GDO_Module $module)
+	public static function installModuleClasses(GDO_Module $module, $reinstall=false)
 	{
 		if ($classes = $module->getClasses())
 		{
@@ -62,18 +62,18 @@ class Installer
 					$gdo instanceof GDO;
 					if (!$gdo->gdoAbstract())
 					{
-						self::installModuleClass($gdo);
+						self::installModuleClass($gdo, $reinstall);
 					}
 				}
 			}
 		}
 	}
 	
-	public static function installModuleClass(GDO $gdo)
+	public static function installModuleClass(GDO $gdo, $reinstall=false)
 	{
 		if ($gdo->gdoIsTable())
 		{
-			$gdo->createTable();
+			$gdo->createTable($reinstall);
 		}
 	}
 	

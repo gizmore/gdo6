@@ -4,10 +4,11 @@ use GDO\DB\GDT_String;
 /**
  * HTTP Url field.
  * Features link checking.
+ * Value is a @see URL.
  * 
  * @author gizmore
  * @since 5.0
- * @version 5.0
+ * @version 6.09
  */
 class GDT_Url extends GDT_String
 {
@@ -52,26 +53,39 @@ class GDT_Url extends GDT_String
 		return $this;
 	}
 
+	################
+	### Validate ###
+	################
 	public function validate($value)
 	{
-		return parent::validate($value->raw) ? $this->validateUrl($value) : false;
+		if (!parent::validate($value?$value->raw:null))
+		{
+			return false;
+		}
+		return $this->validateUrl($value);
 	}
 	
 	public function validateUrl($value)
 	{
-		if ($value !== null)
+		# null seems allowed
+		if (null === ($value = $value->raw))
 		{
-		    $value = $value->raw;
-		    
-			if ( (!$this->allowLocal) && ($value[0] === '/') )
-			{
-				return $this->error('err_local_url_not_allowed', [htmlspecialchars($value)]);
-			}
-			if ( ($this->reachable) && (!HTTP::pageExists($value)) )
-			{
-				return $this->error('err_url_not_reachable', [htmlspecialchars($value)]);
-			}
+			return true;
 		}
+
+		# Check local
+		if ( (!$this->allowLocal) && ($value[0] === '/') )
+		{
+			return $this->error('err_local_url_not_allowed', [htmlspecialchars($value)]);
+		}
+		
+		# Check reachable
+		if ( ($this->reachable) && (!HTTP::pageExists($value)) )
+		{
+			return $this->error('err_url_not_reachable', [htmlspecialchars($value)]);
+		}
+		
 		return true;
 	}
+
 }

@@ -22,7 +22,7 @@ final class HTTP
 	 * @param string $url
 	 * @return true|false
 	 */
-	public static function pageExists( $url=null)
+	public static function pageExists($url=null)
 	{
 		if ($url === null)
 		{
@@ -39,7 +39,7 @@ final class HTTP
 			return false;
 		}
 		
-		#curl_setopt($ch, CURLOPT_VERBOSE, true);
+		curl_setopt($ch, CURLOPT_VERBOSE, true);
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
 		
 		# Set the user agent - might help, doesn't hurt
@@ -63,6 +63,10 @@ final class HTTP
 		curl_setopt($ch, CURLOPT_HEADER, true);
  
 		# Handle HTTPS links
+		if (false === ($parts = parse_url($url)))
+		{
+			return false;
+		}
 		if(isset($parts['scheme']) && $parts['scheme']=='https')
 		{
 			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  0);
@@ -71,9 +75,11 @@ final class HTTP
 		}
  
 		$response = curl_exec($ch);
+
 		curl_close($ch);
 		
 		# Get the status code from HTTP headers
+		$matches = [];
 		if(preg_match('/HTTP\/1\.\d+\s+(\d+)/', $response, $matches))
 		{
 			$code = intval($matches[1]);

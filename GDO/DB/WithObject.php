@@ -59,10 +59,14 @@ trait WithObject
 			# Without javascript, convert the name input
 			if (isset($_REQUEST['nocompletion_'.$this->name]))
 			{
-//			 	unset($_REQUEST['nocompletion_'.$this->name]);
-				return $this->findByName($var);
+			 	unset($_REQUEST['nocompletion_'.$this->name]);
+			 	if ($user = $this->findByName($var))
+			 	{
+			 		$_REQUEST['form'][$this->name] = $user->getID();
+			 	}
+				return $user;
 			}
-			return $this->table->findById(...explode(':', $var));
+			return $this->table->getById(...explode(':', $var));
 		}
 	}
 	
@@ -77,7 +81,6 @@ trait WithObject
 		{
 			return $this->table->getBy($column->name, $name);
 		}
-		return $this->table->findById($name);
 	}
 	
 	/**
@@ -122,11 +125,23 @@ trait WithObject
 	###############
 	### Cascade ###
 	###############
-	public $cascade = 'CASCADE';
+	public $cascade = 'SET NULL';
 	public function cascadeNull()
 	{
 		$this->notNull = false;
 		$this->cascade = 'SET NULL';
+		return $this;
+	}
+	
+	public function cascade()
+	{
+		$this->cascade = 'CASCADE';
+		return $this;
+	}
+	
+	public function cascadeRestrict()
+	{
+		$this->cascade = 'RESTRICT';
 		return $this;
 	}
 	

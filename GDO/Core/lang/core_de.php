@@ -166,4 +166,14 @@ return array(
 #
 'quote_by' => 'Zitat von %s',
 'quote_at' => 'am %s',
+
+	
+# Filter
+'int_filter' => 'Num',
+'string_filter' => 'Text',
+'object_filter' => 'Filter',
+'sel_all' => 'Alle',
+'sel_checked' => 'Aktiv',
+'sel_unchecked' => 'Inaktiv',
+	
 );
