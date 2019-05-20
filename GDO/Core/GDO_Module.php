@@ -172,9 +172,20 @@ class GDO_Module extends GDO
 	##############
 	public function canUpdate() { return $this->module_version != $this->getVersion(); }
 	public function canInstall() { return !$this->isPersisted(); }
+	
+	/**
+	 * Filesystem path for a file within this module.
+	 * @param string $path
+	 * @return string
+	 */
 	public function filePath($path='') { return GWF_PATH.$this->wwwPath($path); }
+	
+	/**
+	 * Relative www path for a resource.
+	 * @param string $path
+	 * @return string
+	 */
 	public function wwwPath($path='') { return "GDO/{$this->getName()}/$path"; }
-// 	public function includeClass($class) { require_once $this->filePath("$class.php"); }
 	
 	#################
 	### Templates ###

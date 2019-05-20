@@ -16,7 +16,6 @@ use GDO\Core\Module_Core;
  */
 final class GDT_CreatedBy extends GDT_User
 {
-	public $notNull = true;
 	public $writable = false;
 	public $editable = false;
 	

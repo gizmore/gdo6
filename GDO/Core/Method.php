@@ -43,6 +43,7 @@ abstract class Method
 	public function isTransactional() { return false; }
 	public function isAlwaysTransactional() { return false; }
 	public function getPermission() {}
+	public function hasPermission(GDO_User $user) { return true; }
 	public function getUserType() {}
 	public function init() {}
 	public function beforeExecute() {}
@@ -77,7 +78,8 @@ abstract class Method
 	 */
 	public function gdoParameterVar($key)
 	{
-		return $this->gdoParameter($key)->getRequestVar();
+		$gdt = $this->gdoParameter($key);
+		return $gdt->getRequestVar(null, $gdt->initial);
 	}
 	
 	/**
@@ -87,7 +89,7 @@ abstract class Method
 	public function gdoParameterValue($key)
 	{
 		$gdoType = $this->gdoParameter($key);
-		return $gdoType->toValue($gdoType->getRequestVar());
+		return $gdoType->toValue($gdoType->getRequestVar(null, $gdoType->initial), $gdoType->initial);
 	}
 	
 	##############
@@ -160,6 +162,11 @@ abstract class Method
 		if ( ($permission = $this->getPermission()) && (!$user->hasPermission($permission)) )
 		{
 			return GDT_Error::responseWith('err_permission_required', [t('perm_'.$permission)]);
+		}
+		
+		if (true !== ($error = $this->hasPermission($user)))
+		{
+			return $error;
 		}
 		
 		return $this->execMethod();

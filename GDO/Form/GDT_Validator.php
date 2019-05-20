@@ -31,4 +31,12 @@ class GDT_Validator extends GDT
 	public function renderCell() { return ''; }
 	public function validatorField() { return GDT_Form::$VALIDATING_INSTANCE->fields[$this->validateField]; }
 	public function renderJSON() {}
+	
+	/**
+	 * 
+	 */
+	public function validator_func_dummy(GDT_Form $form, GDT $field, $value)
+	{
+		
+	}
 }

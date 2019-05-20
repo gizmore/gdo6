@@ -29,6 +29,6 @@ if ($field->editable) $firstEditableField = $firstEditableField ? $firstEditable
   </div>
 </div>
 <script type="text/javascript">
-window.GDO_FIRST_EDITABLE_FIELD = window.GDO_FIRST_EDITABLE_FIELD||'<?=$firstEditableField->id()?>';
+window.GDO_FIRST_EDITABLE_FIELD = window.GDO_FIRST_EDITABLE_FIELD||'<?=$firstEditableField?$firstEditableField->id():null?>';
 </script>
 <!-- End of Form -->

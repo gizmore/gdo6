@@ -40,3 +40,7 @@ Pull requests < gimme your ssh key. :)
 
 - What is the difference between writable and editable? (writable is still written to db, but cannot be changed from initial – editable accepts user input)
 
+# Code Ideas
+integer sequency enceclopedy modules (OEOIS->sequence('141414')->element(5)->forEach()->etc
+
+

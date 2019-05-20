@@ -5,7 +5,6 @@ use GDO\DB\GDT_String;
 /**
  * A combobox is a string with additional completion and dropdown.
  * 
- * @todo implement
  * @author gizmore
  * @since 6.00
  * @version 6.05

@@ -63,10 +63,13 @@ trait WithObject
 			 	if ($user = $this->findByName($var))
 			 	{
 			 		$_REQUEST['form'][$this->name] = $user->getID();
+					return $user;
 			 	}
+			}
+			if ($user = $this->table->getById(...explode(':', $var)))
+			{
 				return $user;
 			}
-			return $this->table->getById(...explode(':', $var));
 		}
 	}
 	
@@ -108,18 +111,12 @@ trait WithObject
 	################
 	public function validate($value)
 	{
-		if ($value === null)
+		# Weird using getVar. but works with completion hack.
+		if ($var = $this->getVar())
 		{
-			if (null !== ($var = $this->getVar()))
-			{
-				return $this->error('err_gdo_not_found', [$this->table->gdoHumanName(), html($var)]);
-			}
-			elseif ($this->notNull)
-			{
-				return $this->errorNotNull();
-			}
+			return $value ? true : $this->error('err_gdo_not_found', [$this->table->gdoHumanName(), html($var)]);
 		}
-		return true;
+		return $this->notNull ? $this->errorNotNull() : true;
 	}
 	
 	###############
@@ -128,7 +125,6 @@ trait WithObject
 	public $cascade = 'SET NULL';
 	public function cascadeNull()
 	{
-		$this->notNull = false;
 		$this->cascade = 'SET NULL';
 		return $this;
 	}
@@ -180,7 +176,7 @@ trait WithObject
 		$define = str_replace(' NOT NULL', '', $define);
 		$define = str_replace(' PRIMARY KEY', '', $define);
 		$define = str_replace(' AUTO_INCREMENT', '', $define);
-		$define = preg_replace('#,FOREIGN KEY .* ON UPDATE CASCADE#', '', $define);
+		$define = preg_replace('#,FOREIGN KEY .* ON UPDATE (?:CASCADE|RESTRICT|SET NULL)#', '', $define);
 		$on = $this->fkOn ? $this->fkOn : $primaryKey->identifier();
 		return "$define{$this->gdoNullDefine()}".
 			",FOREIGN KEY ({$this->identifier()}) REFERENCES $tableName($on) ON DELETE {$this->cascade} ON UPDATE {$this->cascade}";
