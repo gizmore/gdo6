@@ -67,6 +67,12 @@ abstract class Method
 		{
 			if ($gdt->name === $key)
 			{
+				$var = $gdt->getRequestVar(null, $gdt->initial);
+				$value = $gdt->toValue($var);
+				if ($gdt->validate($value))
+				{
+					$gdt->var = $var;
+				}
 				return $gdt;
 			}
 		}
@@ -79,7 +85,7 @@ abstract class Method
 	public function gdoParameterVar($key)
 	{
 		$gdt = $this->gdoParameter($key);
-		return $gdt->getRequestVar(null, $gdt->initial);
+		return $gdt->var;
 	}
 	
 	/**
@@ -88,8 +94,8 @@ abstract class Method
 	 */
 	public function gdoParameterValue($key)
 	{
-		$gdoType = $this->gdoParameter($key);
-		return $gdoType->toValue($gdoType->getRequestVar(null, $gdoType->initial), $gdoType->initial);
+		$gdt = $this->gdoParameter($key);
+		return $gdt->toValue($gdt->var);
 	}
 	
 	##############
