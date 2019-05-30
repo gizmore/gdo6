@@ -53,6 +53,16 @@ class GDT_Table extends GDT
 		return $this;
 	}
 	
+	##################
+	### Hide empty ###
+	##################
+	public $hideEmpty = false;
+	public function hideEmpty($hideEmpty=true)
+	{
+		$this->hideEmpty = $hideEmpty;
+		return $this;
+	}
+	
 	################
 	### Ordering ###
 	################
@@ -254,6 +264,10 @@ class GDT_Table extends GDT
 	##############
 	public function renderCell()
 	{
+		if ( ($this->hideEmpty) && ($this->getResult()->numRows() === 0) )
+		{
+			return '';
+		}
 		return GDT_Template::php('Table', 'cell/table.php', ['field'=>$this]);
 	}
 	

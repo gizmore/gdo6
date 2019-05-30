@@ -112,9 +112,9 @@ trait WithObject
 	public function validate($value)
 	{
 		# Weird using getVar. but works with completion hack.
-		if ($var = $this->getVar())
+		if ($this->var)
 		{
-			return $value ? true : $this->error('err_gdo_not_found', [$this->table->gdoHumanName(), html($var)]);
+			return $value ? true : $this->error('err_gdo_not_found', [$this->table->gdoHumanName(), html($this->var)]);
 		}
 		return $this->notNull ? $this->errorNotNull() : true;
 	}

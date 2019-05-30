@@ -66,7 +66,7 @@ final class Mail
 		$data = file_get_contents($filename);
 		return $this->addAttachment($title, $data, $mime);
 	}
-
+	
 	public static function botMail()
 	{
 		$mail = new self();

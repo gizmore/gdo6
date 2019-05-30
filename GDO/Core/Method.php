@@ -69,9 +69,10 @@ abstract class Method
 			{
 				$var = $gdt->getRequestVar(null, $gdt->initial);
 				$value = $gdt->toValue($var);
-				if ($gdt->validate($value))
+				$gdt->var = $var;
+				if (!$gdt->validate($value))
 				{
-					$gdt->var = $var;
+					$gdt->var = $gdt->initial;
 				}
 				return $gdt;
 			}
@@ -98,6 +99,15 @@ abstract class Method
 		return $gdt->toValue($gdt->var);
 	}
 	
+	public function methodVars(array $vars)
+	{
+		foreach ($vars as $key => $value)
+		{
+			$_REQUEST[$key] = $value;
+		}
+		return $this;
+	}
+	
 	##############
 	### Helper ###
 	##############
@@ -111,6 +121,33 @@ abstract class Method
 	public function message($key, array $args=null, $log=true) { return GDT_Success::responseWith($key, $args); }
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
+	
+	##################
+	### Permission ###
+	##################
+	/**
+	 * Check if user has permission to execute method.
+	 * Override various function to customize your method:
+	 * Methods: getUserType, isUserRequired, getPermission, hasPermission.
+	 * @param GDO_User $user
+	 * @return boolean
+	 */
+	public function hasUserPermission(GDO_User $user)
+	{
+		if ( ($this->isUserRequired()) && (!$user->isAuthenticated()) )
+		{
+			return false;
+		}
+		if ( ($this->getUserType()) && ($this->getUserType() !== $user->getType()) )
+		{
+			return false;
+		}
+		if ( ($permission = $this->getPermission()) && (!$user->hasPermission($permission)) )
+		{
+			return false;
+		}
+		return $this->hasPermission($user);
+	}
 	
 	############
 	### Exec ###

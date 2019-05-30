@@ -5,3 +5,8 @@ span, img, a, i, b, em { display: inline-block; }
 .gdo-exception { white-space: pre; font-family: monospace; }
 .gdo-tblorder { display: inline-block; }
 img.gdo-country { width: 22px; height: 16px; }
+.b { display: block; }
+.ib { display: inline-block; }
+.n { display: none; }
+.cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
+.ce { text-align: center; margin: auto; }
