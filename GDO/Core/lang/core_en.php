@@ -110,8 +110,8 @@ return array(
 'perm_staff' => 'Staff',
 
 # Dateformats
-'df_day' => 'm/d/Y',
-'df_short' => 'm/d/Y H:i',
+'df_day' => '%m/%d/%Y',
+'df_short' => '%m/%d/%Y %H:%M',
 'tu_s' => 's',
 'tu_m' => 'm',
 'tu_h' => 'h',

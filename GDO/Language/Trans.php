@@ -15,6 +15,12 @@ final class Trans
 	private static $CACHE;
 	private static $INITED = false;
 	
+	public static function setISO($iso)
+	{
+		self::$ISO = $iso;
+		setlocale(LC_TIME, $iso);
+	}
+	
 	public static function numFiles()
 	{
 		return count(self::$PATHS);

@@ -62,7 +62,7 @@ final class Time
 	
 	public static function displayTimestampISO($iso, $timestamp=null, $format='short', $default_return='---')
 	{
-		return $timestamp === null ? $default_return : date(t('df_'.$format), $timestamp);
+		return $timestamp === null ? $default_return : strftime(t('df_'.$format), $timestamp);
 	}
 	
 	public static function displayDate($date=null, $format='short', $default_return='---')

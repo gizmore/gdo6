@@ -56,7 +56,7 @@ class Module_Language extends GDO_Module
 	{
 		if (!Application::instance()->isCLI())
 		{
-			Trans::$ISO = $this->detectISO();
+			Trans::setISO($this->detectISO());
 		}
 	}
 	
