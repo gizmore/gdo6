@@ -48,7 +48,7 @@ final class Module_Core extends GDO_Module
 	
 	public function onInstall()
 	{
-		touch(GWF_PATH.'temp/ipc.socket');
+		touch(GDO_PATH.'temp/ipc.socket');
 	}
 	
 	##############

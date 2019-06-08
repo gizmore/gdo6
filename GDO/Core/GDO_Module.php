@@ -178,7 +178,7 @@ class GDO_Module extends GDO
 	 * @param string $path
 	 * @return string
 	 */
-	public function filePath($path='') { return GWF_PATH.$this->wwwPath($path); }
+	public function filePath($path='') { return GDO_PATH.$this->wwwPath($path); }
 	
 	/**
 	 * Relative www path for a resource.

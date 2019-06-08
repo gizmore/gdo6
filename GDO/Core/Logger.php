@@ -33,7 +33,7 @@ final class Logger
 	private static $POST_DELIMITER = '.::.';
 
 	private static $username = false;
-	private static $basedir = GWF_PATH . 'protected/logs';
+	private static $basedir = GDO_PATH . 'protected/logs';
 	private static $logbits = self::_DEFAULT;
 	private static $logformat = "%s [%s%s] - %s\n";
 	private static $cache = 0;
@@ -50,7 +50,7 @@ final class Logger
 	{
 		self::$username = $username;
 		self::$logbits = $logbits;
-		self::$basedir = GWF_PATH . $basedir;
+		self::$basedir = GDO_PATH . $basedir;
 	}
 
 	public static function isEnabled($bits) { return ($bits === (self::$logbits & $bits)); }

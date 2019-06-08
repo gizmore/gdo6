@@ -15,7 +15,7 @@ use GDO\Core\ModuleLoader;
 define('GWF_PERF_START', microtime(true));
 
 # Autoconf path
-define('GWF_PATH', str_replace('\\', '/', __DIR__) . '/');
+define('GDO_PATH', str_replace('\\', '/', __DIR__) . '/');
 
 # Verbose error handling
 while (ob_get_level()>0) { ob_end_clean(); }
@@ -25,7 +25,7 @@ ini_set('display_errors', 1);
 # Init GDO autoloader
 global $GDT_LOADED; $GDT_LOADED = 0; # perf
 spl_autoload_register(function($name){
-	$name = GWF_PATH . str_replace('\\', '/', $name) . '.php';
+	$name = GDO_PATH . str_replace('\\', '/', $name) . '.php';
 	if (is_file($name))
 	{
 		global $GDT_LOADED; $GDT_LOADED++; # perf

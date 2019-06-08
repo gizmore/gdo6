@@ -162,7 +162,7 @@ class Installer
 	 */
 	public static function loopMethod(GDO_Module $module, $path)
 	{
-// 		die($path."<br/>\n".GWF_PATH);
+// 		die($path."<br/>\n".GDO_PATH);
 		$entry = Strings::substrTo(basename($path), '.');
 		$class_name = "GDO\\{$module->getName()}\\Method\\$entry";
 		if (!class_exists($class_name, false))
@@ -210,7 +210,7 @@ class Installer
 // 	public static function includeCoreTables()
 // 	{
 // 		self::$coreTables = [];
-// 		Filewalker::traverse(GWF_PATH . 'inc/util/gwf', '*', [__CLASS__, 'coreInclude'], false, false);
+// 		Filewalker::traverse(GDO_PATH . 'inc/util/gwf', '*', [__CLASS__, 'coreInclude'], false, false);
 // 		return self::$coreTables;
 // 	}
 	

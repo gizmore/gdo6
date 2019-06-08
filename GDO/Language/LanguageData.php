@@ -16,7 +16,7 @@ final class LanguageData
 		foreach (self::getLanguages() as $data)
 		{
 			list($en, $native, $iso3, $iso2) = $data;
-			if (FileUtil::isFile(GWF_PATH . 'GDO/Language/img/'.strtolower($iso2).'.png'))
+			if (FileUtil::isFile(GDO_PATH . 'GDO/Language/img/'.strtolower($iso2).'.png'))
 			{
 			  $bulkData[] = [strtolower($iso2)];
 			}

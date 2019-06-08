@@ -39,7 +39,7 @@ class GDT_Font extends GDT_Select
 					foreach ($files as $file)
 					{
 						$fontName = Strings::rsubstrTo($file, '.');
-						$fontPath = Strings::rsubstrFrom($dir . '/' . $file, GWF_PATH);
+						$fontPath = Strings::rsubstrFrom($dir . '/' . $file, GDO_PATH);
 						$choices[$fontPath] = $fontName;
 					}
 				}

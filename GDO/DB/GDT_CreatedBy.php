@@ -18,7 +18,7 @@ final class GDT_CreatedBy extends GDT_User
 {
 	public $writable = false;
 	public $editable = false;
-	public $notNull = true;
+	public $notNull = false;
 	
 	public function defaultLabel() { return $this->label('created_by'); }
 	

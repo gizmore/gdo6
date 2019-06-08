@@ -27,7 +27,7 @@ class Application
 	public function __construct()
 	{
 		self::$instance = $this;
-		$this->loader = new ModuleLoader(GWF_PATH . 'GDO/');
+		$this->loader = new ModuleLoader(GDO_PATH . 'GDO/');
 	}
 	public function __destruct()
 	{

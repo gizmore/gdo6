@@ -36,10 +36,10 @@ final class Security extends MethodForm
 
 	public function onProtect()
 	{
-		HTAccess::protectFolder(GWF_PATH.'temp');
-		HTAccess::protectFolder(GWF_PATH.'files');
-		HTAccess::protectFolder(GWF_PATH.'protected');
-		HTAccess::protectFolder(GWF_PATH.'install');
+		HTAccess::protectFolder(GDO_PATH.'temp');
+		HTAccess::protectFolder(GDO_PATH.'files');
+		HTAccess::protectFolder(GDO_PATH.'protected');
+		HTAccess::protectFolder(GDO_PATH.'install');
 		return Website::redirectMessage(GWF_WEB_ROOT)->add($this->renderPage());
 	}
 }

@@ -130,6 +130,10 @@ abstract class GDO
 		return @array_key_exists($key, $this->gdoVars);
 	}
 	
+	/**
+	 * @param string $key
+	 * @return string
+	 */
 	public function getVar($key)
 	{
 		return @$this->gdoVars[$key];

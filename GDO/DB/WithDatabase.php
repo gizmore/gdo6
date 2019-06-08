@@ -13,7 +13,7 @@ trait WithDatabase
 	public function unique($unique=true) { $this->unique = $unique; return $this; }
 	
 //	 public $primary = false;
-	public function primary($primary=true) { $this->primary = $primary; return $this->notNull(); }
+	public function primary($primary=true) { $this->primary = $primary; return $this; }
 	public function isPrimary() { return $this->primary; }
 	
 	public $index = false;

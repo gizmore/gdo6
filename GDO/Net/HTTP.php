@@ -3,17 +3,22 @@ namespace GDO\Net;
 use GDO\Util\Strings;
 use GDO\Core\GDT_Error;
 /**
- * HTTP functions using curl.
- * Nocache helper.
+ * - very simple HTTP get/post using curl.
+ * 
+ * - simple HTTP Nocache headers.
  * 
  * @author gizmore
  * @version 6.05
  */
 final class HTTP
 {
+	#####################
+	### head/get/post ###
+	#####################
 	const DEFAULT_TIMEOUT = 20;
 	const DEFAULT_TIMEOUT_CONNECT = 6;
-	const USERAGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0';
+	const USERAGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36';
+#	const USERAGENT_LINUX = 'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0';
 	public static $TIMEOUT = self::DEFAULT_TIMEOUT;
 	public static $TIMEOUT_CONNECT = self::DEFAULT_TIMEOUT_CONNECT;
 
@@ -109,7 +114,11 @@ final class HTTP
 		);
 		$url = str_replace(array_keys($replace), array_values($replace), $url);
 		
+		echo "$url\n";
+		
 		$ch = curl_init();
+		
+		curl_setopt($ch, CURLOPT_VERBOSE, true);
 		
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
 		
@@ -124,7 +133,7 @@ final class HTTP
 			curl_setopt($ch, CURLOPT_COOKIE, $cookie);
 		}
 		# Enable cookie engine with not saving the cookies to disk
-		curl_setopt($ch, CURLOPT_COOKIEFILE, "");
+		curl_setopt($ch, CURLOPT_COOKIEFILE, GDO_PATH."temp/test.cookie");
 		
 		
 		curl_setopt($ch, CURLOPT_USERAGENT, self::USERAGENT);
@@ -169,7 +178,7 @@ final class HTTP
 	 * @param false|string $cookie
 	 * @return string the page content
 	 */
-	public static function post($url, $postdata, $returnHeader=false, $httpHeaders=false, $cookie=false)
+	public static function post($url, $postdata=[], $returnHeader=false, $httpHeaders=false, $cookie=false)
 	{
 		# Clean URL
 		if (strlen($url) < 10)
@@ -182,7 +191,8 @@ final class HTTP
 		}
 		
 		$ch = curl_init();
-		#curl_setopt($ch, CURLOPT_VERBOSE, true);
+		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		echo "$url\n";
 
 		# Optional HTTP headers
 		if (is_array($httpHeaders))
@@ -197,7 +207,7 @@ final class HTTP
 			curl_setopt($ch, CURLOPT_COOKIE, $cookie);
 		}
 		# Enable cookie engine with not saving the cookies to disk
-		curl_setopt($ch, CURLOPT_COOKIEFILE, "");
+		curl_setopt($ch, CURLOPT_COOKIEFILE, GDO_PATH."temp/test.cookie");
 		
 		curl_setopt($ch, CURLOPT_URL, $url);
  		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);

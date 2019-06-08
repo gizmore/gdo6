@@ -146,7 +146,7 @@ class GDT_Template extends GDT
 		foreach ($isos as $iso)
 		{
 			$path1 = Strings::rsubstrTo($path, '.', $path) . $iso . '.' . Strings::rsubstrFrom($path, '.', '');
-			$path1 = GWF_PATH . "GDO/$moduleName/tpl/$path1";
+			$path1 = GDO_PATH . "GDO/$moduleName/tpl/$path1";
 			if (is_file($path1))
 			{
 				return $path1;
@@ -154,6 +154,6 @@ class GDT_Template extends GDT
 		}
 
 		// Try module file on module templates.
-		return GWF_PATH . "GDO/$moduleName/tpl/$path";
+		return GDO_PATH . "GDO/$moduleName/tpl/$path";
 	}
 }

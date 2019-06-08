@@ -53,7 +53,7 @@ class GDT_Message extends GDT_Text
 		static $purifier;
 		if (!isset($purifier))
 		{
-			require GWF_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
+			require GDO_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
 			$config = \HTMLPurifier_Config::createDefault();
 			
 			$config->set('HTML.Allowed', 'div,blockquote,span');

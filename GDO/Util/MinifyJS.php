@@ -26,7 +26,7 @@ final class MinifyJS
 	private $external = array();
 	private $concatenate = array();
 	
-	public static function tempDirS($path='') { return GWF_PATH . 'temp/minify/' . $path; }
+	public static function tempDirS($path='') { return GDO_PATH . 'temp/minify/' . $path; }
 
 	public static function minified(array $javascripts)
 	{
@@ -114,7 +114,7 @@ final class MinifyJS
 	
 	public function minifiedJavascript($path)
 	{
-		$src = GWF_PATH . Strings::substrTo($path, '?', $path);
+		$src = GDO_PATH . Strings::substrTo($path, '?', $path);
 		
 		if (FileUtil::isFile($src))
 		{

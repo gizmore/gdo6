@@ -19,7 +19,7 @@ class Configure extends MethodForm
 {
 	public function configPath()
 	{
-		return GWF_PATH . 'protected/config.php';
+		return GDO_PATH . 'protected/config.php';
 	}
 	
 	public function createForm(GDT_Form $form)

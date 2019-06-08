@@ -15,9 +15,9 @@ final class SystemTest extends Method
 		$tVars = array(
 			'tests' => array(
 				$this->testPHPVersion(),
-				FileUtil::createDir(GWF_PATH . 'protected'),
-				FileUtil::createDir(GWF_PATH . 'files'),
-				FileUtil::createDir(GWF_PATH . 'temp'),
+				FileUtil::createDir(GDO_PATH . 'protected'),
+				FileUtil::createDir(GDO_PATH . 'files'),
+				FileUtil::createDir(GDO_PATH . 'temp'),
 				$this->testBower(),
 				function_exists('mb_strlen'),
 			),

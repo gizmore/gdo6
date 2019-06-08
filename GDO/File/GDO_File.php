@@ -103,7 +103,7 @@ final class GDO_File extends GDO
 	###############
 	public static function filesDir()
 	{
-		return GWF_PATH . 'files/';
+		return GDO_PATH . 'files/';
 	}
 	
 	/**
@@ -126,7 +126,7 @@ final class GDO_File extends GDO
 	public static function fromString($name, $content)
 	{
 		# Create temp dir
-		$tempDir = GWF_PATH . 'temp/file';
+		$tempDir = GDO_PATH . 'temp/file';
 		FileUtil::createDir($tempDir);
 		# Copy content to temp file
 		$tempPath = $tempDir . '/' . md5(md5($name).md5($content));
