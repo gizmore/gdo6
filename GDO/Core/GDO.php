@@ -509,12 +509,12 @@ abstract class GDO
 		return $by === 0 ? $this : $this->saveVar($key, $this->getVar($key)+$by);
 	}
 	
-	public function saveVar($key, $value)
+	public function saveVar($key, $value, $withHooks=true, &$worthy=false)
 	{
-		return $this->saveVars([$key => $value]);
+		return $this->saveVars([$key => $value], $withHooks, $worthy);
 	}
 	
-	public function saveVars(array $vars, $withHooks=true)
+	public function saveVars(array $vars, $withHooks=true, &$worthy=false)
 	{
 		$worthy = false; # Anything changed?
 		$query = $this->updateQuery();

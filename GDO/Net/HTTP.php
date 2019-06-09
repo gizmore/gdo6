@@ -110,7 +110,7 @@ final class HTTP
 	 * @param false|string $cookie
 	 * @return string content from curl request.
 	 */
-	public static function getFromURL($url, $returnHeader=false, $cookie=false)
+	public static function getFromURL($url, $returnHeader=false, $cookie=false, array $httpHeaders=null)
 	{
 		# Cleanup URL
 		$url = trim($url);
@@ -119,14 +119,18 @@ final class HTTP
 		);
 		$url = str_replace(array_keys($replace), array_values($replace), $url);
 		
-		echo "$url\n";
-		
 		$ch = curl_init();
 		
 		if (self::$DEBUG)
 		{
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
 		}
+		
+		if ( (!empty($httpHeaders)) && (is_array($httpHeaders)) )
+		{
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeaders);
+		}
+		
 		
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
 		
