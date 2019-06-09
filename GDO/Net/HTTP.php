@@ -12,6 +12,7 @@ use GDO\Core\GDT_Error;
  */
 final class HTTP
 {
+	public static $DEBUG = false;
 	#####################
 	### head/get/post ###
 	#####################
@@ -44,7 +45,11 @@ final class HTTP
 			return false;
 		}
 		
-		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		if (self::$DEBUG)
+		{
+			curl_setopt($ch, CURLOPT_VERBOSE, true);
+		}
+		
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
 		
 		# Set the user agent - might help, doesn't hurt
@@ -118,7 +123,10 @@ final class HTTP
 		
 		$ch = curl_init();
 		
-		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		if (self::$DEBUG)
+		{
+			curl_setopt($ch, CURLOPT_VERBOSE, true);
+		}
 		
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
 		
@@ -191,8 +199,11 @@ final class HTTP
 		}
 		
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_VERBOSE, true);
-		echo "$url\n";
+		
+		if (self::$DEBUG)
+		{
+			curl_setopt($ch, CURLOPT_VERBOSE, true);
+		}
 
 		# Optional HTTP headers
 		if (is_array($httpHeaders))
