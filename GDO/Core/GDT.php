@@ -150,7 +150,7 @@ abstract class GDT
 				return $default;
 			}
 		}
-		return empty($arr) ? $default : $arr;
+		return empty($arr) ? null : $arr;
 	}
 	
 	##############
