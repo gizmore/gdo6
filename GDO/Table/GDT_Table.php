@@ -69,7 +69,7 @@ class GDT_Table extends GDT
 	public $ordered;
 	public $orderDefault;
 	public $orderDefaultAsc = true;
-	public function ordered($ordered=true, $defaultOrder=null, $defaultAsc = true)
+	public function ordered($ordered=true, $defaultOrder=null, $defaultAsc=true)
 	{
 		$this->ordered = $ordered;
 		$this->orderDefault = $defaultOrder;

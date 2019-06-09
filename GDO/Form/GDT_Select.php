@@ -142,7 +142,7 @@ class GDT_Select extends GDT_ComboBox
 		{
 			if ($selected = @json_decode($this->getVar()))
 			{
-				if (in_array($value, $selected, true))
+				if (in_array($value, $selected))
 				{
 					return self::SELECTED;
 				}

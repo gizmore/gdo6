@@ -7,6 +7,7 @@ use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
 use GDO\DB\WithDatabase;
 use GDO\UI\WithTooltip;
+use GDO\Table\WithOrder;
 
 /**
  * The GDT_Timestamp field is the baseclass for all datefields.
@@ -22,6 +23,7 @@ class GDT_Timestamp extends GDT
 	use WithTooltip;
 	use WithFormFields;
 	use WithDatabase;
+	use WithOrder;
 	
 	public function __construct()
 	{
