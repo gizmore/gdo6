@@ -27,13 +27,21 @@ class GDT_Form extends GDT
 	public $info;
 	public function info($info) { $this->info = $info; return $this; }
 	
+	##############
+	### Method ###
+	##############
 	public $method = 'POST';
 	public function method($method)
 	{
 		$this->method = $method;
 		return $this;
 	}
+	public function methodGET() { return $this->method('GET'); }
+	public function methodPOST() { return $this->method('POST'); }
 	
+	################
+	### Encoding ###
+	################
 	const URLENCODED = 'application/x-www-form-urlencoded';
 	const MULTIPART = 'multipart/form-data';
 	public $encoding = self::MULTIPART;
