@@ -7,12 +7,12 @@ use GDO\DB\GDT_Text;
 /**
  * A message is a GDT_Text with an editor.
  * The content is html, filtered through a whitelist with html-purifier.
- * The default editor is simply a textarea.
+ * The default editor is simply a textarea, and a gdo6-tinymce is available.
  * 
  * @see \GDO\TinyMCE\Module_TinyMCE
  * @author gizmore
  * @since 3.0
- * @version 6.05
+ * @version 6.09
  */
 class GDT_Message extends GDT_Text
 {

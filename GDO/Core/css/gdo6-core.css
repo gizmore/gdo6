@@ -10,3 +10,5 @@ img.gdo-country { width: 22px; height: 16px; }
 .n { display: none; }
 .cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
 .ce { text-align: center; margin: auto; }
+
+.gdo-table td.gdt-num.gdo-gdt_user { font-family: sans-serif; text-align: left; }

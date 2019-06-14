@@ -20,9 +20,6 @@ final class GDT_CreatedBy extends GDT_User
 {
 	public $writable = false; # no visible in form? / no editing allowed?
 	public $editable = false; # no editing allowed (disabled, nochange/ignore)
-	# public $notNull = false; # should be default
-
-	# public $cascade = "SET NULL"; # should be default
 	
 	public function defaultLabel() { return $this->label('created_by'); }
 	
@@ -35,8 +32,14 @@ final class GDT_CreatedBy extends GDT_User
 	public function blankData()
 	{
 		$id = Application::instance()->isInstall()
-			? Module_Core::instance()->cfgSystemUserID()
+			? GDO_User::system()->getID()
 			: GDO_User::current()->persistent()->getID();
 		return [$this->name => $id];
+	}
+	
+	public function getValue()
+	{
+		$value = parent::getValue();
+		return $value ? $value : GDO_User::system();
 	}
 }

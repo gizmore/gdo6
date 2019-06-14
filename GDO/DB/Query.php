@@ -64,7 +64,7 @@ class Query
 	### Cache ###
 	#############
 	/**
-	 * Use this to avoid using the GDO cache.
+	 * Use this to avoid using the GDO cache. This means the memcache might be still used? This means no single identity?
 	 * @return \GDO\DB\Query
 	 */
 	public function uncached() { return $this->cached(false); }
@@ -87,7 +87,7 @@ class Query
 	/**
 	 * Copy this query.
 	 * Used to build pagination queries from selects.
-	 * @return \GDO\DB\Query
+	 * @return self
 	 */
 	public function copy()
 	{
@@ -140,18 +140,11 @@ class Query
 	/**
 	 * @param string $condition
 	 * @param string $op
-	 * @return self
+	 * @return Query
 	 */
 	public function where($condition, $op="AND")
 	{
-		if ($this->where)
-		{
-			$this->where.= " $op ($condition)";
-		}
-		else
-		{
-			$this->where= "($condition)";
-		}
+		$this->where = $this->where ? $this->where . " $op ($condition)" : "($condition)";
 		return $this;
 	}
 	
@@ -188,16 +181,14 @@ class Query
 		return $this->having ? " HAVING {$this->having}" : "";
 	}
 	
+		
+	/**
+	 * @param string $tableName
+	 * @return self
+	 */	
 	public function from($tableName)
 	{
-		if ($this->from)
-		{
-			$this->from .= ',' . $tableName;
-		}
-		else
-		{
-			$this->from = $tableName;
-		}
+		$this->from = $this->from ? $this->from . ", $tableName" : $tableName;
 		return $this;
 	}
 	
@@ -211,23 +202,25 @@ class Query
 		return $this->from ? " {$this->from}" : "";
 	}
 	
+	/**
+	 * @param string $columns
+	 * @return self
+	 */
 	public function select($columns=null)
 	{
 		$this->type = self::SELECT;
-		if ($columns)
+		if ($columns) # ignore empty
 		{
-			if ($this->columns)
-			{
-				$this->columns .= ", $columns";
-			}
-			else
-			{
-				$this->columns = " $columns";
-			}
+			$this->columns = $this->columns ? $this->columns . ", $columns" : " $columns";
 		}
 		return $this;
 	}
 	
+	/**
+	 * @param int $count
+	 * @param int $start
+	 * @return self
+	 */
 	public function limit($count, $start=0)
 	{
 		$this->limit = " LIMIT $start, $count";

@@ -18,8 +18,12 @@ final class Website
 	
 	public static function redirectBack($time=0)
 	{
-		$url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : GWF_WEB_ROOT;
-		return self::redirect($url, $time);
+		return self::redirect(Website::hrefBack(), $time);
+	}
+	
+	public static function hrefBack()
+	{
+		return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : GWF_WEB_ROOT;
 	}
 	
 	public static function redirect($url, $time=0)

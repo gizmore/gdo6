@@ -1,5 +1,6 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Table\WithOrder;
 use GDO\Core\GDT_Template;
 use GDO\UI\WithLabel;
@@ -7,12 +8,16 @@ use GDO\Form\WithFormFields;
 use GDO\UI\WithTooltip;
 use GDO\Core\GDO;
 use GDO\Core\GDT;
-use GDO\UI\WithHTML;
 use GDO\UI\WithPHPJQuery;
+
 /**
  * Basic String type with database support.
+ * Base class for further textual data like a text(area) or message.
+ * Used "With" Traits: label, formfields, tooltip, order, database and phpjquery.
+ * Provided Variables: encoding, pattern, caseSensitive, min, max
+ * 
  * @author gizmore
- * @version 6.05
+ * @version 6.08
  * @since 6.00
  */
 class GDT_String extends GDT

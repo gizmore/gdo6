@@ -22,7 +22,7 @@ abstract class Method
 	use WithTitle;
 
 	/**
-	 * @return \GDO\Core\GDT_Response
+	 * @return GDT_Response
 	 */
 	abstract public function execute();
 	
@@ -234,11 +234,11 @@ abstract class Method
 		try
 		{
 			$this->init();
-			$this->beforeExecute();
+			$response = $this->beforeExecute();
 			if ($transactional) $db->transactionBegin();
-			$response = $this->execute();
+			$response = $response ? $response->add($this->execute()) : $this->execute();
 			if ($transactional) $db->transactionEnd();
-			$this->afterExecute();
+			$response = $response ? $response->add($this->afterExecute()) : $response;
 			return $response;
 		}
 		catch (\Exception $e)

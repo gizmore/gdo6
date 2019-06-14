@@ -3,7 +3,6 @@ namespace GDO\Form;
 use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Util\Common;
-use GDO\Core\GDT;
 use GDO\File\GDT_File;
 /**
  * Generic method that uses a GDT_Form.

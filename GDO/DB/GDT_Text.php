@@ -1,11 +1,13 @@
 <?php
 namespace GDO\DB;
+
 /**
- * The text gdoType exceeds the varchar.
+ * The text gdoType exceeds the varchar (GDT_String).
  * It is displayed in a textarea like form field.
  * The cell rendering should be dottet.
  * 
  * @author gizmore
+ * @see GDT_String
  *
  */
 class GDT_Text extends GDT_String
@@ -19,4 +21,15 @@ class GDT_Text extends GDT_String
 		$collate = $this->gdoCollateDefine($this->caseSensitive);
 		return "{$this->identifier()} TEXT({$this->max}) CHARSET {$this->gdoCharsetDefine()} {$collate}{$this->gdoNullDefine()}";
 	}
+	
+	public function validate($value)
+	{
+		return parent::validate($value) ? $this->validateNonNumeric($value) : false;
+	}
+	
+	public function validateNonNumeric($value)
+	{
+		return is_numeric($value) ? $this->error('err_text_only_numeric') : true;
+	}
+	
 }

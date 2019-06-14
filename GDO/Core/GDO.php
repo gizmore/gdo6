@@ -125,7 +125,11 @@ abstract class GDO
 	private $dirty = false;
 	public function getGDOVars() { return $this->gdoVars; }
 	
-	public function hasVar($key=null)
+	/**
+	 * @param string $key
+	 * @return bool
+	 */
+	public function hasVar($key)
 	{
 		return @array_key_exists($key, $this->gdoVars);
 	}
@@ -139,9 +143,15 @@ abstract class GDO
 		return @$this->gdoVars[$key];
 	}
 	
-	public function setVar($key, $value, $markDirty=true)
+	/**
+	 * @param string $key
+	 * @param string $var
+	 * @param boolean $markDirty
+	 * @return self
+	 */
+	public function setVar($key, $var, $markDirty=true)
 	{
-		$this->gdoVars[$key] = $value === null ? null : (string)$value;
+		$this->gdoVars[$key] = $var === null ? null : (string)$var;
 		return $markDirty ? $this->markDirty($key) : $this;
 	}
 	
@@ -223,6 +233,7 @@ abstract class GDO
 		{
 			$this->dirty = [];
 		}
+
 		if ($this->dirty !== true)
 		{
 			$this->dirty[$key] = true;

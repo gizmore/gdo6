@@ -3,6 +3,8 @@ namespace GDO\DB;
 use GDO\Core\GDO;
 use GDO\Core\GDT;
 /**
+ * A Database query result.
+ * Use fetchTable() to control the object type for fetching objects. 
  * @author gizmore
  * @version 6.05
  * @since 6.00
@@ -20,13 +22,16 @@ class Result
 		$this->useCache = $useCache;
 	}
 	
-	public function __destruct()
-	{
-		if ($this->result)
-		{
-			mysqli_free_result($this->result);
-		}
-	}
+	/**
+	 * Shouldn't it be as safe and as fast to just rely on their destructors?
+	 */
+// 	public function __destruct()
+// 	{
+// 		if ($this->result)
+// 		{
+// 			mysqli_free_result($this->result);
+// 		}
+// 	}
 	
 	################
 	### Num rows ###

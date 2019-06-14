@@ -1,5 +1,7 @@
 <?php
 namespace GDO\Language;
+use GDO\Util\Strings;
+
 /**
  * Very cheap i18n.
  * 
@@ -14,6 +16,8 @@ final class Trans
 	private static $PATHS = [];
 	private static $CACHE;
 	private static $INITED = false;
+	
+	public static $NO_SITENAME = false;
 	
 	public static function setISO($iso)
 	{
@@ -65,6 +69,7 @@ final class Trans
 	public static function tiso($iso, $key, array $args=null)
 	{
 		$cache = self::load($iso);
+
 		if ($text = @$cache[$key])
 		{
 			if ($args)
@@ -84,11 +89,27 @@ final class Trans
 				$text .= ": ";
 				$text .= json_encode($args);
 			}
+			
 		}
 		
 		return $text;
+// 		return self::$NO_SITENAME ? self::filterSitename($text) : $text;
 	}
 
+// 	/**
+// 	 * remove the leading [GDO] from titles.
+// 	 *
+// 	 * @param string $text
+// 	 * @return string
+// 	 */
+// 	private static function filterSitename($text)
+// 	{
+// 		$sitename = '[' . sitename() . ']';
+// 		return Strings::startsWith($text, $sitename) ?
+// 		substr($text, mb_strlen($sitename)+1) :
+// 		$text;
+// 	}
+	
 	private static function reload($iso)
 	{
 		$trans = [];
