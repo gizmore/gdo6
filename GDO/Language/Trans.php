@@ -17,8 +17,14 @@ final class Trans
 	
 	public static function setISO($iso)
 	{
+		# Set Trans locale
 		self::$ISO = $iso;
-		setlocale(LC_TIME, $iso);
+		# Generate utf8 locale identifier, e.g: de_DE.utf8 and setlocale
+		$iso = $iso . '_' . strtoupper($iso) . '.utf-8';
+		if (!setlocale(LC_TIME, $iso))
+		{
+			setlocale(LC_TIME, $iso);
+		}
 	}
 	
 	public static function numFiles()
