@@ -150,7 +150,16 @@ abstract class GDT
 				return $default;
 			}
 		}
-		return empty($arr) ? null : $arr;
+		
+		if (is_array($arr))
+		{
+			return empty($arr) ? null : $arr;
+		}
+		else
+		{
+			$arr = trim($arr);
+			return $arr === '' ? null : $arr;
+		}
 	}
 	
 	##############
