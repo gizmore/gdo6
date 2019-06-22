@@ -141,6 +141,24 @@ trait WithObject
 		return $this;
 	}
 	
+	/**
+	 * If object columns are not null, they cascade upon deletion.
+	 */
+	public function notNull($notNull=true)
+	{
+		$this->notNull = $notNull;
+		return $this->cascade();
+	}
+	
+	/**
+	 * If object columns are primary, they cascade upon deletion.
+	 */
+	public function primary($primary=true)
+	{
+		$this->primary = $primary;
+		return $this->cascade();
+	}
+	
 	########################
 	### Custom ON clause ###
 	########################

@@ -31,9 +31,9 @@ final class InstallModules extends Method
 		$loader->sortModules('module_priority');
 		$this->modules = $loader->getModules();
 		
-		if (isset($_GET['btn_install']))
+		if (isset($_REQUEST['btn_install']))
 		{
-			return $this->onInstall(Common::getGetArray('module'));
+			return $this->onInstall(Common::getPostArray('module'));
 		}
 		
 		return $this->renderModuleTable();

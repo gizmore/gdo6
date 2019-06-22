@@ -10,6 +10,10 @@ footer {
 /* 	bottom: 0; */
 }
 
+.n {
+	display: none;
+}
+
 .gdo-bar-column, .gdo-bar-column > *, .gdo-bar-row, .gdo-bar-row > * {
 	display: flex;
 	flex-grow: 1;
