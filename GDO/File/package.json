@@ -1,0 +1,12 @@
+{
+  "name": "gdo6",
+  "version": "6.09",
+  "description": "File handling for GDO6",
+  "main": "Module_File.php",
+  "repository": "ssh://git@github.com/gizmore/gdo6",
+  "author": "gizmore",
+  "license": "MIT",
+  "dependencies": {
+    "flow.js": "^0.2.6"
+  }
+}

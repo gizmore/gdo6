@@ -28,7 +28,7 @@ final class Module_File extends GDO_Module
 		if (module_enabled('JQuery'))
 		{
 			$min = Module_Core::instance()->cfgMinifyJS() === 'no' ? '' : '.min';
-			$this->addBowerJavascript("flow.js/dist/flow$min.js");
+			$this->addBowerJavascript("flow.js/lib/flow.js");
 		}
 	}
 }
