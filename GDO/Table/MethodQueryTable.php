@@ -43,7 +43,7 @@ abstract class MethodQueryTable extends Method
 	############
 	public function execute()
 	{
-		$table = GDT_Table::make();
+		$table = GDT_Table::make('table');
 		$table->headers(GDT_Fields::make('o')->addFields($this->getHeaders()));
 // 		$table->href($this->href());
 		$table->query($this->getQuery());
