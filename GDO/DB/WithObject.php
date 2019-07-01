@@ -98,6 +98,12 @@ trait WithObject
 	{
 		if ($object = $this->getObject())
 		{
+			# Array for multiple select. ignore. 
+			if (is_array($object))
+			{
+				return null ;
+			}
+			
 			return [$this->name => $object->getID()];
 		}
 		else

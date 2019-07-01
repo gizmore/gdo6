@@ -40,3 +40,7 @@ GDO/*
 # Ignore yarn
 **/node_modules
 **/yarn.lock
+
+# Ignore bower
+**/bower_components
+
