@@ -79,6 +79,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-currency Currency
     ## git clone --recursive https://github.com/gizmore/gdo6-dog Dog
     git clone --recursive https://github.com/gizmore/gdo6-download Download
+    git clone --recursive https://github.com/gizmore/gdo6-dsgvo DSGVO
     git clone --recursive https://github.com/gizmore/gdo6-facebook Facebook
     git clone --recursive https://github.com/gizmore/gdo6-font-awesome FontAwesome
     git clone --recursive https://github.com/gizmore/gdo6-forum Forum
