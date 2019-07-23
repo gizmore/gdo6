@@ -1,5 +1,7 @@
 <?php
 return array(
+'msg_language_set' => 'Your language has been set to %s.',
+	
 // 'lang_af' => 'Afrikaans',
 'lang_ar' => 'Arabic',
 // 'lang_az' => 'Azerbaijani',

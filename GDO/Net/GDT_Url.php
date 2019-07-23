@@ -21,6 +21,7 @@ class GDT_Url extends GDT_String
 	
 	public $reachable = false;
 	public $allowLocal = false;
+	public $allowExternal = true;
 	
 	public $min = 0;
 	public $max = 255;
@@ -44,6 +45,12 @@ class GDT_Url extends GDT_String
 	public function allowLocal($allowLocal=true)
 	{
 		$this->allowLocal = $allowLocal;
+		return $this;
+	}
+	
+	public function allowExternal($allowExternal=true)
+	{
+		$this->allowExternal = $allowExternal;
 		return $this;
 	}
 	
@@ -76,13 +83,18 @@ class GDT_Url extends GDT_String
 		# Check local
 		if ( (!$this->allowLocal) && ($value[0] === '/') )
 		{
-			return $this->error('err_local_url_not_allowed', [htmlspecialchars($value)]);
+			return $this->error('err_local_url_not_allowed', [htmlspecialchars($value->raw)]);
+		}
+		
+		if ( (!$this->allowExternal) && ($value[0] !== '/') )
+		{
+			return $this->error('err_external_url_not_allowed', [htmlspecialchars($value->raw)]);
 		}
 		
 		# Check reachable
 		if ( ($this->reachable) && (!HTTP::pageExists($value)) )
 		{
-			return $this->error('err_url_not_reachable', [htmlspecialchars($value)]);
+			return $this->error('err_url_not_reachable', [htmlspecialchars($value->raw)]);
 		}
 		
 		return true;

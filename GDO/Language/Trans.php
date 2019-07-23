@@ -1,6 +1,5 @@
 <?php
 namespace GDO\Language;
-use GDO\Util\Strings;
 
 /**
  * Very cheap i18n.

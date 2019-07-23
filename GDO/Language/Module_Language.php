@@ -6,6 +6,7 @@ use GDO\UI\GDT_Bar;
 use GDO\Util\Strings;
 use GDO\Core\Application;
 use GDO\User\GDO_User;
+use GDO\User\GDO_Session;
 
 /**
  * Internationalization Module.
@@ -15,7 +16,7 @@ use GDO\User\GDO_User;
  * - Provide GDO_Language table
  * @author gizmore
  * @since 2.0
- * @version 6.06
+ * @version 6.09
  */
 class Module_Language extends GDO_Module
 {
@@ -70,6 +71,10 @@ class Module_Language extends GDO_Module
 	#################
 	public function detectISO()
 	{
+		if ($iso = GDO_Session::get('gdo-language'))
+		{
+			return $iso;
+		}
 		if (!($iso = $this->detectAcceptLanguage()))
 		{
 			$iso = GDO_User::current()->getLangISO();
@@ -81,12 +86,13 @@ class Module_Language extends GDO_Module
 	{
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
+			$matches = [];
 			$languages = GDO_Language::table()->allSupported();
 			if (preg_match_all("/[-a-zA-Z,]+;q=[.\d]+/", $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches))
 			{
 				foreach ($matches[0] as $match)
 				{
-					list($isos, $q) = explode(';', ltrim($match, ','));
+					list($isos) = explode(';', ltrim($match, ','));
 					foreach (explode(',', $isos) as $iso)
 					{
 						$iso = strtolower(Strings::substrTo($iso, '-', $iso));

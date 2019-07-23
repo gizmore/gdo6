@@ -72,6 +72,7 @@ abstract class Method
 				$gdt->var = $var;
 				if (!$gdt->validate($value))
 				{
+// 					throw new GDOException($gdt->error);
 					$gdt->var = $gdt->initial;
 				}
 				return $gdt;
