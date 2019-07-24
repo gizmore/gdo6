@@ -7,6 +7,6 @@
   "author": "gizmore",
   "license": "MIT",
   "dependencies": {
-    "flow.js": "https://github.com/flowjs/flow.js.git",
+    "flow.js": "https://github.com/flowjs/flow.js.git"
   }
 }
