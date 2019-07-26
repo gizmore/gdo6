@@ -11,7 +11,7 @@ class GDT_Select extends GDT_ComboBox
 	public function getVar()
 	{
 		$this->fixEmptyMultiple();
-
+		
 		if (null === ($value = $this->getRequestVar('form', $this->var)))
 		{
 			$value = $this->multiple ? '[]' : null;

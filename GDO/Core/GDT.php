@@ -122,9 +122,24 @@ abstract class GDT
 		return $this;
 	}
 	
+	/**
+	 * Get a param for this GDT from $_REQUEST.
+	 * $firstLevel usually is [form]
+	 * Override default with simple get param. (OUCH)
+	 * 
+	 * @todo: Slow and bad code. remove.
+	 * 
+	 * @param string $firstLevel
+	 * @param string $default
+	 * @param string $name
+	 * @return string
+	 */
 	public function getRequestVar($firstLevel=null, $default=null, $name=null)
 	{
 		$name = $name === null ? $this->name : $name;
+		
+		$default = isset($_REQUEST[$name]) ? $_REQUEST[$name] : $default; # change default to non form param if present.
+		
 		$path = '';
 		if ($firstLevel)
 		{
