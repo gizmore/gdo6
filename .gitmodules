@@ -1,3 +1,4 @@
 [submodule "GDO/UI/htmlpurifier"]
 	path = GDO/UI/htmlpurifier
 	url = https://github.com/ezyang/htmlpurifier
+	branch = master
