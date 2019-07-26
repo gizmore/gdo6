@@ -59,7 +59,18 @@ final class ModuleLoader
 		});
 	}
 	
-	/**
+		/**
+	 * Get all enabled and loaded modules.
+	 * @return GDO_Module[]
+	 */
+	public function getInstallableModules()
+	{
+		return array_filter($this->modules, function(GDO_Module $module){
+			return $module->isInstallable();
+		});
+	}
+	
+/**
 	 * @param string $moduleName
 	 * @return GDO_Module
 	 */

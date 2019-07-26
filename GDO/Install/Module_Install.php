@@ -14,12 +14,9 @@ use GDO\Core\Website;
  */
 class Module_Install extends GDO_Module
 {
+	public function isInstallable() { return false; }
+
 	public function onLoadLanguage() { $this->loadLanguage('lang/install'); }
 	public function defaultEnabled() { return false; }
 	public function getThemes() { return ['install']; }
-	
-	public function onInit()
-	{
-		$this->addCSS("css/install6.css");
-	}
 }

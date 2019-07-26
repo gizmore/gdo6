@@ -22,6 +22,7 @@ class Module_Language extends GDO_Module
 {
 	public $module_priority = 2;
 	
+	public function isCoreModule() { return true; }
 	public function getClasses() { return ['GDO\Language\GDO_Language']; }
 	public function onInstall() { LanguageData::onInstall(); }
 	public function onLoadLanguage() { $this->loadLanguage('lang/language'); }

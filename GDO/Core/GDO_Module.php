@@ -32,7 +32,13 @@ class GDO_Module extends GDO
 	
 	public function gdoCached() { return false; }
 	public function memCached() { return false; }
-	public function defaultEnabled() { return true; }
+	public function defaultEnabled() { return !$this->isSiteModule(); }
+	public function isCoreModule() { return false; }
+	public function isSiteModule() { return false; }
+	public function isInstallable() { return true; }
+	public function gdoDependencies() { return ['Core', 'Language', 'Table', 'User', 'Country']; }
+	public function getDependencies() { return []; }
+	public function dependencies() { return array_unique(array_merge($this->gdoDependencies(), $this->getDependencies())); }
 	
 	/**
 	 * Provided theme names in module /thm/$themeName folder.
@@ -152,7 +158,6 @@ class GDO_Module extends GDO
 	public function getVersion() { return $this->getVar('module_version'); }
 	public function isEnabled() { return !!$this->getVar('module_enabled'); }
 	public function isInstalled() { return $this->isPersisted(); }
-	public function isCoreModule() { return false; }
 	public function getSiteName() { return sitename(); }
 	
 	###############

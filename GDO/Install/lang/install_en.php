@@ -40,10 +40,15 @@ return array(
 'install_config_section_email' => 'Mail',
 'err_db_connect' => 'The connection to the database server failed. Note that only mysql/maria is supported.',
 'install_config_boxinfo_success' => 'Your system looks solid. You can continue with %s',
+
 # Modules
 'install_title_4' => 'GDO Modules',
-'install_modules_info_text' => 'Here you can choose the modules to install. Dependencies are not resolved yet.',
+'install_modules_info_text' => 'Here you can choose the modules to install. Dependencies are not 100% resolved yet.',
 'install_modules_completed' => 'Your modules have been installed. You can continue with %s',
+'err_disable_core_module' => 'You cannot disable a core module.',
+'err_multiple_site_modules' => 'You should not have multiple site modules.',
+'err_missing_dependency' => 'You are missing dependencies: ',
+
 # Cronjob
 'install_title_5' => 'Cronjob Configuration',
 'install_cronjob_info' => '

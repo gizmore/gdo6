@@ -52,24 +52,24 @@ class Config
 	private static function detectServerSoftware()
 	{
 		$software = $_SERVER['SERVER_SOFTWARE'];
-		if (stripos($software, 'Apache') >= 0)
+		if (stripos($software, 'Apache') !== false)
 		{
-			if (strpos($software, '2.4') >= 0)
+			if (strpos($software, '2.4') !== false)
 			{
 				return 'apache2.4';
 			}
-			if (strpos($software, '2.2') >= 0)
+			if (strpos($software, '2.2') !== false)
 			{
 				return 'apache2.2';
 			}
 			return 'apache2.4';
 		}
-		if (stripos($software, 'nginx') >= 0)
+		if (stripos($software, 'nginx') !== false)
 		{
 			return 'nginx';
 			
 		}
-		return 'apache2.4';
+		return 'other';
 	}
 	
 	public static function configure()
@@ -141,7 +141,7 @@ class Config
 			# HTTP
 			GDT_Divider::make()->label('install_config_section_http'),
 			GDT_String::make('domain')->required()->initial(GWF_DOMAIN),
-			GDT_Enum::make('server')->required()->enumValues('apache2.2', 'apache2.4', 'nginx')->initial(GWF_SERVER),
+			GDT_Enum::make('server')->required()->enumValues('other', 'apache2.2', 'apache2.4', 'nginx')->initial(GWF_SERVER),
 			GDT_Enum::make('protocol')->required()->enumValues('http', 'https')->initial(GWF_PROTOCOL),
 			GDT_String::make('web_root')->required()->initial(GWF_WEB_ROOT),
 			# Files

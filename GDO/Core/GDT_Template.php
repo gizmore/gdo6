@@ -40,7 +40,6 @@ class GDT_Template extends GDT
 	public function renderCell() { return $this->renderTemplate(); }
 	public function renderForm() { return $this->renderTemplate(); }
 	public function renderFilter() { return $this->renderTemplate(); }
-	public function renderHeader() { return $this->displayLabel(); }
 	public function renderTemplate()
 	{
 		$tVars = ['field'=>$this];
@@ -60,6 +59,32 @@ class GDT_Template extends GDT
 		$this->templateVars = $tVars;
 		return $this;
 	}
+	
+	##############
+	### Header ###
+	##############
+	public $templateModuleHead;
+	public $templatePathHead;
+	public $templateVarsHead;
+	public function templateHead($moduleName, $path, array $tVars=null)
+	{
+		$this->templateModuleHead = $moduleName;
+		$this->templatePathHead = $path;
+		$this->templateVarsHead = $tVars;
+		return $this;
+	}
+
+	public function renderHeader()
+	{
+		if (!$this->templateModuleHead)
+		{
+			return $this->displayLabel();
+		}
+		$tVars = ['field'=>$this];
+		$tVars = $this->templateVarsHead ? array_merge($this->templateVarsHead, $tVars) : $tVars;
+		return self::php($this->templateModuleHead, $this->templatePathHead, $tVars);
+	}
+	
 	##############
 	### Engine ###
 	##############

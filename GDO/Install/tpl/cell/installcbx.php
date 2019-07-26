@@ -5,10 +5,13 @@ $field instanceof GDT_Template;
 $module = $field->gdo;
 $module instanceof GDO_Module;
 $name = $module->getName();
-$checked = isset($_POST['form']['module'][$name]) || $module->defaultEnabled();
+$checked = isset($_REQUEST['module'][$name]) || $module->defaultEnabled();
 $checked = $checked ? 'checked="checked"' : '';
 ?>
 <input
+ id="cbx-module-<?=$name?>"
  type="checkbox"
- name="module[<?= $name; ?>]"
- <?= $checked ?> />
+ class="gdo-module-install-cbx"
+ onclick="toggledModule(this, '<?=$name?>');"
+ name="module[<?=$name?>]"
+ <?=$checked?> />

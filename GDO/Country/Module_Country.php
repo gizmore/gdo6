@@ -11,6 +11,8 @@ class Module_Country extends GDO_Module
 {
 	public $module_priority = 3;
 	
+	public function isCoreModule() { return true; }
+	
 	public function getClasses() { return ['GDO\Country\GDO_Country']; }
 	public function onInstall() { InstallCountries::install(); }
 	public function onLoadLanguage() { $this->loadLanguage('lang/country'); }

@@ -10,6 +10,8 @@ use GDO\DB\GDT_UInt;
  */
 final class Module_Table extends GDO_Module
 {
+	public function isCoreModule() { return true; }
+	
 	public function getConfig()
 	{
 		return array(

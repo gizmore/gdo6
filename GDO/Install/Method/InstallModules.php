@@ -28,8 +28,8 @@ final class InstallModules extends Method
 		$db = Database::init();
 		$loader = ModuleLoader::instance();
 		$loader->loadModules(false, true);
-		$loader->sortModules('module_priority');
-		$this->modules = $loader->getModules();
+// 		$loader->sortModules('module_priority');
+		$this->modules = $loader->getInstallableModules();
 		
 		if (isset($_REQUEST['btn_install']))
 		{
@@ -43,8 +43,58 @@ final class InstallModules extends Method
 	{
 		$tVars = array(
 			'modules' => $this->modules,
+			'moduleNames' => $this->getModuleNames(),
+			'coreModules' => $this->getCoreModuleNames(),
+			'siteModules' => $this->getSiteModuleNames(),
+			'dependencies' => $this->getModuleDependencies(),
 		);
 		return $this->templatePHP('page/installmodules.php', $tVars);
+	}
+	
+	private function getModuleNames()
+	{
+		$mods = [];
+		foreach ($this->modules as $module)
+		{
+			$mods[] = $module->getName();
+		}
+		return $mods;
+	}
+	
+	private function getCoreModuleNames()
+	{
+		$mods = [];
+		foreach ($this->modules as $module)
+		{
+			if ($module->isCoreModule())
+			{
+				$mods[] = $module->getName();
+			}
+		}
+		return $mods;
+	}
+	
+	private function getSiteModuleNames()
+	{
+		$mods = [];
+		foreach ($this->modules as $module)
+		{
+			if ($module->isSiteModule())
+			{
+				$mods[] = $module->getName();
+			}
+		}
+		return $mods;
+	}
+	
+	private function getModuleDependencies()
+	{
+		$deps = [];
+		foreach ($this->modules as $module)
+		{
+			$deps[$module->getName()] = $module->dependencies();
+		}
+		return $deps;
 	}
 	
 	public function onInstall(array $toInstall)

@@ -32,6 +32,8 @@ final class Module_Core extends GDO_Module
 	##############
 	public $module_priority = 1;
 	
+	public function isCoreModule() { return true; }
+	
 	public function getThemes() { return ['default']; }
 	
 	public function onLoadLanguage() { return $this->loadLanguage('lang/core'); }
