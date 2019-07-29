@@ -11,21 +11,21 @@ trait WithOrder
 	{
 		if ($this->orderable)
 		{
-			
 			$name = $this->name;
+			$o = $table->headers->name . "[$name]";
 			
 			$url = $_SERVER['REQUEST_URI'];
 			
 			# Check if one arrow is selected
-			$is_asc = strpos($url, "&o[$name]=1") !== false;
-			$is_desc = strpos($url, "&o[$name]=0") !== false;
+			$is_asc = strpos($url, "&$o=1") !== false;
+			$is_desc = strpos($url, "&$o=0") !== false;
 			
 			$is_asc = $is_asc || isset($_REQUEST['o'][$name]) && $_REQUEST['o'][$name];
 			$is_desc = $is_desc || isset($_REQUEST['o'][$name]) && (!$_REQUEST['o'][$name]);
 			
 			# Clean url of my own ordering
-			$url = str_replace("&o[$name]=0", '', $url);
-			$url = str_replace("&o[$name]=1", '', $url);
+			$url = str_replace("&$o=0", '', $url);
+			$url = str_replace("&$o=1", '', $url);
 			
 			# Clean url of paging
 			if ($pagemenu = $table->getPageMenu())
@@ -34,8 +34,8 @@ trait WithOrder
 			}
 			
 			# Arrow urls
-			$url_asc = $is_asc ? $url : $url . "&o[$name]=1";
-			$url_desc = $is_desc ? $url : $url . "&o[$name]=0";
+			$url_asc = $is_asc ? $url : $url . "&$o=1";
+			$url_desc = $is_desc ? $url : $url . "&$o=0";
 			
 			# Template
 			$tVars = array(

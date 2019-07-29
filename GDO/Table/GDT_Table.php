@@ -10,6 +10,7 @@ use GDO\Core\GDT_Template;
 use GDO\UI\WithHREF;
 use GDO\UI\WithTitle;
 use GDO\UI\WithActions;
+use GDO\Core\WithFields;
 /**
  * A sortable, orderable, filterable, paginatable collection of GDT[] in headers.
  * Supports queried and GDO\Core\ArrayResult.
@@ -23,6 +24,7 @@ class GDT_Table extends GDT
 	use WithTitle;
 	use WithHeaders;
 	use WithActions;
+	use WithFields;
 	
 	################
 	### Endpoint ###

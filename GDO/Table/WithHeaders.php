@@ -20,11 +20,18 @@ trait WithHeaders
 	 * @var \GDO\Core\GDT_Fields
 	 */
 	public $headers;
-	private function makeHeaders() { if (!$this->headers) $this->headers = GDT_Fields::make(); return $this->headers; }
+	private function makeHeaders() { if (!$this->headers) $this->headers = GDT_Fields::make(self::nextOrderName()); return $this->headers; }
 	public function headers(GDT_Fields $headers) { $this->headers = $headers; }
 	public function headersWith(array $fields) { return $this->addHeaders($fields); }
 	public function addHeaders(array $fields) { return $this->makeHeaders()->addFields($fields); }
 	public function addHeader(GDT $field) { return $this->makeHeaders()->addField($field); }
+	
+	private static $ORDER_NAME = 0;
+	public static function nextOrderName()
+	{
+		self::$ORDER_NAME++;
+		return "o" . self::$ORDER_NAME;
+	}
 	
 	###############
 	### Sorting ###
@@ -34,7 +41,7 @@ trait WithHeaders
 	 * This method does a stable multisort on an ArrayResult.
 	 * @param ArrayResult $result
 	 */
-	public function multisort(ArrayResult $result, $defaultOrder=null, $defaultOrderAsc=true, $orderName=null)
+	public function multisort(ArrayResult $result, $defaultOrder=null, $defaultOrderAsc=true)
 	{
 		# Get order from request
 		$orders = Common::getRequestArray($this->headers->name);
@@ -44,10 +51,10 @@ trait WithHeaders
 		{
 			$order = $defaultOrderAsc ? '1' : '0';
 			$orders[$defaultOrder] = $order;
-			if ($orderName)
-			{
-				$_REQUEST[$orderName] = array($defaultOrder => $order);
-			}
+// 			if ($orderName)
+// 			{
+// 				$_REQUEST[$orderName] = array($defaultOrder => $order);
+// 			}
 		}
 		
 		# Build sort func

@@ -37,7 +37,10 @@ $result = $field->getResult();
 	<tbody>
 	<?php while ($gdo = $result->fetchAs($field->fetchAs)) : ?>
 	<tr gdo-id="<?= $gdo->getID()?>">
-	  <?php foreach($headers as $gdoType) : $gdoType->gdo($gdo); ?>
+	  <?php foreach($headers as $gdoType) :
+	  $col = $field->getField($gdoType->name);
+	  $gdoType = $col ? $col : $gdoType;
+	  $gdoType->gdo($gdo); ?>
 		<td class="<?=$gdoType->htmlClass()?>"><?= $gdoType->renderCell(); ?></td>
 	  <?php endforeach; ?>
 	</tr>

@@ -50,8 +50,7 @@ abstract class MethodTable extends Method
 	public function renderTable()
 	{
 		$table = GDT_Table::make();
-		$headers = GDT_Fields::make($this->getOrderName())->addFields($this->getHeaders());
-		$table->headers($headers);
+		$table->addHeaders($this->getHeaders());
 		$table->ordered($this->isOrdered());
 		$table->filtered($this->isFiltered());
 		$table->paginate($this->isPaginated(), $this->ipp());

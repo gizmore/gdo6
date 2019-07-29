@@ -26,3 +26,5 @@ footer {
 	flex-direction: row;
 }
 
+.core-module { font-style: italic; }
+.site-module { color: purple; }
