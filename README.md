@@ -100,6 +100,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-logs Logs
     git clone --recursive https://github.com/gizmore/gdo6-maps Maps
     # git clone --recursive https://github.com/gizmore/gdo6-material Material
+    # git clone --recursive https://github.com/gizmore/gdo6-mibbit Mibbit
     ## git clone --recursive https://github.com/gizmore/gdo6-nasdax Nasdax
     git clone --recursive https://github.com/gizmore/gdo6-news News
     git clone --recursive https://github.com/gizmore/gdo6-online-users OnlineUsers
@@ -121,6 +122,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-websocket Websocket
     ## git clone --recursive https://github.com/gizmore/gdo6-wechall WeChall
     ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
+    # git clone --recursive https://github.com/gizmore/gdo6-whois Whois
     
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
 
