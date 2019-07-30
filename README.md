@@ -5,15 +5,15 @@ Gizmore Data Objects 6
 
 ## Features
 
-- allows to build sites without a database or install.
-- module-only, means that there every piece of code is contained in a module.
-- Code first dba
-- Two-layer Single-identity cache.
+- Module-Only: every piece of code is contained in a module. Everything is autoloaded with a very slim and fast autoloader.
+- Code-First DBA: You write code easily with GDO code completion standards. Your Database is created with a lot of foreign keys and perfect relations.
+- Two-Layer + Single-Identity Cache - Read https://github.com/gizmore/gdo6/blob/master/GDO_CACHING.md to learn more
 
 
 ## Demo
 
 A demo site with (almost) the module set from below is here: http://gdo6.gizmore.org
+
 
 ### PHP Requirements
 
@@ -92,6 +92,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-instagram Instagram
     git clone --recursive https://github.com/gizmore/gdo6-invite Invite
     git clone --recursive https://github.com/gizmore/gdo6-ip2country IP2Country
+    # git clone --recursive https://github.com/gizmore/gdo6-irc IRC
     git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
     git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
     git clone --recursive https://github.com/gizmore/gdo6-links Links
@@ -115,6 +116,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
     # git clone --recursive https://github.com/gizmore/gdo6-shoutbox Shoutbox
+    ## git clone --recursive https://github.com/gizmore/gdo6-slaytags Slaytags
     git clone --recursive https://github.com/gizmore/gdo6-tag Tag
     git clone --recursive https://github.com/gizmore/gdo6-tinymce TinyMCE
     # git clone --recursive https://github.com/gizmore/gdo6-usergroup Usergroup
