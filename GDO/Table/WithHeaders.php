@@ -51,10 +51,6 @@ trait WithHeaders
 		{
 			$order = $defaultOrderAsc ? '1' : '0';
 			$orders[$defaultOrder] = $order;
-// 			if ($orderName)
-// 			{
-// 				$_REQUEST[$orderName] = array($defaultOrder => $order);
-// 			}
 		}
 		
 		# Build sort func

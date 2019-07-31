@@ -25,9 +25,9 @@ class GDO_Module extends GDO
 	################
 	### Override ###
 	################
-	public $module_version = "6.09";
+	public $module_version = "6.10";
 	public $module_author = "Christian Busch <gizmore@wechall.net>";
-	public $module_license = "GDO6";
+	public $module_license = "MIT";
 	public $module_priority = 50;
 	
 	public function gdoCached() { return false; }
