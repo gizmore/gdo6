@@ -14,5 +14,9 @@ elseif ($module->isCoreModule()) {
 else {
 	$class = 'gdo-module';
 }
+
+if ($module->isInstalled()) {
+	$class .= ' module-installed';
+}
 ?>
 <span class="<?=$class?>"><?=$name?></span>

@@ -5,7 +5,7 @@ $field instanceof GDT_Template;
 $module = $field->gdo;
 $module instanceof GDO_Module;
 $name = $module->getName();
-$checked = isset($_REQUEST['module'][$name]) || $module->defaultEnabled();
+$checked = isset($_REQUEST['module'][$name]) || $module->isInstalled() || $module->isCoreModule();
 $checked = $checked ? 'checked="checked"' : '';
 ?>
 <input

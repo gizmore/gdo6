@@ -59,7 +59,7 @@ final class ModuleLoader
 		});
 	}
 	
-		/**
+	/**
 	 * Get all enabled and loaded modules.
 	 * @return GDO_Module[]
 	 */
@@ -154,8 +154,13 @@ final class ModuleLoader
 	 * @param $loadFS
 	 * @return \GDO\Core\GDO_Module[]
 	 */
-	public function loadModules($loadDB=true, $loadFS=false)
+	public function loadModules($loadDB=true, $loadFS=false, $refresh=false)
 	{
+		if ($refresh)
+		{
+			$this->modules = [];
+		}
+		
 		# Load maybe 0, 1 or 2 sources
 		$loaded = false;
 		if ($loadDB && (!$this->loadedDB) )
@@ -163,6 +168,7 @@ final class ModuleLoader
 			$this->loadedDB = $this->loadModulesDB() !== false;
 			$loaded = true;
 		}
+		
 		if ($loadFS && (!$this->loadedFS) )
 		{
 			$this->loadModulesFS();
@@ -179,7 +185,6 @@ final class ModuleLoader
 
 			$this->sortModules('module_priority');
 			$this->initModules();
-//			 $this->sortModules('module_sort');
 		}
 		return $this->modules;
 	}
@@ -198,6 +203,10 @@ final class ModuleLoader
 					{
 						$this->modules[$moduleName] = $module->setPersisted(true);
 					}
+				}
+				else
+				{
+					$this->modules[$moduleName] = $module->setPersisted(true);
 				}
 			}
 // 		}

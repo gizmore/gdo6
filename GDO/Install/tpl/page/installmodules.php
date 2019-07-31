@@ -117,4 +117,17 @@ function enableDependencies(deps) {
 		enableModule(deps[i]);
 	}
 }
+
+function enableInstalled() {
+	var modules = document.querySelectorAll('.module-installed');
+	console.log(modules);
+	for (var i in modules) {
+		var module = modules[i];
+		console.log(module);
+	}
+	
+}
+
+enableInstalled();
+
 </script>
