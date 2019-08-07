@@ -1,5 +1,6 @@
 <?php
 return array(
+'lbl_langswitch' => 'Change Language',
 'msg_language_set' => 'Your language has been set to %s.',
 	
 // 'lang_af' => 'Afrikaans',

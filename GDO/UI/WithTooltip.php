@@ -3,19 +3,25 @@ namespace GDO\UI;
 
 trait WithTooltip
 {
-	use WithIcon;
+	public $tooltipText = null;
+	public $tooltipTextArgs = null;
 	
-	public function tooltip($tooltipText=null)
+	public function tooltip($tooltipText, array $tooltipTextArgs=null)
 	{
-		if (!$this->icon)
+		$this->tooltipText = $tooltipText;
+		$this->tooltipTextArgs = $tooltipTextArgs;
+		return $this;
+	}
+	
+	##############
+	### Render ###
+	##############
+	public function htmlTooltip()
+	{
+		if ($this->tooltipText)
 		{
-			$this->icon('help');
+			return GDT_Icon::iconS('bulb', t($this->tooltipText, $this->tooltipTextArgs));
 		}
-		return $this->iconText($tooltipText);
 	}
-
-	public static function with($tooltipText)
-	{
-		return self::make()->tooltip($tooltipText)->render();
-	}
+	
 }

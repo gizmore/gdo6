@@ -4,8 +4,9 @@ use GDO\UI\GDT_Icon;
 $field instanceof GDT_Email;
 ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
+  <?=$field->htmlTooltip()?>
   <?=$field->htmlIcon()?>
+  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input
    type="email"
    name="form[<?= $field->name; ?>]"

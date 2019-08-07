@@ -1,7 +1,8 @@
 <?php /** @var $field \GDO\DB\GDT_String **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
+  <?=$field->htmlTooltip()?>
   <?= $field->htmlIcon(); ?>
+  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input
    type="text"
    <?=$field->htmlID()?>

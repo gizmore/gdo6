@@ -8,11 +8,9 @@ use GDO\UI\WithLabel;
 use GDO\Util\Strings;
 use GDO\Form\WithFormFields;
 use GDO\Table\WithOrder;
-use GDO\UI\WithTooltip;
 class GDT_Int extends GDT
 {
 	use WithLabel;
-	use WithTooltip;
 	use WithFormFields;
 	use WithDatabase;
 	use WithOrder;

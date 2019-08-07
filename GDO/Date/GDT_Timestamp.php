@@ -6,7 +6,6 @@ use GDO\Core\GDT;
 use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
 use GDO\DB\WithDatabase;
-use GDO\UI\WithTooltip;
 use GDO\Table\WithOrder;
 
 /**
@@ -20,15 +19,11 @@ use GDO\Table\WithOrder;
 class GDT_Timestamp extends GDT
 {
 	use WithLabel;
-	use WithTooltip;
 	use WithFormFields;
 	use WithDatabase;
 	use WithOrder;
 	
-	public function __construct()
-	{
-		$this->icon('time');
-	}
+	public $icon = 'time';
 	
 	#############
 	### Value ###

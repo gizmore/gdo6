@@ -53,7 +53,7 @@ abstract class MethodQueryList extends MethodQuery
 	public function renderPage()
 	{
 		$list = GDT_List::make();
-		$list->title(t('list_'.strtolower($this->gdoShortName()), [sitename()]));
+		$list->title(t('list_'.strtolower($this->gdoShortName())]));
 		$headers = GDT_Fields::make('o')->addFields($this->gdoFilters())->addFields($this->gdoParameters());
 		$list->headers($headers);
 		$list->query($this->gdoFilteredQuery());

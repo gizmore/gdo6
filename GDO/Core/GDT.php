@@ -5,9 +5,13 @@ use GDO\Table\GDT_Table;
 use GDO\Util\Strings;
 use GDO\Form\GDT_Form;
 use GDO\DB\GDT_String;
+use GDO\UI\WithTooltip;
+use GDO\UI\WithIcon;
 abstract class GDT
 {
 	use WithName;
+	use WithIcon;
+	use WithTooltip;
 	
 	###############
 	### Factory ###

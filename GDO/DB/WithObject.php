@@ -63,7 +63,7 @@ trait WithObject
 			 	if ($user = $this->findByName($var))
 			 	{
 			 		$_REQUEST['form'][$this->name] = $user->getID();
-					return $user;
+			 		return $user;
 			 	}
 			}
 			if ($user = $this->table->getById(...explode(':', $var)))
@@ -118,7 +118,7 @@ trait WithObject
 	public function validate($value)
 	{
 		# Weird using getVar. but works with completion hack.
-		if ($this->var)
+		if ($value)
 		{
 			return $value ? true : $this->error('err_gdo_not_found', [$this->table->gdoHumanName(), html($this->var)]);
 		}
@@ -162,7 +162,7 @@ trait WithObject
 	public function primary($primary=true)
 	{
 		$this->primary = $primary;
-		return $this->cascade();
+		return $this->cascade()->notNull();
 	}
 	
 	########################

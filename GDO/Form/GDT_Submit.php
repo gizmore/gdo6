@@ -15,8 +15,11 @@ class GDT_Submit extends GDT
 	use WithIcon;
 	use WithLabel;
 	use WithFormFields;
+	
+// 	public $writable = false;
+	public $editable = false;
 
-//	 public function defaultLabel() { return $this->label('btn_send'); }
+	public function defaultLabel() { return $this->label('btn_send'); }
 	
 	public function isSerializable() { return false; }
 	

@@ -61,7 +61,7 @@ You can then continue with %s.',
 
 # Admins 
 'install_title_6' => 'Create Admins',
-'ft_install_installadmins' => '[%s] Create Admins',
+'ft_install_installadmins' => 'Create Admins',
 	
 'install_title_7' => 'Install Javascript',
 'install_content_7' => '

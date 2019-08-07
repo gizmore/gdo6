@@ -136,8 +136,8 @@ return array(
 'enum_no_gender' => 'keine Angabe',
 
 # CRUD
-'ft_crud_create' => '[%s] %s erstellen',
-'ft_crud_update' => '[%s] %s bearbeiten',
+'ft_crud_create' => '%s erstellen',
+'ft_crud_update' => '%s bearbeiten',
 'msg_crud_created' => '%s wurde erfolgreich erstellt.',
 'msg_crud_updated' => '%s wurde erfolgreich bearbeitet.',
 'msg_crud_deleted' => '%s wurde erfolgreich gelöscht.',

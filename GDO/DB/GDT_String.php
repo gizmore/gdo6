@@ -5,7 +5,6 @@ use GDO\Table\WithOrder;
 use GDO\Core\GDT_Template;
 use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
-use GDO\UI\WithTooltip;
 use GDO\Core\GDO;
 use GDO\Core\GDT;
 use GDO\UI\WithPHPJQuery;
@@ -24,7 +23,6 @@ class GDT_String extends GDT
 {
 	use WithLabel;
 	use WithFormFields;
-	use WithTooltip;
 	use WithOrder;
 	use WithDatabase;
 	use WithPHPJQuery;

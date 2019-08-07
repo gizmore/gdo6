@@ -19,6 +19,8 @@ class GDT_Date extends GDT_Timestamp
 {
 	public $dateStartView = 'year';
 	
+	public $icon = 'calendar';
+	
 	public function gdoColumnDefine()
 	{
 		return "{$this->identifier()} DATE {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";

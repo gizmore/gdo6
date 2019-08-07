@@ -65,7 +65,7 @@ abstract class MethodForm extends Method
 	{
 		$module = strtolower($this->getModuleName());
 		$method = strtolower($this->getMethodName());
-		return $this->title(t("ft_{$module}_{$method}", [sitename()]));
+		return $this->title(t("ft_{$module}_{$method}"));
 	}
 	
 	/**

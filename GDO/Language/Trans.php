@@ -95,20 +95,6 @@ final class Trans
 // 		return self::$NO_SITENAME ? self::filterSitename($text) : $text;
 	}
 
-// 	/**
-// 	 * remove the leading [GDO] from titles.
-// 	 *
-// 	 * @param string $text
-// 	 * @return string
-// 	 */
-// 	private static function filterSitename($text)
-// 	{
-// 		$sitename = '[' . sitename() . ']';
-// 		return Strings::startsWith($text, $sitename) ?
-// 		substr($text, mb_strlen($sitename)+1) :
-// 		$text;
-// 	}
-	
 	private static function reload($iso)
 	{
 		$trans = [];
@@ -134,5 +120,16 @@ final class Trans
 			$trans = $loaded;
 		}
 		self::$CACHE[$iso] = $trans;
+	}
+	
+	public static function hasKey($key)
+	{
+		return self::hasKeyIso(self::$ISO, $key);
+	}
+	
+	public static function hasKeyIso($iso, $key)
+	{
+		$cache = self::load($iso);
+		return !!@$cache[$key];
 	}
 }

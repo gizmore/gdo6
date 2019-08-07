@@ -29,6 +29,8 @@
 .gdo-tblorder { display: inline-block; }
 .gdo-tblorder a.sel { color: gold; }
 .gdo-table th input, .gdo-table th select { display: block; }
+.gdo-table th { vertical-align: bottom; }
+div.gdo-table { overflow: auto; }
 
 /** Lists **/
 .gdo-list-card { margin: 4px; border: 1px solid #000; }

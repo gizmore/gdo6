@@ -1,7 +1,7 @@
 <?php
 namespace GDO\UI;
 /**
- * UTF8 icon provider.
+ * Default icon provider using UTF8 icons.
  * This is the most primitive and cheap icon rendering.
  * It is included in the core, and a reference for possible icons.
  * However, the possible icons are not limited to the few used ones.
@@ -26,6 +26,8 @@ final class GDT_IconUTF8
 			'audio' => '♬',
 			'back' => '↶',
 			'block' => '✖',
+			'bulb' => '💡',
+			'calendar' => '📅',
 			'captcha' => '♺',
 			'country' => '⚑',
 			'check' => '✔',
@@ -42,6 +44,7 @@ final class GDT_IconUTF8
 			'error' => '⚠',
 			'face' => '☺',
 			'female' => '♀',
+			'flag' => '⚑',
 			'group' => '😂',
 			'gender' => '⚥',
 			'help' => '☛',
@@ -50,6 +53,7 @@ final class GDT_IconUTF8
 			'like' => '❤',
 			'link' => '⚓',
 			'list' => '▤',
+			'lock' => '🔒',
 			'male' => '♂',
 			'message' => '☶',
 			'money' => '€',
@@ -61,7 +65,7 @@ final class GDT_IconUTF8
 			'search' => '.o',
 			'settings' => '⚙',
 			'star' => '★',
-			'time' => 'TIME',
+			'time' => '⌛',
 			'title' => 'T',
 			'url' => '🌐',
 			'users' => 'USERS',

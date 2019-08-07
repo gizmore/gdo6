@@ -16,7 +16,6 @@ class GDT_Slider extends GDT
 	##############
 	use WithIcon;
 	use WithLabel;
-	use WithTooltip;
 	use WithFormFields;
 	
 	##############

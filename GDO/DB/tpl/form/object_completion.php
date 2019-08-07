@@ -6,6 +6,7 @@ $id = 'gwfac_'.$field->name; ?>
  ng-app="gdo6"
  ng-controller="GDOAutoCompleteCtrl"
  ng-init='init(<?= $field->displayJSON(); ?>, "#<?= $id; ?>")'>
+  <?=$field->htmlTooltip()?>
   <?= $field->htmlIcon(); ?>
   <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input

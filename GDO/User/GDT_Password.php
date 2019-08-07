@@ -16,6 +16,8 @@ class GDT_Password extends GDT_String
 		$this->max = 60;
 		$this->encoding = self::ASCII;
 		$this->caseSensitive = true;
+		$this->icon('lock');
+		$this->tooltip('tt_password');
 	}
 
 	public function defaultLabel() { return $this->label('password'); }
