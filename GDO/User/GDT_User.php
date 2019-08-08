@@ -62,12 +62,25 @@ class GDT_User extends GDT_Object
 		return t('unknown');
 	}
 	
+	##############
+	### Filter ###
+	##############
+	public $noFilter = false;
+	public function noFilter($noFilter=true)
+	{
+		$this->noFilter = $noFilter;
+		return $this;
+	}
+	
 	public function filterQuery(Query $query)
 	{
-		if ($filter = $this->filterValue())
+		if (!$this->noFilter)
 		{
-			$filter = GDO::escapeS($filter);
-			$this->filterQueryCondition($query, "user_name LIKE '%$filter%'");
+			if ($filter = $this->filterValue())
+			{
+				$filter = GDO::escapeS($filter);
+				$this->filterQueryCondition($query, "user_name LIKE '%$filter%'");
+			}
 		}
 	}
 

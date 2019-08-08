@@ -4,6 +4,7 @@ use GDO\Core\GDT_Template;
 use GDO\Core\GDT;
 use GDO\UI\WithIcon;
 use GDO\UI\WithLabel;
+use GDO\UI\WithPHPJQuery;
 /**
  * Form submit button.
  * @author gizmore
@@ -15,8 +16,8 @@ class GDT_Submit extends GDT
 	use WithIcon;
 	use WithLabel;
 	use WithFormFields;
+	use WithPHPJQuery;
 	
-// 	public $writable = false;
 	public $editable = false;
 
 	public function defaultLabel() { return $this->label('btn_send'); }

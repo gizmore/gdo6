@@ -8,6 +8,8 @@ namespace GDO\File;
  */
 trait WithImageFile
 {
+	public function isImageFile() { return true; }
+	
 	##############
 	### Scaled ###
 	##############

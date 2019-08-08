@@ -2,7 +2,7 @@
 namespace GDO\UI;
 class GDT_EditButton extends GDT_Button
 {
-	public function defaultLabel() { return $this->label('edit'); }
+	public function defaultLabel() { return $this->label('btn_edit'); }
 	
 	public function name($name=null)
 	{

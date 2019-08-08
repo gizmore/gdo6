@@ -59,6 +59,9 @@ return array(
 'msg_upgrading' => 'Upgrading Module %s to version %s.',
 'msg_redirect' => 'You will be redirected to <i>%s</i> in %s seconds.',
 
+# Generic Confirms	
+'confirm_delete' => 'Do you really want to delete this?',
+	
 # Generic Errors
 'err_db' => "Database Error(%s): %s<br/>\n%s<br/>\n",
 'err_exception' => 'Exception: %s',

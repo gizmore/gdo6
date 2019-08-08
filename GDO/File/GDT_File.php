@@ -20,7 +20,8 @@ class GDT_File extends GDT_Object
 	
 	public $multiple = false;
 	
-// 	public function defaultLabel() { return $this->label('file'); }
+	public function defaultLabel() { return $this->label('file'); }
+	public function isImageFile() { return false; }
 	
 	public function __construct()
 	{
@@ -541,11 +542,13 @@ class GDT_File extends GDT_Object
 	
 	private function onFlowTestMime($key, $file)
 	{
-		if (!($mime = @file_get_contents($this->getChunkDir($key).'/mime'))) {
-			return "$key: No mime file found for $key";
+		if (!($mime = @file_get_contents($this->getChunkDir($key).'/mime')))
+		{
+			return t('err_no_mime_file', [$this->displayLabel(), $key]);
 		}
-		if ((!in_array($mime, $this->mimes, true)) && (count($this->mimes)>0)) {
-			return "$key: Unsupported MIME TYPE: $mime";
+		if ((!in_array($mime, $this->mimes, true)) && (count($this->mimes)>0))
+		{
+			return t('err_mimetype', [$this->displayLabel(), $mime]);
 		}
 		return false;
 	}

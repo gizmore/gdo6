@@ -67,7 +67,8 @@ header#gdo-header, header#gdo-header .gdo-bar { min-height: 64px; }
 .gdo-panel { border: 1px solid #444; padding: 8px 16px; }
 
 /** File **/
-.gdo-imagefile-preview img { max-width: 640px; max-height: 480px; }
+.gdo-file-preview { width: 320px; height: 280px; border: 1px dashed #ddd; float: left; }
+.gdo-file-preview img { max-width: 320px; max-height: 240px; }
 
 /** Country **/
 .gdo-country { width: 38px; height: 24px; }

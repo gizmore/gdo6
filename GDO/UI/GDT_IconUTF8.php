@@ -44,7 +44,9 @@ final class GDT_IconUTF8
 			'error' => '⚠',
 			'face' => '☺',
 			'female' => '♀',
+			'file' => '🗎',
 			'flag' => '⚑',
+			'folder' => '📁',
 			'group' => '😂',
 			'gender' => '⚥',
 			'help' => '☛',
@@ -68,7 +70,7 @@ final class GDT_IconUTF8
 			'time' => '⌛',
 			'title' => 'T',
 			'url' => '🌐',
-			'users' => 'USERS',
+			'users' => '😂',
 			'view' => '👁',
 			'wait' => '◴',
 		);

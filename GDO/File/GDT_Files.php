@@ -19,6 +19,8 @@ use GDO\User\GDO_User;
  */
 class GDT_Files extends GDT_File
 {
+	public function defaultLabel() { return $this->label('files'); }
+	
 	########################
 	### STUB GDT methods ###
 	########################

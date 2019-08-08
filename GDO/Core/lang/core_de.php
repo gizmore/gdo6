@@ -59,6 +59,9 @@ return array(
 'msg_upgrading' => 'Installiere Modul %s Version %s.',
 'msg_redirect' => 'Sie werden in %2$s Sekunden umgeleitet nach <i>%1$s</i>.',
 
+# Generic Confirms
+'confirm_delete' => 'Möchten Sie das wirklich löschen?',
+	
 # Generic Errors
 'err_db' => "Datenbank Fehler(%s): %s<br/>\n%s<br/>\n",
 'err_exception' => 'Ausnahme: %s',

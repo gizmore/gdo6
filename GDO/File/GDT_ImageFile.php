@@ -10,10 +10,12 @@ namespace GDO\File;
  * 
  * @license MIT
  * @author gizmore@wechall.net
- * @version 6.08
+ * @version 6.10
  * @since 6.00
  */
 final class GDT_ImageFile extends GDT_File
 {
 	use WithImageFile;
+	
+	public function defaultLabel() { return $this->label('image'); }
 }

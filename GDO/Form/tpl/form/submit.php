@@ -2,6 +2,7 @@
 <input
  type="submit"
  class="md-button md-primary md-raised"
- name="<?= $field->name; ?>"
- value="<?= $field->displayLabel(); ?>"
- <?= $field->htmlDisabled(); ?> /></input>
+ name="<?=$field->name?>"
+ value="<?=$field->displayLabel()?>"
+ <?=$field->htmlAttributes()?>
+ <?=$field->htmlDisabled()?> /></input>

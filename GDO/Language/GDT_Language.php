@@ -41,32 +41,5 @@ class GDT_Language extends GDT_ObjectSelect
 	{
 		return $this->completionHref(href('Language', 'Completion'));
 	}
-	
-	##############
-	### Render ###
-	##############
-//	 public function render()
-//	 {
-//		 if ($this->completionHref)
-//		 {
-//			 return GDT_Template::php('GWF', 'form/object_completion.php', ['field'=>$this]);
-//		 }
-//		 else
-//		 {
-//			 $this->choices = $this->languageChoices();
-//			 return GDT_Template::php('form/language.php', ['field'=>$this]);
-//		 }
-//	 }
-	
-//	 public function renderCell()
-//	 {
-//		 return GDT_Template::php('Language', 'cell/language.php', ['language'=>$this->gdo]);
-//	 }
-	
-//	 public function renderChoice()
-//	 {
-//		 return GDT_Template::php('Language', 'choice/language.php', ['language'=>$this->gdo]);
-//	 }
-	
-}
 
+}
