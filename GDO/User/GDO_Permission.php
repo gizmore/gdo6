@@ -46,7 +46,7 @@ final class GDO_Permission extends GDO
 	############
 	### HREF ###
 	############
-	public function href_edit() { return href('Admin', 'ViewPermission', '&permission='.$this->getID()); }
+	public function href_btn_edit() { return href('Admin', 'ViewPermission', '&permission='.$this->getID()); }
 	
 	
 }

@@ -3,6 +3,8 @@ namespace GDO\UI;
 
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+use GDO\Avatar\GDO_Avatar;
+use GDO\User\GDO_User;
 
 /**
  * A list item.
@@ -25,6 +27,12 @@ final class GDT_ListItem extends GDT
 	
 	public $subtext;
 	public function subtext($subtext) { $this->subtext = $subtext; return $this; }
+	
+	public $avatar;
+	public function avatar($avatar) { $this->avatar = $avatar; return $this; }
+	
+	public function userAvatar(GDO_User $user) { return $this->avatar(GDO_Avatar::forUser($user)); }
+	
 	
 	/**
 	 * @var GDT_Menu

@@ -60,6 +60,7 @@ final class GDT_IconUTF8
 			'message' => '☶',
 			'money' => '€',
 			'password' => '⚷',
+			'pause' => '⏸',
 			'phone' => '☎',
 			'plus_one' => '+1',
 			'quote' => '↶',

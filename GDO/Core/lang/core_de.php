@@ -53,6 +53,10 @@ return array(
 'btn_upload' => 'Hochladen',
 'btn_edit' => 'Bearbeiten',
 'btn_view' => 'Ansehen',
+'btn_preview' => 'Preview',
+'btn_visible' => 'Make visible',
+'btn_invisible' => 'Make invisible',
+'btn_send_mail' => 'Send Email',
 
 # Generic Messages
 'msg_form_saved' => 'Ihre Daten wurden erfolgreich gespeichert.',
