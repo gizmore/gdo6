@@ -9,6 +9,8 @@ use GDO\DB\GDT_String;
 /**
  * Country table/entity.
  * @author gizmore
+ * @version 6.10
+ * @since 3.00
  */
 final class GDO_Country extends GDO
 {
@@ -56,6 +58,11 @@ final class GDO_Country extends GDO
 		if (false === ($cache = Cache::get('gdo_country')))
 		{
 			$cache = self::table()->select('*')->exec()->fetchAllArray2dObject();
+			uasort($cache, function(GDO_Country $a, GDO_Country $b){
+				$ca = iconv('utf-8', 'ascii//TRANSLIT', $a->displayName());
+				$cb = iconv('utf-8', 'ascii//TRANSLIT', $b->displayName());
+				return strcasecmp($ca, $cb);
+			});
 			Cache::set('gdo_country', $cache);
 		}
 		return $cache;

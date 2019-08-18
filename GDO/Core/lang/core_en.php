@@ -13,6 +13,8 @@ return array(
 'country' => 'Country',
 'created_at' => 'Created at',
 'created_by' => 'Created by',
+'deleted_at' => 'Deleted at',
+'deleted_by' => 'Deleted by',
 'credits' => 'Credits',
 'description' => 'Description',
 'email' => 'Email',
@@ -45,9 +47,11 @@ return array(
 'username' => 'Username',
 'user_real_name' => 'Real Name',
 'version' => 'Version',
+'not_specified' => 'not specified',
 
 # Generic Buttons
 'btn_back' => 'Back',
+'btn_set' => 'Set',
 'btn_send' => 'Send',
 'btn_save' => 'Save',
 'btn_upload' => 'Upload',
@@ -68,6 +72,7 @@ return array(
 	
 # Generic Errors
 'err_db' => "Database Error(%s): %s<br/>\n%s<br/>\n",
+'err_user' => 'This user is unknown.',
 'err_exception' => 'Exception: %s',
 'err_gdo_object_no_table' => '%s is a GDT_Object without a table.',
 'err_column' => 'Unknown GDT column: %s.',
@@ -116,6 +121,12 @@ return array(
 'perm_cronjob' => 'Cronjob',
 'perm_staff' => 'Staff',
 
+# User types
+'enum_ghost' => 'Geist',
+'enum_guest' => 'Gast',
+'enum_system' => 'System',
+'enum_member' => 'Mitglied',
+	
 # Dateformats
 'df_day' => '%m/%d/%Y',
 'df_short' => '%m/%d/%Y %H:%M',

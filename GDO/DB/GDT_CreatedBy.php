@@ -4,7 +4,6 @@ namespace GDO\DB;
 use GDO\Core\Application;
 use GDO\User\GDT_User;
 use GDO\User\GDO_User;
-use GDO\Core\Module_Core;
 
 /**
  * The "CeatedBy" column is filled with current user upon creation.

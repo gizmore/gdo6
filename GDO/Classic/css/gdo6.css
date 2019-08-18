@@ -49,7 +49,8 @@ a { color: #33f; font-weight: 900; }
 
 /** Table/Lists **/
 .gdt-list { border: 1px solid #000; border-bottom: none; }
-.gdt-list-item { position relative; border-bottom: 1px solid #000; }
+.gdt-list-item { position: relative; border-bottom: 1px solid #000; }
+.gdt-list > h3 { border-bottom: 1px solid #000; }
 .gdt-li-upper { display: flex; }
 .gdt-li-image { width: 48px; max-height: 48px; text-align: center; display: flex; align-items: center; align-content: center; }
 .gdt-li-image > * { margin: auto; }

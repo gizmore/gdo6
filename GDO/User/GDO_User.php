@@ -178,7 +178,7 @@ final class GDO_User extends GDO
 	 * Not necisarilly via session!
 	 * @return self
 	 */
-	public static function current() { return isset(self::$CURRENT) ? self::$CURRENT : GDO_Session::user(); }
+	public static function current() { self::$CURRENT = self::$CURRENT ? self::$CURRENT : GDO_Session::user(); return self::$CURRENT; }
 	
 	/**
 	 * @var self

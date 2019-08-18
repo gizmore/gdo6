@@ -1,9 +1,9 @@
 <?php
 return array(
-	'file' => 'file',
-	'files' => 'files',
-	'image' => 'image',
-	'images' => 'images',
+	'file' => 'File',
+	'files' => 'Files',
+	'image' => 'Image',
+	'images' => 'Images',
 	'_filesize' => array(
 		'Bytes',
 		'KB',

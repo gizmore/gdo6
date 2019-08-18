@@ -26,6 +26,7 @@ final class GDT_IconUTF8
 			'audio' => '♬',
 			'back' => '↶',
 			'block' => '✖',
+			'book' => '📖',
 			'bulb' => '💡',
 			'calendar' => '📅',
 			'captcha' => '♺',

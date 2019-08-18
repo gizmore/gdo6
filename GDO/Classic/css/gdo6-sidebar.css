@@ -24,16 +24,18 @@
 	align-self: flex-end;
 	text-align: right;
 }
+#gdo-header .gdo-bar {
+	padding: 0px 42px;
+}
+
 #gdo-pagewrap {
 	min-width: 100%;
 	min-height: 100%;
 	background-color: #fff;
 	position: relative;
 	top: 0;
-/* 	bottom: 100%; */
 	left: 0;
 	z-index: 2;
-/*	 padding: 4em; */
 }
 .gdo-nav {
 	position: absolute;

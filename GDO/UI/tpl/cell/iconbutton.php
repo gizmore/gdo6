@@ -2,5 +2,11 @@
 <?php if ($href) : ?>
 <a class="gdo-icon-button"
  href="<?= $href; ?>"
- <?= $field->htmlDisabled(); ?>><?= $field->displayLabel(); ?>&nbsp;<?= $field->htmlIcon(); ?></a>
+ <?=$field->htmlDisabled()?>
+ <?=$field->htmlAttributes()?>>
+  <?= $field->htmlIcon(); ?>
+  <?php if ($field->label || $field->labelRaw) : ?>
+    &nbsp;<?= $field->displayLabel(); ?>
+  <?php endif; ?>
+</a>
 <?php endif; ?>

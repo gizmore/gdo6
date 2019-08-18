@@ -1,4 +1,6 @@
 /** Basic layout **/
+#gdo-header { position: fixed; width: 100%; background: #eef; }
+div.gdo-body { padding-top: 64px; }
 
 /** Bar **/
 .gdo-bar a { padding: 4px 8px; }
@@ -6,6 +8,10 @@
 
 /** Buttons **/
 .gdo-icon-button:HOVER { text-decoration: none; }
+.gdt-button, input[type=submit], a.gdo-icon-button {
+	border: 1px ridge gray; background: #ddd; border-radius: 6px; padding: 0px 6px; color: #333; margin: 2px;
+	height: 24px; line-height: 22px; font-size: 16px; font-weight: 500; font-family: sans-serif;
+}
 
 /** Form **/
 .gdo-has-error { background: #fa6; }
@@ -31,6 +37,13 @@
 .gdo-table th input, .gdo-table th select { display: block; }
 .gdo-table th { vertical-align: bottom; }
 div.gdo-table { overflow: auto; }
+table.gdo-table thead { background: #ccb; }
+table.gdo-table tbody tr:nth-child(even) { background: #ddd; }
+table.gdo-table tbody tr:nth-child(odd) { background: #eee; }
+table.gdo-table tbody tr:hover { background: #fff; }
+table.gdo-table td.gdt-num { text-align: right; padding-right: 4px; /* font-family: monospace; */ }
+table.gdo-table td.gdo-gdt_country { text-align: center; }
+table.gdo-table td { padding: 0px 2px; }
 
 /** Lists **/
 .gdo-list-card { margin: 4px; border: 1px solid #000; }
@@ -55,8 +68,8 @@ div.gdo-table { overflow: auto; }
 
 
 /** Message **/
-.gdo-error-box, .gdo-error.gdo-panel { background: #fcc; padding: 24px; border: 1px dotted #eee; }
-.gdo-message-box, .gdo-success.gdo-panel { background: #cfc; padding: 24px; border: 1px dotted #eee; }
+.gdo-error-box, .gdo-error.gdo-panel { background: #fcc; padding: 12px; border: 1px dotted #eee; }
+.gdo-message-box, .gdo-success.gdo-panel { background: #cfc; padding: 12px; border: 1px dotted #eee; }
 
 /** Header **/
 #gdo-pagewrap { width: 100%; min-height: 100%; overflow: auto; }

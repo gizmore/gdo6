@@ -162,7 +162,6 @@ class Installer
 	 */
 	public static function loopMethod(GDO_Module $module, $path)
 	{
-// 		die($path."<br/>\n".GDO_PATH);
 		$entry = Strings::substrTo(basename($path), '.');
 		$class_name = "GDO\\{$module->getName()}\\Method\\$entry";
 		if (!class_exists($class_name, false))
@@ -180,78 +179,5 @@ class Installer
 			GDO_Permission::create($permission);
 		}
 	}
-	
-// 	#####################
-// 	### GWF core util ###
-// 	#####################
-// 	private static $coreTables;
-// 	public static function coreInclude($entry, $path, $args)
-// 	{
-// 		$class = Strings::substrTo($entry, '.');
-// 		if (class_exists($class))
-// 		{
-// 			if (is_subclass_of($class, 'GDO'))
-// 			{
-// 				if ($table = GDO::tableFor($class))
-// 				{
-// 					if (!$table->gdoAbstract())
-// 					{
-// 						self::$coreTables[$class] = $table;
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-	
-// 	/**
-// 	 * Get all core tables from inc folder.
-// 	 * @return GDO[]
-// 	 */
-// 	public static function includeCoreTables()
-// 	{
-// 		self::$coreTables = [];
-// 		Filewalker::traverse(GDO_PATH . 'inc/util/gwf', '*', [__CLASS__, 'coreInclude'], false, false);
-// 		return self::$coreTables;
-// 	}
-	
-// 	public static function installCoreTables($dropTables=false)
-// 	{
-// 		$tables = self::includeCoreTables();
-// 		while (count($tables))
-// 		{
-// 			$changed = false;
-// 			foreach ($tables as $classname => $table)
-// 			{
-// 				$skip = false; 
-// 				if ($deps = $table->gdoDependencies())
-// 				{
-// 					foreach ($deps as $dep)
-// 					{
-// 						if (isset($tables[$dep]))
-// 						{
-// 							$skip = true;
-// 							break;
-// 						}
-// 					}
-// 				}
-// 				if ($skip)
-// 				{
-// 					continue;
-// 				}
-// 				if ($dropTables)
-// 				{
-// 					$table->dropTable();
-// 				}
-// 				$table->createTable();
-// 				$changed = true;
-// 				unset($tables[$classname]);
-// 				break;
-// 			}
-// 			if (!$changed)
-// 			{
-// 				throw new GDOError("err_gdo_dependency not met", [implode(', ', array_keys($tables))]);
-// 			}
-// 		}
-// 	}
 	
 }

@@ -19,10 +19,8 @@ $firstEditableField = null;
 		<input type="hidden" name="me" value="<?=html(me())?>" />
 	  <?php endif; ?>
 <?php foreach ($form->getFields() as $field) : ?>
-		<?php # if ($field->writable) :
-if ($field->editable) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
+          <?php if ($field->editable) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
 		  <?= $field->renderForm(); ?>
-		<?php # endif; ?>
 <?php endforeach; ?>
 	  </form>
 	</div>

@@ -1,12 +1,20 @@
 <?php
 namespace GDO\Form;
+
 use GDO\Core\GDO;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\WithFields;
 use GDO\UI\WithTitle;
-use GDO\UI\GDT_Panel;
-use GDO\UI\WithHTML;
+
+/**
+ * An HTML Form.
+ * 
+ * @author gizmore
+ * 
+ * @version 6.10
+ * @since 3.00
+ */
 class GDT_Form extends GDT
 {
 	public static $VALIDATING_INSTANCE; # ugly, but hey.
@@ -20,7 +28,6 @@ class GDT_Form extends GDT
 	
 	public function __construct()
 	{
-//	 	$this->name = 'form';
 		$this->action = $_SERVER['REQUEST_URI'];
 	}
 	

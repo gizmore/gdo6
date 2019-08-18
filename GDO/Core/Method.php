@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Core;
+
 use GDO\DB\Database;
 use GDO\Register\Module_Register;
 use GDO\User\GDO_User;
@@ -7,13 +8,21 @@ use GDO\Util\Common;
 use GDO\Util\Strings;
 use GDO\UI\WithTitle;
 use GDO\User\GDO_Session;
+use GDO\Date\Time;
+
 /**
  * Abstract baseclass for all methods.
+ * 
  * There are some derived method classes for forms, tables and cronjobs.
  * Provides transaction wrapping and permission checks.
+ * 
+ * @see MethodTable
+ * @see MethodQueryTable
+ * @see MethodForm
+ * @see MethodCrud
  *
  * @author gizmore
- * @version 6.09
+ * @version 6.10
  * @since 1.0
  */
 abstract class Method
@@ -228,18 +237,42 @@ abstract class Method
 		($this->isTransactional() && (count($_POST)>0) );
 	}
 	
+	/**
+	 * Wrap execution in transaction if desired from method.
+	 * @throws \Exception
+	 * @return GDT_Response
+	 */
 	public function execWrap()
 	{
 		$db = Database::instance();
 		$transactional = $this->transactional();
+		
 		try
 		{
-			$this->init();
-			$response = $this->beforeExecute();
+			# Wrap transaction start
 			if ($transactional) $db->transactionBegin();
+			
+			# Init method
+			$this->init();
+			
+			# Exec 1)before, 2)execute, 3)after
+			$response = $this->beforeExecute();
 			$response = $response ? $response->add($this->execute()) : $this->execute();
+			$response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
+			
+			# store activity timestamp
+			if (!$this->isAjax())
+			{
+				$user = GDO_User::current();
+				if ($user->isPersisted())
+				{
+					$user->saveVar('user_last_activity', Time::getDate());
+				}
+			}
+
+			# Wrap transaction end
 			if ($transactional) $db->transactionEnd();
-			$response = $response ? $response->add($this->afterExecute()) : $response;
+			
 			return $response;
 		}
 		catch (\Exception $e)
@@ -248,4 +281,5 @@ abstract class Method
 			throw $e;
 		}
 	}
+	
 }

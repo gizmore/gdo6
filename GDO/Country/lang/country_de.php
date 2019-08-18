@@ -1,6 +1,7 @@
 <?php
 return array(
 'gdo_country' => 'Land',
+'unknown_country' => 'Unbekanntes Land',
 'country' => 'Land',
 'country_af' => 'Afghanistan',
 'country_ax' => 'Åland',

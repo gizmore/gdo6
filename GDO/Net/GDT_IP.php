@@ -35,6 +35,7 @@ final class GDT_IP extends GDT_String
 	public $editable = false;
 	public function defaultLabel() { return $this->label('ip'); }
 	public function renderForm() { return GDT_Template::php('Net', 'form/ip.php', ['field' => $this]); }
+	public function renderCell() { return $this->getVar(); }
 	
 	/**
 	 * Uppercase IPv6 to speed up DB lookups.

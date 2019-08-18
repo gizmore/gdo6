@@ -352,9 +352,18 @@ abstract class GDO
 	 */
 	public function gdoColumn($key)
 	{
-		$column = #clone $this->gdoColumnsCache()[$key]; # XXX: performance over weird bugs?
 		$column = $this->gdoColumnsCache()[$key];
 		return $column->gdo($this);
+	}
+	
+	/**
+	 * @param string $key
+	 * @return GDT
+	 */
+	public function gdoColumnCopy($key)
+	{
+		$column = clone $this->gdoColumnsCache()[$key];
+		return $column->gdo($this)->val(null);
 	}
 	
 	public function gdoColumnsExcept(...$except)

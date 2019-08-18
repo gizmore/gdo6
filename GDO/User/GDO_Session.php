@@ -15,15 +15,17 @@ use GDO\Date\Time;
 /**
  * GDO Session handler.
  * @author gizmore
+ * @version 6.10
+ * @since 3.00
  */
 class GDO_Session extends GDO
 {
-	const DUMMY_COOKIE_CONTENT = 'GWF_like_16_byte';
+	const DUMMY_COOKIE_CONTENT = 'GDO_like_16_byte';
 	
 	private static $INSTANCE;
 	public static $STARTED = false;
 	
-	private static $COOKIE_NAME = 'GWF5';
+	private static $COOKIE_NAME = 'GDO6';
 	private static $COOKIE_DOMAIN = 'localhost';
 	private static $COOKIE_JS = true;
 	private static $COOKIE_HTTPS = true;

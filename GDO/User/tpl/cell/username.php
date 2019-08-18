@@ -1,7 +1,11 @@
 <?php
 use GDO\User\GDO_User;
+/**
+ * @var $user GDO_User
+ */
 $user instanceof GDO_User;
 $id = $user->getID();
+
 # Beautify markup and typography
 # As it's a template you might want to add colors for permissions, a link to your profile or whatever.
 if ($user->isGhost())

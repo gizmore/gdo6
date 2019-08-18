@@ -125,9 +125,6 @@ abstract class MethodForm extends Method
 		unset($_POST['form']);
 		unset($_POST['nojs']);
 		unset($_REQUEST['form']);
-// 		$this->form->withFields(function(GDT $field){
-// 			$field->var = $field->initial;
-// 		});
 		unset($this->form);
 	}
 	
