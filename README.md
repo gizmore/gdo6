@@ -1,134 +1,98 @@
-# gdo6
+# GDO6
 
-Gizmore Data Objects 6
+## Gizmore Data Objects 6
+
+GDO6 is a PHP framework to ease the development of websites.
+The main audience is highly dynamic websites like games.
+All code and modules are currently written by myself, ensuring the same code style and quality.
+
+The main difference to other frameworks is the type system; All other frameworks have multiple type systems; one for DB, one for Models and maybe even more.
+
+In GDO6 the same type system (GDT) applies to all widgets, like tables, forms and also the DB layer.
+Write a GDT once, write the validation once, and use the same GDType everywhere in your code.
+There are types like Email, Username, Geoposition, Country, Object, File, Image, Enum, Duration, Serialize, ComboBox, Date, CreatedBy and many more.
+
+The performance is quite okay with responsive timing and about 4MB memory footprint.
+
+## Why?
+
+I was unhappy with RubyOnRails and recoded my framework from scratch. I took the best ideas from all my experience to create the GDT - GizmoreDataType - System, Which i think is missing on all frameworks i have seen.
+
+Read https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_AND_GDT.md to learn more about GDT.
+ 
+
+## Outstanding features
+
+- Two-Layer Single-Identity Cache: Read https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_CACHING.md to learn more about what single identity means.
+
+- Code-First DBA: You write Entities easily with GDT and code completion. Your Database is created with all appropiate foreign keys and perfect relations.
+
+- Unified type system: Use GDT everywhere like in DBA, Forms, Tables and Views. There are more than 50 Different GDT which know how to behave in every context.
+
+- Method Re-Use: Write methods once and make them work for ajax, json, html or re-use them with websockets.
+
+- Code Style: Almost every class is less than 250 lines. No scrolling to the right needed. Clean code!
+
+- Code Completion: In the EclipsePDT IDE the code completion coverage is about 92%. Other IDE are not tested yet.
+
+- PHP Warnings: The code does not produce any warning or notice. By default a notice or warning is treated as application crash and issues an error mail.
 
 
-## Features
+## Notable features
 
-- Module-Only: every piece of code is contained in a module. Everything is autoloaded with a very slim and fast autoloader.
-- Code-First DBA: You write code easily with GDO code completion standards. Your Database is created with a lot of foreign keys and perfect relations.
-- Two-Layer + Single-Identity Cache - Read https://github.com/gizmore/gdo6/blob/master/GDO_CACHING.md to learn more
+ - Much code and logic was ported from my old framework, which already had thoughtful processes. For example the registration does not waste mails or nicknames until activated.
+
+ - The Web Event System can call hooks in the websocket process.
+
+ - No 3rd party template engine: I wrote an own minimal template engine which is just using require. Language specific templates are supported. The GDT_Template can also be used as a normal GDT.
+ 
+ - Yarn: Some modules come with javascript dependencies. Install all of them easily via ./gdo_yarn.sh
+ 
+ - JS: There is a JS minifier that builds a single .js out of all js assets on the fly. Protect your JS code with that uglyfier via setting an option.
+ 
+ - WYSIWYG: GDT_Message allows html to be typed by users. HTMLPurifier is used to securely allow that. The module gdo6-tinymce adds a nice editor on top of that.
+
+ - Logger: The logger writes logfiles for each user individually.
+ 
+
+## Missing features
+
+ - Unit Tests: Currently there is NO unit testing. My strategy is to issue error mails. Of course unit tests would be an awesome addition.
+
+ - No good design or theme: I am working on a basic web1.0 classic design, which is the only recommended design at the moment. There is a material design which looks  better but it's tricky to install and has a huge drawback - No rendering at all when javascipt has problems.
+
+ - The I18n is not that great. Pluralization, for example, is not supported.
+ 
+ - Currently there are no SEO friendly urls. This is on TODO.
+ 
+ - Some modules are not that mature yet. For example the forum module is missing lots of design and features like unread threads or search highlight.
+ 
+ - There is only one configuration file. Rest of config is in modules. It would be cool if ENV could override module and config settings
+ 
+ - There is no CMS module and i think i don't want one. I create site via code, not via click.
 
 
 ## Demo
 
-A demo site with (almost) the module set from below is here: http://gdo6.gizmore.org
+A demo site with material design and almost all modules is available here: http://gdo6.gizmore.org
+
+A demo site with classic design and almost all modules is (SOON) available here: http://classic.gdo6.gizmore.org (NOT YET)
 
 
-### PHP Requirements
+## Installation
 
-gdo6(PHP) runs on PHP 5.6 and later versions (7.2) and requires a few PHP modules
+The installation process is documented in https://github.com/gizmore/gdo6/blob/master/DOCS/INSTALL.md
 
-    apt-get install php-mbstring php-bcmath php-curl php-mysql php-gd
-
-These modules are optional
-
-    apt-get install php-memcached php-gmp
+There is also a list of official modules to install.
 
 
-### Modules
+## Security
 
-For a "quick" install.
+Security is a big concern and i do my best to provide secure code, elegant processes and a transparent ecosystem.
 
-1. Install core:
-
-    mkdir www && cd www
-    git clone --recursive https://github.com/gizmore/gdo6
-
-In case you forgot a recursive:
-
-    git submodule update --init --recursive
+GDO6 is one of the very few frameworks that offer GPG encrypted mails and alert you on login failures.
 
 
-Install required PHP modules:
-
-
-
-Install modules:
-
-Switch to the GDO folder and clone or code submodules.
-
-It is a good strategy to paste the below clone lines to a text file.
-Then remove the modules you do not want and clone the remaining modules.
-
-Modules with ## are sites/projects, you probably don't want those.
-Modules with # are not ready for production yet.
-
-Be a bit careful with mixing theme/css modules like JQueryUI, Bootstrap and Material.
-The material design is tricky to setup atm and not recommended yet.
-
-
-    cd www/gdo6/GDO # switch to modules dir
-
-    git clone --recursive https://github.com/gizmore/gdo6-account Account
-    git clone --recursive https://github.com/gizmore/gdo6-address Address
-    git clone --recursive https://github.com/gizmore/gdo6-admin Admin
-    # git clone --recursive https://github.com/gizmore/gdo6-angular Angular
-    git clone --recursive https://github.com/gizmore/gdo6-audio Audio
-    git clone --recursive https://github.com/gizmore/gdo6-avatar Avatar
-    git clone --recursive https://github.com/gizmore/gdo6-backup Backup
-    ## git clone --recursive https://github.com/gizmore/gdo6-blog Blog
-    git clone --recursive https://github.com/gizmore/gdo6-bootstrap Bootstrap
-    ## git clone --recursive https://github.com/gizmore/gdo6-buzzerapp Buzzerapp
-    git clone --recursive https://github.com/gizmore/gdo6-captcha Captcha
-    git clone --recursive https://github.com/gizmore/gdo6-category Category
-    git clone --recursive https://github.com/gizmore/gdo6-comment Comment
-    git clone --recursive https://github.com/gizmore/gdo6-contact Contact
-    git clone --recursive https://github.com/gizmore/gdo6-cors CORS
-    git clone --recursive https://github.com/gizmore/gdo6-country-coordinates CountryCoordinates
-    git clone --recursive https://github.com/gizmore/gdo6-currency Currency
-    ## git clone --recursive https://github.com/gizmore/gdo6-dog Dog
-    git clone --recursive https://github.com/gizmore/gdo6-download Download
-    git clone --recursive https://github.com/gizmore/gdo6-dsgvo DSGVO
-    git clone --recursive https://github.com/gizmore/gdo6-facebook Facebook
-    git clone --recursive https://github.com/gizmore/gdo6-font-awesome FontAwesome
-    git clone --recursive https://github.com/gizmore/gdo6-forum Forum
-    git clone --recursive https://github.com/gizmore/gdo6-friends Friends
-    git clone --recursive https://github.com/gizmore/gdo6-gallery Gallery
-    git clone --recursive https://github.com/gizmore/gdo6-geo2country Geo2Country
-    # git clone --recursive https://github.com/gizmore/gdo6-guestbook Guestbook
-    # git clone --recursive https://github.com/gizmore/gdo6-helpdesk Helpdesk
-    git clone --recursive https://github.com/gizmore/gdo6-import-gwf3 ImportGWF3
-    git clone --recursive https://github.com/gizmore/gdo6-instagram Instagram
-    git clone --recursive https://github.com/gizmore/gdo6-invite Invite
-    git clone --recursive https://github.com/gizmore/gdo6-ip2country IP2Country
-    # git clone --recursive https://github.com/gizmore/gdo6-irc IRC
-    git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
-    git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
-    git clone --recursive https://github.com/gizmore/gdo6-links Links
-    git clone --recursive https://github.com/gizmore/gdo6-login Login
-    git clone --recursive https://github.com/gizmore/gdo6-login-as LoginAs
-    git clone --recursive https://github.com/gizmore/gdo6-logs Logs
-    git clone --recursive https://github.com/gizmore/gdo6-maps Maps
-    # git clone --recursive https://github.com/gizmore/gdo6-material Material
-    # git clone --recursive https://github.com/gizmore/gdo6-mibbit Mibbit
-    ## git clone --recursive https://github.com/gizmore/gdo6-nasdax Nasdax
-    git clone --recursive https://github.com/gizmore/gdo6-news News
-    git clone --recursive https://github.com/gizmore/gdo6-online-users OnlineUsers
-    # git clone --recursive https://github.com/gizmore/gdo6-opentimes OpenTimes
-    git clone --recursive https://github.com/gizmore/gdo6-payment Payment
-    git clone --recursive https://github.com/gizmore/gdo6-payment-credits PaymentCredits
-    git clone --recursive https://github.com/gizmore/gdo6-payment-paypal PaymentPaypal
-    git clone --recursive https://github.com/gizmore/gdo6-pm PM
-    git clone --recursive https://github.com/gizmore/gdo6-poll Poll
-    git clone --recursive https://github.com/gizmore/gdo6-profile Profile
-    git clone --recursive https://github.com/gizmore/gdo6-push Push
-    git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
-    git clone --recursive https://github.com/gizmore/gdo6-register Register
-    # git clone --recursive https://github.com/gizmore/gdo6-shoutbox Shoutbox
-    ## git clone --recursive https://github.com/gizmore/gdo6-slaytags Slaytags
-    git clone --recursive https://github.com/gizmore/gdo6-tag Tag
-    git clone --recursive https://github.com/gizmore/gdo6-tinymce TinyMCE
-    # git clone --recursive https://github.com/gizmore/gdo6-usergroup Usergroup
-    git clone --recursive https://github.com/gizmore/gdo6-vote Vote
-    git clone --recursive https://github.com/gizmore/gdo6-websocket Websocket
-    ## git clone --recursive https://github.com/gizmore/gdo6-wechall WeChall
-    ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
-    # git clone --recursive https://github.com/gizmore/gdo6-whois Whois
-    
-Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
-
-    
 ### Write own modules
 
 There is a tutorial in the gdo6-helpdesk module, which is worth a read.
@@ -136,8 +100,17 @@ There is a tutorial in the gdo6-helpdesk module, which is worth a read.
 https://github.com/gizmore/gdo6-helpdesk/blob/master/howto/HOWTO.md
 
 
-There is a tutorial section in gdo6/tutorial.
-
 ### Known Bugs / TODO
 
-There is a ROADMAP.md
+There is a ROADMAP.md in the DOCS folder
+
+
+### Contribution
+
+Contribution is welcome via suggestions or testing. Maybe a few bugfixes.
+You are welcome to write own modules which i might list as official.
+
+
+### License
+
+GDO6 is licensed under the MIT license. Mostly all modules are MIT as well. There are only a very few properitary modules, own sites, which might be available on github.
