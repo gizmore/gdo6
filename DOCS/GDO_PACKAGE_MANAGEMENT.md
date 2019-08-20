@@ -1,9 +1,10 @@
 # Package management in GDO6
 
 gdo6 does NOT use composer for package management. Instead you use git to install and update gdo6 modules.
-gdo6 is NOT PSR-4 compliant. It has an own minimal and optimized autoloader which is maybe 4 lines of code.
 
-gdo6 has the ability to exchange modules for another. An example is Captcha; You clone one of the captcha modules as GDO/Captcha and chose your captcha implementation that way.
+gdo6 is NOT PSR-4 compliant. It has an own minimal and optimized autoloader. Although it is similiar to PSR-4 it is not compatible.
+
+gdo6 has the ability to exchange modules for another. An example is Captcha; You clone one of the captcha modules as GDO/Captcha and have chosen your captcha implementation that way.
 
 
 ## Installing a gdo6 module
@@ -24,4 +25,17 @@ The installation process for a gdo6 module is as follows.
     # Click Install
     
 That's it. Your application now includes jquery assets :)
+
  
+## Updating your installation
+
+Updating all your GDO6 modules can be easily done using the following command.
+
+    cd gdo6
+    ./gdo_update.sh
+    
+This will run git pull on the core and all modules.
+
+It might be that you have to run install on some modules after update. This can be done via the installer or the admin panel.
+
+The developers must assure that all modules stay backwards compatible!

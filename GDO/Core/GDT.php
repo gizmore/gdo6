@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Core;
+
 use GDO\DB\Query;
 use GDO\Table\GDT_Table;
 use GDO\Util\Strings;
@@ -7,6 +8,18 @@ use GDO\Form\GDT_Form;
 use GDO\DB\GDT_String;
 use GDO\UI\WithTooltip;
 use GDO\UI\WithIcon;
+
+/**
+ * Base class for all GDT.
+ * 
+ * @author gizmore
+ * @version 6.10
+ * @since 6.00
+ * 
+ * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
+ * @see \GDO\DB\GDT_String - Database supporting string baseclass
+ * @see \GDO\UI\GDT_Paragraph - Simple text rendering <p>
+ */
 abstract class GDT
 {
 	use WithName;
@@ -18,6 +31,7 @@ abstract class GDT
 	###############
 	private static $nameNr = 1;
 	public static function nextName() { return 'gdo-'.(self::$nameNr++); }
+
 	/**
 	 * Create a GDT instance.
 	 * @param string $name
@@ -36,8 +50,9 @@ abstract class GDT
 	############
 	public $name;
 	public function name($name=null) { $this->name = $name === null ? self::nextName() : $name; return $this; }
+	public function htmlName() { return sprintf(' name="%s"', $this->name); }
 	public function htmlClass() { return " gdo-".strtolower(Strings::rsubstrFrom(get_called_class(), '\\')); }
-
+	
 	##############
 	### FormID ###
 	##############
@@ -53,6 +68,7 @@ abstract class GDT
 	public function writable($writable) { $this->writable = $writable; return $this; }
 	public $editable = true;
 	public function editable($editable) { $this->editable = $editable; return $this->writable($editable); }
+
 	#############
 	### Error ###
 	#############
@@ -114,7 +130,6 @@ abstract class GDT
 	#################
 	public function blankData() { return $this->initial; }
 	public function getGDOData() {}
-// 	public function setGDOData(GDO $gdo=null) { return $this; }
 	public function setGDOVar($var) { if ($this->gdo) $this->gdo->setVar($this->name, $var); return $this; }
 	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
 	public function setGDOData(GDO $gdo=null)
@@ -128,14 +143,16 @@ abstract class GDT
 	
 	/**
 	 * Get a param for this GDT from $_REQUEST.
-	 * $firstLevel usually is [form]
-	 * Override default with simple get param. (OUCH)
 	 * 
-	 * @todo: Slow and bad code. remove.
+	 * $firstLevel usually is [form]
+	 * Override default with simple get param.
+	 * 
+	 * @todo: Slow and bad code. Rewrite it.
 	 * 
 	 * @param string $firstLevel
 	 * @param string $default
 	 * @param string $name
+	 * 
 	 * @return string
 	 */
 	public function getRequestVar($firstLevel=null, $default=null, $name=null)
@@ -154,6 +171,7 @@ abstract class GDT
 			$path = $firstLevel.']';
 		}
 		$arr = $_REQUEST;
+		
 		# Allow nested form checkboxes and stuff
 		$path .= '['.$name;
 		$path = explode('][', $path);
@@ -199,7 +217,6 @@ abstract class GDT
 	}
 	
 	public function renderList() { return $this->render(); }
-// 	public function renderOrder() { return 'aa'; }
 	public function displayLabel() { return t($this->name); }
 
 	# Render debug data by default.

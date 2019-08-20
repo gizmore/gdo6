@@ -30,6 +30,7 @@ div.gdo-body { padding-top: 64px; }
 .gdo-form textarea { width: 100%; }
 .gdo-form select { min-width: 160px; }
 .gdo-form .gdo-link { text-decoration: underline; }
+.gdo-form-title { text-align: center; line-height: 38px; margin-bottom: 6px; }
 
 /** Table **/
 .gdo-tblorder { display: inline-block; }

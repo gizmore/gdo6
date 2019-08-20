@@ -1,11 +1,14 @@
 <?php
 namespace GDO\Core;
+
 use GDO\Util\Strings;
+
 /**
- * Adds naming conventions
+ * Adds naming conventions to a GDT.
+ * 
  * @author gizmore
  * @since 6.00
- * @version 6.05
+ * @version 6.10
  */
 trait WithName
 {
@@ -14,4 +17,5 @@ trait WithName
 	public function gdoShortName() { return self::gdoShortNameS(); }
 	public static function gdoClassNameS() { return get_called_class(); }
 	public static function gdoShortNameS() { return Strings::rsubstrFrom(get_called_class(), '\\'); }
+	
 }

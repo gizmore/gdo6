@@ -52,7 +52,7 @@ final class GDT_IconUTF8
 			'gender' => '⚥',
 			'help' => '☛',
 			'image' => '📷',
-			'level' => 'LVL',
+			'level' => '🏆',
 			'like' => '❤',
 			'link' => '⚓',
 			'list' => '▤',

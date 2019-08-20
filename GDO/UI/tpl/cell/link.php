@@ -1,6 +1,12 @@
 <?php /** @var $link \GDO\UI\GDT_Link **/ ?>
-<?php $link->attr('class','gdo-link'); ?>
-<span class="gdt-link">
+<span class="<?=$link->htmlClass()?>">
   <?=$link->htmlIcon()?>
-  <a <?=$link->htmlAttributes()?>"<?=$link->htmlTarget()?> href="<?=$link->href?>"><?=$link->displayLabel()?></a>
+  <a
+   <?=$link->htmlName()?>
+   <?=$link->htmlAttributes()?>
+   <?=$link->htmlTarget()?>
+   <?=$link->htmlHREF()?>
+   href="<?=html($link->href)?>">
+    <?=$link->displayLabel()?>
+  </a>
 </span>
