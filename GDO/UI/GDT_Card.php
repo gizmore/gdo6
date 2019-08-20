@@ -1,11 +1,16 @@
 <?php
 namespace GDO\UI;
+
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\WithFields;
+
 /**
- * 
+ * A card with title, subtitle, creator, date, content and actions.
+ *  
  * @author gizmore
+ * @version 6.10
+ * @since 6.04
  */
 final class GDT_Card extends GDT
 {
@@ -13,6 +18,12 @@ final class GDT_Card extends GDT
 	use WithFields;
 	use WithIcon;
 	use WithTitle;
+	use WithPHPJQuery;
+	
+	public function hasUpperCard()
+	{
+		return $this->title || $this->subtitle || $this->withCreator || $this->withCreated;
+	}
 	
 	################
 	### Subtitle ###
@@ -46,4 +57,5 @@ final class GDT_Card extends GDT
 	{
 		return $this->gdo->gdoValueOf('GDO\DB\GDT_CreatedBy');
 	}
+	
 }

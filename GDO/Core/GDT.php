@@ -12,6 +12,11 @@ use GDO\UI\WithIcon;
 /**
  * Base class for all GDT.
  * 
+ * To implement a new GDT inherit this class and override rendering methods and validation.
+ * 
+ * There are a few traits that offer features like completion, html attributes or tooltips.
+ * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
+ * 
  * @author gizmore
  * @version 6.10
  * @since 6.00

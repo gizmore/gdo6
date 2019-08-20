@@ -3,7 +3,6 @@ $firstEditableField = null;
 ?>
 <!-- Begin Form -->
 <div class="gdo-form">
-  <div class="md-whiteframe-8dp">
 	<div class="gdo-form-inner">
 	  <div class="gdo-form-head">
 		<h2 class="gdo-form-title"><?= $form->title; ?></h2>
@@ -24,7 +23,6 @@ $firstEditableField = null;
 <?php endforeach; ?>
 	  </form>
 	</div>
-  </div>
 </div>
 <script type="text/javascript">
 window.GDO_FIRST_EDITABLE_FIELD = window.GDO_FIRST_EDITABLE_FIELD||'<?=$firstEditableField?$firstEditableField->id():null?>';

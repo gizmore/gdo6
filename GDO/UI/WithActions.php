@@ -6,7 +6,7 @@ namespace GDO\UI;
  * 
  * @author gizmore
  * @since 6.05
- * @version 6.06
+ * @version 6.10
  */
 trait WithActions
 {
@@ -33,4 +33,9 @@ trait WithActions
 		return $this->actions;
 	}
 
+	public function hasActions()
+	{
+		return $this->actions && (!empty($this->actions));
+	}
+	
 }

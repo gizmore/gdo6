@@ -36,4 +36,12 @@ final class GDT_Country extends GDT_ObjectSelect
 	{
 		return GDT_Template::php('Country', 'cell/country.php', ['field'=>$this]);
 	}
+	
+	public $withName = true;
+	public function withName($withName=true)
+	{
+		$this->withName = $withName;
+		return $this;
+	}
+	
 }
