@@ -204,10 +204,10 @@ final class ModuleLoader
 						$this->modules[$moduleName] = $module->setPersisted(true);
 					}
 				}
-				else
-				{
-					$this->modules[$moduleName] = $module->setPersisted(true);
-				}
+// 				else
+// 				{
+// 					$this->modules[$moduleName] = $module->setPersisted(true);
+// 				}
 			}
 // 		}
 // 		catch (Exception $e)
