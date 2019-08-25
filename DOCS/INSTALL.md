@@ -87,6 +87,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-invite Invite
     git clone --recursive https://github.com/gizmore/gdo6-ip2country IP2Country
     # git clone --recursive https://github.com/gizmore/gdo6-irc IRC
+    git clone --recursive https://github.com/gizmore/gdo6-jpgraph JPGraph
     git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
     git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
     git clone --recursive https://github.com/gizmore/gdo6-links Links
