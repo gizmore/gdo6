@@ -138,6 +138,7 @@ return array(
 
 # Checkbox
 'enum_undetermined_yes_no' => 'unbekannt',
+'enum_unknown' => 'Unbekannt',
 	
 # Files
 '_filesize' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),
