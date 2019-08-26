@@ -9,6 +9,7 @@ trait WithLabel
 
 	public function name($name=null) { $this->name = $name ? $name : self::nextName(); return $this->defaultLabel(); }
 
+	public function hasLabel() { return $this->label || $this->labelRaw; }
 	public function defaultLabel() { return $this->label($this->name); }
 	public function noLabel() { return $this->rawLabel(''); }
 	public function label($key, array $args=null) { $this->labelRaw = null; $this->label = $key; $this->labelArgs = $args; return $this; }

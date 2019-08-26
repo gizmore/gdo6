@@ -89,7 +89,7 @@ return array(
 'err_create_dir' => 'Could not create directory \'%s\'.',
 'err_permission_required' => 'You need <i>%s</i> permissions to access this function.',
 'err_save_unpersisted_entity' => 'Tried to save an unpersisted entity of type <i>%s</i>.',
-'err_file' => 'File not found: %s',
+'err_file_not_found' => 'File not found: %s',
 'err_already_authenticated' => 'You are already authenticated.',
 'err_gdo_not_found' => 'Could not find %s with ID %s.',
 'err_string_pattern' => 'Your input did not pass the pattern validation test for this field.',

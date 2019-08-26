@@ -2,8 +2,8 @@
 return array(
 'sitename' => GWF_SITENAME,
 
-'enum_none' => 'nichts',
-'no_selection' => 'keine Auswahl',
+'enum_none' => 'Nichts',
+'no_selection' => 'Keine Auswahl',
 
 # util/gdo and util/gwf fields
 'birthdate' => 'Geburtsdatum',
@@ -19,7 +19,7 @@ return array(
 'description' => 'Beschreibung',
 'email' => 'E-Mail',
 'email_fmt' => 'E-Mail Format',
-'enabled' => 'aktiv',
+'enabled' => 'Aktiv',
 'file' => 'Datei',
 'folder' => 'Ordner',
 'gender' => 'Geschlecht',
@@ -89,7 +89,7 @@ return array(
 'err_create_dir' => 'Verzeichnis konnte nicht erstellt werden: %s.',
 'err_permission_required' => 'Sie benötigen die <i>%s</i> Berechtigung um diese Funktion aufzurufen.',
 'err_save_unpersisted_entity' => 'Es wurde versucht eine unpersitierte Entity des Typs <i>%s</i> zu speichern.',
-'err_file' => 'Datei nicht gefunden: %s',
+'err_file_not_found' => 'Datei nicht gefunden: %s',
 'err_already_authenticated' => 'Sie sind bereits angemeldet.',
 'err_gdo_not_found' => 'Konnte %s mit der ID %s nicht finden.',
 'err_string_pattern' => 'Ihre Eingabe passt nicht zur Eingabemaske.',

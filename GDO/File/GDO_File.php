@@ -144,7 +144,7 @@ final class GDO_File extends GDO
 	{
 		if (!FileUtil::isFile($path))
 		{
-			throw new GDOException(t('err_file', [$path]));
+			throw new GDOException(t('err_file_not_found', [$path]));
 		}
 		$values = array(
 			'name' => $name,

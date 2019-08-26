@@ -23,8 +23,8 @@ class GDT_Checkbox extends GDT_Select
 		{
 			$this->choices = [];
 			$this->choices(array(
-				'0' => t('no'),
-				'1' => t('yes'),
+				'0' => t('enum_no'),
+				'1' => t('enum_yes'),
 			));
 			if ($this->undetermined)
 			{
