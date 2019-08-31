@@ -289,6 +289,8 @@ class GDO_Module extends GDO
 	 * @return GDT[]
 	 */
 	public function getUserSettings(){}
+	public function getUserSettingsURL(){}
+	
 	/**
 	 * @return GDT[]
 	 */
