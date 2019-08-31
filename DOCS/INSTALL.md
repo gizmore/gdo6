@@ -94,6 +94,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-login Login
     git clone --recursive https://github.com/gizmore/gdo6-login-as LoginAs
     git clone --recursive https://github.com/gizmore/gdo6-logs Logs
+    # git clone --recursive https://github.com/gizmore/gdo6-mail-gpg MailGPG
     git clone --recursive https://github.com/gizmore/gdo6-maps Maps
     # git clone --recursive https://github.com/gizmore/gdo6-material Material
     # git clone --recursive https://github.com/gizmore/gdo6-mibbit Mibbit

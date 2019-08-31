@@ -11,7 +11,7 @@ return array(
 'install_test_1' => 'Is the protected folder writable?',
 'install_test_2' => 'Is the files folder writable?',
 'install_test_3' => 'Is the temp folder writable?',
-'install_test_4' => 'Is nodejs, npm and bower available?',
+'install_test_4' => 'Are nodejs, npm, bower and yarn available?',
 'install_test_5' => 'Is PHP mbstring installed?',
 'install_title_2_optionals' => 'Optional Features',
 'install_optional_0' => 'Is PHP gd installed?',

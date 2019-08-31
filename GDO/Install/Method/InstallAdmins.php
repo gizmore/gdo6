@@ -31,7 +31,7 @@ class InstallAdmins extends MethodForm
 			$users->gdoColumn('user_email'),
 			$users->gdoColumn('user_password'),
 			GDT_Submit::make(),
-			GDT_AntiCSRF::make(),
+// 			GDT_AntiCSRF::make(),
 		));
 	}
 	
