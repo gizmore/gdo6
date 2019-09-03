@@ -83,4 +83,28 @@ trait WithFields
 		}
 		return $json;
 	}
+
+	##############################
+	### Get Fields Recursively ###
+	##############################
+	public function getFieldsRec()
+	{
+		$fields = [];
+		$this->_getFieldsRec($fields, $this);
+		return $fields;
+	}
+	
+	private function _getFieldsRec(array &$fields, GDT $gdt)
+	{
+		foreach ($gdt->fields as $_gdt)
+		{
+			$fields[$_gdt->name] = $_gdt;
+			$uses = class_uses($_gdt);
+			if (in_array('GDO\Core\WithFields', $uses, true))
+			{
+				$this->_getFieldsRec($fields, $_gdt);
+			}
+		}
+	}
+	
 }

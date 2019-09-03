@@ -81,7 +81,7 @@ abstract class MethodForm extends Method
 			return $form->getField($flowField)->flowUpload();
 		}
 		
-		foreach ($form->fields as $field)
+		foreach ($form->getFieldsRec() as $field)
 		{
 			if ($field instanceof GDT_Submit)
 			{
@@ -89,7 +89,7 @@ abstract class MethodForm extends Method
 				{
 					if ($form->validateForm())
 					{
-					 	unset($_POST['nojs']);
+						unset($_POST['nojs']);
 						$response = call_user_func([$this, "onSubmit_{$field->name}"], $form);
 						$form->onValidated();
 					}

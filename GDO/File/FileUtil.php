@@ -9,7 +9,7 @@ final class FileUtil
 {
 	public static function isFile($filename) { return is_file($filename) && is_readable($filename); }
 	public static function isDir($filename) { return is_dir($filename) && is_readable($filename); }
-	public static function createDir($path) { return self::isDir($path) && is_writable($path) ? true : @mkdir($path, GWF_CHMOD, true); }
+	public static function createDir($path) { return self::isDir($path) && is_writable($path) ? true : mkdir($path, GWF_CHMOD, true); }
 	public static function dirsize($path)
 	{
 		$bytes = 0;
