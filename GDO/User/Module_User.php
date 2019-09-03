@@ -21,7 +21,6 @@ final class Module_User extends GDO_Module
 			'GDO\User\GDO_UserPermission',
 			'GDO\User\GDO_UserSetting',
 			'GDO\User\GDO_UserSettingBlob',
-			'GDO\User\GDO_PublicKey',
 		);
 	}
 }

@@ -13,8 +13,8 @@ use GDO\Core\Debug;
  * @since 2008
  * */
 use GDO\Core\GDT_Template;
+use GDO\MailGPG\GDO_PublicKey;
 use GDO\User\GDO_User;
-use GDO\User\GDO_PublicKey;
 final class Mail
 {
 	public static $SENT = 0;
@@ -325,9 +325,12 @@ final class Mail
 		{
 			if (function_exists('gnupg_init'))
 			{
-				if ($fingerprint = GDO_PublicKey::getFingerprintForUser($user))
+				if (module_enabled('MailGPG'))
 				{
-					$this->setGPGKey($fingerprint);
+					if ($fingerprint = GDO_PublicKey::getFingerprintForUser($user))
+					{
+						$this->setGPGKey($fingerprint);
+					}
 				}
 			}
 		}
