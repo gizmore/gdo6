@@ -97,7 +97,7 @@ abstract class MethodCrud extends MethodForm
 		$form->withGDOValuesFrom($gdo);
 		if ($this->gdo)
 		{
-			$this->title(t('ft_crud_update', [$this->gdoTable()->gdoHumanName()]));
+			$this->crudCreateTitle();
 		}
 		else
 		{
@@ -143,7 +143,8 @@ abstract class MethodCrud extends MethodForm
 	public function onCreate(GDT_Form $form)
 	{
 		$table = $this->gdoTable();
-		$gdo = $table->blank($form->getFormData())->insert();
+		$data = $form->getFormData();
+		$gdo = $table->blank()->insert();
 		$this->resetForm();
 		return
 			$this->message('msg_crud_created', [$gdo->gdoHumanName()])->

@@ -28,7 +28,7 @@ final class GDO_File extends GDO
 		return array(
 			GDT_AutoInc::make('file_id')->label('id'),
 			GDT_String::make('file_name')->notNull(),
-			GDT_String::make('file_type')->ascii()->caseS()->notNull()->max(96),
+			GDT_MimeType::make('file_type')->notNull(),
 			GDT_Filesize::make('file_size')->notNull(),
 			GDT_Int::make('file_width')->unsigned(),
 			GDT_Int::make('file_height')->unsigned(),

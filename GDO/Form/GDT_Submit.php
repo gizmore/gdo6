@@ -20,7 +20,7 @@ class GDT_Submit extends GDT
 	
 	public $editable = false;
 
-	public function defaultLabel() { return $this->label('btn_send'); }
+// 	public function defaultLabel() { return $this->label('btn_send'); }
 	
 	public function isSerializable() { return false; }
 	
