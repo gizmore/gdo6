@@ -97,7 +97,7 @@ abstract class MethodCrud extends MethodForm
 		$form->withGDOValuesFrom($gdo);
 		if ($this->gdo)
 		{
-			$this->crudCreateTitle();
+			$this->crudEditTitle();
 		}
 		else
 		{
@@ -117,6 +117,11 @@ abstract class MethodCrud extends MethodForm
 	protected function crudCreateTitle()
 	{
 		$this->title(t('ft_crud_create', [$this->gdoTable()->gdoHumanName()]));
+	}
+	
+	protected function crudEditTitle()
+	{
+		$this->title(t('ft_crud_update', [$this->gdoTable()->gdoHumanName()]));
 	}
 	
 	##############
