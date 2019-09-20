@@ -40,8 +40,6 @@ Switch to the GDO folder and clone or code modules.
 It is a good strategy to paste the clone lines below to a text file.
 Then remove the modules you do not want and clone the remaining modules.
 
-
-
 Modules with ## are sites/projects, you probably don't want those.
 
 Modules with # are not ready for production yet.
@@ -109,6 +107,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-poll Poll
     git clone --recursive https://github.com/gizmore/gdo6-profile Profile
     git clone --recursive https://github.com/gizmore/gdo6-push Push
+    git clone --recursive https://github.com/gizmore/gdo6-qrcode QRCode
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
     # git clone --recursive https://github.com/gizmore/gdo6-shoutbox Shoutbox
