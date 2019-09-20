@@ -8,6 +8,7 @@ $field instanceof GDT_Email;
   <?=$field->htmlIcon()?>
   <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input
+   size="32"
    type="email"
    name="form[<?= $field->name; ?>]"
    value="<?= $field->displayVar(); ?>"
