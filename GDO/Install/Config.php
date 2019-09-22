@@ -42,6 +42,7 @@ class Config
 			'InstallCronjob',
 			'InstallAdmins',
 			'InstallJavascript',
+			'ImportBackup',
 			'Security',
 		);
 	}

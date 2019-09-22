@@ -72,7 +72,13 @@ final class Filewalker
 		}
 		$dir->close();
 		
-		usort($filestack, function($a, $b){ return strcasecmp($a[0], $b[0]); });
+		usort($filestack, function($a, $b) {
+			if (is_numeric($a[0]) && is_numeric($b[0]))
+			{
+				return $a[0] - $b[0];
+			}
+			return strcasecmp($a[0], $b[0]);
+		});
 		foreach ($filestack as $file)
 		{
 			call_user_func($callback_file, $file[0], $file[1], $args);

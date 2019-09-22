@@ -85,7 +85,10 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 </code>
 ',
 	
-	'install_title_8' => 'Install Security',
+'install_title_8' => 'Import Backup',
+'ft_install_importbackup' => 'Import a backup',
+	
+'install_title_9' => 'Install Security',
 'ft_install_security' => 'Finish installation by removing access to install wizard and the protected folder',
 	
 );

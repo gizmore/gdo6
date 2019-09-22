@@ -326,6 +326,24 @@ order by tab.table_name,
 	}
 	
 	###################
+	### DB Creation ###
+	###################
+	public function createDatabase($databaseName)
+	{
+		return $this->queryWrite("CREATE DATABASE $databaseName");
+	}
+	
+	public function useDatabase($databaseName)
+	{
+		$this->queryWrite("USE $databaseName");
+	}
+	
+	public function dropDatabase($databaseName)
+	{
+		return $this->queryWrite("DROP DATABASE $databaseName");
+	}
+	
+	###################
 	### Transaction ###
 	###################
 	public function transactionBegin()

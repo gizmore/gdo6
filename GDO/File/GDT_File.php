@@ -473,7 +473,7 @@ class GDT_File extends GDT_Object
 
 		if ($sumSize > $this->maxsize)
 		{
-			$this->denyFlowFile($key, $file, "exceed size of {$this->maxsize}");
+			$this->denyFlowFile($key, $file, t('err_filesize_exceeded', [FileUtil::humanFilesize($this->maxsize)]));
 			return false;
 		}
 

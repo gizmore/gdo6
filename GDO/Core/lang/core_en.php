@@ -141,7 +141,6 @@ return array(
 'enum_unknown' => 'unknown',
 
 # Files
-'_filesize' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),
 'image' => 'Image',
 'icon' => 'Icon',
 	

@@ -3,7 +3,7 @@ document.querySelectorAll('.gdo-flow-file').forEach(function(input){
 		target: location.href + "&ajax=1&fmt=json&flowField="+input.name,
 		withCredentials: true,
 		fileParameterName: input.name,
-		singleFile: input.className.indexOf('multiple') >= 0,
+		singleFile: input.className.indexOf('multiple') < 0,
 		testChunks: false,
 	});
 	
@@ -21,18 +21,20 @@ document.querySelectorAll('.gdo-flow-file').forEach(function(input){
 			console.error('Cannot find gdo-file-preview-'+input.name);
 			return;
 		}
-
-		var div = document.createElement("DIV");
-		div.className = 'gdo-file-preview';
-		var node = document.createElement("IMG");
-		node.src = '#';
-		div.appendChild(node);
-		preview.appendChild(div); 
-		var reader = new FileReader();
-		reader.onload = function(e) {
-			node.src = e.target.result;
+		
+		if (document.querySelector('#gdo-file-preview-'+input.name+' img')) {
+			var div = document.createElement("DIV");
+			div.className = 'gdo-file-preview';
+			var node = document.createElement("IMG");
+			node.src = '#';
+			div.appendChild(node);
+			preview.appendChild(div); 
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				node.src = e.target.result;
+			}
+			reader.readAsDataURL(file.file);
 		}
-		reader.readAsDataURL(file.file);
 	});
 	flow.on('fileError', function(file, message){
 		message = JSON.parse(message);

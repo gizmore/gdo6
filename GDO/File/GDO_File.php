@@ -73,7 +73,7 @@ final class GDO_File extends GDO
 			$variant = preg_replace("/[^a-z]/", '', $variant);
 			$variant = "_$variant";
 		}
-		return $this->getDestPath() . $variant;
+		return $this->getPath() . $variant;
 	}
 	
 	public function gdoAfterDelete()

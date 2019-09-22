@@ -4,6 +4,7 @@ return array(
 	'files' => 'Dateien',
 	'image' => 'Bild',
 	'images' => 'Bilder',
+	'filesize ' => 'Dateigröße',
 	'_filesize' => array(
 		'Byte',
 		'KB',
@@ -19,5 +20,6 @@ return array(
 	'err_upload_denied' => 'Hochladen verweigert: %s.',
 	'err_mimetype' => 'Die Datei für %s hat keinen gültigen Typ: %s',
 	'err_no_mime_file' => 'Die Datei für %s/%s hat keine Mime Datei.',
+	'err_filesize_exceeded' => 'Die Datei überschreitet die maximale Größe von %s.',
 	'msg_uploaded' => 'Ihre Datei wurde erfolgreich hochgeladen.',
 );

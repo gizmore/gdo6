@@ -4,6 +4,7 @@ return array(
 	'files' => 'Files',
 	'image' => 'Image',
 	'images' => 'Images',
+	'filesize ' => 'Filesize',
 	'_filesize' => array(
 		'Bytes',
 		'KB',
@@ -19,5 +20,6 @@ return array(
 	'err_upload_denied' => 'Upload denied: %s.',
 	'err_mimetype' => 'The file for %s has no valid mime type: %s.',
 	'err_no_mime_file' => '%s has no mime file for %s.',
+	'err_filesize_exceeded' => 'The file exceeds the max size of %s.',
 	'msg_uploaded' => 'Your file has been uploaded successfully.',
 );

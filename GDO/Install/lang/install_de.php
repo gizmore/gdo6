@@ -85,6 +85,9 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 </code>
 ',
 	
-'install_title_8' => 'Installation absichern',
+'install_title_8' => 'Backup einspielen',
+'ft_install_importbackup' => 'Backup einspielen',
+
+'install_title_9' => 'Installation absichern',
 'ft_install_security' => 'Installation abschliessen und den Zugang zum Installer und protected Ordner verhindern.',
 );
