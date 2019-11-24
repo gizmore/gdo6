@@ -61,6 +61,7 @@ return array(
 'btn_visible' => 'Make visible',
 'btn_invisible' => 'Make invisible',
 'btn_send_mail' => 'Send Email',
+'link_overview' => 'Overview',
 
 # Generic Messages
 'msg_form_saved' => 'Your data has been safed successfully.',

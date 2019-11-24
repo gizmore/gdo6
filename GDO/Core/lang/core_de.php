@@ -57,11 +57,12 @@ return array(
 'btn_upload' => 'Hochladen',
 'btn_edit' => 'Bearbeiten',
 'btn_view' => 'Ansehen',
-'btn_preview' => 'Preview',
-'btn_visible' => 'Make visible',
-'btn_invisible' => 'Make invisible',
-'btn_send_mail' => 'Send Email',
-
+'btn_preview' => 'Vorschau',
+'btn_visible' => 'Sichtbar schalten',
+'btn_invisible' => 'Unsichtbar schalten',
+'btn_send_mail' => 'Email senden',
+'link_overview' => 'Übersicht',
+	
 # Generic Messages
 'msg_form_saved' => 'Ihre Daten wurden erfolgreich gespeichert.',
 'msg_upgrading' => 'Installiere Modul %s Version %s.',

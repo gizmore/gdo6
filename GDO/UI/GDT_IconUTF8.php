@@ -25,6 +25,7 @@ final class GDT_IconUTF8
 			'arrow_up' => '▲',
 			'audio' => '♬',
 			'back' => '↶',
+			'bars' => '☰',
 			'block' => '✖',
 			'book' => '📖',
 			'bulb' => '💡',

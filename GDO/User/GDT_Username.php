@@ -15,6 +15,8 @@ class GDT_Username extends GDT_String
 	public $min = 2;
 	public $max = 32;
 	
+	public $icon = 'face';
+	
 	# Allow - _ LETTERS DIGITS
 	public $pattern = "/^[-_\\p{L}0-9]{2,32}$/iuD";
 

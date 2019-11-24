@@ -5,7 +5,7 @@ use GDO\Language\Trans;
 
 $languages = Module_Language::instance()->cfgSupported();
 ?>
-<div>
+<div class="gdo-lang-switch">
  <form method="get">
   <input type="hidden" name="mo" value="Language" />
   <input type="hidden" name="me" value="SwitchLanguage" />

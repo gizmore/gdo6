@@ -110,7 +110,7 @@ class Module_Language extends GDO_Module
 	#############
 	### Hooks ###
 	#############
-	public function hookRightBar(GDT_Bar $navbar)
+	public function hookLeftBar(GDT_Bar $navbar)
 	{
 		$this->templatePHP('rightbar.php', ['navbar'=>$navbar]);
 	}
