@@ -48,7 +48,8 @@ return array(
 'user_real_name' => 'Real Name',
 'version' => 'Version',
 'not_specified' => 'not specified',
-
+'no_match' => 'No match',
+	
 # Generic Buttons
 'btn_back' => 'Back',
 'btn_set' => 'Set',

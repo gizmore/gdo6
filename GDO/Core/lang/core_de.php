@@ -48,6 +48,7 @@ return array(
 'user_real_name' => 'Realname',
 'version' => 'Version',
 'not_specified' => 'keine Angabe',
+'no_match' => 'Kein Treffer',
 	
 # Generic Buttons
 'btn_back' => 'Zurück',
