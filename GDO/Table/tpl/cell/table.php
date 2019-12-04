@@ -7,7 +7,9 @@ if ($pagemenu = $field->getPageMenu())
 }
 $result = $field->getResult();
 ?>
+<?php if (!$form) : ?>
 <form method="post" action="<?= $field->href; ?>" class="b">
+<?php endif; ?>
 <div
  class="gdo-table"
  layout="column" flex layout-fill
@@ -53,5 +55,7 @@ $result = $field->getResult();
 <?php if ($actions = $field->getActions()) : ?>
 <?php echo $actions->render(); ?>
 <?php endif; ?>
+<?php if (!$form) : ?>
 </form>
+<?php endif; ?>
 <!-- END of GDT_Table -->

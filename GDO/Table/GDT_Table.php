@@ -270,7 +270,12 @@ class GDT_Table extends GDT
 		{
 			return '';
 		}
-		return GDT_Template::php('Table', 'cell/table.php', ['field'=>$this]);
+		return GDT_Template::php('Table', 'cell/table.php', ['field'=>$this, 'form' => false]);
+	}
+	
+	public function renderForm()
+	{
+		return GDT_Template::php('Table', 'cell/table.php', ['field'=>$this, 'form' => true]);
 	}
 	
 	public function renderJSON()

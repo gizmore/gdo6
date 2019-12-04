@@ -570,8 +570,8 @@ abstract class GDO
 	
 	public function saveValue($key, $value)
 	{
-		$this->gdoColumn($key)->setGDOValue($value);
-		return $this->saveVar($key, $this->getVar($key));
+		$var = $this->gdoColumn($key)->toVar($value);
+		return $this->saveVar($key, $var);
 	}
 	
 	public function saveValues(array $values)

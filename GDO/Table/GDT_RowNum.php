@@ -9,6 +9,8 @@ use GDO\DB\GDT_Checkbox;
  */
 final class GDT_RowNum extends GDT_Checkbox
 {
+	public $multiple = true;
+	
 	public $orderable = false;
 	
 	public $name = 'rbx';
@@ -16,13 +18,25 @@ final class GDT_RowNum extends GDT_Checkbox
 	
 	public $num = 0;
 	
+	public $toggleAll = false;
+	public function toggleAll($toggleAll)
+	{
+		$this->toggleAll = $toggleAll;
+		return $this;
+	}
+	
 	###############################
 	### Different filter header ###
 	###############################
 	public function displayHeaderLabel() { return ''; }
-	public function renderFilter()
+// 	public function renderFilter()
+// 	{
+// 		$this->num = 0;
+// 		return GDT_Template::php('Table', 'filter/rownum.php', ['field'=>$this]);
+// 	}
+	
+	public function renderHeader()
 	{
-		$this->num = 0;
 		return GDT_Template::php('Table', 'filter/rownum.php', ['field'=>$this]);
 	}
 	
@@ -31,4 +45,6 @@ final class GDT_RowNum extends GDT_Checkbox
 		return GDT_Template::php('Table', 'cell/rownum.php', ['field'=>$this]);
 		
 	}
+	
+	
 }

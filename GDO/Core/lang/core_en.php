@@ -57,6 +57,7 @@ return array(
 'btn_save' => 'Save',
 'btn_upload' => 'Upload',
 'btn_edit' => 'Edit',
+'btn_delete' => 'Delete',
 'btn_view' => 'View',
 'btn_preview' => 'Preview',
 'btn_visible' => 'Make visible',

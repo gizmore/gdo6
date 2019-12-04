@@ -2,6 +2,7 @@
 namespace GDO\UI;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+use GDO\Core\WithFields;
 /**
  * Simple content pane.
  * @author gizmore
@@ -13,6 +14,9 @@ class GDT_Panel extends GDT
 	use WithIcon;
 	use WithHTML;
 	use WithTitle;
+	use WithPHPJQuery;
+	use WithFields;
+	
 	
 	public function isError() { return false; }
 

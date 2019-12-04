@@ -31,4 +31,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
 }, false);
 
-
+window.GDO.toggleAll = function(toggler) {
+	console.log(toggler);
+	var tc = "."+toggler.getAttribute('gdo-toggle-class');
+	console.log(tc);
+	var cbxes = window.document.querySelectorAll(tc);
+	cbxes.forEach(function(cbx){
+		cbx.checked = toggler.checked;
+	});
+};

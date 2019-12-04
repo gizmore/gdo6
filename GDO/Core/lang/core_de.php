@@ -57,6 +57,7 @@ return array(
 'btn_save' => 'Speichern',
 'btn_upload' => 'Hochladen',
 'btn_edit' => 'Bearbeiten',
+'btn_delete' => 'Löschen',
 'btn_view' => 'Ansehen',
 'btn_preview' => 'Vorschau',
 'btn_visible' => 'Sichtbar schalten',

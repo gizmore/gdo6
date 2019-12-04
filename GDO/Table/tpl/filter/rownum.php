@@ -2,9 +2,8 @@
 use GDO\Table\GDT_RowNum;
 $field instanceof GDT_RowNum;
 ?>
-<div ng-controller="GDOTableToggleCtrl">
-  <md-checkbox
-   md-indeterminate="cbxAll === undefined"
-   ng-model="cbxAll"
-   ng-click="cbxToggleAll($event)"></md-checkbox>
-</div>
+<input
+ name="<?=$field->name?>[0]"
+ type="checkbox"
+ gdo-toggle-class="rbxall-<?=$field->name?>"
+ onclick="window.GDO.toggleAll(this)" />
