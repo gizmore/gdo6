@@ -370,6 +370,17 @@ order by tab.table_name,
 	############
 	### Lock ###
 	############
+	public function lock($lock, $timeout=30)
+	{
+		$query = "SELECT GET_LOCK('{$lock}', {$timeout}) as L";
+		return $this->queryRead($query);
+	}
+	
+	public function unlock($lock)
+	{
+		$query = "SELECT RELEASE_LOCK('{$lock}') as L";
+		return $this->queryRead($query);
+	}
 	
 	###############
 	### FKCheck ###

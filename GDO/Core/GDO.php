@@ -1100,4 +1100,20 @@ abstract class GDO
 		Database::instance()->queryWrite($query);
 	}
 	
+	############
+	### Lock ###
+	############
+	public function lock($lock, $timeout=10)
+	{
+		$result = Database::instance()->lock($lock, $timeout);
+		return mysqli_fetch_field($result) === '1';
+	}
+	
+	public function unlock($lock)
+	{
+		$result = Database::instance()->unlock($lock);
+		return mysqli_fetch_field($result) === '1';
+	}
+	
+	
 }
