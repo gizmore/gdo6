@@ -17,6 +17,7 @@ class GDT_Bar extends GDT
 	const HORIZONTAL = 2;
 
 	public function renderCell() { return GDT_Template::php('UI', 'cell/bar.php', ['bar' => $this]); }
+	public function renderCard() { return GDT_Template::php('UI', 'card/bar.php', ['bar' => $this]); }
 	
 	public $direction = self::VERTICAL;
 	public function direction($direction) { $this->direction = $direction; return $this; }

@@ -103,6 +103,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-online-users OnlineUsers
     # git clone --recursive https://github.com/gizmore/gdo6-opentimes OpenTimes
     git clone --recursive https://github.com/gizmore/gdo6-payment Payment
+    git clone --recursive https://github.com/gizmore/gdo6-payment-bank PaymentBank
     git clone --recursive https://github.com/gizmore/gdo6-payment-credits PaymentCredits
     git clone --recursive https://github.com/gizmore/gdo6-payment-paypal PaymentPaypal
     git clone --recursive https://github.com/gizmore/gdo6-pm PM

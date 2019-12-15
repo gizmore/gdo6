@@ -25,7 +25,7 @@
   
   <div class="card-content">
 <?php foreach ($field->getFields() as $gdt) : ?>
-	<?=$gdt->render()?>
+	<?=$gdt->renderCard()?>
 <?php endforeach; ?>
   </div>
   

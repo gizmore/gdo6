@@ -26,4 +26,10 @@ final class PageMenuItem
 	{
 		return $this->selected ? ' page-selected' : '';
 	}
+	
+	public function isSelected()
+	{
+		return $this->selected;
+	}
+	
 }

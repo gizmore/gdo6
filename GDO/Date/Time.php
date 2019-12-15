@@ -264,6 +264,13 @@ final class Time
 		return $negative * $back;
 	}
 	
+	#############
+	### Parts ###
+	#############
+	public static function getYear($date) { return substr($date, 0 , 4); }
+	public static function getMonth($date) { return substr($date, 5 , 2); }
+	public static function getDay($date) { return substr($date, 8 , 2); }
+	
 	########################
 	### Calendar utility ###
 	########################

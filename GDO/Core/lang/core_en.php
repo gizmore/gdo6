@@ -49,7 +49,8 @@ return array(
 'version' => 'Version',
 'not_specified' => 'not specified',
 'no_match' => 'No match',
-	
+'view' => 'View',
+
 # Generic Buttons
 'btn_back' => 'Back',
 'btn_set' => 'Set',

@@ -49,6 +49,7 @@ return array(
 'version' => 'Version',
 'not_specified' => 'keine Angabe',
 'no_match' => 'Kein Treffer',
+'view' => 'Ansehen',
 	
 # Generic Buttons
 'btn_back' => 'Zurück',
