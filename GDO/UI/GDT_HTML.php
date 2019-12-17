@@ -10,4 +10,5 @@ final class GDT_HTML extends GDT
 {
 	use WithHTML;
 	public function render() { return $this->html; }
+	public function renderCard() { return $this->html; }
 }
