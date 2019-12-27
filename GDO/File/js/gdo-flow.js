@@ -1,4 +1,5 @@
-document.querySelectorAll('.gdo-flow-file').forEach(function(input){
+document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo-flow-file').forEach(function(input){
+	
 	var flow = new Flow({
 		target: location.href + "&ajax=1&fmt=json&flowField="+input.name,
 		withCredentials: true,
@@ -35,6 +36,11 @@ document.querySelectorAll('.gdo-flow-file').forEach(function(input){
 			}
 			reader.readAsDataURL(file.file);
 		}
+		else {
+			var previewString = document.getElementById('gdo-file-preview-'+input.name);
+			previewString.value = file.file.name;
+		}
+		
 	});
 	flow.on('fileError', function(file, message){
 		message = JSON.parse(message);

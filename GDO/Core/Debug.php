@@ -81,10 +81,12 @@ final class Debug
 	 */
 	public static function shutdown_function()
 	{
-		$error = error_get_last();
-		if ($error['type'] === 1)
+		if ($error = error_get_last())
 		{
-			self::error_handler(1, $error['message'], self::shortpath($error['file']), $error['line'], NULL);
+			if ($error['type'] === 1)
+			{
+				self::error_handler(1, $error['message'], self::shortpath($error['file']), $error['line'], NULL);
+			}
 		}
 	}
 	

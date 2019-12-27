@@ -131,7 +131,7 @@ class Config
 
 			# Site
 			GDT_Divider::make()->label('install_config_section_site'),
-			GDT_String::make('sitename')->initial(GWF_SITENAME)->max(8)->label('cfg_sitename'),
+			GDT_String::make('sitename')->initial(GWF_SITENAME)->max(16)->label('cfg_sitename'),
 			GDT_Hidden::make('sitecreated')->val(GWF_SITECREATED),
 			GDT_Enum::make('language')->enumValues('en', 'de')->initial(GWF_LANGUAGE)->required(),
 			GDT_Select::make('themes')->multiple()->choices(array_combine($themes, $themes))->required()->initialValue(array('default')),
