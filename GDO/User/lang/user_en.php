@@ -20,4 +20,5 @@ return array(
 'lvlpopup_ok' => 'Your userlevel is compliant with the requirements.',
 'lvlpopup_too_low' => 'You are not allowed to access this item.',
 	
+'link_user_add_user' => 'Create a new user',
 );

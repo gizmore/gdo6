@@ -17,4 +17,6 @@ return array(
 'lvlpopup_your_level' => 'Il suo livello é: %s',
 'lvlpopup_ok' => 'Il suo livello di applicazione é salito',
 'lvlpopup_too_low' => 'Qui non puó accedere.',
+
+'link_user_add_user' => 'Crea un nuovo utente',
 );

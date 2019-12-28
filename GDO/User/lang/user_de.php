@@ -18,4 +18,6 @@ return array(
 'lvlpopup_your_level' => 'Ihr level: %s',
 'lvlpopup_ok' => 'Ihr Nutzerlevel ist den Anforderungen gewachsen.',
 'lvlpopup_too_low' => 'Sie dürfen hierauf nicht zugreifen.',
+	
+'link_user_add_user' => 'Nutzer erstellen',
 );
