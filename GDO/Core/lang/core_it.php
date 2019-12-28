@@ -178,13 +178,13 @@ return array(
 	
 # Welcome
 'core_welcome_box_info' => 'Benvenuti su %s. Siete registrati come %s.',
-'link_impressum' => 'Area legale',									???
+'link_impressum' => 'Area legale',
 
 ################################################
 'link_node_detect' => 'Cerca programma uglify',
 'msg_nodejs_detected' => 'Il programma nodejs è stato trovato: <i>%s</i>',
 'msg_annotate_detected' => 'Il programma ng-annotate è stato trovato: <i>%s</i>',
-'msg_uglify_detected' => =>'Il programma uglify-js è stato trovato: <i>%s</i>',
+'msg_uglify_detected' => 'Il programma uglify-js è stato trovato: <i>%s</i>',
 #
 'quote_by' => 'Citato di %s',
 'quote_at' => 'il %s',
