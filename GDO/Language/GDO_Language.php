@@ -46,6 +46,14 @@ class GDO_Language extends GDO
 	}
 	
 	/**
+	 * @return self
+	 */
+	public function current()
+	{
+		return self::getByISOOrUnknown(Trans::$ISO);
+	}
+	
+	/**
 	 * @return self[]
 	 */
 	public function allSupported()
