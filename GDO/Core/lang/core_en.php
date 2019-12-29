@@ -65,6 +65,8 @@ return array(
 'btn_visible' => 'Make visible',
 'btn_invisible' => 'Make invisible',
 'btn_send_mail' => 'Send Email',
+'btn_confirm' => 'Confirm',
+'btn_cancel' => 'Cancel',
 'link_overview' => 'Overview',
 
 # Generic Messages

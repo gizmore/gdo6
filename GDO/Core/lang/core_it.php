@@ -65,6 +65,8 @@ return array(
 'btn_visible' => 'Imposta visiva',
 'btn_invisible' => 'Imposta invisiva ',
 'btn_send_mail' => 'Invia e-Mail',
+'btn_confirm' => 'Conferma',
+'btn_cancel' => 'Abortire',
 'link_overview' => 'Sommario',
 	
 # Generic Messages

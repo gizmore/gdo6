@@ -65,6 +65,8 @@ return array(
 'btn_visible' => 'Sichtbar schalten',
 'btn_invisible' => 'Unsichtbar schalten',
 'btn_send_mail' => 'Email senden',
+'btn_confirm' => 'Bestätigen',
+'btn_cancel' => 'Abbrechen',
 'link_overview' => 'Übersicht',
 	
 # Generic Messages
