@@ -55,6 +55,7 @@ return array(
 'btn_back' => 'Indietro',
 'btn_set' => 'Posare',
 'btn_send' => 'Inviare',
+'submit' => 'Inviare',
 'btn_save' => 'Memmorizzare',
 'btn_upload' => 'Caricare',
 'btn_edit' => 'Modificare',

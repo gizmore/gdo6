@@ -278,6 +278,11 @@ class GDT_Table extends GDT
 		return GDT_Template::php('Table', 'cell/table.php', ['field'=>$this, 'form' => true]);
 	}
 	
+	public function renderCard()
+	{
+		return $this->renderCell();
+	}
+	
 	public function renderJSON()
 	{
 		return array_merge($this->configJSON(), ['data'=>$this->renderJSONData()]);

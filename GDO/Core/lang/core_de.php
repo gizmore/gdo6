@@ -55,6 +55,7 @@ return array(
 'btn_back' => 'Zurück',
 'btn_set' => 'Setzen',
 'btn_send' => 'Senden',
+'submit' => 'Senden',
 'btn_save' => 'Speichern',
 'btn_upload' => 'Hochladen',
 'btn_edit' => 'Bearbeiten',
