@@ -7,9 +7,14 @@ class GDT_ObjectSelect extends GDT_Select
 {
 	use WithObject;
 	
+	public function getChoices()
+	{
+		return $this->table->all();
+	}
+	
 	public function initChoices()
 	{
-		return $this->choices === null ? $this->choices($this->table->all()) : null;
+		return $this->choices === null ? $this->choices($this->getChoices()) : $this;
 	}
 	
 	public function validate($value)
