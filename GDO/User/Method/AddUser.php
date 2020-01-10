@@ -3,6 +3,7 @@ namespace GDO\User\Method;
 
 use GDO\Form\GDT_Form;
 use GDO\Form\MethodForm;
+use GDO\Core\GDT_Hook;
 use GDO\Core\MethodAdmin;
 use GDO\User\GDO_User;
 use GDO\Form\GDT_Submit;
@@ -49,6 +50,8 @@ final class AddUser extends MethodForm
 		{
 			GDO_UserPermission::grantPermission($user, $permission);
 		}
+
+		GDT_Hook::callWithIPC('UserActivated', $user);
 		
 		return $this->message('msg_form_saved');
 	}

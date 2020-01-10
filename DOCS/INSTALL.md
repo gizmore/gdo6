@@ -53,6 +53,7 @@ The material design is tricky to setup atm and not recommended yet.
     cd www/gdo6/GDO # switch to modules dir
 
     git clone --recursive https://github.com/gizmore/gdo6-account Account
+    git clone --recursive https://github.com/gizmore/gdo6-activation-alert ActivationAlert
     git clone --recursive https://github.com/gizmore/gdo6-address Address
     git clone --recursive https://github.com/gizmore/gdo6-admin Admin
     # git clone --recursive https://github.com/gizmore/gdo6-angular Angular
