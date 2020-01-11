@@ -128,7 +128,8 @@ final class Mail
 
 	public static function sendDebugMail($subject, $body)
 	{
-		return self::sendMailS(GWF_BOT_EMAIL, GWF_ADMIN_EMAIL, GWF_SITENAME.": ".$subject, Debug::getDebugText($body), false, true);
+		$to = defined('GWF_ERROR_EMAIL') ? GWF_ERROR_EMAIL : GWF_ADMIN_EMAIL;
+		return self::sendMailS(GWF_BOT_EMAIL, $to, GWF_SITENAME.": ".$subject, Debug::getDebugText($body), false, true);
 	}
 	
 	private static function br2nl($s, $nl=PHP_EOL)
@@ -226,7 +227,7 @@ final class Mail
 		$encrypted = $this->encrypt($message);
 		if (self::$DEBUG)
 		{
-			$printmail = sprintf('<h1>Local EMail:</h1><pre>%s<br/>%s</pre>', htmlspecialchars($this->subject), $message);
+			$printmail = sprintf('<h1>Local EMail to %s:</h1><pre>%s<br/>%s</pre>', htmlspecialchars($to), htmlspecialchars($this->subject), $message);
 			echo $printmail;
 			return true;
 		}

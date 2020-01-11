@@ -120,6 +120,7 @@ class Config
 		if (!defined('GWF_BOT_NAME')) define('GWF_BOT_NAME', GWF_SITENAME . ' support');
 		if (!defined('GWF_BOT_EMAIL')) define('GWF_BOT_EMAIL', 'support@'.GWF_DOMAIN);
 		if (!defined('GWF_ADMIN_EMAIL')) define('GWF_ADMIN_EMAIL', 'administrator@'.GWF_DOMAIN);
+		if (!defined('GWF_ERROR_EMAIL')) define('GWF_ERROR_EMAIL', 'administrator@'.GWF_DOMAIN);
 		if (!defined('GWF_DEBUG_EMAIL')) define('GWF_DEBUG_EMAIL', true);
 	}
 	
@@ -182,6 +183,7 @@ class Config
 			GDT_Realname::make('bot_name')->required()->initial(GWF_BOT_NAME),
 			GDT_Email::make('bot_email')->required()->initial(GWF_BOT_EMAIL),
 			GDT_Email::make('admin_email')->required()->initial(GWF_ADMIN_EMAIL),
+			GDT_Email::make('error_email')->required()->initial(GWF_ERROR_EMAIL),
 			GDT_Checkbox::make('debug_email')->initial(GWF_DEBUG_EMAIL),
 		);
 	}
