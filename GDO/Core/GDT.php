@@ -209,6 +209,7 @@ abstract class GDT
 	### Render ###
 	##############
 	public function render() { return $this->renderCell(); }
+	public function renderPDF() { return $this->renderCard(); }
 	public function renderCard() { return GDT_Template::php('Core', 'card/gdt.php', ['gdt'=>$this]); }
 	public function renderCell() { return html($this->getVar()); }
 	public function renderChoice($choice) { return is_object($choice) ? $choice->renderChoice() : $choice; }

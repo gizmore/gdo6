@@ -50,6 +50,7 @@ return array(
 'not_specified' => 'nessuna indicazione',
 'no_match' => 'nessun risultato',
 'view' => 'Visualizzare',
+'page' => 'Pagina',
 	
 # Generic Buttons
 'btn_back' => 'Indietro',
@@ -121,7 +122,9 @@ return array(
 'err_members_only' => 'Questa funzione viene messa a disposizione solo ai membri.',
 'err_session_required' => 'La vostra sessione è scaduta.',
 'err_not_allowed' => 'Le manca l´autorizzazione: %s',
-
+'err_cannot_stream_output_started' => 'Il file non può essere scaricato. Altri contenuti sono già stati inviati dal server web.',
+'err_unknown_file' => 'File non trovato.',
+	
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',
 'perm_admin' => 'Administratore',

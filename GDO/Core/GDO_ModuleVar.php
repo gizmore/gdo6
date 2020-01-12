@@ -28,10 +28,22 @@ final class GDO_ModuleVar extends GDO
 	
 	public static function createModuleVar(GDO_Module $module, GDT $var)
 	{
+		if ($var->getVar() === null)
+		{
+			$var->initial(null);
+			return self::removeModuleVar($module, $var->name);
+		}
 		return self::table()->blank(array(
 			'mv_module_id' => $module->getID(),
 			'mv_name' => $var->name,
 			'mv_value' => $var->getVar(),
 		))->replace();
 	}
+	
+	public static function removeModuleVar(GDO_Module $module, $varname)
+	{
+		$varname = GDO::escapeS($varname);
+		return self::table()->deleteWhere("mv_module_id={$module->getID()} AND mv_name='$varname'");
+	}
+	
 }

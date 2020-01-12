@@ -44,7 +44,9 @@ final class GDO_File extends GDO
 	public function getType() { return $this->getVar('file_type'); }
 	public function displaySize() { return FileUtil::humanFilesize($this->getSize()); }
 	public function isImageType() { return Strings::startsWith($this->getType(), 'image/'); }
-
+	public function getWidth() { return $this->getVar('file_width'); }
+	public function getHeight() { return $this->getVar('file_height'); }
+	
 	public function renderCell() { return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this]); }
 	public function renderCard() { return GDT_Template::php('File', 'card/file.php', ['gdo'=>$this]); }
 	
@@ -112,11 +114,22 @@ final class GDO_File extends GDO
 	 */
 	public static function fromForm(array $values)
 	{
-		return self::blank(array(
+		$file = self::blank(array(
 			'file_name' => $values['name'],
 			'file_size' => $values['size'],
 			'file_type' => $values['mime']
 		))->tempPath($values['path']);
+		
+		if ($file->isImageType())
+		{
+			list($width, $height) = getimagesize($file->getPath());
+			$file->setVars(array(
+				'file_width' => $width,
+				'file_height' => $height,
+			));
+		}
+		
+		return $file;
 	}
 	
 	/**

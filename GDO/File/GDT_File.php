@@ -8,6 +8,7 @@ use GDO\DB\GDT_Object;
 use GDO\UI\WithHREF;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Success;
+use GDO\Core\GDO_Module;
 /**
  * File input and upload backend for flow.js
  * @author gizmore
@@ -219,17 +220,28 @@ class GDT_File extends GDT_Object
 	public function onDeleteFiles(array $ids)
 	{
 		$id = array_shift($ids); # only first id
+		
 		if ( ($this->gdo) && ($this->gdo->isPersisted()) ) # GDO possibly has a file
 		{
+			
+			if ($this->gdo instanceof GDO_Module)
+			{
+				if ($id == $this->gdo->getConfigVar($this->name))
+				{
+					$this->gdo->removeConfigVar($this->name);
+				}
+			}
+			
 			if ($id == $this->gdo->getVar($this->name)) # It is the requested file to delete.
 			{
 				$this->gdo->saveVar($this->name, null); # Unrelate
-				if ($file = GDO_File::getById($id)) # Delete file physically
-				{
-					$file->delete();
-				}
 				$this->initial(null);
 			}
+		}
+
+		if ($file = GDO_File::getById($id)) # Delete file physically
+		{
+			$file->delete();
 		}
 	}
 	

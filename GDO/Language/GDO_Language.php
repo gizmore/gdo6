@@ -12,6 +12,17 @@ use GDO\DB\Cache;
  */
 class GDO_Language extends GDO
 {
+	public static function iso() { return Trans::$ISO; }
+	
+	public static function withIso($iso, $callback)
+	{
+		$old = self::iso();
+		Trans::setISO($iso);
+		$result = call_user_func($callback);
+		Trans::setISO($old);
+		return $result;
+	}
+	
 	public function gdoColumns()
 	{
 		return array(

@@ -153,4 +153,10 @@ final class Website
 		}
 		die(json_encode($json, JSON_PRETTY_PRINT));
 	}
+	
+	public static function outputStarted()
+	{
+		return headers_sent() || ob_get_contents();
+	}
+
 }

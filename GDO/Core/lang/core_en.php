@@ -50,6 +50,7 @@ return array(
 'not_specified' => 'not specified',
 'no_match' => 'No match',
 'view' => 'View',
+'page' => 'Page',
 
 # Generic Buttons
 'btn_back' => 'Back',
@@ -121,7 +122,9 @@ return array(
 'err_members_only' => 'This functionality is for registered members only.',
 'err_session_required' => 'Your session has expired.',
 'err_not_allowed' => 'You do not have the required permissions: %s.',
-
+'err_cannot_stream_output_started' => 'The file cannot be downloaded. Other content has already been sent from the web server.',
+'err_unknown_file' => 'File not found',
+	
 # Permissions
 'sel_no_permissions' => 'No permission required',
 'perm_admin' => 'Administrator',

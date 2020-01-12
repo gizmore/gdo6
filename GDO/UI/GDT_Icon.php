@@ -11,6 +11,7 @@ use GDO\Core\GDT;
 class GDT_Icon extends GDT
 {
 	use WithIcon;
+	use WithPHPJQuery;
 
 	/**
 	 * When an icon provider is loaded, it changes this var.

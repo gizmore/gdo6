@@ -72,7 +72,7 @@ class GDO_Module extends GDO
 			$this->configCache = $this->getConfig();
 			foreach ($this->configCache as $gdoType)
 			{
-				$gdoType->val($this->getConfigVar($gdoType->name));
+				$gdoType->gdo($this)->val($this->getConfigVar($gdoType->name));
 			}
 		}
 		return $this->configCache;
@@ -102,7 +102,6 @@ class GDO_Module extends GDO
 	
 	public function saveConfigVar($key, $var)
 	{
-		
 		GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->initial($var));
 		Cache::remove('gdo_modules');
 	}
@@ -111,6 +110,12 @@ class GDO_Module extends GDO
 	{
 		GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->value($value));
 		Cache::remove('gdo_modules');
+	}
+	
+	public function removeConfigVar($key)
+	{
+		$this->getConfigColumn($key)->initial(null);
+		GDO_ModuleVar::removeModuleVar($this, $key);
 	}
 	
 	##############
@@ -191,6 +196,13 @@ class GDO_Module extends GDO
 	 * @return string
 	 */
 	public function wwwPath($path='') { return "GDO/{$this->getName()}/$path"; }
+	
+	/**
+	 * Filesystem path for a temp file. Absolute path to the gdo6/temp/{module}/ folder.
+	 * @param string $filename appendix filename
+	 * @return string the absolute path
+	 */
+	public function tempPath($filename='') { return GDO_PATH . 'temp/' . $this->getName() .'/' . $filename; }
 	
 	#################
 	### Templates ###
