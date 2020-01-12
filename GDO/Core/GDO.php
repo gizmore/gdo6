@@ -938,7 +938,7 @@ abstract class GDO
 		$columns = [];
 		foreach ($names as $key)
 		{
-			$columns[$key] = $this->gdoColumn($key);
+			$columns[$key] = $this->gdoColumnCopy($key);
 		}
 		return $columns;
 	}
