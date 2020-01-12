@@ -32,13 +32,13 @@ class GDT_Object extends GDT_UInt
 		return $this->getVar();
 	}
 	
-//	 public function renderChoice($choice)
-//	 {
-//		 if ($obj = $this->getValue())
-//		 {
-//			 return $obj->renderChoice();
-//		 }
-//	 }
+	 public function renderChoice($choice)
+	 {
+		 if ($obj = $this->getValue())
+		 {
+			 return $obj->renderChoice();
+		 }
+	 }
 	
 	public function renderForm()
 	{

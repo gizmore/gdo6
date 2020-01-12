@@ -130,6 +130,7 @@ abstract class GDT
 	public function getValidationValue() { return $this->getValue(); }
 	
 	public function isSerializable() { return true; }
+	public function isPrimary() { return false; }
 	
 	#################
 	### GDO Value ###

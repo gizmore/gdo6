@@ -55,24 +55,33 @@ class GDT_Enum extends GDT
 	### Enum ###
 	############
 	public $enumValues;
-	public function enumLabel($enumValue=null) { return $enumValue === null ? $this->emptyLabel : t("enum_$enumValue"); }
+	public function enumLabel($enumValue=null) { return $enumValue === null ? t($this->emptyLabel, $this->emptyLabelArgs) : t("enum_$enumValue"); }
 	public function enumValues(...$enumValues) { $this->enumValues = $enumValues; return $this; }
 	public function enumIndex() { return $this->enumIndexFor($this->getVar()); }
 	public function enumIndexFor($enumValue) { $index = array_search($enumValue, $this->enumValues, true); return $index === false ? 0 : $index + 1; }
 	public function enumForId($index) { return $index > 0 ? $this->enumValues[$index-1] : null; }
 	public function htmlSelected($enumValue) { return $this->getVar() === ((string)$enumValue) ? ' selected="selected"' : ''; }
-	
+
+	#############
+	### Empty ###
+	#############
 	public $emptyValue = '0';
 	public function emptyValue($emptyValue)
 	{
 		$this->emptyValue = $emptyValue;
-		return $this->emptyLabel(t('please_choice'));
+		return $this->emptyLabel('please_choice');
 	}
 	public $emptyLabel;
-	public function emptyLabel($emptyLabel)
+	public $emptyLabelArgs;
+	public function emptyLabel($emptyLabel, $args=null)
 	{
 		$this->emptyLabel = $emptyLabel;
+		$this->emptyLabelArgs = $args;
 		return $this;
+	}
+	public function displayEmptyLabel()
+	{
+		return t($this->emptyLabel, $this->emptyLabelArgs);
 	}
 	
 	##############

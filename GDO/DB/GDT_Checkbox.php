@@ -29,7 +29,7 @@ class GDT_Checkbox extends GDT_Select
 			if ($this->undetermined)
 			{
 				$this->emptyInitial(t('please_choose'), $this->emptyValue);
-				$this->choices[$this->emptyValue] = $this->emptyLabel;
+				$this->choices[$this->emptyValue] = $this->displayEmptyLabel();
 			}
 		}
 		return $this;

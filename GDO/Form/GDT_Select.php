@@ -134,14 +134,23 @@ class GDT_Select extends GDT_ComboBox
 	public function emptyValue($emptyValue)
 	{
 		$this->emptyValue = $emptyValue;
-		return $this->emptyLabel(t('please_choice'));
+		return $this->emptyLabel('please_choice');
 	}
+	
 	public $emptyLabel;
-	public function emptyLabel($emptyLabel)
+	public $emptyLabelArgs;
+	public function emptyLabel($emptyLabel, $args=null)
 	{
 		$this->emptyLabel = $emptyLabel;
+		$this->emptyLabelArgs = $args;
 		return $this;
 	}
+	
+	public function displayEmptyLabel()
+	{
+		return t($this->emptyLabel, $this->emptyLabelArgs);
+	}
+	
 	public function emptyInitial($emptyLabel, $emptyValue='0')
 	{
 		$this->emptyValue = $emptyValue;

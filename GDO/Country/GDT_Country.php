@@ -13,7 +13,7 @@ final class GDT_Country extends GDT_ObjectSelect
 	public function __construct()
 	{
 		$this->table(GDO_Country::table());
-		$this->emptyLabel(t('not_specified'));
+		$this->emptyLabel('not_specified');
 		$this->min = $this->max = 2;
 		$this->icon('flag');
 	}

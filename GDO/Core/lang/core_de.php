@@ -92,7 +92,7 @@ return array(
 'err_strlen_between' => 'Dieser Text muss zwischen %s und %s Zeichen lang sein.',
 'err_form_invalid' => 'Ihr Formular ist unvollständig und enthält Fehler.',
 'err_user_required' => 'Für diese Funktion müssen Sie angemeldet sein. Es ist auch möglich sich <a href="%s" title="Nickname wählen">als Gast anzumelden</a>.',
-'err_upload_min_files' => 'Sie müssen mehr als %s Datei(en) hochladen.',
+'err_upload_min_files' => 'Sie müssen mindestens %s Datei(en) hochladen.',
 'err_upload_max_files' => 'Sie dürfen nicht mehr als %s Datei(en) hochladen.',
 'err_create_dir' => 'Verzeichnis konnte nicht erstellt werden: %s.',
 'err_permission_required' => 'Sie benötigen die <i>%s</i> Berechtigung um diese Funktion aufzurufen.',

@@ -363,15 +363,32 @@ abstract class GDO
 	public function gdoColumnCopy($key)
 	{
 		$column = clone $this->gdoColumnsCache()[$key];
+		$column instanceof GDT;
 		return $column->gdo($this)->val(null);
 	}
 	
 	public function gdoColumnsExcept(...$except)
 	{
-		$columns = $this->gdoColumnsCache();
-		foreach ($except as $ex)
+		$columns = array();
+		foreach (array_keys($this->gdoColumnsCache()) as $key)
 		{
-			unset($columns[$ex]);
+			if (!in_array($key, $except, true))
+			{
+				$columns[$key] = $this->gdoColumn($key);
+			}
+		}
+		return $columns;
+	}
+	
+	public function gdoColumnsCopyExcept(...$except)
+	{
+		$columns = array();
+		foreach (array_keys($this->gdoColumnsCache()) as $key)
+		{
+			if (!in_array($key, $except, true))
+			{
+				$columns[$key] = $this->gdoColumnCopy($key);
+			}
 		}
 		return $columns;
 	}
