@@ -4,6 +4,7 @@ use GDO\Core\GDO;
 use GDO\Core\GDT;
 use GDO\DB\GDT_Name;
 use GDO\DB\GDT_Text;
+use GDO\Core\GDT_Hook;
 /**
  * User settings for larger blob values, e.g. PMSignature.
  * 
@@ -80,6 +81,9 @@ final class GDO_UserSettingBlob extends GDO
 			))->replace();
 		}
 		$user->tempUnset('gdo_setting_blob');
-		$user->recache();
+		
+		self::userGet($user, $key)->val($value);
+		
+		GDT_Hook::callWithIPC('UserSettingChange', $user, $key, $value);
 	}
 }

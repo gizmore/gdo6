@@ -117,6 +117,7 @@ The material design is tricky to setup atm and not recommended yet.
     # git clone --recursive https://github.com/gizmore/gdo6-shoutbox Shoutbox
     ## git clone --recursive https://github.com/gizmore/gdo6-slaytags Slaytags
     git clone --recursive https://github.com/gizmore/gdo6-tag Tag
+    git clone --recursive https://github.com/gizmore/gdo6-tcpdf TCPDF
     git clone --recursive https://github.com/gizmore/gdo6-tinymce TinyMCE
     # git clone --recursive https://github.com/gizmore/gdo6-usergroup Usergroup
     git clone --recursive https://github.com/gizmore/gdo6-vote Vote

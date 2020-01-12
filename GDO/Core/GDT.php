@@ -36,6 +36,7 @@ abstract class GDT
 	###############
 	private static $nameNr = 1;
 	public static function nextName() { return 'gdo-'.(self::$nameNr++); }
+	public function hasName() { return substr($this->name, 0, 4) !== 'gdo-'; }
 
 	/**
 	 * Create a GDT instance.

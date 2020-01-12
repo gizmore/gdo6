@@ -12,6 +12,7 @@ use GDO\Core\GDT_Hook;
 class GDT_Bar extends GDT
 {
 	use WithFields;
+	use WithPHPJQuery;
 
 	const VERTICAL = 1;
 	const HORIZONTAL = 2;

@@ -1,2 +1,4 @@
-<?php $field instanceof GDO\UI\GDT_Divider; ?>
-<div class="gdo-divider"><?=$field->displayLabel()?></div>
+<?phpuse GDO\UI\GDT_Divider;
+/** @var $field GDT_Divider **/$field instanceof GDT_Divider;
+?>
+<div class="gdt-divider"><?=$field->displayLabel()?></div>
