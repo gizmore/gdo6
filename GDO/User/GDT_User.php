@@ -3,6 +3,7 @@ namespace GDO\User;
 use GDO\DB\GDT_Object;
 use GDO\DB\Query;
 use GDO\Core\GDO;
+use GDO\Util\Strings;
 /**
  * An autocomplete enabled user field.
  * @author gizmore
@@ -48,9 +49,32 @@ class GDT_User extends GDT_Object
 		return $user;
 	}
 	
+	public function displayVar()
+	{
+		if ($gdo = $this->getUser())
+		{
+			return $gdo->displayNameLabel();
+		}
+	}
+	
 	public function findByName($name)
 	{
-		return GDO_User::getByName($name);
+		if (Strings::startsWith($name, GDO_User::GHOST_NAME_PREFIX))
+		{
+			return null;
+		}
+		elseif (Strings::startsWith($name, GDO_User::REAL_NAME_PREFIX))
+		{
+			return GDO_User::table()->findBy('user_real_name', trim($name, GDO_User::REAL_NAME_PREFIX));
+		}
+		elseif (Strings::startsWith($name, GDO_User::GUEST_NAME_PREFIX))
+		{
+			return GDO_User::table()->findBy('user_guest_name', trim($name, GDO_User::GUEST_NAME_PREFIX));
+		}
+		else
+		{
+			return GDO_User::getByName($name);
+		}
 	}
 	
 	public function renderCell()

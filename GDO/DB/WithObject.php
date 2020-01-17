@@ -87,6 +87,25 @@ trait WithObject
 	}
 	
 	/**
+	 * @return GDO
+	 */
+	public function getGDO()
+	{
+		return $this->gdo;
+	}
+	
+	public function displayVar()
+	{
+		if ($gdo = $this->getValue())
+		{
+			if ($column = $gdo->gdoNameColumn())
+			{
+				return html($column->getVar());
+			}
+		}
+	}
+	
+	/**
 	 * @return \GDO\Core\GDO
 	 */
 	public function getObject()

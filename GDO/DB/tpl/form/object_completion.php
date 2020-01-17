@@ -15,7 +15,7 @@ $id = 'gwfac_'.$field->name; ?>
    <?= $field->htmlDisabled(); ?>
    id="<?= $id; ?>"
    name="form[<?= $field->name; ?>]"
-   value="<?= html($gdo ? $gdo->displayName() : $field->getVar()); ?>" />
+   value="<?=$field->displayVar()?>" />
   <input type="hidden" name="nocompletion_<?=$field->name?>" value="1" />
   <?= $field->htmlError(); ?>
 </div>
