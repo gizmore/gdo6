@@ -1,4 +1,7 @@
-<?php /** @var $field \GDO\UI\GDT_Card **/ ?>
+<?php
+use GDO\Profile\GDT_ProfileLink;
+/** @var $field \GDO\UI\GDT_Card **/
+?>
 <?php if ($field->gdo) : ?>
 <a name="card-<?=$field->gdo->getID()?>"></a>
 <?php endif; ?>
