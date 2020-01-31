@@ -4,6 +4,7 @@ namespace GDO\UI;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\WithFields;
+use GDO\Date\Time;
 
 /**
  * A card with title, subtitle, creator, date, content and actions.
@@ -50,7 +51,12 @@ final class GDT_Card extends GDT
 	{
 		return $this->gdo->gdoVarOf('GDO\DB\GDT_CreatedAt');
 	}
-
+	
+	public function displayCreated()
+	{
+		return Time::displayDate($this->gdoCreated());
+	}
+	
 	/**
 	 * @return \GDO\User\GDO_User
 	 */
