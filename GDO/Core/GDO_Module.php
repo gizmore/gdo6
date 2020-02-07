@@ -173,6 +173,7 @@ class GDO_Module extends GDO
 	############
 	### Href ###
 	############
+	public function href($methodName, $append='') { return href($this->getName(), $methodName, $append); }
 	public function href_install_module() { return href('Admin', 'Install', '&module='.$this->getName()); }
 	public function href_configure_module() { return href('Admin', 'Configure', '&module='.$this->getName()); }
 	public function href_administrate_module() {}
