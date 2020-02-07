@@ -261,13 +261,22 @@ class GDO_Module extends GDO
 	{
 		if (!$this->inited)
 		{
-			$this->inited = true;
 			$this->registerSettings();
 			if ($this->isEnabled())
 			{
 				$this->onInit();
 			}
 		}
+	}
+	
+	public function initedModule()
+	{
+		$this->inited = true;
+	}
+	
+	public function isInited()
+	{
+		return $this->inited;
 	}
 	
 	public function registerThemes()

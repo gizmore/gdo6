@@ -4,7 +4,6 @@ use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
-use Exception;
 /**
  * Module loader.
  *
@@ -140,8 +139,16 @@ final class ModuleLoader
 		{
 			foreach ($this->modules as $module)
 			{
-				$module->onIncludeScripts();
+				if (!$module->isInited())
+				{
+					$module->onIncludeScripts();
+				}
 			}
+		}
+
+		foreach ($this->modules as $module)
+		{
+			$module->initedModule();
 		}
 	}
 	

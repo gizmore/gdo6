@@ -71,18 +71,7 @@ class Module_Language extends GDO_Module
 		$iso = Trans::$ISO;
 		$href = $this->href('GetTransData', "&iso={$iso}&".$this->nocacheVersion());
 		Javascript::addJavascript($href);
-// 		Javascript::addJavascriptine($this->transJS());
 	}
-	
-// 	private function transJS()
-// 	{
-// 		$cache = Trans::getCache(Trans::$ISO);
-// 		$data = json_encode($cache);
-// 		$js = <<<END
-// window.GDO_TRANS.CACHE = {$data};
-// END;
-// 		return $js;
-// 	}
 	
 	#################
 	### Detection ###
