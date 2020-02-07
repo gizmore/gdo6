@@ -38,6 +38,8 @@ class GDT_String extends GDT
 	public $min = 0;
 	public $max = 255;
 	
+	public $_inputType = 'text';
+	
 	public function utf8() { return $this->encoding(self::UTF8); }
 	public function ascii() { return $this->encoding(self::ASCII); }
 	public function binary() { return $this->encoding(self::BINARY); }

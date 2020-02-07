@@ -73,6 +73,7 @@ final class GDT_IconUTF8
 			'star' => '★',
 			'time' => '⌛',
 			'title' => 'T',
+			'trophy' => '🏆',
 			'url' => '🌐',
 			'user' => '☺',
 			'users' => '😂',

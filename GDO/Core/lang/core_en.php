@@ -181,6 +181,7 @@ return array(
 'enum_no' => 'No',
 'enum_yes' => 'Yes',
 'enum_concat' => 'Concatenate',
+'cfg_ipp' => 'Items per page',
 	
 # Welcome
 'core_welcome_box_info' => 'Welcome to %s. You are authenticated as %s.',

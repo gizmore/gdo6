@@ -25,7 +25,7 @@ abstract class MethodQueryList extends MethodQuery
 	public function gdoDecorateList(GDT_List $list) {}
 	
 	/**
-	 * @return \GDO\DB\Query
+	 * @return Query
 	 */
 	public function gdoQuery() { return $this->gdoTable()->select(); }
 	
@@ -37,6 +37,11 @@ abstract class MethodQueryList extends MethodQuery
 		return array(
 			GDT_PageMenu::make('page')->initial('1'),
 		);
+	}
+	
+	public function getListName()
+	{
+		return 'list';
 	}
 	
 	/**
@@ -52,11 +57,11 @@ abstract class MethodQueryList extends MethodQuery
 	 */
 	public function renderPage()
 	{
-		$list = GDT_List::make();
-		$list->title(t('list_'.strtolower($this->gdoShortName())));
+		$list = GDT_List::make($this->getListName());
+		$list->query($this->gdoFilteredQuery());
+		$list->title(t('list_'.strtolower($this->gdoShortName()), [$list->countItems()]));
 		$headers = GDT_Fields::make('o')->addFields($this->gdoFilters())->addFields($this->gdoParameters());
 		$list->headers($headers);
-		$list->query($this->gdoFilteredQuery());
 		$list->listMode($this->gdoListMode());
 		$list->paginate();
 		$list->href($this->href());

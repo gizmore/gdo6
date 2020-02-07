@@ -6,6 +6,7 @@ use GDO\DB\GDT_String;
  */
 class GDT_SearchField extends GDT_String
 {
+	public $_inputType = 'search';
 	public function defaultLabel() { return $this->label('search'); }
 	public $min = 3;
 	public $max = 128;

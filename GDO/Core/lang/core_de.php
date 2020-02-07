@@ -181,6 +181,7 @@ return array(
 'enum_no' => 'Nein',
 'enum_yes' => 'Ja',
 'enum_concat' => 'auch zusammenführen',
+'cfg_ipp' => 'Einträge pro Seite',
 	
 # Welcome
 'core_welcome_box_info' => 'Willkommen auf %s. Sie sind angemeldet als %s.',

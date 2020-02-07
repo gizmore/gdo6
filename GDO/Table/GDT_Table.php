@@ -87,8 +87,9 @@ class GDT_Table extends GDT
 	{
 		return $this->paginate(true, $href, Module_Table::instance()->cfgItemsPerPage());
 	}
-	public function paginate($paginate=true, $href=null, $ipp=10)
+	public function paginate($paginate=true, $href=null, $ipp=0)
 	{
+		$ipp = $ipp <= 0 ? Module_Table::instance()->cfgItemsPerPage() : (int)$ipp;
 		if ($paginate)
 		{
 			$href = $href === null ? $_SERVER['REQUEST_URI'] : $href;

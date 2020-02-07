@@ -181,6 +181,7 @@ return array(
 'enum_no' => 'No',
 'enum_yes' => 'Si',
 'enum_concat' => 'anche riunire',
+'cfg_ipp' => 'Voci per pagina',
 	
 # Welcome
 'core_welcome_box_info' => 'Benvenuti su %s. Siete registrati come %s.',

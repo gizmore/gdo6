@@ -15,4 +15,11 @@ class GDT_Label extends GDT
 	{
 		return GDT_Template::php('UI', 'cell/label.php', ['field'=>$this]);
 	}
+	
+	public function renderJSON()
+	{
+		return array(
+			$this->name => $this->displayLabel(),
+		);
+	}
 }

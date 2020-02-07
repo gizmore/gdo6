@@ -5,10 +5,11 @@ use GDO\Core\GDOError;
 use GDO\Core\GDO;
 use GDO\User\PermissionException;
 use GDO\Util\Common;
-use GDO\File\GDT_File;
-use GDO\File\GDO_File;
+use GDO\User\GDO_User;
+use GDO\Captcha\GDT_Captcha;
+
 /**
- * Abstract CReate|Update|Delete for a GDO.
+ * Abstract Create|Update|Delete for a GDO.
  * @author gizmore
  * @since 5.0
  */
@@ -27,6 +28,7 @@ abstract class MethodCrud extends MethodForm
 	public abstract function hrefList();
 	
 	public function isUserRequired() { return true; }
+	public function isCaptchaRequired() { return !GDO_User::current()->isMember(); }
 	
 	public function canCreate(GDO $table) { return true; }
 	public function canUpdate(GDO $gdo) { return true; }
@@ -79,7 +81,19 @@ abstract class MethodCrud extends MethodForm
 				$form->addField($gdoType);
 			}
 		}
+		$this->createCaptcha($form);
 		$this->createFormButtons($form);
+	}
+
+	public function createCaptcha(GDT_Form $form)
+	{
+		if (module_enabled('Captcha'))
+		{
+			if ($this->isCaptchaRequired())
+			{
+				$form->addField(GDT_Captcha::make());
+			}
+		}
 	}
 	
 	public function createFormButtons(GDT_Form $form)
