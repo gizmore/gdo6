@@ -6,6 +6,7 @@ use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Template;
 use GDO\Form\GDT_Submit;
 use GDO\Form\GDT_Hidden;
+use GDO\UI\GDT_Cell;
 use GDO\UI\GDT_Panel;
 use GDO\Install\GDT_ModuleFeature;
 use GDO\UI\GDT_Link;
@@ -24,7 +25,7 @@ $table->addHeader(GDO_Module::table()->gdoColumn('module_name'));
 $table->addField(GDT_Template::make('module_name')->template('Install', 'cell/modulename.php'));
 $table->addHeader(GDO_Module::table()->gdoColumn('module_priority'));
 $table->addHeader(GDT_ModuleFeature::make('module_features'));
-
+$table->addHeader(GDT_Cell::make('module_description')->method('displayModuleDescription'));
 $install = GDT_Submit::make('btn_install');
 $skip = Config::linkStepGDT('5');
 $hiddenStep = GDT_Hidden::make('step')->val('4');

@@ -18,7 +18,7 @@ use GDO\User\GDO_UserSettingBlob;
  * 
  * @author gizmore
  * @since 1.00
- * @version 6.06
+ * @version 6.10
  */
 class GDO_Module extends GDO
 {
@@ -29,6 +29,20 @@ class GDO_Module extends GDO
 	public $module_author = "Christian Busch <gizmore@wechall.net>";
 	public $module_license = "MIT";
 	public $module_priority = 50;
+	
+	public function displayModuleDescription() { return html($this->getModuleDescription()); }
+	public function getModuleDescription()
+	{
+		if ($readme = @file_get_contents($this->filePath('README.md')))
+		{
+			$matches = null;
+			if (preg_match("/^#.*\\n(.*)\\n/", $readme, $matches))
+			{
+				return $matches[1];
+			}
+		}
+		return ''; 
+	}
 	
 	public function gdoCached() { return false; }
 	public function memCached() { return false; }
