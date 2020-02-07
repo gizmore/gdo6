@@ -51,7 +51,12 @@ return array(
 'no_match' => 'No match',
 'view' => 'View',
 'page' => 'Page',
-
+'online' => 'Online',
+'offline' => 'Offine',
+'public' => 'Public',
+'private' => 'Private',
+'admin' => 'Administration',
+	
 # Generic Buttons
 'btn_back' => 'Back',
 'btn_set' => 'Set',

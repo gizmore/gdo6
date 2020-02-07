@@ -106,6 +106,11 @@ final class GDO_User extends GDO
 		return $this->getName();
 	}
 	
+	public function displayType()
+	{
+		return t('enum_' . $this->getType());
+	}
+	
 	public function displayNameLabel()
 	{
 		if ($realName = $this->getRealName())

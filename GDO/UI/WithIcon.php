@@ -12,8 +12,9 @@ namespace GDO\UI;
  * @example echo GDT_Icon::make()->rawIcon($site->getIconImage())->size(20)->render();
  * 
  * @author gizmore
- * @see \GDO\UI\GDT_Icon - for a standalone icon that is a gdt.
- * @version 6.05
+ * @see GDT_Icon - for a standalone icon that is a gdt.
+ * @see GDT_IconUTF8 - for the minimal icon provider.
+ * @version 6.10
  */
 trait WithIcon
 {
