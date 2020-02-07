@@ -9,7 +9,7 @@ GDO6 is running fine on windows and linux.
 
 ### PHP Requirements
 
-gdo6(PHP) runs on PHP 5.6 and later versions (7.2) and requires a few PHP modules
+gdo6(PHP) runs on PHP 5.6 and later versions up to (7.4) and requires a few PHP modules
 
     apt-get install php-mbstring php-bcmath php-curl php-mysql php-gd
 
@@ -40,12 +40,24 @@ Switch to the GDO folder and clone or code modules.
 It is a good strategy to paste the clone lines below to a text file.
 Then remove the modules you do not want and clone the remaining modules.
 
-Modules with ## are sites/projects, you probably don't want those.
+Modules with ## are websites/projects, you probably don't want those but they are good code examples.
 
 Modules with # are not ready for production yet.
 
 Be a bit careful with mixing theme/css modules like JQueryUI, Bootstrap and Material.
-The material design is tricky to setup atm and not recommended yet.
+
+All designs have different quality and varying tpl implementation support.
+Sorry for that.
+If a component is missing in a theme contact me or try a pull request.
+
+### Licensing
+
+Each module is open source and MIT licensed with a very few exceptions.
+Some website modules like Dog and WeChall, and maybe a few others, are my property.
+Very private stuff is only at own git servers.
+Modules have a license property which defaults to [MIT](LICENSE_MIT)
+
+I intend to keep all stuff MIT licensed for as long as possible so one could really do fancy stuff in gdo6.
 
 ### Official gdo6 modules
 
@@ -79,7 +91,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-forum Forum
     git clone --recursive https://github.com/gizmore/gdo6-friends Friends
     git clone --recursive https://github.com/gizmore/gdo6-gallery Gallery
-    git clone --recursive https://github.com/gizmore/gdo6-geo2country Geo2Country
+    ## git clone --recursive https://github.com/gizmore/gdo6-geo2country Geo2Country
     # git clone --recursive https://github.com/gizmore/gdo6-guestbook Guestbook
     # git clone --recursive https://github.com/gizmore/gdo6-helpdesk Helpdesk
     git clone --recursive https://github.com/gizmore/gdo6-import-gwf3 ImportGWF3
@@ -97,6 +109,7 @@ The material design is tricky to setup atm and not recommended yet.
     # git clone --recursive https://github.com/gizmore/gdo6-mail-gpg MailGPG
     git clone --recursive https://github.com/gizmore/gdo6-maps Maps
     # git clone --recursive https://github.com/gizmore/gdo6-material Material
+    ## git clone --recursive https://git@github.com/gizmore/gdo6-mettwitze Mettwitze
     # git clone --recursive https://github.com/gizmore/gdo6-mibbit Mibbit
     git clone --recursive https://github.com/gizmore/gdo6-moment Moment
     ## git clone --recursive https://github.com/gizmore/gdo6-nasdax Nasdax
@@ -108,6 +121,7 @@ The material design is tricky to setup atm and not recommended yet.
     git clone --recursive https://github.com/gizmore/gdo6-payment-credits PaymentCredits
     git clone --recursive https://github.com/gizmore/gdo6-payment-paypal PaymentPaypal
     git clone --recursive https://github.com/gizmore/gdo6-pm PM
+    git clone --recursive https://github.com/gizmore/gdo6-pma PhpMyAdmin
     git clone --recursive https://github.com/gizmore/gdo6-poll Poll
     git clone --recursive https://github.com/gizmore/gdo6-profile Profile
     git clone --recursive https://github.com/gizmore/gdo6-push Push

@@ -1,21 +1,3 @@
----------------------------------------------------------
-GDO License
-
-Copyright (c) 2017-2020 gizmore@wechall.net
-
-The GDO core is MIT and GDO licensed and shall stay as free as possible at all times.
-
-The GDO folder contains modules, whereas each module 
-has to provide it's own, one and only, license.
-
-The GDO Core license does not cover any module.
-A few modules are shipped with the core, but they
-explicitly state MIT licensed code.
-
-The additional GDO core license (MIT) is attached here.
-
----------------------------------------------------------
-
 MIT License
 
 Copyright (c) 2017-2020 gizmore@wechall.net
