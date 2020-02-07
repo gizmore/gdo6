@@ -4,9 +4,10 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 /**
  * A horizontal divider.
+ * 
  * @author gizmore
  * @since 6.00
- * @version 6.05
+ * @version 6.10
  */
 class GDT_Divider extends GDT
 {
@@ -18,4 +19,6 @@ class GDT_Divider extends GDT
 	
 	public function renderCell() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
 	public function renderForm() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
+	public function renderCard() { return '<hr/>'; }
+
 }

@@ -4,7 +4,11 @@ use GDO\Core\GDT_Template;
 use GDO\Form\WithFormFields;
 /**
  * @author gizmore
- * @version 6.05
+ * @version 6.10
+ * @since 6.01
+ * @see GDT_Submit
+ * @see GDT_Link
+ * @see GDT_IconButton
  */
 class GDT_Button extends GDT_Label
 {
@@ -12,6 +16,7 @@ class GDT_Button extends GDT_Label
 	use WithIcon;
 	use WithFormFields;
 	use WithPHPJQuery;
+	use WithAnchorRelation;
 	
 	public $primary = true;
 	public function primary() { $this->primary = true; return $this; }
@@ -24,11 +29,6 @@ class GDT_Button extends GDT_Label
 	{
 		return GDT_Template::php('UI', 'cell/button.php', ['field'=>$this, 'href'=>$this->gdoHREF()]);
 	}
-
-// 	public function renderForm()
-// 	{
-// 		return GDT_Template::php('UI', 'form/button.php', ['field'=>$this]);
-// 	}
 
 	#############
 	### Proxy ###

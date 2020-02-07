@@ -18,6 +18,24 @@ class GDT_Link extends GDT_String
 	use WithHREF;
 	use WithHTML;
 	use WithPHPJQuery;
+	use WithAnchorRelation;
+
+	#################
+	### Relations ###
+	#################
+	const REL_ALTERNATE = 'alternate';
+	const REL_AUTHOR = 'author';
+	const REL_BOOKMARK = 'bookmark';
+	const REL_EXTERNAL = 'external';
+	const REL_HELP = 'help';
+	const REL_LICENSE = 'license';
+	const REL_NEXT = 'next';
+	const REL_NOFOLLOW = 'nofollow';
+	const REL_NOREFERRER = 'noreferrer';
+	const REL_NOOPENER = 'noopener';
+	const REL_PREV = 'prev';
+	const REL_SEARCH = 'search';
+	const REL_TAG = 'tag';
 	
 	public $caseSensitive = true;
 	public function isSerializable() { return false; }
@@ -48,5 +66,6 @@ class GDT_Link extends GDT_String
 	public function target($target) { $this->target = $target; return $this; }
 	public function targetBlank() { return $this->target('__blank'); }
 	public function htmlTarget() { return $this->target === null ? '' : " target=\"{$this->target}\""; }
+	
 	
 }

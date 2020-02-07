@@ -7,6 +7,7 @@ use GDO\Core\Application;
 use GDO\Core\GDT_Template;
 use GDO\UI\WithHREF;
 use GDO\UI\WithLabel;
+use GDO\UI\GDT_Link;
 
 class GDT_PageMenu extends GDT
 {
@@ -65,9 +66,12 @@ class GDT_PageMenu extends GDT
 		return $this;
 	}
 	
+	/**
+	 * @return int
+	 */
 	public function getPage()
 	{
-		return Math::clamp($this->filterValue(), 1, $this->getPages());
+		return (int) Math::clamp($this->filterValue(), 1, $this->getPages());
 	}
 	
 	public function getFrom()
@@ -170,4 +174,28 @@ class GDT_PageMenu extends GDT
 		
 		return $pages;
 	}
+	
+	/**
+	 * Get anchor relation for a page. Either next, prev or nofollow.
+	 * @see GDT_Link
+	 * @param PageMenuItem $page
+	 * @return string
+	 */
+	public function relationForPage(PageMenuItem $page)
+	{
+		$current = $this->getPage();
+		if ( ($page->page - 1) == $current)
+		{
+			return GDT_Link::REL_NEXT;
+		}
+		elseif ( ($page->page + 1) == $current)
+		{
+			return GDT_Link::REL_PREV;
+		}
+		else
+		{
+			return GDT_Link::REL_NOFOLLOW;
+		}
+	}
+
 }
