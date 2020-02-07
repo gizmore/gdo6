@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Core;
 use GDO\DB\GDT_Enum;
-use GDO\DB\GDT_UInt;
 use GDO\File\GDT_Path;
 use GDO\UI\GDT_Divider;
 use GDO\UI\GDT_Link;
@@ -23,7 +22,7 @@ use GDO\UI\GDT_Bar;
  * 
  * @author gizmore
  * @since 6.00
- * @version 6.08
+ * @version 6.10
  */
 final class Module_Core extends GDO_Module
 {
@@ -60,29 +59,28 @@ final class Module_Core extends GDO_Module
 	{
 		return array(
 			GDT_User::make('system_user')->editable(false),
-			GDT_Divider::make()->label('div_pagination'),
-			GDT_UInt::make('ipp')->max(1000)->initial('20'),
-			GDT_UInt::make('spp')->max(1000)->initial('10'),
-			GDT_Divider::make()->label('div_javascript'),
+			GDT_Checkbox::make('show_impressum')->initial('1'),
+			GDT_Divider::make('div_javascript')->label('div_javascript'),
 			GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial('no'),
 			GDT_Path::make('nodejs_path')->initial('nodejs')->label('nodejs_path'),
 			GDT_Path::make('uglifyjs_path')->initial('uglifyjs')->label('uglifyjs_path'),
 			GDT_Path::make('ng_annotate_path')->initial('ng-annotate')->label('ng_annotate_path'),
 			GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
 			GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
-			GDT_Checkbox::make('show_impressum')->initial('1'),
 		);
 	}
+	
+	/**
+	 * @return GDO_User
+	 */
 	public function cfgSystemUser() { return $this->getConfigValue('system_user'); }
 	public function cfgSystemUserID() { return $this->getConfigVar('system_user'); }
-	public function cfgIPP() { return $this->getConfigVar('ipp'); }
-	public function cfgSPP() { return $this->getConfigVar('spp'); }
+	public function cfgShowImpressum() { return $this->getConfigValue('show_impressum'); }
 	public function cfgMinifyJS() { return $this->getConfigVar('minify_js'); }
 	public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
 	public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
 	public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
 	public function cfgAssetVersion() { return $this->getConfigVar('asset_revision'); }
-	public function cfgShowImpressum() { return $this->getConfigValue('show_impressum'); }
 	
 	#############
 	### Hooks ###

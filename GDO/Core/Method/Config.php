@@ -29,11 +29,11 @@ final class Config extends Method
 		foreach ($module->getConfigCache() as $type)
 		{
 			$value = $module->getConfigValue($type->name);
-			if ($value instanceof GDO)
-			{
-				$value = $value->getID();
-			}
-			$json[$type->name] = $value;
+// 			if ($value instanceof GDO)
+// 			{
+// 				$value = $value->getID();
+// 			}
+			$json[$type->name] = $type->toVar($value);
 		}
 		return $json;
 	}

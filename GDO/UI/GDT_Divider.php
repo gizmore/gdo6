@@ -20,5 +20,6 @@ class GDT_Divider extends GDT
 	public function renderCell() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
 	public function renderForm() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
 	public function renderCard() { return '<hr/>'; }
-
+	public function renderJSON() {}
+	
 }

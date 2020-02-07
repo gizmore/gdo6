@@ -148,6 +148,10 @@ abstract class Method
 		{
 			return false;
 		}
+		if ( (!$this->isGuestAllowed()) && (!$user->isMember()) )
+		{
+			return false;
+		}
 		if ( ($this->getUserType()) && ($this->getUserType() !== $user->getType()) )
 		{
 			return false;
