@@ -143,7 +143,7 @@ abstract class MethodCrud extends MethodForm
 	##############
 	public function formValidated(GDT_Form $form)
 	{
-		$table = $this->gdoTable();
+// 		$table = $this->gdoTable();
 		return $this->gdo ? $this->onUpdate($form) : $this->onCreate($form);
 	}
 	
@@ -163,7 +163,7 @@ abstract class MethodCrud extends MethodForm
 	{
 		$table = $this->gdoTable();
 		$data = $form->getFormData();
-		$gdo = $table->blank()->insert();
+		$gdo = $table->blank($data)->insert();
 		$this->resetForm();
 		return
 			$this->message('msg_crud_created', [$gdo->gdoHumanName()])->
