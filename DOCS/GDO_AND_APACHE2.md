@@ -19,6 +19,8 @@ This virtual hosts configuration does the following:
 - serve both, http and https
 - allow letsencrypt to verify www and non-www domains.
 
+
+```
     <VirtualHost *:80>
         ServerName gdo6.com
         DocumentRoot /home/gizmore/www/gdo6
@@ -74,7 +76,7 @@ This virtual hosts configuration does the following:
         ErrorLog /home/gizmore/www/recalcolo.errors.log
         CustomLog /home/gizmore/www/recalcolo.access.log combined
     </VirtualHost>
-
+```
 
 ## letsencrypt
 
