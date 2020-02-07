@@ -129,6 +129,7 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
     # git clone --recursive https://github.com/gizmore/gdo6-shoutbox Shoutbox
+    git clone --recursive https://github.com/gizmore/gdo6-sitemap Sitemap
     ## git clone --recursive https://github.com/gizmore/gdo6-slaytags Slaytags
     git clone --recursive https://github.com/gizmore/gdo6-tag Tag
     git clone --recursive https://github.com/gizmore/gdo6-tcpdf TCPDF

@@ -19,7 +19,7 @@ class MethodPage extends Method
 		return $this->templatePHP("page/{$name}.php", $this->getTemplateVars());
 	}
 	
-	private function getTemplateVars()
+	protected function getTemplateVars()
 	{
 		$tVars = [];
 		foreach ($this->gdoParameters() as $param)
