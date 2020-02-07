@@ -24,8 +24,8 @@ class GDT_Url extends GDT_String
 	public $allowExternal = true;
 	
 	public $min = 0;
-	public $max = 255;
-	public $pattern = "#(?:https?://|/).*#i";
+	public $max = 1024;
+// 	public $pattern = "#(?:https?://|/).*#i";
 	
 	public function __construct()
 	{
@@ -83,18 +83,22 @@ class GDT_Url extends GDT_String
 		# Check local
 		if ( (!$this->allowLocal) && ($value[0] === '/') )
 		{
-			return $this->error('err_local_url_not_allowed', [htmlspecialchars($value->raw)]);
+			return $this->error('err_local_url_not_allowed', [html($value)]);
 		}
 		
 		if ( (!$this->allowExternal) && ($value[0] !== '/') )
 		{
-			return $this->error('err_external_url_not_allowed', [htmlspecialchars($value->raw)]);
+			return $this->error('err_external_url_not_allowed', [html($value)]);
 		}
 		
 		# Check reachable
 		if ( ($this->reachable) && (!HTTP::pageExists($value)) )
 		{
-			return $this->error('err_url_not_reachable', [htmlspecialchars($value->raw)]);
+			if ($value[0] === '/')
+			{
+				return true;
+			}
+			return $this->error('err_url_not_reachable', [html($value)]);
 		}
 		
 		return true;

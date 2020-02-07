@@ -221,7 +221,7 @@ final class Time
 	{
 		if (is_int($duration)) { return $duration; }
 		if (!is_string($duration)) { return 0; }
-		if (Common::isNumeric($duration)) { return (int)$duration; }
+		if (is_numeric($duration)) { return (int)$duration; }
 		$duration = trim(strtolower($duration));
 		if (!preg_match('/^(?:(?:[0-9 ]+[sihdwmy])+)$/', $duration)) { return 0; }
 		
@@ -250,16 +250,19 @@ final class Time
 		$back = 0;
 		foreach ($duration as $d)
 		{
-			$unit = substr($d, -1);
-			if (is_numeric($unit)) {
-				$unit = 's';
+			if ($d = trim($d))
+			{
+				$unit = substr($d, -1);
+				if (is_numeric($unit)) {
+					$unit = 's';
+				}
+				else {
+					$d = substr($d, 0, -1);
+				}
+				$d = intval($d);
+				
+				$back += $multis[$unit] * $d;
 			}
-			else {
-				$d = substr($d, 0, -1);
-			}
-			$d = intval($d);
-			
-			$back += $multis[$unit] * $d;
 		}
 		return $negative * $back;
 	}
