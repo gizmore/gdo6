@@ -25,7 +25,9 @@ final class GDO_Country extends GDO
 			GDT_Int::make('c_population')->initial('0')->unsigned(),
 		);
 	}
-	
+
+	public function getID() { return $this->getISO(); }
+	public function getIDFile() { $iso = $this->getISO(); return $iso === 'ad' ? 'axx' : $iso; }
 	public function getISO() { return $this->getVar('c_iso'); }
 	public function getISO3() { return $this->getVar('c_iso3'); }
 	public function displayName() { return t('country_'.$this->getISO()); }

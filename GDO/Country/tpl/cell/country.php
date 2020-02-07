@@ -8,7 +8,7 @@ $country = $field->gdo;
  class="gdo-country"
  alt="<?= $country->displayName(); ?>"
  title="<?= $country->displayName(); ?>"
- src="GDO/Country/img/<?= $country->getID(); ?>.png" />
+ src="GDO/Country/img/<?= $country->getIDFile(); ?>.png" />
 <?php if ($field->withName) : ?>
 <span><?= $country->displayName(); ?></span>
 <?php endif; ?>

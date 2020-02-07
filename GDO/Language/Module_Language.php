@@ -7,6 +7,7 @@ use GDO\Util\Strings;
 use GDO\Core\Application;
 use GDO\User\GDO_User;
 use GDO\User\GDO_Session;
+use GDO\Util\Javascript;
 
 /**
  * Internationalization Module.
@@ -65,7 +66,23 @@ class Module_Language extends GDO_Module
 	public function onIncludeScripts()
 	{
 		$this->addJavascript('js/gdo-trans.js');
+		
+		# Add js trans
+		$iso = Trans::$ISO;
+		$href = $this->href('GetTransData', "&iso={$iso}&".$this->nocacheVersion());
+		Javascript::addJavascript($href);
+// 		Javascript::addJavascriptine($this->transJS());
 	}
+	
+// 	private function transJS()
+// 	{
+// 		$cache = Trans::getCache(Trans::$ISO);
+// 		$data = json_encode($cache);
+// 		$js = <<<END
+// window.GDO_TRANS.CACHE = {$data};
+// END;
+// 		return $js;
+// 	}
 	
 	#################
 	### Detection ###

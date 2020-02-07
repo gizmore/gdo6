@@ -135,6 +135,14 @@ final class ModuleLoader
 		{
 			$module->initModule();
 		}
+		$app = Application::instance();
+		if ( (!$app->isInstall()) && (!$app->isCLI()) )
+		{
+			foreach ($this->modules as $module)
+			{
+				$module->onIncludeScripts();
+			}
+		}
 	}
 	
 	##################

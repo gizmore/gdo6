@@ -30,6 +30,7 @@ class GDO_Language extends GDO
 		);
 	}
 	
+	public function getID() { return $this->getISO(); }
 	public function getISO() { return $this->getVar('lang_iso'); }
 	public function displayName() { return t('lang_'.$this->getISO()); }
 	public function displayNameISO($iso) { return tiso($iso, 'lang_'.$this->getISO()); }

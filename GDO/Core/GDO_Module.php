@@ -262,16 +262,9 @@ class GDO_Module extends GDO
 		if (!$this->inited)
 		{
 			$this->inited = true;
-//			 $this->onLoadLanguage();
 			$this->registerSettings();
-//			 if ($this->isPersisted() && $this->isEnabled())
 			if ($this->isEnabled())
 			{
-				$app = Application::instance();
-				if ( (!$app->isInstall()) && (!$app->isCLI()) )
-				{
-					$this->onIncludeScripts();
-				}
 				$this->onInit();
 			}
 		}
@@ -287,17 +280,6 @@ class GDO_Module extends GDO
 			}
 		}
 	}
-	
-// 	public function loadClasses()
-// 	{
-// 		if ($classes = $this->getClasses())
-// 		{
-// 			foreach ($classes as $class)
-// 			{
-// 				$this->includeClass($class);
-// 			}
-// 		}
-// 	}
 	
 	public function loadLanguage($path)
 	{
@@ -354,10 +336,10 @@ class GDO_Module extends GDO
 	##############
 	### Assets ###
 	##############
-	public function nocacheVersion() { return "?v={$this->getVersion()}&vc=".Module_Core::instance()->cfgAssetVersion(); }
-	public function addBowerJavascript($path) { return $this->addJavascript('bower_components/'.$path.$this->nocacheVersion()); }
-	public function addJavascript($path) { return Javascript::addJavascript($this->wwwPath($path.$this->nocacheVersion())); }
-	public function addBowerCSS($path) { return $this->addCSS('bower_components/'.$path.$this->nocacheVersion()); }
-	public function addCSS($path) { return Website::addCSS($this->wwwPath($path.$this->nocacheVersion())); }
+	public function nocacheVersion() { return "v={$this->getVersion()}&vc=".Module_Core::instance()->cfgAssetVersion(); }
+	public function addBowerJavascript($path) { return $this->addJavascript('bower_components/'.$path.'?'.$this->nocacheVersion()); }
+	public function addJavascript($path) { return Javascript::addJavascript($this->wwwPath($path.'?'.$this->nocacheVersion())); }
+	public function addBowerCSS($path) { return $this->addCSS('bower_components/'.$path.'?'.$this->nocacheVersion()); }
+	public function addCSS($path) { return Website::addCSS($this->wwwPath($path.'?'.$this->nocacheVersion())); }
 
 }
