@@ -3,8 +3,8 @@
 ## Permissions
 
 I run apache2 with mod mpm itk.
-This allows switching users easily.
 
+This allows switching users easily.
 
 ## Document Root
 
@@ -21,9 +21,7 @@ This virtual hosts configuration does the following:
 
     <VirtualHost *:80>
         ServerName gdo6.com
-
         DocumentRoot /home/gizmore/www/gdo6
-
         <Directory "/home/gizmore/www/gdo6">
                 Options +Indexes +FollowSymLinks -MultiViews
                 AllowOverride All
@@ -32,15 +30,12 @@ This virtual hosts configuration does the following:
         AssignUserID gizmore gizmore
         ErrorLog /home/gizmore/www/recalcolo.errors.log
         CustomLog /home/gizmore/www/recalcolo.access.log combined
-
         RewriteCond %{REQUEST_URI} "!/.well-known/acme-challenge/"
         RewriteRule ^/*(.*)$ https://%{HTTP_HOST}/$1 [NE,L,R=301]
     </VirtualHost>
-
     <VirtualHost *:80>
         ServerName www.gdo6.com
         DocumentRoot /home/gizmore/www/gdo6
-
         <Directory "/home/gizmore/www/gdo6">
                 Options +Indexes +FollowSymLinks -MultiViews
                 AllowOverride All
@@ -50,7 +45,6 @@ This virtual hosts configuration does the following:
         ErrorLog /home/gizmore/www/recalcolo.errors.log
         CustomLog /home/gizmore/www/recalcolo.access.log combined
     </VirtualHost>
-
     <VirtualHost *:443>
         ServerName gdo6.com
         SSLEngine on
@@ -61,10 +55,8 @@ This virtual hosts configuration does the following:
         AssignUserID gizmore gizmore
         ErrorLog /home/gizmore/www/recalcolo.errors.log
         CustomLog /home/gizmore/www/recalcolo.access.log combined
-
         Redirect permanent / https://www.gdo6.com/
     </VirtualHost>
-
     <VirtualHost *:443>
         ServerName www.gdo6.com
         DocumentRoot /home/gizmore/www/gdo6
