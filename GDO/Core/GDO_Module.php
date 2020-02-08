@@ -30,20 +30,6 @@ class GDO_Module extends GDO
 	public $module_license = "MIT";
 	public $module_priority = 50;
 	
-	public function displayModuleDescription() { return html($this->getModuleDescription()); }
-	public function getModuleDescription()
-	{
-		if ($readme = @file_get_contents($this->filePath('README.md')))
-		{
-			$matches = null;
-			if (preg_match("/^#.*\\n(.*)\\n/", $readme, $matches))
-			{
-				return $matches[1];
-			}
-		}
-		return ''; 
-	}
-	
 	public function gdoCached() { return false; }
 	public function memCached() { return false; }
 	public function defaultEnabled() { return !$this->isSiteModule(); }
@@ -71,6 +57,32 @@ class GDO_Module extends GDO
 	 * @return GDT[]
 	 */
 	public function getConfig() { return []; }
+	
+	############
+	### Info ###
+	############
+	public function displayName()
+	{
+		$name = $this->getName();
+		$key = 'module_' . strtolower($name);
+		return Trans::hasKey($key) ? t($key) : $name;
+	}
+	
+	public function displayModuleDescription() { return html($this->getModuleDescription()); }
+	public function getModuleDescription()
+	{
+		if ($readme = @file_get_contents($this->filePath('README.md')))
+		{
+			$matches = null;
+			if (preg_match("/^#.*\\n(.*)\\n/", $readme, $matches))
+			{
+				return $matches[1];
+			}
+		}
+		return '';
+	}
+	
+	
 	
 	##############
 	### Config ###
