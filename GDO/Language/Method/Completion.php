@@ -1,10 +1,10 @@
 <?php
 namespace GDO\Language\Method;
-use GDO\Core\Method;
 use GDO\Language\GDO_Language;
 use GDO\Language\GDT_Language;
+use GDO\Core\MethodAjax;
 
-final class Completion extends Method
+final class Completion extends MethodAjax
 {
 	public function execute()
 	{

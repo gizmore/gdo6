@@ -6,6 +6,8 @@ use GDO\File\GDO_File;
 use GDO\File\FileUtil;
 use GDO\Net\Stream;
 use GDO\Util\Common;
+use GDO\DB\GDT_Int;
+use GDO\DB\GDT_String;
 
 /**
  * Serve a file from partially db(meta) and fs.
@@ -30,6 +32,14 @@ use GDO\Util\Common;
 final class GetFile extends Method
 {
 	public function getPermission() { return 'admin'; }
+	
+	public function gdoParameters()
+	{
+		return array(
+			GDT_Int::make('file')->notNull(),
+			GDT_String::make('variant'),
+		);
+	}
 	
 	public function execute()
 	{

@@ -1,11 +1,11 @@
 <?php
 namespace GDO\User\Method;
-use GDO\Core\Method;
 use GDO\Core\GDO;
 use GDO\User\GDT_User;
 use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Core\Website;
+use GDO\Core\MethodAjax;
 
 /**
  * Auto completion for GDT_User types.
@@ -13,7 +13,7 @@ use GDO\Core\Website;
  * @version 5.0
  * @since 5.0
  */
-class Completion extends Method
+class Completion extends MethodAjax
 {
 	public static $MAXCOUNT = 20;
 	
