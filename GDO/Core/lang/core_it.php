@@ -129,6 +129,7 @@ return array(
 'err_not_allowed' => 'Le manca l´autorizzazione: %s',
 'err_cannot_stream_output_started' => 'Il file non può essere scaricato. Altri contenuti sono già stati inviati dal server web.',
 'err_unknown_file' => 'File non trovato.',
+'err_no_permission' => 'Non sei autorizzato a farlo.',
 	
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',

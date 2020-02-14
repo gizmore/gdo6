@@ -219,6 +219,8 @@ class GDT_Table extends GDT
 				{
 					if ($field->orderable)
 					{
+// 						echo $name;
+// 						die('X');
 						$query->order($field->orderFieldName(), !!$asc);
 						$hasCustomOrder = true;
 					}

@@ -22,6 +22,9 @@ abstract class MethodQueryList extends MethodQuery
 	
 	public function gdoListMode() { return GDT_List::MODE_LIST; }
 	
+	public function isOrdered() { return true; }
+	public function isPaginated() { return true; }
+	
 	public function gdoDecorateList(GDT_List $list) {}
 	
 	/**
@@ -36,6 +39,7 @@ abstract class MethodQueryList extends MethodQuery
 	{
 		return array(
 			GDT_PageMenu::make('page')->initial('1'),
+			GDT_PageMenu::make('ipp')->initial(Module_Table::instance()->cfgItemsPerPage()),
 		);
 	}
 	
@@ -59,14 +63,27 @@ abstract class MethodQueryList extends MethodQuery
 	{
 		$list = GDT_List::make($this->getListName());
 		$list->query($this->gdoFilteredQuery());
-		$list->title(t('list_'.strtolower($this->gdoShortName()), [$list->countItems()]));
+		$this->setupTitle($list);
 		$headers = GDT_Fields::make('o')->addFields($this->gdoFilters())->addFields($this->gdoParameters());
 		$list->headers($headers);
 		$list->listMode($this->gdoListMode());
-		$list->paginate();
+		if ($this->isPaginated())
+		{
+			$list->paginate(true, null, $this->gdoParameterValue('ipp'));
+		}
+		if ($this->isOrdered())
+		{
+			$list->ordered();
+		}
 		$list->href($this->href());
 		$this->gdoDecorateList($list);
 		return GDT_Response::makeWith($list);
 	}
+	
+	protected function setupTitle(GDT_List $list)
+	{
+		$list->title(t('list_'.strtolower($this->gdoShortName()), [$list->countItems()]));
+	}
+	
 }
 
