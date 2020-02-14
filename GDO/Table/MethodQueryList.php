@@ -75,7 +75,7 @@ abstract class MethodQueryList extends MethodQuery
 		{
 			$list->ordered();
 		}
-		$list->href($this->href());
+// 		$list->href($this->href());
 		$this->gdoDecorateList($list);
 		return GDT_Response::makeWith($list);
 	}
