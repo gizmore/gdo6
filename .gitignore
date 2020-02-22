@@ -44,3 +44,5 @@ GDO/*
 # Ignore bower
 **/bower_components
 
+# Ignore favicons
+favicon.*

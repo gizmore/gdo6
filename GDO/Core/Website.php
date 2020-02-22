@@ -158,5 +158,19 @@ final class Website
 	{
 		return headers_sent() || ob_get_contents();
 	}
+	
+	####################
+	### Generic Head ###
+	####################
+	private static $HEAD = '';
+	public static function addHead($string)
+	{
+		self::$HEAD .= $string;
+	}
+	
+	public static function displayHead()
+	{
+		return self::$HEAD;
+	}
 
 }

@@ -58,6 +58,7 @@ abstract class Method
 	public function beforeExecute() {}
 	public function afterExecute() {}
 	public function saveLastUrl() { return true; }
+	public function showInSitemap() { return true; }
 	
 	######################
 	### GET Parameters ###
@@ -81,7 +82,7 @@ abstract class Method
 				$gdt->var = $var;
 				if (!$gdt->validate($value))
 				{
-					throw new GDOException($gdt->error);
+// 					throw new GDOException($gdt->error);
 					$gdt->var = $gdt->initial;
 				}
 				return $gdt;

@@ -9,7 +9,7 @@ $field->addClass('gdt-button');
 if ($href) : ?>
 <a <?=$field->htmlAttributes()?>
  <?=$field->htmlDisabled()?>
- <?=$field->htmlRel()?>
+ <?=$field->htmlRelation()?>
  href="<?=html($href)?>">
   <?=$field->htmlIcon()?>
   <?=$field->displayLabel()?>

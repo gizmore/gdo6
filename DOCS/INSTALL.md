@@ -87,6 +87,7 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-download Download
     git clone --recursive https://github.com/gizmore/gdo6-dsgvo DSGVO
     git clone --recursive https://github.com/gizmore/gdo6-facebook Facebook
+    git clone --recursive https://github.com/gizmore/gdo6-favicon Favicon
     git clone --recursive https://github.com/gizmore/gdo6-font-awesome FontAwesome
     git clone --recursive https://github.com/gizmore/gdo6-forum Forum
     git clone --recursive https://github.com/gizmore/gdo6-friends Friends
