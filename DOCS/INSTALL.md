@@ -121,6 +121,7 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-payment-bank PaymentBank
     git clone --recursive https://github.com/gizmore/gdo6-payment-credits PaymentCredits
     git clone --recursive https://github.com/gizmore/gdo6-payment-paypal PaymentPaypal
+    git clone --recursive https://github.com/gizmore/gdo6-paypal-donation PaypalDonation
     git clone --recursive https://github.com/gizmore/gdo6-pm PM
     git clone --recursive https://github.com/gizmore/gdo6-pma PhpMyAdmin
     git clone --recursive https://github.com/gizmore/gdo6-poll Poll

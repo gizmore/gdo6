@@ -137,7 +137,14 @@ class GDT_PageMenu extends GDT
 	private function replaceHREF($page)
 	{
 		$this->href = preg_replace("#&f\\[{$this->name}\\]=\\d+#", '', $this->href);
-		return $this->href . '&f[' . $this->name . ']='. $page;
+		if (!strpos($this->href, '?'))
+		{
+			return $this->href . '?f[' . $this->name . ']='. $page;
+		}
+		else
+		{
+			return $this->href . '&f[' . $this->name . ']='. $page;
+		}
 	}
 	
 	private function pagesObject()
