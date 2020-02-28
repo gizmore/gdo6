@@ -60,6 +60,19 @@ abstract class Method
 	public function saveLastUrl() { return true; }
 	public function showInSitemap() { return true; }
 	
+	###################
+	### Description ###
+	###################
+	public function getDescriptionLangKey()
+	{
+		return strtolower('mdescr_' . $this->getModuleName() . '_' . $this->getMethodName());
+	}
+	
+	public function getDescription()
+	{
+		return t($this->getDescriptionLangKey());
+	}
+	
 	######################
 	### GET Parameters ###
 	######################
@@ -67,13 +80,25 @@ abstract class Method
 	 * @return GDT[]
 	 */
 	public function gdoParameters() { return []; }
+	
+	private $paramCache = null;
+	public function gdoParameterCache()
+	{
+		if ($this->paramCache === null)
+		{
+			$this->paramCache = $this->gdoParameters();
+		}
+		return $this->paramCache;
+	}
+	
+	
 	/**
 	 * @param string $key
 	 * @return GDT
 	 */
 	public function gdoParameter($key)
 	{
-		foreach ($this->gdoParameters() as $gdt)
+		foreach ($this->gdoParameterCache() as $gdt)
 		{
 			if ($gdt->name === $key)
 			{
@@ -132,6 +157,21 @@ abstract class Method
 	public function message($key, array $args=null, $log=true) { return GDT_Success::responseWith($key, $args); }
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
+	
+	#################
+	### Auto HREF ###
+	#################
+	public function methodHref()
+	{
+		$append = '';
+		foreach ($this->gdoParameterCache() as $gdt)
+		{
+			$append .= '&' . $gdt->name . '=' . urlencode($gdt->getVar());
+		}
+		
+		
+		return $this->href($append);
+	}
 	
 	##################
 	### Permission ###

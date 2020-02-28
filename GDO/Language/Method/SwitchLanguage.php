@@ -31,6 +31,11 @@ final class SwitchLanguage extends Method
 		);
 	}
 	
+	public function getDescription()
+	{
+		return t($this->getDescriptionLangKey(), [$this->getLanguage()->displayName()]);
+	}
+	
 	/**
 	 * @return \GDO\Language\GDO_Language
 	 */
@@ -43,6 +48,8 @@ final class SwitchLanguage extends Method
 	{
 		# Set new ISO language
 		$iso = $this->getLanguage()->getISO();
+		$_SERVER['REQUEST_URI'] = preg_replace("/_lang=[a-z]{2}/", "_lang=".$iso , $_SERVER['REQUEST_URI']);
+		$_REQUEST['_lang'] = $iso;
 		GDO_Session::set('gdo-language', $iso);
 		Trans::setISO($iso);
 		
@@ -52,6 +59,7 @@ final class SwitchLanguage extends Method
 		# Redirect if 'ref' is set
 		if ($url = $this->gdoParameterVar('ref'))
 		{
+			$url = preg_replace("/_lang=[a-z]{2}/", "_lang=".$iso , $url);
 			$response->add(Website::redirect($url));
 		}
 

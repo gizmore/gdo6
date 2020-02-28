@@ -210,5 +210,8 @@ return array(
 'sel_all' => 'Alle',
 'sel_checked' => 'Aktiv',
 'sel_unchecked' => 'Inaktiv',
-	
+
+# Method description
+'mdescr_core_impressum' => 'Impressum',
+'mdescr_core_privacy' => 'Datenschutz',
 );

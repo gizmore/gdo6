@@ -211,4 +211,7 @@ return array(
 'sel_checked' => 'Attivo',
 'sel_unchecked' => 'Inattivo',
 	
+# Method description
+'mdescr_core_impressum' => 'Site impressum',
+'mdescr_core_privacy' => 'Privacy information',
 );

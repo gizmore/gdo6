@@ -209,4 +209,9 @@ return array(
 'sel_all' => 'all',
 'sel_checked' => 'active',
 'sel_unchecked' => 'inactive',
+
+# Method description
+'mdescr_core_impressum' => 'Site impressum',
+'mdescr_core_privacy' => 'Privacy information',
+
 );

@@ -36,7 +36,7 @@ spl_autoload_register(function($name){
 # Global utility
 function sitename() { return t('sitename'); }
 function url($module, $method, $append='') { return GDT_Url::absolute(href($module, $method, $append)); }
-function href($module, $method, $append='') { return "index.php?mo=$module&me=$method$append"; }
+function href($module, $method, $append='') { return "index.php?mo=$module&me=$method$append&_lang=".Trans::$ISO; }
 function quote($value) { return GDO::quoteS($value); }
 function html($html=null) { return htmlspecialchars($html); }
 function mo() { return Common::getRequestString('mo', GWF_MODULE); }

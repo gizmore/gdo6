@@ -8,6 +8,7 @@ use GDO\Core\Application;
 use GDO\User\GDO_User;
 use GDO\User\GDO_Session;
 use GDO\Util\Javascript;
+use GDO\Util\Common;
 
 /**
  * Internationalization Module.
@@ -78,6 +79,10 @@ class Module_Language extends GDO_Module
 	#################
 	public function detectISO()
 	{
+		if ($iso = Common::getGetString('_lang'))
+		{
+			return $iso;
+		}
 		if ($iso = GDO_Session::get('gdo-language'))
 		{
 			return $iso;
