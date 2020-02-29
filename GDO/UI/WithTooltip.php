@@ -20,7 +20,7 @@ trait WithTooltip
 	{
 		if ($this->tooltipText)
 		{
-			return GDT_Icon::iconS('bulb', t($this->tooltipText, $this->tooltipTextArgs));
+			return GDT_Icon::iconS($this->icon, t($this->tooltipText, $this->tooltipTextArgs));
 		}
 	}
 	

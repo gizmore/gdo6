@@ -267,7 +267,7 @@ abstract class Method
 			return $error;
 		}
 		
-		return $this->execMethod();
+		return $this->execWrap();
 	}
 	
 	public function execMethod()
@@ -301,9 +301,11 @@ abstract class Method
 			$this->init();
 			
 			# Exec 1)before, 2)execute, 3)after
+			GDT_Hook::callHook('BeforeExecute', $this);
 			$response = $this->beforeExecute();
 			$response = $response ? $response->add($this->execute()) : $this->execute();
 			$response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
+			GDT_Hook::callHook('AfterExecute', $this);
 			
 			# store activity timestamp
 			if (!$this->isAjax())

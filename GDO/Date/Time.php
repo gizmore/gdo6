@@ -39,6 +39,12 @@ final class Time
 		return date('Y-m-d H:i:s', $time === null ? time() : $time);
 	}
 	
+	public static function getDateWithoutTime($time=null)
+	{
+		return substr(self::getDate($time), 0, 10);
+	}
+	
+	
 	public static function getTimestamp($date=null)
 	{
 		return $date === null ? time() : strtotime($date);

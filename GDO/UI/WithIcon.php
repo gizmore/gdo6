@@ -46,7 +46,7 @@ trait WithIcon
 	############
 	### Icon ###
 	############
-	protected $icon;
+	public $icon;
 	public function icon($icon) { $this->icon = $icon; return $this; }
 	
 	public $iconText;
