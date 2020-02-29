@@ -15,6 +15,8 @@ final class DetectNode extends Method
 	
 	public function getPermission() { return 'staff'; }
 
+	public function showInSitemap() { return false; }
+	
 	public function execute()
 	{
 		$response = $this->detectNodeJS();

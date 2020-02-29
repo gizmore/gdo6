@@ -21,4 +21,7 @@ return array(
 'lvlpopup_too_low' => 'You are not allowed to access this item.',
 	
 'link_user_add_user' => 'Create a new user',
+
+'mdescr_user_adduser' => 'Create a new user',
+'mdescr_user_admin' => 'Administrate users',
 );

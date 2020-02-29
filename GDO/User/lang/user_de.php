@@ -20,4 +20,7 @@ return array(
 'lvlpopup_too_low' => 'Sie dürfen hierauf nicht zugreifen.',
 	
 'link_user_add_user' => 'Nutzer erstellen',
+	
+'mdescr_user_adduser' => 'Nutzer erstellen',
+'mdescr_user_admin' => 'Nutzer administrieren',
 );

@@ -19,4 +19,7 @@ return array(
 'lvlpopup_too_low' => 'Qui non puó accedere.',
 
 'link_user_add_user' => 'Crea un nuovo utente',
+
+'mdescr_user_adduser' => 'Crea un nuovo utente',
+'mdescr_user_admin' => 'Administrare  utente',
 );
