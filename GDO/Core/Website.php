@@ -131,7 +131,7 @@ final class Website
 	public static function displayMeta()
 	{
 		$back = '';
-		$mode = array('name', 'http-equiv');
+// 		$mode = array('name', 'http-equiv');
 		foreach (self::$_meta as $meta)
 		{
 			if (!is_array($meta))
@@ -139,8 +139,8 @@ final class Website
 				continue; # TODO: spaceone fix.
 			}
 			list($name, $content, $equiv) = $meta;
-			$equiv = $mode[$equiv];
-			$back .= sprintf('<meta %s="%s" content="%s"%s', $equiv, $name, $content, self::$xhtml);
+// 			$equiv = $mode[$equiv];
+			$back .= sprintf("<meta %s=\"%s\" content=\"%s\" />\n", $equiv, $name, $content);
 		}
 		return $back;
 	}
@@ -165,7 +165,7 @@ final class Website
 	private static $HEAD = '';
 	public static function addHead($string)
 	{
-		self::$HEAD .= $string;
+		self::$HEAD .= $string . "\n";
 	}
 	
 	public static function displayHead()

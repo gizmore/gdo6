@@ -24,6 +24,7 @@ final class AddUser extends MethodForm
 	public function createForm(GDT_Form $form)
 	{
 		$users = GDO_User::table();
+		$form->title(t('mdescr_user_adduser'));
 		$form->addField($users->gdoColumn('user_name'));
 		$form->addField($users->gdoColumn('user_email'));
 		$form->addField($users->gdoColumn('user_level'));

@@ -9,6 +9,7 @@ use GDO\User\GDO_User;
 use GDO\User\GDO_Session;
 use GDO\Util\Javascript;
 use GDO\Util\Common;
+use GDO\Core\Website;
 
 /**
  * Internationalization Module.
@@ -60,7 +61,9 @@ class Module_Language extends GDO_Module
 	{
 		if (!Application::instance()->isCLI())
 		{
-			Trans::setISO($this->detectISO());
+			$iso = $this->detectISO();
+			Trans::setISO($iso);
+			Website::addMeta(['language', $iso, 'name']);
 		}
 	}
 	

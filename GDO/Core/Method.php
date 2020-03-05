@@ -87,6 +87,10 @@ abstract class Method
 		if ($this->paramCache === null)
 		{
 			$this->paramCache = $this->gdoParameters();
+			if (!$this->paramCache)
+			{
+				$this->paramCache = [];
+			}
 		}
 		return $this->paramCache;
 	}
@@ -299,6 +303,9 @@ abstract class Method
 			
 			# Init method
 			$this->init();
+			
+			# SEO
+			Website::addMeta(['description', $this->getDescription(), 'name']);
 			
 			# Exec 1)before, 2)execute, 3)after
 			GDT_Hook::callHook('BeforeExecute', $this);
