@@ -65,11 +65,14 @@ class GDT_Form extends GDT
 	
 	public function renderJSON()
 	{
+		die('B');
 		$json = [];
-		foreach ($this->fields as $field)
+		foreach ($this->getFields() as $field)
 		{
+			die('A');
 			if ($j = $field->renderJSON())
 			{
+				die('Y');
 				$json[$field->name] = $j;
 //	 			$json = array_merge($json, $j);
 			}

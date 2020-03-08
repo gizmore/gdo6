@@ -78,7 +78,7 @@ trait WithFields
 		{
 			if ($data = $gdoType->renderJSON())
 			{
-				$json = array_merge($json, $data);
+				$json[$gdoType->name] = $data;
 			}
 		}
 		return $json;

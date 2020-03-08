@@ -7,6 +7,11 @@ use GDO\User\PermissionException;
 use GDO\Util\Common;
 use GDO\User\GDO_User;
 use GDO\Captcha\GDT_Captcha;
+use GDO\UI\GDT_Divider;
+use GDO\DB\GDT_Object;
+use GDO\DB\GDT_ObjectSelect;
+use GDO\Core\GDT;
+use GDO\DB\GDT_AutoInc;
 
 /**
  * Abstract Create|Update|Delete for a GDO.
@@ -74,15 +79,44 @@ abstract class MethodCrud extends MethodForm
 	public function createForm(GDT_Form $form)
 	{
 		$table = $this->gdoTable();
-		foreach ($table->gdoColumnsCache() as $gdoType)
+		foreach ($table->gdoColumnsCache() as $gdt)
 		{
-			if ($gdoType->editable)
-			{
-				$form->addField($gdoType);
-			}
+			$this->createFormRec($form, $gdt);
 		}
 		$this->createCaptcha($form);
 		$this->createFormButtons($form);
+	}
+	
+	public function createFormRec(GDT_Form $form, GDT $gdt)
+	{
+// 		if ($gdt instanceof GDT_AutoInc)
+// 		{
+// 			$form->addField($gdt);
+// 		}
+		if ($gdt->editable)
+		{
+			if ( ($gdt instanceof GDT_Object) ||
+				 ($gdt instanceof GDT_ObjectSelect) )
+			{
+// 				$form->addField(GDT_Divider::make()->rawLabel($gdt->gdoHumanName()));
+// 				$form->addField($gdt);
+				if ($gdt->composition)
+				{
+					foreach ($gdt->table->gdoColumnsCache() as $gdt2)
+					{
+						$this->createFormRec($form, $gdt2);
+					}
+				}
+				else
+				{
+					$form->addField($gdt);
+				}
+			}
+			else 
+			{
+				$form->addField($gdt);
+			}
+		}
 	}
 
 	public function createCaptcha(GDT_Form $form)
@@ -164,6 +198,18 @@ abstract class MethodCrud extends MethodForm
 		$table = $this->gdoTable();
 		$data = $form->getFormData();
 		$gdo = $table->blank($data)->insert();
+		foreach ($gdo->gdoColumnsCache() as $gdt)
+		{
+			if ( ($gdt instanceof GDT_Object) || ($gdt instanceof GDT_ObjectSelect) )
+			{
+				if ($gdt->composition)
+				{
+					$id = $gdt->table->blank($data)->insert()->getID();
+					$gdo->saveVar($gdt->name, $id);
+				}
+			}
+		}
+		
 		$this->resetForm();
 		return
 			$this->message('msg_crud_created', [$gdo->gdoHumanName()])->
@@ -171,14 +217,30 @@ abstract class MethodCrud extends MethodForm
 			add(Website::redirectMessage($this->hrefList()));
 	}
 	
+	private function onCreateRec(GDT_Form $form, GDT $gdt)
+	{
+	}
+	
 	public function onUpdate(GDT_Form $form)
 	{
 		$this->gdo->saveVars($form->getFormData());
+		foreach ($this->gdo->gdoColumnsCache() as $gdt)
+		{
+			$this->onUpdateRec($form, $gdt);
+		}
 		$this->resetForm();
 		return
 		$this->message('msg_crud_updated', [$this->gdo->gdoHumanName()])->
 			add($this->afterUpdate($form, $this->gdo))->
 			add($this->renderPage());
+	}
+	
+	private function onUpdateRec(GDT_Form $form, GDT $gdt)
+	{
+		if ( ($gdt instanceof GDT_Object) || (($gdt instanceof GDT_ObjectSelect)) )
+		{
+			$gdt->table->blank($form->getFormData());
+		}
 	}
 	
 	public function onDelete(GDT_Form $form)

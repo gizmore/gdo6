@@ -4,6 +4,7 @@ use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Util\Common;
 use GDO\File\GDT_File;
+use GDO\Core\Application;
 /**
  * Generic method that uses a GDT_Form.
  * @author gizmore
@@ -155,7 +156,12 @@ abstract class MethodForm extends Method
 	 */
 	public function formInvalid(GDT_Form $form)
 	{
-		return $this->error('err_form_invalid');
+		$error = $this->error('err_form_invalid');
+		if (Application::instance()->isAjax())
+		{
+			$error->addFields($form->getFields());
+		}
+		return $error;
 	}
 	
 }
