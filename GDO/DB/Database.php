@@ -212,7 +212,11 @@ class Database
 	 */
 	public static function columnsS($classname)
 	{
-		self::tableS($classname);
+		$gdo = self::tableS($classname);
+		if (!isset(self::$COLUMNS[$classname]))
+		{
+			self::$COLUMNS[$classname] = self::hashedColumns($gdo->gdoColumns());
+		}
 		return self::$COLUMNS[$classname];
 	}
 	
