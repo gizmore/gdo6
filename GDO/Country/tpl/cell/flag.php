@@ -1,5 +1,6 @@
 <?php
 use GDO\Country\GDO_Country;
+use GDO\Country\GDT_Country;
 /**
  * @var GDT_Country $field
  */

@@ -1,4 +1,4 @@
-<?php /** @var $field \GDO\DB\GDT_Duration **/ ?>
+<?php /** @var $field \GDO\Date\GDT_Duration **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?=$field->htmlTooltip()?>
   <?= $field->htmlIcon(); ?>

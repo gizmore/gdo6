@@ -1,8 +1,7 @@
-<?php /** @var GDT_DeleteButton $field **/ ?>
+<?php /** @var \GDO\Form\GDT_DeleteButton $field **/ ?>
 <input
  type="submit"
  onclick="return confirm('<?=t('confirm_delete')?>')"
- class="md-button md-primary md-raised"
  name="<?= $field->name; ?>"
  value="<?= $field->displayLabel(); ?>"
  <?= $field->htmlDisabled(); ?> /></input>
