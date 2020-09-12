@@ -12,18 +12,19 @@ final class LanguageData
 {
 	public static function onInstall()
 	{
-		$bulkData = array();
 		foreach (self::getLanguages() as $data)
 		{
 			list($en, $native, $iso3, $iso2) = $data;
 			if (FileUtil::isFile(GDO_PATH . 'GDO/Language/img/'.strtolower($iso2).'.png'))
 			{
-			  $bulkData[] = [strtolower($iso2)];
+			    if (!GDO_Language::getById($iso2))
+			    {
+			        GDO_Language::blank(array(
+			            'lang_iso' => $iso2
+			        ))->insert();
+			    }
 			}
 		}
-		
-		$fields = [GDO_Language::table()->gdoColumn('lang_iso')];
-		GDO_Language::bulkReplace($fields, $bulkData);
 	}
 	
 	public static function getLanguages()

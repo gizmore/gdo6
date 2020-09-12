@@ -134,7 +134,7 @@ class Installer
 	
 	public static function increaseVersion(GDO_Module $module)
 	{
-		$v = (string) (floatval($module->getVersion()) + 0.01);
+		$v = sprintf('%.02f', (floatval($module->getVersion()) + 0.01));
 		$module->saveVar('module_version', $v);
 		return $v;
 	}

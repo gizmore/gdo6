@@ -44,7 +44,27 @@ final class Common
 	 */
 	public static function regex($pattern, $s)
 	{
-		$matches = array();
+	    $matches = [];
 		return preg_match($pattern, $s, $matches) ? $matches[1] : false;
+	}
+	
+	/**
+	 * Clamp a numeric value. null as min or max disables a check. $val should be an int or float. No conversion is done when something is in range.
+	 * @param $val mixed string or int or float or double
+	 * @param $min bool or numeric as above
+	 * @param $max bool or numeric as above
+	 * @return int|float
+	 */
+	public static function clamp($val, $min=null, $max=null)
+	{
+	    if ($min !== null && $val < $min)
+	    {
+	        return $min;
+	    }
+	    if ($max !== null && $val > $max)
+	    {
+	        return $max;
+	    }
+	    return $val;
 	}
 }

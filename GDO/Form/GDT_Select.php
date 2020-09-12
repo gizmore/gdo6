@@ -8,6 +8,16 @@ class GDT_Select extends GDT_ComboBox
 {
 	const SELECTED = ' selected="selected"';
 	
+	public function __construct()
+	{
+	    $this->initChoices();
+	}
+	
+	public function initChoices()
+	{
+	    $this->choices = [];
+	}
+	
 	public function getVar()
 	{
 		$this->fixEmptyMultiple();
@@ -53,7 +63,19 @@ class GDT_Select extends GDT_ComboBox
 
 	public function toValue($var)
 	{
-		return $this->multiple ? json_decode($var) : ($var === $this->emptyValue ? null : $var);
+	    if ($this->multiple)
+	    {
+	        return json_decode($var);
+	    }
+	    if ($var === $this->emptyValue)
+	    {
+	        return null;
+	    }
+	    if (isset($this->choices[$var]))
+	    {
+	        return $this->choices[$var];
+	    }
+	    return $var;
 	}
 	
 	public function getGDOData()

@@ -202,7 +202,7 @@ final class Debug
 		// Send error to admin?
 		if ($mail)
 		{
-			self::sendDebugMail($firstLine . $e->getTraceAsString());
+			self::sendDebugMail($firstLine . "\n" . $e->getTraceAsString());
 		}
 		
 		// Log it?
@@ -279,7 +279,7 @@ final class Debug
 		    print_r($_REQUEST, true),
 		    print_r($_COOKIE, true));
 		$args = array_map('htmlspecialchars', $args);
-		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_GET: %s\n\n_POST: %s\n\n_COOKIE: %s\n\n";
+		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_GET: %s\n\n_POST: %s\n\nREQUEST: %s\n\n_COOKIE: %s\n\n";
 		return vsprintf($pattern, $args);
 	}
 	private static function getMoMe()

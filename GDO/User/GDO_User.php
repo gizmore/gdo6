@@ -190,7 +190,7 @@ final class GDO_User extends GDO
 	public static function current() { self::$CURRENT = self::$CURRENT ? self::$CURRENT : GDO_Session::user(); return self::$CURRENT; }
 	
 	/**
-	 * @var self
+	 * @var GDO_User
 	 */
 	public static $CURRENT;
 	

@@ -12,8 +12,6 @@ final class InstallCountries
 		$module = Module_Country::instance();
 		$path = $module->filePath('data/countries.csv');
 		
-		$bulkData = [];
-		
 		if ($fh = fopen($path, 'r'))
 		{
 			# Build csv index names from header row
@@ -26,26 +24,19 @@ final class InstallCountries
 			{
 				if (count($row) > 3)
 				{
-					$bulkData[] = array(
-						trim(strtolower($row[$cca2])),
-						trim(strtolower($row[$cca3])),
-						trim($row[$phone]),
-						null,
-					);
+				    if (!GDO_Country::getById($row[$cca2]))
+				    {
+				        GDO_Country::blank(array(
+				            'c_iso' => $row[$cca2],
+				            'c_iso3' => $row[$cca3],
+				            'c_phonecode' => $row[$phone],
+				            'c_population' => null,
+				        ))->insert();
+				    }
 				}
 			}
 			
 			fclose($fh);
 		}
-	
-		# Bulk insert
-		$c = GDO_Country::table();
-		$fields = array(
-			$c->gdoColumn('c_iso'),
-			$c->gdoColumn('c_iso3'),
-			$c->gdoColumn('c_phonecode'),
-			$c->gdoColumn('c_population'),
-		);
-		GDO_Country::bulkReplace($fields, $bulkData);
 	}
 }
