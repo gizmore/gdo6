@@ -894,6 +894,19 @@ abstract class GDO
 		}
 	}
 	
+	public function clearCache()
+	{
+	    if ($this->table()->cache)
+	    {
+	        $this->table()->cache->clearCache();
+	    }
+	    if ($this->memCached())
+	    {
+			Cache::flush();
+	    }
+	    return $this;
+	}
+
 	public function callRecacheHook()
 	{
 		if ($this->gdoCached() || $this->memCached())

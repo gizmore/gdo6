@@ -1,6 +1,8 @@
 <?php
 namespace GDO\Net;
 
+use GDO\Util\Common;
+
 final class URL
 {
 	public $raw;
@@ -21,4 +23,10 @@ final class URL
 	{
 		return $this->parts['port'];
 	}
+	
+	public function getTLD()
+	{
+	    return Common::regex('/([^.]\\.[^.])$/ui', $this->getHost());
+	}
+
 }

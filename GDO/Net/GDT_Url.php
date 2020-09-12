@@ -34,7 +34,7 @@ class GDT_Url extends GDT_String
 	
 	public function toValue($var)
 	{
-		return new URL($var);
+		return $var ? new URL($var) : null;
 	}
 	
 	public function toVar($value)
@@ -75,7 +75,7 @@ class GDT_Url extends GDT_String
 	public function validateUrl($value)
 	{
 		# null seems allowed
-		if (null === ($value = $value->raw))
+		if ((!$value) || (null === ($value = $value->raw)))
 		{
 			return true;
 		}

@@ -120,6 +120,11 @@ class Cache
 		return $this->cache[$key];
 	}
 	
+	public function clearCache()
+	{
+	    $this->cache = [];
+	}
+	
 	public function recache(GDO $object)
 	{
 		$back = $object;

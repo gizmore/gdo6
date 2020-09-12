@@ -67,7 +67,7 @@ final class Arrays
 		switch (count($array))
 		{
 			case 0: return '';
-			case 1: return $array[0];
+			case 1: return array_pop($array);
 			default:
 				$last = array_pop($array);
 				return implode(', ', $array) . ' ' . t('and') . ' ' . $last;

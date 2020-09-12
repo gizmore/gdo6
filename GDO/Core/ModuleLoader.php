@@ -4,6 +4,7 @@ use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
+use Exception;
 /**
  * Module loader.
  *

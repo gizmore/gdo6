@@ -140,7 +140,7 @@ class Query
 	/**
 	 * @param string $condition
 	 * @param string $op
-	 * @return self
+	 * @return Query
 	 */
 	public function where($condition, $op="AND")
 	{
@@ -248,7 +248,7 @@ class Query
 	
 	private function getSelectColumns()
 	{
-		return $this->columns ? $this->columns : '*';
+		return $this->columns ? $this->columns : ' *';
 	}
 	
 	public function delete($tableName)
@@ -403,8 +403,8 @@ class Query
 	/**
 	 * Execute a query.
 	 * Returns boolean on writes and a Result on reads.
-	 * @see \GDO\DB\Result
-	 * @return \GDO\DB\Result
+	 * @see Result
+	 * @return Result
 	 */
 	public function exec()
 	{

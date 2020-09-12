@@ -5,7 +5,7 @@ namespace GDO\Util;
  * 
  * @author gizmore
  * @since 1.0
- * @version 6.05
+ * @version 6.11
  */
 final class Strings
 {
@@ -66,6 +66,9 @@ final class Strings
 		return $default;
 	}
 
+	#############
+	### Chunk ###
+	#############
 	public static function chunkSplit($s, $length)
 	{
 	    return array_chunk(preg_split("//u", $s, -1, PREG_SPLIT_NO_EMPTY), $length);

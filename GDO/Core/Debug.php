@@ -360,7 +360,7 @@ final class Debug
 		
 		if (!GWF_ERROR_STACKTRACE)
 		{
-			return $html ? sprintf('<pre class="gdo-exception">%s</pre>', $message) : $message;
+			return $html ? sprintf('<pre class="gdo-exception">%s</pre>', $message) . PHP_EOL : $message;
 		}
 		
 		// Append PRE header.
@@ -408,7 +408,7 @@ final class Debug
 		$back .= $html ? '<hr/>' : "\n";
 		$back .= sprintf('Backtrace starts in %s line %s.', self::shortpath($prefile), $preline) . "\n";
 		$back .= implode("\n", array_reverse($copy));
-		$back .= $html ? '</pre>' : '';
+		$back .= $html ? "</pre>\n" : '';
 		return $back;
 	}
 	
