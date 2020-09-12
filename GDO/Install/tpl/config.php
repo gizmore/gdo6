@@ -30,6 +30,10 @@ else
 		{
 			$value = "0".Numeric::baseConvert($value, 10, 8);
 		}
+		elseif ($field->name === 'error_level')
+		{
+		    $value = "0x".Numeric::baseConvert($value, 10, 16);
+		}
 		else
 		{
 			$value = "'$value'";

@@ -140,7 +140,7 @@ class Query
 	/**
 	 * @param string $condition
 	 * @param string $op
-	 * @return Query
+	 * @return self
 	 */
 	public function where($condition, $op="AND")
 	{

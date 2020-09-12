@@ -83,7 +83,7 @@ final class Debug
 	{
 		if ($error = error_get_last())
 		{
-			if ($error['type'] === 1)
+			if ($error && ($error['type'] === 1))
 			{
 				self::error_handler(1, $error['message'], self::shortpath($error['file']), $error['line'], NULL);
 			}
@@ -275,8 +275,9 @@ final class Debug
 			$user,
 			$message,
 			print_r($_GET, true),
-			print_r($_POST, true),
-			print_r($_COOKIE, true));
+		    print_r($_POST, true),
+		    print_r($_REQUEST, true),
+		    print_r($_COOKIE, true));
 		$args = array_map('htmlspecialchars', $args);
 		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_GET: %s\n\n_POST: %s\n\n_COOKIE: %s\n\n";
 		return vsprintf($pattern, $args);

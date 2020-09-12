@@ -16,6 +16,7 @@ use GDO\User\GDT_Realname;
 use GDO\Mail\GDT_Email;
 use GDO\DB\GDT_String;
 use GDO\Core\GDT_Template;
+use GDO\Core\Logger;
 /**
  * Configuration helper during install wizard.
  * Holds a set of method names for the steps
@@ -52,6 +53,11 @@ class Config
 	#############################
 	private static function detectServerSoftware()
 	{
+	    if (!isset($_SERVER['SERVER_SOFTWARE']))
+	    {
+	        return 'none';
+	    }
+	    
 		$software = $_SERVER['SERVER_SOFTWARE'];
 		if (stripos($software, 'Apache') !== false)
 		{
@@ -85,14 +91,14 @@ class Config
 		if (!defined('GWF_IPC')) define('GWF_IPC', 0);
 		if (!defined('GWF_IPC_DEBUG')) define('GWF_IPC_DEBUG', 0);
 		# HTTP
-		if (!defined('GWF_DOMAIN')) define('GWF_DOMAIN', $_SERVER['HTTP_HOST']);
+		if (!defined('GWF_DOMAIN')) define('GWF_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
 		if (!defined('GWF_SERVER')) define('GWF_SERVER', self::detectServerSoftware());
 		if (!defined('GWF_PROTOCOL')) define('GWF_PROTOCOL', isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS']) === 'on');
 		if (!defined('GWF_WEB_ROOT')) define('GWF_WEB_ROOT', Strings::substrTo($_SERVER['SCRIPT_NAME'], 'install/wizard.php'));
 		# Files
 		if (!defined('GWF_CHMOD')) define('GWF_CHMOD', 0770);
 		# Logging
-		if (!defined('GWF_ERROR_LEVEL')) define('GWF_ERROR_LEVEL', 0x7FFFFFFF);
+		if (!defined('GWF_ERROR_LEVEL')) define('GWF_ERROR_LEVEL', Logger::_DEFAULT);
 		if (!defined('GWF_ERROR_STACKTRACE')) define('GWF_ERROR_STACKTRACE', true);
 		if (!defined('GWF_ERROR_DIE')) define('GWF_ERROR_DIE', true);
 		if (!defined('GWF_ERROR_MAIL')) define('GWF_ERROR_MAIL', false);

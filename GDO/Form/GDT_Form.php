@@ -28,7 +28,7 @@ class GDT_Form extends GDT
 	
 	public function __construct()
 	{
-		$this->action = $_SERVER['REQUEST_URI'];
+		$this->action = @$_SERVER['REQUEST_URI'];
 	}
 	
 	public $info;

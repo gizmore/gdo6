@@ -70,7 +70,7 @@ final class Arrays
 			case 1: return $array[0];
 			default:
 				$last = array_pop($array);
-				return implode(', ', $array) . t('and') . $last;
+				return implode(', ', $array) . ' ' . t('and') . ' ' . $last;
 		}
 	}
 	

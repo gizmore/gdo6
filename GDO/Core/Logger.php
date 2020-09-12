@@ -213,7 +213,11 @@ final class Logger
 		# log it?
 		if (true === self::isEnabled($logmode))
 		{
-			$time = date('H:i');
+		    if (PHP_SAPI === 'cli')
+		    {
+		        echo "$message\n";
+		    }
+		    $time = date('H:i');
 			$ip = (false === isset($_SERVER['REMOTE_ADDR']) || self::isDisabled(self::IP))
 				? '' : $_SERVER['REMOTE_ADDR'];
 			$username = self::$username === false ? '' : ':'.self::$username;

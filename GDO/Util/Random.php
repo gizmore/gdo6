@@ -10,6 +10,7 @@ final class Random
 	const TOKEN_LEN = 16;
 	const RAND_MAX = 4294967295; # 2147483647
 	
+	const NUMERIC = '0123456789';
 	const ALPHAUP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	const ALPHALOW = 'abcdefghijklmnopqrstuvwxyz';
 	const HEXLOWER = 'abcdef0123456789';
