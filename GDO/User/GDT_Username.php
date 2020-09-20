@@ -13,12 +13,12 @@ class GDT_Username extends GDT_String
 	const LENGTH = 32;
 	
 	public $min = 2;
-	public $max = 32;
+	public $max = 64;
 	
 	public $icon = 'face';
 	
 	# Allow - _ LETTERS DIGITS
-	public $pattern = "/^[-_\\p{L}0-9]{2,32}$/iuD";
+	public $pattern = "/^[\\p{L}0-9][-_\\p{L}0-9]{1,31}$/iuD";
 
 	public function defaultLabel() { return $this->label('username'); }
 	

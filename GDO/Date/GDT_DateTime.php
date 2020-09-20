@@ -9,7 +9,7 @@ class GDT_DateTime extends GDT_Timestamp
 	
 	public function gdoColumnDefine()
 	{
-		return "{$this->identifier()} DATETIME {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
+		return "{$this->identifier()} DATETIME(3) {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 
 	public function renderForm()
