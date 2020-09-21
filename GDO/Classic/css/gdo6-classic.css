@@ -5,6 +5,9 @@ div.gdo-body { padding-top: 64px; }
 /** Bar **/
 .gdo-bar a { padding: 4px 0px; }
 .gdo-bar { border: 1px solid #666; }
+.gdt-bar { display: flex; }
+.gdt-bar-row { flex-direction: row; }
+.gdt-bar-column { flex-direction: column; }
 
 /** Buttons **/
 .gdo-icon-button:HOVER { text-decoration: none; }

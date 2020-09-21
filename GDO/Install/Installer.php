@@ -10,6 +10,7 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\User\GDO_Permission;
 use GDO\Util\Strings;
+use GDO\Core\ModuleLoader;
 /**
  * Install helper.
  * @author gizmore
@@ -179,5 +180,5 @@ class Installer
 			GDO_Permission::create($permission);
 		}
 	}
-	
+
 }

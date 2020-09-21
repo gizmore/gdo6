@@ -3,7 +3,7 @@ namespace GDO\Language;
 
 use GDO\DB\GDT_ObjectSelect;
 
-class GDT_Language extends GDT_ObjectSelect
+final class GDT_Language extends GDT_ObjectSelect
 {
 	public function defaultLabel() { return $this->label('language'); }
 	

@@ -18,7 +18,7 @@ use GDO\Core\GDOException;
  * @version 6.07
  * @since 5.00
  */
-class Query
+final class Query
 {
 	# Type constants
 	const SELECT = "SELECT";
@@ -140,7 +140,7 @@ class Query
 	/**
 	 * @param string $condition
 	 * @param string $op
-	 * @return Query
+	 * @return \GDO\DB\Query
 	 */
 	public function where($condition, $op="AND")
 	{

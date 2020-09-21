@@ -12,7 +12,6 @@ use GDO\User\GDO_UserPermission;
 use GDO\Util\BCrypt;
 use GDO\User\GDO_Permission;
 use GDO\Core\ModuleLoader;
-use GDO\Form\GDT_AntiCSRF;
 use GDO\User\GDO_Session;
 
 class InstallAdmins extends MethodForm
@@ -49,10 +48,10 @@ class InstallAdmins extends MethodForm
 			'user_type' => GDO_User::MEMBER,
 		))->insert();
 		
-		$permissions = ['admin', 'staff', 'cronjob'];
-		foreach ($permissions as $permission)
+		$permissions = ['admin' => 1000, 'staff' => 500, 'cronjob' => null];
+		foreach ($permissions as $permission => $level)
 		{
-			GDO_UserPermission::grantPermission($user, GDO_Permission::getOrCreateByName($permission));
+			GDO_UserPermission::grantPermission($user, GDO_Permission::create($permission, $level));
 		}
 		
 		return parent::formValidated($form)->add($this->renderPage());

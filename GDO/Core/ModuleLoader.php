@@ -70,11 +70,11 @@ final class ModuleLoader
 		});
 	}
 	
-/**
+    /**
 	 * @param string $moduleName
 	 * @return GDO_Module
 	 */
-	public function getModule($moduleName=null)
+	public function getModule($moduleName)
 	{
 		return @$this->modules[$moduleName];
 	}

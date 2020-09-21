@@ -14,6 +14,15 @@ class Application
 	const HTML = 'html';
 	const JSON = 'json';
 	
+	public static $TIME;
+	public static $MICROTIME;
+	
+	public static function updateTime()
+	{
+	    self::$MICROTIME = microtime(true);
+	    self::$TIME = (int) self::$MICROTIME;
+	}
+	
 	/**
 	 * @return self
 	 */
@@ -29,6 +38,7 @@ class Application
 		self::$instance = $this;
 		$this->loader = new ModuleLoader(GDO_PATH . 'GDO/');
 	}
+	
 	public function __destruct()
 	{
 		Logger::flush();
@@ -64,3 +74,5 @@ class Application
 	public function getThemes() { return is_array($this->themes) ? $this->themes : explode(',', $this->themes); }
 	public function setThemes(array $themes) { $this->themes = $themes; return $this; }
 }
+
+Application::updateTime();

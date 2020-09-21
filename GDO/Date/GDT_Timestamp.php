@@ -7,6 +7,7 @@ use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
 use GDO\DB\WithDatabase;
 use GDO\Table\WithOrder;
+use GDO\Core\Application;
 
 /**
  * The GDT_Timestamp field is the baseclass for all datefields.
@@ -46,7 +47,7 @@ class GDT_Timestamp extends GDT
 	
 	public function initialSnap($mod)
 	{
-		$time = time();
+		$time = Application::$TIME;
 		$time = $time - ($time % $mod) + $mod;
 		return $this->initialValue($time);
 	}
@@ -83,8 +84,8 @@ class GDT_Timestamp extends GDT
 	 * @param int $duration
 	 * @return \GDO\Date\GDT_Timestamp
 	 */
-	public function minAge($duration) { return $this->minTimestamp(time() - $duration); }
-	public function maxAge($duration) { return $this->maxTimestamp(time() + $duration); }
+	public function minAge($duration) { return $this->minTimestamp(Application::$TIME - $duration); }
+	public function maxAge($duration) { return $this->maxTimestamp(Application::$TIME + $duration); }
 	
 	public $minDate;
 	public function minTimestamp($minTimestamp)

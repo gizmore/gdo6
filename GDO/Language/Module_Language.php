@@ -21,7 +21,7 @@ use GDO\Core\Website;
  * @since 2.0
  * @version 6.09
  */
-class Module_Language extends GDO_Module
+final class Module_Language extends GDO_Module
 {
 	public $module_priority = 2;
 	

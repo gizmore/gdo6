@@ -242,7 +242,7 @@ final class Mail
 		$to = $this->getUTF8Receiver();
 		$from = $this->getUTF8Sender();
 		$subject = $this->getUTF8Subject();
-		$random_hash = md5(microtime(true));
+		$random_hash = sha1(microtime(true));
 		$bound_mix = "GWF4-MIX-{$random_hash}";
 		$bound_alt = "GWF4-ALT-{$random_hash}";
 		$headers = 

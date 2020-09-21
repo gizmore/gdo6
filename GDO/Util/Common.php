@@ -44,15 +44,18 @@ final class Common
 	 */
 	public static function regex($pattern, $s)
 	{
-	    $matches = [];
-		return preg_match($pattern, $s, $matches) ? $matches[1] : false;
+	    $matches = null;
+		return preg_match($pattern, $s, $matches) ? $matches[1] : null;
 	}
 	
 	/**
-	 * Clamp a numeric value. null as min or max disables a check. $val should be an int or float. No conversion is done when something is in range.
-	 * @param $val mixed string or int or float or double
-	 * @param $min bool or numeric as above
-	 * @param $max bool or numeric as above
+	 * Clamp a numeric value.
+	 * null as min or max disables a check.
+	 * $val should be an int or float.
+	 * No conversion is done when something is in range.
+	 * @param $val number
+	 * @param $min number
+	 * @param $max number
 	 * @return int|float
 	 */
 	public static function clamp($val, $min=null, $max=null)
@@ -61,10 +64,13 @@ final class Common
 	    {
 	        return $min;
 	    }
-	    if ($max !== null && $val > $max)
+	    elseif ($max !== null && $val > $max)
 	    {
 	        return $max;
 	    }
-	    return $val;
+	    else
+	    {
+	        return $val;
+	    }
 	}
 }

@@ -226,7 +226,7 @@ class GDO_Session extends GDO
 	{
 		if (!Application::instance()->isCLI())
 		{
-			setcookie(self::$COOKIE_NAME, $this->cookieContent(), time() + self::$COOKIE_SECONDS, '/', self::$COOKIE_DOMAIN, self::cookieSecure(), !self::$COOKIE_JS);
+		    setcookie(self::$COOKIE_NAME, $this->cookieContent(), Application::$TIME + self::$COOKIE_SECONDS, '/', self::$COOKIE_DOMAIN, self::cookieSecure(), !self::$COOKIE_JS);
 		}
 	}
 	
@@ -244,7 +244,7 @@ class GDO_Session extends GDO
 	{
 		if (!Application::instance()->isCLI())
 		{
-			setcookie(self::$COOKIE_NAME, self::DUMMY_COOKIE_CONTENT, time()+300, '/', self::$COOKIE_DOMAIN, self::cookieSecure(), !self::$COOKIE_JS);
+		    setcookie(self::$COOKIE_NAME, self::DUMMY_COOKIE_CONTENT, Application::$TIME+300, '/', self::$COOKIE_DOMAIN, self::cookieSecure(), !self::$COOKIE_JS);
 		}
 	}
 	

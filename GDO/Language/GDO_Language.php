@@ -10,7 +10,7 @@ use GDO\DB\Cache;
  * @version 6.05
  * @since 3.00
  */
-class GDO_Language extends GDO
+final class GDO_Language extends GDO
 {
 	public static function iso() { return Trans::$ISO; }
 	

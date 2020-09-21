@@ -5,6 +5,7 @@ use GDO\User\GDO_Session;
 use GDO\User\GDO_User;
 use GDO\Date\Time;
 use GDO\DB\Database;
+use GDO\Core\Application;
 use GDO\Core\GDT_Hook;
 
 final class GuestCleanup extends MethodCronjob
@@ -13,7 +14,7 @@ final class GuestCleanup extends MethodCronjob
 	{
 		$db = Database::instance();
 		
-		$cut = Time::getDate(time() - GWF_SESS_TIME);
+		$cut = Time::getDate(Application::$TIME - GWF_SESS_TIME);
 		
 		GDO_Session::table()->deleteWhere("sess_time<'$cut' OR sess_time IS NULL")->exec();
 		$sessions = $db->affectedRows();

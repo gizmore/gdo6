@@ -193,7 +193,7 @@ trait WithObject
 	public function primary($primary=true)
 	{
 		$this->primary = $primary;
-		return $this->cascade()->notNull();
+		return $this->notNull();
 	}
 	
 	########################

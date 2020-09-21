@@ -10,7 +10,7 @@ use GDO\Core\ModuleLoader;
  * GDO autoloader and public functions.
  * @author gizmore
  * @since 6.00
- * @version 6.05
+ * @version 6.10
  */
 define('GWF_PERF_START', microtime(true));
 

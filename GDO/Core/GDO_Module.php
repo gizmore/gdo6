@@ -37,7 +37,15 @@ class GDO_Module extends GDO
 	public function isSiteModule() { return false; }
 	public function isInstallable() { return true; }
 	public function gdoDependencies() { return ['Core', 'Language', 'Table', 'User', 'Country']; }
+	
+	/**
+	 * @return string[]
+	 */
 	public function getDependencies() { return []; }
+	
+	/**
+	 * @return string[]
+	 */
 	public function dependencies() { return array_unique(array_merge($this->gdoDependencies(), $this->getDependencies())); }
 	
 	/**

@@ -42,7 +42,7 @@ final class GDO_UserPermission extends GDO
 		{
 			return [];
 		}
-		return self::table()->select('perm_name, 1')->join("JOIN gdo_permission on perm_perm_id = perm_id")->where("perm_user_id={$user->getID()}")->exec()->fetchAllArray2dPair();
+		return self::table()->select('perm_name, perm_level')->join("JOIN gdo_permission on perm_perm_id = perm_id")->where("perm_user_id={$user->getID()}")->order('perm_level')->exec()->fetchAllArray2dPair();
 	}
 	
 	public static function grantPermission(GDO_User $user, GDO_Permission $permission)
@@ -57,7 +57,7 @@ final class GDO_UserPermission extends GDO
 	
 	public static function revokePermission(GDO_User $user, GDO_Permission $permission)
 	{
-		return self::table()->deleteWhere("perm_user_id={$user->getID()} AND perm_perm_id={$permission->getID()}")->exec();
+		self::table()->deleteWhere("perm_user_id={$user->getID()} AND perm_perm_id={$permission->getID()}")->exec();
 	}
 	
 	public static function revoke(GDO_User $user, $permission)

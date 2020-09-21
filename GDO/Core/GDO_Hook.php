@@ -18,13 +18,13 @@ final class GDO_Hook extends GDO
 	public function gdoColumns()
 	{
 		return array(
-			GDT_String::make('hook_message')->notNull()->max(768),
+			GDT_String::make('hook_message')->notNull()->max(1024),
 		);
 	}
 	
 	public static function encodeHookMessage($event, array $args)
 	{
-		return json_encode(array('event'=>$event, 'args' => $args));
+		return json_encode(['event'=>$event, 'args' => $args]);
 	}
 
 }

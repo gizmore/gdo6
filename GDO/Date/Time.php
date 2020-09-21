@@ -2,8 +2,8 @@
 namespace GDO\Date;
 
 use GDO\Language\Trans;
-use GDO\Util\Common;
 use DateTime;
+use GDO\Core\Application;
 /**
  * Time helper class.
  * Using mysql date format now, instead of yyyymmddhhiissmmm
@@ -36,7 +36,7 @@ final class Time
 	 */
 	public static function getDate($time=null)
 	{
-		return date('Y-m-d H:i:s', $time === null ? time() : $time);
+		return date('Y-m-d H:i:s.v', $time === null ? Application::$MICROTIME : $time);
 	}
 	
 	public static function getDateWithoutTime($time=null)
@@ -47,7 +47,7 @@ final class Time
 	
 	public static function getTimestamp($date=null)
 	{
-		return $date === null ? time() : strtotime($date);
+	    return $date === null ? Application::$MICROTIME : strtotime($date);
 	}
 	
 	###############
@@ -103,7 +103,7 @@ final class Time
 	
 	public static function getAgo($date)
 	{
-		return time() - self::getTimestamp($date);
+		return Application::$TIME - self::getTimestamp($date);
 	}
 	
 	public static function displayAge($date)
@@ -113,7 +113,7 @@ final class Time
 	
 	public static function displayAgeTS($timestamp)
 	{
-		return self::humanDuration(time() - $timestamp);
+	    return self::humanDuration(Application::$TIME - $timestamp);
 	}
 	
 	public static function displayAgeISO($date, $iso)
@@ -123,7 +123,7 @@ final class Time
 	
 	public static function displayAgeTSISO($timestamp, $iso)
 	{
-		return self::humanDurationISO($iso, time()-$timestamp);
+	    return self::humanDurationISO($iso, Application::$TIME - $timestamp);
 	}
 	
 	################
@@ -187,7 +187,7 @@ final class Time
 		
 		$calced = array_reverse($calced, true);
 		$i = 0;
-		foreach ($calced as $key => $value)
+		foreach (array_keys($calced) as $key)
 		{
 			$i++;
 			if ($i > $nUnits) {
@@ -289,7 +289,7 @@ final class Time
 	 * */
 	public static function getTimeWeekStart()
 	{
-		return strtotime('previous monday', time()+self::ONE_DAY);
+	    return strtotime('previous monday', Application::$TIME + self::ONE_DAY);
 	}
 	
 	// 	/**

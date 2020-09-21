@@ -45,7 +45,7 @@ final class GDO_User extends GDO
 			GDT_Username::make('user_guest_name')->unique()->label('guestname'),
 			GDT_Realname::make('user_real_name'),
 			GDT_Email::make('user_email'),
-			GDT_UInt::make('user_level')->notNull()->initial('0')->label('level'),
+// 			GDT_UInt::make('user_level')->notNull()->initial('0')->label('level'),
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits'),
 			GDT_EmailFormat::make('user_email_fmt')->notNull()->initial(GDT_EmailFormat::HTML),
 			GDT_Gender::make('user_gender'),
@@ -76,7 +76,7 @@ final class GDO_User extends GDO
 	public function isGuest() { return $this->getType() === self::GUEST; }
 	public function isMember() { return $this->getType() === self::MEMBER; }
 	
-	public function getLevel() { return $this->getVar('user_level'); }
+// 	public function getLevel() { return $this->getVar('user_level'); }
 	public function getCredits() { return $this->getVar('user_credits'); }
 	public function isAuthenticated() { return !$this->isGhost(); }
 	
@@ -171,6 +171,19 @@ final class GDO_User extends GDO
 	public function isStaff() { return $this->hasPermission('staff'); }
 	public function changedPermissions() { $this->tempUnset('gdo_permission'); return $this->recache(); }
 	
+	public function getLevel()
+	{
+	    $max = 0;
+	    foreach ($this->loadPermissions() as $level)
+	    {
+	        if ($level > $max)
+	        {
+	            $max = $level;
+	        }
+	    }
+	    return $max;
+	}
+	
 	##############
 	### Static ###
 	##############
@@ -262,7 +275,7 @@ final class GDO_User extends GDO
 			'user_email' => $this->getMail(),
 			'user_gender' => $this->getGender(),
 			'user_type' => $this->getType(),
-			'user_level' => (int)$this->getLevel(),
+// 			'user_level' => (int)$this->getLevel(),
 			'user_credits' => (int)$this->getCredits(),
 			'user_email_fmt' => $this->getMailFormat(),
 			'user_language' => $this->getLangISO(),

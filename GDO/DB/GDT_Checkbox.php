@@ -40,7 +40,7 @@ class GDT_Checkbox extends GDT_Select
 	################
 	public function gdoColumnDefine()
 	{
-		return "{$this->identifier()} TINYINT UNSIGNED {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
+		return "{$this->identifier()} TINYINT(1) UNSIGNED {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 	
 	####################

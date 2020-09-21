@@ -66,12 +66,4 @@ final class Strings
 		return $default;
 	}
 
-	#############
-	### Chunk ###
-	#############
-	public static function chunkSplit($s, $length)
-	{
-	    return array_chunk(preg_split("//u", $s, -1, PREG_SPLIT_NO_EMPTY), $length);
-	}
-
 }

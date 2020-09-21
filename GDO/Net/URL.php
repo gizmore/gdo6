@@ -3,6 +3,10 @@ namespace GDO\Net;
 
 use GDO\Util\Common;
 
+/**
+ * This class holds url parts and the raw url.
+ * @author gizmore
+ */
 final class URL
 {
 	public $raw;
@@ -12,6 +16,11 @@ final class URL
 	{
 		$this->raw = $url;
 		$this->parts = parse_url($url);
+	}
+	
+	public function getScheme()
+	{
+	    return $this->parts['scheme'];
 	}
 	
 	public function getHost()

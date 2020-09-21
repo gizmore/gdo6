@@ -34,7 +34,7 @@ final class GDT_AutoInc extends GDT_UInt
 	{
 		if ($id = Database::$INSTANCE->insertId())
 		{
-			$this->gdo->setVar($this->name, (string)$id, false);
+			$this->gdo->setVar($this->name, $id, false);
 		}
 	}
 }

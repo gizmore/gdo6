@@ -27,7 +27,7 @@ final class AddUser extends MethodForm
 		$form->title(t('mdescr_user_adduser'));
 		$form->addField($users->gdoColumn('user_name'));
 		$form->addField($users->gdoColumn('user_email'));
-		$form->addField($users->gdoColumn('user_level'));
+// 		$form->addField($users->gdoColumn('user_level'));
 		$form->addField(GDT_Permission::make('permissions')->multiple());
 		$form->addField(GDT_Submit::make());
 		$form->addField(GDT_AntiCSRF::make());
