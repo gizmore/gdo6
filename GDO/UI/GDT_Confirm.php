@@ -10,15 +10,15 @@ use GDO\DB\GDT_String;
  */
 final class GDT_Confirm extends GDT_String
 {
-	public $confirmation;
+	public $confirmation = 'iconfirm';
 	public function confirmation($confirmation)
 	{
 		$this->confirmation = $confirmation;
-		return $this->label('please_confirm_with', [$confirmation]);
+		return $this->label('please_confirm_with', [t($confirmation)]);
 	} 
 	
 	public function validate($value)
 	{
-		return $this->confirmation === $value ? true : $this->error('err_confirm', [$this->confirmation]);
+		return $this->confirmation === $value ? true : $this->error('err_confirm', [t($this->confirmation)]);
 	}
 }

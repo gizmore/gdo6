@@ -32,7 +32,10 @@ final class GDO_Permission extends GDO
 		elseif ($perm->getLevel() != $level)
 		{
 		    # Fix level because install method makes sure the permission exists.
-		    $perm->saveVar('perm_level', $level);
+		    if ($perm->getLevel() === null)
+		    {
+    		    $perm->saveVar('perm_level', $level);
+		    }
 		}
 		
 		return $perm;

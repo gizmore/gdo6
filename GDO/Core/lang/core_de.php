@@ -82,7 +82,8 @@ return array(
 
 # Generic Confirms
 'confirm_delete' => 'Möchten Sie das wirklich löschen?',
-	
+'iconfirm' => 'Ich bin sicher',
+    
 # Generic Errors
 'err_db' => "Datenbank Fehler(%s): %s<br/>\n%s<br/>\n",
 'err_user' => 'Dieser Benutzer ist unbekannt.',
@@ -130,7 +131,7 @@ return array(
 'err_cannot_stream_output_started' => 'Die Datei kann nicht heruntergeladen werden. Es wurde bereits anderer Inhalt vom Webserver gesendet.',
 'err_unknown_file' => 'Datei nicht gefunden.',
 'err_no_permission' => 'Dafür fehlt Ihnen die Berechtigung.',
-	
+    
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',
 'perm_admin' => 'Administrator',

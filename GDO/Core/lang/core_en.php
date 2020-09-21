@@ -82,6 +82,7 @@ return array(
 
 # Generic Confirms	
 'confirm_delete' => 'Do you really want to delete this?',
+'iconfirm' => 'I am sure',
 	
 # Generic Errors
 'err_db' => "Database Error(%s): %s<br/>\n%s<br/>\n",

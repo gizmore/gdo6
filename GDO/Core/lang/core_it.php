@@ -82,7 +82,8 @@ return array(
 
 # Generic Confirms
 'confirm_delete' => 'Volete cancellare davvero?',
-	
+'iconfirm' => 'sono sicuro',
+    
 # Generic Errors
 'err_db' => 'Errore di bancadati(%s): %s<br/>\n%s<br/>\n',
 'err_user' => 'Questo utente é sconosciuto.',
@@ -130,7 +131,7 @@ return array(
 'err_cannot_stream_output_started' => 'Il file non può essere scaricato. Altri contenuti sono già stati inviati dal server web.',
 'err_unknown_file' => 'File non trovato.',
 'err_no_permission' => 'Non sei autorizzato a farlo.',
-	
+    
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',
 'perm_admin' => 'Administratore',
