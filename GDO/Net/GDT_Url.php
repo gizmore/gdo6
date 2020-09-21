@@ -1,17 +1,21 @@
 <?php
 namespace GDO\Net;
 use GDO\DB\GDT_String;
+use GDO\Util\Arrays;
 /**
- * HTTP Url field.
+ * URL field.
  * Features link checking.
  * Value is a @see URL.
  * 
  * @author gizmore
  * @since 5.0
- * @version 6.09
+ * @version 6.10
  */
 class GDT_Url extends GDT_String
 {
+    ##############
+    ### Static ###
+    ##############
 	public static function host() { return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : GWF_DOMAIN; }
 	public static function protocol() { return isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] !== 'off') ? 'https' : 'http'; }
 	public static function absolute($url) { return sprintf('%s://%s%s%s', self::protocol(), self::host(), GWF_WEB_ROOT, self::relative($url)); }
@@ -22,6 +26,7 @@ class GDT_Url extends GDT_String
 	public $reachable = false;
 	public $allowLocal = false;
 	public $allowExternal = true;
+	public $schemes = ['http', 'https'];
 	
 	public $min = 0;
 	public $max = 1024;
@@ -42,6 +47,9 @@ class GDT_Url extends GDT_String
 	    return $value ? $value->raw : null;
 	}
 	
+	###############
+	### Options ###
+	###############
 	public function allowLocal($allowLocal=true)
 	{
 		$this->allowLocal = $allowLocal;
@@ -59,6 +67,12 @@ class GDT_Url extends GDT_String
 		$this->reachable = $reachable;
 		return $this;
 	}
+	
+	public function schemes(...$schemes)
+	{
+	    $this->schemes = $schemes;
+	    return $this;
+	}
 
 	################
 	### Validate ###
@@ -72,10 +86,10 @@ class GDT_Url extends GDT_String
 		return $this->validateUrl($value);
 	}
 	
-	public function validateUrl($value)
+	public function validateUrl(URL $url=null)
 	{
 		# null seems allowed
-		if ((!$value) || (null === ($value = $value->raw)))
+	    if ((!$url) || (null === ($value = $url->raw)))
 		{
 			return true;
 		}
@@ -99,6 +113,15 @@ class GDT_Url extends GDT_String
 				return true;
 			}
 			return $this->error('err_url_not_reachable', [html($value)]);
+		}
+		
+		# Check schemes
+		if (count($this->schemes))
+		{
+    		if (!in_array($url->getScheme(), $this->schemes, true))
+    		{
+    		    return $this->error('err_url_scheme', [Arrays::implodeHuman($this->schemes)]);
+    		}
 		}
 		
 		return true;

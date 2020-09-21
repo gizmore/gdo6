@@ -97,11 +97,10 @@ final class Debug
 	 * @param string $errstr			
 	 * @param string $errfile			
 	 * @param int $errline			
-	 * @param
-	 *			$errcontext
+	 * @param mixed $errcontext
 	 * @return false
 	 */
-	public static function error_handler($errno, $errstr, $errfile, $errline, $errcontext)
+	public static function error_handler($errno, $errstr, $errfile, $errline, $errcontext=null)
 	{
 		if (!error_reporting())
 		{

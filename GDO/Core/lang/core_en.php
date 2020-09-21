@@ -131,6 +131,7 @@ return array(
 'err_cannot_stream_output_started' => 'The file cannot be downloaded. Other content has already been sent from the web server.',
 'err_unknown_file' => 'File not found.',
 'err_no_permission' => 'You do not have the required permission.',
+'err_url_scheme' => 'This URL scheme is not supported. Supported are %s.',
 	
 # Permissions
 'sel_no_permissions' => 'No permission required',

@@ -26,7 +26,7 @@ final class Trans
 		$iso = $iso . '_' . strtoupper($iso) . '.utf-8';
 		if (!setlocale(LC_TIME, $iso))
 		{
-			setlocale(LC_TIME, $iso);
+			setlocale(LC_TIME, $iso); # Bug... sometimes it needs two calls?!
 		}
 	}
 	

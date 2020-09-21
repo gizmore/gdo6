@@ -131,6 +131,7 @@ return array(
 'err_cannot_stream_output_started' => 'Die Datei kann nicht heruntergeladen werden. Es wurde bereits anderer Inhalt vom Webserver gesendet.',
 'err_unknown_file' => 'Datei nicht gefunden.',
 'err_no_permission' => 'Dafür fehlt Ihnen die Berechtigung.',
+'err_url_scheme' => 'Dieses URL-Schema wird nicht unterstützt. Erlaubte Schemas: %s.',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',

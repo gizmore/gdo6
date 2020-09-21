@@ -131,6 +131,7 @@ return array(
 'err_cannot_stream_output_started' => 'Il file non può essere scaricato. Altri contenuti sono già stati inviati dal server web.',
 'err_unknown_file' => 'File non trovato.',
 'err_no_permission' => 'Non sei autorizzato a farlo.',
+'err_url_scheme' => 'Questo schema URL non è supportato. Sono supportati %s.',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',
