@@ -39,20 +39,20 @@ trait WithDatabase
 	public function blankData() { return [$this->name => $this->initial]; }
 	public function getGDOData() { return [$this->name => $this->getVar()]; }
 	
-	/**
-	 * Called when you initialize a @link GDT_Form with a @link GDO.
-	 * @see GDO
-	 * @see GDT
-	 * @see GDT_Form
-	 * @param GDO $gdo
-	 */
-	public function setGDOData(GDO $gdo=null)
-	{
-		if ($gdo && $gdo->hasVar($this->name))
-		{
-			$this->var = $gdo->getVar($this->name);
-		}
-		return $this;
-	}
+// 	/**
+// 	 * Called when you initialize a @link GDT_Form with a @link GDO.
+// 	 * @see GDO
+// 	 * @see GDT
+// 	 * @see GDT_Form
+// 	 * @param GDO $gdo
+// 	 */
+// 	public function setGDOData(GDO $gdo=null)
+// 	{
+// 		if ($gdo && $gdo->hasVar($this->name))
+// 		{
+// 			$this->var = $gdo->getVar($this->name);
+// 		}
+// 		return $this;
+// 	}
 	
 }

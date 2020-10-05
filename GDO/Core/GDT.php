@@ -141,11 +141,12 @@ abstract class GDT
 	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
 	public function setGDOData(GDO $gdo=null)
 	{
-		if ($gdo && $gdo->hasVar($this->name))
-		{
-			$this->var = $gdo->getVar($this->name);
-		}
-		return $this;
+	    return $gdo ? $this->val($gdo->getVar($this->name)) : $this;
+// 		if ($gdo && $gdo->hasVar($this->name))
+// 		{
+// 			$this->var = $gdo->getVar($this->name);
+// 		}
+// 		return $this;
 	}
 	
 	/**

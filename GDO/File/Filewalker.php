@@ -19,12 +19,6 @@ final class Filewalker
 			return;
 		}
 		
-		if ($pattern)
-		{
-			$_pattern = str_replace(['.', '*', '/'], ['\\.', '.*', '\\/'], $pattern);
-			$_pattern = "/{$_pattern}/";
-		}
-		
 		$path = rtrim($path, '/\\');
 		
 		# Readable?
@@ -53,21 +47,20 @@ final class Filewalker
 				continue;
 			}
 			
-			if ($pattern)
-			{
-				if (!preg_match($_pattern, $entry))
-				{
-					continue;
-				}
-			}
-			
 			if (is_dir($fullpath))
 			{
 				$dirstack[] = array($entry, $fullpath);
 			}
 			elseif (is_file($fullpath))
 			{
-				$filestack[] = array($entry, $fullpath);
+			    if ($pattern)
+			    {
+			        if (!preg_match($pattern, $entry))
+			        {
+			            continue;
+			        }
+			    }
+			    $filestack[] = array($entry, $fullpath);
 			}
 		}
 		$dir->close();

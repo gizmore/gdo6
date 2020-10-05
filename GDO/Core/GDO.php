@@ -131,7 +131,7 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-		return @array_key_exists($key, $this->gdoVars);
+		return isset($this->gdoVars[$key]);
 	}
 	
 	/**

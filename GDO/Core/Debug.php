@@ -90,6 +90,11 @@ final class Debug
 		}
 	}
 	
+	public static function error(\Error $e)
+	{
+	    self::error_handler($e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine());
+	}
+	
 	/**
 	 * Error handler creates some html backtrace and can die on _every_ warning etc.
 	 * 
