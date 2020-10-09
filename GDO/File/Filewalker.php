@@ -3,6 +3,8 @@ namespace GDO\File;
 /**
  * Directory traversing utility.
  * @author gizmore
+ * @version 6.10
+ * @since 5.00
  */
 final class Filewalker
 {
