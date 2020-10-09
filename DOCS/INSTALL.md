@@ -68,6 +68,7 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-activation-alert ActivationAlert
     git clone --recursive https://github.com/gizmore/gdo6-address Address
     git clone --recursive https://github.com/gizmore/gdo6-admin Admin
+    ## git clone --recursive https://github.com/gizmore/gdo6-amphp AmPHP
     # git clone --recursive https://github.com/gizmore/gdo6-angular Angular
     git clone --recursive https://github.com/gizmore/gdo6-audio Audio
     git clone --recursive https://github.com/gizmore/gdo6-avatar Avatar
@@ -84,10 +85,17 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-country-coordinates CountryCoordinates
     git clone --recursive https://github.com/gizmore/gdo6-currency Currency
     ## git clone --recursive https://github.com/gizmore/gdo6-dog Dog
+    ## git clone --recursive https://github.com/gizmore/gdo6-dog-auth DogAuth
+    ## git clone --recursive https://github.com/gizmore/gdo6-dog-irc DogIRC
+    ## git clone --recursive https://github.com/gizmore/gdo6-dog-irc-autologin DogIRCAutologin
+    ## git clone --recursive https://github.com/gizmore/gdo6-dog-irc-spider DogIRCSpider
+    ## git clone --recursive https://github.com/gizmore/gdo6-dog-shadowdogs DogShadowdogs
+    ## git clone --recursive https://github.com/gizmore/gdo6-dog-tick DogTick
     git clone --recursive https://github.com/gizmore/gdo6-download Download
     git clone --recursive https://github.com/gizmore/gdo6-dsgvo DSGVO
     git clone --recursive https://github.com/gizmore/gdo6-facebook Facebook
     git clone --recursive https://github.com/gizmore/gdo6-favicon Favicon
+    # git clone --recursive https://github.com/gizmore/gdo6-follower Follower
     git clone --recursive https://github.com/gizmore/gdo6-font-awesome FontAwesome
     git clone --recursive https://github.com/gizmore/gdo6-forum Forum
     git clone --recursive https://github.com/gizmore/gdo6-friends Friends
@@ -99,7 +107,6 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-instagram Instagram
     git clone --recursive https://github.com/gizmore/gdo6-invite Invite
     git clone --recursive https://github.com/gizmore/gdo6-ip2country IP2Country
-    # git clone --recursive https://github.com/gizmore/gdo6-irc IRC
     git clone --recursive https://github.com/gizmore/gdo6-jpgraph JPGraph
     git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
     git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
@@ -122,11 +129,11 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-payment-credits PaymentCredits
     git clone --recursive https://github.com/gizmore/gdo6-payment-paypal PaymentPaypal
     ## git clone --recursive https://github.com/gizmore/gdo6-paypal-donation PaypalDonation
-    git clone --recursive https://github.com/gizmore/gdo6-pm PM
     git clone --recursive https://github.com/gizmore/gdo6-pma PhpMyAdmin
+    git clone --recursive https://github.com/gizmore/gdo6-pm PM
     git clone --recursive https://github.com/gizmore/gdo6-poll Poll
     git clone --recursive https://github.com/gizmore/gdo6-profile Profile
-    git clone --recursive https://github.com/gizmore/gdo6-push Push
+    # git clone --recursive https://github.com/gizmore/gdo6-push Push
     git clone --recursive https://github.com/gizmore/gdo6-qrcode QRCode
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
@@ -141,8 +148,8 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-vote Vote
     git clone --recursive https://github.com/gizmore/gdo6-websocket Websocket
     ## git clone --recursive https://github.com/gizmore/gdo6-wechall WeChall
-    ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
     # git clone --recursive https://github.com/gizmore/gdo6-whois Whois
+    ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
     
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
 
