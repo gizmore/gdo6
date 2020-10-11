@@ -88,6 +88,7 @@ class Database
 				if ($this->link = $this->connect())
 				{
 					$this->query("SET NAMES UTF8");
+					$this->query("SET time_zone = '+00:00'");
 				}
 			}
 			catch (Exception $e)
@@ -212,9 +213,9 @@ class Database
 	 */
 	public static function columnsS($classname)
 	{
-		$gdo = self::tableS($classname);
 		if (!isset(self::$COLUMNS[$classname]))
 		{
+    		$gdo = self::tableS($classname);
 			self::$COLUMNS[$classname] = self::hashedColumns($gdo->gdoColumns());
 		}
 		return self::$COLUMNS[$classname];

@@ -56,7 +56,8 @@ return array(
 'public' => 'Öffentlich',
 'private' => 'Privat',
 'admin' => 'Administration',
-	
+'timezone' => 'Zeitzone',
+    
 # Generic Buttons
 'btn_back' => 'Zurück',
 'btn_set' => 'Setzen',
@@ -146,8 +147,8 @@ return array(
 'enum_member' => 'Mitglied',
 
 # Dateformats
-'df_day' => '%d.%m.%Y',
-'df_short' => '%d.%m.%Y %H:%M',
+'df_day' => 'd.m.Y',
+'df_short' => 'd.m.Y H:i',
 'tu_s' => 's',
 'tu_m' => 'm',
 'tu_h' => 'h',

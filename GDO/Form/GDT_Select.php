@@ -137,11 +137,20 @@ class GDT_Select extends GDT_ComboBox
 			return $this->notNull ? $this->errorNotNull() : true;
 		}
 		
-		if (!array_key_exists($this->getVar(), $this->choices))
+		if (in_array($value, $this->choices, true))
 		{
-			return $this->errorInvalidChoice();
+		    return true;
 		}
-		return true;
+		
+		if (!$this->multiple)
+		{
+    		if (array_key_exists($this->toVar($value), $this->choices))
+    		{
+    		    return true;
+    		}
+		}
+ 		
+ 		return $this->errorInvalidChoice();
 	}
 	
 	protected function errorInvalidChoice()

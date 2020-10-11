@@ -1,6 +1,5 @@
 <?php /** @var $field \GDO\DB\GDT_Int **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <?=$field->htmlTooltip()?>
   <?= $field->htmlIcon(); ?>
   <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input

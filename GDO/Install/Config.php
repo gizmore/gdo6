@@ -83,13 +83,14 @@ class Config
 	{
 		# Site
 		if (!defined('GWF_SITENAME')) define('GWF_SITENAME', 'GDO6');
-		if (!defined('GWF_SITECREATED')) define('GWF_SITECREATED', Time::getDate());
+		if (!defined('GWF_SITECREATED')) define('GWF_SITECREATED', Time::getDate(microtime(true)));
 		if (!defined('GWF_LANGUAGE')) define('GWF_LANGUAGE', 'en');
+		if (!defined('GWF_TIMEZONE')) define('GWF_TIMEZONE', ini_get('date.timezone'));
 		if (!defined('GWF_THEMES')) define('GWF_THEMES', '[default]');
 		if (!defined('GWF_MODULE')) define('GWF_MODULE', 'Core');
 		if (!defined('GWF_METHOD')) define('GWF_METHOD', 'Welcome');
-		if (!defined('GWF_IPC')) define('GWF_IPC', 0);
-		if (!defined('GWF_IPC_DEBUG')) define('GWF_IPC_DEBUG', 0);
+		if (!defined('GWF_IPC')) define('GWF_IPC', 'none');
+		if (!defined('GWF_IPC_DEBUG')) define('GWF_IPC_DEBUG', false);
 		# HTTP
 		if (!defined('GWF_DOMAIN')) define('GWF_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
 		if (!defined('GWF_SERVER')) define('GWF_SERVER', self::detectServerSoftware());
@@ -108,13 +109,12 @@ class Config
 		if (!defined('GWF_DB_USER')) define('GWF_DB_USER', '');
 		if (!defined('GWF_DB_PASS')) define('GWF_DB_PASS', '');
 		if (!defined('GWF_DB_NAME')) define('GWF_DB_NAME', '');
-//		 if (!defined('GWF_DB_PREFIX')) define('GWF_DB_PREFIX', 'gdo_');
 		if (!defined('GWF_DB_DEBUG')) define('GWF_DB_DEBUG', false);
 		# Cache
 		if (!defined('GWF_MEMCACHE')) define('GWF_MEMCACHE', true);
 		if (!defined('GWF_MEMCACHE_PREFIX')) define('GWF_MEMCACHE_PREFIX', '1_');
 		if (!defined('GWF_MEMCACHE_HOST')) define('GWF_MEMCACHE_HOST', '127.0.0.1');
-		if (!defined('GWF_MEMCACHE_PORT')) define('GWF_MEMCACHE_PORT', '61220');
+		if (!defined('GWF_MEMCACHE_PORT')) define('GWF_MEMCACHE_PORT', 61220);
 		if (!defined('GWF_MEMCACHE_TTL')) define('GWF_MEMCACHE_TTL', 1800);
 		# Cookies
 		if (!defined('GWF_SESS_NAME')) define('GWF_SESS_NAME', 'GDO6');
@@ -138,59 +138,60 @@ class Config
 
 			# Site
 			GDT_Divider::make()->label('install_config_section_site'),
-			GDT_String::make('sitename')->initial(GWF_SITENAME)->max(16)->label('cfg_sitename'),
+			GDT_String::make('sitename')->initialValue(GWF_SITENAME)->max(16)->label('cfg_sitename'),
 			GDT_Hidden::make('sitecreated')->val(GWF_SITECREATED),
-			GDT_Enum::make('language')->enumValues('en', 'de')->initial(GWF_LANGUAGE)->required(),
-			GDT_Select::make('themes')->multiple()->choices(array_combine($themes, $themes))->required()->initialValue(array('default')),
-			GDT_String::make('module')->required()->initial(GWF_MODULE),
-			GDT_String::make('method')->required()->initial(GWF_METHOD),
-			GDT_Select::make('ipc')->choices(['db' => 'Database', '1' => 'IPC', '0' => 'none'])->initial(GWF_IPC),
-			GDT_Checkbox::make('ipc_debug')->initial(GWF_IPC_DEBUG),
+		    GDT_Enum::make('language')->enumValues('en', 'de')->initialValue(GWF_LANGUAGE)->required(),
+		    GDT_String::make('timezone')->initialValue(GWF_TIMEZONE)->required(),
+		    GDT_Select::make('themes')->multiple()->choices(array_combine($themes, $themes))->required()->initialValue(array('default')),
+			GDT_String::make('module')->required()->initialValue(GWF_MODULE),
+			GDT_String::make('method')->required()->initialValue(GWF_METHOD),
+			GDT_Select::make('ipc')->choices(['db' => 'Database', '1' => 'IPC', '0' => 'none'])->initialValue(GWF_IPC),
+			GDT_Checkbox::make('ipc_debug')->initialValue(GWF_IPC_DEBUG),
 			# HTTP
 			GDT_Divider::make()->label('install_config_section_http'),
-			GDT_String::make('domain')->required()->initial(GWF_DOMAIN),
-			GDT_Enum::make('server')->required()->enumValues('other', 'apache2.2', 'apache2.4', 'nginx')->initial(GWF_SERVER),
-			GDT_Enum::make('protocol')->required()->enumValues('http', 'https')->initial(GWF_PROTOCOL),
-			GDT_String::make('web_root')->required()->initial(GWF_WEB_ROOT),
+			GDT_String::make('domain')->required()->initialValue(GWF_DOMAIN),
+			GDT_Enum::make('server')->required()->enumValues('other', 'apache2.2', 'apache2.4', 'nginx')->initialValue(GWF_SERVER),
+			GDT_Enum::make('protocol')->required()->enumValues('http', 'https')->initialValue(GWF_PROTOCOL),
+			GDT_String::make('web_root')->required()->initialValue(GWF_WEB_ROOT),
 			# Files
 			GDT_Divider::make()->label('install_config_section_files'),
-			GDT_Enum::make('chmod')->enumValues((string)0700, (string)0770, (string)0777)->initial(GWF_CHMOD),
+			GDT_Enum::make('chmod')->enumValues((string)0700, (string)0770, (string)0777)->initialValue(GWF_CHMOD),
 			# Logging
 			GDT_Divider::make()->label('install_config_section_logging'),
-			GDT_Hidden::make('error_level')->initial(GWF_ERROR_LEVEL),
+			GDT_Hidden::make('error_level')->initialValue(GWF_ERROR_LEVEL),
 			GDT_Checkbox::make('error_stacktrace')->initialValue(GWF_ERROR_STACKTRACE),
-			GDT_Checkbox::make('error_die')->initial(GWF_ERROR_DIE),
-			GDT_Checkbox::make('error_mail')->initial(GWF_ERROR_MAIL),
+			GDT_Checkbox::make('error_die')->initialValue(GWF_ERROR_DIE),
+			GDT_Checkbox::make('error_mail')->initialValue(GWF_ERROR_MAIL),
 			# Database
 			GDT_Divider::make()->label('install_config_section_database'),
-			GDT_Hidden::make('salt')->initial(GWF_SALT),
-			GDT_String::make('db_host')->initial(GWF_DB_HOST),
-			GDT_String::make('db_user')->initial(GWF_DB_USER),
-			GDT_String::make('db_pass')->initial(GWF_DB_PASS),
-			GDT_String::make('db_name')->initial(GWF_DB_NAME),
-//			 Text::make('db_prefix')->initial(GWF_DB_PREFIX)->required(),
-			GDT_Checkbox::make('db_debug')->initial(GWF_DB_DEBUG),
+			GDT_Hidden::make('salt')->initialValue(GWF_SALT),
+			GDT_String::make('db_host')->initialValue(GWF_DB_HOST),
+			GDT_String::make('db_user')->initialValue(GWF_DB_USER),
+			GDT_String::make('db_pass')->initialValue(GWF_DB_PASS),
+			GDT_String::make('db_name')->initialValue(GWF_DB_NAME),
+//			 Text::make('db_prefix')->initialValue(GWF_DB_PREFIX)->required(),
+			GDT_Checkbox::make('db_debug')->initialValue(GWF_DB_DEBUG),
 			# Cache
 			GDT_Divider::make()->label('install_config_section_cache'),
-			GDT_Checkbox::make('memcache')->initial(GWF_MEMCACHE),
-			GDT_String::make('memcache_prefix')->initial(GWF_MEMCACHE_PREFIX)->required(),
-			GDT_String::make('memcache_host')->initial(GWF_MEMCACHE_HOST)->required(),
-			GDT_Port::make('memcache_port')->initial(GWF_MEMCACHE_PORT)->required(),
-			GDT_Int::make('memcache_ttl')->unsigned()->initial(GWF_MEMCACHE_TTL)->required(),
+			GDT_Checkbox::make('memcache')->initialValue(GWF_MEMCACHE),
+			GDT_String::make('memcache_prefix')->initialValue(GWF_MEMCACHE_PREFIX)->required(),
+			GDT_String::make('memcache_host')->initialValue(GWF_MEMCACHE_HOST)->required(),
+			GDT_Port::make('memcache_port')->initialValue(GWF_MEMCACHE_PORT)->required(),
+			GDT_Int::make('memcache_ttl')->unsigned()->initialValue(GWF_MEMCACHE_TTL)->required(),
 			# Cookies
 			GDT_Divider::make()->label('install_config_section_cookies'),
-			GDT_String::make('sess_name')->ascii()->caseS()->initial(GWF_SESS_NAME)->required(),
-			GDT_Hidden::make('sess_domain')->initial(GWF_SESS_DOMAIN),
-			GDT_Duration::make('sess_time')->initial(GWF_SESS_TIME)->required()->min(30),
-			GDT_Checkbox::make('sess_js')->initial(GWF_SESS_JS),
-			GDT_Checkbox::make('sess_https')->initial(GWF_SESS_HTTPS),
+			GDT_String::make('sess_name')->ascii()->caseS()->initialValue(GWF_SESS_NAME)->required(),
+			GDT_Hidden::make('sess_domain')->initialValue(GWF_SESS_DOMAIN),
+			GDT_Duration::make('sess_time')->initialValue(GWF_SESS_TIME)->required()->min(30),
+			GDT_Checkbox::make('sess_js')->initialValue(GWF_SESS_JS),
+			GDT_Checkbox::make('sess_https')->initialValue(GWF_SESS_HTTPS),
 			# Email
 			GDT_Divider::make()->label('install_config_section_email'),
-			GDT_Realname::make('bot_name')->required()->initial(GWF_BOT_NAME),
-			GDT_Email::make('bot_email')->required()->initial(GWF_BOT_EMAIL),
-			GDT_Email::make('admin_email')->required()->initial(GWF_ADMIN_EMAIL),
-			GDT_Email::make('error_email')->required()->initial(GWF_ERROR_EMAIL),
-			GDT_Checkbox::make('debug_email')->initial(GWF_DEBUG_EMAIL),
+			GDT_Realname::make('bot_name')->required()->initialValue(GWF_BOT_NAME),
+			GDT_Email::make('bot_email')->required()->initialValue(GWF_BOT_EMAIL),
+			GDT_Email::make('admin_email')->required()->initialValue(GWF_ADMIN_EMAIL),
+			GDT_Email::make('error_email')->required()->initialValue(GWF_ERROR_EMAIL),
+			GDT_Checkbox::make('debug_email')->initialValue(GWF_DEBUG_EMAIL),
 		);
 	}
 }

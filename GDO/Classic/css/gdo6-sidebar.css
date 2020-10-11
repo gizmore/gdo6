@@ -11,11 +11,22 @@
 	height: 100%;
 	position: fixed;
 	top: 0;
-	right: 0;
 	bottom: 0;
-	left: 0;
 	z-index: 1;
 }
+
+#gdo-left-bar {
+	border-right: 1px solid #fff;
+	width: 256px;
+	left: 0;
+}
+
+#gdo-right-bar {
+	border-left: 1px solid #fff;
+	width: 256px;
+	right: 0;
+}
+
 #gdo-left-bar .gdt-bar > * {
 	align-self: flex-start;
 	text-align: left;

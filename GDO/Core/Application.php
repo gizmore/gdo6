@@ -7,7 +7,7 @@ use GDO\User\GDO_Session;
  * 
  * @author gizmore
  * @since 6.00
- * @version 6.05
+ * @version 6.10
  */
 class Application
 {
@@ -36,6 +36,8 @@ class Application
 	public function __construct()
 	{
 		self::$instance = $this;
+        ini_set('date.timezone', 'UTC');
+		date_default_timezone_set('UTC');
 		$this->loader = new ModuleLoader(GDO_PATH . 'GDO/');
 	}
 	

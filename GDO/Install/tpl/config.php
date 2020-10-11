@@ -1,14 +1,23 @@
 <?php
+use GDO\Date\Time;
 use GDO\Form\GDT_Form;
 use GDO\UI\GDT_Divider;
 use GDO\Form\GDT_Submit;
 use GDO\Util\Numeric;
-$form instanceof GDT_Form;
+/**
+ * @var $form GDT_Form
+ */
 echo '<';echo '?';echo "php\n";
 ?>
 ###############################
 ### GDO6 Configuration File ###
 ###############################
+<?php
+$tz = $form->getField('timezone')->var;
+$created = Time::getDate(microtime(true));
+$form->getField('sitecreated')->val($created);
+?>
+
 <?php foreach ($form->fields as $field) : ?>
 <?php
 if ($field instanceof GDT_Divider)
@@ -23,14 +32,16 @@ elseif ($field instanceof GDT_Submit)
 }
 else
 {
+    $name = $field->name;
+    
 	$value = $field->getValue();
 	if (is_string($value))
 	{
-		if ($field->name === 'chmod')
+		if ($name === 'chmod')
 		{
 			$value = "0".Numeric::baseConvert($value, 10, 8);
 		}
-		elseif ($field->name === 'error_level')
+		elseif ($name === 'error_level')
 		{
 		    $value = "0x".Numeric::baseConvert($value, 10, 16);
 		}
@@ -52,7 +63,7 @@ else
 	{
 		$value = $value ? 'true' : 'false';
 	}
-	printf("define('GWF_%s', %s);\n", strtoupper($field->name), $value);
+	printf("define('GWF_%s', %s);\n", strtoupper($name), $value);
 }
 ?>
 <?php endforeach; ?>

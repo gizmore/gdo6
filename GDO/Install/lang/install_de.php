@@ -25,6 +25,7 @@ return array(
 'install_config_section_site' => 'Seite',
 'cfg_sitename' => 'Kurzer Sitenname',
 'language' => 'Hauptsprache',
+'timezone' => 'Zeitzone',
 'themes' => 'Designs',
 'install_config_section_http' => 'HTTP',
 'install_config_section_files' => 'Dateien',
@@ -40,7 +41,9 @@ return array(
 'install_config_section_email' => 'Email',
 'err_db_connect' => 'Die Verbindung zur Datenbank ist fehlgeschlagen.',
 'install_config_boxinfo_success' => 'Dieses System sieht gut aus. Sie können hier fortfahren: %s',
-
+'save_config' => 'Speichern',
+'test_config' => 'Testen',
+    
 # Modules
 'install_title_4' => 'GDO6 Module',
 'install_modules_info_text' => 'Hier wählen Sie die Module zum Installieren.',

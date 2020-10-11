@@ -2,7 +2,6 @@
 $sel = ' selected="selected"';
 $val = $field->getVar(); ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <?=$field->htmlTooltip()?>
   <?= $field->htmlIcon(); ?>
   <label><?= $field->displayLabel(); ?></label>
   <select

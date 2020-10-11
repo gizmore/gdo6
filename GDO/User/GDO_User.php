@@ -15,6 +15,7 @@ use GDO\Mail\GDT_EmailFormat;
 use GDO\Net\GDT_IP;
 use GDO\DB\GDT_UInt;
 use GDO\Date\GDT_Birthdate;
+use GDO\Date\GDT_Timezone;
 /**
  * The holy user object.
  * @author gizmore
@@ -45,7 +46,7 @@ final class GDO_User extends GDO
 			GDT_Username::make('user_guest_name')->unique()->label('guestname'),
 			GDT_Realname::make('user_real_name'),
 			GDT_Email::make('user_email'),
-// 			GDT_UInt::make('user_level')->notNull()->initial('0')->label('level'),
+			GDT_UInt::make('user_level')->notNull()->initial('0')->label('level'),
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits'),
 			GDT_EmailFormat::make('user_email_fmt')->notNull()->initial(GDT_EmailFormat::HTML),
 			GDT_Gender::make('user_gender'),
@@ -56,6 +57,7 @@ final class GDO_User extends GDO
 			GDT_DeletedAt::make('user_deleted_at'),
 			GDT_CreatedAt::make('user_last_activity')->label('last_activity'),
 			GDT_CreatedAt::make('user_register_time')->label('registered_at'),
+		    GDT_Timezone::make('user_timezone')->initial(GWF_TIMEZONE),
 			GDT_IP::make('user_register_ip'),
 		);
 	}
@@ -90,6 +92,7 @@ final class GDO_User extends GDO
 	public function getLanguage() { return GDO_Language::findById($this->getLangISO()); }
 	public function getCountryISO() { return $this->getVar('user_country'); }
 	public function getCountry() { return $this->getValue('user_country'); }
+	public function getTimezone() { return $this->getVar('user_timezone'); }
 	public function getBirthdate() { return $this->getVar('user_birthdate'); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
@@ -97,6 +100,16 @@ final class GDO_User extends GDO
 	public function getRegisterDate() { return $this->getVar('user_register_time'); }
 	public function getRegisterIP() { return $this->getVar('user_register_ip'); }
 	public function isDeleted() { return $this->getVar('user_deleted_at') !== null; }
+	
+	private $tz = null;
+	public function getTimezoneObject()
+	{
+	    if ($this->tz === null)
+	    {
+	        $this->tz = new \DateTimeZone($this->getTimezone());
+	    }
+	    return $this->tz;
+	}
 	
 	###############
 	### Display ###
@@ -172,6 +185,13 @@ final class GDO_User extends GDO
 	public function changedPermissions() { $this->tempUnset('gdo_permission'); return $this->recache(); }
 	
 	public function getLevel()
+	{
+	    $level = $this->getVar('user_level');
+	    $permLevel = $this->getPermissionLevel();
+	    return max($level, $permLevel);
+	}
+	
+	public function getPermissionLevel()
 	{
 	    $max = 0;
 	    foreach ($this->loadPermissions() as $level)
@@ -280,6 +300,7 @@ final class GDO_User extends GDO
 			'user_email_fmt' => $this->getMailFormat(),
 			'user_language' => $this->getLangISO(),
 			'user_country' => $this->getCountryISO(),
+		    'user_timezone' => $this->getTimezone(),
 			'user_birthdate' => Time::getTimestamp($this->getBirthdate()),
 			'permissions' => $this->loadPermissions(),
 		);

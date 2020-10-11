@@ -29,6 +29,8 @@ a { color: #33f; font-weight: 900; }
 	label[for="gdo-left-nav"] { display: none; }
 	#gdo-left-bar { z-index: 2; }
 	#gdo-right-nav:checked ~ #gdo-right-bar { z-index: 3; left: auto; width: 256px;}
+
+    #gdo-header { width: calc(100% - 256px)!important; }
 }
 
 

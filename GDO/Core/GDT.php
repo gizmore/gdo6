@@ -6,7 +6,6 @@ use GDO\Table\GDT_Table;
 use GDO\Util\Strings;
 use GDO\Form\GDT_Form;
 use GDO\DB\GDT_String;
-use GDO\UI\WithTooltip;
 use GDO\UI\WithIcon;
 
 /**
@@ -29,7 +28,6 @@ abstract class GDT
 {
 	use WithName;
 	use WithIcon;
-	use WithTooltip;
 	
 	###############
 	### Factory ###
@@ -141,12 +139,11 @@ abstract class GDT
 	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
 	public function setGDOData(GDO $gdo=null)
 	{
-	    return $gdo ? $this->val($gdo->getVar($this->name)) : $this;
-// 		if ($gdo && $gdo->hasVar($this->name))
-// 		{
-// 			$this->var = $gdo->getVar($this->name);
-// 		}
-// 		return $this;
+		if ($gdo && $gdo->hasVar($this->name))
+		{
+			$this->var = $gdo->getVar($this->name);
+		}
+		return $this;
 	}
 	
 	/**
@@ -226,7 +223,10 @@ abstract class GDT
 	}
 	
 	public function renderList() { return $this->render(); }
-	public function displayLabel() { return t($this->name); }
+	
+	public $labelArgs;
+	public function labelArgs(...$labelArgs) { $this->labelArgs = $labelArgs; return $this; }
+	public function displayLabel() { return t($this->name, $this->labelArgs); }
 	
 	# Render debug data by default.
 	private function renderDebug() { return print_r($this, true); }

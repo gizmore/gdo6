@@ -10,6 +10,9 @@ if ($href) : ?>
 <a <?=$field->htmlAttributes()?>
  <?=$field->htmlDisabled()?>
  <?=$field->htmlRelation()?>
+<?php if (!$field->writable) : ?>
+ onclick="return false;"
+<?php endif; ?>
  href="<?=html($href)?>">
   <?=$field->htmlIcon()?>
   <?=$field->displayLabel()?>

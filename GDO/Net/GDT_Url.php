@@ -105,23 +105,26 @@ class GDT_Url extends GDT_String
 			return $this->error('err_external_url_not_allowed', [html($value)]);
 		}
 		
+		# Check schemes (if external). internal are always prefixed with /
+		if ($this->allowExternal)
+		{
+    		if (count($this->schemes))
+    		{
+        		if (!in_array($url->getScheme(), $this->schemes, true))
+        		{
+        		    return $this->error('err_url_scheme', [Arrays::implodeHuman($this->schemes)]);
+        		}
+    		}
+		}
+		
 		# Check reachable
 		if ( ($this->reachable) && (!HTTP::pageExists($value)) )
 		{
-			if ($value[0] === '/')
-			{
-				return true;
-			}
-			return $this->error('err_url_not_reachable', [html($value)]);
-		}
-		
-		# Check schemes
-		if (count($this->schemes))
-		{
-    		if (!in_array($url->getScheme(), $this->schemes, true))
-    		{
-    		    return $this->error('err_url_scheme', [Arrays::implodeHuman($this->schemes)]);
-    		}
+		    if ($value[0] === '/')
+		    {
+		        return true;
+		    }
+		    return $this->error('err_url_not_reachable', [html($value)]);
 		}
 		
 		return true;

@@ -12,7 +12,6 @@
   <div style="clear: both;"></div>
 </div>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <?=$field->htmlTooltip()?>
   <?=$field->htmlIcon()?>
   <label><?= $field->displayLabel() ?></label>
   <input type="file" name="<?=$field->name?>" class="gdo-flow-file" />

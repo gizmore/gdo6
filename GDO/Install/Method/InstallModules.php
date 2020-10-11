@@ -25,7 +25,7 @@ final class InstallModules extends Method
 	
 	public function execute()
 	{
-		$db = Database::init();
+		Database::init();
 		$loader = ModuleLoader::instance();
 		$loader->loadModules(false, true, true);
 		$loader->sortModules('module_priority');
@@ -118,7 +118,6 @@ final class InstallModules extends Method
 		catch (\Exception $e)
 		{
 			Database::instance()->transactionRollback();
-//			 echo $response->renderHTML();
 			throw $e;
 		}
 		finally

@@ -10,7 +10,6 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\User\GDO_Permission;
 use GDO\Util\Strings;
-use GDO\Core\ModuleLoader;
 /**
  * Install helper.
  * @author gizmore
@@ -150,7 +149,7 @@ class Installer
 		$dir = $module->filePath('Method');
 		if (FileUtil::isDir($dir))
 		{
-			Filewalker::traverse($dir, '*', $callback, false, false, $module);
+			Filewalker::traverse($dir, null, $callback, false, false, $module);
 		}
 	}
 	

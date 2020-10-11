@@ -25,6 +25,7 @@ return array(
 'install_config_section_site' => 'Site',
 'cfg_sitename' => 'Short Sitename',
 'language' => 'Main Language',
+'timezone' => 'Timezone',
 'themes' => 'Themes',
 'install_config_section_http' => 'HTTP',
 'install_config_section_files' => 'Files',
@@ -40,7 +41,9 @@ return array(
 'install_config_section_email' => 'Mail',
 'err_db_connect' => 'The connection to the database server failed. Note that only mysql/maria is supported.',
 'install_config_boxinfo_success' => 'Your system looks solid. You can continue with %s',
-
+'save_config' => 'Save',
+'test_config' => 'Test',
+    
 # Modules
 'install_title_4' => 'GDO Modules',
 'install_modules_info_text' => 'Here you can choose the modules to install. Dependencies are not 100% resolved yet.',

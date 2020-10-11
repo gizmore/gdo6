@@ -14,6 +14,8 @@ class GDT_Divider extends GDT
 	use WithLabel;
 	use WithIcon;
 	
+	public function blankData() {}
+
 	public function isSerializable() { return false; }
 	public function defaultLabel() { return $this->noLabel(); }
 	

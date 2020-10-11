@@ -1,7 +1,6 @@
 <?php /** @var $field \GDO\Date\GDT_Date **/
 $id = 'date_'.$field->name; ?>
 <div class="gdo-container<?=$field->classError()?>">
-  <?=$field->htmlTooltip()?>
   <?=$field->htmlIcon()?>
   <label for="<?=$id?>"><?=$field->displayLabel()?></label>
   <input

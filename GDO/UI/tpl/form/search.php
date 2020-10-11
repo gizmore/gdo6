@@ -4,7 +4,6 @@ use GDO\UI\GDT_SearchField;
 $field instanceof GDT_SearchField;
 ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <?=$field->htmlTooltip()?>
   <?= $field->htmlIcon(); ?>
   <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
   <input

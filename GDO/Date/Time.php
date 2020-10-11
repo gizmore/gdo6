@@ -4,6 +4,7 @@ namespace GDO\Date;
 use GDO\Language\Trans;
 use DateTime;
 use GDO\Core\Application;
+use GDO\User\GDO_User;
 /**
  * Time helper class.
  * Using mysql date format now, instead of yyyymmddhhiissmmm
@@ -29,14 +30,19 @@ final class Time
 	###############
 	### Convert ###
 	###############
+	public static $UTC;
+	
 	/**
-	 * Get a mysql date from a timestamp, like YYYY-mm-dd HH:ii:ss.
+	 * Get a mysql date from a timestamp, like YYYY-mm-dd HH:ii:ss.vvv.
 	 * @example $date = Time::getDate();
 	 * @return string
 	 */
 	public static function getDate($time=null)
 	{
-		return date('Y-m-d H:i:s.v', $time === null ? Application::$MICROTIME : $time);
+	    $time = $time === null ? Application::$MICROTIME : $time;
+	    $time = sprintf('%.03f', $time);
+	    $now = DateTime::createFromFormat('U.u', $time);
+	    return $now->format("Y-m-d H:i:s.v");
 	}
 	
 	public static function getDateWithoutTime($time=null)
@@ -55,7 +61,6 @@ final class Time
 	###############
 	/**
 	 * Display a timestamp.
-	 * TODO: Function is slow
 	 * @param $timestamp
 	 * @param $langid
 	 * @param $default_return
@@ -63,22 +68,28 @@ final class Time
 	 */
 	public static function displayTimestamp($timestamp=null, $format='short', $default_return='---')
 	{
-		return self::displayTimestampISO(Trans::$ISO, $timestamp, $format, $default_return);
+		return self::displayDateISO(Trans::$ISO, $timestamp, $format, $default_return);
 	}
 	
 	public static function displayTimestampISO($iso, $timestamp=null, $format='short', $default_return='---')
 	{
-		return $timestamp === null ? $default_return : strftime(t('df_'.$format), $timestamp);
+	    return self::displayDateISO($iso, $timestamp, $format, $default_return);
 	}
 	
 	public static function displayDate($date=null, $format='short', $default_return='---')
 	{
-		return $date === null ? $default_return : self::displayTimestamp(self::getTimestamp($date), $format, $default_return);
+	    return self::displayDateISO(Trans::$ISO, $date, $format, $default_return);
 	}
 	
 	public static function displayDateISO($iso, $date=null, $format='short', $default_return='---')
 	{
-		return self::displayTimestampISO($iso, self::getTimestamp($date), $format, $default_return);
+	    if ($date === null)
+	    {
+	        return $default_return;
+	    }
+	    $datetime = new \DateTime($date, self::$UTC); # we get in UTC
+	    $datetime->setTimezone(GDO_User::current()->getTimezoneObject()); # and convert to user timezone
+	    return $datetime->format(t("df_$format")); # output 
 	}
 	
 	###########
@@ -334,6 +345,6 @@ final class Time
 	// 			default: return false;
 	// 		}
 	// 	}
-	}
+}
 	
-	
+Time::$UTC = new \DateTimeZone("UTC");

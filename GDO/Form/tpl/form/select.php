@@ -1,6 +1,5 @@
 <?php /** @var $field \GDO\Form\GDT_Select **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <?=$field->htmlTooltip()?>
   <?=$field->htmlIcon()?>
   <label><?= $field->displayLabel(); ?></label>
   <select

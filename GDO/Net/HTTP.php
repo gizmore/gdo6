@@ -90,7 +90,7 @@ final class HTTP
 		
 		# Get the status code from HTTP headers
 		$matches = [];
-		if(preg_match('/HTTP\/1\.\d+\s+(\d+)/', $response, $matches))
+		if(preg_match('/HTTP\/[12](?:\.\d+)?\s+(\d+)/', $response, $matches))
 		{
 			$code = intval($matches[1]);
   		} 

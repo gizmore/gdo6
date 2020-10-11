@@ -27,6 +27,10 @@ class GDT_Button extends GDT_Label
 	##############
 	public function renderCell()
 	{
+	    if ($this->checkEnabled)
+	    {
+    	    $this->writable(call_user_func($this->checkEnabled, $this));
+	    }
 		return GDT_Template::php('UI', 'cell/button.php', ['field'=>$this, 'href'=>$this->gdoHREF()]);
 	}
 
@@ -47,5 +51,15 @@ class GDT_Button extends GDT_Label
 	{
 		return '';
 	}
-}
+	
+	########################
+	### Enabled callback ###
+	########################
+	public $checkEnabled;
+	public function checkEnabled(callable $checkEnabled)
+	{
+	    $this->checkEnabled = $checkEnabled;
+	    return $this;
+	}
 
+}

@@ -131,7 +131,7 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-		return isset($this->gdoVars[$key]);
+		return array_key_exists($key, $this->gdoColumnsCache());
 	}
 	
 	/**
@@ -192,6 +192,7 @@ abstract class GDO
 		$back = [];
 		foreach ($keys as $key)
 		{
+// 		    $back[$key] = $this->getVar($key);
 			if ($data = $this->gdoColumn($key)->getGDOData())
 			{
 				$back = array_merge($back, $data);
@@ -270,6 +271,21 @@ abstract class GDO
 	### Columns ###
 	###############
 	/**
+	 * Get the first primary key column
+	 * @return GDT
+	 */
+	public function gdoPrimaryKeyColumn()
+	{
+		foreach ($this->gdoColumnsCache() as $column)
+		{
+			if ($column->isPrimary())
+			{
+				return $column;
+			}
+		}
+	}
+
+	/**
 	 * Get the primary key columns for a table.
 	 * @return GDT[]
 	 */
@@ -291,18 +307,24 @@ abstract class GDO
 	}
 	
 	/**
-	 * Get the first primary key column
-	 * @return GDT
+	 * Get primary key column names.
+	 * @return string[]
 	 */
-	public function gdoPrimaryKeyColumn()
+	private function gdoPrimaryKeyColumnNames()
 	{
-		foreach ($this->gdoColumnsCache() as $column)
-		{
-			if ($column->isPrimary())
-			{
-				return $column;
-			}
-		}
+	    $columns = [];
+	    foreach ($this->gdoColumnsCache() as $column)
+	    {
+	        if ($column->isPrimary())
+	        {
+	            $columns[] = $column->name;
+	        }
+	        else
+	        {
+	            break; # Assume PKs are first until no more PKs
+	        }
+	    }
+	    return $columns;
 	}
 	
 	/**
@@ -683,7 +705,6 @@ abstract class GDO
 		$gdoVars = [];
 		foreach ($table->gdoColumnsCache() as $column)
 		{
-			/** @var $column \GDO\Core\GDT **/
 			if ($data = $column->blankData())
 			{
 				$gdoVars = array_merge($gdoVars, $data);
@@ -719,10 +740,10 @@ abstract class GDO
 	public function getID()
 	{
 		$id = '';
-		foreach ($this->gdoPrimaryKeyColumns() as $name => $column)
+		foreach ($this->gdoPrimaryKeyColumnNames() as $name)
 		{
-			$id2 = $this->getVar($name);
-			$id = $id ? "{$id}:$id2" : $id2;
+   			$id2 = $this->getVar($name);
+   			$id = $id ? "{$id}:$id2" : $id2;
 		}
 		return $id;
 	}
@@ -1053,14 +1074,25 @@ abstract class GDO
 	################
 	### Hashcode ###
 	################
+	/**
+	 * Generate a hashcode from gdo vars.
+	 * This is often used in approval tokens or similar.
+	 * @return string
+	 */
 	public function gdoHashcode()
 	{
 		return self::gdoHashcodeS($this->gdoVars);
 	}
 	
+	/**
+	 * Generate a hashcode from an associative array.
+	 * @param array $gdoVars
+	 * @return string
+	 */
 	public static function gdoHashcodeS(array $gdoVars)
 	{
-		return substr(md5(md5(md5(str_repeat(GWF_SALT, 4)).json_encode(array_values($gdoVars)))), 0, 16);
+	    ksort($gdoVars); # Ensure order of vars stay the same.
+		return substr(md5(str_repeat(GWF_SALT, 4).json_encode($gdoVars)), 0, 16);
 	}
 	
 	##############

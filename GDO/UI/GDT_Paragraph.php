@@ -10,4 +10,3 @@ final class GDT_Paragraph extends GDT
 	public function renderCell() { return sprintf('<p>%s</p>', $this->html); }
 	public function renderCard() { return $this->renderCell(); }
 }
-

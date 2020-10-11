@@ -1,10 +1,9 @@
 <?php
 namespace GDO\Install;
 use GDO\Core\GDO_Module;
-use GDO\Core\Website;
 /**
  * Module that features the installer.
- * The entry point is in gdo7/install/index.php
+ * The entry point is in install/wizard.php
  * 
  * Provides the install theme to style the install wizard.
  * 

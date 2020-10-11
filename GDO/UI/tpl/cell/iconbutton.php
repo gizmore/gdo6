@@ -2,6 +2,9 @@
 <?php if ($href) : ?>
 <a class="gdo-icon-button"
  href="<?= $href; ?>"
+<?php if (!$field->writable) : ?>
+ onclick="return false;"
+<?php endif; ?>
  <?=$field->htmlDisabled()?>
  <?=$field->htmlAttributes()?>>
   <?= $field->htmlIcon(); ?>

@@ -21,6 +21,9 @@ abstract class MethodQueryCard extends Method
 		return [GDT_AutoInc::make('id')];
 	}
 	
+	/**
+	 * @return \GDO\Core\GDO
+	 */
 	public function gdoQueryCard()
 	{
 		return $this->gdoTable()->find(Common::getGetString('id'));

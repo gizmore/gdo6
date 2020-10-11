@@ -80,7 +80,7 @@ final class GDO_File extends GDO
 	
 	public function gdoAfterDelete()
 	{
-		Filewalker::traverse(self::filesDir(), "{$this->getID()}_", [$this, 'deleteVariant']);
+		Filewalker::traverse(self::filesDir(), "/^{$this->getID()}_/", [$this, 'deleteVariant']);
 		@unlink($this->getDestPath());
 	}
 	
