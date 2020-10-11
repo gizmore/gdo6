@@ -58,7 +58,7 @@ label[for="gdo-left-nav"]{
 }
 label[for="gdo-right-nav"]{
 	top: 0px;
-	right: 0px;
+	right: 16px;
 }
 label[for="gdo-left-nav"],
 label[for="gdo-right-nav"] {
@@ -77,7 +77,7 @@ label[for="gdo-right-nav"] {
 	left: 256px;
 }
 #gdo-right-nav:checked ~ label[for="gdo-right-nav"] {
-	right: 256px;
+	right: 272px;
 }
 #gdo-left-nav:checked ~ label[for="gdo-right-nav"] {
 	display: none;

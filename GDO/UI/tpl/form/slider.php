@@ -1,7 +1,7 @@
 <?php /** @var $field \GDO\UI\GDT_Slider **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
-  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
+  <label <?=$field->htmlForID()?>><?= $field->displayLabel(); ?></label>
 <?php if (is_array($field->step)) : $var = $field->getVar(); ?>
   <select name="<?= $field->name; ?>">
 <?php foreach ($field->step as $value => $choice) : ?>
@@ -11,13 +11,14 @@
   </select>
 <?php else : ?>
   <input
+  <?=$field->htmlID()?>
    type="range"
    <?= $field->htmlRequired(); ?>
    <?= $field->htmlDisabled(); ?>
    min="<?= $field->min; ?>"
    max="<?= $field->max; ?>"
    step="<?= $field->step; ?>"
-   name="form[<?= $field->name; ?>]"
+   <?=$field->htmlFormName()?>
    value="<?= $field->getVar(); ?>" />
  <?php endif; ?>
   <?= $field->htmlError(); ?>

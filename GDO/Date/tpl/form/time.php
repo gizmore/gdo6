@@ -1,12 +1,11 @@
-<?php /** @var $field \GDO\Date\GDT_DateTime **/
-$id = 'date_'.$field->name; ?>
+<?php /** @var $field \GDO\Date\GDT_DateTime **/ ?>
 <div class="gdo-container<?=$field->classError()?>">
   <?=$field->htmlIcon()?>
-  <label for="<?=$id?>"><?=$field->displayLabel()?></label>
+  <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input
-   id="<?=$id?>"
+   <?=$field->htmlID()?>
    type="time"
-   name="form[<?= $field->name; ?>]"
+   <?=$field->htmlFormName()?>
    value="<?=$field->displayVar()?>"
    <?=$field->htmlDisabled()?> />
   <?=$field->htmlError()?>

@@ -42,7 +42,7 @@ final class GDT_RangeSlider extends GDT_Slider
 	public function initialValue($value) { $this->initial = $this->var = $this->toVar($value); return parent::initialValue($value); }
 	public function getValue()
 	{
-		if ($lo = $this->getRequestVar('form', $this->initial))
+		if ($lo = $this->getRequestVar($this->formVariable(), $this->initial))
 		{
 			# 1 field json mode
 			if ($lo[0] === '[')
@@ -50,7 +50,7 @@ final class GDT_RangeSlider extends GDT_Slider
 				return json_decode($lo);
 			}
 			# 2 field 1.0 mode
-			elseif ($hi = $this->getRequestVar('form', null, $this->highName))
+			elseif ($hi = $this->getRequestVar($this->formVariable(), null, $this->highName))
 			{				
 				return [$lo, $hi];
 			}

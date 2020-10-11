@@ -2,7 +2,7 @@
 $firstEditableField = null;
 ?>
 <!-- Begin Form -->
-<div class="gdo-form">
+<div class="gdo-form <?=$form->htmlClassSlim()?>">
 	<div class="gdo-form-inner">
 	  <div class="gdo-form-head">
 		<h2 class="gdo-form-title"><?= $form->title; ?></h2>

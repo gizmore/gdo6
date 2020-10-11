@@ -75,7 +75,15 @@ return array(
 'btn_confirm' => 'Confirm',
 'btn_cancel' => 'Cancel',
 'link_overview' => 'Overview',
-
+'btn_search' => 'Search',
+'btn_sort' => 'Sort',
+    
+# Sorting
+'order_by' => 'Order by',
+'order_dir' => 'Direction',
+'asc' => 'Ascending',
+'desc' => 'Descending',
+    
 # Generic Messages
 'msg_form_saved' => 'Your data has been safed successfully.',
 'msg_upgrading' => 'Upgrading Module %s to version %s.',

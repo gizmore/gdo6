@@ -25,6 +25,9 @@ class GDT_Enum extends GDT
 	use WithLabel;
 	use WithDatabase;
 	use WithFormFields;
+	
+	public $filterable = true;
+	public $orderableField = true;
 
 	############
 	### Base ###

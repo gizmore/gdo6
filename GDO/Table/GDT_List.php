@@ -14,6 +14,7 @@ class GDT_List extends GDT_Table
 {
 	const MODE_CARD = 1;
 	const MODE_LIST = 2;
+	
 	private $listMode= self::MODE_CARD;
 	public function listMode($mode)
 	{
@@ -32,6 +33,8 @@ class GDT_List extends GDT_Table
 	{
 		return $this->itemTemplate ? $this->itemTemplate : GDT_GWF::make();
 	}
+	
+	public $singleOrdered = true;
 	
 	##############
 	### Render ###

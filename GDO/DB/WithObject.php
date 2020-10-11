@@ -40,7 +40,7 @@ trait WithObject
 	###################
 	public function getVar()
 	{
-		$var = $this->getRequestVar('form', $this->var);
+		$var = $this->getRequestVar($this->formVariable(), $this->var);
 		return empty($var) ? null : $var;
 	}
 
@@ -64,7 +64,7 @@ trait WithObject
 			 	unset($_REQUEST['nocompletion_'.$this->name]);
 			 	if ($user = $this->findByName($var))
 			 	{
-			 		$_REQUEST['form'][$this->name] = $user->getID();
+			 		$_REQUEST[$this->formVariable()][$this->name] = $user->getID();
 			 		return $user;
 			 	}
 			}

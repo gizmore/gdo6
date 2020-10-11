@@ -62,7 +62,8 @@ abstract class GDT
 	##############
 	public function id() { return (GDT_Form::$CURRENT?GDT_Form::$CURRENT->name:'')."_".$this->name; }
 	public function htmlID() { return sprintf('id="%s"', $this->id()); }
-
+	public function htmlForID() { return sprintf('for="%s"', $this->id()); }
+	
 	###########
 	### RWE ###
 	###########
@@ -114,7 +115,7 @@ abstract class GDT
 	public function toVar($value) { return ($value === null) || ($value === '') ? null : (string) $value; }
 	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
 	public function hasVar() { return !!$this->getVar(); }
-	public function getVar() { return $this->getRequestVar('form', $this->var); }
+	public function getVar() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->var) : $this->var; }
 	public function getParameterVar() { return $this->getRequestVar(null, $this->var); }
 	public function getParameterValue() { return $this->toValue($this->getParameterVar()); }
 	public function getValue() { return $this->toValue($this->getVar()); }
@@ -129,6 +130,13 @@ abstract class GDT
 	
 	public function isSerializable() { return true; }
 	public function isPrimary() { return false; }
+	
+	###################
+	### Form Naming ###
+	###################
+	public function formVariable() { return GDT_Form::$CURRENT ? GDT_Form::$CURRENT->name : null; }
+	public function formName() { return sprintf('%s[%s]', $this->formVariable(), $this->name); }
+	public function htmlFormName() { return sprintf("name=\"%s\"", $this->formName()); }
 	
 	#################
 	### GDO Value ###
@@ -209,20 +217,22 @@ abstract class GDT
 	##############
 	public function render() { return $this->renderCell(); }
 	public function renderPDF() { return $this->renderCard(); }
-	public function renderCard() { return GDT_Template::php('Core', 'card/gdt.php', ['gdt'=>$this]); }
 	public function renderCell() { return html($this->getVar()); }
-	public function renderChoice($choice) { return is_object($choice) ? $choice->renderChoice() : $choice; }
-	public function renderFilter() {}
+	public function renderCard() { return GDT_Template::php('Core', 'card/gdt.php', ['gdt'=>$this]); }
+	public function renderList() { return $this->render(); }
 	public function renderForm() { return $this->render(); }
+	public function renderFilter() {}
 	public function renderHeader() {}
+	public function renderChoice($choice) { return is_object($choice) ? $choice->renderChoice() : $choice; }
 	public function renderJSON()
 	{
 		return array(
+		    'name' => $this->name,
 			'error' => $this->error,
+		    'var' => $this->getVar(),
 		);
 	}
 	
-	public function renderList() { return $this->render(); }
 	
 	public $labelArgs;
 	public function labelArgs(...$labelArgs) { $this->labelArgs = $labelArgs; return $this; }
@@ -269,11 +279,14 @@ abstract class GDT
 	#############
 	### Order ###
 	#############
+	public $orderableField = false;
+	public function orderableField($orderableField=true) { $this->orderableField = $orderableField; return $this; }
+	
 	public $orderField;
 	public function orderField($orderField)
 	{
 		$this->orderField = $orderField;
-		return $this;
+		return $this->sortable();
 	}
 	public function orderFieldName()
 	{
@@ -283,8 +296,14 @@ abstract class GDT
 	##############
 	### Filter ###
 	##############
+	public $searchable = false;
+	public function searchable($searchable=true) { $this->searchable = $searchable; return  $this; }
+	
+	public $filterable = false;
+	public function filterable($filterable=true) { $this->filterable = $filterable; return  $this; }
+	
 	public $filterField;
-	public function filterField($filterField) { $this->filterField = $filterField; return $this; }
+	public function filterField($filterField) { $this->filterField = $filterField; return $this->searchable(); }
 	public function filterValue() { return $this->getRequestVar('f', null, $this->filterField ? $this->filterField : $this->name); }
 	
 	/**
@@ -292,6 +311,8 @@ abstract class GDT
 	 * @see GDT_String
 	 */
 	public function filterQuery(Query $query) {}
+	
+	public function searchCondition($searchTerm) {}
 
 	/**
 	 * Filter for entities.

@@ -68,8 +68,8 @@ class GDT_Table extends GDT
 	################
 	### Ordering ###
 	################
-	public $ordered;
-	public $orderDefault;
+	public $ordered = false;
+	public $orderDefault = null;
 	public $orderDefaultAsc = true;
 	public function ordered($ordered=true, $defaultOrder=null, $defaultAsc=true)
 	{
@@ -78,6 +78,9 @@ class GDT_Table extends GDT
 		$this->orderDefaultAsc = $defaultAsc;
 		return $this;
 	}
+	
+	public $singleOrdered = false;
+	public function singleOrdered($singleOrdered=true) { $this->singleOrdered = $singleOrdered; return $this; }
 	
 	##################
 	### Pagination ###
@@ -162,14 +165,44 @@ class GDT_Table extends GDT
 	public function getFilteredQuery()
 	{
 		$query = $this->getQuery();
+
 		if ($this->filtered)
 		{
 			foreach ($this->getHeaderFields() as $gdoType)
 			{
-				$gdoType->filterQuery($query);
+			    if ($gdoType->filterable)
+			    {
+    				$gdoType->filterQuery($query);
+			    }
 			}
 		}
+		
+		if ($this->searchable)
+		{
+		    if (isset($_REQUEST['s']['search']))
+		    {
+		        if ($searchTerm = trim((string)$_REQUEST['s']['search']))
+		        {
+		            $bigWhere = $this->getBigWhereCondition($searchTerm);
+            		$query->where($bigWhere);
+		        }
+		    }
+		}
+		
 		return $query;
+	}
+	
+	private function getBigWhereCondition($searchTerm)
+	{
+	    $where = [];
+	    foreach ($this->getHeaderFields() as $gdoType)
+	    {
+	        if ($gdoType->searchable)
+	        {
+	            $where[] = $gdoType->searchCondition($searchTerm);
+		    }
+		}
+		return implode(' OR ', $where);
 	}
 	
 	public function getHeaderFields()
@@ -201,26 +234,33 @@ class GDT_Table extends GDT
 	 */
 	public function queryResult()
 	{
-		$query = $this->query;
+		$query = $this->getFilteredQuery();
+		
 		$headers = $this->headers;
-		if ($this->filtered)
-		{
-			foreach ($headers->fields as $gdoType)
-			{
-				$gdoType->filterQuery($query);
-			}
-		}
+		$o = $headers->name;
+		$s = $o;
+		
 		if ($this->ordered)
 		{
+		    # Convert single to multiple fake
+		    if ($this->singleOrdered)
+		    {
+		        if (isset($_REQUEST[$s]['order_by']))
+		        {
+		            $by = $_REQUEST[$s]['order_by'];
+		            $_REQUEST[$o][$by] = $_REQUEST[$s]['order_dir'] === 'ASC';
+		            unset($_REQUEST[$s]['order_by']);
+		            unset($_REQUEST[$s]['order_dir']);
+		        }
+		    }
+		    
 			$hasCustomOrder = false;
-			foreach (Common::getRequestArray($headers->name) as $name => $asc)
+			foreach (Common::getRequestArray($o) as $name => $asc)
 			{
 				if ($field = $headers->getField($name))
 				{
-					if ($field->orderable)
+					if ($field->orderableField)
 					{
-// 						echo $name;
-// 						die('X');
 						$query->order($field->orderFieldName(), !!$asc);
 						$hasCustomOrder = true;
 					}
@@ -230,9 +270,6 @@ class GDT_Table extends GDT
 			{
 				if ($this->orderDefault)
 				{
-// 					$ascdesc = $this->orderDefaultAsc ? 1 : 0;
-// 					$_REQUEST['o'] = [$this->orderDefault => $ascdesc];
-// 					$_SERVER['REQUEST_URI'] .= "&o[$this->orderDefault]=$ascdesc";
 					$query->order($this->orderDefault, $this->orderDefaultAsc);
 				}
 			}

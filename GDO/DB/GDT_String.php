@@ -40,6 +40,10 @@ class GDT_String extends GDT
 	
 	public $_inputType = 'text';
 	
+	public $filterable = true;
+	public $searchable = true;
+	public $orderableField = true;
+	
 	public function utf8() { return $this->encoding(self::UTF8); }
 	public function ascii() { return $this->encoding(self::ASCII); }
 	public function binary() { return $this->encoding(self::BINARY); }
@@ -99,7 +103,8 @@ class GDT_String extends GDT
 	##############
 	public function renderCell() { return html($this->getVar()); }
 	public function renderForm() { return GDT_Template::php('DB', 'form/string.php', ['field' => $this]); }
-//	 public function renderJSON() { return array('text' => $this->var, 'error'); }
+// 	public function renderJSON() { return array_merge(parent::renderJSON(), ['text' => $this->var]); }
+
 	################
 	### Validate ###
 	################
@@ -174,14 +179,27 @@ class GDT_String extends GDT
 		return GDT_Template::php('DB', 'filter/string.php', ['field'=>$this]);
 	}
 	
+    public function searchCondition($searchTerm)
+    {
+        $collate = $this->caseSensitive ? (' '.$this->gdoCollateDefine(false)) : '';
+        $condition = sprintf('%s%s LIKE \'%%%s%%\'', 
+            $this->identifier(), $collate, GDO::escapeSearchS($searchTerm));
+        return $condition;
+    }
+
+	
 	public function filterQuery(Query $query)
 	{
 		if ('' !== ($filter = (string)$this->filterValue()))
 		{
-			$collate = $this->caseSensitive ? (' '.$this->gdoCollateDefine(false)) : '';
-			$condition = sprintf('%s%s LIKE \'%%%s%%\'', $this->identifier(), $collate, GDO::escapeSearchS($filter));
-			$this->filterQueryCondition($query, $condition);
+		    $this->applyQueryFilter($query, $filter);
 		}
+	}
+	
+	private function applyQueryFilter(Query $query, $searchValue)
+	{
+	    $condition = $this->searchCondition($searchValue);
+	    $this->filterQueryCondition($query, $condition);
 	}
 	
 	public function filterGDO(GDO $gdo)
@@ -193,7 +211,7 @@ class GDT_String extends GDT
 			return !preg_match($pattern, $this->getVar());
 		}
 	}
-
+	
 	##############
 	### Config ###
 	##############

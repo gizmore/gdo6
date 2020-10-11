@@ -1,10 +1,11 @@
 <?php /** @var $field \GDO\UI\GDT_Message **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
-  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
+  <label <?=$field->htmlForID()?>><?= $field->displayLabel(); ?></label>
   <?= $field->htmlIcon(); ?>
   <textarea
+   <?=$field->htmlID()?>
    class="<?=$field->classEditor()?>"
-   name="form[<?= $field->name; ?>]"
+   <?=$field->htmlFormName()?>
    rows="6"
    maxRows="6"
    <?= $field->htmlRequired(); ?>

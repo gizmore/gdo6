@@ -113,7 +113,7 @@ abstract class MethodForm extends Method
 	{
 		if (!isset($this->form))
 		{
-			$this->form = GDT_Form::make();
+			$this->form = GDT_Form::make('form');
 			$this->defaultTitle();
 			$this->createForm($this->form);
 		}

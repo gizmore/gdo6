@@ -1,8 +1,6 @@
 <?php
 namespace GDO\DB;
-use GDO\Form\GDT_Form;
 use GDO\Core\GDO;
-use GDO\Core\GDT;
 
 trait WithDatabase
 {

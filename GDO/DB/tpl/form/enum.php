@@ -5,7 +5,7 @@ $val = $field->getVar(); ?>
   <?= $field->htmlIcon(); ?>
   <label><?= $field->displayLabel(); ?></label>
   <select
-   name="form[<?=$field->name;?>]"
+   <?=$field->htmlFormName()?>
    <?= $field->htmlRequired(); ?>
    <?= $field->htmlDisabled(); ?>>
 <?php if ($field->emptyLabel) : ?>

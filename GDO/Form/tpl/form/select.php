@@ -3,12 +3,10 @@
   <?=$field->htmlIcon()?>
   <label><?= $field->displayLabel(); ?></label>
   <select
+   <?=$field->htmlFormName()?>
 <?php if ($field->multiple) : ?>
-   name="form[<?= $field->name?>][]"
    multiple="multiple"
    size="8"
-<?php else : ?>
-   name="form[<?= $field->name?>]"
 <?php endif; ?>
    <?= $field->htmlDisabled(); ?>>
 <?php if ($field->emptyLabel) : ?>

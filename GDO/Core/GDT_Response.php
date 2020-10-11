@@ -100,7 +100,11 @@ final class GDT_Response extends GDT
 	################
 	public function add(GDT_Response $response=null)
 	{
-		return $response ? $this->addFields($response->getFields()) : $this;
+	    if ($response->code != 200)
+	    {
+    	    $this->code = $response->code;
+	    }
+		return $response ? $this->addField($response) : $this;
 	}
 	
 	public function addHTML($html)

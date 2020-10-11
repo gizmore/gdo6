@@ -1,11 +1,12 @@
 <?php /** @var $field \GDO\DB\GDT_Object **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?=$field->htmlIcon()?>
-  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
+  <label <?=$field->htmlForID()?>><?= $field->displayLabel(); ?></label>
   <input
+   <?=$field->htmlID()?>
    type="number"
    step="1"
-   name="form[<?= $field->name; ?>]"
+   <?=$field->htmlFormName()?>
    value="<?= $field->displayVar(); ?>"
    <?= $field->htmlRequired(); ?>
    <?= $field->htmlDisabled(); ?> />

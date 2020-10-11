@@ -46,3 +46,7 @@ GDO/*
 
 # Ignore favicons
 favicon.*
+
+# Ignore vendor
+vendor/
+

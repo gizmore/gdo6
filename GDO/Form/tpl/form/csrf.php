@@ -5,7 +5,7 @@ $field instanceof GDT_AntiCSRF;
 <div class="gdo-container<?=$field->classError()?>">
   <input
    type="hidden"
-   name="form[<?= $field->name; ?>]"
+   <?=$field->htmlFormName()?>
    value="<?= $field->csrfToken(); ?>"></input>
   <?= $field->htmlError(); ?>
 </div>

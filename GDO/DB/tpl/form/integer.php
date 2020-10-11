@@ -1,10 +1,11 @@
 <?php /** @var $field \GDO\DB\GDT_Int **/ ?>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
-  <label for="form[<?= $field->name; ?>]"><?= $field->displayLabel(); ?></label>
+  <label <?=$field->htmlForID()?>><?= $field->displayLabel(); ?></label>
   <input
+   <?=$field->htmlID()?>
    type="number"
-   name="form[<?= $field->name; ?>]"
+   <?=$field->htmlFormName()?>
    <?= $field->htmlDisabled(); ?>
    <?= $field->htmlRequired(); ?>
    min="<?= $field->min; ?>"

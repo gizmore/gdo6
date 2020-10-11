@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 cd "$(dirname "$0")"
 
 CORE="$(dirname "$0")"

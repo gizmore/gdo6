@@ -32,7 +32,7 @@ class Application
 	################
 	### Instance ###
 	################
-	private $loader;
+	public $loader;
 	public function __construct()
 	{
 		self::$instance = $this;
@@ -57,7 +57,7 @@ class Application
 	################
 	### Override ###
 	################
-	public function isCLI() { return false; }
+	public function isCLI() { return PHP_SAPI === 'cli'; }
 	public function isInstall() { return false; }
 	public function isWebsocket() { return false; }
 

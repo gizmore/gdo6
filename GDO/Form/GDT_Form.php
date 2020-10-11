@@ -21,16 +21,18 @@ class GDT_Form extends GDT
 	public static $VALIDATING_SUCCESS; # ugly, but hey.
 	public static $CURRENT; # ugly, but hey?! performance :)
 	
-	public $validated = false;
-	
 	use WithFields;
 	use WithTitle;
 	
 	public function __construct()
 	{
 		$this->action = @$_SERVER['REQUEST_URI'];
+		$this->writable = false;
 	}
 	
+	############
+	### Info ###
+	############
 	public $info;
 	public function info($info) { $this->info = $info; return $this; }
 	
@@ -38,11 +40,7 @@ class GDT_Form extends GDT
 	### Method ###
 	##############
 	public $method = 'POST';
-	public function method($method)
-	{
-		$this->method = $method;
-		return $this;
-	}
+	public function method($method) { $this->method = $method; return $this; }
 	public function methodGET() { return $this->method('GET'); }
 	public function methodPOST() { return $this->method('POST'); }
 	
@@ -51,16 +49,31 @@ class GDT_Form extends GDT
 	################
 	const URLENCODED = 'application/x-www-form-urlencoded';
 	const MULTIPART = 'multipart/form-data';
-	public $encoding = self::MULTIPART;
+	public $encoding = self::URLENCODED;
 	public function encoding($encoding) { $this->encoding = $encoding; return $this; }
 	
+	##############
+	### Action ###
+	##############
 	public $action;
 	public function action($action=null) { $this->action = $action; return $this; }
 	
+	##############
+	### Layout ###
+	##############
+	public $slim = false;
+	public function slim($slim=true) { $this->slim = $slim; return $this; }
+	public function htmlClassSlim() { return $this->slim ? 'gdo-form-slim' : 'gdo-form-large'; }
+
+	##############
+	### Render ###
+	##############
 	public function render()
 	{
 		self::$CURRENT = $this;
-		return GDT_Template::php('Form', 'cell/form.php', ['form' => $this]);
+		$back = GDT_Template::php('Form', 'cell/form.php', ['form' => $this]);
+		self::$CURRENT = null;
+		return $back;
 	}
 	
 	public function renderJSON()
@@ -80,11 +93,18 @@ class GDT_Form extends GDT
 		return $json;
 	}
 	
+	################
+	### Validate ###
+	################
+	public $validated = false;
+	
 	public function validateForm()
 	{
-		self::$VALIDATING_INSTANCE = $this;
+	    self::$CURRENT = $this;
+	    self::$VALIDATING_INSTANCE = $this;
 		self::$VALIDATING_SUCCESS = true;
 		$this->validateFormField($this);
+		self::$CURRENT = null;
 		return self::$VALIDATING_SUCCESS;
 	}
 	
@@ -125,6 +145,9 @@ class GDT_Form extends GDT
 		}
 	}
 	
+	#############
+	### Build ###
+	#############
 	public function withGDOValuesFrom(GDO $gdo=null)
 	{
 		$this->fieldWithGDOValuesFrom($this, $gdo);
@@ -143,11 +166,11 @@ class GDT_Form extends GDT
 		}
 	}
 	
-	private static $formData;
+	private static $formData; # ugly
 	public function getFormData()
 	{
 		self::$formData = array();
-		$this->withFields(function(GDT $field){
+		$this->withFields(function(GDT $field) {
 			if ($data = $field->getGDOData())
 			{
 				self::$formData = array_merge(self::$formData, $data);

@@ -23,6 +23,9 @@ class GDT_Int extends GDT
 	public $unsigned = false;
 	public $bytes = 4;
 	public $step = 1;
+	public $filterable = true;
+	public $searchable = false;
+	public $orderableField = true;
 	
 	public function step($step) { $this->step = $step; return $this; }
 	public function bytes($bytes = 4) { $this->bytes = $bytes; return $this; }

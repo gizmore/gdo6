@@ -75,7 +75,15 @@ return array(
 'btn_confirm' => 'Conferma',
 'btn_cancel' => 'Abortire',
 'link_overview' => 'Sommario',
-	
+'btn_search' => 'Ricerca',
+'btn_sort' => 'Ordina',
+    
+# Sorting
+'order_by' => 'Order by',
+'order_dir' => 'Direction',
+'asc' => 'Ascending',
+'desc' => 'Descending',
+    
 # Generic Messages
 'msg_form_saved' => 'I vostri dati sono stati memmorizzati com successo.',
 'msg_upgrading' => 'Installare modulo %s versione %s.',

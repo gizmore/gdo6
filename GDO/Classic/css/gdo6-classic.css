@@ -4,7 +4,7 @@ div.gdo-body { padding: 64px 0px 0px; min-height: 100%; }
 #gdo-footer { background: #eee; }
 
 /** Bar **/
-.gdt-bar { display: flex; padding: 8px; background: #eee; }
+.gdt-bar { display: flex; padding: 8px; background: #eee; flex-wrap: wrap; }
 .gdt-bar-row { flex-direction: row; }
 .gdt-bar-column { flex-direction: column; }
 .gdt-bar > * { flex-grow: 1; text-align: center; }
@@ -16,12 +16,16 @@ a.gdt-button, input[type=submit], a.gdo-icon-button {
 	border: 1px ridge gray; background: #ddd; border-radius: 6px; padding: 0px 6px; color: #333; margin: 2px;
 	height: 24px; line-height: 22px; font-size: 16px; font-weight: 500; font-family: sans-serif;
 }
-a[disabled] { opacity: 0.25; }
+a[disabled] { opacity: 0.25; cursor: text; }
 
 /** Form **/
 .gdo-has-error { background: #fa6; }
 .gdo-form { padding: 8px; border: 1px solid #000; }
+.gdo-form-slim { padding: 2px 4px; border: none; }
+.gdo-form-slim form { padding: 2px; display: flex; flex-direction: row; align-items: flex-end; flex-wrap: wrap; }
+.gdo-form-slim form > * { padding: 2px; flex-grow: 0; text-align: left; }
 .gdo-form .gdo-container { padding: 6px 8px; }
+.gdo-form-slim .gdo-container { padding: 0px 0px; }
 .gdo-form .gdo-container > * { display: block; }
 .gdo-form .gdo-container > i.fa,
 .gdo-form .gdo-container > label, .gdo-form .gdo-container > .gdo-icon { display: inline-block; }

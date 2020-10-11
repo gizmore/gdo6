@@ -75,7 +75,15 @@ return array(
 'btn_confirm' => 'Bestätigen',
 'btn_cancel' => 'Abbrechen',
 'link_overview' => 'Übersicht',
-	
+'btn_search' => 'Suchen',
+'btn_sort' => 'Sortieren',
+    
+# Sorting
+'order_by' => 'Sortierung',
+'order_dir' => 'Richtung',
+'asc' => 'Aufsteigend',
+'desc' => 'Absteigend',
+    
 # Generic Messages
 'msg_form_saved' => 'Ihre Daten wurden erfolgreich gespeichert.',
 'msg_upgrading' => 'Installiere Modul %s Version %s.',

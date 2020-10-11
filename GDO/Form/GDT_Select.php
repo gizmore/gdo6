@@ -22,7 +22,7 @@ class GDT_Select extends GDT_ComboBox
 	{
 		$this->fixEmptyMultiple();
 		
-		if (null === ($value = $this->getRequestVar('form', $this->var)))
+		if (null === ($value = $this->getRequestVar($this->formVariable(), $this->var)))
 		{
 			$value = $this->multiple ? '[]' : null;
 		}
@@ -93,11 +93,12 @@ class GDT_Select extends GDT_ComboBox
 	################
 	private function fixEmptyMultiple()
 	{
-		if (isset($_REQUEST['form']) && $this->multiple)
+	    $f = $this->formVariable();
+		if (isset($_REQUEST[$f]) && $this->multiple)
 		{
-			if (!isset($_REQUEST['form'][$this->name]))
+			if (!isset($_REQUEST[$f][$this->name]))
 			{
-				$_REQUEST['form'][$this->name] = array();
+				$_REQUEST[$f][$this->name] = array();
 			}
 		}
 	}
@@ -258,4 +259,11 @@ class GDT_Select extends GDT_ComboBox
 		$var = $this->getVar();
 		return $var === null ? $this->emptyValue : $var;
 	}
+	
+	public function htmlFormName()
+	{
+	    $name = parent::htmlFormName();
+	    return $this->multiple ? "{$name}[]" : $name;
+	}
+	
 }

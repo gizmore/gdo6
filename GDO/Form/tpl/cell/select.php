@@ -1,12 +1,10 @@
 <?php /** @var $field \GDO\Form\GDT_Select **/ ?>
   <select
-<?php echo $field->htmlAttributes(); ?>
+   <?=$field->htmlAttributes()?>
+   <?=$field->htmlFormName()?>
 <?php if ($field->multiple) : ?>
-   name="form[<?= $field->name?>][]"
    multiple="multiple"
    size="8"
-<?php else : ?>
-   name="form[<?= $field->name?>]"
 <?php endif; ?>
    <?= $field->htmlDisabled(); ?>>
 <?php if ($field->emptyLabel) : ?>
