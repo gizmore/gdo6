@@ -100,7 +100,7 @@ final class GDT_Response extends GDT
 	################
 	public function add(GDT_Response $response=null)
 	{
-	    if ($response->code != 200)
+	    if ($response && $response->code != 200)
 	    {
     	    $this->code = $response->code;
 	    }

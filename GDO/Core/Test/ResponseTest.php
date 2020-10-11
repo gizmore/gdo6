@@ -30,5 +30,14 @@ final class ResponseTest extends TestCase
         assertStringContainsString('par2', $html);
         assertStringContainsString('par3', $html);
     }
+    
+    public function testAddingNullResponse()
+    {
+        $r1 = GDT_Response::make();
+        $p1 = GDT_Paragraph::withHTML('par1');
+        $r1->addField($p1);
+        $r1->add(null);
+        $this->assertEquals(200, $r1->code);
+    }
 
 }
