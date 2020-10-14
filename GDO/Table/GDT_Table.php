@@ -79,9 +79,6 @@ class GDT_Table extends GDT
 		return $this;
 	}
 	
-	public $singleOrdered = false;
-	public function singleOrdered($singleOrdered=true) { $this->singleOrdered = $singleOrdered; return $this; }
-	
 	##################
 	### Pagination ###
 	##################
@@ -95,7 +92,7 @@ class GDT_Table extends GDT
 		$ipp = $ipp <= 0 ? Module_Table::instance()->cfgItemsPerPage() : (int)$ipp;
 		if ($paginate)
 		{
-			$href = $href === null ? $_SERVER['REQUEST_URI'] : $href;
+		    $href = $href === null ? $_SERVER['REQUEST_URI'] : $href;
 			$this->pagemenu = GDT_PageMenu::make($this->name.'_page');
 			$this->pagemenu->href($href);
 			$this->pagemenu->ipp($ipp);
@@ -243,7 +240,7 @@ class GDT_Table extends GDT
 		if ($this->ordered)
 		{
 		    # Convert single to multiple fake
-		    if ($this->singleOrdered)
+		    if (isset($_REQUEST[$s]['order_by']))
 		    {
 		        if (isset($_REQUEST[$s]['order_by']))
 		        {
@@ -262,7 +259,7 @@ class GDT_Table extends GDT
     			{
     				if ($field = $headers->getField($name))
     				{
-    					if ($field->orderableField)
+    					if ($field->orderable)
     					{
     						$query->order($field->orderFieldName(), !!$asc);
     						$hasCustomOrder = true;

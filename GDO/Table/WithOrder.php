@@ -5,8 +5,6 @@ use GDO\Core\GDT_Template;
 
 trait WithOrder
 {
-	public $orderable = true;
-	public function orderable($orderable=true) { $this->orderable = $orderable; return $this; }
 	public function displayTableOrder(GDT_Table $table)
 	{
 		if ($this->orderable)

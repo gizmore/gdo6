@@ -20,13 +20,13 @@ if ($field->searchable)
 ##################
 ### Order Form ###
 ##################
-if ($field->orderableField)
+if ($field->orderable)
 {
     $formOrder = $formSearch; # GDT_Form::make('o')->slim()->methodGET();
     $select = GDT_Select::make('order_by');
     foreach ($field->headers->fields as $gdt)
     {
-        if ($gdt->orderableField)
+        if ($gdt->orderable)
         {
             $select->choices[$gdt->name] = $gdt->displayLabel();
         }
@@ -41,7 +41,7 @@ if ($field->orderableField)
     $formOrder->addField($ascdesc);
 }
 
-if ($field->searchable || $field->orderableField)
+if ($field->searchable || $field->orderable)
 {
     $formSearch->addField(GDT_Submit::make('btn_search'));
     $bar = GDT_Bar::make()->horizontal();

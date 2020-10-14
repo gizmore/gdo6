@@ -2,6 +2,7 @@
 namespace GDO\Core;
 use GDO\UI\GDT_Link;
 use GDO\UI\GDT_Panel;
+use GDO\User\GDO_Session;
 /**
  * General Website utility.
  * @author gizmore
@@ -23,7 +24,11 @@ final class Website
 	
 	public static function hrefBack()
 	{
-		return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : GWF_WEB_ROOT;
+	    if (!($url = GDO_Session::instance()->getLastURL()))
+	    {
+	        $url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : GWF_WEB_ROOT;
+	    }
+	    return $url;
 	}
 	
 	public static function redirect($url, $time=0)

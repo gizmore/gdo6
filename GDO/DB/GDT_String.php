@@ -42,7 +42,7 @@ class GDT_String extends GDT
 	
 	public $filterable = true;
 	public $searchable = true;
-	public $orderableField = true;
+	public $orderable = true;
 	
 	public function utf8() { return $this->encoding(self::UTF8); }
 	public function ascii() { return $this->encoding(self::ASCII); }

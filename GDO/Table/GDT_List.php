@@ -34,8 +34,6 @@ class GDT_List extends GDT_Table
 		return $this->itemTemplate ? $this->itemTemplate : GDT_GWF::make();
 	}
 	
-	public $singleOrdered = true;
-	
 	##############
 	### Render ###
 	##############

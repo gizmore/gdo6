@@ -54,6 +54,7 @@ class GDO_Session extends GDO
 	public function getIP() { return $this->getValue('sess_ip'); }
 	public function getTime() { return $this->getValue('sess_time'); }
 	public function getData() { return $this->getValue('sess_data'); }
+	public function getLastURL() { return $this->getVar('sess_last_url'); }
 	
 	/**
 	 * Get current user or ghost.

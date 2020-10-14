@@ -13,6 +13,7 @@ final class GDT_EditedAt extends GDT_DateTime
 {
 	public $writable = false;
 	public $editable = false;
+	public $orderDefaultAsc = false;
 	
 	public function defaultLabel() { return $this->label('edited_at'); }
 	

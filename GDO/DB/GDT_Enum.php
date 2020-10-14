@@ -27,7 +27,7 @@ class GDT_Enum extends GDT
 	use WithFormFields;
 	
 	public $filterable = true;
-	public $orderableField = true;
+	public $orderable = true;
 
 	############
 	### Base ###

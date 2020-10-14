@@ -22,7 +22,7 @@ use GDO\UI\WithIcon;
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
  * @see \GDO\DB\GDT_String - Database supporting string baseclass
- * @see \GDO\UI\GDT_Paragraph - Simple text rendering <p>
+ * @see \GDO\UI\GDT_Paragraph - Simple text rendering
  */
 abstract class GDT
 {
@@ -279,19 +279,16 @@ abstract class GDT
 	#############
 	### Order ###
 	#############
-	public $orderableField = false;
-	public function orderableField($orderableField=true) { $this->orderableField = $orderableField; return $this; }
+	public $orderable = true;
+	public function orderable($orderable=true) { $this->orderable = $orderable; return $this; }
 	
 	public $orderField;
-	public function orderField($orderField)
-	{
-		$this->orderField = $orderField;
-		return $this->sortable();
-	}
-	public function orderFieldName()
-	{
-		return $this->orderField ? $this->orderField : $this->name;
-	}
+	public function orderField($orderField) { $this->orderField = $orderField; return $this; }
+	public function orderFieldName() { return $this->orderField ? $this->orderField : $this->name; }
+	
+	public $orderDefaultAsc = true;
+	public function orderDefaultAsc($defaultAsc=true) { $this->orderDefaultAsc = $defaultAsc; return $this; }
+	public function orderDefaultDesc($defaultDesc=true) { $this->orderDefaultAsc = !$defaultDesc; return $this; }
 	
 	##############
 	### Filter ###
