@@ -24,6 +24,7 @@ abstract class MethodQueryList extends MethodQuery
 	
 	public function isOrdered() { return true; }
 	public function isPaginated() { return true; }
+	public function isQuicksorted() { return true; }
 	
 	public function gdoDecorateList(GDT_List $list) {}
 	
@@ -75,6 +76,7 @@ abstract class MethodQueryList extends MethodQuery
 		{
 			$list->ordered();
 		}
+		$list->quicksort($this->isQuicksorted());
 // 		$list->href($this->href());
 		$this->gdoDecorateList($list);
 		return GDT_Response::makeWith($list);

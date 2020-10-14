@@ -34,6 +34,12 @@ class GDT_List extends GDT_Table
 		return $this->itemTemplate ? $this->itemTemplate : GDT_GWF::make();
 	}
 	
+	#################
+	### Quicksort ###
+	#################
+	public $quicksort = true;
+	public function quicksort($quicksort=true) { $this->quicksort = $quicksort; return $this; }
+	
 	##############
 	### Render ###
 	##############
