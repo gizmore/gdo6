@@ -14,6 +14,6 @@
 <div class="gdo-container<?= $field->classError(); ?>">
   <?=$field->htmlIcon()?>
   <label><?= $field->displayLabel() ?></label>
-  <input type="file" name="<?=$field->name?>" class="gdo-flow-file" />
+  <input type="file" id="gdo-file-input-<?=$field->name?>" name="<?=$field->name?>" class="gdo-flow-file" />
   <?= $field->htmlError(); ?>
 </div>

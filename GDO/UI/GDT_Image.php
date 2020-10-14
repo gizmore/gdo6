@@ -28,7 +28,7 @@ final class GDT_Image extends GDT
 	##############
 	### Render ###
 	##############
-	public function render()
+	public function renderCell()
 	{
 		return GDT_Template::php('UI', 'cell/image.php', ['field' => $this]);
 	}

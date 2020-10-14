@@ -66,6 +66,7 @@ return array(
 'btn_save' => 'Save',
 'btn_upload' => 'Upload',
 'btn_edit' => 'Edit',
+'btn_create' => 'Create',
 'btn_delete' => 'Delete',
 'btn_view' => 'View',
 'btn_preview' => 'Preview',
@@ -74,7 +75,7 @@ return array(
 'btn_send_mail' => 'Send Email',
 'btn_confirm' => 'Confirm',
 'btn_cancel' => 'Cancel',
-'link_overview' => 'Overview',
+'btn_overview' => 'Overview',
 'btn_search' => 'Search',
 'btn_sort' => 'Sort',
     
@@ -141,6 +142,7 @@ return array(
 'err_unknown_file' => 'File not found.',
 'err_no_permission' => 'You do not have the required permission.',
 'err_url_scheme' => 'This URL scheme is not supported. Supported are %s.',
+'err_no_image' => 'This file is not an image.',
 	
 # Permissions
 'sel_no_permissions' => 'No permission required',

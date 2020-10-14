@@ -22,4 +22,5 @@ return array(
 'err_no_mime_file' => 'Il file per %s/%s non possiede il Mime file.',
 'err_filesize_exceeded' => 'Il file supera la grandezza massimale di &s.',
 'msg_uploaded' => 'Il vostro file é stato caricato con successo.',
+'file_download' => 'Scarica',
 );

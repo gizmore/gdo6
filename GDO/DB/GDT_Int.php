@@ -16,7 +16,6 @@ class GDT_Int extends GDT
 	use WithOrder;
 
 	public function toValue($var) { return $var === null ? null : (int) $var; }
-//	 public function setGDOData(GDO $gdo=null) { return $gdo ? $this->val($gdo->getVar($this->name)) : $this; }
 	
 	public $min = null;
 	public $max = null;
@@ -114,14 +113,13 @@ class GDT_Int extends GDT
 	
 	public function renderJSON()
 	{
-		return array(
+	    return array_merge(parent::renderJSON(), array(
 			'min' => $this->min,
 			'max' => $this->max,
 			'step' => $this->step,
 			'bytes' => $this->bytes,
 			'unsigned' => $this->unsigned,
-			'error' => $this->error,
-		);
+	    ));
 	}
 	
 	public function renderFilter()

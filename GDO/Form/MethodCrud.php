@@ -7,11 +7,9 @@ use GDO\User\PermissionException;
 use GDO\Util\Common;
 use GDO\User\GDO_User;
 use GDO\Captcha\GDT_Captcha;
-use GDO\UI\GDT_Divider;
 use GDO\DB\GDT_Object;
 use GDO\DB\GDT_ObjectSelect;
 use GDO\Core\GDT;
-use GDO\DB\GDT_AutoInc;
 
 /**
  * Abstract Create|Update|Delete for a GDO.
@@ -89,17 +87,11 @@ abstract class MethodCrud extends MethodForm
 	
 	public function createFormRec(GDT_Form $form, GDT $gdt)
 	{
-// 		if ($gdt instanceof GDT_AutoInc)
-// 		{
-// 			$form->addField($gdt);
-// 		}
 		if ($gdt->editable)
 		{
 			if ( ($gdt instanceof GDT_Object) ||
 				 ($gdt instanceof GDT_ObjectSelect) )
 			{
-// 				$form->addField(GDT_Divider::make()->rawLabel($gdt->gdoHumanName()));
-// 				$form->addField($gdt);
 				if ($gdt->composition)
 				{
 					foreach ($gdt->table->gdoColumnsCache() as $gdt2)
@@ -142,25 +134,17 @@ abstract class MethodCrud extends MethodForm
 		}
 		
 		$gdo = $this->gdo ? $this->gdo : $this->gdoTable();
-		$form->withGDOValuesFrom($gdo);
+		    
 		if ($this->gdo)
 		{
+    		$form->withGDOValuesFrom($gdo);
 			$this->crudEditTitle();
 		}
 		else
 		{
-// 			$this->blank($form);
 			$this->crudCreateTitle();
 		}
 	}
-	
-// 	private function blank(GDT_Form $form)
-// 	{
-// 		$form->withFields(function(GDT $gdoType){
-// 			$gdoType->gdo(null);
-// 			$gdoType->val($gdoType->initial);
-// 		});
-// 	}
 	
 	protected function crudCreateTitle()
 	{
@@ -177,7 +161,6 @@ abstract class MethodCrud extends MethodForm
 	##############
 	public function formValidated(GDT_Form $form)
 	{
-// 		$table = $this->gdoTable();
 		return $this->gdo ? $this->onUpdate($form) : $this->onCreate($form);
 	}
 	
@@ -251,4 +234,5 @@ abstract class MethodCrud extends MethodForm
 			add($this->afterDelete($form, $this->gdo))->
 			add(Website::redirectMessage($this->hrefList()));
 	}
+	
 }

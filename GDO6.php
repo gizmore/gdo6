@@ -25,8 +25,8 @@ ini_set('display_errors', 1);
 # Init GDO autoloader
 global $GDT_LOADED; $GDT_LOADED = 0; # perf
 spl_autoload_register(function($name){
-	$name = GDO_PATH . str_replace('\\', '/', $name) . '.php';
-	if (is_file($name))
+    $name = GDO_PATH . str_replace('\\', '/', $name) . '.php';
+    if (is_file($name))
 	{
 		global $GDT_LOADED; $GDT_LOADED++; # perf
 		require $name;
@@ -36,7 +36,7 @@ spl_autoload_register(function($name){
 # Global utility
 function sitename() { return t('sitename'); }
 function url($module, $method, $append='') { return GDT_Url::absolute(href($module, $method, $append)); }
-function href($module, $method, $append='') { return "index.php?mo=$module&me=$method$append&_lang=".Trans::$ISO; }
+function href($module, $method, $append='') { $iso = Trans::$ISO; return "index.php?mo={$module}&me={$method}&_lang={$iso}$append"; }
 function quote($value) { return GDO::quoteS($value); }
 function html($html=null) { return htmlspecialchars($html); }
 function mo() { return Common::getRequestString('mo', GWF_MODULE); }

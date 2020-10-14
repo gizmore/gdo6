@@ -10,6 +10,7 @@ use GDO\Core\Module_Core;
 
 final class ModuleTest extends TestCase
 {
+    
     public function testAlreadyLoaded()
     {
         # Modules are not cached. But this should be a unique identity as well.

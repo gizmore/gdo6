@@ -237,7 +237,7 @@ class GDT_Table extends GDT
 		$query = $this->getFilteredQuery();
 		
 		$headers = $this->headers;
-		$o = $headers->name;
+		$o = $headers ? $headers->name : 's';
 		$s = $o;
 		
 		if ($this->ordered)
@@ -255,17 +255,21 @@ class GDT_Table extends GDT
 		    }
 		    
 			$hasCustomOrder = false;
-			foreach (Common::getRequestArray($o) as $name => $asc)
-			{
-				if ($field = $headers->getField($name))
-				{
-					if ($field->orderableField)
-					{
-						$query->order($field->orderFieldName(), !!$asc);
-						$hasCustomOrder = true;
-					}
-				}
-			}
+
+		    if ($this->headers)
+		    {
+    			foreach (Common::getRequestArray($o) as $name => $asc)
+    			{
+    				if ($field = $headers->getField($name))
+    				{
+    					if ($field->orderableField)
+    					{
+    						$query->order($field->orderFieldName(), !!$asc);
+    						$hasCustomOrder = true;
+    					}
+    				}
+    			}
+		    }
 			if (!$hasCustomOrder)
 			{
 				if ($this->orderDefault)

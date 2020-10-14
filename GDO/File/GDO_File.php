@@ -3,12 +3,12 @@ namespace GDO\File;
 use GDO\Core\GDO;
 use GDO\DB\GDT_AutoInc;
 use GDO\Date\GDT_Duration;
-use GDO\DB\GDT_Int;
 use GDO\DB\GDT_String;
 use GDO\Core\GDOError;
 use GDO\Core\GDT_Template;
 use GDO\Util\Strings;
 use GDO\Core\GDOException;
+use GDO\DB\GDT_UInt;
 /**
  * File database storage.
  * 
@@ -30,9 +30,9 @@ final class GDO_File extends GDO
 			GDT_String::make('file_name')->notNull(),
 			GDT_MimeType::make('file_type')->notNull(),
 			GDT_Filesize::make('file_size')->notNull(),
-			GDT_Int::make('file_width')->unsigned(),
-			GDT_Int::make('file_height')->unsigned(),
-			GDT_Int::make('file_bitrate')->unsigned(),
+			GDT_UInt::make('file_width'),
+			GDT_UInt::make('file_height'),
+			GDT_UInt::make('file_bitrate'),
 			GDT_Duration::make('file_duration'),
 			
 		);

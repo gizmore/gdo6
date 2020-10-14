@@ -22,4 +22,5 @@ return array(
 	'err_no_mime_file' => 'Die Datei für %s/%s hat keine Mime Datei.',
 	'err_filesize_exceeded' => 'Die Datei überschreitet die maximale Größe von %s.',
 	'msg_uploaded' => 'Ihre Datei wurde erfolgreich hochgeladen.',
+    'file_download' => 'Herunterladen',
 );

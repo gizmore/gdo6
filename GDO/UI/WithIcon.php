@@ -53,13 +53,13 @@ trait WithIcon
 	public $iconTextArgs;
 	public function iconText($text, $textArgs) { $this->iconText = $text; $this->iconTextArgs = $textArgs; return $this; }
 	
-	protected $rawIcon;
+	public $rawIcon;
 	public function rawIcon($rawIcon) { $this->rawIcon = $rawIcon; return $this; }
 
-	protected $size;
+	public $size;
 	public function size($size) { $this->size = $size; return $this; }
 
-	protected $color;
+	public $color;
 	public function color($color) { $this->color = $color; return $this; }
 	
 	public function tooltip($text, $textArgs=null)
@@ -77,6 +77,7 @@ trait WithIcon
 	public function htmlIcon()
 	{
 	    $text = $this->iconText ? t($this->iconText, $this->iconTextArgs) : '';
+	    $text = str_replace('"', "'", $text);
 		return $this->icon ?
 			self::iconS($this->icon, $text, $this->size, $this->color) :
 			self::rawIconS($this->rawIcon, $text, $this->size, $this->color);

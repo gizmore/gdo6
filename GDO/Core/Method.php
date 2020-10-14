@@ -173,7 +173,6 @@ abstract class Method
 			$append .= '&' . $gdt->name . '=' . urlencode($gdt->getVar());
 		}
 		
-		
 		return $this->href($append);
 	}
 	

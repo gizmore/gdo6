@@ -13,3 +13,7 @@ img.gdo-country { width: 24px; height: 17px; position: relative; top: 3px; }
 .cb { clear: both; }
 .dn { display: none; }
 .gdo-table td.gdt-num.gdo-gdt_user { font-family: sans-serif; text-align: left; }
+.ri { text-align: right; float: right; }
+.fr { float: right; }
+.fl { float: left; }
+.bw { word-break: break-word; }

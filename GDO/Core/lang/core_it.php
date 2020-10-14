@@ -66,6 +66,7 @@ return array(
 'btn_save' => 'Memmorizzare',
 'btn_upload' => 'Caricare',
 'btn_edit' => 'Modificare',
+'btn_create' => 'Creare',
 'btn_delete' => 'Cancellare',
 'btn_view' => 'Visualizzare',
 'btn_preview' => 'Anteprima',
@@ -74,7 +75,7 @@ return array(
 'btn_send_mail' => 'Invia e-Mail',
 'btn_confirm' => 'Conferma',
 'btn_cancel' => 'Abortire',
-'link_overview' => 'Sommario',
+'btn_overview' => 'Sommario',
 'btn_search' => 'Ricerca',
 'btn_sort' => 'Ordina',
     
@@ -141,6 +142,7 @@ return array(
 'err_unknown_file' => 'File non trovato.',
 'err_no_permission' => 'Non sei autorizzato a farlo.',
 'err_url_scheme' => 'Questo schema URL non è supportato. Sono supportati %s.',
+'err_no_image' => 'Questo file non è un \'immagine.',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',

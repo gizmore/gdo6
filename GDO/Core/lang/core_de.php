@@ -66,6 +66,7 @@ return array(
 'btn_save' => 'Speichern',
 'btn_upload' => 'Hochladen',
 'btn_edit' => 'Bearbeiten',
+'btn_create' => 'Erstellen',
 'btn_delete' => 'Löschen',
 'btn_view' => 'Ansehen',
 'btn_preview' => 'Vorschau',
@@ -74,7 +75,7 @@ return array(
 'btn_send_mail' => 'Email senden',
 'btn_confirm' => 'Bestätigen',
 'btn_cancel' => 'Abbrechen',
-'link_overview' => 'Übersicht',
+'btn_overview' => 'Übersicht',
 'btn_search' => 'Suchen',
 'btn_sort' => 'Sortieren',
     
@@ -141,6 +142,7 @@ return array(
 'err_unknown_file' => 'Datei nicht gefunden.',
 'err_no_permission' => 'Dafür fehlt Ihnen die Berechtigung.',
 'err_url_scheme' => 'Dieses URL-Schema wird nicht unterstützt. Erlaubte Schemas: %s.',
+'err_no_image' => 'Diese Datei ist kein Bild.',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',

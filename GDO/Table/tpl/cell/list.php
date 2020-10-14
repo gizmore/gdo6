@@ -12,34 +12,42 @@ use GDO\UI\GDT_Bar;
 ### Search Form ###
 ###################
 $formSearch = GDT_Form::make('s')->slim()->methodGET();
-$formSearch->addField(GDT_SearchField::make('search'));
+if ($field->searchable)
+{
+    $formSearch->addField(GDT_SearchField::make('search'));
+}
 
 ##################
 ### Order Form ###
 ##################
-$formOrder = $formSearch; # GDT_Form::make('o')->slim()->methodGET();
-$select = GDT_Select::make('order_by');
-foreach ($field->headers->fields as $gdt)
+if ($field->orderableField)
 {
-    if ($gdt->orderableField)
+    $formOrder = $formSearch; # GDT_Form::make('o')->slim()->methodGET();
+    $select = GDT_Select::make('order_by');
+    foreach ($field->headers->fields as $gdt)
     {
-        $select->choices[$gdt->name] = $gdt->displayLabel();
+        if ($gdt->orderableField)
+        {
+            $select->choices[$gdt->name] = $gdt->displayLabel();
+        }
     }
+    $select->initial($field->orderDefault);
+    $formOrder->addField($select);
+    
+    $ascdesc = GDT_Select::make('order_dir');
+    $ascdesc->choices['ASC'] = t('asc');
+    $ascdesc->choices['DESC'] = t('desc');
+    $ascdesc->initial($field->orderDefaultAsc ? 'ASC' : 'DESC');
+    $formOrder->addField($ascdesc);
 }
-$select->initial($field->orderDefault);
-$formOrder->addField($select);
 
-$ascdesc = GDT_Select::make('order_dir');
-$ascdesc->choices['ASC'] = t('asc');
-$ascdesc->choices['DESC'] = t('desc');
-$ascdesc->initial($field->orderDefaultAsc ? 'ASC' : 'DESC');
-$formOrder->addField($ascdesc);
-// $formOrder->addField(GDT_Submit::make('btn_sort'));
-$formSearch->addField(GDT_Submit::make('btn_search'));
-
-$bar = GDT_Bar::make()->horizontal();
-$bar->addFields([$formSearch]);
-echo $bar->render();
+if ($field->searchable || $field->orderableField)
+{
+    $formSearch->addField(GDT_Submit::make('btn_search'));
+    $bar = GDT_Bar::make()->horizontal();
+    $bar->addFields([$formSearch]);
+    echo $bar->render();
+}
 
 ############
 ### List ###

@@ -14,33 +14,37 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 		setTimeout(flow.upload.bind(flow), 200);
 	});
 	flow.on('fileSuccess', function(file,message){
-		console.log(input.name);
-		console.log(file);
-		console.log(message);
+		
+//		console.log(input.name);
+//		console.log(file);
+//		console.log(message);
+		
 		var preview = document.getElementById('gdo-file-preview-'+input.name);
+
 		if (!preview) {
 			console.error('Cannot find gdo-file-preview-'+input.name);
 			return;
 		}
 		
-		if (document.querySelector('#gdo-file-preview-'+input.name+' img')) {
-			var div = document.createElement("DIV");
-			div.className = 'gdo-file-preview';
-			var node = document.createElement("IMG");
-			node.src = '#';
-			div.appendChild(node);
-			preview.appendChild(div); 
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				node.src = e.target.result;
+		if (file.file.type && file.file.type.startsWith('image/')) {
+			if (document.querySelector('#gdo-file-preview-'+input.name+' img')) {
+				var div = document.createElement("DIV");
+				div.className = 'gdo-file-preview';
+				var node = document.createElement("IMG");
+				node.src = '#';
+				div.appendChild(node);
+				preview.appendChild(div); 
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					node.src = e.target.result;
+				}
+				reader.readAsDataURL(file.file);
 			}
-			reader.readAsDataURL(file.file);
 		}
-		else {
-			var previewString = document.getElementById('gdo-file-preview-'+input.name);
-			previewString.value = file.file.name;
-		}
-		
+
+		var previewString = document.getElementById('gdo-file-input-'+input.name);
+		previewString.value = file.file.name + " (" + file.file.size + " bytes)";
+
 	});
 	flow.on('fileError', function(file, message){
 		message = JSON.parse(message);

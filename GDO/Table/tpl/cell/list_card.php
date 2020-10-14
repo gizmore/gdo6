@@ -3,7 +3,7 @@ use GDO\Util\Common;
 $result = $field->getResult();
 ?>
 <div class="gdo-list-card">
-  <div class="title"><?= $field->title; ?></div>
+  <h3 class="title"><?= $field->title; ?></h3>
   <ul>
 	<li>
 <?php

@@ -33,7 +33,8 @@ trait WithObject
 	 */
 	public function foreignTable() { return $this->table; }
 	
-	public $composition = true;
+	public $composition = false;
+	public function composition($composition=true) { $this->composition = $composition; return $this; }
 	
 	###################
 	### Var / Value ###

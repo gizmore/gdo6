@@ -1,5 +1,4 @@
 <?php
-use GDO\Core\ModuleLoader;
 use GDO\DB\Database;
 use GDO\Install\Installer;
 use GDO\Core\Logger;
@@ -28,7 +27,7 @@ $modules = $app->loader->loadModules(false, true);
 
 foreach ($modules as $module)
 {
-    echo "Installing module {$module->getName()}.\n";
+//     echo "Installing {$module->getName()}.\n";
     Installer::installModule($module);
     
     $testDir = $module->filePath('Test');
@@ -38,9 +37,5 @@ foreach ($modules as $module)
         $command = new Command();
         $command->run(['phpunit', $testDir], false);
         echo "Done.\n";
-    }
-    else
-    {
-        echo "No tests.\n";
     }
 }

@@ -109,7 +109,7 @@ abstract class GDT
 	public $gdo;
 	public $var;
 	public $initial = null;
-	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $gdo === null ? $this->val(null) : $this->setGDOData($gdo); }
+	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $gdo === null ? $this->val($this->initial) : $this->setGDOData($gdo); }
 	public function val($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
 	public function toVar($value) { return ($value === null) || ($value === '') ? null : (string) $value; }
@@ -229,7 +229,7 @@ abstract class GDT
 		return array(
 		    'name' => $this->name,
 			'error' => $this->error,
-		    'var' => $this->getVar(),
+		    'var' => $this->var,
 		);
 	}
 	

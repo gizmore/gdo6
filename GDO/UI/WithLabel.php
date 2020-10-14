@@ -17,7 +17,7 @@ trait WithLabel
 	
 	public function displayLabel()
 	{
-		if ($this->labelRaw)
+		if ($this->labelRaw !== null)
 		{
 			return $this->labelRaw;
 		}

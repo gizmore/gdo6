@@ -10,8 +10,6 @@ use GDO\Core\GDT_Template;
  */
 final class GDT_Country extends GDT_ObjectSelect
 {
-	public $composition = false;
-	
 	public function __construct()
 	{
 		$this->table(GDO_Country::table());
