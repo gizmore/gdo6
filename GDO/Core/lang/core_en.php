@@ -45,6 +45,7 @@ return array(
 'url' => 'URL',
 'user' => 'User',
 'username' => 'Username',
+'guestname' => 'Guestname',
 'user_real_name' => 'Real Name',
 'version' => 'Version',
 'not_specified' => 'not specified',
@@ -57,7 +58,9 @@ return array(
 'private' => 'Private',
 'admin' => 'Administration',
 'timezone' => 'Timezone',
-	
+'filesize' => 'Filesize',
+'font_weight' => 'Font weight',
+    
 # Generic Buttons
 'btn_back' => 'Back',
 'btn_set' => 'Set',
@@ -143,6 +146,8 @@ return array(
 'err_no_permission' => 'You do not have the required permission.',
 'err_url_scheme' => 'This URL scheme is not supported. Supported are %s.',
 'err_no_image' => 'This file is not an image.',
+'err_is_deleted ' => 'This item is already deleted.',
+'err_text_only_numeric' => 'This text has only numbers in it and got rejected.',
 	
 # Permissions
 'sel_no_permissions' => 'No permission required',
@@ -226,5 +231,4 @@ return array(
 # Method description
 'mdescr_core_impressum' => 'Site impressum',
 'mdescr_core_privacy' => 'Privacy information',
-
 );

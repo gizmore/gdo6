@@ -1,15 +1,17 @@
 <?php
 namespace GDO\Table;
+
 use GDO\Core\GDT_Fields;
 use GDO\DB\ArrayResult;
 use GDO\Util\Common;
 use GDO\Core\GDT;
+
 /**
  * - A trait for tables and list which adds an extra headers variable. This has to be a \GDO\Core\GDT_Fields.
  * - Implements @\GDO\Core\ArrayResult multisort for use in @\GDO\Table\MethodTable.
  * @author gizmore
+ * @version 6.10
  * @since 6.05
- * @version 6.05
  */
 trait WithHeaders
 {
@@ -17,7 +19,7 @@ trait WithHeaders
 	### Headers ###
 	###############
 	/**
-	 * @var \GDO\Core\GDT_Fields
+	 * @var GDT_Fields
 	 */
 	public $headers;
 	private function makeHeaders() { if (!$this->headers) $this->headers = GDT_Fields::make(self::nextOrderName()); return $this->headers; }
@@ -59,6 +61,7 @@ trait WithHeaders
 		# Use it
 		usort($result->data, $sort);
 	}
+	
 	private function make_cmp(array $sorting)
 	{
 		$headers = $this->headers;
@@ -75,4 +78,5 @@ trait WithHeaders
 			return 0;
 		};
 	}
+	
 }

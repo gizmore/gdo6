@@ -25,13 +25,13 @@ class Result
 	/**
 	 * Shouldn't it be as safe and as fast to just rely on their destructors?
 	 */
-// 	public function __destruct()
-// 	{
-// 		if ($this->result)
-// 		{
-// 			mysqli_free_result($this->result);
-// 		}
-// 	}
+	public function __destruct()
+	{
+		if ($this->result)
+		{
+			mysqli_free_result($this->result);
+		}
+	}
 	
 	################
 	### Num rows ###
@@ -116,8 +116,8 @@ class Result
 			else
 			{
 				$class = $table->gdoClassName();
+				/** @var $object GDO **/
 				$object = new $class();
-				$object instanceof GDO;
 				return $object->setGDOVars($gdoData)->setPersisted();
 			}
 		}

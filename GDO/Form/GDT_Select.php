@@ -85,7 +85,7 @@ class GDT_Select extends GDT_ComboBox
 	
 	public function setGDOData(GDO $gdo=null)
 	{
-		return $gdo ? parent::setGDOData($gdo) : $this->val($this->emptyValue);
+		return $gdo ? parent::setGDOData($gdo) : $this->var($this->emptyValue);
 	}
 	
 	################

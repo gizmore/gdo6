@@ -1,8 +1,6 @@
 <?php
 namespace GDO\Core;
 
-use GDO\DB\GDT_String;
-
 /**
  * This table holds IPC shim data.
  * The IPC shim uses a DB table to communicate with other processes.
@@ -10,15 +8,19 @@ use GDO\DB\GDT_String;
  * @see GDT_Hook
  * @see GWS_Server
  * @author gizmore@wechall.net
+ * @version 6.10
+ * @since 6.05
  */
 final class GDO_Hook extends GDO
 {
+	public function gdoEngine() { return GDO::MYISAM; }
+	
 	public function gdoCached() { return false; }
 	
 	public function gdoColumns()
 	{
 		return array(
-			GDT_String::make('hook_message')->notNull()->max(1024),
+			GDT_JSON::make('hook_message')->notNull()->max(1024),
 		);
 	}
 	

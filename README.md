@@ -12,7 +12,7 @@ In GDO6 the same type system (GDT) applies to all widgets, like tables, forms an
 Write a GDT once, write the validation once, and use the same GDType everywhere in your code.
 There are types like Email, Username, Geoposition, Country, Object, File, Image, Enum, Duration, Serialize, ComboBox, Date, CreatedBy and many more.
 
-The performance is quite okay with responsive timing and about 4MB memory footprint.
+The performance is quite okay with responsive timing and about 5MB memory footprint with 90+ modules loaded.
 
 ## Why?
 
@@ -57,13 +57,13 @@ Read https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_AND_GDT.md to learn mo
 
 ## Missing features
 
- - Unit Tests: Currently there is NO unit testing. My strategy is to issue error mails. Of course unit tests would be an awesome addition.
+ - Unit Tests: Currently there are only very few unit tests. My strategy is to issue error mails on any little error.
 
- - No good design or theme: I am working on a basic web1.0 classic design, which is the only recommended design at the moment. There is a material design which looks  better but it's tricky to install and has a huge drawback - No rendering at all when javascipt has problems.
+ - Only a few designs. Currently there is one ugly classic design, a bootstrap theme and an angular material design.
 
  - The I18n is not that great. Pluralization, for example, is not supported.
  
- - Currently there are no SEO friendly urls. This is on TODO.
+ - Currently there are no SEO friendly urls. This is on TODO!
  
  - Some modules are not that mature yet. For example the forum module is missing lots of design and features like unread threads or search highlight.
  

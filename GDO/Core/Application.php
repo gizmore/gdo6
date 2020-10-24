@@ -60,7 +60,8 @@ class Application
 	public function isCLI() { return PHP_SAPI === 'cli'; }
 	public function isInstall() { return false; }
 	public function isWebsocket() { return false; }
-
+	public function allowJavascript() { return !isset($_REQUEST['disableJS']); }
+	
 	##############
 	### Format ###
 	##############

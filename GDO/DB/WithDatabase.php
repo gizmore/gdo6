@@ -31,26 +31,10 @@ trait WithDatabase
 	### GDO ###
 	###########
 	public function gdoColumnDefine() {}
-	public function gdoNullDefine() { return $this->notNull ? ' NOT NULL' : ''; }
+	public function gdoNullDefine() { return $this->notNull ? ' NOT NULL' : ' NULL'; }
 	public function gdoInitialDefine() { return isset($this->initial) ? (" DEFAULT ".GDO::quoteS($this->initial)) : ''; }
 	public function identifier() { return $this->name; }
 	public function blankData() { return [$this->name => $this->initial]; }
 	public function getGDOData() { return [$this->name => $this->getVar()]; }
-	
-// 	/**
-// 	 * Called when you initialize a @link GDT_Form with a @link GDO.
-// 	 * @see GDO
-// 	 * @see GDT
-// 	 * @see GDT_Form
-// 	 * @param GDO $gdo
-// 	 */
-// 	public function setGDOData(GDO $gdo=null)
-// 	{
-// 		if ($gdo && $gdo->hasVar($this->name))
-// 		{
-// 			$this->var = $gdo->getVar($this->name);
-// 		}
-// 		return $this;
-// 	}
 	
 }

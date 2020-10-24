@@ -9,9 +9,7 @@ use GDO\UI\WithTitle;
 
 /**
  * An HTML Form.
- * 
  * @author gizmore
- * 
  * @version 6.10
  * @since 3.00
  */
@@ -47,8 +45,8 @@ class GDT_Form extends GDT
 	################
 	### Encoding ###
 	################
-	const URLENCODED = 'application/x-www-form-urlencoded';
 	const MULTIPART = 'multipart/form-data';
+	const URLENCODED = 'application/x-www-form-urlencoded';
 	public $encoding = self::URLENCODED;
 	public function encoding($encoding) { $this->encoding = $encoding; return $this; }
 	
@@ -110,6 +108,7 @@ class GDT_Form extends GDT
 	
 	public function validateFormField(GDT $field)
 	{
+	    # Check field
 		if (($field->writable) && (!$field->error))
 		{
 			$value = $field->getValidationValue();
@@ -118,7 +117,6 @@ class GDT_Form extends GDT
 				self::$VALIDATING_SUCCESS = false;
 				if (!$field->error)
 				{
-					# Validators have to return truthy
 					$field->error('err_field_errorneus');
 				}
 			}
@@ -127,6 +125,7 @@ class GDT_Form extends GDT
 				$field->value($value);
 			}
 		}
+		# Recursive
 		if ($fields = $field->getFields())
 		{
 			foreach ($fields as $field)
@@ -154,7 +153,7 @@ class GDT_Form extends GDT
 		return $this;
 	}
 	
-	public function fieldWithGDOValuesFrom(GDT $gdoType, GDO $gdo=null)
+	private function fieldWithGDOValuesFrom(GDT $gdoType, GDO $gdo=null)
 	{
 		$gdoType->gdo($gdo);
 		if ($fields = $gdoType->getFields())
@@ -169,11 +168,14 @@ class GDT_Form extends GDT
 	private static $formData; # ugly
 	public function getFormData()
 	{
-		self::$formData = array();
+		self::$formData = [];
 		$this->withFields(function(GDT $field) {
 			if ($data = $field->getGDOData())
 			{
-				self::$formData = array_merge(self::$formData, $data);
+			    foreach ($data as $k => $v)
+			    {
+    			    self::$formData[$k] = $v;
+			    }
 			}
 		});
 		return self::$formData;
@@ -189,4 +191,9 @@ class GDT_Form extends GDT
 		return isset($this->fields[$key]) ? $this->fields[$key]->getValue() : null;
 	}
 
+	public static function hiddenMoMe()
+	{
+	    return sprintf('<input type="hidden" name="mo" value="%s" /><input type="hidden" name="me" value="%s" />',
+	        html($_REQUEST['mo']), html($_REQUEST['me']));
+	}
 }

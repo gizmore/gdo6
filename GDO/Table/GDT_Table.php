@@ -26,6 +26,12 @@ class GDT_Table extends GDT
 	use WithActions;
 	use WithFields;
 	
+	##############
+	### Footer ###
+	##############
+	public $footer;
+	public function footer($footer) { $this->footer = $footer; return $this; }
+	
 	################
 	### Endpoint ###
 	################
@@ -154,15 +160,25 @@ class GDT_Table extends GDT
 		return $this;
 	}
 	
-	public function getQuery()
+	public $countQuery;
+	public function countQuery(Query $query)
 	{
-		return $this->query->copy();
+	    $this->countQuery = $query;
+	    return $this;
 	}
 	
-	public function getFilteredQuery()
+	public function getQuery()
 	{
-		$query = $this->getQuery();
-
+		return $this->query; #->copy();
+	}
+	
+	public function getCountQuery()
+	{
+	    return $this->countQuery;
+	}
+	
+	public function getFilteredQuery(Query $query)
+	{
 		if ($this->filtered)
 		{
 			foreach ($this->getHeaderFields() as $gdoType)
@@ -176,9 +192,10 @@ class GDT_Table extends GDT
 		
 		if ($this->searchable)
 		{
-		    if (isset($_REQUEST['s']['search']))
+		    $s = $this->headers->name;
+		    if (isset($_REQUEST[$s]['search']))
 		    {
-		        if ($searchTerm = trim((string)$_REQUEST['s']['search']))
+		        if ($searchTerm = trim((string)@$_REQUEST[$s]['search']))
 		        {
 		            $bigWhere = $this->getBigWhereCondition($searchTerm);
             		$query->where($bigWhere);
@@ -218,8 +235,8 @@ class GDT_Table extends GDT
 	{
 		if ($this->countItems === null)
 		{
-			$this->countItems = $this->query ? 
-				$this->getFilteredQuery()->select('COUNT(*)')->exec()->fetchValue() :
+			$this->countItems = $this->countQuery ? 
+				$this->getFilteredQuery($this->countQuery)->exec()->fetchValue() :
 				$this->getResult()->numRows();
 		}
 		return $this->countItems;
@@ -231,7 +248,7 @@ class GDT_Table extends GDT
 	 */
 	public function queryResult()
 	{
-		$query = $this->getFilteredQuery();
+		$query = $this->getFilteredQuery($this->query);
 		
 		$headers = $this->headers;
 		$o = $headers ? $headers->name : 's';
@@ -267,6 +284,7 @@ class GDT_Table extends GDT
     				}
     			}
 		    }
+		    
 			if (!$hasCustomOrder)
 			{
 				if ($this->orderDefault)
@@ -275,10 +293,12 @@ class GDT_Table extends GDT
 				}
 			}
 		}
+		
 		if ($this->pagemenu)
 		{
 			$this->pagemenu->filterQuery($query);
 		}
+		
 		return $query->exec();
 	}
 	

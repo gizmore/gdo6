@@ -8,6 +8,7 @@ namespace GDO\UI;
  * @author gizmore
  * @since 6.05
  * @version 6.10
+ * @see https://www.utf8icons.com/
  */
 final class GDT_IconUTF8
 {
@@ -21,7 +22,7 @@ final class GDT_IconUTF8
         'arrow_left' => '←',
         'arrow_right' => '‣',
         'arrow_up' => '▲',
-        'audio' => '♬',
+        'audio' => '🎵',
         'back' => '↶',
         'bars' => '☰',
         'birthday' => '🎂',
@@ -36,7 +37,7 @@ final class GDT_IconUTF8
         'create' => '✚',
         'credits' => '¢',
         'cut' => '✂',
-        'date_range' => '◴',
+        'date_range' => '⌚',
         'delete' => '✖',
         'delete_sweep' => '✖',
         'download' => '⇩',
@@ -49,9 +50,10 @@ final class GDT_IconUTF8
         'file' => '🗎',
         'flag' => '⚑',
         'folder' => '📁',
+        'font' => 'ᴫ',
         'group' => '😂',
         'gender' => '⚥',
-        'help' => '☛',
+        'help' => '💡',
         'image' => '📷',
         'language' => '⚐',
         'level' => '🏆',
@@ -61,10 +63,10 @@ final class GDT_IconUTF8
         'lock' => '🔒',
         'male' => '♂',
         'message' => '☶',
-        'money' => '€',
+        'money' => '💰',
         'password' => '⚷',
         'pause' => '⏸',
-        'phone' => '☎',
+        'phone' => '📞',
         'plus' => '+',
         'plus_one' => '+1',
         'quote' => '↶',
@@ -73,9 +75,13 @@ final class GDT_IconUTF8
         'settings' => '⚙',
         'star' => '★',
         'tag' => '⛓',
-        'time' => '⌛',
+        'thumbs_up' => '👍',
+        'thumbs_down' => '👎',
+        'thumbs_none' => '👉',
+        'time' => '⌚',
         'title' => 'T',
         'trophy' => '🏆',
+        'upload' => '⇧',
         'url' => '🌐',
         'user' => '☺',
         'users' => '😂',

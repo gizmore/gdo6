@@ -14,6 +14,9 @@ class GDT_PageMenu extends GDT
 	use WithHREF;
 	use WithLabel;
 	
+	public $orderable = false;
+	public $searchable = false;
+	
 	public $numItems = 0;
 	public function items($numItems)
 	{
@@ -32,11 +35,11 @@ class GDT_PageMenu extends GDT
 	 * Set num items via query.
 	 * @optional
 	 * @param Query $query
-	 * @return \GDO\Table\GDT_PageMenu
+	 * @return self
 	 */
 	public function query(Query $query)
 	{
-		$this->query = $query->copy()->select('COUNT(*)');
+		$this->query = $query->copy()->selectOnly('COUNT(*)');
 		$this->numItems = $this->query->exec()->fetchValue();
 		return $this;
 	}
@@ -58,7 +61,6 @@ class GDT_PageMenu extends GDT
 		$this->shown = $shown;
 		return $this;
 	}
-	
 	
 	public function filterQuery(Query $query)
 	{

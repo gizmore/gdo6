@@ -287,7 +287,7 @@ class GDT_File extends GDT_Object
 						$this->beforeCopy($file);
 						$file->copy();
 // 						$this->gdo->setVar($this->name, $file->getID());
-						$this->val($file->getID());
+						$this->var($file->getID());
 						$this->files[] = $file;
 					}
 				}

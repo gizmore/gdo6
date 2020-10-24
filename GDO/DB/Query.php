@@ -78,7 +78,7 @@ final class Query
 	 * Enable logging and verbose output.
 	 * @return \GDO\DB\Query
 	 */
-	public function debug() { $this->debug = true; return $this; }
+	public function debug($debug=true) { $this->debug = $debug; return $this; }
 	private $debug = false;
 	
 	#############
@@ -86,21 +86,25 @@ final class Query
 	#############
 	/**
 	 * Copy this query.
-	 * Used to build pagination queries from selects.
 	 * @return self
 	 */
 	public function copy()
 	{
 		$clone = new self($this->table);
-// 		$clone->columns = $this->columns;
+        $clone->fetchTable = $this->fetchTable;
 		$clone->type = $this->type;
+		$clone->columns = $this->columns;
 		$clone->from = $this->from;
 		$clone->where = $this->where;
 		$clone->join = $this->join;
-// 		$clone->group = $this->group;
-// 		$clone->having = $this->having;
+		$clone->group = $this->group;
+		$clone->having = $this->having;
+        $clone->order = $this->order;
+        $clone->limit = $this->limit;
 		$clone->from = $this->from;
 		$clone->write = $this->write;
+		$clone->debug = $this->debug;
+		$clone->cached = $this->cached;
 		return $clone;
 	}
 	
@@ -203,6 +207,7 @@ final class Query
 	}
 	
 	/**
+	 * Build a select.
 	 * @param string $columns
 	 * @return self
 	 */
@@ -214,6 +219,17 @@ final class Query
 			$this->columns = $this->columns ? $this->columns . ", $columns" : " $columns";
 		}
 		return $this;
+	}
+	
+	/**
+	 * Build a select but reset columns.
+	 * @param string $columns
+	 * @return self
+	 */
+	public function selectOnly($columns=null)
+	{
+	    $this->columns = null;
+	    return $this->select($columns);
 	}
 	
 	/**

@@ -24,8 +24,9 @@ use GDO\Date\GDT_Timezone;
  */
 final class GDO_User extends GDO
 {
-	const REAL_NAME_PREFIX = '`';
-	const GUEST_NAME_PREFIX = '~';
+    const REAL_NAME_PREFIX = '´';
+    const REAL_NAME_POSTFIX = '`';
+    const GUEST_NAME_PREFIX = '~';
 	const GHOST_NAME_PREFIX = '~~';
 			
 	const BOT = 'bot';

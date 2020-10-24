@@ -82,7 +82,7 @@ class GDO_Module extends GDO
 		if ($readme = @file_get_contents($this->filePath('README.md')))
 		{
 			$matches = null;
-			if (preg_match("/^#.*\\n(.*)\\n/", $readme, $matches))
+			if (preg_match("/^#.*[\\r\\n]+(.*)[\\r\\n]/", $readme, $matches))
 			{
 				return $matches[1];
 			}
@@ -106,7 +106,7 @@ class GDO_Module extends GDO
 			$this->configCache = $this->getConfig();
 			foreach ($this->configCache as $gdoType)
 			{
-				$gdoType->gdo($this)->val($this->getConfigVar($gdoType->name));
+				$gdoType->gdo($this)->var($this->getConfigVar($gdoType->name));
 			}
 		}
 		return $this->configCache;

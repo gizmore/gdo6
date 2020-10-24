@@ -3,10 +3,11 @@ namespace GDO\DB;
 use GDO\Form\GDT_Select;
 use GDO\Core\GDT_Template;
 /**
- * Boolean Checkbox
+ * Boolean Checkbox.
+ * Implemented as select to reflect undetermined status. Also HTML does not send unchecked boxes.
  * @author gizmore
  * @since 5.0
- * @version 6.0
+ * @version 6.10
  */
 class GDT_Checkbox extends GDT_Select
 {
@@ -46,8 +47,8 @@ class GDT_Checkbox extends GDT_Select
 	####################
 	### Undetermined ###
 	####################
-	public $undetermined;
-	public function undetermined($undetermined)
+	public $undetermined = false;
+	public function undetermined($undetermined=true)
 	{
 		$this->undetermined = $undetermined;
 		return $this;
@@ -90,6 +91,7 @@ class GDT_Checkbox extends GDT_Select
 	public function renderForm()
 	{
 		$this->initChoices();
+		$this->initThumbIcon();
 		return parent::renderForm();
 	}
 	
@@ -102,10 +104,23 @@ class GDT_Checkbox extends GDT_Select
 			default: return t('enum_undetermined_yes_no');
 		}
 	}
-
+	
 	public function renderFilter()
 	{
 		return GDT_Template::php('DB', 'filter/boolean.php', ['field'=>$this]);
+	}
+
+	####################
+	### Dynamic Icon ###
+	####################
+	private function initThumbIcon()
+	{
+	    switch ($this->getVar())
+	    {
+	        case '0': return $this->icon('thumbs_down');
+	        case '1': return $this->icon('thumbs_up');
+	        default: return $this->icon('thumbs_none');
+	    }
 	}
 
 }

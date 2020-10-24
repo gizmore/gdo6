@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Core;
+
 use GDO\DB\GDT_Enum;
 use GDO\File\GDT_Path;
 use GDO\UI\GDT_Divider;
@@ -11,6 +12,7 @@ use GDO\Language\Trans;
 use GDO\DB\GDT_Version;
 use GDO\DB\GDT_Checkbox;
 use GDO\UI\GDT_Bar;
+
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
  * simply because it installs the module table.
@@ -21,8 +23,8 @@ use GDO\UI\GDT_Bar;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @since 6.00
  * @version 6.10
+ * @since 6.00
  */
 final class Module_Core extends GDO_Module
 {
@@ -30,6 +32,8 @@ final class Module_Core extends GDO_Module
 	### Module ###
 	##############
 	public $module_priority = 1;
+
+	public $gdo_revision = '6.10-r9303'; # unused.
 	
 	public function isCoreModule() { return true; }
 	
@@ -80,7 +84,7 @@ final class Module_Core extends GDO_Module
 	public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
 	public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
 	public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
-	public function cfgAssetVersion() { return $this->getConfigVar('asset_revision'); }
+	public function cfgAssetVersion() { return sprintf('%.02f', $this->getConfigVar('asset_revision')); }
 	
 	#############
 	### Hooks ###

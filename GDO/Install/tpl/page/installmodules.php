@@ -28,7 +28,7 @@ $table->addHeader(GDT_ModuleFeature::make('module_features'));
 $table->addHeader(GDT_Cell::make('module_description')->method('displayModuleDescription'));
 $install = GDT_Submit::make('btn_install');
 $skip = Config::linkStepGDT('5');
-$hiddenStep = GDT_Hidden::make('step')->val('4');
+$hiddenStep = GDT_Hidden::make('step')->var('4');
 $table->actions()->addFields([$install, $skip, $hiddenStep]);
 $table->ordered(true);
 $table->multisort($table->getResult(), 'module_name', true);

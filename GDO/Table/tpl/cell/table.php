@@ -1,5 +1,6 @@
-<?php /** @var $field \GDO\Table\GDT_Table **/
-use GDO\Util\Common;
+<?php use GDO\Form\GDT_Form;
+/** @var $field \GDO\Table\GDT_Table **/
+/** @var $form GDT_Form **/
 $headers = $field->getHeaderFields();
 if ($pagemenu = $field->getPageMenu())
 {
@@ -8,17 +9,14 @@ if ($pagemenu = $field->getPageMenu())
 $result = $field->getResult();
 ?>
 <?php if (!$form) : ?>
-<form method="post" action="<?= $field->href; ?>" class="b">
+<form method="get" action="<?= $field->href; ?>" class="b">
+<?=GDT_Form::hiddenMoMe()?>
 <?php endif; ?>
-<div
- class="gdo-table"
- layout="column" flex layout-fill
- ng-controller="GDOTableCtrl"
- ng-init='init(<?= $field->displayConfigJSON(); ?>)'>
+<div class="gdo-table">
   <?php if ($field->title) : ?>
-  <h3><?= $field->title; ?></h3>
+  <h3><?=$field->title?></h3>
   <?php endif; ?>
-  <table id="gwfdt-<?= $field->name; ?>" class="gdo-table">
+  <table id="gwfdt-<?=$field->name?>" class="gdo-table">
 	<thead>
 	  <tr>
 	  <?php foreach($headers as $gdoType) : ?>
@@ -38,7 +36,7 @@ $result = $field->getResult();
 	</thead>
 	<tbody>
 	<?php while ($gdo = $result->fetchAs($field->fetchAs)) : ?>
-	<tr gdo-id="<?= $gdo->getID()?>">
+	<tr data-gdo-id="<?= $gdo->getID()?>">
 	  <?php foreach($headers as $gdoType) :
 	  $col = $field->getField($gdoType->name);
 	  $gdoType = $col ? $col : $gdoType;
@@ -48,7 +46,9 @@ $result = $field->getResult();
 	</tr>
 	<?php endwhile; ?>
 	</tbody>
-	<tfoot></tfoot>
+<?php if ($field->footer) : ?>
+	<tfoot><?=$field->footer?></tfoot>
+<?php endif; ?>
   </table>
   <input type="submit" class="n" />
 </div>

@@ -5,6 +5,9 @@ use GDO\DB\Cache;
 use GDO\DB\Database;
 use GDO\DB\Query;
 use GDO\DB\Result;
+use GDO\DB\GDT_Int;
+use GDO\DB\GDT_String;
+use GDO\DB\GDT_Enum;
 
 /**
  * A GDO is a container for GDTs, which values are backed by a database and cache.
@@ -14,18 +17,23 @@ use GDO\DB\Result;
  * @see Database
  * 
  * @author gizmore@wechall.net
- * @version 6.08
- * @since 1.00
+ * @version 6.11
+ * @since 3.02
  */
 abstract class GDO
 {
 	use WithName;
 
-	const MYISAM = 'myisam';
-	const INNODB = 'innodb';
-	const MEMORY = 'memory';
+	const MYISAM = 'myisam'; # Faster writes
+	const INNODB = 'innodb'; # Foreign keys
+	const MEMORY = 'memory'; # Temp tables
 	
 	/**
+	 * Override this function to create GDO database columns for your GDO.
+	 * Any GDT can be used, most of them support table creation code via GDT_Int, GDT_String or GDT_Enum.
+	 * @see GDT_Int
+	 * @see GDT_String
+	 * @see GDT_Enum
 	 * @return GDT[]
 	 */
 	public abstract function gdoColumns();
@@ -44,7 +52,7 @@ abstract class GDO
 	################
 	### Escaping ###
 	################
-	public static function escapeIdentifierS($identifier) { return str_replace("`", "\`", $identifier); }
+	public static function escapeIdentifierS($identifier) { return str_replace("`", "\\`", $identifier); }
 	public static function quoteIdentifierS($identifier) { return "`" . self::escapeIdentifierS($identifier) . "`"; }
 	public static function escapeSearchS($var) { return str_replace(['%', "'", '"'], ['\\%', "\\'", '\\"'], $var); }
 	
@@ -112,7 +120,10 @@ abstract class GDO
 		{
 			if ($data = $gdoType->gdo($this)->getGDOData())
 			{
-				$values = array_merge($values, $data);
+			    foreach ($data as $k => $v)
+			    {
+			        $values[$k] = $v;
+			    }
 			}
 		}
 		return $values;
@@ -157,12 +168,9 @@ abstract class GDO
 	
 	public function setVars(array $vars=null, $markDirty=true)
 	{
-		if ($vars)
+		foreach ($vars as $key => $value)
 		{
-			foreach ($vars as $key => $value)
-			{
-				$this->setVar($key, $value, $markDirty);
-			}
+			$this->setVar($key, $value, $markDirty);
 		}
 		return $this;
 	}
@@ -192,10 +200,12 @@ abstract class GDO
 		$back = [];
 		foreach ($keys as $key)
 		{
-// 		    $back[$key] = $this->getVar($key);
 			if ($data = $this->gdoColumn($key)->getGDOData())
 			{
-				$back = array_merge($back, $data);
+			    foreach ($data as $k => $v)
+			    {
+			        $back[$k] = $v;
+			    }
 			}
 		}
 		return $back;
@@ -355,7 +365,7 @@ abstract class GDO
 		return $this->getValue($this->gdoColumnOf($className)->name);
 	}
 	
-/**
+    /**
 	 * Get the GDOs AutoIncrement column, if any.
 	 * @return \GDO\DB\GDT_AutoInc
 	 */
@@ -374,8 +384,7 @@ abstract class GDO
 	 */
 	public function gdoColumn($key)
 	{
-		$column = $this->gdoColumnsCache()[$key];
-		return $column->gdo($this);
+		return $this->gdoColumnsCache()[$key]->gdo($this);
 	}
 	
 	/**
@@ -384,9 +393,9 @@ abstract class GDO
 	 */
 	public function gdoColumnCopy($key)
 	{
+	    /** @var $column GDT **/
 		$column = clone $this->gdoColumnsCache()[$key];
-		$column instanceof GDT;
-		return $column->gdo($this)->val(null);
+		return $column->gdo($this)->var($column->initial);
 	}
 	
 	public function gdoColumnsExcept(...$except)
@@ -707,16 +716,17 @@ abstract class GDO
 		{
 			if ($data = $column->blankData())
 			{
-				$gdoVars = array_merge($gdoVars, $data);
+			    foreach ($data as $k => $v)
+			    {
+			        $gdoVars[$k] = $v;
+			    }
 			}
 		}
-		
 		if ($initial)
 		{
 			# Merge only existing keys
 			$gdoVars = array_intersect_key($initial, $gdoVars) + $gdoVars;
 		}
-		
 		return $gdoVars;
 	}
 	
@@ -750,7 +760,7 @@ abstract class GDO
 	
 	public function displayName()
 	{
-		return $this->gdoClassName() . "#" . $this->getID();
+		return $this->gdoHumanName() . "#" . $this->getID();
 	}
 	
 	##############
@@ -783,6 +793,10 @@ abstract class GDO
 		return self::notFoundException($value);
 	}
 	
+	/**
+	 * @param array $vars
+	 * @return self
+	 */
 	public static function getByVars(array $vars)
 	{
 		$query = self::table()->select();
@@ -795,7 +809,7 @@ abstract class GDO
 	
 	/**
 	 * Get a row by auto inc column.
-	 * @param string $id
+	 * @param string ...$id
 	 * @return self
 	 */
 	public static function getById(...$id)
@@ -860,10 +874,6 @@ abstract class GDO
 	#############
 	### Cache ###
 	#############
-// 	public function __wakeup()
-// 	{
-// 		#$this->table();
-// 	}
 	/**
 	 * @var \GDO\DB\Cache
 	 */
@@ -935,8 +945,6 @@ abstract class GDO
 			GDT_Hook::callWithIPC('CacheInvalidate', $this->gdoClassName(), $this->getID());
 		}
 	}
-	
-	
 	
 	###########
 	### All ###
@@ -1129,6 +1137,7 @@ abstract class GDO
 	{
 		self::bulkInsert($fields, $data, $chunkSize, 'REPLACE');
 	}
+	
 	public static function bulkInsert(array $fields, array $data, $chunkSize=100, $insert='INSERT')
 	{
 		foreach (array_chunk($data, $chunkSize) as $chunk)
@@ -1136,6 +1145,7 @@ abstract class GDO
 			self::_bulkInsert($fields, $chunk, $insert);
 		}
 	}
+	
 	private static function _bulkInsert(array $fields, array $data, $insert='INSERT')
 	{
 		$names = [];
@@ -1176,6 +1186,5 @@ abstract class GDO
 		$result = Database::instance()->unlock($lock);
 		return mysqli_fetch_field($result) === '1';
 	}
-	
 	
 }

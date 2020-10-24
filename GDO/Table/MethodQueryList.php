@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Table;
+
 use GDO\Core\GDT;
 use GDO\Core\GDO;
 use GDO\Core\GDT_Response;
@@ -10,8 +11,8 @@ use GDO\Core\GDT_Fields;
  * Abstract class that renders a list.
  *
  * @author gizmore
+ * @version 6.10
  * @since 5.0
- * @version 5.0
  */
 abstract class MethodQueryList extends MethodQuery
 {
@@ -24,7 +25,13 @@ abstract class MethodQueryList extends MethodQuery
 	
 	public function isOrdered() { return true; }
 	public function isPaginated() { return true; }
-	public function isQuicksorted() { return true; }
+	public function isQuicksorted() { return false; }
+	public function isQuicksearchable() { return false; }
+	public function defaultOrderField() { return null; }
+	public function defaultOrderDirAsc() { return true; }
+	
+	public function headersName() { return 'o'; }
+	public function listName() { return 'list'; }
 	
 	public function gdoDecorateList(GDT_List $list) {}
 	
@@ -34,19 +41,27 @@ abstract class MethodQueryList extends MethodQuery
 	public function gdoQuery() { return $this->gdoTable()->select(); }
 	
 	/**
+	 * @return Query
+	 */
+	public function gdoCountQuery() { return $this->gdoQuery()->copy()->selectOnly('COUNT(*)'); }
+	
+	/**
 	 * @return GDT[]
 	 */
 	public function gdoParameters()
 	{
 		return array(
 			GDT_PageMenu::make('page')->initial('1'),
-			GDT_PageMenu::make('ipp')->initial(Module_Table::instance()->cfgItemsPerPage()),
+		    GDT_PageMenu::make('ipp')->initial(Module_Table::instance()->cfgItemsPerPage()),
 		);
 	}
 	
-	public function getListName()
+	/**
+	 * Override for quicksearch and order fields.
+	 * @return GDT[]
+	 */
+	public function gdoFilters()
 	{
-		return 'list';
 	}
 	
 	/**
@@ -62,22 +77,23 @@ abstract class MethodQueryList extends MethodQuery
 	 */
 	public function renderPage()
 	{
-		$list = GDT_List::make($this->getListName());
-		$list->query($this->gdoFilteredQuery());
-		$this->setupTitle($list);
-		$headers = GDT_Fields::make('o')->addFields($this->gdoFilters())->addFields($this->gdoParameters());
+		$list = GDT_List::make($this->listName());
+		$headers = GDT_Fields::make($this->headersName())->addFields($this->gdoFilters())->addFields($this->gdoParameters());
 		$list->headers($headers);
+		$list->quicksort($this->isQuicksorted());
+		$list->searchable($this->isQuicksearchable());
+		$list->query($this->gdoQuery());
+		$list->countQuery($this->gdoCountQuery());
+		$this->setupTitle($list);
 		$list->listMode($this->gdoListMode());
-		if ($this->isPaginated())
-		{
-			$list->paginate(true, null, $this->gdoParameterValue('ipp'));
-		}
 		if ($this->isOrdered())
 		{
-			$list->ordered();
+		    $list->ordered(true, $this->defaultOrderField(), $this->defaultOrderDirAsc());
 		}
-		$list->quicksort($this->isQuicksorted());
-// 		$list->href($this->href());
+		if ($this->isPaginated())
+		{
+		    $list->paginate(true, null, $this->gdoParameterValue('ipp'));
+		}
 		$this->gdoDecorateList($list);
 		return GDT_Response::makeWith($list);
 	}

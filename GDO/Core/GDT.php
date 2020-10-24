@@ -104,13 +104,13 @@ abstract class GDT
 	### Var/Value ###
 	#################
 	/**
-	 * @var \GDO\Core\GDO - Current row / gdo
+	 * @var $gdo GDO
 	 */
-	public $gdo;
-	public $var;
-	public $initial = null;
-	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $gdo === null ? $this->val($this->initial) : $this->setGDOData($gdo); }
-	public function val($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
+	public $gdo; # current row / gdo
+	public $var; # String representation
+	public $initial = null; # Initial var
+	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $gdo === null ? $this->var($this->initial) : $this->setGDOData($gdo); }
+	public function var($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
 	public function toVar($value) { return ($value === null) || ($value === '') ? null : (string) $value; }
 	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
@@ -119,7 +119,7 @@ abstract class GDT
 	public function getParameterVar() { return $this->getRequestVar(null, $this->var); }
 	public function getParameterValue() { return $this->toValue($this->getParameterVar()); }
 	public function getValue() { return $this->toValue($this->getVar()); }
-	public function initial($var=null) { $this->initial = $var === null ? null : (string)$var; return $this->val($var); }
+	public function initial($var=null) { $this->initial = $var === null ? null : (string)$var; return $this->var($var); }
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }
 	public function displayVar() { return html($this->getVar()); }
 	public function displayJSON() { return json_encode($this->renderJSON()); }

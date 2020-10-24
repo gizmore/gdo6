@@ -1,4 +1,6 @@
 /** Basic layout **/
+* { font-family: Helvetica Neue,sans-serif; }
+
 #gdo-header { position: fixed; width: 100%; background: #eee; border-bottom: 1px solid #fff; padding: 0px 32px; }
 div.gdo-body { padding: 64px 0px 0px; min-height: 100%; }
 #gdo-footer { background: #eee; }
@@ -14,7 +16,7 @@ div.gdo-body { padding: 64px 0px 0px; min-height: 100%; }
 .gdo-icon-button:HOVER { text-decoration: none; }
 a.gdt-button, input[type=submit], a.gdo-icon-button {
 	border: 1px ridge gray; background: #ddd; border-radius: 6px; padding: 0px 6px; color: #333; margin: 2px;
-	height: 24px; line-height: 22px; font-size: 16px; font-weight: 500; font-family: sans-serif;
+	height: 24px; line-height: 22px; font-size: 16px; font-weight: 500;
 }
 a[disabled] { opacity: 0.25; cursor: text; }
 
@@ -41,9 +43,11 @@ a[disabled] { opacity: 0.25; cursor: text; }
 .gdo-form .gdo-link { text-decoration: underline; }
 .gdo-form-title { text-align: center; line-height: 38px; margin-bottom: 6px; background: #eee; }
 /* .gdo-container.gdt-anticsrf { padding: 0; } */
+input[type=submit]:hover { cursor: pointer; }
+.gdo-form a { padding: 8px; }
 
 /** Divider **/
-.gdt-divider { padding: 8px; background: #eee; border: 1px solid #fff; }
+.gdt-divider { padding: 8px; background: #eee; border: 1px solid #fff; font-weight: bold; }
 
 /** Table **/
 .gdo-tblorder { display: inline-block; }
@@ -51,6 +55,7 @@ a[disabled] { opacity: 0.25; cursor: text; }
 .gdo-table th input, .gdo-table th select { display: block; }
 .gdo-table th { vertical-align: bottom; }
 div.gdo-table { overflow: auto; }
+table.gdo-table { min-width: 100%; }
 table.gdo-table thead { background: #ccb; }
 table.gdo-table tbody tr:nth-child(even) { background: #ddd; }
 table.gdo-table tbody tr:nth-child(odd) { background: #eee; }
@@ -64,9 +69,10 @@ table.gdo-table td { padding: 0px 2px; }
 .gdo-list-card > .title { padding: 4px 8px 2px; font-size: 20px; } 
 
 /** Pagemenu **/
-.gdo-pagemenu ul { display: flex; }
-.gdo-pagemenu li { flex: 1 1 auto; }
+.gdo-pagemenu ul { display: flex; margin: 0 4px; }
+.gdo-pagemenu li { flex: 0 0 auto; padding: 8px; height: 36px; line-height: 20px; display: block; min-width: 36px; }
 .gdo-pagemenu a { width: 100%; height: 100%; display: inline-block; text-align: center; }
+.gdo-pagemenu li.page-selected a, .gdo-pagemenu a:hover { color: #000; background: #eee; }
 
 /** Card **/
 .gdo-card { border-bottom: 2px dashed #ddd; margin-bottom: 12px; padding-bottom: 12px; }
@@ -120,3 +126,6 @@ table img.gdo-country + span { display: none; }
     border: 1px solid #888;
 }
 
+a {
+	text-decoration: underline;
+}

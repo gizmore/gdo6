@@ -134,12 +134,12 @@ class Config
 	{
 		$themes = array_diff(GDT_Template::themeNames(), ['install']);
 		return array(
-			GDT_Hidden::make('configured')->val('1'),
+			GDT_Hidden::make('configured')->var('1'),
 
 			# Site
 			GDT_Divider::make()->label('install_config_section_site'),
 			GDT_String::make('sitename')->initialValue(GWF_SITENAME)->max(16)->label('cfg_sitename'),
-			GDT_Hidden::make('sitecreated')->val(GWF_SITECREATED),
+			GDT_Hidden::make('sitecreated')->var(GWF_SITECREATED),
 		    GDT_Enum::make('language')->enumValues('en', 'de')->initialValue(GWF_LANGUAGE)->required(),
 		    GDT_String::make('timezone')->initialValue(GWF_TIMEZONE)->required(),
 		    GDT_Select::make('themes')->multiple()->choices(array_combine($themes, $themes))->required()->initialValue(array('default')),

@@ -45,6 +45,7 @@ trait WithFields
 	 * @return \GDO\Core\GDT[]
 	 */
 	public function getFields() { return $this->fields; }
+	public function fieldCount() { return $this->fields ? count($this->fields) : 0; }
 	
 	/**
 	 * Return a field by name.

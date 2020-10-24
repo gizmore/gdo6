@@ -14,5 +14,6 @@ final class GDT_Level extends GDT_UInt
 	public function __construct()
 	{
 		$this->icon('level');
+		$this->min(0);
 	}
 }

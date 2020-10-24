@@ -10,6 +10,8 @@ use GDO\Util\Strings;
  */
 class GDT_Font extends GDT_Select
 {
+    public $icon = 'font';
+    
 	public function defaultLabel() { return $this->label('font'); }
 	
 	public function renderForm()

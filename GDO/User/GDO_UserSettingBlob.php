@@ -82,7 +82,7 @@ final class GDO_UserSettingBlob extends GDO
 		}
 		$user->tempUnset('gdo_setting_blob');
 		
-		self::userGet($user, $key)->val($value);
+		self::userGet($user, $key)->var($value);
 		
 		GDT_Hook::callWithIPC('UserSettingChange', $user, $key, $value);
 	}

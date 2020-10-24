@@ -5,7 +5,7 @@ use GDO\Core\Method;
 use GDO\DB\Query;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Response;
-use GDO\Core\GDT_Fields;
+
 /**
  * A method that displays a table.
  * 
@@ -28,6 +28,11 @@ abstract class MethodQueryTable extends Method
 	 */
 	public abstract function getQuery();
 	
+	public function getCountQuery()
+	{
+	    return $this->getQuery()->copy()->selectOnly('COUNT(*)');
+	}
+	
 	/**
 	 * @return GDT[]
 	 */
@@ -45,8 +50,8 @@ abstract class MethodQueryTable extends Method
 	{
 		$table = GDT_Table::make('table');
 		$table->addHeaders($this->getHeaders());
-// 		$table->href($this->href());
 		$table->query($this->getQuery());
+		$table->countQuery($this->getCountQuery());
 		$table->gdo($table->query->table);
 		$table->ordered($this->isOrdered());
 		$table->filtered($this->isFiltered());
@@ -54,4 +59,5 @@ abstract class MethodQueryTable extends Method
 		$this->onDecorateTable($table);
 		return GDT_Response::makeWith($table);
 	}
+
 }

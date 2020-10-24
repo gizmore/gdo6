@@ -15,7 +15,7 @@ echo '<';echo '?';echo "php\n";
 <?php
 $tz = $form->getField('timezone')->var;
 $created = Time::getDate(microtime(true));
-$form->getField('sitecreated')->val($created);
+$form->getField('sitecreated')->var($created);
 ?>
 
 <?php foreach ($form->fields as $field) : ?>

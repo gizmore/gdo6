@@ -45,6 +45,7 @@ return array(
 'url' => 'URL',
 'user' => 'Benutzer',
 'username' => 'Benutzername',
+'guestname' => 'Gastname',
 'user_real_name' => 'Realname',
 'version' => 'Version',
 'not_specified' => 'keine Angabe',
@@ -57,6 +58,8 @@ return array(
 'private' => 'Privat',
 'admin' => 'Administration',
 'timezone' => 'Zeitzone',
+'filesize' => 'Dateigröße',
+'font_weight' => 'Font-Stärke',
     
 # Generic Buttons
 'btn_back' => 'Zurück',
@@ -143,6 +146,8 @@ return array(
 'err_no_permission' => 'Dafür fehlt Ihnen die Berechtigung.',
 'err_url_scheme' => 'Dieses URL-Schema wird nicht unterstützt. Erlaubte Schemas: %s.',
 'err_no_image' => 'Diese Datei ist kein Bild.',
+'err_is_deleted ' => 'Dieser Eintrag ist bereits gelöscht.',
+'err_text_only_numeric' => 'Dieser Text enthält nur Zahlen und wurde deshalb abgelehnt.',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',

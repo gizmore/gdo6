@@ -7,7 +7,7 @@ use Exception;
  * The GDO Logger.
  * @author gizmore
  * @author spaceone
- * @version 6.05
+ * @version 6.10
  * @since 1.00
  */
 final class Logger
@@ -18,7 +18,7 @@ final class Logger
 	const GWF_CRITICAL = 0x08;
 	const PHP_ERROR = 0x10;
 	const DB_ERROR = 0x20;
-	const SMARTY = 0x40;
+// 	const SMARTY = 0x40;
 	const HTTP_ERROR = 0x80;
 	const HTTP_GET = 0x100;
 	const HTTP_POST = 0x200;
@@ -30,7 +30,7 @@ final class Logger
 	const _ALL = 0x37ff;
 	const _DEFAULT = self::_ALL;
 
-	private static $POST_DELIMITER = '.::.';
+	public static $POST_DELIMITER = '.::.';
 
 	private static $username = false;
 	private static $basedir = GDO_PATH . 'protected/logs';

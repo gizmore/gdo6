@@ -42,7 +42,7 @@ class InstallAdmins extends MethodForm
 	public function formValidated(GDT_Form $form)
 	{
 		$password = $form->getField('user_password');
-		$password->val(BCrypt::create($password->getVar())->__toString());
+		$password->var(BCrypt::create($password->getVar())->__toString());
 		
 		$user = GDO_User::blank($form->getFormData())->setVars(array(
 			'user_type' => GDO_User::MEMBER,
