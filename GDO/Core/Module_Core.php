@@ -33,7 +33,7 @@ final class Module_Core extends GDO_Module
 	##############
 	public $module_priority = 1;
 
-	public $gdo_revision = '6.10-r9303'; # unused.
+	public $gdo_revision = '6.10-r9304'; # unused.
 	
 	public function isCoreModule() { return true; }
 	
