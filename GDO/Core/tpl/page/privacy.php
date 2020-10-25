@@ -22,7 +22,7 @@ Here are some default paragraphs for default official GDO modules.
 <li>
 <div>
 <h1>Logging</h1>
-<p>Is the logging module installed?......</p>
+<p>GDO6 is collecting lots of logfiles in a manner that we can exactly trace your activity on this website.</p>
 </div>
 </li>
 

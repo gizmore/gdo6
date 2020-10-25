@@ -22,6 +22,7 @@ use GDO\UI\WithIcon;
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
  * @see \GDO\DB\GDT_String - Database supporting string baseclass
+ * @see \GDO\DB\GDT_Enum - Database supporting enum class
  * @see \GDO\UI\GDT_Paragraph - Simple text rendering
  */
 abstract class GDT
@@ -136,7 +137,7 @@ abstract class GDT
 	###################
 	public function formVariable() { return GDT_Form::$CURRENT ? GDT_Form::$CURRENT->name : null; }
 	public function formName() { return sprintf('%s[%s]', $this->formVariable(), $this->name); }
-	public function htmlFormName() { return sprintf("name=\"%s\"", $this->formName()); }
+	public function htmlFormName() { return sprintf(" name=\"%s\"", $this->formName()); }
 	
 	#################
 	### GDO Value ###
@@ -145,11 +146,15 @@ abstract class GDT
 	public function getGDOData() {}
 	public function setGDOVar($var) { if ($this->gdo) $this->gdo->setVar($this->name, $var); return $this; }
 	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
-	public function setGDOData(GDO $gdo=null)
+	public function setGDOData(GDO $gdo)
 	{
-		if ($gdo && $gdo->hasVar($this->name))
+		if ($gdo->hasVar($this->name))
 		{
 			$this->var = $gdo->getVar($this->name);
+		}
+		else
+		{
+		    $this->var = $this->initial;
 		}
 		return $this;
 	}

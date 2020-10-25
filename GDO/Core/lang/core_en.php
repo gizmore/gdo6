@@ -3,9 +3,12 @@ return array(
 'sitename' => GWF_SITENAME,
 
 'enum_none' => 'None',
+'enum_all' => 'All',
+'enum_staff' => 'Staff',
 'no_selection' => 'No selection',
 
 # util/gdo and util/gwf fields
+'all' => 'All',
 'birthdate' => 'Birthdate',
 'captcha' => 'Captcha',
 'color' => 'Color',
@@ -70,6 +73,7 @@ return array(
 'btn_upload' => 'Upload',
 'btn_edit' => 'Edit',
 'btn_create' => 'Create',
+'btn_approve' => 'Approve',
 'btn_delete' => 'Delete',
 'btn_view' => 'View',
 'btn_preview' => 'Preview',
@@ -128,7 +132,9 @@ return array(
 'err_pass_too_short' => 'Your password has to be at least %s characters long.',
 'err_module_method' => 'The module and method could not been not found.',
 'err_invalid_choice' => 'Your selection is not applicable.',
+'err_permission_create_level' => 'You need a userlevel of %s to create this.',
 'err_permission_create' => 'You do not have permissions to create data of this type.',
+'err_permission_read' => 'You are not allowed to see this entry.',
 'err_permission_update' => 'You do not have permissions to edit this object.',
 'err_permission_delete' => 'You do not have permissions to delete this object.',
 'err_path_not_exists' => 'The specified path does not qualify as %s: %s',
@@ -148,7 +154,10 @@ return array(
 'err_no_image' => 'This file is not an image.',
 'err_is_deleted ' => 'This item is already deleted.',
 'err_text_only_numeric' => 'This text has only numbers in it and got rejected.',
-	
+'err_already_approved' => 'This has been approved already.',
+'err_already_deleted' => 'This item has been already deleted.',
+'err_level_too_low' => 'You need a userlevel of %s to do that. Your level is %s.',
+    
 # Permissions
 'sel_no_permissions' => 'No permission required',
 'perm_admin' => 'Administrator',
@@ -231,4 +240,6 @@ return array(
 # Method description
 'mdescr_core_impressum' => 'Site impressum',
 'mdescr_core_privacy' => 'Privacy information',
+    
+'li_creation_title' => '%s at %s (%s)',
 );

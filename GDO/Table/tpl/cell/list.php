@@ -24,7 +24,7 @@ if ($field->quicksort && $field->headers && $field->headers->fieldCount())
 ##################
     if ($field->orderable && $field->headers)
     {
-        $formOrder = $formSearch; # GDT_Form::make('o')->slim()->methodGET();
+        $formOrder = $formSearch;
         $select = GDT_Select::make('order_by')->icon('arrow_up');
         foreach ($field->headers->fields as $gdt)
         {

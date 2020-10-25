@@ -30,6 +30,9 @@ class GDT_File extends GDT_Object
 		$this->icon('file');
 	}
 	
+	############
+	### Mime ###
+	############
 	public $mimes = [];
 	public function mime(...$mime)
 	{
@@ -37,6 +40,9 @@ class GDT_File extends GDT_Object
 		return $this;
 	}
 	
+	############
+	### Size ###
+	############
 	public $minsize;
 	public function minsize($minsize)
 	{
@@ -50,6 +56,9 @@ class GDT_File extends GDT_Object
 		return $this;
 	}
 	
+	###############
+	### Preview ###
+	###############
 	public $preview = false;
 	public function preview($preview=true)
 	{
@@ -60,6 +69,9 @@ class GDT_File extends GDT_Object
 	public function previewHREF($previewHREF=null) { $this->previewHREF = $previewHREF; return $this->preview($previewHREF!==null); }
 	public function displayPreviewHref(GDO_File $file) { return $this->previewHREF . $file->getID(); }
 	
+	##################
+	### File count ###
+	##################
 	public $minfiles = 0;
 	public $maxfiles = 1;
 	public function minfiles($minfiles)
@@ -67,12 +79,16 @@ class GDT_File extends GDT_Object
 		$this->minfiles = $minfiles;
 		return $minfiles  > 0 ? $this->notNull() : $this;
 	}
+	
 	public function maxfiles($maxfiles)
 	{
 		$this->maxfiles = $maxfiles;
 		return $this;
 	}
 	
+	##############
+	### Action ###
+	##############
 	public $action;
 	public function action($action)
 	{
@@ -83,7 +99,7 @@ class GDT_File extends GDT_Object
 	{
 		if (!$this->action)
 		{
-			$this->action($_SERVER['REQUEST_URI']);
+			$this->action(@$_SERVER['REQUEST_URI']);
 		}
 		return $this->action;
 	}
@@ -119,7 +135,7 @@ class GDT_File extends GDT_Object
 	{
 		$json = [];
 		$files = Arrays::arrayed($this->getValue());
-		/** @var $files \GDO\File\GDO_File **/
+		/** @var $file \GDO\File\GDO_File **/
 		foreach ($files as $file)
 		{
 			$file->tempHref($this->href);
@@ -217,6 +233,19 @@ class GDT_File extends GDT_Object
 	##############
 	### Delete ###
 	##############
+	public $noDelete = false;
+	public function noDelete($noDelete=true)
+	{
+	    $this->noDelete = $noDelete;
+	    return $this;
+	}
+	
+	public function notNull($notNull=true)
+	{
+	    $this->noDelete = $notNull;
+	    return parent::notNull($notNull);
+	}
+	
 	public function onDeleteFiles(array $ids)
 	{
 		$id = array_shift($ids); # only first id

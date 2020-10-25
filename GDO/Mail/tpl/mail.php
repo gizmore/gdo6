@@ -1,3 +1,7 @@
+<?php
+use GDO\Util\Strings;
+/** @var $content string **/
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +10,7 @@
 <body>
 <h1><?=sitename()?></h1>
 <div>
-<?=nl2br($content)?>
+<?=Strings::nl2brHTMLSafe($content)?>
 </div>
 </body>
 </html>

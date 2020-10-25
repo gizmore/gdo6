@@ -9,9 +9,6 @@ span, img { display: inline-block; }
 /** Main Layout **/
 body { height: 100%; background: #fff; overflow-x: auto; width: 100%;}
 html { height: 100%; }
-/* .gdo-body { display: flex; } */
-/* #gdo-left-bar, #gdo-right-bar { flex: 0 0 18.5%; } */
-/* .gdo-main { flex: 1; } */
 
 /** UI/GDT_Bar.php **/
 .gdo-bar  { display: flex; flex: 1 1 auto; justify-content: space-around; align-content: center; }
@@ -51,13 +48,12 @@ a { color: #33f; font-weight: 900; }
 
 /** Table/Lists **/
 .gdt-list { border: 1px solid #000; border-bottom: none; }
+.gdt-list > h3 { border-bottom: 1px solid #333; padding: 8px; background: #eee; }
 .gdt-list-item { position: relative; border-bottom: 1px solid #000; }
-.gdt-list > h3 { border-bottom: 1px solid #000; }
-.gdt-li-upper { display: flex; }
-.gdt-li-image { width: 48px; max-height: 48px; text-align: center; display: flex; align-items: center; align-content: center; }
-.gdt-li-image > * { margin: auto; }
-.gdt-li-content { flex-grow: 10; }
-.gdt-li-subtext { padding: 4px 8px; }
+.gdt-li-upper { display: flex; border-bottom: 1px solid #ccc; padding: 4px;}
+.gdt-li-title { flex-grow: 1 1 auto; font-size: 18px; padding: 8px 0px; }
+.gdt-li-image { width: 48px; max-height: 48px; text-align: center; align-items: center; align-content: center; flex-flow: 0 0 auto; }
+.gdt-li-middle { padding: 8px; display: block; font-size: 20px; border-bottom: 1px solid #333; }
 
 /** File **/
 .gdo-file img { max-width: 100%; max-height: 1024px; }

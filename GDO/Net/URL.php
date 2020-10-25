@@ -2,13 +2,35 @@
 namespace GDO\Net;
 
 use GDO\Util\Common;
+use GDO\Core\Application;
 
 /**
  * This class holds url parts and the raw url.
+ * It is the return value of GDT_Url->toValue().
+ * 
  * @author gizmore
+ * @version 6.10
+ * @sinve 6.02
+ * 
+ * @see GDT_Url
  */
 final class URL
 {
+    ##############
+    ### Static ###
+    ##############
+	public static function localScheme()
+	{
+	    if (Application::instance()->isCLI())
+	    {
+	        return GWF_PROTOCOL;
+	    }
+	    return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+	}
+	
+	###############
+	### Members ###
+	###############
 	public $raw;
 	public $parts;
 	
@@ -20,7 +42,7 @@ final class URL
 	
 	public function getScheme()
 	{
-	    return $this->parts['scheme'];
+	    return isset($this->parts['scheme']) ? $this->parts['scheme'] : self::localScheme();
 	}
 	
 	public function getHost()

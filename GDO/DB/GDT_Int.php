@@ -1,5 +1,6 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDO;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
@@ -8,6 +9,27 @@ use GDO\UI\WithLabel;
 use GDO\Util\Strings;
 use GDO\Form\WithFormFields;
 use GDO\Table\WithOrder;
+
+/** 
+ * Database capable base integer class.
+ * Control ->bytes(4) for size.
+ * Control ->unsigned(true) for unsigned.
+ * Control ->min() and ->max() for validation.
+ * Control ->step() for html5 fancy.
+ * Is inherited by GDT_Object for auto_inc relation.
+ * Can validate uniqueness.
+ * Can compare gdo instances.
+ * Is searchable and orderable.
+ * Uses WithLabel, WithFormFields, WithDatabase and WithOrder.
+ * 
+ * @author gizmore
+ * @version 6.10
+ * @since 6.00
+ * 
+ * @see GDT_UInt
+ * @see GDT_Decimal
+ * @see GDT_Object
+ */
 class GDT_Int extends GDT
 {
 	use WithLabel;
@@ -17,13 +39,13 @@ class GDT_Int extends GDT
 
 	public function toValue($var) { return $var === null ? null : (int) $var; }
 	
-	public $min = null;
-	public $max = null;
+	public $min;
+	public $max;
 	public $unsigned = false;
 	public $bytes = 4;
 	public $step = 1;
 	public $filterable = true;
-	public $searchable = false;
+	public $searchable = true;
 	public $orderable = true;
 	public $orderDefaultAsc = true;
 	
@@ -33,6 +55,9 @@ class GDT_Int extends GDT
 	public function min($min) { $this->min = $min; return $this; }
 	public function max($max) { $this->max = $max; return $this; }
 	
+	################
+	### Validate ###
+	################
 	public function validate($value)
 	{
 		if (parent::validate($value))
@@ -58,16 +83,19 @@ class GDT_Int extends GDT
 		if ($this->unique)
 		{
 			$condition = "{$this->identifier()}=".GDO::quoteS($value);
-			if ($this->gdo->getID())
-			{
+			if ($this->gdo->getID()) // persisted
+			{ // ignore own row
 				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}
-			return $this->gdo->table()->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
+			return $this->gdo->table()->select('1')->where($condition)->first()->exec()->fetchValue() !== '1';
 		}
 		return true;
-		
 	}
 	
+	/**
+	 * Appropiate min / max validation.
+	 * @return boolean
+	 */
 	private function intError()
 	{
 		if (($this->min !== null) && ($this->max !== null))
@@ -84,6 +112,9 @@ class GDT_Int extends GDT
 		}
 	}
 	
+	##########
+	### DB ###
+	##########
 	public function gdoColumnDefine()
 	{
 		$unsigned = $this->unsigned ? " UNSIGNED" : "";
@@ -100,6 +131,14 @@ class GDT_Int extends GDT
 			case 8: return "BIG";
 			default: throw new GDOError('err_int_bytes_length', [$this->bytes]);
 		}
+	}
+	
+	##############
+	### Render ###
+	##############
+	public function htmlClass()
+	{
+	    return sprintf(' gdt-num %s', parent::htmlClass());
 	}
 	
 	public function renderForm()
@@ -123,6 +162,9 @@ class GDT_Int extends GDT
 	    ));
 	}
 	
+	##############
+	### Filter ###
+	##############
 	public function renderFilter()
 	{
 		return GDT_Template::php('DB', 'filter/int.php', ['field'=>$this]);
@@ -141,7 +183,7 @@ class GDT_Int extends GDT
 	
 	public function filterGDO(GDO $gdo)
 	{
-		if ('' !== ($filter = (string)$this->filterValue()))
+		if ($filter = (string)$this->filterValue())
 		{
 			$min = Strings::substrTo($filter, '-', $filter);
 			$max = Strings::substrFrom($filter, '-', $filter);
@@ -157,11 +199,6 @@ class GDT_Int extends GDT
 		return $va - $vb;
 	}
 	
-	public function htmlClass()
-	{
-		return sprintf(' gdt-num %s', parent::htmlClass());
-	}
-
 	##############
 	### Config ###
 	##############
@@ -173,7 +210,7 @@ class GDT_Int extends GDT
 			'unsigned' => $this->unsigned,
 			'bytes' => $this->bytes,
 			'step' => $this->step,
-			'value' => $this->var,
+			'var' => $this->var,
 		);
 	}
 

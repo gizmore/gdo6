@@ -2,23 +2,27 @@
 namespace GDO\Net;
 use GDO\DB\GDT_String;
 use GDO\Util\Arrays;
+use GDO\Core\GDT_Template;
+use GDO\UI\WithTitle;
 /**
  * URL field.
  * Features link checking.
  * Value is a @see URL.
  * 
  * @author gizmore
- * @since 5.0
  * @version 6.10
+ * @since 5.0
  */
 class GDT_Url extends GDT_String
 {
+    use WithTitle;
+    
     ##############
     ### Static ###
     ##############
 	public static function host() { return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : GWF_DOMAIN; }
 	public static function protocol() { return isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] !== 'off') ? 'https' : 'http'; }
-	public static function absolute($url) { return sprintf('%s://%s%s%s', self::protocol(), self::host(), GWF_WEB_ROOT, self::relative($url)); }
+	public static function absolute($url) { return sprintf('%s://%s%s', self::protocol(), self::host(), self::relative($url)); }
 	public static function relative($url) { return $url; }
 	
 	public function defaultLabel() { return $this->label('url'); }
@@ -27,10 +31,10 @@ class GDT_Url extends GDT_String
 	public $allowLocal = false;
 	public $allowExternal = true;
 	public $schemes = ['http', 'https'];
+	public $noFollow = false;
 	
 	public $min = 0;
 	public $max = 1024;
-// 	public $pattern = "#(?:https?://|/).*#i";
 	
 	public function __construct()
 	{
@@ -46,6 +50,11 @@ class GDT_Url extends GDT_String
 	{
 	    return $value ? $value->raw : null;
 	}
+	
+	##############
+	### Render ###
+	##############
+	public function renderCell() { return GDT_Template::php('Net', 'cell/url.php', ['field' => $this]); }
 	
 	###############
 	### Options ###
@@ -71,6 +80,12 @@ class GDT_Url extends GDT_String
 	public function schemes(...$schemes)
 	{
 	    $this->schemes = $schemes;
+	    return $this;
+	}
+	
+	public function noFollow($noFollow=true)
+	{
+	    $this->noFollow = $noFollow;
 	    return $this;
 	}
 

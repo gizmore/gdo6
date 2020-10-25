@@ -1,10 +1,12 @@
 <?php
 namespace GDO\User;
+
 use GDO\DB\GDT_UInt;
+
 /**
  * User level field.
  * @author gizmore
- * @version 6.05
+ * @version 6.10
  * @since 6.02
  */
 final class GDT_Level extends GDT_UInt
@@ -14,6 +16,7 @@ final class GDT_Level extends GDT_UInt
 	public function __construct()
 	{
 		$this->icon('level');
-		$this->min(0);
+		$this->initial('0');
 	}
+	
 }

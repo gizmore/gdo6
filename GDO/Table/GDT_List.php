@@ -1,14 +1,21 @@
 <?php
 namespace GDO\Table;
+
 use GDO\Core\GDT_Template;
 use GDO\Core\GDT;
 
 /**
- * Similiar to a table, a list displays multiple cards.
+ * Similiar to a table, a list displays multiple cards or list items.
+ * 
+ * Control ->itemTemplate(GDT) which defaults to GDT_GWF.
+ * Control ->listMode(1|2) for cards or list items.
+ * Control ->quicksort(true) for a quicksearch and order form.
  * 
  * @author gizmore
+ * @version 6.10
  * @since 5.0
- * @version 5.0
+ * 
+ * @see GDT_Table
  */
 class GDT_List extends GDT_Table
 {
@@ -49,24 +56,12 @@ class GDT_List extends GDT_Table
 		return GDT_Template::php('Table', $template, ['field'=>$this]);
 	}
 	
-	public function initJSON()
+	public function configJSON()
 	{
-		$pagemenu = $this->getPageMenu();
-		return array(
-			'tableName' => $this->getResult()->table->gdoClassName(),
-			'pagemenu' => $pagemenu ? $pagemenu->initJSON() : null,
-// 			'sortable' => $this->sortable,
-// 			'sortableURL' => $this->sortableURL,
-		);
-	}
-
-	public function renderJSON()
-	{
-		$pagemenu = $this->getPageMenu();
-		return array(
-			'pagemenu' => $pagemenu ? $pagemenu->renderJSON() : null,
-			'result' => $this->getResult()->renderJSON($this->getFields()),
-		);
+	    return array_merge(parent::configJSON(), [
+	        'quicksort' => $this->quicksort,
+	        'listMode' => $this->listMode,
+	    ]);
 	}
 	
 }

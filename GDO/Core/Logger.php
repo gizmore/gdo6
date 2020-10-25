@@ -83,9 +83,9 @@ final class Logger
 		$back = Common::getServer('REQUEST_METHOD', '').' ';
 		$back .= Common::getServer('REQUEST_URI', '');
 
-		if (false === $post && count($_POST) > 0)
+		if (false === $post && count($_REQUEST) > 0)
 		{
-			$back .= self::$POST_DELIMITER .'POSTDATA'.self::stripPassword($_POST);
+			$back .= self::$POST_DELIMITER .'POSTDATA'.self::stripPassword($_REQUEST);
 		}
 		return $back;
 	}
@@ -145,13 +145,13 @@ final class Logger
 	public static function logCritical($message)
 	{
 		self::log('critical', $message, self::GWF_CRITICAL);
-		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_POST).PHP_EOL.$message, false), self::GWF_CRITICAL); // TODO: formating
+		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GWF_CRITICAL); // TODO: formating
 	}
 	public static function logException(Exception $e)
 	{
 		$message = sprintf("%s in %s Line %s\n", $e->getMessage(), $e->getFile(), $e->getLine());
 		self::log('critical', $message, self::GWF_CRITICAL);
-		$log = Debug::backtraceException($e, true).PHP_EOL.self::stripPassword($_POST).PHP_EOL.$message;
+		$log = Debug::backtraceException($e, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message;
 		self::log('critical_details', $log, self::GWF_CRITICAL);
 	}
 	public static function logInstall($message) { self::log('install', $message, self::_NONE); }

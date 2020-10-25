@@ -2,7 +2,7 @@
 <div class="gdo-file-controls">
 <div id="gdo-file-preview-<?=$field->name?>"></div>
 <?php foreach ($field->getInitialFiles() as $file) : $file instanceof \GDO\File\GDO_File; ?>
-<?php $deleteButton = sprintf('<input type="submit" name="delete_%s[%s]" value="Remove File" onclick="return confirm(\'%s\')"/>', $field->name, $file->getID(), t('confirm_delete')); ?>
+<?php $deleteButton = $field->noDelete ? '' : sprintf('<input type="submit" name="delete_%s[%s]" value="Remove File" onclick="return confirm(\'%s\')"/>', $field->name, $file->getID(), t('confirm_delete')); ?>
 <?php if ($field->preview && $file->isImageType()) : ?>
 <?php printf('<div class="gdo-file-preview"><img src="%s" />%s (%s)</div>', $field->displayPreviewHref($file), $deleteButton, html($file->getName())); ?>
 <?php else : ?>
@@ -13,7 +13,8 @@
 </div>
 <div class="gdo-container<?= $field->classError(); ?>">
   <?=$field->htmlIcon()?>
-  <label><?= $field->displayLabel() ?></label>
-  <input type="file" id="gdo-file-input-<?=$field->name?>" name="<?=$field->name?>" class="gdo-flow-file" />
+  <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
+  <input type="file" <?=$field->htmlID()?> name="<?=$field->name?>" class="gdo-flow-file" />
+  <span id="gdo-file-input-<?=$field->name?>"></span>
   <?= $field->htmlError(); ?>
 </div>

@@ -56,6 +56,8 @@ abstract class MethodQueryList extends MethodQuery
 		);
 	}
 	
+	public function getPage() { return $this->gdoParameterVar('page'); }
+	
 	/**
 	 * Override for quicksearch and order fields.
 	 * @return GDT[]

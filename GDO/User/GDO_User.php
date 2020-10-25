@@ -16,6 +16,7 @@ use GDO\Net\GDT_IP;
 use GDO\DB\GDT_UInt;
 use GDO\Date\GDT_Birthdate;
 use GDO\Date\GDT_Timezone;
+use GDO\Avatar\GDT_Avatar;
 /**
  * The holy user object.
  * @author gizmore
@@ -156,7 +157,16 @@ final class GDO_User extends GDO
 	
 	public function renderChoice()
 	{
-		return $this->displayNameLabel();
+	    $pre = '';
+	    if (module_enabled('Avatar'))
+	    {
+	        # ugly switch to html output for the avatar.
+	        $old = $_REQUEST['fmt'];
+	        $_REQUEST['fmt'] = 'html';
+	        $pre = GDT_Avatar::make()->user($this)->addClass('fl')->renderCell(); # html avatar
+	        $_REQUEST['fmt'] = $old;
+	    }
+		return $pre . $this->displayNameLabel();
 	}
 	
 	#############
@@ -228,7 +238,9 @@ final class GDO_User extends GDO
 	 */
 	public static $CURRENT;
 	
-	
+	/**
+	 * @return GDO_User
+	 */
 	public function persistent()
 	{
 		if ($this->isGhost())

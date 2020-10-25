@@ -65,5 +65,55 @@ final class Strings
 		}
 		return $default;
 	}
-
+	
+	#######################
+	### HTML safe nl2br ###
+	#######################
+	/**
+	 * Changes newline to <br/> but only when no tags are open.
+	 * @param string $s
+	 * @return string
+	 */
+	public static function nl2brHTMLSafe($s)
+	{
+	    $s = trim($s, " \r\n");
+	    $len = strlen($s);
+	    $open = 0;
+	    $back = '';
+	    for ($i = 0; $i < $len; $i++)
+	    {
+	        $c = $s[$i];
+	        if ($c === '<')
+	        {
+	            $back .= $c;
+	            $open++;
+	        }
+	        elseif ($c === '>')
+	        {
+	            $back .= $c;
+	            $open--;
+	        }
+	        elseif ($c === "\r")
+	        {
+	            # skip
+	        }
+	        elseif ($c === "\n")
+	        {
+	            if (!$open)
+	            {
+	                $back .= "<br/>\n"; # safe to convert
+	            }
+	            else
+	            {
+	                $back .= ' '; # Open tag. use space instead.
+	            }
+	        }
+	        else
+	        {
+	            $back .= $c;
+	        }
+	    }
+	    return $back;
+	}
+	
 }

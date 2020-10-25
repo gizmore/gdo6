@@ -3,9 +3,12 @@ return array(
 'sitename' => GWF_SITENAME,
 
 'enum_none' => 'Nichts',
+'enum_all' => 'Alle',
+'enum_staff' => 'Mitarbeiter',
 'no_selection' => 'Keine Auswahl',
 
 # util/gdo and util/gwf fields
+'all' => 'Alle',
 'birthdate' => 'Geburtsdatum',
 'captcha' => 'Captcha',
 'color' => 'Farbe',
@@ -70,6 +73,7 @@ return array(
 'btn_upload' => 'Hochladen',
 'btn_edit' => 'Bearbeiten',
 'btn_create' => 'Erstellen',
+'btn_approve' => 'Freischalten',
 'btn_delete' => 'Löschen',
 'btn_view' => 'Ansehen',
 'btn_preview' => 'Vorschau',
@@ -128,7 +132,9 @@ return array(
 'err_pass_too_short' => 'Ihr Passwort muss mindestens %s Zeichen lang sein.',
 'err_module_method' => 'Die Funktion konnte nicht gefunden werden.',
 'err_invalid_choice' => 'Ihre Auswahl ist ungültig.',
+'err_permission_create_level' => 'Sie benötigen einen Nutzerlevel von %s um dies anzulegen.',
 'err_permission_create' => 'Sie dürfen das Objekt nicht anlegen.',
+'err_permission_read' => 'Sie dürfen diesen Eintrag nicht sehen.',
 'err_permission_update' => 'Sie dürfen dieses Objekt nicht bearbeiten.',
 'err_permission_delete' => 'Sie dürfen dieses Objekt nicht löschen.',
 'err_path_not_exists' => 'Der angegebene Pfad ist kein %s: %s',
@@ -148,6 +154,9 @@ return array(
 'err_no_image' => 'Diese Datei ist kein Bild.',
 'err_is_deleted ' => 'Dieser Eintrag ist bereits gelöscht.',
 'err_text_only_numeric' => 'Dieser Text enthält nur Zahlen und wurde deshalb abgelehnt.',
+'err_already_approved' => 'Dieser Eintrag wurde schon freigegeben.',
+'err_already_deleted' => 'Dieser Eintrag wurde bereits gelöscht.',
+'err_level_too_low' => 'Sie benötigen einen Nutzerlevel von %s um dies zu tun. Ihr Nutzerlevel ist %s.',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',
@@ -232,4 +241,6 @@ return array(
 # Method description
 'mdescr_core_impressum' => 'Impressum',
 'mdescr_core_privacy' => 'Datenschutz',
+
+'li_creation_title' => '%s am %s (%s)',
 );

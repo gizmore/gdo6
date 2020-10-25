@@ -24,9 +24,13 @@ final class Website
 	
 	public static function hrefBack()
 	{
+	    if (Application::instance()->isCLI())
+	    {
+	        return hrefDefault();
+	    }
 	    if (!($url = GDO_Session::instance()->getLastURL()))
 	    {
-	        $url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : GWF_WEB_ROOT;
+	        $url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : hrefDefault();
 	    }
 	    return $url;
 	}
@@ -150,13 +154,24 @@ final class Website
 		return $back;
 	}
 	
-	public static function renderJSON($json)
+	/**
+	 * Renders a json response and dies.
+	 * @param mixed $json
+	 * @param boolean $die
+	 */
+	public static function renderJSON($json, $die=true)
 	{
 		if (!Application::instance()->isCLI())
 		{
 			header('Content-Type: application/json');
 		}
-		die(json_encode($json, JSON_PRETTY_PRINT));
+		
+		echo json_encode($json, JSON_PRETTY_PRINT);
+
+		if ($die)
+		{
+		    die(0);
+		}
 	}
 	
 	public static function outputStarted()

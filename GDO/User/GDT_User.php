@@ -102,10 +102,21 @@ class GDT_User extends GDT_Object
 		{
 			if ($filter = $this->filterValue())
 			{
-				$filter = GDO::escapeS($filter);
-				$this->filterQueryCondition($query, "user_name LIKE '%$filter%'");
+				$filter = GDO::escapeSearchS($filter);
+				$filter = "LIKE '%{$filter}%'";
+				$this->filterQueryCondition($query, "user_name $filter OR user_guest_name $filter OR user_real_name $filter");
 			}
 		}
 	}
-
+	
+	/**
+	 * Quicksearch does it's work via subselects.
+	 */
+	public function searchCondition($searchTerm)
+	{
+	    $searchTerm = GDO::escapeSearchS($searchTerm);
+	    $like = "LIKE '%$searchTerm%'";
+	    return "( SELECT 1 FROM {$this->table->gdoTableName()} WHERE user_name $like OR user_guest_name $like OR user_real_name $like )";
+	}
+	
 }

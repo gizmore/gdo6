@@ -1,5 +1,6 @@
 <?php
 namespace GDO\DB;
+use GDO\Core\GDO;
 use GDO\Core\GDT_Template;
 use GDO\Core\WithCompletion;
 
@@ -11,18 +12,6 @@ class GDT_Object extends GDT_UInt
 	##############
 	### Render ###
 	##############
-	public function renderJSON()
-	{
-		$gdo = $this->getValue();
-		return array_merge(parent::renderJSON(), array(
-			'selected' => ($gdo ? array(
-				'id' => $gdo->getID(),
-				'display' => $gdo->displayName(),
-			) : null),
-			'completionHref' => $this->completionHref,
-		));
-	}
-
 	public function renderCell()
 	{
 		if ($obj = $this->getValue())
@@ -34,6 +23,7 @@ class GDT_Object extends GDT_UInt
 	
 	 public function renderChoice($choice)
 	 {
+	     /** @var $obj GDO **/
 		 if ($obj = $this->getValue())
 		 {
 			 return $obj->renderChoice();
@@ -51,5 +41,21 @@ class GDT_Object extends GDT_UInt
 			return GDT_Template::php('DB', 'form/object.php', ['field'=>$this]);
 		}
 	}
+	
+	##############
+	### Config ###
+	##############
+	public function configJSON()
+	{
+	    $gdo = $this->getValue();
+	    return array_merge(parent::configJSON(), array(
+	        'selected' => ($gdo ? array(
+	            'id' => $gdo->getID(),
+	            'display' => $gdo->displayName(),
+	        ) : null),
+	        'completionHref' => $this->completionHref,
+	    ));
+	}
+	
 	
 }

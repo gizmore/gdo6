@@ -11,7 +11,7 @@ This will instruct the template engine to look for templates in jqui first, then
 
 Default is not a real theme, it is just the default templates that ship with all the GDT. Make sure you _always_ have default as the last theme in your config.
 
-Some modules ship with a theme, like the modules _Material_, _Classic_ or _JQueryUI_. The classic theme is recommended at the moment.
+Some modules ship with a theme, like the modules _Material_, _Classic_, _BootstrapTheme_ or _JQueryUI_. The BootstrapTheme theme is recommended at the moment.
 
 
 ## Creating a new theme
@@ -41,11 +41,14 @@ Voila, you have succesfully overwritten a template.
 
 ## GDO6 Templates
 
-GDO6 templates are simple php files. It is recommended to NOT output any HTML or text in view templates. Instead use GDT so the template supports all content types and/or websocket invocation. Some PHP logic is used in some templates, so the behaviour can be altered via theming which grants it's great flexibility.
+GDO6 templates are simple php files. It is recommended to NOT output any HTML or text in view templates. Instead use GDT so the template supports all content types and/or websocket invocation. Some PHP logic is used in some templates, so the behaviour can be altered via theming which grants great flexibility in a MVVM style.
 
 GDO6 templates support locale aware loading. For example you can create impressum_en.php and impressum_de.php.
 
 ### Template API
+
+Templates are handled by the GDT_Template implementation.
+You can call the static php function or add a real GDT to the fields you work with.
 
 Render a template:
 

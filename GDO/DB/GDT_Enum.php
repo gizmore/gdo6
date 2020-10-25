@@ -11,13 +11,13 @@ use GDO\Core\GDT_Template;
  * ENUMs are similiar to a select, but only allow 1 item being chosen.
  * For the database an enum column will be created.
  * 
+ * @author gizmore
+ * @version 6.10
+ * @since 5.00
+ * 
  * @example GDT_Enum::make()->enumValues('one', 'two')->notNull()->initial('one')
  * 
  * @see GDT_Select
- * 
- * @author gizmore
- * @since 5.00
- * @version 6.05
  */
 class GDT_Enum extends GDT
 {
@@ -26,8 +26,8 @@ class GDT_Enum extends GDT
 	use WithDatabase;
 	use WithFormFields;
 	
-	public $filterable = true;
 	public $orderable = true;
+	public $filterable = true;
 
 	############
 	### Base ###
@@ -149,9 +149,9 @@ class GDT_Enum extends GDT
 	{
 		return array(
 			'enumValues' => $this->enumValues,
-			'emptyLabel' => $this->emptyLabel,
 			'emptyValue' => $this->emptyValue,
-			'value' => $this->var,
+			'emptyLabel' => $this->emptyLabel,
+			'var' => $this->var,
 		);
 	}
   

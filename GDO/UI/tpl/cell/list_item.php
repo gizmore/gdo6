@@ -6,14 +6,14 @@
 <?php if ($gdt->image) : ?>
 	<div class="gdt-li-image"><?=$gdt->image->renderCell()?></div>
 <?php endif; ?>
-	<div class="gdt-li-content">
 <?php if ($gdt->title) : ?>
-	  <div class="gdt-li-title"><?=$gdt->title->renderCell()?></div>
+    <div class="gdt-li-title"><?=$gdt->title->renderCell()?></div>
 <?php endif; ?>
+  </div>
+  <div class="gdt-li-middle">
 <?php if ($gdt->subtitle) : ?>
 	  <div class="gdt-li-subtitle"><?=$gdt->subtitle->renderCell()?></div>
 <?php endif; ?>
-	</div>
   </div>
   <div class="gdt-li-lower">
 <?php if ($gdt->subtext) : ?>

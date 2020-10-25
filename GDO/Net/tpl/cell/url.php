@@ -1,0 +1,2 @@
+<?phpuse GDO\Net\GDT_Url;
+/** @var $field GDT_Url **/$field->addClass('gdt-url');$url = $field->getValue();?><a <?=$field->htmlAttributes()?><?php if ($field->noFollow) : ?> rel="external nofollow"<?php endif; ?> href="<?=$field->getVar()?>"><?= $field->title ? $field->title : html($url ? $url->getHost() : $field->displayLabel()) ?></a>

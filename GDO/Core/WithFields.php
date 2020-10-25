@@ -1,10 +1,13 @@
 <?php
 namespace GDO\Core;
+
 /**
  * Used by types that have collections of fields.
  * E.g.: GDT_Fields, GDT_Bar, GDT_Response, GDT_Form, GDT_Table->headers, GDO
+ * 
  * @author gizmore
- * @version 6.05
+ * @version 6.10
+ * @since 6.00
  */
 trait WithFields
 {
@@ -34,7 +37,7 @@ trait WithFields
 		{
 			foreach ($fields as $field)
 			{
-				$this->fields[$field->name] = $field;
+			    $this->addField($field);
 			}
 		}
 		return $this;

@@ -21,7 +21,7 @@ class GDT_Token extends GDT_Char
 	
 	public function size($size)
 	{
-		$this->pattern = '/^[a-zA-Z0-9]{'.$size.'}$/d';
+		$this->pattern = '/^[a-zA-Z0-9]{'.$size.'}$/D';
 		return parent::size($size);
 	}
 	

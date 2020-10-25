@@ -14,8 +14,7 @@ $firstEditableField = null;
 	   method="<?= $form->method; ?>"
 	   enctype="<?= $form->encoding; ?>">
 	  <?php if ($form->method === 'GET') : ?>
-		<input type="hidden" name="mo" value="<?=html(mo())?>" />
-		<input type="hidden" name="me" value="<?=html(me())?>" />
+	    <?=$form->htmlHidden()?>
 	  <?php endif; ?>
 <?php foreach ($form->getFields() as $field) : ?>
           <?php if ($field->editable) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>

@@ -1,7 +1,20 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDO;
 
+/**
+ * Adds primary attribute.
+ * Adds index attribute.
+ * Adds virtual attribute.
+ * Defaults getGDOData and setGDOData.
+ * 
+ * @author gizmore
+ * @version 6.10
+ * @since 6.00
+ * 
+ * @see GDT
+ */
 trait WithDatabase
 {
 // 	public $notNull = false;

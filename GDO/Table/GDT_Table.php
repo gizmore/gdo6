@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Table;
+
 use GDO\Util\Common;
 use GDO\DB\ArrayResult;
 use GDO\Core\GDO;
@@ -11,12 +12,15 @@ use GDO\UI\WithHREF;
 use GDO\UI\WithTitle;
 use GDO\UI\WithActions;
 use GDO\Core\WithFields;
+
 /**
  * A sortable, orderable, filterable, paginatable collection of GDT[] in headers.
  * Supports queried and GDO\Core\ArrayResult.
+ * 
  * @author gizmore
+ * 
  * @since 6.00
- * @version 6.05
+ * @version 6.10
  */
 class GDT_Table extends GDT
 {
@@ -169,7 +173,7 @@ class GDT_Table extends GDT
 	
 	public function getQuery()
 	{
-		return $this->query; #->copy();
+		return $this->query;
 	}
 	
 	public function getCountQuery()
@@ -213,7 +217,10 @@ class GDT_Table extends GDT
 	    {
 	        if ($gdoType->searchable)
 	        {
-	            $where[] = $gdoType->searchCondition($searchTerm);
+	            if ($condition = $gdoType->searchCondition($searchTerm))
+	            {
+    	            $where[] = $condition;
+	            }
 		    }
 		}
 		return implode(' OR ', $where);
@@ -353,9 +360,15 @@ class GDT_Table extends GDT
 	{
 		return array(
 			'tableName' => $this->getResult()->table->gdoClassName(),
-			'pagemenu' => $this->pagemenu ? $this->getPageMenu()->initJSON() : null,
+			'pagemenu' => $this->pagemenu ? $this->getPageMenu()->configJSON() : null,
+		    'searchable' => $this->searchable,
 			'sortable' => $this->sortable,
 			'sortableURL' => $this->sortableURL,
+		    'filtered' => $this->filtered,
+		    'filterable' => $this->filterable,
+		    'orderable' => $this->orderable,
+		    'orderDefaultField' => $this->orderDefault,
+		    'orderDefaultASC' => $this->orderDefaultAsc,
 		);
 	}
 	
@@ -370,4 +383,5 @@ class GDT_Table extends GDT
 		}
 		return $data;
 	}
+
 }

@@ -15,6 +15,7 @@ use GDO\Date\Time;
  * 
  * There are some derived method classes for forms, tables and cronjobs.
  * Provides transaction wrapping and permission checks.
+ * Provides parameters via ->gdoParameters().
  * 
  * @see MethodTable
  * @see MethodQueryTable
@@ -23,7 +24,7 @@ use GDO\Date\Time;
  *
  * @author gizmore
  * @version 6.10
- * @since 1.0
+ * @since 3.00
  */
 abstract class Method
 {
@@ -43,6 +44,10 @@ abstract class Method
 	################
 	### Override ###
 	################
+	/**
+	 * @return GDT_Response
+	 */
+	public function init() {}
 	public function isAjax() { return false; }
 	public function isEnabled() { return true; }
 	public function isUserRequired() { return false; }
@@ -54,7 +59,6 @@ abstract class Method
 	public function getPermission() {}
 	public function hasPermission(GDO_User $user) { return true; }
 	public function getUserType() {}
-	public function init() {}
 	public function beforeExecute() {}
 	public function afterExecute() {}
 	public function saveLastUrl() { return true; }
@@ -125,13 +129,12 @@ abstract class Method
 	 */
 	public function gdoParameterVar($key)
 	{
-		$gdt = $this->gdoParameter($key);
-		return $gdt->var;
+	    return $this->gdoParameter($key)->var;
 	}
 	
 	/**
 	 * @param string $key
-	 * @return string
+	 * @return mixed
 	 */
 	public function gdoParameterValue($key)
 	{
@@ -172,7 +175,6 @@ abstract class Method
 		{
 			$append .= '&' . $gdt->name . '=' . urlencode($gdt->getVar());
 		}
-		
 		return $this->href($append);
 	}
 	
@@ -218,19 +220,11 @@ abstract class Method
 	{
 		if ($this->isAjax())
 		{
-			$_GET['fmt'] = 'json';
-			$_GET['ajax'] = '1';
+			$_GET['fmt'] = $_REQUEST['fmt'] = 'json';
+			$_GET['ajax'] = $_REQUEST['ajax'] = '1';
 		}
 		
 		$user = GDO_User::current();
-		
-		if ($session = GDO_Session::instance())
-		{
-			if ( ($this->saveLastUrl()) && (!Application::instance()->isAjax()) )
-			{
-				$session->setVar('sess_last_url', $_SERVER['REQUEST_URI']);
-			}
-		}
 		
 		if (!($this->isEnabled()))
 		{
@@ -292,23 +286,26 @@ abstract class Method
 	 */
 	public function execWrap()
 	{
-		$db = Database::instance();
-		$transactional = $this->transactional();
-		
-		try
+	    $db = Database::instance();
+	    $transactional = $this->transactional();
+	    try
 		{
-			# Wrap transaction start
-			if ($transactional) $db->transactionBegin();
-			
 			# Init method
-			$this->init();
+			$response = $this->init();
+			if ($response && $response->isError())
+			{
+			    return $response;
+			}
 			
 			# SEO
 			Website::addMeta(['description', $this->getDescription(), 'name']);
 			
+			# Wrap transaction start
+			if ($transactional) $db->transactionBegin();
+			
 			# Exec 1)before, 2)execute, 3)after
 			GDT_Hook::callHook('BeforeExecute', $this);
-			$response = $this->beforeExecute();
+			$response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
 			$response = $response ? $response->add($this->execute()) : $this->execute();
 			$response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
 			GDT_Hook::callHook('AfterExecute', $this);
@@ -325,6 +322,15 @@ abstract class Method
 
 			# Wrap transaction end
 			if ($transactional) $db->transactionEnd();
+			
+			# Store last URL in session
+			if ($session = GDO_Session::instance())
+			{
+			    if ( ($this->saveLastUrl()) && (!Application::instance()->isAjax()) )
+			    {
+			        $session->setVar('sess_last_url', @$_SERVER['REQUEST_URI']);
+			    }
+			}
 			
 			return $response;
 		}

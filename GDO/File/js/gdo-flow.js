@@ -43,7 +43,7 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 		}
 
 		var previewString = document.getElementById('gdo-file-input-'+input.name);
-		previewString.value = file.file.name + " (" + file.file.size + " bytes)";
+		previewString.innerHTML = file.file.name + " (" + file.file.size + " bytes)";
 
 	});
 	flow.on('fileError', function(file, message){

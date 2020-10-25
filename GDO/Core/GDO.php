@@ -105,12 +105,17 @@ abstract class GDO
 	##############
 	public function display($key)
 	{
-		return html($this->gdoVars[$key]);
+		return html(@$this->gdoVars[$key]);
 	}
 	
 	public function edisplay($key)
 	{
 		echo $this->display($key);
+	}
+	
+	public function renderChoice()
+	{
+	    return $this->displayName();
 	}
 	
 	public function toJSON()
@@ -142,7 +147,7 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-		return array_key_exists($key, $this->gdoColumnsCache());
+	    return @array_key_exists($key, $this->gdoVars);
 	}
 	
 	/**
@@ -350,7 +355,7 @@ abstract class GDO
 		{
 			if (is_a($gdoType, $className))
 			{
-				return $gdoType;
+				return $gdoType->gdo($this);
 			}
 		}
 	}
@@ -586,13 +591,13 @@ abstract class GDO
 	{
 		$worthy = false; # Anything changed?
 		$query = $this->updateQuery();
-		foreach ($vars as $key => $value)
+		foreach ($vars as $key => $var)
 		{
 			if (array_key_exists($key, $this->gdoVars))
 			{
-				if ($this->gdoVars[$key] != $value)
+				if ($this->gdoVars[$key] !== $var)
 				{
-					$query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($value)));
+					$query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
 					$this->markClean($key);
 					$worthy = true; # We got a change
 				}
@@ -605,7 +610,13 @@ abstract class GDO
 		if ($worthy)
 		{
 			$query->exec();
-			$this->gdoVars = array_merge($this->gdoVars, $vars);
+			foreach ($vars as $key => $var)
+			{
+			    if (array_key_exists($key, $this->gdoVars))
+			    {
+			        $this->gdoVars[$key] = $var;
+			    }
+			}
 			$this->recache(); # save is the only action where we recache!
 			if ($withHooks) $this->callRecacheHook();
 		}

@@ -67,6 +67,9 @@ final class Mail
 		return $this->addAttachment($title, $data, $mime);
 	}
 	
+	/**
+	 * @return self
+	 */
 	public static function botMail()
 	{
 		$mail = new self();

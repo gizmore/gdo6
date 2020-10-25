@@ -155,8 +155,9 @@ final class Time
 	public static function humanDurationEN($duration, $nUnits=2)
 	{
 		static $units = true;
-		if ($units === true) {
-			$units = array('s' => 60,'m' => 60,'h' => 24,'d' => 365,'y' => 1000000);
+		if ($units === true)
+		{
+		    $units = ['s' => 60, 'm' => 60, 'h' => 24, 'd' => 365, 'y' => 1000000];
 		}
 		return self::humanDurationRaw($duration, $nUnits, $units);
 	}

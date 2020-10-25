@@ -21,6 +21,11 @@ class GDT_Message extends GDT_Text
 		$this->icon('message');
 	}
 	
+	public function toValue($var)
+	{
+	    return $this->renderCell();
+	}
+	
 	##############
 	### Render ###
 	##############

@@ -45,6 +45,9 @@ trait WithObject
 		return empty($var) ? null : $var;
 	}
 
+	/**
+     * @return GDO
+	 */
 	public function getValue()
 	{
 		return $this->toValue($this->getVar());
@@ -105,6 +108,10 @@ trait WithObject
 			{
 				return html($column->getVar());
 			}
+			else
+			{
+			    return $gdo->getID();
+			}
 		}
 	}
 	
@@ -161,15 +168,16 @@ trait WithObject
 	### Cascade ###
 	###############
 	public $cascade = 'SET NULL';
-	public function cascadeNull()
-	{
-		$this->cascade = 'SET NULL';
-		return $this;
-	}
-	
+
 	public function cascade()
 	{
 		$this->cascade = 'CASCADE';
+		return $this;
+	}
+	
+	public function cascadeNull()
+	{
+		$this->cascade = 'SET NULL';
 		return $this;
 	}
 	

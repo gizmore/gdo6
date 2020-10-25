@@ -191,9 +191,36 @@ class GDT_Form extends GDT
 		return isset($this->fields[$key]) ? $this->fields[$key]->getValue() : null;
 	}
 
+	##########################
+	### Auto hidden fields ###
+	##########################
+	public function htmlHidden()
+	{
+	    $back = '';
+	    $back = $this->htmlHiddenRec($_GET, $back);
+	    return $back;
+	}
+
+	private function htmlHiddenRec($getVars, $out)
+	{
+	    foreach ($getVars as $k => $v)
+	    {
+	        if (is_array($v))
+	        {
+	            $out = $this->htmlHiddenRec($v, $out);
+	        }
+	        elseif (!$this->getField($k))
+	        {
+	            $out .= sprintf('<input type="hidden" name="%s" value="%s" />', html($k), html($v));
+	        }
+	    }
+	    return $out;
+	}
+	
 	public static function hiddenMoMe()
 	{
 	    return sprintf('<input type="hidden" name="mo" value="%s" /><input type="hidden" name="me" value="%s" />',
 	        html($_REQUEST['mo']), html($_REQUEST['me']));
 	}
+	
 }

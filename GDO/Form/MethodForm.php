@@ -86,11 +86,11 @@ abstract class MethodForm extends Method
 		{
 			if ($field instanceof GDT_Submit)
 			{
-				if (isset($_POST[$field->name]))
+				if (isset($_REQUEST[$field->name]))
 				{
 					if ($form->validateForm())
 					{
-						unset($_POST['nojs']);
+					    unset($_REQUEST['nojs']);
 						$response = call_user_func([$this, "onSubmit_{$field->name}"], $form);
 						$form->onValidated();
 					}

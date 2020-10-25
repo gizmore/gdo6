@@ -3,9 +3,12 @@ return array(
 'sitename' => GWF_SITENAME,
 
 'enum_none' => 'Niente',
+'enum_all' => 'Tutti',
+'enum_staff' => 'Dipendente',
 'no_selection' => 'Nessuna selezione',
 
 # util/gdo and util/gwf fields
+'all' => 'Tutti',
 'birthdate' => 'Data di nascita',
 'captcha' => 'Capcha',
 'color' => 'Colore',
@@ -70,6 +73,7 @@ return array(
 'btn_upload' => 'Caricare',
 'btn_edit' => 'Modificare',
 'btn_create' => 'Creare',
+'btn_approve' => 'Sbloccare',
 'btn_delete' => 'Cancellare',
 'btn_view' => 'Visualizzare',
 'btn_preview' => 'Anteprima',
@@ -128,7 +132,9 @@ return array(
 'err_pass_too_short' => 'Il vostro password deve avere una lungezza di minimo %s caratteri.',
 'err_module_method' => 'La funzione non é stata trovata.',
 'err_invalid_choice' => 'La vostra selezione è invalida.',
+'err_permission_create_level' => 'È necessario un livello utente di %s per creare questo.',
 'err_permission_create' => 'Questo ogetto non puó essere creato.',
+'err_permission_read' => 'Non sei autorizzato a vedere questa voce.',
 'err_permission_update' => 'Questo ogetto non puó essere ellaborato.',
 'err_permission_delete' => 'Questo ogetto non puó essere Cancellato.',
 'err_path_not_exists' => 'Il pfad indicato non é %s: %s',
@@ -148,6 +154,9 @@ return array(
 'err_no_image' => 'Questo file non è un \'immagine.',
 'err_is_deleted ' => 'Questa voce è già stata cancellata.',
 'err_text_only_numeric' => 'Questo testo contiene solo numeri ed è stato quindi respinto.',
+'err_already_approved' => 'Questa voce è già stata rilasciata.',
+'err_already_deleted' => 'Questa voce è già stata eliminata.',
+'err_level_too_low' => 'È necessario un livello utente di %s per farlo. Il tuo livello utente è %s.',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',
@@ -232,4 +241,7 @@ return array(
 # Method description
 'mdescr_core_impressum' => 'Site impressum',
 'mdescr_core_privacy' => 'Privacy information',
+
+'li_creation_title' => '%s il %s (%s)',
+    
 );

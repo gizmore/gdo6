@@ -1,6 +1,17 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDT_Template;
+
+/**
+ * A fixed decimal, database driven field.
+ * 
+ * @author gizmore
+ * @version 6.10
+ * @since 6.00
+ * 
+ * @see GDT_Float
+ */
 class GDT_Decimal extends GDT_Int
 {
 	public $digitsBefore = 5;
@@ -11,7 +22,7 @@ class GDT_Decimal extends GDT_Int
 		$this->digitsBefore = $before;
 		$this->digitsAfter = $after;
 		$step = $after < 1 ? 1 : floatval('0.'.str_repeat('0', $after-1).'1');
-		return $this->step($step);
+		return $after < 1 ? $this->step(1) : $this->step(sprintf("%.0{$after}f", $step));
 	}
 	
 	public function gdoColumnDefine()

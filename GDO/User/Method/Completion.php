@@ -1,7 +1,7 @@
 <?php
 namespace GDO\User\Method;
+
 use GDO\Core\GDO;
-use GDO\User\GDT_User;
 use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Core\Website;
@@ -9,8 +9,9 @@ use GDO\Core\MethodAjax;
 
 /**
  * Auto completion for GDT_User types.
+ * 
  * @author gizmore
- * @version 5.0
+ * @version 6.10
  * @since 5.0
  */
 class Completion extends MethodAjax
@@ -26,11 +27,10 @@ class Completion extends MethodAjax
 		$query = GDO_User::table()->select('*')->where($condition)->limit(self::$MAXCOUNT)->uncached();
 		$result = $query->exec();
 		$response = [];
-		$cell = GDT_User::make('user_id');
 		
+		/** @var $user GDO_User **/
 		while ($user = $result->fetchObject())
 		{
-			$user instanceof GDO_User;
 			$response[] = array(
 				'id' => $user->getID(),
 				'json' => array(
@@ -38,9 +38,10 @@ class Completion extends MethodAjax
 					'user_country' => $user->getCountryISO()
 				),
 				'text' => $user->displayNameLabel(),
-				'display' => $cell->renderChoice($user),
+			    'display' => $user->renderChoice(),
 			);
 		}
+	
 		Website::renderJSON($response);
 	}
 }

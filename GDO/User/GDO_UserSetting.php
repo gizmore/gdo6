@@ -59,7 +59,9 @@ final class GDO_UserSetting extends GDO
 		{
 			return array();
 		}
-		return self::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair();
+		return
+		self::table()->select('uset_name, uset_value')->
+		where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair();
 	}
 	
 	public static function get($key)
@@ -74,22 +76,40 @@ final class GDO_UserSetting extends GDO
 	 */
 	public static function userGet(GDO_User $user, $key)
 	{
-// 		Logger::logDebug("GDO_UserSetting::userGet({$user->displayName()}, $key)");
 		if (null === ($settings = $user->tempGet('gdo_setting')))
 		{
 			$settings = self::load($user);
 			$user->tempSet('gdo_setting', $settings);
 			$user->recache();
 		}
-		$gdoType = self::$settings[$key];
-		$value = isset($settings[$key]) ? $settings[$key] : $gdoType->initial;
-// 		Logger::logDebug("GDO_UserSetting::userGet({$user->displayName()}, $key) == {$value}");
-		return $gdoType->initial($value);
+		
+		/** @var $gdoType GDT **/
+		if ($gdoType = self::$settings[$key])
+		{
+    		$var = isset($settings[$key]) ? $settings[$key] : $gdoType->initial;
+    		return $gdoType->initial($var);
+		}
 	}
-
-	public static function set($key, $value)
+	
+	public static function userGetVar(GDO_User $user, $key)
 	{
-		return self::userSet(GDO_User::current(), $key, $value);
+	    if ($gdt = self::userGet($user, $key))
+	    {
+	        return $gdt->getVar();
+	    }
+	}
+	
+	public static function userGetValue(GDO_User $user, $key)
+	{
+	    if ($gdt = self::userGet($user, $key))
+	    {
+	        return $gdt->getValue();
+	    }
+	}
+	
+	public static function set($key, $var)
+	{
+		return self::userSet(GDO_User::current(), $key, $var);
 	}
 	
 	public static function inc($key, $by=1)
@@ -102,11 +122,11 @@ final class GDO_UserSetting extends GDO
 		return self::userSet($user, $key, self::get($key)->getValue() + $by);
 	}
 	
-	public static function userSet(GDO_User $user, $key, $value)
+	public static function userSet(GDO_User $user, $key, $var)
 	{
 		$userid = $user->getID();
 		
-		if ($value === null)
+		if ($var === null)
 		{
 			self::table()->deleteWhere("uset_user=$userid AND uset_name=".quote($key))->exec();
 		}
@@ -115,14 +135,14 @@ final class GDO_UserSetting extends GDO
 			self::blank(array(
 				'uset_user' => $userid,
 				'uset_name' => $key,
-				'uset_value' => $value
+				'uset_value' => $var
 			))->replace();
 		}
 		$user->tempUnset('gdo_setting');
 		
-		self::userGet($user, $key)->var($value);
+		self::userGet($user, $key)->var($var); # Refresh cache?
 		
-		GDT_Hook::callWithIPC('UserSettingChange', $user, $key, $value);
+		GDT_Hook::callWithIPC('UserSettingChange', $user, $key, $var);
 	}
 	
 }

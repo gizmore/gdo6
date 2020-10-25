@@ -8,8 +8,8 @@ use GDO\DB\GDT_String;
  * An anchor for menus or paragraphs.
  * 
  * @author gizmore
+ * @version 6.10
  * @since 6.00
- * @version 6.06
  */
 class GDT_Link extends GDT_String
 {
@@ -20,9 +20,9 @@ class GDT_Link extends GDT_String
 	use WithPHPJQuery;
 	use WithAnchorRelation;
 
-	#################
-	### Relations ###
-	#################
+	################
+	### Relation ###
+	################
 	const REL_ALTERNATE = 'alternate';
 	const REL_AUTHOR = 'author';
 	const REL_BOOKMARK = 'bookmark';
@@ -66,6 +66,5 @@ class GDT_Link extends GDT_String
 	public function target($target) { $this->target = $target; return $this; }
 	public function targetBlank() { return $this->target('__blank'); }
 	public function htmlTarget() { return $this->target === null ? '' : " target=\"{$this->target}\""; }
-	
 	
 }

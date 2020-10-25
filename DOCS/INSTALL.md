@@ -110,6 +110,7 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-ip2country IP2Country
     git clone --recursive https://github.com/gizmore/gdo6-jpgraph JPGraph
     git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
+    git clone --recursive https://github.com/gizmore/gdo6-jquery-autocomplete JQueryAutocomplete
     git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
     git clone --recursive https://github.com/gizmore/gdo6-links Links
     git clone --recursive https://github.com/gizmore/gdo6-login Login

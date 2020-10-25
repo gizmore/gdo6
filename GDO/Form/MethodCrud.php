@@ -10,6 +10,9 @@ use GDO\Captcha\GDT_Captcha;
 use GDO\DB\GDT_Object;
 use GDO\DB\GDT_ObjectSelect;
 use GDO\Core\GDT;
+use GDO\DB\GDT_DeletedAt;
+use GDO\DB\GDT_DeletedBy;
+use GDO\Date\Time;
 
 /**
  * Abstract Create|Update|Delete for a GDO.
@@ -37,6 +40,10 @@ abstract class MethodCrud extends MethodForm
 	public function canUpdate(GDO $gdo) { return true; }
 	public function canDelete(GDO $gdo) { return true; }
 	
+	public function beforeCreate(GDT_Form $form, GDO $gdo) {}
+	public function beforeUpdate(GDT_Form $form, GDO $gdo) {}
+	public function beforeDelete(GDT_Form $form, GDO $gdo) {}
+	
 	public function afterCreate(GDT_Form $form, GDO $gdo) {}
 	public function afterUpdate(GDT_Form $form, GDO $gdo) {}
 	public function afterDelete(GDT_Form $form, GDO $gdo) {}
@@ -53,26 +60,29 @@ abstract class MethodCrud extends MethodForm
 	 */
 	protected $crudMode = self::ERROR;
 	
-	public function execute()
+	public function init()
 	{
-		$this->crudMode = self::CREATED;
-		$table = $this->gdoTable();
-		if ($id = $this->getCRUDID())
-		{
-			$this->gdo = $table->find($id);
-			$this->crudMode = self::EDITED;
-			if (!$this->canUpdate($this->gdo))
-			{
-				throw new PermissionException('err_permission_update');
-			}
-		}
-		elseif (!$this->canCreate($table))
-		{
-			throw new PermissionException('err_permission_create');
-		}
-		
-		return parent::execute();
+	    $this->crudMode = self::CREATED;
+	    $table = $this->gdoTable();
+	    if ($id = $this->getCRUDID())
+	    {
+	        $this->gdo = $table->find($id);
+	        $this->crudMode = self::EDITED;
+	        if (!$this->canUpdate($this->gdo))
+	        {
+	            throw new PermissionException('err_permission_update');
+	        }
+	    }
+	    elseif (!$this->canCreate($table))
+	    {
+	        throw new PermissionException('err_permission_create');
+	    }
 	}
+	
+// 	public function execute()
+// 	{
+// 		return parent::execute();
+// 	}
 	
 	public function createForm(GDT_Form $form)
 	{
@@ -180,7 +190,9 @@ abstract class MethodCrud extends MethodForm
 	{
 		$table = $this->gdoTable();
 		$data = $form->getFormData();
-		$gdo = $table->blank($data)->insert();
+		$gdo = $table->blank($data);
+		$this->beforeCreate($form, $gdo);
+		$gdo->insert();
 		foreach ($gdo->gdoColumnsCache() as $gdt)
 		{
 			if ( ($gdt instanceof GDT_Object) || ($gdt instanceof GDT_ObjectSelect) )
@@ -200,12 +212,13 @@ abstract class MethodCrud extends MethodForm
 			add(Website::redirectMessage($this->hrefList()));
 	}
 	
-	private function onCreateRec(GDT_Form $form, GDT $gdt)
-	{
-	}
+// 	private function onCreateRec(GDT_Form $form, GDT $gdt)
+// 	{
+// 	}
 	
 	public function onUpdate(GDT_Form $form)
 	{
+	    $this->beforeUpdate($form, $this->gdo);
 		$this->gdo->saveVars($form->getFormData());
 		foreach ($this->gdo->gdoColumnsCache() as $gdt)
 		{
@@ -229,7 +242,24 @@ abstract class MethodCrud extends MethodForm
 	public function onDelete(GDT_Form $form)
 	{
 		$this->crudMode = self::DELETED;
-		$this->gdo->delete();
+		
+		$this->beforeDelete($form, $this->gdo);
+		
+		# Mark deleted
+		if ($delAt = $this->gdo->gdoColumnOf(GDT_DeletedAt::class))
+		{
+		    $this->gdo->setVar($delAt->name, Time::getDate());
+		    if ($delBy = $this->gdo->gdoColumnOf(GDT_DeletedBy::class))
+		    {
+		        $this->gdo->setVar($delBy->name, GDO_User::current()->getID());
+		    }
+		    $this->gdo->save();
+		}
+		else # Really delete
+		{
+    		$this->gdo->delete();
+		}
+		$this->gdo->table()->clearCache();
 		return $this->message('msg_crud_deleted', [$this->gdo->gdoHumanName()])->
 			add($this->afterDelete($form, $this->gdo))->
 			add(Website::redirectMessage($this->hrefList()));
