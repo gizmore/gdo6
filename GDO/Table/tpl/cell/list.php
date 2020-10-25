@@ -13,17 +13,21 @@ use GDO\UI\GDT_Bar;
 ###################
 if ($field->quicksort && $field->headers && $field->headers->fieldCount())
 {
+    $haveSearch = $haveOrder = false;
+    
     $formSearch = GDT_Form::make($field->headers->name)->slim()->methodGET();
-    if ($field->searchable)
+    if ($field->searchable && $field->headers->searchableFieldCount())
     {
+        $haveSearch = 1;
         $formSearch->addField(GDT_SearchField::make('search'));
     }
 
 ##################
 ### Order Form ###
 ##################
-    if ($field->orderable && $field->headers)
+    if ($field->orderable && $field->headers && $field->headers->orderableFieldCount())
     {
+        $haveOrder = 1;
         $formOrder = $formSearch;
         $select = GDT_Select::make('order_by')->icon('arrow_up');
         foreach ($field->headers->fields as $gdt)
@@ -43,7 +47,7 @@ if ($field->quicksort && $field->headers && $field->headers->fieldCount())
         $formOrder->addField($ascdesc);
     }
     
-    if ($field->searchable || $field->orderable)
+    if ($haveSearch || $haveOrder)
     {
         $formSearch->addField(GDT_Submit::make('btn_search'));
         $bar = GDT_Bar::make()->horizontal();

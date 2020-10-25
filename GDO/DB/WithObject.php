@@ -273,4 +273,41 @@ trait WithObject
 		}
 	}
 	
+	##############
+	### Search ###
+	##############
+	/**
+	 * Build huge quicksearch query.
+	 * @param Query $query
+	 * @param string $searchTerm
+	 * @param boolean $first
+	 * @return string
+	 */
+	public function searchQuery(Query $query, $searchTerm, $first)
+	{
+        $table = $this->foreignTable();
+	    $nameT = GDO::escapeIdentifierS('t_' . $this->name);
+	    
+	    if ($first)
+	    {
+	        $name = GDO::escapeIdentifierS($this->name);
+	        $fk = $table->gdoPrimaryKeyColumn()->name;
+	        $fkI = GDO::escapeIdentifierS($fk);
+	        $query->join("LEFT JOIN {$table->gdoTableName()} {$nameT} ON {$name} = {$nameT}.{$fkI}");
+	    }
+	    
+	    $where = [];
+	    foreach ($table->gdoColumnsCache() as $gdt)
+	    {
+	        if ($gdt->searchable)
+	        {
+	            if ($condition = $gdt->searchCondition($searchTerm, $nameT))
+	            {
+	                $where[] = $condition;
+	            }
+	        }
+	    }
+	    return implode(' OR ', $where);
+	}
+	
 }

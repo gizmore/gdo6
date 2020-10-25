@@ -63,6 +63,7 @@ return array(
 'timezone' => 'Timezone',
 'filesize' => 'Dimensione del file',
 'font_weight' => 'Forza dei caratteri',
+'perm_level' => 'Livello di autorizzazione',
     
 # Generic Buttons
 'btn_back' => 'Indietro',

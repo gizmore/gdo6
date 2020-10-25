@@ -179,18 +179,17 @@ class GDT_String extends GDT
 		return GDT_Template::php('DB', 'filter/string.php', ['field'=>$this]);
 	}
 	
-    public function searchCondition($searchTerm)
+    public function searchCondition($searchTerm, $fkTable=null)
     {
         $collate = $this->caseSensitive ? (' '.$this->gdoCollateDefine(false)) : '';
-        $condition = sprintf('%s%s LIKE \'%%%s%%\'', 
-            $this->identifier(), $collate, GDO::escapeSearchS($searchTerm));
+        $condition = sprintf('%s%s%s LIKE \'%%%s%%\'', 
+            $fkTable ? $fkTable.'.' : '', $this->identifier(), $collate, GDO::escapeSearchS($searchTerm));
         return $condition;
     }
-
 	
 	public function filterQuery(Query $query)
 	{
-		if ('' !== ($filter = (string)$this->filterValue()))
+		if ($filter = (string)$this->filterValue())
 		{
 		    $this->applyQueryFilter($query, $filter);
 		}
@@ -204,12 +203,20 @@ class GDT_String extends GDT
 	
 	public function filterGDO(GDO $gdo)
 	{
-		if ('' !== ($filter = $this->filterValue()))
+		if ($filter = $this->filterValue())
 		{
 			$pattern = chr(1).preg_quote($filter, chr(1)).chr(1);
 			if ($this->caseSensitive) { $pattern .= 'i'; } # Switch to case-i if necessary
 			return !preg_match($pattern, $this->getVar());
 		}
+	}
+	
+	##############
+	### Search ###
+	##############
+	public function searchQuery(Query $query, $searchTerm, $first)
+	{
+	    return $this->searchCondition($searchTerm);
 	}
 	
 	##############
@@ -223,7 +230,7 @@ class GDT_String extends GDT
 			'pattern' => $this->pattern,
 			'encoding' => $this->encoding,
 			'caseS' => $this->caseSensitive,
-			'value' => $this->var,
+			'var' => $this->var,
 		);
 	}
 

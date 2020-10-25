@@ -1,11 +1,13 @@
 <?php
 namespace GDO\User;
+
 use GDO\Core\GDO;
 use GDO\DB\GDT_AutoInc;
 use GDO\DB\GDT_Name;
 use GDO\UI\GDT_EditButton;
-use GDO\DB\GDT_UInt;
+
 /**
+ * Permission entity.
  * @author gizmore
  */
 final class GDO_Permission extends GDO
@@ -15,7 +17,7 @@ final class GDO_Permission extends GDO
 		return array(
 			GDT_AutoInc::make('perm_id'),
 			GDT_Name::make('perm_name')->unique(),
-		    GDT_UInt::make('perm_level')->bytes(2),
+		    GDT_Level::make('perm_level')->label('perm_level')->bytes(2),
 		);
 	}
 	

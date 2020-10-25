@@ -200,6 +200,26 @@ class GDT_Int extends GDT
 	}
 	
 	##############
+	### Search ###
+	##############
+	public function searchQuery(Query $query, $searchTerm, $first)
+	{
+	    return $this->searchCondition($searchTerm);
+	}
+	
+	/**
+	 * Build a search condition.
+	 * @param string $searchTerm
+	 */
+	public function searchCondition($searchTerm, $fkTable=null)
+	{
+	    $nameI = GDO::escapeIdentifierS($this->name);
+	    $searchTerm = GDO::escapeSearchS($searchTerm);
+	    return sprintf('%s%s LIKE \'%%%s%%\'',
+	        $fkTable ? $fkTable.'.' : '', $nameI, $searchTerm);
+	}
+	
+	##############
 	### Config ###
 	##############
 	public function configJSON()

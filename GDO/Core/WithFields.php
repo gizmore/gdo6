@@ -3,11 +3,14 @@ namespace GDO\Core;
 
 /**
  * Used by types that have collections of fields.
- * E.g.: GDT_Fields, GDT_Bar, GDT_Response, GDT_Form, GDT_Table->headers, GDO
+ * E.g.: GDT_Fields, GDT_Bar, GDT_Response, GDT_Form, GDT_Table->headers.
  * 
  * @author gizmore
  * @version 6.10
  * @since 6.00
+ * 
+ * @see GDT_Bar
+ * @see GDT_Table
  */
 trait WithFields
 {
@@ -48,9 +51,36 @@ trait WithFields
 	 * @return \GDO\Core\GDT[]
 	 */
 	public function getFields() { return $this->fields; }
+
 	public function fieldCount() { return $this->fields ? count($this->fields) : 0; }
 	
-	/**
+	public function searchableFieldCount()
+	{
+	    $count = 0;
+	    if ($this->fields)
+	    {
+	        foreach ($this->fields as $gdt)
+	        {
+	            $count += $gdt->searchable ? 1 : 0;
+	        }
+	    }
+	    return $count;
+	}
+	
+	public function orderableFieldCount()
+	{
+	    $count = 0;
+	    if ($this->fields)
+	    {
+	        foreach ($this->fields as $gdt)
+	        {
+	            $count += $gdt->orderable ? 1 : 0;
+	        }
+	    }
+	    return $count;
+	}
+	
+    /**
 	 * Return a field by name.
 	 * @param string $name
 	 * @return \GDO\Core\GDT

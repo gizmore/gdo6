@@ -23,11 +23,6 @@ class GDT_ObjectSelect extends GDT_Select
 		return parent::validate($value);
 	}
 	
-// 	protected function validateSingle($value)
-// 	{
-// 		return parent::validateSingle($value?$value->getID():$value);
-// 	}
-	
 	##############
 	### Render ###
 	##############

@@ -15,12 +15,12 @@ use GDO\Core\WithFields;
 
 /**
  * A sortable, orderable, filterable, paginatable collection of GDT[] in headers.
- * Supports queried and GDO\Core\ArrayResult.
+ * Supports queried Ressult and GDO\Core\ArrayResult.
  * 
  * @author gizmore
  * 
- * @since 6.00
  * @version 6.10
+ * @since 6.00
  */
 class GDT_Table extends GDT
 {
@@ -102,7 +102,7 @@ class GDT_Table extends GDT
 		$ipp = $ipp <= 0 ? Module_Table::instance()->cfgItemsPerPage() : (int)$ipp;
 		if ($paginate)
 		{
-		    $href = $href === null ? $_SERVER['REQUEST_URI'] : $href;
+		    $href = $href === null ? @$_SERVER['REQUEST_URI'] : $href;
 			$this->pagemenu = GDT_PageMenu::make($this->name.'_page');
 			$this->pagemenu->href($href);
 			$this->pagemenu->ipp($ipp);
@@ -199,10 +199,9 @@ class GDT_Table extends GDT
 		    $s = $this->headers->name;
 		    if (isset($_REQUEST[$s]['search']))
 		    {
-		        if ($searchTerm = trim((string)@$_REQUEST[$s]['search']))
+		        if ($searchTerm = trim((string)@$_REQUEST[$s]['search'], "\r\n\t "))
 		        {
-		            $bigWhere = $this->getBigWhereCondition($searchTerm);
-            		$query->where($bigWhere);
+		            $this->bigSearchQuery($query, $searchTerm);
 		        }
 		    }
 		}
@@ -210,25 +209,42 @@ class GDT_Table extends GDT
 		return $query;
 	}
 	
-	private function getBigWhereCondition($searchTerm)
+	/**
+	 * Build a huge where clause for quicksearch.
+	 * Supports multiple terms at once, split via whitespaces.
+	 * Objects that are searchable JOIN automatically and offer more searchable fields.
+	 * In general, GDT_String and GDT_Int is searchable.
+	 * 
+	 * @todo GDT_Enum is not searchable yet.
+	 * 
+	 * @param Query $query
+	 * @param string $searchTerm
+	 */
+	private function bigSearchQuery(Query $query, $searchTerm)
 	{
-	    $where = [];
-	    foreach ($this->getHeaderFields() as $gdoType)
+	    $split = preg_split("/\\s+/iD", trim($searchTerm, "\t\r\n "));
+        $first = true;
+	    foreach ($split as $searchTerm)
 	    {
-	        if ($gdoType->searchable)
-	        {
-	            if ($condition = $gdoType->searchCondition($searchTerm))
-	            {
-    	            $where[] = $condition;
-	            }
-		    }
-		}
-		return implode(' OR ', $where);
+    	    $where = [];
+    	    foreach ($this->getHeaderFields() as $gdt)
+    	    {
+    	        if ($gdt->searchable)
+    	        {
+    	            if ($condition = $gdt->searchQuery($query, $searchTerm, $first))
+    	            {
+    	                $where[] = $condition;
+    	            }
+    	        }
+    	    }
+    	    $query->where(implode(' OR ', $where));
+    	    $first = false;
+	    }
 	}
 	
 	public function getHeaderFields()
 	{
-		return $this->headers ? $this->headers->getFields() : null;
+		return $this->headers ? $this->headers->getFields() : [];
 	}
 	
 	/**

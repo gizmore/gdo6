@@ -109,14 +109,14 @@ class GDT_User extends GDT_Object
 		}
 	}
 	
-	/**
-	 * Quicksearch does it's work via subselects.
-	 */
-	public function searchCondition($searchTerm)
-	{
-	    $searchTerm = GDO::escapeSearchS($searchTerm);
-	    $like = "LIKE '%$searchTerm%'";
-	    return "( SELECT 1 FROM {$this->table->gdoTableName()} WHERE user_name $like OR user_guest_name $like OR user_real_name $like )";
-	}
+// 	/**
+// 	 * Quicksearch does it's work via subselects.
+// 	 */
+// 	public function searchCondition($searchTerm)
+// 	{
+// 	    $searchTerm = GDO::escapeSearchS($searchTerm);
+// 	    $like = "LIKE '%$searchTerm%'";
+// 	    return "( SELECT COUNT(*) FROM {$this->table->gdoTableName()} WHERE user_name $like OR user_guest_name $like OR user_real_name $like AND user_id = gbm_uid )";
+// 	}
 	
 }

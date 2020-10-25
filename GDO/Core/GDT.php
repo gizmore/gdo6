@@ -313,9 +313,22 @@ abstract class GDT
 	 * @see GDT_String
 	 */
 	public function filterQuery(Query $query) {}
-	
-	public function searchCondition($searchTerm) {}
 
+	/**
+	 * Extend query with searching for a term. Used in quicksearch.
+	 * Search looks in all searchable columns for an OR match.
+	 * Objects JOIN their foreign tables during this.
+	 * @param Query $query
+	 * @param string $searchTerm
+	 */
+	public function searchQuery(Query $query, $searchTerm, $first) {}
+
+	/**
+	 * Build a search condition.
+	 * @param string $searchTerm
+	 */
+	public function searchCondition($searchTerm, $fkTable=null) {}
+	
 	/**
 	 * Filter for entities.
 	 * @see GDT_String
