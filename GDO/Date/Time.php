@@ -5,13 +5,17 @@ use GDO\Language\Trans;
 use DateTime;
 use GDO\Core\Application;
 use GDO\User\GDO_User;
+
 /**
  * Time helper class.
- * Using mysql date format now, instead of yyyymmddhhiissmmm
+ * Using mysql date with milliseconds.
  *
  * @author gizmore
- * @version 6.00
+ * @version 6.10
  * @since 1.00
+ * 
+ * @see GDT_Date
+ * @see GDT_DateTime
  */
 final class Time
 {
@@ -49,7 +53,6 @@ final class Time
 	{
 		return substr(self::getDate($time), 0, 10);
 	}
-	
 	
 	public static function getTimestamp($date=null)
 	{
@@ -108,8 +111,8 @@ final class Time
 	public static function getDiff($date)
 	{
 		$a = new DateTime($date);
-		$b = new DateTime();
-		return $b->diff($a);
+		$b = new DateTime(self::getDate(Application::$TIME));
+		return abs($b->getTimestamp() - $a->getTimestamp());
 	}
 	
 	public static function getAgo($date)

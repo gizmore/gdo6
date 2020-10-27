@@ -180,10 +180,12 @@ class Database
 		if (!isset(self::$TABLES[$classname]))
 		{
 			self::$TABLES[$classname] = $gdo = new $classname();
+			
 			if ($gdo->gdoAbstract())
 			{
 				return null;
 			}
+			
 			self::$COLUMNS[$classname] = self::hashedColumns($gdo->gdoColumns());
 
 			/** @var $gdo \GDO\Core\GDO **/

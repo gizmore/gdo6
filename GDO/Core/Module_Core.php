@@ -28,14 +28,13 @@ use GDO\UI\GDT_Bar;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9310';
+	public $gdo_revision = '6.10-r9317';
 
 	##############
 	### Module ###
 	##############
 	public $module_priority = 1;
 
-	
 	public function isCoreModule() { return true; }
 	
 	public function getThemes() { return ['default']; }
@@ -98,7 +97,6 @@ final class Module_Core extends GDO_Module
 		}
 	}
 	
-	
 	##################
 	### Javascript ###
 	##################
@@ -114,16 +112,13 @@ final class Module_Core extends GDO_Module
 	
 	public function gdoConfigJS()
 	{
-		return sprintf("
-window.GDO_CONFIG = {};
-window.GWF_PROTOCOL = '%s'; window.GWF_DOMAIN = '%s'; window.GWF_WEB_ROOT = '%s';
-window.GWF_LANGUAGE = '%s';",
+		return sprintf("window.GDO_CONFIG = {}; window.GWF_PROTOCOL = '%s'; window.GWF_DOMAIN = '%s'; window.GWF_WEB_ROOT = '%s'; window.GWF_LANGUAGE = '%s';",
 			GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT, Trans::$ISO);
 	}
 	
 	public function gdoUserJS()
 	{
-		$json = json_encode($this->gdoUserJSON());
+		$json = json_encode($this->gdoUserJSON(), JSON_PRETTY_PRINT);
 		return "window.GDO_USER = new GDO_User($json);";
 	}
 	
@@ -132,4 +127,5 @@ window.GWF_LANGUAGE = '%s';",
 		$user = GDO_User::current();
 		return $user->renderJSON();
 	}
+	
 }

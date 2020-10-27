@@ -224,14 +224,13 @@ class GDT_Int extends GDT
 	##############
 	public function configJSON()
 	{
-		return array(
+		return array_merge(parent::configJSON(), array(
 			'min' => $this->min,
 			'max' => $this->max,
 			'unsigned' => $this->unsigned,
 			'bytes' => $this->bytes,
 			'step' => $this->step,
-			'var' => $this->var,
-		);
+		));
 	}
 
 }

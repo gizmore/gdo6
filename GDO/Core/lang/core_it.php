@@ -64,6 +64,7 @@ return array(
 'filesize' => 'Dimensione del file',
 'font_weight' => 'Forza dei caratteri',
 'perm_level' => 'Livello di autorizzazione',
+'ago' => '%s fa',
     
 # Generic Buttons
 'btn_back' => 'Indietro',
@@ -174,6 +175,7 @@ return array(
 # Dateformats
 'df_day' => 'd.m.Y',
 'df_short' => 'd.m.Y H:i',
+'df_long' => 'd.m.Y H:i:s',
 'tu_s' => 's',
 'tu_m' => 'm',
 'tu_h' => 'h',

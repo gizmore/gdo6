@@ -1,3 +1,4 @@
+"use strict"
 document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo-flow-file').forEach(function(input){
 	
 	var flow = new Flow({
@@ -19,7 +20,7 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 //		console.log(file);
 //		console.log(message);
 		
-		var preview = document.getElementById('gdo-file-preview-'+input.name);
+		var preview = document.getElementById('gdt-file-preview-'+input.name);
 
 		if (!preview) {
 			console.error('Cannot find gdo-file-preview-'+input.name);
@@ -27,7 +28,7 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 		}
 		
 		if (file.file.type && file.file.type.startsWith('image/')) {
-			if (document.querySelector('#gdo-file-preview-'+input.name+' img')) {
+			if (document.querySelector('#gdt-file-preview-'+input.name)) {
 				var div = document.createElement("DIV");
 				div.className = 'gdo-file-preview';
 				var node = document.createElement("IMG");

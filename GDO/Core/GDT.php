@@ -346,6 +346,30 @@ abstract class GDT
 	##############
 	### Config ###
 	##############
-	public function configJSON() { return null; }
-	public function displayConfigJSON() { return json_encode($this->configJSON()); }
+	public function displayConfigJSON() { return json_encode($this->configJSON(), JSON_PRETTY_PRINT); }
+
+	/**
+	 * Expose all fields to JSON config.
+	 * @return array
+	 */
+	public function configJSON()
+	{
+	    return array(
+	        'var' => $this->var,
+	        'name' => $this->name,
+	        'icon' => $this->icon,
+	        'error' => $this->error,
+	        'initial' => $this->initial,
+	        'unique' => $this->unique,
+	        'primary' => $this->primary,
+	        'notNull' => $this->notNull,
+	        'readable' => $this->readable,
+	        'writable' => $this->writable,
+	        'editable' => $this->editable,
+	        'orderable' => $this->orderable,
+	        'filterable' => $this->filterable,
+	        'searchable' => $this->searchable,
+	    );
+	}
+
 }

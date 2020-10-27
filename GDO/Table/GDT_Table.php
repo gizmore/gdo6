@@ -16,6 +16,7 @@ use GDO\Core\WithFields;
 /**
  * A sortable, orderable, filterable, paginatable collection of GDT[] in headers.
  * Supports queried Ressult and GDO\Core\ArrayResult.
+ * Quicksearch can crawl multiple fields at once.
  * 
  * @author gizmore
  * 
@@ -220,7 +221,7 @@ class GDT_Table extends GDT
 	 * @param Query $query
 	 * @param string $searchTerm
 	 */
-	private function bigSearchQuery(Query $query, $searchTerm)
+	public function bigSearchQuery(Query $query, $searchTerm)
 	{
 	    $split = preg_split("/\\s+/iD", trim($searchTerm, "\t\r\n "));
         $first = true;

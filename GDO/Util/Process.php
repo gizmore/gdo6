@@ -2,10 +2,12 @@
 namespace GDO\Util;
 
 /**
- * Process utilities
+ * Process utilities.
+ * Check if a command is in PATH env.
+ * 
  * @author gizmore
- * @since 6.10
  * @version 6.10
+ * @since 6.10
  */
 final class Process
 {
@@ -15,9 +17,10 @@ final class Process
      * @return bool True if the command has been found ; otherwise, false.
      * @author https://stackoverflow.com/a/18540185/13599483
      */
-    public static function commandExists($command)
+    public static function commandExists($command, $windowsSuffix='.exe')
     {
-        $whereIsCommand = (PHP_OS == 'WINNT') ? 'where' : 'which';
+        $whereIsCommand = PHP_OS === 'WINNT' ? 'where' : 'which';
+        $command = PHP_OS === 'WINNT' ? "$command$windowsSuffix" : $command;
     
         $pipes = [];
         $process = proc_open(

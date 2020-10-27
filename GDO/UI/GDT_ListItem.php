@@ -8,6 +8,7 @@ use GDO\DB\GDT_CreatedBy;
 use GDO\DB\GDT_CreatedAt;
 use GDO\Avatar\GDT_Avatar;
 use GDO\Profile\GDT_ProfileLink;
+use GDO\Date\GDT_DateDisplay;
 
 /**
  * A list item.
@@ -19,42 +20,64 @@ use GDO\Profile\GDT_ProfileLink;
 final class GDT_ListItem extends GDT
 {
 	use WithPHPJQuery;
+	use WithTitle;
 	
-	public $image;
-	public function image($image) { $this->image = $image; return $this; }
-	
-	public $title;
-	public function title($title) { $this->title = $title; return $this; }
+	public $avatar;
+	public function avatar($avatar) { $this->avatar = $avatar; return $this; }
+	public function userAvatar(GDO_User $user) { return $this->avatar(GDT_Avatar::make()->user($user)); }
 	
 	public $subtitle;
 	public function subtitle($subtitle) { $this->subtitle = $subtitle; return $this; }
 	
+	public $image;
+	public function image($image) { $this->image = $image; return $this; }
+	
+	public $content;
+	public function content($content) { $this->content = $content; return $this; }
+	
 	public $subtext;
 	public function subtext($subtext) { $this->subtext = $subtext; return $this; }
 	
-	public function avatar($avatar) { return $this->image($avatar); }
-	public function userAvatar(GDO_User $user) { return $this->avatar(GDT_Avatar::make()->user($user)); }
-	
 	/**
-	 * Use the title to render creation stats. User (with img), Date, Age.
+	 * Use the subtitle to render creation stats. User (with avatar), Date, Age.
 	 * @return self
 	 */
-	public function titleCreation()
+	public function titleCreation(GDT $title=null)
 	{
 	    /** @var $user GDO_User **/
 	    $user = $this->gdo->gdoColumnOf(GDT_CreatedBy::class)->getValue();
-	    $date = $this->gdo->gdoColumnOf(GDT_CreatedAt::class)->renderCell();
-	    $age = $this->gdo->gdoColumnOf(GDT_CreatedAt::class)->renderAge();
+	    $date = $this->gdo->gdoColumnOf(GDT_CreatedAt::class);
+	    
+	    $this->subtitle = GDT_Container::make();
+	    
+	    if (module_enabled('Avatar')) # ugly bridge
+	    {
+	        if (module_enabled('Profile'))
+	        {
+	            $this->avatar = GDT_ProfileLink::make()->forUser($user)->withAvatar();
+	        }
+	        else
+	        {
+	            $this->avatar = GDT_Avatar::make()->user($user);
+	        }
+	    }
+	    
 	    if (module_enabled('Profile')) # ugly bridge
 	    {
-	        $profileLink = GDT_ProfileLink::make()->forUser($user)->withAvatar()->withNickname()->render();
+	        $profileLink = GDT_ProfileLink::make()->forUser($user)->withNickname();
 	    }
 	    else
 	    {
-	        $profileLink = $user->displayNameLabel();
-	        $this->userAvatar($user);
+	        $profileLink = GDT_Label::make()->rawLabel($user->displayNameLabel());
 	    }
-	    $this->title(GDT_Label::make()->label('li_creation_title', [$profileLink, $date, $age]));
+	    $this->subtitle->addField($profileLink);
+	    $this->subtitle->addField(GDT_DateDisplay::make($date->name)->gdo($this->gdo)->addClass('ri'));
+	    
+	    if ($title)
+	    {
+	        $this->title = $title;
+	    }
+        
 	    return $this;
 	}
 	

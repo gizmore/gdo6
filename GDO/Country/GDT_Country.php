@@ -25,7 +25,7 @@ final class GDT_Country extends GDT_ObjectSelect
 	
 	public function defaultLabel() { return $this->label('country'); }
 	
-	public function renderJSON()
+	public function configJSON()
 	{
 		return array_merge(parent::renderJSON(), array(
 			'completionHref' => $this->completionHref,

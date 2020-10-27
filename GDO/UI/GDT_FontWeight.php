@@ -17,7 +17,7 @@ class GDT_FontWeight extends GDT_Enum
 	
 	public function __construct()
 	{
-	    $this->enumValues('100', '300', '400', '500', '700', '900');
+	    $this->enumValues('100', '200', '300', '400', '500', '600', '700', '800', '900');
 	}
 	
 	public function enumLabel($enumValue=null)

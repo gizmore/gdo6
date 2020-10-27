@@ -6,14 +6,16 @@ use GDO\Core\GDT_Template;
  * A Date is like a Datetime, but a bit older, so we start with year selection.
  * An example is the release date of a book, or a birthdate.
  * 
- * @see Time for conversion
- * @see GDT_DateTime
+ * @author gizmore
+ * @version 6.10
+ * @since 5.0
+ * 
  * @see GDT_Time
  * @see GDT_Timestamp
- * 
- * @author gizmore
- * @version 6.09
- * @since 5.0
+ * @see GDT_Date
+ * @see GDT_DateTime
+ * @see GDT_Duration
+ * @see Time for conversion
  */
 class GDT_Date extends GDT_Timestamp
 {
@@ -26,7 +28,7 @@ class GDT_Date extends GDT_Timestamp
 		return "{$this->identifier()} DATE {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 
-	public function renderCell() { return Time::displayDate($this->gdo->getVar($this->name)); }
+	public function renderCell() { return Time::displayDate($this->gdo->getVar($this->name), 'day'); }
 	public function renderForm() { return GDT_Template::php('Date', 'form/date.php', ['field'=>$this]); }
 	
 	public function toVar($value)

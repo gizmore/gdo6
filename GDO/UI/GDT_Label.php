@@ -11,6 +11,7 @@ use GDO\Core\GDT_Template;
 class GDT_Label extends GDT
 {
 	use WithLabel;
+	
 	public function renderCell()
 	{
 		return GDT_Template::php('UI', 'cell/label.php', ['field'=>$this]);
@@ -22,4 +23,10 @@ class GDT_Label extends GDT
 			$this->name => $this->displayLabel(),
 		);
 	}
+	
+	public function renderCard()
+	{
+	    return $this->renderCell();
+	}
+
 }

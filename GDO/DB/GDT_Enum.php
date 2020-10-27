@@ -6,6 +6,7 @@ use GDO\UI\WithIcon;
 use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
 use GDO\Core\GDT_Template;
+use GDO\Core\WithCompletion;
 
 /**
  * ENUMs are similiar to a select, but only allow 1 item being chosen.
@@ -25,6 +26,7 @@ class GDT_Enum extends GDT
 	use WithLabel;
 	use WithDatabase;
 	use WithFormFields;
+	use WithCompletion;
 	
 	public $orderable = true;
 	public $filterable = true;
@@ -145,14 +147,30 @@ class GDT_Enum extends GDT
 	##############
 	### Config ###
 	##############
+	private $enumLabels;
+	private function generateEnumLabels()
+	{
+	    if ($this->enumLabels === null)
+	    {
+    	    $labels = [];
+    	    foreach ($this->enumValues as $enum)
+    	    {
+    	        $labels[] = $this->enumLabel($enum);
+    	    }
+    	    $this->enumLabels = $labels;
+	    }
+	    return $this->enumLabels;
+	}
+	
 	public function configJSON()
 	{
-		return array(
+		return array_merge(parent::configJSON(), array(
 			'enumValues' => $this->enumValues,
+		    'enumLabels' => $this->generateEnumLabels(),
 			'emptyValue' => $this->emptyValue,
 			'emptyLabel' => $this->emptyLabel,
-			'var' => $this->var,
-		);
+		    'completionHref' => $this->completionHref,
+		));
 	}
   
 }

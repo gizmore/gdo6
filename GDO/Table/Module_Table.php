@@ -24,9 +24,11 @@ final class Module_Table extends GDO_Module
 	public function getConfig()
 	{
 		return array(
-			GDT_UInt::make('ipp')->initial('10')->max(1000),
+		    GDT_UInt::make('spr')->initial('10')->max(100),
+		    GDT_UInt::make('ipp')->initial('10')->max(1000),
 		);
 	}
 	public function cfgItemsPerPage() { return $this->getConfigValue('ipp'); }
+	public function cfgSuggestionsPerRequest() { return $this->getConfigValue('spr'); }
 	
 }

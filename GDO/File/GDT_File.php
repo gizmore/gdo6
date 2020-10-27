@@ -1,5 +1,6 @@
 <?php
 namespace GDO\File;
+
 use GDO\Core\GDT_Template;
 use GDO\User\GDO_Session;
 use GDO\Util\Arrays;
@@ -9,11 +10,13 @@ use GDO\UI\WithHREF;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Success;
 use GDO\Core\GDO_Module;
+
 /**
  * File input and upload backend for flow.js
+ * 
  * @author gizmore
- * @since 4.0
- * @version 5.0
+ * @version 6.10
+ * @since 4.02
  */
 class GDT_File extends GDT_Object
 {
@@ -49,6 +52,7 @@ class GDT_File extends GDT_Object
 		$this->minsize = $minsize;
 		return $this;
 	}
+	
 	public $maxsize = 4096 * 2048; # 8MB
 	public function maxsize($maxsize)
 	{
@@ -65,6 +69,7 @@ class GDT_File extends GDT_Object
 		$this->preview = $preview;
 		return $this;
 	}
+	
 	public $previewHREF;
 	public function previewHREF($previewHREF=null) { $this->previewHREF = $previewHREF; return $this->preview($previewHREF!==null); }
 	public function displayPreviewHref(GDO_File $file) { return $this->previewHREF . $file->getID(); }
@@ -95,6 +100,7 @@ class GDT_File extends GDT_Object
 		$this->action = $action.'&ajax=1&fmt=json&flowField='.$this->name;
 		return $this;
 	}
+	
 	public function getAction()
 	{
 		if (!$this->action)

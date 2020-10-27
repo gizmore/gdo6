@@ -13,7 +13,7 @@ trait WithActions
 	/**
 	 * @var \GDO\UI\GDT_Bar
 	 */
-	private $actions;
+	public $actions;
 
 	/**
 	 * Init or get action bar-

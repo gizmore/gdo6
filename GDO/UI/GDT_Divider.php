@@ -12,7 +12,6 @@ use GDO\Core\GDT_Template;
 class GDT_Divider extends GDT
 {
 	use WithLabel;
-	use WithIcon;
 	
 	public function blankData() {}
 
@@ -21,7 +20,7 @@ class GDT_Divider extends GDT
 	
 	public function renderCell() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
 	public function renderForm() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
-	public function renderCard() { return '<hr/>'; }
+	public function renderCard() { return '<hr/><hr/>'; }
 	public function renderJSON() {}
 	
 }

@@ -4,7 +4,5 @@ use GDO\Core\GDT;
 $gdt instanceof GDT;
 
 ?>
-<div>
-  <label><?=$gdt->displayLabel()?>:</label>
-  <span><?=$gdt->renderCell()?></span>
-</div>
+<label><?=$gdt->displayLabel()?>:</label>
+<span><?=$gdt->renderCell()?></span>

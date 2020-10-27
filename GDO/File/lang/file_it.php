@@ -4,6 +4,7 @@ return array(
 'files' => 'File',
 'image' => 'Imagine',
 'images' => 'Imagini',
+'file_type' => 'Tipo di file',
 'filesize' => 'Grandezza file',
 '_filesize' => array(
 	'Byte',

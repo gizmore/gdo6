@@ -1,8 +1,19 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDO;
 use GDO\Core\GDT_Template;
 use GDO\Form\GDT_Select;
+
+/**
+ * A select WithObject trait.
+ * It behaves a tiny bit different than GDT_Select, for the selected value.
+ * It inits the choices with a call to $table->all()!
+ * 
+ * @author gizmore
+ * @version 6.10
+ * @since 6.02
+ */
 class GDT_ObjectSelect extends GDT_Select
 {
 	use WithObject;
@@ -32,17 +43,6 @@ class GDT_ObjectSelect extends GDT_Select
 		return parent::renderForm();
 	}
 	
-	public function renderJSON()
-	{
-		return array(
-			'name' => $this->name,
-			'multiple' => $this->multiple,
-			'minSelected' => $this->minSelected,
-			'maxSelected' => $this->maxSelected,
-			'selected' => $this->multiple ? array_keys($this->getValue()) : $this->getSelectedVar(),
-		);
-	}
-	
 	public function renderCell()
 	{
 		if ($obj = $this->getValue())
@@ -57,6 +57,7 @@ class GDT_ObjectSelect extends GDT_Select
 	{
 		return GDT_Template::php('DB', 'filter/object.php', ['field'=>$this]);
 	}
+	
 	#############
 	### Value ###
 	#############
@@ -109,6 +110,16 @@ class GDT_ObjectSelect extends GDT_Select
 			}
 		}
 		return $back;
+	}
+	
+	##############
+	### Config ###
+	##############
+	public function configJSON()
+	{
+	    return array_merge(parent::configJSON(), array(
+	        'selected' => $this->multiple ? array_keys($this->getValue()) : $this->getSelectedVar(),
+	    ));
 	}
 	
 }

@@ -7,10 +7,13 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 
 /**
- * You would expect this to be GDT_Object,
+ * You would expect this to be in GDT_Object,
  * but this is also mixed into GDT_ObjectSelect, hence it is a trait.
  * 
  * @author gizmore
+ * @version 6.10
+ * @since 6.00
+ * 
  * @see GDT_Object
  * @see GDT_ObjectSelect
  */

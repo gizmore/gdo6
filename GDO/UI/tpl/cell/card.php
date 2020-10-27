@@ -1,42 +1,57 @@
 <?php
-use GDO\Profile\GDT_ProfileLink;
-use GDO\Date\Time;
 /** @var $field \GDO\UI\GDT_Card **/
+$field->addClass('gdt-card');
 ?>
+<div <?=$field->htmlAttributes()?>>
+
 <?php if ($field->gdo) : ?>
-<a name="card-<?=$field->gdo->getID()?>" class="dn"></a>
+  <a id="card-<?=$field->gdo->getID()?>" class="n"></a>
 <?php endif; ?>
-<div class="gdo-card">
-<?php if ($field->hasUpperCard()) : ?>
-  <div class="card-upper">
-<?php if ($field->withCreator) : ?>
-	<div class="card-creator"><?=GDT_ProfileLink::make()->forUser($field->gdoCreator())->avatarSize(42)->render()?></div>
+
+<?php if ($field->avatar || $field->title || $field->subtitle) : ?>
+  <div class="gdt-card-upper">
+<?php if ($field->avatar) : ?>
+    <div class="gdt-card-avatar"><?=$field->avatar->renderCell()?></div>
 <?php endif; ?>
-	<div class="card-titles">
+<?php if ($field->title || $field->subtitle) : ?>
+    <div class="gdt-card-title-texts">
 <?php if ($field->title) : ?>
-	  <div class="card-title"><?=$field->title?></div>
+    <div class="gdt-card-title"><?=$field->title->renderCell()?></div>
 <?php endif; ?>
 <?php if ($field->subtitle) : ?>
-	  <div class="card-subtitle"><?=$field->subtitle?></div>
+    <div class="gdt-card-subtitle"><?=$field->subtitle->renderCell()?></div>
 <?php endif; ?>
-<?php if ($field->withCreated) : ?>
-      <?php $date = $field->gdoCreated(); ?>
-	  <div class="card-created"><?=Time::displayDate($date) . ' - ' . Time::displayAge($date)?></div>
+    </div>
 <?php endif; ?>
-	</div>
-	<div class="cb"></div>
   </div>
 <?php endif; ?>
-  
-  <div class="card-content">
-<?php foreach ($field->getFields() as $gdt) : ?>
-	<?=$gdt->renderCard()?>
-<?php endforeach; ?>
+
+<?php if ($field->image || $field->content || $field->fields) : ?>
+  <div class="gdt-card-middle">
+<?php if ($field->image) : ?>
+    <div class="gdt-card-image"><?=$field->image->renderCell()?></div>
+<?php endif; ?>
+<?php if ($field->content) : ?>
+    <div class="gdt-card-content"><?=$field->content->renderCell()?></div>
+<?php endif; ?>
+<?php if ($field->fields) : ?>
+    <div class="gdt-card-fields">
+    <?php foreach ($field->fields as $gdt) : ?>
+      <?=$gdt->renderCard()?>
+    <?php endforeach; ?>
+    </div>
+<?php endif; ?>
   </div>
-  
-<?php if ($field->hasActions()) : ?>
-  <div class="card-actions">
-	<?=$field->actions()->render()?>
+<?php endif; ?>
+
+<?php if ($field->footer || $field->actions) : ?>
+  <div class="gdt-card-lower">
+<?php if ($field->footer) : ?>
+    <div class="gdt-card-footer"><?=$field->footer->renderCell()?></div>
+<?php endif; ?>
+<?php if ($field->actions) : ?>
+    <div class="gdt-card-actions"><?=$field->actions()->renderCell()?></div>
+<?php endif; ?>
   </div>
 <?php endif; ?>
   

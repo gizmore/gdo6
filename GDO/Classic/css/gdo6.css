@@ -47,6 +47,7 @@ a { color: #33f; font-weight: 900; }
 }
 
 /** Table/Lists **/
+/*
 .gdt-list { border: 1px solid #000; border-bottom: none; }
 .gdt-list > h3 { border-bottom: 1px solid #333; padding: 8px; background: #eee; }
 .gdt-list-item { position: relative; border-bottom: 1px solid #000; }
@@ -54,6 +55,7 @@ a { color: #33f; font-weight: 900; }
 .gdt-li-title { flex-grow: 1 1 auto; font-size: 18px; padding: 8px 0px; }
 .gdt-li-image { width: 48px; max-height: 48px; text-align: center; align-items: center; align-content: center; flex-flow: 0 0 auto; }
 .gdt-li-middle { padding: 8px; display: block; font-size: 20px; border-bottom: 1px solid #333; }
+*/
 
 /** File **/
 .gdo-file img { max-width: 100%; max-height: 1024px; }

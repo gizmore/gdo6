@@ -11,10 +11,14 @@ use GDO\DB\GDT_Enum;
 
 /**
  * A GDO is a container for GDTs, which values are backed by a database and cache.
+ * Values are stored in the $gdoVars array. When a GDT column is selected values are copied into the gdt and make this framework tick.
+ * It safes memory to only keep the GDTs once per Table.
+ * Please note that almost all vars are considered string in GDO6. 
  * 
  * @see GDT
  * @see Cache
  * @see Database
+ * @see Query
  * 
  * @author gizmore@wechall.net
  * @version 6.11
@@ -108,14 +112,19 @@ abstract class GDO
 		return html(@$this->gdoVars[$key]);
 	}
 	
-	public function edisplay($key)
-	{
-		echo $this->display($key);
-	}
+// 	public function edisplay($key)
+// 	{
+// 		echo $this->display($key);
+// 	}
 	
 	public function renderChoice()
 	{
 	    return $this->displayName();
+	}
+	
+	public function renderJSON()
+	{
+	    return $this->toJSON();
 	}
 	
 	public function toJSON()
@@ -147,7 +156,7 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-	    return @array_key_exists($key, $this->gdoVars);
+	    return @array_key_exists($key, $this->gdoVars) || array_key_exists($key, $this->gdoColumnsCache());
 	}
 	
 	/**
@@ -383,7 +392,7 @@ abstract class GDO
 	public function gdoNameColumn() { return $this->gdoColumnOf('GDO\DB\GDT_Name'); }
 	
 	/**
-	 * Get the Type for a key.
+	 * Get the GDT for a key.
 	 * @param string $key
 	 * @return GDT
 	 */
@@ -996,19 +1005,19 @@ abstract class GDO
 	public function truncate() { return Database::instance()->truncateTable($this); }
 	
 	/**
-	 * @return \GDO\Core\GDT[]
+	 * @return GDT[]
 	 */
 	public function gdoColumnsCache() { return Database::columnsS($this->gdoClassName()); }
 	
 	/**
-	 * @return \GDO\Core\GDT[]
+	 * @return GDT[]
 	 */
 	public function getGDOColumns(array $names)
 	{
 		$columns = [];
 		foreach ($names as $key)
 		{
-			$columns[$key] = $this->gdoColumnCopy($key);
+			$columns[$key] = $this->gdoColumn($key);
 		}
 		return $columns;
 	}
@@ -1111,7 +1120,7 @@ abstract class GDO
 	public static function gdoHashcodeS(array $gdoVars)
 	{
 	    ksort($gdoVars); # Ensure order of vars stay the same.
-		return substr(md5(str_repeat(GWF_SALT, 4).json_encode($gdoVars)), 0, 16);
+		return substr(md5(str_repeat(GWF_SALT, 3).json_encode($gdoVars)), 0, 16);
 	}
 	
 	##############

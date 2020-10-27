@@ -49,10 +49,8 @@ class GDT_Object extends GDT_UInt
 	{
 	    $gdo = $this->getValue();
 	    return array_merge(parent::configJSON(), array(
-	        'selected' => ($gdo ? array(
-	            'id' => $gdo->getID(),
-	            'display' => $gdo->displayName(),
-	        ) : null),
+	        'cascade' => $this->cascade,
+	        'selected' => $gdo ? $gdo->getID() : null,
 	        'completionHref' => $this->completionHref,
 	    ));
 	}

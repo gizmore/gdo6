@@ -9,5 +9,5 @@ final class GDT_Menu extends GDT
 {
 	use WithFields;
 	
-	public function render() { return GDT_Template::php('UI', 'cell/menu.php', ['field'=>$this]); }
+	public function renderCell() { return GDT_Template::php('UI', 'cell/menu.php', ['field'=>$this]); }
 }

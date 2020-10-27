@@ -4,7 +4,8 @@ return array(
 	'files' => 'Dateien',
 	'image' => 'Bild',
 	'images' => 'Bilder',
-	'filesize ' => 'Dateigröße',
+    'file_type' => 'Dateityp',
+    'filesize ' => 'Dateigröße',
 	'_filesize' => array(
 		'Byte',
 		'KB',

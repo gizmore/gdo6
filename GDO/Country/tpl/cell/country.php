@@ -2,6 +2,13 @@
 use GDO\Country\GDO_Country;
 /** @var $field \GDO\Country\GDT_Country **/
 $country = $field->gdo;
+
+if (!($country instanceof GDO_Country ))
+{
+    $country = GDO_Country::getById($field->var);
+}
+
+
 ?>
 <?php if ($country instanceof GDO_Country) : ?>
 <img

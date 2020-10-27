@@ -1,5 +1,4 @@
-<?php
-use GDO\UI\GDT_Label;
-$field instanceof GDT_Label;
+<?phpuse GDO\UI\GDT_Label;
+/** @var $field GDT_Label **/
 ?>
-<?= $field->displayLabel(); ?>
+<label><?=$field->displayLabel()?></label>

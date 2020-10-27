@@ -64,6 +64,7 @@ return array(
 'filesize' => 'Filesize',
 'font_weight' => 'Font weight',
 'perm_level' => 'Permission level',
+'ago' => '%s ago',
     
 # Generic Buttons
 'btn_back' => 'Back',
@@ -166,14 +167,15 @@ return array(
 'perm_staff' => 'Staff',
 
 # User types
-'enum_ghost' => 'Geist',
-'enum_guest' => 'Gast',
+'enum_ghost' => 'Ghost',
+'enum_guest' => 'Guest',
 'enum_system' => 'System',
-'enum_member' => 'Mitglied',
+'enum_member' => 'Member',
 	
 # Dateformats
 'df_day' => 'm/d/Y',
-'df_short' => 'm/d/Y h:i a',
+'df_short' => 'm/d/Y h:i A',
+'df_long' => 'm/d/Y h:i:s A',
 'tu_s' => 's',
 'tu_m' => 'm',
 'tu_h' => 'h',

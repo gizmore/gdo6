@@ -196,7 +196,7 @@ class GDT_Select extends GDT_ComboBox
 		{
 			if ($selected = @json_decode($this->getVar()))
 			{
-				if (in_array($value, $selected))
+				if (in_array($value, $selected, true))
 				{
 					return self::SELECTED;
 				}
@@ -242,16 +242,16 @@ class GDT_Select extends GDT_ComboBox
 		return GDT_Template::php('Form', 'form/select.php', ['field' => $this]);
 	}
 	
-	public function renderJSON()
+	public function configJSON()
 	{
-		return array(
-			'name' => $this->name,
+		return array_merge(parent::configJSON(), array(
 			'multiple' => $this->multiple,
+			'selected' => $this->multiple ? $this->getValue() : $this->getSelectedVar(),
 			'minSelected' => $this->minSelected,
 			'maxSelected' => $this->maxSelected,
-			'selected' => $this->multiple ? $this->getValue() : $this->getSelectedVar(),
-			'error' => $this->error,
-		);
+		    'emptyValue' => $this->emptyValue,
+		    'emptyLabel' => $this->displayEmptyLabel(),
+		));
 	}
 	
 	public function getSelectedVar()

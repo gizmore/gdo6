@@ -57,5 +57,7 @@ class GDO_FileTable extends GDO
 	###########
 	### ACL ###
 	###########
+	public function canEdit(GDO_User $user) { return ($this->getCreatorID() === $user->getID()) || ($user->isStaff()); }
 	public function canDelete(GDO_User $user) { return ($this->getCreatorID() === $user->getID()) || ($user->isStaff()); }
+
 }
