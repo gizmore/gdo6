@@ -48,7 +48,8 @@ abstract class MethodCrud extends MethodForm
 	public function afterUpdate(GDT_Form $form, GDO $gdo) {}
 	public function afterDelete(GDT_Form $form, GDO $gdo) {}
 	
-	public function getCRUDID() { return Common::getRequestString('id'); }
+	public function crudName() { return 'id'; }
+	public function getCRUDID() { return Common::getRequestString($this->crudName()); }
 	
 	/**
 	 * @var GDO
@@ -97,6 +98,7 @@ abstract class MethodCrud extends MethodForm
 	
 	public function createFormRec(GDT_Form $form, GDT $gdt)
 	{
+	    $gdt->gdo($this->gdoTable());
 		if ($gdt->editable)
 		{
 			if ( ($gdt instanceof GDT_Object) ||
@@ -114,7 +116,7 @@ abstract class MethodCrud extends MethodForm
 					$form->addField($gdt);
 				}
 			}
-			else 
+			elseif (!$gdt->virtual)
 			{
 				$form->addField($gdt);
 			}

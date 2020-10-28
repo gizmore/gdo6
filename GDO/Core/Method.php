@@ -311,7 +311,7 @@ abstract class Method
 			GDT_Hook::callHook('AfterExecute', $this);
 			
 			# store activity timestamp
-			if (!$this->isAjax())
+			if (!$this->isAjax() && count($_POST))
 			{
 				$user = GDO_User::current();
 				if ($user->isPersisted())

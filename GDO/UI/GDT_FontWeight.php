@@ -1,7 +1,7 @@
 <?php
 namespace GDO\UI;
 
-use GDO\DB\GDT_Enum;
+use GDO\DB\GDT_EnumNoI18n;
 
 /**
  * Font weight enum select.
@@ -9,20 +9,10 @@ use GDO\DB\GDT_Enum;
  * @version 6.10
  * @since 6.10
  */
-class GDT_FontWeight extends GDT_Enum
+class GDT_FontWeight extends GDT_EnumNoI18n
 {
     public $icon = 'font';
     
 	public function defaultLabel() { return $this->label('font_weight'); }
-	
-	public function __construct()
-	{
-	    $this->enumValues('100', '200', '300', '400', '500', '600', '700', '800', '900');
-	}
-	
-	public function enumLabel($enumValue=null)
-	{
-	    return $enumValue === null ? t($this->emptyLabel, $this->emptyLabelArgs) : $enumValue;
-	}
 	
 }

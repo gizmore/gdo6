@@ -91,13 +91,15 @@ abstract class GDT
 		return $class;
 	}
 	
-	##############
-	### Events ###
-	##############
+	###################
+	### CRUD Events ###
+	###################
 	public function gdoBeforeCreate(Query $query) {}
+	public function gdoBeforeRead(Query $query) {}
 	public function gdoBeforeUpdate(Query $query) {}
 	public function gdoBeforeDelete(Query $query) {}
 	public function gdoAfterCreate() {}
+	public function gdoAfterRead() {}
 	public function gdoAfterUpdate() {}
 	public function gdoAfterDelete() {}
 	

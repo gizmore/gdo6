@@ -53,10 +53,13 @@ trait WithPHPJQuery
 		$newclss = explode(" ", $class); # multiple possible
 		foreach ($newclss as $class)
 		{
-			if (!in_array($class, $classes, true))
-			{
-				$classes[] = $class;
-			}
+		    if ($class = trim($class))
+		    {
+    			if (!in_array($class, $classes, true))
+    			{
+    				$classes[] = $class;
+    			}
+		    }
 		}
 		
 		return $this->attr('class', implode(" ", $classes));

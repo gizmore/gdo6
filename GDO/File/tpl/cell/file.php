@@ -9,8 +9,10 @@ use GDO\UI\GDT_Icon; ?>
 <?php else : ?>
   <?= GDT_Icon::iconS('file'); ?>
 <?php endif; ?>
+<?php if ($field->withFileInfo) : ?>
   <span class="gdo-file-title"><?= $gdo->displayName(); ?></span>
   <span class="gdo-file-size"><?= $gdo->displaySize(); ?></span>
   <span class="gdo-file-type"><?= $gdo->getType(); ?></span>
   <div class="cf"></div>
+<?php endif; ?>
 </div>

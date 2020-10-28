@@ -139,11 +139,11 @@ class GDT_String extends GDT
 		if ($this->unique)
 		{
 			$condition = "{$this->identifier()}=".GDO::quoteS($value);
-			if ($this->gdo->getID())
+			if ($this->gdo && $this->gdo->getID())
 			{
 				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}
-			return $this->gdo->table()->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
+			return $this->gdo->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
 		}
 		return true;
 	}

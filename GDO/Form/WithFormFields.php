@@ -28,6 +28,10 @@ trait WithFormFields
 	public function enabled($enabled=true) { return $this->writable($enabled); }
 	public function disabled($disabled=true) { return $this->writable(!$disabled); }
 	public function htmlDisabled() { return $this->writable ? '' : ' disabled="disabled"'; }
+	
+	public $placeholder;
+	public function placeholder($placeholder) { $this->placeholder = $placeholder; return $this; }
+	public function htmlPlaceholder() { return sprintf(' placeholder="%s"', html($this->placeholder)); }
 
 	/**
 	 * Change a request var globally on the fly.

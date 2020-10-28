@@ -1,6 +1,7 @@
 <?php
 namespace GDO\DB;
 
+use GDO\Core\Application;
 use GDO\User\GDT_User;
 use GDO\User\GDO_User;
 
@@ -18,4 +19,12 @@ final class GDT_EditedBy extends GDT_User
 		$query->set($this->identifier() . '=' . $userId);
 		$this->gdo->setVar($this->name, $userId);
 	}
+	
+	public function blankData()
+	{
+	    $user = Application::instance()->isInstall() ? GDO_User::system() : GDO_User::current()->persistent();
+	    $id = $user->getID();
+	    return [$this->name => $id];
+	}
+	
 }

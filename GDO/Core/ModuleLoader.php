@@ -111,6 +111,7 @@ final class ModuleLoader
 		}
 		else
 		{
+// 		    Cache::heat('gdo_modules', $cache); # is not gdoCached.
 			$this->initFromCache($cache);
 		}
 		

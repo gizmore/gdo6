@@ -5,11 +5,12 @@
   <?=$field->htmlIcon()?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input
-   style="width: 330px;"
    class="gdo-autocomplete"
+   autocomplete="no"
    data-config='<?=$field->displayConfigJSON()?>'
    <?=$field->htmlID()?>
-   type="text"
+   type="search"
+   <?=$field->htmlPlaceholder()?>
    <?=$field->htmlRequired()?>
    <?=$field->htmlDisabled()?>
    <?=$field->htmlFormName()?>

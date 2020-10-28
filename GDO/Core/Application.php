@@ -1,33 +1,41 @@
 <?php
 namespace GDO\Core;
+
 use GDO\Util\Common;
 use GDO\User\GDO_Session;
+
 /**
  * The application can control main behaviour settings.
+ * It holds the global time variables for exact time measurements in games or replays.
  * 
  * @author gizmore
- * @since 6.00
  * @version 6.10
+ * @since 6.00
  */
 class Application
 {
 	const HTML = 'html';
 	const JSON = 'json';
 	
-	public static $TIME;
-	public static $MICROTIME;
-	
-	public static function updateTime()
-	{
-	    self::$MICROTIME = microtime(true);
-	    self::$TIME = (int) self::$MICROTIME;
-	}
-	
 	/**
 	 * @return self
 	 */
 	public static function instance() { return self::$instance; }
 	private static $instance;
+	
+	############
+	### Time ###
+	############
+	public static $TIME;
+	public static $MICROTIME;
+	/**
+	 * Move forward in time.
+	 */
+	public static function updateTime()
+	{
+	    self::$MICROTIME = microtime(true);
+	    self::$TIME = (int) self::$MICROTIME;
+	}
 	
 	################
 	### Instance ###
@@ -52,7 +60,7 @@ class Application
 	/**
 	 * @return \GDO\Core\Method
 	 */
-	public function getMethod() { return method(Common::getGetString('mo', GWF_MODULE), Common::getGetString('me', GWF_METHOD)); }
+	public function getMethod() { return method(Common::getRequestString('mo', GWF_MODULE), Common::getRequestString('me', GWF_METHOD)); }
 	
 	################
 	### Override ###
@@ -75,7 +83,9 @@ class Application
 	##############
 	private $themes = GWF_THEMES;
 	public function getThemes() { return is_array($this->themes) ? $this->themes : explode(',', $this->themes); }
+	public function hasTheme($theme) { return in_array($theme, $this->getThemes(), true); }
 	public function setThemes(array $themes) { $this->themes = $themes; return $this; }
+
 }
 
 Application::updateTime();

@@ -3,11 +3,13 @@ namespace GDO\Core;
 
 use GDO\DB\Cache;
 use GDO\DB\Database;
+use GDO\DB\GDT_AutoInc;
 use GDO\DB\Query;
 use GDO\DB\Result;
 use GDO\DB\GDT_Int;
 use GDO\DB\GDT_String;
 use GDO\DB\GDT_Enum;
+use GDO\DB\GDT_Name;
 
 /**
  * A GDO is a container for GDTs, which values are backed by a database and cache.
@@ -111,11 +113,6 @@ abstract class GDO
 	{
 		return html(@$this->gdoVars[$key]);
 	}
-	
-// 	public function edisplay($key)
-// 	{
-// 		echo $this->display($key);
-// 	}
 	
 	public function renderChoice()
 	{
@@ -362,7 +359,7 @@ abstract class GDO
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			if (is_a($gdoType, $className))
+			if (is_a($gdoType, $className, true))
 			{
 				return $gdoType->gdo($this);
 			}
@@ -383,13 +380,13 @@ abstract class GDO
 	 * Get the GDOs AutoIncrement column, if any.
 	 * @return \GDO\DB\GDT_AutoInc
 	 */
-	public function gdoAutoIncColumn() { return $this->gdoColumnOf('GDO\DB\GDT_AutoInc'); }
+	public function gdoAutoIncColumn() { return $this->gdoColumnOf(GDT_AutoInc::class); }
 	
 	/**
 	 * Get the GDOs name identifier column, if any.
 	 * @return \GDO\DB\GDT_Name
 	 */
-	public function gdoNameColumn() { return $this->gdoColumnOf('GDO\DB\GDT_Name'); }
+	public function gdoNameColumn() { return $this->gdoColumnOf(GDT_Name::class); }
 	
 	/**
 	 * Get the GDT for a key.
@@ -398,7 +395,10 @@ abstract class GDO
 	 */
 	public function gdoColumn($key)
 	{
-		return $this->gdoColumnsCache()[$key]->gdo($this);
+	    if ($gdt = @$this->gdoColumnsCache()[$key])
+	    {
+	        return $gdt->gdo($this);
+	    }
 	}
 	
 	/**
@@ -482,16 +482,18 @@ abstract class GDO
 	 */
 	public function findWhere($condition)
 	{
-		return $this->query()->select('*')->from($this->gdoTableIdentifier())->where($condition)->first()->exec()->fetchObject();
+	    return $this->select()->where($condition)->first()->exec()->fetchObject();
 	}
 	
 	/**
 	 * @param string $columns
 	 * @return \GDO\DB\Query
 	 */
-	public function select($columns=null)
+	public function select($columns='*')
 	{
-		return $this->query()->select($columns)->from($this->gdoTableIdentifier());
+	    $query = $this->query()->select($columns)->from($this->gdoTableIdentifier());
+	    $this->beforeRead($query);
+		return $query;
 	}
 	
 	/**
@@ -523,7 +525,7 @@ abstract class GDO
 		{
 			return $this->insert();
 		}
-		$query = $this->query()->replace($this->gdoTableIdentifier())->values($this->gdoVars);
+		$query = $this->query()->replace($this->gdoTableIdentifier())->values($this->getDirtyVars());
 		return $this->insertOrReplace($query);
 	}
 	
@@ -672,14 +674,17 @@ abstract class GDO
 		{
 			foreach ($this->gdoColumnsCache() as $column)
 			{
-				if ( ($this->dirty === true) || (isset($this->dirty[$column->name])) )
-				{
-					if ($setClause !== '')
-					{
-						$setClause .= ',';
-					}
-					$setClause .= $column->identifier() . "=" . $this->quoted($column->name);
-				}
+			    if (!$column->virtual)
+			    {
+    				if ( ($this->dirty === true) || (isset($this->dirty[$column->name])) )
+    				{
+    					if ($setClause !== '')
+    					{
+    						$setClause .= ',';
+    					}
+    					$setClause .= $column->identifier() . "=" . $this->quoted($column->name);
+    				}
+			    }
 			}
 		}
 		return $setClause;
@@ -1034,6 +1039,15 @@ abstract class GDO
 		$this->gdoBeforeCreate();
 	}
 	
+	private function beforeRead(Query $query)
+	{
+	    foreach ($this->gdoColumnsCache() as $gdoType)
+	    {
+	        $gdoType->gdo($this)->gdoBeforeRead($query);
+	    }
+	    $this->gdoBeforeRead();
+	}
+	
 	private function beforeUpdate(Query $query)
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
@@ -1092,10 +1106,12 @@ abstract class GDO
 	
 	# Overrides
 	public function gdoBeforeCreate() {}
+	public function gdoBeforeRead() {}
 	public function gdoBeforeUpdate() {}
 	public function gdoBeforeDelete() {}
 	
 	public function gdoAfterCreate() {}
+	public function gdoAfterRead() {}
 	public function gdoAfterUpdate() {}
 	public function gdoAfterDelete() {}
 	

@@ -31,7 +31,7 @@ class Cache
 	public static function get($key) { return GWF_MEMCACHE ? self::$MEMCACHED->get(GWF_MEMCACHE_PREFIX.$key) : false; }
 	public static function set($key, $value) { if (GWF_MEMCACHE) self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$key, $value); }
 	public static function remove($key) { if (GWF_MEMCACHE) self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$key); }
-	public static function flush() { if (GWF_MEMCACHE) self::$MEMCACHED->flush(); }
+	public static function flush() { if (GWF_MEMCACHE) self::$MEMCACHED->flush(); Cache::cooldown(); }
 	public static function init()
 	{
 		if (GWF_MEMCACHE)
@@ -41,6 +41,38 @@ class Cache
 		}
 	}
 	
+	private static $HEAT = [];
+	
+	/**
+	 * Load memcached GDOs into the process cache.
+	 * @param string $key
+	 * @param GDO[] $objects
+	 */
+	public static function heat($key, array $objects)
+	{
+	    if (!isset(self::$HEAT[$key]))
+	    {
+	        self::$HEAT[$key] = true;
+	        foreach ($objects as $gdo)
+	        {
+	            if (!$gdo->gdoCached())
+	            {
+	                return;
+	            }
+	            
+	            
+	            $gdo->cache->recache($gdo);
+	        }
+	    }
+	}
+	
+	/**
+	 * Re-init heat after a cache flush.
+	 */
+	public static function cooldown()
+	{
+	    self::$HEAT = [];
+	}
 	#################
 	### GDO Cache ###
 	#################

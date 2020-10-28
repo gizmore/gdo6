@@ -65,6 +65,7 @@ return array(
 'font_weight' => 'Font-Stärke',
 'perm_level' => 'Berechtigungslevel',
 'ago' => 'vor %s',
+'duration' => 'Dauer',
     
 # Generic Buttons
 'btn_back' => 'Zurück',
@@ -246,6 +247,8 @@ return array(
 'mdescr_core_privacy' => 'Datenschutz',
 
 'li_creation_title' => '%s am %s (%s)',
+'edited_info' => 'Zuletzt bearbeitet von %s am %s',
+    
 # Config
 'cfg_system_user' => 'System Benutzer',
 'cfg_show_impressum' => 'Impressum im Footer anzeigen?',

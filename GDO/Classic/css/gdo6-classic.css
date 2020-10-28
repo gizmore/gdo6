@@ -65,7 +65,7 @@ table.gdo-table td { padding: 0px 2px; }
 /** Lists **/
 .gdt-list h3 { border-top: 1px solid #333; font-size: 22px; background: #bbf; padding: 4px 8px; }
 .gdt-list-item { display: flex; flex-direction: column; border-top: 1px solid #333; border-bottom: 1px solid #333; margin-top: 8px; }
-.gdt-li-upper { display: flex; flex-direction: row; padding: 0px 4px; border-bottom: 1px solid #bbb; }
+.gdt-li-upper { display: flex; flex-direction: row; padding: 4px 4px; border-bottom: 1px solid #bbb; }
 .gdt-li-title { font-size: 18px; margin-top: 4px; }
 .gdt-li-subtitle { font-size: 15px; flex-grow: 1; line-height: 28px; }
 .gdt-li-subtitle * { min-height: 28px; }
@@ -80,13 +80,16 @@ table.gdo-table td { padding: 0px 2px; }
 .gdo-list-card { }
 .gdo-list-card > .title { padding: 4px 8px 2px; font-size: 20px; background: #ddf; border-bottom: 1px solid #333; }
 .gdt-card { border-bottom: 1px solid #333; border-top: 1px solid #333; margin-bottom: 8px; }
-.gdt-card-upper { border-bottom: 1px solid #ddd; padding: 8px; }
+.gdt-card-upper { display: flex; flex-direction: row; border-bottom: 1px solid #ddd; padding: 8px; }
 .gdt-card-middle { border-bottom: 1px solid #ddd; padding: 8px; }
 .gdt-card-lower { padding: 2px 8px; }
 .gdt-card-title { font-size: 20px; }
 .gdt-card-subtitle { font-size: 14px; }
+.gdt-card-avatar { align-self: center; margin-right: 8px; }
 .gdt-card-fields { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto; gap: 6px 8px; }
 .gdt-card-fields label { text-align: right; }
+.gdt-card-avatar > .gdo-file > img { max-width: 48px; max-height: 48px; border-radius: 8px; }
+.gdt-card-footer { font-size: 14px; }
 
 /** Textmessage **/
 .gdo-message blockquote { padding-left: 16px; border: 1px solid #000; }
@@ -103,7 +106,8 @@ footer#gdo-footer, footer#gdo-footer .gdo-bar { min-height: 32px; }
 header#gdo-header, header#gdo-header .gdo-bar { min-height: 64px; }
 
 /** Panel **/
-.gdo-panel { border: 1px solid #444; padding: 8px 16px; }
+.gdo-panel { border: 1px solid #444; padding: 6px 14px; margin: 2px; }
+.gdo-panel > p { margin-bottom: 16px; }
 
 /** File **/
 .gdo-file-controls { padding: 0px 8px; }

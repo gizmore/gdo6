@@ -110,6 +110,9 @@ class GDT_File extends GDT_Object
 		return $this->action;
 	}
 	
+	public $withFileInfo = true;
+	public function withFileInfo($withFileInfo=true) { $this->withFileInfo = $withFileInfo; return $this; }
+	
 	##############
 	### Render ###
 	##############
@@ -120,7 +123,7 @@ class GDT_File extends GDT_Object
 	
 	public function renderCell()
 	{
-		return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this->getValue()]);
+		return GDT_Template::php('File', 'cell/file.php', ['field' => $this, 'gdo' => $this->getValue()]);
 	}
 	
 	public function renderJSON()

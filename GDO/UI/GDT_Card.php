@@ -10,6 +10,8 @@ use GDO\Profile\GDT_ProfileLink;
 use GDO\Avatar\GDT_Avatar;
 use GDO\Date\GDT_DateDisplay;
 use GDO\Core\WithFields;
+use GDO\DB\GDT_EditedBy;
+use GDO\DB\GDT_EditedAt;
 
 /**
  * A card with title, subtitle, creator, date, content and actions.
@@ -73,7 +75,7 @@ final class GDT_Card extends GDT
 	 * Use the subtitle to render creation stats. User (with avatar), Date, Age.
 	 * @return self
 	 */
-	public function titleCreation(GDT $title=null)
+	public function creatorHeader(GDT $title=null)
 	{
 	    /** @var $user GDO_User **/
 	    $user = $this->gdo->gdoColumnOf(GDT_CreatedBy::class)->getValue();
@@ -112,4 +114,29 @@ final class GDT_Card extends GDT
 	    return $this;
 	}
 	
+	#####################
+	### Edited Footer ###
+	#####################
+	/**
+	 * Create a last 'edited by' footer.
+	 */
+	public function editorFooter()
+	{
+	    /** @var $user GDO_User **/
+	    if ($user = $this->gdo->gdoColumnOf(GDT_EditedBy::class)->getValue())
+	    {
+    	    if (module_enabled('Profile'))
+    	    {
+    	        $username = GDT_ProfileLink::make()->forUser($user)->withNickname()->withAvatar()->renderCell();
+    	    }
+    	    else
+    	    {
+    	        $username = $user->displayNameLabel();
+    	    }
+    	    
+    	    $at = $this->gdo->gdoColumnOf(GDT_EditedAt::class)->renderCell();
+    	    $this->footer = GDT_Label::make()->label('edited_info', [$username, $at]);
+	    }
+	    return $this;
+	}
 }

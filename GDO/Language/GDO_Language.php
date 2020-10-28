@@ -83,6 +83,10 @@ final class GDO_Language extends GDO
 			$cache = self::table()->select('*')->exec()->fetchAllArray2dObject();
 			Cache::set('gdo_languages', $cache);
 		}
+		else
+		{
+		    Cache::heat('gdo_languages', $cache);
+		}
 		return $cache;
 	}
 }

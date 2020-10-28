@@ -22,6 +22,8 @@ abstract class MethodForm extends Method
 	
 	public function isUserRequired() { return true; }
 	
+	public function formName() { return 'form'; }
+	
 	public abstract function createForm(GDT_Form $form);
 	
 	/**
@@ -86,7 +88,7 @@ abstract class MethodForm extends Method
 		{
 			if ($field instanceof GDT_Submit)
 			{
-				if (isset($_REQUEST[$field->name]))
+				if (isset($_REQUEST[$this->formName()][$field->name]))
 				{
 					if ($form->validateForm())
 					{
@@ -113,7 +115,7 @@ abstract class MethodForm extends Method
 	{
 		if (!isset($this->form))
 		{
-			$this->form = GDT_Form::make('form');
+			$this->form = GDT_Form::make($this->formName());
 			$this->defaultTitle();
 			$this->createForm($this->form);
 		}
@@ -122,10 +124,13 @@ abstract class MethodForm extends Method
 	
 	public function resetForm()
 	{
-		unset($_GET['form']);
-		unset($_POST['form']);
+	    $form = $this->formName();
+	    unset($_GET[$form]);
+	    unset($_POST[$form]);
+		unset($_REQUEST[$form]);
+		unset($_GET['nojs']);
 		unset($_POST['nojs']);
-		unset($_REQUEST['form']);
+		unset($_REQUEST['nojs']);
 		unset($this->form);
 	}
 	

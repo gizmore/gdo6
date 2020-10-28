@@ -40,6 +40,10 @@ class GDT_ObjectSelect extends GDT_Select
 	public function renderForm()
 	{
 		$this->initChoices();
+		if ($this->completionHref)
+		{
+		    return GDT_Template::php('DB', 'form/object_completion.php', ['field' => $this]);
+		}
 		return parent::renderForm();
 	}
 	
@@ -115,10 +119,46 @@ class GDT_ObjectSelect extends GDT_Select
 	##############
 	### Config ###
 	##############
+	private function configJSONSelected()
+	{
+	    if ($this->multiple)
+	    {
+	        $selected = [];
+	        foreach ($this->getValue() as $value)
+	        {
+	            $selected[] = array(
+	                'id' => $value->getID(),
+	                'text' => $value->displayName(),
+	                'display' => $value->renderChoice(),
+	            );
+	        }
+	    }
+	    else
+	    {
+	        if ($value = $this->getValue())
+	        {
+    	        $selected = array(
+    	            'id' => $value->getID(),
+    	            'text' => $value->displayName(),
+    	            'display' => $value->renderChoice(),
+    	        );
+	        }
+	        else
+	        {
+	            $selected = array(
+	                'id' => $this->emptyValue,
+	                'text' => $this->emptyLabel,
+	                'display' => $this->displayEmptyLabel(),
+	            );
+	        }
+	    }
+	    return $selected;
+	}
+	
 	public function configJSON()
 	{
 	    return array_merge(parent::configJSON(), array(
-	        'selected' => $this->multiple ? array_keys($this->getValue()) : $this->getSelectedVar(),
+	        'selected' => $this->configJSONSelected(),
 	    ));
 	}
 	

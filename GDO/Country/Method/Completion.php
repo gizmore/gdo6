@@ -1,41 +1,57 @@
 <?php
 namespace GDO\Country\Method;
-use GDO\Core\GDO;
+
 use GDO\Core\MethodCompletion;
 use GDO\Country\GDO_Country;
-use GDO\Country\GDT_Country;
+use GDO\Core\Website;
+
 /**
  * Autocomplete adapter for countries.
  * @author gizmore
  * @since 6.00
- * @version 6.05
+ * @version 6.10
  */
 final class Completion extends MethodCompletion
 {
-    public function gdoTable()
+    public function execute()
     {
-        return GDO_Country::table();
-    }
-
-    public function gdoHeaderColumns()
-    {
-        $t = $this->gdoTable();
-        return array(
-            $t->gdoColumn('c_iso'),
-        );
-    }
-
-    /**
-     * @var $gdo GDO_Country
-     */
-    public function renderJSON(GDO $gdo)
-    {
-        $cell = GDT_Country::make('c_iso');
-        return array(
-            'id' => $gdo->getID(),
-            'text' => $gdo->displayName(),
-            'display' => $cell->gdo($gdo)->renderCell(),
-        );
+        $countries = GDO_Country::table()->all();
+        
+        $q = mb_strtolower($this->getSearchTerm());
+        $max = $this->getMaxSuggestions();
+        $result = [];
+        foreach ($countries as $country)
+        {
+            $name = $country->displayName();
+            $iso = $country->getISO();
+            if (strtolower($iso) === $q)
+            {
+                array_unshift($result, $country);
+            }
+            elseif (mb_stripos($name, $q) !== false)
+            {
+                $result[] = $country;
+            }
+            elseif ($q === '')
+            {
+                $result[] = $country;
+            }
+            if (count($result) >= $max)
+            {
+                break;
+            }
+        }
+        
+        $json = [];
+        $json = array_map(function(GDO_Country $country) {
+            return array(
+                'id' => $country->getID(),
+                'text' => $country->displayName(),
+                'display' => $country->renderChoice(),
+            );
+        }, $result);
+        
+        Website::renderJSON($json);
     }
     
 }

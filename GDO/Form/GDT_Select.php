@@ -105,7 +105,7 @@ class GDT_Select extends GDT_ComboBox
 		{
 			if (!isset($_REQUEST[$f][$this->name]))
 			{
-				$_REQUEST[$f][$this->name] = array();
+				$_REQUEST[$f][$this->name] = [];
 			}
 		}
 	}
@@ -148,7 +148,16 @@ class GDT_Select extends GDT_ComboBox
 			return $this->notNull ? $this->errorNotNull() : true;
 		}
 		
-		if (in_array($value, $this->choices, true))
+		
+		if (is_object($value))
+		{
+    		if (isset($this->choices[$value->getID()])) # check memcached by id
+    		{
+    		    return true;
+    		}
+		}
+		
+		if (in_array($value, $this->choices, true)) # check single identity
 		{
 		    return true;
 		}
@@ -270,9 +279,9 @@ class GDT_Select extends GDT_ComboBox
 		return $var === null ? $this->emptyValue : $var;
 	}
 	
-	public function htmlFormName()
+	public function formName()
 	{
-	    $name = parent::htmlFormName();
+	    $name = parent::formName();
 	    return $this->multiple ? "{$name}[]" : $name;
 	}
 	

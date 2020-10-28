@@ -23,4 +23,10 @@ final class GDT_EditedAt extends GDT_DateTime
 		$query->set($this->identifier() . "=" . quote($now));
 		$this->gdo->setVar($this->name, $now);
 	}
+
+	public function blankData()
+	{
+	    return [$this->name => Time::getDate()];
+	}
+
 }

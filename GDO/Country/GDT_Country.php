@@ -27,7 +27,7 @@ final class GDT_Country extends GDT_ObjectSelect
 	
 	public function configJSON()
 	{
-		return array_merge(parent::renderJSON(), array(
+	    return array_merge(parent::configJSON(), array(
 			'completionHref' => $this->completionHref,
 		));
 	}

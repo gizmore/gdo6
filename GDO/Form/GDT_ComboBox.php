@@ -28,7 +28,7 @@ class GDT_ComboBox extends GDT_String
 	{
 	    return array_merge(parent::configJSON(), array(
 	        'completionHref' => $this->completionHref,
-	        'choices' => $this->choices,
+// 	        'choices' => $this->choices,
 	    ));
 	}
 	

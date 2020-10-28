@@ -65,6 +65,7 @@ return array(
 'font_weight' => 'Font weight',
 'perm_level' => 'Permission level',
 'ago' => '%s ago',
+'duration' => 'Duration',
     
 # Generic Buttons
 'btn_back' => 'Back',
@@ -245,6 +246,7 @@ return array(
 'mdescr_core_privacy' => 'Privacy information',
     
 'li_creation_title' => '%s at %s (%s)',
+'edited_info' => 'Last edited by %s at %s',
 
 # Config
 'cfg_system_user' => 'System user',

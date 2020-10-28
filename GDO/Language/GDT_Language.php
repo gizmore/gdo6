@@ -14,6 +14,9 @@ final class GDT_Language extends GDT_ObjectSelect
 		$this->min = $this->max = 2;
 		$this->icon('language');
 	}
+	
+	public $withName = false;
+	public function withName($withName=true) { $this->withName = $withName; return $this; }
 
 	###############
 	### Choices ###

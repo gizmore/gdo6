@@ -1,11 +1,13 @@
 <?php
 namespace GDO\Country;
+
 use GDO\DB\Cache;
 use GDO\Core\GDO;
 use GDO\Core\GDT_Template;
 use GDO\DB\GDT_Char;
 use GDO\DB\GDT_Int;
 use GDO\DB\GDT_String;
+
 /**
  * Country table/entity.
  * @author gizmore
@@ -66,6 +68,10 @@ final class GDO_Country extends GDO
 				return strcasecmp($ca, $cb);
 			});
 			Cache::set('gdo_country', $cache);
+		}
+		else
+		{
+		    Cache::heat('gdo_country', $cache);
 		}
 		return $cache;
 	}

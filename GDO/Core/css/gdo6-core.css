@@ -1,4 +1,4 @@
-* { margin: 0; padding: 0; text-decoration: none; box-sizing: border-box; list-style: none; word-break: break-all; }
+* { margin: 0; padding: 0; text-decoration: none; box-sizing: border-box; list-style: none; }
 span, img, a, i, b, em { display: inline-block; }
 .cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
 .ce { text-align: center; margin: auto; }
@@ -12,7 +12,7 @@ img.gdo-country { width: 24px; height: 17px; position: relative; top: 3px; }
 .ce { text-align: center; margin: auto; }
 .cb { clear: both; }
 .dn { display: none; }
-.gdo-table td.gdt-num.gdo-gdt_user { font-family: sans-serif; text-align: left; }
+.gdo-table td.gdt-num.gdo-gdt_user { text-align: left; }
 .ri { text-align: right; float: right; }
 .ri:after,.fr:after,.fl:after { content: ""; visibility: hidden; display: block; height: 0; clear: both; }
 .fr { float: right; }

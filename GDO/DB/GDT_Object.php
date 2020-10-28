@@ -21,7 +21,7 @@ class GDT_Object extends GDT_UInt
 		return $this->getVar();
 	}
 	
-	 public function renderChoice($choice)
+	 public function renderChoice($choice=null)
 	 {
 	     /** @var $obj GDO **/
 		 if ($obj = $this->getValue())
@@ -47,10 +47,25 @@ class GDT_Object extends GDT_UInt
 	##############
 	public function configJSON()
 	{
-	    $gdo = $this->getValue();
+	    if ($gdo = $this->getValue())
+	    {
+	        $selected = array(
+	            'id' => $gdo->getID(),
+	            'text' => $gdo->displayName(),
+	            'display' => $gdo->renderChoice(),
+	        );
+	    }
+	    else 
+	    {
+	        $selected = array(
+	            'id' => null,
+	            'text' => $this->placeholder,
+	            'display' => $this->placeholder,
+	        );
+	    }
 	    return array_merge(parent::configJSON(), array(
 	        'cascade' => $this->cascade,
-	        'selected' => $gdo ? $gdo->getID() : null,
+	        'selected' => $selected,
 	        'completionHref' => $this->completionHref,
 	    ));
 	}

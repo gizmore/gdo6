@@ -7,6 +7,7 @@ use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
 use GDO\Core\GDT_Template;
 use GDO\Core\WithCompletion;
+use GDO\UI\WithPHPJQuery;
 
 /**
  * ENUMs are similiar to a select, but only allow 1 item being chosen.
@@ -27,10 +28,11 @@ class GDT_Enum extends GDT
 	use WithDatabase;
 	use WithFormFields;
 	use WithCompletion;
+	use WithPHPJQuery;
 	
 	public $orderable = true;
 	public $filterable = true;
-
+	
 	############
 	### Base ###
 	############
@@ -40,16 +42,16 @@ class GDT_Enum extends GDT
 		return "{$this->identifier()} ENUM ($values) CHARSET ascii COLLATE ascii_bin {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 	
-	public function renderForm() { return GDT_Template::php('DB', 'form/enum.php', ['field' => $this]); }
-	public function renderCell() { return $this->enumLabel($this->getVar()); }
-	public function renderJSON()
+	public function renderForm()
 	{
-		return array(
-			'enumValues' => $this->enumValues,
-			'selected' => $this->getVar(),
-			'error' => $this->error,
-		);
+	    if ($this->completionHref)
+	    {
+	        return GDT_Template::php('DB', 'form/object_completion.php', ['field' => $this]);
+	    }
+	    return GDT_Template::php('DB', 'form/enum.php', ['field' => $this]);
+	
 	}
+	public function renderCell() { return $this->enumLabel($this->getVar()); }
 	
 	public function toValue($var)
 	{
@@ -164,13 +166,43 @@ class GDT_Enum extends GDT
 	
 	public function configJSON()
 	{
-		return array_merge(parent::configJSON(), array(
-			'enumValues' => $this->enumValues,
-		    'enumLabels' => $this->generateEnumLabels(),
-			'emptyValue' => $this->emptyValue,
-			'emptyLabel' => $this->emptyLabel,
-		    'completionHref' => $this->completionHref,
-		));
+	    if ($this->completionHref)
+	    {
+	        if ($value = $this->getValue())
+	        {
+	            $selected = array(
+	                'id' => $this->getVar(),
+	                'text' => $this->getVar(),
+	                'display' => $value,
+	            );
+	        }
+	        else
+	        {
+	            $selected = array(
+    	            'id' => $this->emptyValue,
+    	            'text' => $this->emptyValue,
+    	            'display' => $this->displayEmptyLabel(),
+	            );
+	        }
+    		return array_merge(parent::configJSON(), array(
+    			'emptyValue' => $this->emptyValue,
+    			'emptyLabel' => $this->emptyLabel,
+    		    'completionHref' => $this->completionHref,
+    		    'display' => $this->renderCell(),
+    		    'selected' => $selected,
+    		));
+	    }
+	    else
+	    {
+	        return array_merge(parent::configJSON(), array(
+	            'enumValues' => $this->enumValues,
+	            'enumLabels' => $this->generateEnumLabels(),
+	            'emptyValue' => $this->emptyValue,
+	            'emptyLabel' => $this->displayEmptyLabel(),
+	            'completionHref' => $this->completionHref,
+	            'display' => $this->renderCell(),
+	        ));
+	    }
 	}
   
 }

@@ -2,16 +2,20 @@
 namespace GDO\Language\Method;
 use GDO\Language\GDO_Language;
 use GDO\Language\GDT_Language;
-use GDO\Core\MethodAjax;
+use GDO\Core\MethodCompletion;
 
-final class Completion extends MethodAjax
+final class Completion extends MethodCompletion
 {
 	public function execute()
 	{
 		$response = [];
 		$q = $this->getSearchTerm();
+		
+		$table = GDO_Language::table();
+		$languages = isset($_REQUEST['all']) ? $table->all() : $table->allSupported();
+		
 		$cell = GDT_Language::make('lang_iso');
-		foreach (GDO_Language::table()->all() as $iso => $language)
+		foreach ($languages as $iso => $language)
 		{
 			if ( ($q === '') || ($language->getISO() === $q) ||
 				 (mb_stripos($language->displayName(), $q) !== false) ||
