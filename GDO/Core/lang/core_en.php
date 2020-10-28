@@ -245,4 +245,18 @@ return array(
 'mdescr_core_privacy' => 'Privacy information',
     
 'li_creation_title' => '%s at %s (%s)',
+
+# Config
+'cfg_system_user' => 'System user',
+'cfg_show_impressum' => 'Show impressum in footer?',
+'cfg_div_javascript' => 'Javascript',
+'cfg_minify_js' => 'Javascript minification mode',
+'cfg_nodejs_path' => 'Path to nodejs',
+'cfg_uglifyjs_path' => 'Path to uglifyjs',
+'cfg_ng_annotate_path' => 'Path to ng-annotate',
+'cfg_link_node_detect' => 'Detect Javascript utilities',
+'cfg_asset_revision' => 'Asset revision cache poisoner',
+'err_nodejs_not_found' => 'Could not find nodejs',
+'err_annotate_not_found' => 'Could not find ng-annotate',
+'err_uglify_not_found' => 'Could not find uglify',
 );

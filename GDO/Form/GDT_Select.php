@@ -53,7 +53,14 @@ class GDT_Select extends GDT_ComboBox
 	{
 		if ($this->multiple)
 		{
-			return json_encode(array_values($value));
+		    if ($value)
+		    {
+		        return json_encode(array_values($value));
+		    }
+		    else
+		    {
+		        return null;
+		    }
 		}
 		else 
 		{
@@ -110,13 +117,16 @@ class GDT_Select extends GDT_ComboBox
 	
 	private function validateMultiple($values)
 	{
-		foreach ($values as $value)
-		{
-			if (!$this->validateSingle($value))
-			{
-				return false;
-			}
-		}
+	    if ($values)
+	    {
+    		foreach ($values as $value)
+    		{
+    			if (!$this->validateSingle($value))
+    			{
+    				return false;
+    			}
+    		}
+	    }
 		
 		if ( ($this->minSelected !== null) && ($this->minSelected > count($values)) )
 		{

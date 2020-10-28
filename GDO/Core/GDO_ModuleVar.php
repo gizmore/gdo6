@@ -28,7 +28,7 @@ final class GDO_ModuleVar extends GDO
 	
 	public static function createModuleVar(GDO_Module $module, GDT $var)
 	{
-		if ($var->getVar() === null)
+		if (null === ($value = $var->getValue()))
 		{
 			$var->initial(null);
 			return self::removeModuleVar($module, $var->name);
@@ -36,7 +36,7 @@ final class GDO_ModuleVar extends GDO
 		return self::table()->blank(array(
 			'mv_module_id' => $module->getID(),
 			'mv_name' => $var->name,
-			'mv_value' => $var->getVar(),
+			'mv_value' => $var->toVar($value),
 		))->replace();
 	}
 	

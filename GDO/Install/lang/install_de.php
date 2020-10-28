@@ -51,6 +51,8 @@ return array(
 'err_disable_core_module' => 'Sie können Core Module nicht abwählen.',
 'err_multiple_site_modules' => 'Sie sollten nicht mehere Seitenmodule anwählen.',
 'err_missing_dependency' => 'Es fehlen Abhängigkeiten: ',
+'module_priority' => 'Priorität',
+'module_description' => 'Beschreibung',
 
 # Cronjob
 'install_title_5' => 'Cronjob Konfiguration',

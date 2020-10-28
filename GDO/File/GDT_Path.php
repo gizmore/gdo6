@@ -24,6 +24,12 @@ final class GDT_Path extends GDT_String
 	public $existing = false;
 	public function existingDir() { $this->existing = 'is_dir'; return $this->icon('folder'); }
 	public function existingFile() { $this->existing = 'is_file'; return $this->icon('file'); }
+
+	#####################
+	### Var and Value ###
+	#####################
+// 	public function toVar($value) { return str_replace("\\", "/", $value); }
+// 	public function toValue($var) { return str_replace("\\", "/", $var); }
 	
 	################
 	### Validate ###

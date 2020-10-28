@@ -38,7 +38,12 @@ class GDT_Decimal extends GDT_Int
 	
 	public function toValue($var)
 	{
-		return round($var, $this->digitsAfter);
+	    return round($var, $this->digitsAfter);
+	}
+	
+	public function toVar($value)
+	{
+	    return sprintf("%.0{$this->digitsAfter}f", $value);
 	}
 	
 	public function configJSON()

@@ -51,6 +51,8 @@ return array(
 'err_disable_core_module' => 'You cannot disable a core module.',
 'err_multiple_site_modules' => 'You should not have multiple site modules.',
 'err_missing_dependency' => 'You are missing dependencies: ',
+'module_priority' => 'Priority',
+'module_description' => 'Description',
 
 # Cronjob
 'install_title_5' => 'Cronjob Configuration',

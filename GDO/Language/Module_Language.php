@@ -69,12 +69,13 @@ final class Module_Language extends GDO_Module
 	
 	public function onIncludeScripts()
 	{
-		$this->addJavascript('js/gdo-trans.js');
-		
 		# Add js trans
 		$iso = Trans::$ISO;
 		$href = $this->href('GetTransData', "&iso={$iso}&".$this->nocacheVersion());
 		Javascript::addJavascript($href);
+
+		# Add cheap translation engine.
+		$this->addJavascript('js/gdo-trans.js');
 	}
 	
 	#################

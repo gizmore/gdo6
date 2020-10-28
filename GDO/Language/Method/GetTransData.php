@@ -9,7 +9,7 @@ final class GetTransData extends MethodAjax
 	{
 		header("ContentType: text/javascript");
 		$json = json_encode(Trans::getCache(Trans::$ISO));
-		echo "window.GDO_TRANS.CACHE = {$json};\n";
+		echo "window.GDO_TRANS = { CACHE: {$json} };\n";
 		die();
 	}
 	

@@ -1,38 +1,15 @@
-header {
-	height: 140px;
-	background: red;
-	vertical-align: bottom;
-}
-
-footer {
-/* 	position: absolute; */
-/* 	left: 0; */
-/* 	bottom: 0; */
-}
-
-.n {
-	display: none;
-}
-
-.gdo-bar-column, .gdo-bar-column > *, .gdo-bar-row, .gdo-bar-row > * {
-	display: flex;
-	flex-grow: 1;
-	justify-content: center;
-}
-.gdo-bar-column {
-	flex-direction: column;
-}
-.gdo-bar-row {
-	flex-direction: row;
-}
-
+header { height: 140px; background: red; vertical-align: bottom; }
+.gdo-bar-column, .gdo-bar-column > *,
+.gdo-bar-row, .gdo-bar-row > * { display: flex; flex-grow: 1; justify-content: center; }
+.gdo-bar-column { flex-direction: column; }
+.gdo-bar-row { flex-direction: row; }
 .module-installed { color: green; }
-
 .core-module { font-style: italic; }
 .site-module { color: purple; }
-
-
-.gdt-divider {
-	background: #eee;
-	padding: 5px;
-}
+.gdt-divider { background: #eee; padding: 5px; }
+.gdo-gdt_modulefeature,
+td.gdo-gdt_name,
+td.gdo-gdt_template-Install-modulename span,
+.gdo-gdt_template-Install-modulelicense { white-space: nowrap; }
+body > div.gdo-body { padding: 0; }
+.gdt-module-license { font-style: italic; }

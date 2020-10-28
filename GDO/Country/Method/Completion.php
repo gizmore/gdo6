@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Country\Method;
+use GDO\Core\GDO;
 use GDO\Core\MethodCompletion;
 use GDO\Country\GDO_Country;
 use GDO\Country\GDT_Country;
@@ -11,24 +12,30 @@ use GDO\Country\GDT_Country;
  */
 final class Completion extends MethodCompletion
 {
-	public function execute()
-	{
-		$response = [];
-		$q = $this->getSearchTerm();
-		$cell = GDT_Country::make('c_iso');
-		foreach (GDO_Country::table()->all() as $iso => $country)
-		{
-			if ( (!$q) || ($country->getISO() === $q) ||
-				(mb_stripos($country->displayName(), $q) !== false) )
-			{
-				$response[] = array(
-					'id' => $iso,
-					'text' => $country->displayName(),
-					'display' => $cell->gdo($country)->renderCell(),
-				);
-			}
-		}
-		
-		die(json_encode($response));
-	}
+    public function gdoTable()
+    {
+        return GDO_Country::table();
+    }
+
+    public function gdoHeaderColumns()
+    {
+        $t = $this->gdoTable();
+        return array(
+            $t->gdoColumn('c_iso'),
+        );
+    }
+
+    /**
+     * @var $gdo GDO_Country
+     */
+    public function renderJSON(GDO $gdo)
+    {
+        $cell = GDT_Country::make('c_iso');
+        return array(
+            'id' => $gdo->getID(),
+            'text' => $gdo->displayName(),
+            'display' => $cell->gdo($gdo)->renderCell(),
+        );
+    }
+    
 }

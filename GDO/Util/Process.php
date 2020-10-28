@@ -11,15 +11,20 @@ namespace GDO\Util;
  */
 final class Process
 {
+    public static function isWindows()
+    {
+        return PHP_OS === 'WINNT';
+    }
+    
     /**
      * Determines if a command exists on the current environment
      * @param string $command The command to check
      * @return bool True if the command has been found ; otherwise, false.
      * @author https://stackoverflow.com/a/18540185/13599483
      */
-    public static function commandExists($command, $windowsSuffix='.exe')
+    public static function commandPath($command, $windowsSuffix='.*')
     {
-        $whereIsCommand = PHP_OS === 'WINNT' ? 'where' : 'which';
+        $whereIsCommand = self::isWindows() ? 'where' : 'which';
         $command = PHP_OS === 'WINNT' ? "$command$windowsSuffix" : $command;
     
         $pipes = [];
@@ -41,9 +46,13 @@ final class Process
             fclose($pipes[2]);
             proc_close($process);
             
-            return $stdout != '';
+            if ($stdout !== '')
+            {
+                return trim($stdout, "\r\n\t ");
+            }
         }
-        return false;
+        return null;
     }
+    
 
 }

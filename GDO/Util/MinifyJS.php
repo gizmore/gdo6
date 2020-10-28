@@ -26,6 +26,8 @@ final class MinifyJS
 	private $external = array();
 	private $concatenate = array();
 	
+	private $skipMinified = false;
+	
 	public static function tempDirS($path='') { return GDO_PATH . 'temp/minify/' . $path; }
 
 	public static function minified(array $javascripts)
@@ -34,13 +36,14 @@ final class MinifyJS
 		return $minify->execute();
 	}
 	
-	public function __construct(array $javascripts)
+	public function __construct(array $javascripts, $skipMinified=false)
 	{
 		$this->input = $javascripts;
 		$module = Module_Core::instance();
 		$this->nodejs = $module->cfgNodeJSPath();
 		$this->uglify= $module->cfgUglifyPath();
 		$this->annotate = $module->cfgAnnotatePath();
+		$this->skipMinified = $skipMinified;
 		FileUtil::createDir($this->tempDir());
 	}
 	
@@ -59,7 +62,7 @@ final class MinifyJS
 		{
 			foreach ($this->input as $path)
 			{
-				if (strpos($path, '://'))
+				if (strpos($path, '://') || strpos($path, 'ndex.php?'))
 				{
 					$this->external[] = $path;
 				}
@@ -84,7 +87,14 @@ final class MinifyJS
 		if (!FileUtil::isFile($finalpath))
 		{
 			$concat = implode(' ', $this->concatenate);
-			exec("cat $concat > $finalpath");
+			$cat = 'cat';
+			if (Process::isWindows())
+			{
+			    $cat = 'type';
+			    $concat = str_replace('/', '\\', $concat);
+			}
+			$command = "$cat $concat > $finalpath";
+			exec($command);
 			if (!(FileUtil::isFile($finalpath)))
 			{
 				return $minified; # Fail, inbetween version should be ok though.
@@ -101,7 +111,7 @@ final class MinifyJS
 	
 	public function minifiedJavascriptPath($path)
 	{
-		if (!strpos($path, '://'))
+		if ( (!strpos($path, '://')) && (!strpos($path, 'ndex.php')) )
 		{
 			return $this->minifiedJavascript($path);
 		}
@@ -123,7 +133,7 @@ final class MinifyJS
 			$dest = $this->tempDir("$md5.js");
 			if (!FileUtil::isFile($dest))
 			{
-				if (strpos($src, '.min.js'))
+				if (strpos($src, '.min.js') && $this->skipMinified)
 				{
 					if (!@copy($src, $dest)) # Skip minified ones
 					{
@@ -138,8 +148,15 @@ final class MinifyJS
 					$annotate = $this->annotate;
 					$uglifyjs = $this->uglify;
 					$nodejs = $this->nodejs;
-					# TODO: remove console.log calls
-					$command = "$nodejs $annotate -ar $src | $nodejs $uglifyjs --compress --mangle -o $dest";
+					# TODO: remove console.log calls+
+					if (Process::isWindows())
+					{
+					    $command = "$annotate -ar $src | $uglifyjs --compress --mangle -o $dest";
+					}
+					else
+					{
+    					$command = "$nodejs $annotate -ar $src | $nodejs $uglifyjs --compress --mangle -o $dest";
+					}
 					$return = 0;
 					$output = array();
 					exec($command, $output, $return);

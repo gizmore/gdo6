@@ -33,7 +33,7 @@ final class InstallModules extends Method
 		
 		if (isset($_REQUEST['btn_install']))
 		{
-			return $this->onInstall(Common::getPostArray('module'));
+			return $this->onInstall(Common::getRequestArray('module'));
 		}
 		
 		return $this->renderModuleTable();

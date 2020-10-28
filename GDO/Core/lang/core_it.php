@@ -246,5 +246,17 @@ return array(
 'mdescr_core_privacy' => 'Privacy information',
 
 'li_creation_title' => '%s il %s (%s)',
-    
+# Config
+'cfg_system_user' => 'System Benutzer',
+'cfg_show_impressum' => 'Impressum im Footer anzeigen?',
+'cfg_div_javascript' => 'Javascript',
+'cfg_minify_js' => 'Javascript Minifizierungs-Modus',
+'cfg_nodejs_path' => 'Pfad zu nodejs',
+'cfg_uglifyjs_path' => 'Pfad zu uglifyjs',
+'cfg_ng_annotate_path' => 'Pfad zu ng-annotate',
+'cfg_link_node_detect' => 'Javascript Programme auf Server suchen',
+'cfg_asset_revision' => 'Asset Cache Version',
+'err_nodejs_not_found' => 'Konnte nodejs nicht finden',
+'err_annotate_not_found' => 'Konnte ng-annotate nicht finden',
+'err_uglify_not_found' => 'Konnte uglify nicht finden',
 );

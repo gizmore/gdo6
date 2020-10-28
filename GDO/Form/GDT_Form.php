@@ -220,7 +220,7 @@ class GDT_Form extends GDT
 	public static function hiddenMoMe()
 	{
 	    return sprintf('<input type="hidden" name="mo" value="%s" /><input type="hidden" name="me" value="%s" />',
-	        html($_REQUEST['mo']), html($_REQUEST['me']));
+	        html(@$_REQUEST['mo']), html(@$_REQUEST['me']));
 	}
 	
 }

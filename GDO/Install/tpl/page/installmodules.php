@@ -22,6 +22,7 @@ echo GDT_Panel::make()->html(t('install_modules_info_text'))->render();
 $table = GDT_Table::make()->result(new ArrayResult($modules, GDO_Module::table()));
 $table->addHeader(GDT_Template::make()->template('Install', 'cell/installcbx.php')->templateHead('Install', 'cell/installcbx_head.php'));
 $table->addHeader(GDO_Module::table()->gdoColumn('module_name'));
+$table->addHeader(GDT_Template::make('module_license')->label('license')->template('Install', 'cell/modulelicense.php'));
 $table->addField(GDT_Template::make('module_name')->template('Install', 'cell/modulename.php'));
 $table->addHeader(GDO_Module::table()->gdoColumn('module_priority'));
 $table->addHeader(GDT_ModuleFeature::make('module_features'));

@@ -84,7 +84,7 @@ final class GDO_UserSetting extends GDO
 		}
 		
 		/** @var $gdoType GDT **/
-		if ($gdoType = self::$settings[$key])
+		if ($gdoType = @self::$settings[$key])
 		{
     		$var = isset($settings[$key]) ? $settings[$key] : $gdoType->initial;
     		return $gdoType->initial($var);

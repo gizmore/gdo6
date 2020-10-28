@@ -2,7 +2,6 @@
 namespace GDO\Core\Method;
 
 use GDO\Core\Method;
-use GDO\Core\GDT_Response;
 use GDO\Core\Website;
 use GDO\Core\Module_Core;
 
