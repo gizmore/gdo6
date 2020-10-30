@@ -18,6 +18,8 @@ class GDT_Password extends GDT_String
 		$this->caseSensitive = true;
 		$this->icon('lock');
 		$this->tooltip('tt_password');
+		$this->orderable = false;
+		$this->searchable = false;
 	}
 
 	public function defaultLabel() { return $this->label('password'); }

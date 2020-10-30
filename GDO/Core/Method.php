@@ -37,7 +37,7 @@ abstract class Method
 	abstract public function execute();
 	
 	/**
-	 * @return self
+	 * @return static
 	 */
 	public static function make() { $class = get_called_class(); return new $class(); }
 	

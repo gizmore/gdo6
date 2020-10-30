@@ -37,13 +37,18 @@ abstract class GDT
 	public static function nextName() { return 'gdo-'.(self::$nameNr++); }
 	public function hasName() { return substr($this->name, 0, 4) !== 'gdo-'; }
 
+	###############
+	### Factory ###
+	###############
+	public static $COUNT = 0;
 	/**
 	 * Create a GDT instance.
 	 * @param string $name
-	 * @return self
+	 * @return static
 	 */
 	public static function make($name=null)
 	{
+	    self::$COUNT++;
 		$type = get_called_class();
 		$obj = new $type();
 		/** @var $obj self **/
@@ -111,8 +116,12 @@ abstract class GDT
 	 */
 	public $gdo; # current row / gdo
 	public $var; # String representation
-	public $initial = null; # Initial var
-	public function gdo(GDO $gdo=null){ $this->gdo = $gdo; return $gdo === null ? $this->var($this->initial) : $this->setGDOData($gdo); }
+	public $initial; # Initial var
+	public function gdo(GDO $gdo=null)
+	{
+	    $this->gdo = $gdo;
+	    return $gdo ? $this->setGDOData($gdo) : $this->var($this->initial);
+	}
 	public function var($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
 	public function toVar($value) { return ($value === null) || ($value === '') ? null : (string) $value; }
@@ -148,15 +157,20 @@ abstract class GDT
 	public function getGDOData() {}
 	public function setGDOVar($var) { if ($this->gdo) $this->gdo->setVar($this->name, $var); return $this; }
 	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
+	
+	/**
+	 * @param GDO $gdo
+	 * @return GDT
+	 */
 	public function setGDOData(GDO $gdo)
 	{
-		if ($gdo->hasVar($this->name))
+	    if ($gdo->isTable())
+	    {
+	        $this->var = $this->initial;
+	    }
+		elseif ($gdo->hasVar($this->name))
 		{
 			$this->var = $gdo->getVar($this->name);
-		}
-		else
-		{
-		    $this->var = $this->initial;
 		}
 		return $this;
 	}

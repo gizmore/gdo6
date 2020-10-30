@@ -24,4 +24,5 @@ return array(
 'err_filesize_exceeded' => 'Il file supera la grandezza massimale di &s.',
 'msg_uploaded' => 'Il vostro file é stato caricato con successo.',
 'file_download' => 'Scarica',
+'browse' => 'Ricerca&hellip;',
 );

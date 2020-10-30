@@ -1,5 +1,8 @@
 <?php
 namespace GDO\Perf;
+
+use GDO\Core\GDO;
+use GDO\Core\GDT;
 use GDO\Core\Logger;
 use GDO\DB\Database;
 use GDO\Language\Trans;
@@ -8,11 +11,13 @@ use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_Panel;
 use GDO\Mail\Mail;
+
 /**
  * Performance statistics panel.
+ * 
  * @author gizmore
+ * @version 6.10
  * @since 6.00
- * @version 6.05
  */
 final class GDT_PerfBar extends GDT_Panel
 {
@@ -42,7 +47,9 @@ final class GDT_PerfBar extends GDT_Panel
 			'phpClasses' => count(get_declared_classes()),
 			
 			'gdoFiles' => $GDT_LOADED,
-			'gdoModules' => count(ModuleLoader::instance()->getModules()),
+		    'gdoCount' => GDO::$COUNT,
+		    'gdtCount' => GDT::$COUNT,
+		    'gdoModules' => count(ModuleLoader::instance()->getModules()),
 			'gdoLangFiles' => Trans::numFiles(),
 			'gdoTemplates' => GDT_Template::$CALLS,
 			'gdoHooks' => GDT_Hook::$CALLS,

@@ -24,4 +24,5 @@ return array(
 	'err_filesize_exceeded' => 'Die Datei überschreitet die maximale Größe von %s.',
 	'msg_uploaded' => 'Ihre Datei wurde erfolgreich hochgeladen.',
     'file_download' => 'Herunterladen',
+    'browse' => 'Durchsuchen&hellip;',
 );

@@ -24,4 +24,5 @@ return array(
 	'err_filesize_exceeded' => 'The file exceeds the max size of %s.',
 	'msg_uploaded' => 'Your file has been uploaded successfully.',
     'file_download' => 'Download',
+    'browse' => 'Browse&hellip;',
 );

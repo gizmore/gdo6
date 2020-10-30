@@ -2,7 +2,6 @@
 namespace GDO\Form;
 
 use GDO\Core\GDT_Template;
-use GDO\Core\GDO;
 
 class GDT_Select extends GDT_ComboBox
 {
@@ -90,10 +89,10 @@ class GDT_Select extends GDT_ComboBox
 		return [$this->name => ($this->var === $this->emptyValue ? null : $this->var)];
 	}
 	
-	public function setGDOData(GDO $gdo=null)
-	{
-		return $gdo ? parent::setGDOData($gdo) : $this->var($this->emptyValue);
-	}
+// 	public function setGDOData(GDO $gdo=null)
+// 	{
+// 		return $gdo ? parent::setGDOData($gdo) : $this->var($this->emptyValue);
+// 	}
 	
 	################
 	### Validate ###

@@ -59,9 +59,7 @@ class Cache
 	            {
 	                return;
 	            }
-	            
-	            
-	            $gdo->cache->recache($gdo);
+	            $gdo->table()->cache->recache($gdo);
 	        }
 	    }
 	}

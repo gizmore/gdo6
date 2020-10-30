@@ -179,7 +179,9 @@ class Database
 	{
 		if (!isset(self::$TABLES[$classname]))
 		{
+		    /** @var $gdo GDO **/
 			self::$TABLES[$classname] = $gdo = new $classname();
+			$gdo->isTable = true;
 			
 			if ($gdo->gdoAbstract())
 			{

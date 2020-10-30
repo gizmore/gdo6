@@ -80,11 +80,6 @@ abstract class MethodCrud extends MethodForm
 	    }
 	}
 	
-// 	public function execute()
-// 	{
-// 		return parent::execute();
-// 	}
-	
 	public function createForm(GDT_Form $form)
 	{
 		$table = $this->gdoTable();
@@ -98,7 +93,6 @@ abstract class MethodCrud extends MethodForm
 	
 	public function createFormRec(GDT_Form $form, GDT $gdt)
 	{
-	    $gdt->gdo($this->gdoTable());
 		if ($gdt->editable)
 		{
 			if ( ($gdt instanceof GDT_Object) ||
@@ -145,11 +139,9 @@ abstract class MethodCrud extends MethodForm
 			$form->addField(GDT_DeleteButton::make());
 		}
 		
-		$gdo = $this->gdo ? $this->gdo : $this->gdoTable();
-		    
+		$form->withGDOValuesFrom($this->gdo);
 		if ($this->gdo)
 		{
-    		$form->withGDOValuesFrom($gdo);
 			$this->crudEditTitle();
 		}
 		else
@@ -190,27 +182,29 @@ abstract class MethodCrud extends MethodForm
 	###############
 	public function onCreate(GDT_Form $form)
 	{
-		$table = $this->gdoTable();
+		$table = $this->gdoTable(); # object table
 		$data = $form->getFormData();
-		$gdo = $table->blank($data);
+		$gdo = $table->blank($data); # object with files gdt
 		$this->beforeCreate($form, $gdo);
 		$gdo->insert();
-		foreach ($gdo->gdoColumnsCache() as $gdt)
-		{
-			if ( ($gdt instanceof GDT_Object) || ($gdt instanceof GDT_ObjectSelect) )
-			{
-				if ($gdt->composition)
-				{
-					$id = $gdt->table->blank($data)->insert()->getID();
-					$gdo->saveVar($gdt->name, $id);
-				}
-			}
-		}
+		$responseAfterCreate = $this->afterCreate($form, $gdo);
+// 		$this->gdo = $gdo;
+// 		foreach ($gdo->gdoColumnsCache() as $gdt)
+// 		{
+// 			if ( ($gdt instanceof GDT_Object) || ($gdt instanceof GDT_ObjectSelect) )
+// 			{
+// 				if ($gdt->composition)
+// 				{
+// 					$id = $gdt->table->blank($data)->insert()->getID();
+// 					$gdo->saveVar($gdt->name, $id);
+// 				}
+// 			}
+// 		}
 		
 		$this->resetForm();
 		return
 			$this->message('msg_crud_created', [$gdo->gdoHumanName()])->
-			addField($this->afterCreate($form, $gdo))->
+			addField($responseAfterCreate)->
 			add(Website::redirectMessage($this->hrefList()));
 	}
 	

@@ -157,12 +157,7 @@ final class Time
 	
 	public static function humanDurationEN($duration, $nUnits=2)
 	{
-		static $units = true;
-		if ($units === true)
-		{
-		    $units = ['s' => 60, 'm' => 60, 'h' => 24, 'd' => 365, 'y' => 1000000];
-		}
-		return self::humanDurationRaw($duration, $nUnits, $units);
+	    return self::humanDurationISO('en', $duration, $nUnits);
 	}
 	
 	public static function humanDurationISO($iso, $duration, $nUnits=2)
@@ -247,14 +242,14 @@ final class Time
 		if (!preg_match('/^(?:(?:[0-9 ]+[sihdwmy])+)$/', $duration)) { return 0; }
 		
 		
-		$multis = array('s' => 1,'i' => 60,'h' => 3600,'d' => 86400,'w' => 604800,'m' => 2592000,'y' => 31536000);
+		$multis = array('s' => 1,'m' => 60,'h' => 3600,'d' => 86400,'y' => 31536000);
 		$replace = array(
 			'seconds' => 's', 'second' => 's', 'sec' => 's',
-			'minutes' => 'i', 'minute' => 'i', 'min' => 'i',
+			'minutes' => 'm', 'minute' => 'm', 'min' => 'm',
 			'hours' => 'h', 'hour' => 'h',
 			'days' => 'd', 'day' => 'd',
-			'weeks' => 'w', 'week' => 'w',
-			'months' => 'm', 'month' => 'm', 'mon' => 'm',
+// 			'weeks' => 'w', 'week' => 'w',
+// 			'months' => 'm', 'month' => 'm', 'mon' => 'm',
 			'years' => 'y', 'year' => 'y',
 		);
 		

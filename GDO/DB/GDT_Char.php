@@ -5,7 +5,7 @@ class GDT_Char extends GDT_String
 	public $encoding = self::ASCII;
 	public $caseSensitive = true;
 	
-	public function size($size)
+	public function length($size)
 	{
 		$this->min = $this->max = $size;
 		return $this;

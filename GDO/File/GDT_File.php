@@ -72,7 +72,7 @@ class GDT_File extends GDT_Object
 	
 	public $previewHREF;
 	public function previewHREF($previewHREF=null) { $this->previewHREF = $previewHREF; return $this->preview($previewHREF!==null); }
-	public function displayPreviewHref(GDO_File $file) { return $this->previewHREF . $file->getID(); }
+	public function displayPreviewHref() { return $this->previewHREF . $this->getVar(); }
 	
 	##################
 	### File count ###

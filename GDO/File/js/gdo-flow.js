@@ -20,7 +20,7 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 //		console.log(file);
 //		console.log(message);
 		
-		var preview = document.getElementById('gdt-file-preview-'+input.name);
+		var preview = document.getElementById('gdo-file-preview-'+input.name);
 
 		if (!preview) {
 			console.error('Cannot find gdo-file-preview-'+input.name);
@@ -28,7 +28,7 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 		}
 		
 		if (file.file.type && file.file.type.startsWith('image/')) {
-			if (document.querySelector('#gdt-file-preview-'+input.name)) {
+			if (document.querySelector('#gdo-file-preview-'+input.name)) {
 				var div = document.createElement("DIV");
 				div.className = 'gdo-file-preview';
 				var node = document.createElement("IMG");
@@ -44,7 +44,12 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 		}
 
 		var previewString = document.getElementById('gdo-file-input-'+input.name);
-		previewString.innerHTML = file.file.name + " (" + file.file.size + " bytes)";
+		var text = file.file.name + " (" + file.file.size + " bytes)";
+		try {
+			previewString.value = text;
+		} catch (e) {
+			previewString.innerHTML = text;
+		}
 
 	});
 	flow.on('fileError', function(file, message){

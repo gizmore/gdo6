@@ -105,6 +105,20 @@ trait WithFields
 		}
 	}
 	
+	##############
+	### Render ###
+	##############
+	public function renderCard()
+	{
+	    if ($this->fields)
+	    {
+    	    foreach($this->fields as $gdt)
+    	    {
+    	        echo $gdt->renderCard();
+    	    }
+	    }
+	}
+	
 	public function renderJSON()
 	{
 		$json = [];

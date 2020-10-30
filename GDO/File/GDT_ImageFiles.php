@@ -1,6 +1,9 @@
 <?php
 namespace GDO\File;
 
+/**
+ * @author gizmore
+ */
 final class GDT_ImageFiles extends GDT_Files
 {
 	use WithImageFile;

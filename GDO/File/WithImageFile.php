@@ -3,8 +3,10 @@ namespace GDO\File;
 
 /**
  * Add this trait for image related file stuff
- * @author kalle
- *
+ * 
+ * @author gizmore, kalle
+ * @version 6.10
+ * @since 6.07
  */
 trait WithImageFile
 {
@@ -18,6 +20,39 @@ trait WithImageFile
 	{
 		$this->scaledVersions[$name] = [$width, $height];
 		return $this;
+	}
+	
+	###############
+	### Variant ###
+	###############
+	public $variant;
+	public function variant($variant) { $this->variant = $variant; return $this; }
+	
+	############
+	### Size ###
+	############
+	public $width;
+	public $height;
+	public function imageSize($width, $height) { $this->width = $width; $this->height = $height; return $this; }
+	public function styleSize()
+	{
+	    if ($this->width)
+	    {
+	        return sprintf('max-width: %spx; max-height: %spx;', $this->width, $this->height);
+	    }
+	}
+	
+	############
+	### HREF ###
+	############
+	public function displayPreviewHref()
+	{
+	    $href = $this->previewHREF . $this->getVar();
+	    if ($this->variant)
+	    {
+	        $href .= '&variant='.$this->variant;
+	    }
+	    return $href;
 	}
 	
 	#################

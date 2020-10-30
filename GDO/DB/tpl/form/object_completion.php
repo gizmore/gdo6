@@ -6,7 +6,7 @@
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input
    class="gdo-autocomplete"
-   autocomplete="no"
+   autocomplete="off"
    data-config='<?=$field->displayConfigJSON()?>'
    <?=$field->htmlID()?>
    type="search"

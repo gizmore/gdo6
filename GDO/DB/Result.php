@@ -27,10 +27,10 @@ class Result
 	 */
 	public function __destruct()
 	{
-		if ($this->result)
-		{
-			mysqli_free_result($this->result);
-		}
+// 		if ($this->result)
+// 		{
+// 			mysqli_free_result($this->result);
+// 		}
 	}
 	
 	################

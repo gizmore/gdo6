@@ -66,6 +66,7 @@ return array(
 'perm_level' => 'Berechtigungslevel',
 'ago' => 'vor %s',
 'duration' => 'Dauer',
+'menu' => 'Menü',
     
 # Generic Buttons
 'btn_back' => 'Zurück',

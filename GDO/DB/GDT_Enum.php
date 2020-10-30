@@ -180,7 +180,7 @@ class GDT_Enum extends GDT
 	        {
 	            $selected = array(
     	            'id' => $this->emptyValue,
-    	            'text' => $this->emptyValue,
+	                'text' => $this->displayEmptyLabel(),
     	            'display' => $this->displayEmptyLabel(),
 	            );
 	        }

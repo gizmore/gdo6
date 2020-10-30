@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Form;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Util\Common;
@@ -118,6 +119,7 @@ abstract class MethodForm extends Method
 			$this->form = GDT_Form::make($this->formName());
 			$this->defaultTitle();
 			$this->createForm($this->form);
+// 			$this->form->withFields(function(GDT $gdt){ $gdt->var = $gdt->initial; });
 		}
 		return $this->form;
 	}

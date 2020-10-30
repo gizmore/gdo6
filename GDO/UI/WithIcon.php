@@ -9,7 +9,7 @@ namespace GDO\UI;
  * Color only works with markup where css colors could apply, e.g: Fonts or SVG drawings.
  * 
  * @example echo GDT_Icon::iconS('clock', 16, '#f00');
- * @example echo GDT_Icon::make()->rawIcon($site->getIconImage())->size(20)->render();
+ * @example echo GDT_Icon::make()->rawIcon($site->getIconImage())->iconSize(20)->render();
  * 
  * @author gizmore
  * @see GDT_Icon - for a standalone icon that is a gdt.
@@ -56,8 +56,8 @@ trait WithIcon
 	public $rawIcon;
 	public function rawIcon($rawIcon) { $this->rawIcon = $rawIcon; return $this; }
 
-	public $size;
-	public function size($size) { $this->size = $size; return $this; }
+	public $iconSize;
+	public function iconSize($size) { $this->iconSize = $size; return $this; }
 
 	public $color;
 	public function color($color) { $this->color = $color; return $this; }
@@ -79,7 +79,7 @@ trait WithIcon
 	    $text = $this->iconText ? t($this->iconText, $this->iconTextArgs) : '';
 	    $text = str_replace('"', "'", $text);
 		return $this->icon ?
-			self::iconS($this->icon, $text, $this->size, $this->color) :
-			self::rawIconS($this->rawIcon, $text, $this->size, $this->color);
+			self::iconS($this->icon, $text, $this->iconSize, $this->color) :
+			self::rawIconS($this->rawIcon, $text, $this->iconSize, $this->color);
 	}
 }

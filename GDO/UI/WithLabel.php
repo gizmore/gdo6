@@ -12,6 +12,12 @@ trait WithLabel
 	public function hasLabel() { return $this->label || $this->labelRaw; }
 	public function defaultLabel() { return $this->label($this->name); }
 	public function noLabel() { return $this->rawLabel(''); }
+	
+	/**
+	 * @param string $key
+	 * @param array $args
+	 * @return self
+	 */
 	public function label($key, array $args=null) { $this->labelRaw = null; $this->label = $key; $this->labelArgs = $args; return $this; }
 	public function rawLabel($label=null) { $this->labelRaw = $label; return $this; }
 	

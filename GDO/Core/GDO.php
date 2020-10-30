@@ -86,6 +86,15 @@ abstract class GDO
 			throw new GDOError('err_cannot_quote', [html($var)]);
 		}
 	}
+
+	#################
+	### Construct ###
+	#################
+	public static $COUNT = 0;
+	public function __construct()
+	{
+	    self::$COUNT++;
+	}
 	
 	#################
 	### Persisted ###
@@ -93,6 +102,9 @@ abstract class GDO
 	private $persisted = false;
 	public function isPersisted() { return $this->persisted; }
 	public function setPersisted($persisted = true) { $this->persisted = $persisted; return $this; }
+	
+	public $isTable = false;
+	public function isTable() { return $this->isTable; }
 	
 	########################
 	### Custom temp vars ###
@@ -395,9 +407,10 @@ abstract class GDO
 	 */
 	public function gdoColumn($key)
 	{
+	    /** @var $gdt GDT **/
 	    if ($gdt = @$this->gdoColumnsCache()[$key])
 	    {
-	        return $gdt->gdo($this);
+	        return $this->isTable() ? $gdt->gdo(null) : $gdt->gdo($this);
 	    }
 	}
 	
@@ -409,7 +422,7 @@ abstract class GDO
 	{
 	    /** @var $column GDT **/
 		$column = clone $this->gdoColumnsCache()[$key];
-		return $column->gdo($this)->var($column->initial);
+		return $column->gdo($this); #->var($column->initial);
 	}
 	
 	public function gdoColumnsExcept(...$except)
@@ -723,7 +736,7 @@ abstract class GDO
 	public static function entity(array $gdoVars)
 	{
 		$class = self::gdoClassNameS();
-		$instance = new $class;
+		$instance = new $class();
 		$instance->gdoVars = $gdoVars;
 		return $instance;
 	}
@@ -1043,7 +1056,7 @@ abstract class GDO
 	{
 	    foreach ($this->gdoColumnsCache() as $gdoType)
 	    {
-	        $gdoType->gdo($this)->gdoBeforeRead($query);
+	        $gdoType->gdoBeforeRead($query);
 	    }
 	    $this->gdoBeforeRead();
 	}

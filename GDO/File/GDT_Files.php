@@ -3,6 +3,7 @@ namespace GDO\File;
 
 use GDO\Util\Arrays;
 use GDO\User\GDO_User;
+use GDO\Core\GDO;
 
 /**
  * Use this GDT in a has_many files relationship.
@@ -13,9 +14,8 @@ use GDO\User\GDO_User;
  * @see GDO_FileTable
  * 
  * @author gizmore@wechall.net
- * 
+ * @version 6.10
  * @since 6.08
- * @version 6.08
  */
 class GDT_Files extends GDT_File
 {
@@ -25,14 +25,17 @@ class GDT_Files extends GDT_File
 	### STUB GDT methods ###
 	########################
 	public function gdoColumnDefine() { return null; } # NO DB column. Your GDO_FileTable has the data.
-	public function getGDOData() { return null; } # Only relation table. Handled by onCreate and onUpdate.
+	public function getGDOData() {} # Only relation table. Handled by onCreate and onUpdate.
+	public function setGDOData(GDO $gdo=null) { return $this; }
 	public function toVar($value) { return null; } # cannot be saved as column.
 	public function isSerializable() { return false; } # cannot be transmitted or serialized.
 	
 	##################
 	### File Table ###
 	##################
+	/** @var $fileTable GDO **/
 	public $fileTable;
+	/** @var $fileObjectTable GDO **/
 	public $fileObjectTable;
 	public function fileTable(GDO_FileTable $table)
 	{
@@ -50,7 +53,7 @@ class GDT_Files extends GDT_File
 	{
 		if ( (!$this->gdo) || (!$this->gdo->isPersisted()) )
 		{
-			return array(); # has no stored files as its not even saved yet.
+			return []; # has no stored files as its not even saved yet.
 		}
 		# Fetch all from relation table as GDO_File array.
 		return $this->fileTable->select('gdo_file.*')->fetchTable(GDO_File::table())->
@@ -110,17 +113,20 @@ class GDT_Files extends GDT_File
 	 */
 	private function updateFile(GDO_File $file)
 	{
-		if ($file->isPersisted())
-		{
-			if (!$this->fileTable->getBy('files_file', $file->getID()))
-			{
-				# Insert in relation table for GDT_Files
-				$this->fileTable->blank(array(
-					'files_object' => $this->gdo->getID(),
-					'files_file' => $file->getID(),
-				))->insert();
-			}
-		}
+	    if ($this->gdo)
+	    {
+    		if ($file->isPersisted())
+    		{
+    			if (!$this->fileTable->getBy('files_file', $file->getID()))
+    			{
+    				# Insert in relation table for GDT_Files
+    				$this->fileTable->blank(array(
+    					'files_object' => $this->gdo->getID(),
+    					'files_file' => $file->getID(),
+    				))->insert();
+    			}
+    		}
+	    }
 	}
 	
 	/**

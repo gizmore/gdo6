@@ -16,13 +16,13 @@ class GDT_Token extends GDT_Char
 	
 	public function __construct()
 	{
-		$this->size(self::$LENGTH);
+		$this->length(self::$LENGTH);
 	}
 	
-	public function size($size)
+	public function length($size)
 	{
 		$this->pattern = '/^[a-zA-Z0-9]{'.$size.'}$/D';
-		return parent::size($size);
+		return parent::length($size);
 	}
 	
 	public $initialNull = false;

@@ -11,7 +11,7 @@ final class GDT_MD5 extends GDT_Char
 	
 	public function __construct()
 	{
-		$this->size(16);
+		$this->length(16);
 	}
 	
 	public function renderCell()

@@ -21,8 +21,8 @@ final class GDO_Country extends GDO
 	public function gdoColumns()
 	{
 		return array(
-			GDT_Char::make('c_iso')->label('id')->size(2)->ascii()->caseS()->primary(),
-			GDT_Char::make('c_iso3')->size(3)->ascii()->caseS()->notNull()->index(),
+			GDT_Char::make('c_iso')->label('id')->length(2)->ascii()->caseS()->primary(),
+			GDT_Char::make('c_iso3')->length(3)->ascii()->caseS()->notNull()->index(),
 			GDT_String::make('c_phonecode')->min(2)->max(32),
 			GDT_Int::make('c_population')->initial('0')->unsigned(),
 		);

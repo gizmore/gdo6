@@ -13,17 +13,11 @@ use GDO\Core\WithFields;
  * @version 6.10
  * @since 6.07
  */
-final class GDT_Container extends GDT
+class GDT_Container extends GDT
 {
+    use WithFlex;
 	use WithFields;
 	use WithPHPJQuery;
-	
-	public $flex = false;
-	public function flex($flex=true) { $this->flex = $flex; return $this; }
-	
-	public $flexDirection = 'row';
-	public function vertical() { $this->flexDirection = 'column'; return $this->flex(); }
-	public function horizontal() { $this->flexDirection = 'row'; return $this->flex(); }
 
 	private function setupHTML()
 	{

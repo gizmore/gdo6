@@ -69,26 +69,10 @@ class GDT_Form extends GDT
 	public function render()
 	{
 		self::$CURRENT = $this;
+		$this->withFields(function(GDT $gdt){$gdt->gdo($gdt->gdo);}); # reset form fields correctly.
 		$back = GDT_Template::php('Form', 'cell/form.php', ['form' => $this]);
 		self::$CURRENT = null;
 		return $back;
-	}
-	
-	public function renderJSON()
-	{
-		die('B');
-		$json = [];
-		foreach ($this->getFields() as $field)
-		{
-			die('A');
-			if ($j = $field->renderJSON())
-			{
-				die('Y');
-				$json[$field->name] = $j;
-//	 			$json = array_merge($json, $j);
-			}
-		}
-		return $json;
 	}
 	
 	################
