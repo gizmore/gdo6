@@ -1,6 +1,9 @@
 <?php
 namespace GDO\Language;
 
+use GDO\Core\GDT_Error;
+use GDO\Core\GDOError;
+
 /**
  * Very cheap i18n.
  * 
@@ -106,11 +109,29 @@ final class Trans
 				{
 					if (is_readable("{$path}_{$iso}.php"))
 					{
-						$trans2 = include("{$path}_{$iso}.php");
+					    try
+					    {
+    						$trans2 = include("{$path}_{$iso}.php");
+					    }
+					    catch (\Throwable $e)
+					    {
+					        self::$CACHE[$iso] = $trans;
+					        echo GDT_Error::responseException($e)->renderCell();
+					    }
 					}
 					else
 					{
-						$trans2 = require("{$path}_en.php");
+					    $pathEN= "{$path}_en.php";
+						try
+						{
+						    $trans2 = include($pathEN);
+						}
+						catch (\Throwable $e)
+						{
+						    self::$CACHE[$iso] = $trans;
+						    echo GDT_Error::responseException($e)->renderCell();
+						    throw new GDOError('err_langfile_corrupt', [$pathEN]);
+						}
 					}
 					$trans = array_merge($trans, $trans2);
 				}

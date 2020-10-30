@@ -28,7 +28,8 @@ class GDT_Date extends GDT_Timestamp
 		return "{$this->identifier()} DATE {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 
-	public function renderCell() { return Time::displayDate($this->getVar(), 'day'); }
+	public function displayVar() { return Time::displayDate($this->getVar(), 'day'); }
+	public function renderCell() { return $this->renderCellSpan($this->displayVar()); }
 	public function renderForm() { return GDT_Template::php('Date', 'form/date.php', ['field'=>$this]); }
 	
 	public function toVar($value)

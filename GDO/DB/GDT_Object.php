@@ -52,7 +52,7 @@ class GDT_Object extends GDT_UInt
 	        $selected = array(
 	            'id' => $gdo->getID(),
 	            'text' => $gdo->displayName(),
-	            'display' => $gdo->renderChoice(),
+	            'display' => json_quote($gdo->renderChoice()),
 	        );
 	    }
 	    else 

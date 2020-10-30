@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Core;
 use GDO\UI\GDT_Panel;
+use GDO\UI\WithTitle;
 /**
  * An error is a panel that additionally logs the given message.
  * @author gizmore
@@ -9,11 +10,14 @@ use GDO\UI\GDT_Panel;
  */
 class GDT_Error extends GDT_Panel
 {
+	use WithTitle;
+
 	public function isError() { return true; }
 	
 	public function hasError() { return true; }
 	
-	public static function responseException(\Exception $e)
+	
+	public static function responseException(\Throwable $e)
 	{
 		Logger::logException($e);
 		$html = Debug::backtraceException($e, Application::instance()->isHTML(), $e->getMessage());

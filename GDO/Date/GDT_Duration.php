@@ -26,12 +26,13 @@ class GDT_Duration extends GDT_UInt
 	
 	public function displayVar()
 	{
-		return $this->renderCell();
+	    return Time::humanDuration($this->getVar());
 	}
+	
 	
 	public function renderCell()
 	{
-		return Time::humanDuration($this->getVar());
+		return $this->renderCellSpan($this->displayVar());
 	}
 	
 	public function renderForm()

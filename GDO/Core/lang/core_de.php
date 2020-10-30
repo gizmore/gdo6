@@ -161,6 +161,8 @@ return array(
 'err_already_approved' => 'Dieser Eintrag wurde schon freigegeben.',
 'err_already_deleted' => 'Dieser Eintrag wurde bereits gelöscht.',
 'err_level_too_low' => 'Sie benötigen einen Nutzerlevel von %s um dies zu tun. Ihr Nutzerlevel ist %s.',
+'err_unknown_gdo_column' => 'Unbekannte GDO Spalte: %s',
+'err_langfile_corrupt' => 'Eine Sprachdatei ist beschädigt: %s',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',

@@ -405,12 +405,16 @@ abstract class GDO
 	 * @param string $key
 	 * @return GDT
 	 */
-	public function gdoColumn($key)
+	public function gdoColumn($key, $throw=true)
 	{
 	    /** @var $gdt GDT **/
 	    if ($gdt = @$this->gdoColumnsCache()[$key])
 	    {
 	        return $this->isTable() ? $gdt->gdo(null) : $gdt->gdo($this);
+	    }
+	    else
+	    {
+	        throw new GDOError('err_unknown_gdo_column', [html($key)]);
 	    }
 	}
 	

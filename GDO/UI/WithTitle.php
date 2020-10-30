@@ -1,5 +1,6 @@
 <?php
 namespace GDO\UI;
+
 trait WithTitle
 {
 	public $title;

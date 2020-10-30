@@ -38,12 +38,33 @@ trait WithFields
 	{
 		if ($fields)
 		{
-			foreach ($fields as $field)
+			foreach ($fields as $gdt)
 			{
-			    $this->addField($field);
+			    $this->addField($gdt);
 			}
 		}
 		return $this;
+	}
+	
+	public function addFieldAfter(GDT $field, $after)
+	{
+	    $newFields = [];
+	    $added = false;
+	    foreach ($this->fields as $name => $gdt)
+	    {
+	        $newFields[$name] = $gdt;
+	        if ($name === $after)
+	        {
+	            $newFields[$field->name] = $field;
+	            $added = true;
+	        }
+	    }
+	    if (!$added)
+	    {
+	        $newFields[$field->name] = $field;
+	    }
+	    $this->fields = $newFields;
+	    return $this;
 	}
 	
 	/**

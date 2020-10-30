@@ -161,6 +161,8 @@ return array(
 'err_already_approved' => 'Questa voce è già stata rilasciata.',
 'err_already_deleted' => 'Questa voce è già stata eliminata.',
 'err_level_too_low' => 'È necessario un livello utente di %s per farlo. Il tuo livello utente è %s.',
+'err_unknown_gdo_column' => 'Colonna GDO sconosciuta: %s',
+'err_langfile_corrupt' => 'Un file di lingua è danneggiato: %s',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',

@@ -24,7 +24,7 @@ class GDT_Container extends GDT
 	    $this->addClass('gdt-container');
 	    if ($this->flex)
 	    {
-	        $this->addClass('flx flx-'.$this->flexDirection);
+	        $this->addClass('flx flx-'.$this->flexDirection.' flx-collapse');
 	    }
 	}
 	

@@ -100,6 +100,8 @@ final class GDO_User extends GDO
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
 	
 	public function getRegisterDate() { return $this->getVar('user_register_time'); }
+	public function displayRegisterAge() { return Time::displayAge($this->getRegisterDate()); }
+	public function displayRegisterDate() { return Time::displayDate($this->getRegisterDate()); }
 	public function getRegisterIP() { return $this->getVar('user_register_ip'); }
 	public function isDeleted() { return $this->getVar('user_deleted_at') !== null; }
 	
@@ -148,25 +150,6 @@ final class GDO_User extends GDO
 		{
 			return '~~' . t('ghost') . '~~';
 		}
-	}
-	
-	public function renderCell()
-	{
-		return GDT_Template::php('User', 'cell/user.php', ['user'=>$this]);
-	}
-	
-	public function renderChoice()
-	{
-	    $pre = '';
-	    if (module_enabled('Avatar'))
-	    {
-	        # ugly switch to html output for the avatar.
-	        $old = $_REQUEST['fmt'];
-	        $_REQUEST['fmt'] = 'html';
-	        $pre = GDT_Avatar::make()->user($this)->addClass('fl')->renderCell(); # html avatar
-	        $_REQUEST['fmt'] = $old;
-	    }
-		return $pre . $this->displayNameLabel();
 	}
 	
 	#############
@@ -266,6 +249,9 @@ final class GDO_User extends GDO
 		return self::table()->select('*')->where(sprintf('user_name=%1$s OR user_email=%1$s', self::quoteS($login)))->first()->exec()->fetchObject();
 	}
 	
+	#######################
+	### With Permission ###
+	#######################
 	/**
 	 * Get all admins
 	 * @return self[]
@@ -296,6 +282,37 @@ final class GDO_User extends GDO
 		where("perm_name=".self::quoteS($permission))->
 		exec()->
 		fetchAllObjectsAs(self::table());
+	}
+	
+	##############
+	### Render ###
+	##############
+	public function renderList()
+	{
+	    return GDT_Template::php('User', 'list/list_user.php', ['user' => $this]);
+	}
+	
+	public function renderCell()
+	{
+	    return GDT_Template::php('User', 'cell/user.php', ['user'=>$this]);
+	}
+	
+	public function renderChoice()
+	{
+	    $pre = '';
+	    if (module_enabled('Avatar'))
+	    {
+	        # ugly switch to html output for the avatar.
+	        $old = @$_REQUEST['fmt'];
+	        $_REQUEST['fmt'] = 'html';
+	        $pre = GDT_Avatar::make()->user($this)->addClass('fl')->renderCell(); # html avatar
+	        if (!$old)
+	        {
+	            unset($_REQUEST['fmt']);
+	        }
+	        $_REQUEST['fmt'] = $old;
+	    }
+	    return $pre . $this->displayNameLabel();
 	}
 	
 	public function renderJSON()

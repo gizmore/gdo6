@@ -39,6 +39,7 @@ function url($module, $method, $append='') { return GDT_Url::absolute(href($modu
 function href($module, $method, $append='') { $iso = Trans::$ISO; return GWF_WEB_ROOT . "index.php?mo={$module}&me={$method}&_lang={$iso}$append"; }
 function hrefDefault() { return href(GWF_MODULE, GWF_METHOD); }
 function quote($value) { return GDO::quoteS($value); }
+function json_quote($s) { return str_replace("'", "&#39;", $s); }
 function html($html=null) { return htmlspecialchars($html); }
 function mo() { return Common::getRequestString('mo', GWF_MODULE); }
 function me() { return Common::getRequestString('me', GWF_METHOD); }

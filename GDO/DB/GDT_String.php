@@ -143,7 +143,7 @@ class GDT_String extends GDT
 			{
 				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}
-			return $this->gdo->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
+			return $this->gdtTable->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
 		}
 		return true;
 	}

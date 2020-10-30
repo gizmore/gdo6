@@ -188,7 +188,7 @@ class Database
 				return null;
 			}
 			
-			self::$COLUMNS[$classname] = self::hashedColumns($gdo->gdoColumns());
+			self::$COLUMNS[$classname] = self::hashedColumns($gdo);
 
 			/** @var $gdo \GDO\Core\GDO **/
 			if ($gdo->gdoCached() || $gdo->memCached())
@@ -204,12 +204,13 @@ class Database
 	 * @param GDT[] $gdoColumns
 	 * @return GDT[]
 	 */
-	private static function hashedColumns(array $gdoColumns)
+	private static function hashedColumns(GDO $gdo)
 	{
+	    $gdoColumns = $gdo->gdoColumns();
 		$columns = [];
 		foreach ($gdoColumns as $gdoType)
 		{
-			$columns[$gdoType->name] = $gdoType;
+			$columns[$gdoType->name] = $gdoType->gdtTable($gdo);
 		}
 		return $columns;
 	}
@@ -223,7 +224,7 @@ class Database
 		if (!isset(self::$COLUMNS[$classname]))
 		{
     		$gdo = self::tableS($classname);
-			self::$COLUMNS[$classname] = self::hashedColumns($gdo->gdoColumns());
+			self::$COLUMNS[$classname] = self::hashedColumns($gdo);
 		}
 		return self::$COLUMNS[$classname];
 	}

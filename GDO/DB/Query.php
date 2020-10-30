@@ -144,7 +144,7 @@ final class Query
 	/**
 	 * @param string $condition
 	 * @param string $op
-	 * @return \GDO\DB\Query
+	 * @return static
 	 */
 	public function where($condition, $op="AND")
 	{

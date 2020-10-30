@@ -108,6 +108,14 @@ abstract class GDT
 	public function gdoAfterUpdate() {}
 	public function gdoAfterDelete() {}
 	
+	#############
+	### Table ###
+	#############
+	# Same as $this->gdo but always set and always a table.
+	/** @var $table GDO **/
+	public $gdtTable;
+	public function gdtTable(GDO $table) { $this->gdtTable = $table; return $this; }
+	
 	#################
 	### Var/Value ###
 	#################
@@ -238,7 +246,8 @@ abstract class GDT
 	##############
 	public function render() { return $this->renderCell(); }
 	public function renderPDF() { return $this->renderCard(); }
-	public function renderCell() { return html($this->getVar()); }
+	public function renderCell() { return $this->renderCellSpan($this->getVar()); }
+	public function renderCellSpan($var) { return sprintf('<span class="%s">%s</span>', $this->gdoClassName(), html($var)); }
 	public function renderCard() { return GDT_Template::php('Core', 'card/gdt.php', ['gdt'=>$this]); }
 	public function renderList() { return $this->render(); }
 	public function renderForm() { return $this->render(); }
@@ -371,6 +380,7 @@ abstract class GDT
 	public function configJSON()
 	{
 	    return array(
+	        'type' => $this->gdoClassName(),
 	        'var' => $this->var,
 	        'name' => $this->name,
 	        'icon' => $this->icon,

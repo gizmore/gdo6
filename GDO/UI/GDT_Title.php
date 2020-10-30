@@ -1,6 +1,8 @@
 <?php
 namespace GDO\UI;
+
 use GDO\DB\GDT_String;
+
 /**
  * A short utf8 title.
  * Pretty common.
@@ -15,4 +17,7 @@ class GDT_Title extends GDT_String
 	{
 		$this->icon('title');
 	}
+	
+	public function renderCell() { return '<span class="gdt-title">' . $this->getVar() . '</span>'; }
+	
 }

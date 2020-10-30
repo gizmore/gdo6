@@ -67,7 +67,7 @@ table.gdo-table td { padding: 0px 2px; }
 .gdt-li-upper { display: flex; flex-direction: row; padding: 4px 4px; border-bottom: 1px solid #bbb; }
 .gdt-li-title { font-size: 18px; margin-top: 4px; }
 .gdt-li-subtitle { font-size: 15px; flex-grow: 1; line-height: 28px; }
-.gdt-li-subtitle * { min-height: 28px; }
+/* .gdt-li-subtitle * { min-height: 28px; } */
 .gdt-li-title-texts { display: flex; flex-direction: column; flex-grow: 1; }
 .gdt-li-main { display: flex; flex-direction: row; padding: 4px 8px; }
 .gdt-li-image, .gdt-li-avatar { align-self: center; margin-right: 4px; }

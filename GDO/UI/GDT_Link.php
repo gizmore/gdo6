@@ -57,6 +57,10 @@ class GDT_Link extends GDT_String
 	### Render ###
 	##############
 	public function renderCell() { return GDT_Template::php('UI', 'cell/link.php', ['link' => $this]); }
+	public function renderCard()
+	{
+	    return $this->renderCell() . $this->renderCellSpan(html($this->initial));
+	}
 	public function renderForm() { return $this->renderCell(); }
 	
 	###################

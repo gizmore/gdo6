@@ -2,7 +2,6 @@
 namespace GDO\Core;
 use GDO\Util\Arrays;
 use GDO\Util\Common;
-use Exception;
 /**
  * The GDO Logger.
  * @author gizmore
@@ -147,7 +146,7 @@ final class Logger
 		self::log('critical', $message, self::GWF_CRITICAL);
 		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GWF_CRITICAL); // TODO: formating
 	}
-	public static function logException(Exception $e)
+	public static function logException(\Throwable $e)
 	{
 		$message = sprintf("%s in %s Line %s\n", $e->getMessage(), $e->getFile(), $e->getLine());
 		self::log('critical', $message, self::GWF_CRITICAL);

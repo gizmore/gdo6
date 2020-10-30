@@ -161,6 +161,8 @@ return array(
 'err_already_approved' => 'This has been approved already.',
 'err_already_deleted' => 'This item has been already deleted.',
 'err_level_too_low' => 'You need a userlevel of %s to do that. Your level is %s.',
+'err_unknown_gdo_column' => 'Unknown GDO column: %s',
+'err_langfile_corrupt' => 'A languagefile is corrupt: %s',
     
 # Permissions
 'sel_no_permissions' => 'No permission required',
