@@ -69,10 +69,9 @@ trait WithHeaders
 		{
 			foreach ($sorting as $column => $sortDir)
 			{
-				$diff = $headers->getField($column)->gdoCompare($a, $b);
-				if ($diff !== 0)
+				if ($diff = $headers->getField($column)->gdoCompare($a, $b))
 				{
-					return $sortDir === '1' ? $diff : -$diff;
+					return $sortDir ? $diff : -$diff;
 				}
 			}
 			return 0;

@@ -25,15 +25,9 @@ ini_set('display_errors', 1);
 # Init GDO autoloader
 global $GDT_LOADED; $GDT_LOADED = 0; # perf
 spl_autoload_register(function($name){
-    $name = GDO_PATH . str_replace('\\', '/', $name) . '.php';
-    try
-    {
-    	include $name;
-    	global $GDT_LOADED; $GDT_LOADED++; # perf
-    }
-    catch (Throwable $e)
-    {
-    }
+    $name = str_replace('\\', '/', $name) . '.php';
+    include $name;
+    global $GDT_LOADED; $GDT_LOADED++; # perf
 });
 	
 # Global utility
@@ -43,7 +37,8 @@ function href($module, $method, $append='') { $iso = Trans::$ISO; return GWF_WEB
 function hrefDefault() { return href(GWF_MODULE, GWF_METHOD); }
 function quote($value) { return GDO::quoteS($value); }
 function json_quote($s) { return str_replace("'", "&#39;", $s); }
-function html($html=null) { return htmlspecialchars($html); }
+// function html($html=null) { return htmlspecialchars($html); }
+function html($html) { return str_replace(['"', "'", '<', '>'], ['\\"', '&#39;', '&lt;', '&gt;'], $html); }
 function mo() { return Common::getRequestString('mo', GWF_MODULE); }
 function me() { return Common::getRequestString('me', GWF_METHOD); }
 function module_enabled($moduleName) { return ($module = ModuleLoader::instance()->getModule($moduleName)) ? $module->isEnabled() : false; }

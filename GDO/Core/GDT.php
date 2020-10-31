@@ -59,7 +59,7 @@ abstract class GDT
 	public $name;
 	public function name($name=null) { $this->name = $name === null ? self::nextName() : $name; return $this; }
 	public function htmlName() { return sprintf(' name="%s"', $this->name); }
-	public function htmlClass() { return " gdo-".strtolower(Strings::rsubstrFrom(get_called_class(), '\\')); }
+	public function htmlClass() { return " gdo-".strtolower($this->gdoShortName()); }
 	
 	##############
 	### FormID ###
@@ -118,7 +118,7 @@ abstract class GDT
 	### Var/Value ###
 	#################
 	/**
-	 * @var $gdo GDO
+	 * @var GDO
 	 */
 	public $gdo; # current row / gdo
 	public $var; # String representation

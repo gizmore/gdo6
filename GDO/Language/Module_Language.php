@@ -127,6 +127,6 @@ final class Module_Language extends GDO_Module
 	#############
 	public function hookLeftBar(GDT_Bar $navbar)
 	{
-		$this->templatePHP('rightbar.php', ['navbar'=>$navbar]);
+	    $navbar->addField(GDT_LangSwitch::make());
 	}
 }

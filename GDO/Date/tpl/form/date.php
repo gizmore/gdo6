@@ -6,7 +6,7 @@
    <?=$field->htmlID()?>
    type="date"
    <?=$field->htmlFormName()?>
-   value="<?=$field->displayVar()?>"
+   value="<?=$field->getVar()?>"
    <?=$field->htmlDisabled()?> />
   <?=$field->htmlError()?>
 </div>

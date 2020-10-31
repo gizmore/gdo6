@@ -3,9 +3,9 @@ namespace GDO\UI;
 
 trait WithLabel
 {
-	public $label = null;
-	public $labelArgs = null;
-	public $labelRaw = null;
+	public $label;
+	public $labelArgs;
+	public $labelRaw;
 
 	public function name($name=null) { $this->name = $name ? $name : self::nextName(); return $this->defaultLabel(); }
 
@@ -23,11 +23,11 @@ trait WithLabel
 	
 	public function displayLabel()
 	{
-		if ($this->labelRaw !== null)
+		if (isset($this->labelRaw))
 		{
-			return $this->labelRaw;
+		    return $this->labelRaw;
 		}
-		if ($this->label)
+		if (isset($this->label))
 		{
 			return t($this->label, $this->labelArgs);
 		}

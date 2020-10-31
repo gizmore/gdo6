@@ -16,8 +16,6 @@ use GDO\DB\GDT_String;
  */
 final class GDO_Country extends GDO
 {
-	public function memCached() { return false; }
-	
 	public function gdoColumns()
 	{
 		return array(

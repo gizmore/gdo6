@@ -134,8 +134,11 @@ final class ModuleLoader
 	{
 		foreach ($this->modules as $module)
 		{
-			$module->registerThemes();
-			$module->onLoadLanguage();
+		    if ($module->isEnabled())
+		    {
+    			$module->registerThemes();
+    			$module->onLoadLanguage();
+		    }
 		}
 		Trans::inited();
 		foreach ($this->modules as $module)
@@ -296,14 +299,16 @@ final class ModuleLoader
 	{
 		$name = $moduleData['module_name'];
 		$klass = "GDO\\$name\\Module_$name";
+		/** @var $instance GDO_Module **/
 		$instance = new $klass();
-		if (!$instance instanceof GDO_Module)
-		{
-			throw new GDOError('err_no_module', [html($name)]);
-		}
+		$instance->isTable = false;
+// 		if (!$instance instanceof GDO_Module)
+// 		{
+// 			throw new GDOError('err_no_module', [html($name)]);
+// 		}
 		$moduleData['module_priority'] = $instance->module_priority;
 		$instance->setGDOVars($moduleData, $dirty);
-		$instance->onLoadLanguage();
+// 		$instance->onLoadLanguage();
 		return $instance;
 	}
 	
@@ -322,6 +327,7 @@ final class ModuleLoader
 		# Assign them to the modules
 		while ($row = $result->fetchRow())
 		{
+		    /** @var $module \GDO\Core\GDO_Module **/
 			if ($module = @$this->modules[$row[0]])
 			{
 				if ($var = $module->getConfigColumn($row[1]))

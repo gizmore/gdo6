@@ -50,18 +50,18 @@ class Cache
 	 */
 	public static function heat($key, array $objects)
 	{
-	    if (!isset(self::$HEAT[$key]))
-	    {
-	        self::$HEAT[$key] = true;
-	        foreach ($objects as $gdo)
-	        {
-	            if (!$gdo->gdoCached())
-	            {
-	                return;
-	            }
-	            $gdo->table()->cache->recache($gdo);
-	        }
-	    }
+// 	    if (!isset(self::$HEAT[$key]))
+// 	    {
+// 	        self::$HEAT[$key] = true;
+// 	        foreach ($objects as $gdo)
+// 	        {
+// 	            if (!$gdo->gdoCached())
+// 	            {
+// 	                return;
+// 	            }
+// 	            $gdo->table()->cache->recache($gdo);
+// 	        }
+// 	    }
 	}
 	
 	/**
@@ -172,9 +172,9 @@ class Cache
 				$this->cache[$object->getID()] = $object;
 			}
 		}
-		if (GWF_MEMCACHE && $object->memCached())
+		if (GWF_MEMCACHE && $back->memCached())
 		{
-			self::$MEMCACHED->replace(GWF_MEMCACHE_PREFIX.$object->gkey(), $object, GWF_MEMCACHE_TTL);
+		    self::$MEMCACHED->replace(GWF_MEMCACHE_PREFIX.$back->gkey(), $back, GWF_MEMCACHE_TTL);
 		}
 		return $back;
 	}

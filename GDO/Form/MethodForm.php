@@ -62,7 +62,8 @@ abstract class MethodForm extends Method
 	 */
 	public function renderPage()
 	{
-		return GDT_Response::makeWith($this->getForm());
+	    $form = $this->getForm();
+		return GDT_Response::makeWith($form);
 	}
 	
 	public function defaultTitle()

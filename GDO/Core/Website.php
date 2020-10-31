@@ -80,7 +80,7 @@ final class Website
 	 */
 	public static function addLink($href, $type, $rel)
 	{
-		self::$_links[] = array(htmlspecialchars($href), $type, $rel);
+		self::$_links[] = array(html($href), $type, $rel);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ final class Website
 	 */
 	public static function addMeta(array $metaA, $overwrite=false)
 	{
-		if((false === $overwrite) && (isset(self::$_meta[$metaA[0]]) === true))
+		if ((false === $overwrite) && (isset(self::$_meta[$metaA[0]]) === true))
 		{
 			return false;
 		}
@@ -177,6 +177,14 @@ final class Website
 	public static function outputStarted()
 	{
 		return headers_sent() || ob_get_contents();
+	}
+	
+	#############
+	### Error ###
+	#############
+	public static function error($key, array $args=null)
+	{
+	    self::topResponse()->addField(GDT_Error::with($key, $args));
 	}
 	
 	####################

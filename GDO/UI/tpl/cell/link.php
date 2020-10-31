@@ -7,6 +7,5 @@
    <?=$link->htmlAttributes()?>
    <?=$link->htmlTarget()?>
    <?=$link->htmlHREF()?>
-   <?=$link->htmlRelation()?>
-   href="<?=html($link->href)?>"><?=$link->displayLabel()?></a>
+   <?=$link->htmlRelation()?>><?=$link->displayLabel()?></a>
 </span>

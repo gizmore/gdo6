@@ -114,7 +114,7 @@ trait WithFields
 	### Iterator ###
 	################
 	public function withFields($callback) { $this->_withFields($this, $callback); }
-	public function _withFields(GDT $field, $callback)
+	private function _withFields(GDT $field, $callback)
 	{
 		call_user_func($callback, $field);
 		if ($fields = $field->getFields())

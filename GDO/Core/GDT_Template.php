@@ -5,6 +5,7 @@ use GDO\UI\WithLabel;
 use GDO\Util\Strings;
 use GDO\Language\Trans;
 use GDO\User\GDO_User;
+use GDO\File\FileUtil;
 /**
  * GWF Template Engine.
  * Very cheap / basic
@@ -106,7 +107,7 @@ class GDT_Template extends GDT
 			ob_start();
 			self::$CALLS++;
 			$path = self::getPath($moduleName, $path);
-			if ($tVars)
+			if (isset($tVars))
 			{
 				foreach ($tVars as $__key => $__value)
 				{
@@ -150,7 +151,7 @@ class GDT_Template extends GDT
 	 */
 	private static function getPath($moduleName, $path)
 	{
-	    $key = $moduleName.$path;
+	    $key = Trans::$ISO.$moduleName.$path;
 	    if (!isset(self::$PATHES[$key]))
 	    {
 	        self::$PATHES[$key] = self::getPathB($moduleName, $path);
@@ -160,21 +161,21 @@ class GDT_Template extends GDT
 	
 	private static function getPathB($moduleName, $path)
 	{
-		$isos = array_unique(['_'.Trans::$ISO, '_'.GWF_LANGUAGE, '_en', '']);
+	    $isos = array_unique(['', '_'.Trans::$ISO, '_'.GWF_LANGUAGE, '_en']);
 		
 		$path12 = Strings::rsubstrTo($path, '.', $path);
 		$path13 = Strings::rsubstrFrom($path, '.', '');
 
 		# Try themes first
-		foreach (Application::instance()->getThemes() as $theme)
+		foreach ($isos as $iso)
 		{
-			if (isset(self::$THEMES[$theme]))
+    		foreach (Application::instance()->getThemes() as $theme)
 			{
-    			foreach ($isos as $iso)
+    			if (isset(self::$THEMES[$theme]))
     			{
     				$path1 = $path12 . $iso . '.' . $path13;
    					$path1 = self::$THEMES[$theme]."/$moduleName/tpl/$path1";
-   					if (is_file($path1))
+   					if (FileUtil::isFile($path1))
     				{
     					return $path1;
     				}
@@ -186,7 +187,7 @@ class GDT_Template extends GDT
 		{
 			$path1 = $path12 . $iso . '.' . $path13;
 			$path1 = GDO_PATH . "GDO/$moduleName/tpl/$path1";
-			if (is_file($path1))
+			if (FileUtil::isFile($path1))
 			{
 				return $path1;
 			}

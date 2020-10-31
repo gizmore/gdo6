@@ -67,7 +67,7 @@ abstract class GDO
 	{
 		if (is_string($var))
 		{
-			return "'" . self::escapeS($var) . "'";
+			return sprintf('"%s"', self::escapeS($var));
 		}
 		elseif ($var === null)
 		{
@@ -165,7 +165,8 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-	    return @array_key_exists($key, $this->gdoVars) || array_key_exists($key, $this->gdoColumnsCache());
+	    return true;
+// 	    return array_key_exists($key, $this->gdoVars) || array_key_exists($key, $this->gdoColumnsCache());
 	}
 	
 	/**
@@ -174,7 +175,8 @@ abstract class GDO
 	 */
 	public function getVar($key)
 	{
-		return @$this->gdoVars[$key];
+	    return @$this->gdoVars[$key];
+// 		return isset($this->gdoVars[$key]) ? $this->gdoVars[$key] : null;
 	}
 	
 	/**
@@ -408,7 +410,7 @@ abstract class GDO
 	public function gdoColumn($key, $throw=true)
 	{
 	    /** @var $gdt GDT **/
-	    if ($gdt = @$this->gdoColumnsCache()[$key])
+	    if ($gdt = $this->gdoColumnsCache()[$key])
 	    {
 	        return $this->isTable() ? $gdt->gdo(null) : $gdt->gdo($this);
 	    }
@@ -464,7 +466,7 @@ abstract class GDO
 	 */
 	public function query()
 	{
-		return new Query(self::tableFor($this->gdoClassName()));
+		return new Query(self::table());
 	}
 	
 	/**
@@ -474,7 +476,7 @@ abstract class GDO
 	 */
 	public function find($id=null, $exception=true)
 	{
-		if ( (!empty($id)) && ($gdo = $this->getById($id)) )
+		if ($id && ($gdo = $this->getById($id)) )
 		{
 			return $gdo;
 		}
@@ -1020,7 +1022,7 @@ abstract class GDO
 	 * Return the GDO instance that is used as table struct.
 	 * @return self
 	 */
-	public static function table() { return self::tableFor(get_called_class()); }
+	public static function table() { return Database::tableS(static::class); }
 	
 	public function createTable($reinstall=false) { return Database::instance()->createTable($this, $reinstall); }
 	public function dropTable() { return Database::instance()->dropTable($this); }
@@ -1029,7 +1031,7 @@ abstract class GDO
 	/**
 	 * @return GDT[]
 	 */
-	public function gdoColumnsCache() { return Database::columnsS($this->gdoClassName()); }
+	public function gdoColumnsCache() { return Database::columnsS(static::class); }
 	
 	/**
 	 * @return GDT[]
@@ -1051,7 +1053,7 @@ abstract class GDO
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdo($this)->gdoBeforeCreate($query);
+			$gdoType->gdoBeforeCreate($query);
 		}
 		$this->gdoBeforeCreate();
 	}
@@ -1069,7 +1071,7 @@ abstract class GDO
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdo($this)->gdoBeforeUpdate($query);
+			$gdoType->gdoBeforeUpdate($query);
 		}
 		$this->gdoBeforeUpdate();
 	}
@@ -1078,7 +1080,7 @@ abstract class GDO
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdo($this)->gdoBeforeDelete($query);
+			$gdoType->gdoBeforeDelete($query);
 		}
 		$this->gdoBeforeDelete();
 	}
@@ -1091,7 +1093,7 @@ abstract class GDO
 		# Trigger event for AutoCol, EditedAt, EditedBy, etc.
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdo($this)->gdoAfterCreate();
+			$gdoType->gdoAfterCreate();
 		}
 		$this->gdoAfterCreate();
 	}
@@ -1103,7 +1105,7 @@ abstract class GDO
 		# Trigger event for AutoCol, EditedAt, EditedBy, etc.
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdo($this)->gdoAfterUpdate();
+			$gdoType->gdoAfterUpdate();
 		}
 		$this->gdoAfterUpdate();
 	}
@@ -1116,7 +1118,7 @@ abstract class GDO
 		# Trigger events on GDTs.
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdo($this)->gdoAfterDelete();
+			$gdoType->gdoAfterDelete();
 		}
 		$this->gdoAfterDelete();
 	}
@@ -1173,7 +1175,7 @@ abstract class GDO
 	 * @param string $columnName
 	 * @param bool $ascending
 	 */
-	public function sort(array &$array, $columnName, $ascending=true)
+	public function sort(array $array, $columnName, $ascending=true)
 	{
 		return $this->gdoColumn($columnName)->sort($array, $ascending);
 	}

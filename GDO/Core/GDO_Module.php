@@ -99,41 +99,67 @@ class GDO_Module extends GDO
 	 * @var GDT[]
 	 */
 	private $configCache;
-	public function getConfigCache()
+	public function buildConfigCache()
 	{
 		if (!$this->configCache)
 		{
-			$this->configCache = $this->getConfig();
-			foreach ($this->configCache as $gdoType)
+			$this->configCache = [];
+			foreach ($this->getConfig() as $gdt)
 			{
-				$gdoType->gdo($this)->var($this->getConfigVar($gdoType->name));
+			    $this->configCache[$gdt->name] = $gdt->gdo($this);
 			}
 		}
 		return $this->configCache;
 	}
 	
+	public function getConfigCache()
+	{
+	    return $this->getConfigMemcache();
+	}
+	
+	private function configCacheKey()
+	{
+	    return $this->getName().'_config_cache';
+	}
+	
+	public function getConfigMemcache()
+	{
+	    $key = $this->configCacheKey();
+	    if (false === ($cache = Cache::get($key)))
+	    {
+	        $cache = $this->buildConfigCache();
+	        Cache::set($key, $cache);
+	    }
+	    return $cache;
+	}
+	
+	/**
+	 * @param GDT
+	 */
 	public function getConfigColumn($key)
 	{
-		foreach ($this->getConfigCache() as $gdoType)
-		{
-			if ($gdoType->name === $key)
-			{
-				return $gdoType;
-			}
-		}
-		
-		throw new GDOError('err_unknown_config', [$this->displayName(), html($key)]);
+	    $cache = $this->getConfigCache();
+	    if (isset($cache[$key]))
+	    {
+	        return $cache[$key];
+	    }
+	    Website::error('err_unknown_config', [$this->displayName(), html($key)]);
 	}
 	
 	public function getConfigVar($key)
 	{
-		return $this->getConfigColumn($key)->initial;
+	    if ($gdt = $this->getConfigColumn($key))
+	    {
+	        return $gdt->initial;
+	    }
 	}
 	
 	public function getConfigValue($key)
 	{
-		$column = $this->getConfigColumn($key);
-		return $column->toValue($column->initial);
+		if ($gdt = $this->getConfigColumn($key))
+		{
+		    return $gdt->toValue($gdt->initial);
+		}
 	}
 	
 	public function saveConfigVar($key, $var)
@@ -144,14 +170,17 @@ class GDO_Module extends GDO
 	
 	public function saveConfigValue($key, $value)
 	{
-		GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->value($value));
+		GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->initialValue($value));
 		Cache::remove('gdo_modules');
 	}
 	
 	public function removeConfigVar($key)
 	{
-		$this->getConfigColumn($key)->initial(null);
-		GDO_ModuleVar::removeModuleVar($this, $key);
+		if ($gdt = $this->getConfigColumn($key))
+		{
+		    $gdt->initial(null);
+    		GDO_ModuleVar::removeModuleVar($this, $key);
+		}
 	}
 	
 	##############
@@ -167,9 +196,9 @@ class GDO_Module extends GDO
 	###########
 	### GDO ###
 	###########
-	public function gdoColumnsCache() { return Database::columnsS('GDO\Core\GDO_Module'); } # Polymorph fix
-	public function gdoTableName() { return "gdo_module"; } # Polymorph fix
-	public function gdoClassName() { return 'GDO\Core\GDO_Module'; } # Polymorph fix
+	public function gdoColumnsCache() { return Database::columnsS(self::class); } # Polymorph fix
+	public function gdoTableName() { return 'gdo_module'; } # Polymorph fix
+	public function gdoClassName() { return self::class; } # Polymorph fix
 	public function gdoColumns()
 	{
 		return array(
@@ -186,10 +215,10 @@ class GDO_Module extends GDO
 	### Static ###
 	##############
 	/**
-	 * @return self
+	 * @return static
 	 */
 	public static function instance() { return ModuleLoader::instance()->getModule(self::getNameS()); }
-	public static function getNameS() { return Strings::substrFrom(get_called_class(), 'Module_'); }
+	public static function getNameS() { return substr(self::gdoShortNameS(), 7); }
 	
 	##############
 	### Getter ###
@@ -283,9 +312,9 @@ class GDO_Module extends GDO
 	{
 		if (!$this->inited)
 		{
-			$this->registerSettings();
 			if ($this->isEnabled())
 			{
+    			$this->registerSettings();
 				$this->onInit();
 // 				GDT_Hook::initModule($this);
 			}

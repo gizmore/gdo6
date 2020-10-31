@@ -56,7 +56,7 @@ class GDT_Files extends GDT_File
 			return []; # has no stored files as its not even saved yet.
 		}
 		# Fetch all from relation table as GDO_File array.
-		return $this->fileTable->select('gdo_file.*')->fetchTable(GDO_File::table())->
+		return $this->fileTable->select('*, gdo_file.*')->fetchTable(GDO_File::table())->
 			where('files_object='.$this->gdo->getID())->
 			joinObject('files_file')->exec()->fetchAllObjects();
 	}

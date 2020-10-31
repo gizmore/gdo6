@@ -12,9 +12,9 @@ trait WithInstance
 	{
 		if (!self::$INSTANCE)
 		{
-			$klass = get_called_class();
-			self::$INSTANCE = new $klass();
+			self::$INSTANCE = new self;
 		}
 		return self::$INSTANCE;
 	}
+	
 }

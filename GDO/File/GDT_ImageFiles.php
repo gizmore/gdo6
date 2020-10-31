@@ -19,4 +19,13 @@ final class GDT_ImageFiles extends GDT_Files
 		$this->icon('image');
 	}
 
+	public function displayPreviewHref(GDO_File $file)
+	{
+	    $href = $this->previewHREF . $file->getID();
+	    if ($this->variant)
+	    {
+	        $href .= '&variant='.$this->variant;
+	    }
+	    return $href;
+	}
 }

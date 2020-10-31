@@ -21,19 +21,18 @@ class GDT_Duration extends GDT_UInt
 
 	public function toValue($var)
 	{
-		return Time::humanToSeconds($var);
+	    return Time::humanDuration($var);
 	}
 	
 	public function toVar($value)
 	{
-	    return Time::humanDuration($value);
+		return Time::humanToSeconds($value);
 	}
 	
 	public function displayVar()
 	{
-	    return $this->getVar();
+	    return $this->getValue();
 	}
-	
 	
 	public function renderCell()
 	{

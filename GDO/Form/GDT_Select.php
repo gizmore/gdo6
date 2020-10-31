@@ -19,7 +19,7 @@ class GDT_Select extends GDT_ComboBox
 	
 	public function getVar()
 	{
-		$this->fixEmptyMultiple();
+// 		$this->fixEmptyMultiple();
 		
 		if (null === ($value = $this->getRequestVar($this->formVariable(), $this->var)))
 		{
@@ -223,7 +223,7 @@ class GDT_Select extends GDT_ComboBox
 		}
 		else 
 		{
-			return $this->getVar() === (string)$value ? self::SELECTED : '';
+			return $this->var === (string)$value ? self::SELECTED : '';
 		}
 	}
 	

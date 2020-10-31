@@ -11,6 +11,8 @@ use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Response;
 use GDO\Core\Website;
 
+set_include_path('.');
+
 @include 'protected/config.php';
 if (!defined('GWF_CONFIGURED'))
 {
@@ -54,11 +56,6 @@ try
     ob_start();
     $method = $app->getMethod();
     $response = $method->exec();
-
-    if ($session = GDO_Session::instance())
-    {
-        $session->commit();
-    }
 }
 catch (Exception $e)
 {
@@ -69,6 +66,11 @@ finally
 {
     $content = ob_get_contents();
     ob_end_clean();
+
+    if ($session = GDO_Session::instance())
+    {
+        $session->commit();
+    }
 }
 
 # Render Page

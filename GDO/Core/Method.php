@@ -39,7 +39,7 @@ abstract class Method
 	/**
 	 * @return static
 	 */
-	public static function make() { $class = get_called_class(); return new $class(); }
+	public static function make() { return new static(); }
 	
 	################
 	### Override ###
@@ -156,8 +156,8 @@ abstract class Method
 	##############
 	public function getFormat() { return Application::instance()->getFormat(); }
 	public function getSiteName() { return sitename(); }
-	public function getMethodName() { return Strings::rsubstrFrom(get_called_class(), '\\'); }
-	public function getModuleName() { return Strings::substrTo(Strings::substrFrom(get_called_class(), '\\'), '\\'); }
+	public function getMethodName() { return $this->gdoShortName(); }
+	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6)-4); }
 	public function module() { return ModuleLoader::instance()->getModule($this->getModuleName()); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
 	public function error($key, array $args=null) { Website::topResponse()->add(GDT_Error::responseWith($key, $args)); return GDT_Response::make()->code(405); }

@@ -262,7 +262,7 @@ final class Logger
 		}
 
 		# Default kill banner.
-		if (false === is_file($filename))
+		if (!is_file($filename))
 		{
 			$bool = true;
 			$bool = $bool && (false !== file_put_contents($filename, '<?php die(2); ?>'.PHP_EOL));

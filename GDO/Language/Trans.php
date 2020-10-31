@@ -3,6 +3,7 @@ namespace GDO\Language;
 
 use GDO\Core\GDT_Error;
 use GDO\Core\GDOError;
+use GDO\File\FileUtil;
 
 /**
  * Very cheap i18n.
@@ -46,7 +47,7 @@ final class Trans
 	public static function inited()
 	{
 		self::$INITED = true;
-		self::$CACHE = [];
+// 		self::$CACHE = [];
 	}
 	
 	public static function getCache($iso)
@@ -72,8 +73,9 @@ final class Trans
 	{
 		$cache = self::load($iso);
 
-		if ($text = @$cache[$key])
+		if (isset($cache[$key]))
 		{
+		    $text = $cache[$key];
 			if ($args)
 			{
 				if (!($text = @vsprintf($text, $args)))
@@ -95,7 +97,6 @@ final class Trans
 		}
 		
 		return $text;
-// 		return self::$NO_SITENAME ? self::filterSitename($text) : $text;
 	}
 
 	private static function reload($iso)
@@ -109,7 +110,7 @@ final class Trans
 				foreach (self::$PATHS as $path)
 				{
 				    $pathISO = "{$path}_{$iso}.php";
-					if (is_file($pathISO))
+					if (FileUtil::isFile($pathISO))
 					{
 					    try
 					    {
