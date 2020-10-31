@@ -9,7 +9,7 @@ use GDO\Core\GDOError;
  * 
  * @author gizmore
  * @since 1.00
- * @version 6.08
+ * @version 6.10
  */
 final class Trans
 {
@@ -101,17 +101,19 @@ final class Trans
 	private static function reload($iso)
 	{
 		$trans = [];
+		$trans2 = [];
 		if (self::$INITED)
 		{
 // 			if (false === ($loaded = Cache::get("gdo_trans_$iso")))
-			{
+// 			{
 				foreach (self::$PATHS as $path)
 				{
-					if (is_readable("{$path}_{$iso}.php"))
+				    $pathISO = "{$path}_{$iso}.php";
+					if (is_file($pathISO))
 					{
 					    try
 					    {
-    						$trans2 = include("{$path}_{$iso}.php");
+    						$trans2[] = include($pathISO);
 					    }
 					    catch (\Throwable $e)
 					    {
@@ -124,7 +126,7 @@ final class Trans
 					    $pathEN= "{$path}_en.php";
 						try
 						{
-						    $trans2 = include($pathEN);
+						    $trans2[] = include($pathEN);
 						}
 						catch (\Throwable $e)
 						{
@@ -133,11 +135,11 @@ final class Trans
 						    throw new GDOError('err_langfile_corrupt', [$pathEN]);
 						}
 					}
-					$trans = array_merge($trans, $trans2);
 				}
+    			$trans = array_merge(...$trans2);
 				$loaded = $trans;
 //		 		Cache::set("gdo_trans_$iso", $loaded);
-			}
+// 			}
 			$trans = $loaded;
 		}
 		self::$CACHE[$iso] = $trans;

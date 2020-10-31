@@ -1,7 +1,6 @@
 <?php
 use GDO\Core\Website;
 use GDO\Util\Javascript;
-use GDO\UI\GDT_Bar;
 use GDO\Core\Module_Core;
 use GDO\UI\GDT_Page;
 /** @var $page GDT_Page **/
@@ -33,7 +32,7 @@ use GDO\UI\GDT_Page;
 	  <div class="gdo-body">
 		<div class="gdo-main">
 		  <?=$page->topTabs->render()?>
-		  <?=Website::topResponse()->render()?>
+		  <?=Website::renderTopResponse()?>
 		  <?=$page->html?>
 		</div>
 	  </div>

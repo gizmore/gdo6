@@ -56,7 +56,8 @@ final class Website
 					}
 				}
 		}
-		return self::topResponse()->add(GDT_Success::responseWith('msg_redirect', [GDT_Link::anchor($url), $time]));
+		self::topResponse()->add(GDT_Success::responseWith('msg_redirect', [GDT_Link::anchor($url), $time]));
+		return GDT_Response::make();
 	}
 
 	private static function ajaxRedirect($url, $time)

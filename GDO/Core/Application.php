@@ -2,7 +2,6 @@
 namespace GDO\Core;
 
 use GDO\Util\Common;
-use GDO\Session\GDO_Session;
 
 /**
  * The application can control main behaviour settings.
@@ -53,7 +52,6 @@ class Application
 	public function __destruct()
 	{
 		Logger::flush();
-// 		GDO_Session::commit();
 	}
 	
 	public function isWindows() { return defined('PHP_WINDOWS_VERSION_MAJOR'); }

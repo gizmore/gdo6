@@ -1,5 +1,6 @@
 <?php
 namespace GDO\User;
+
 use GDO\Core\GDO;
 use GDO\DB\GDT_AutoInc;
 use GDO\DB\GDT_CreatedAt;
@@ -18,11 +19,12 @@ use GDO\Date\GDT_Birthdate;
 use GDO\Date\GDT_Timezone;
 use GDO\Avatar\GDT_Avatar;
 use GDO\Session\GDO_Session;
+
 /**
  * The holy user object.
  * @author gizmore
  * @since 1.00
- * @version 6.09
+ * @version 6.10
  */
 final class GDO_User extends GDO
 {

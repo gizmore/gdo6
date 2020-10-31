@@ -304,33 +304,20 @@ abstract class Method
 			if ($transactional) $db->transactionBegin();
 			
 			# Exec 1)before, 2)execute, 3)after
-			GDT_Hook::callHook('BeforeExecute', $this);
+// 			GDT_Hook::callHook('BeforeExecute', $this);
 			$response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
 			$response = $response ? $response->add($this->execute()) : $this->execute();
 			$response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
-			GDT_Hook::callHook('AfterExecute', $this);
+// 			GDT_Hook::callHook('AfterExecute', $this);
 			
-			# store activity timestamp
-			if (!$this->isAjax() && count($_POST))
-			{
-				$user = GDO_User::current();
-				if ($user->isPersisted())
-				{
-					$user->saveVar('user_last_activity', Time::getDate());
-				}
-			}
-
 			# Wrap transaction end
 			if ($transactional) $db->transactionEnd();
 			
 			# Store last URL in session
-			if ($session = GDO_Session::instance())
-			{
-			    if ( ($this->saveLastUrl()) && (!Application::instance()->isAjax()) )
-			    {
-			        $session->setVar('sess_last_url', @$_SERVER['REQUEST_URI']);
-			    }
-			}
+			$this->storeLastURL();
+			
+			# Store last activity in user
+			$this->storeLastActivity();
 			
 			return $response;
 		}
@@ -339,6 +326,30 @@ abstract class Method
 			if ($transactional) $db->transactionRollback();
 			throw $e;
 		}
+	}
+	
+	private function storeLastURL()
+	{
+	    if ($session = GDO_Session::instance())
+	    {
+	        if ( ($this->saveLastUrl()) && (!Application::instance()->isAjax()) && (!$this->isAjax()) )
+	        {
+	            $session->setVar('sess_last_url', @$_SERVER['REQUEST_URI']);
+	        }
+	    }
+	}
+	
+	private function storeLastActivity()
+	{
+	    if (!$this->isAjax())
+	    {
+	        $user = GDO_User::current();
+	        if ($user->isPersisted())
+	        {
+	            $lastActivity = substr(Time::getDate(), 0, 16) . ':00.000';
+	            $user->saveVar('user_last_activity', $lastActivity);
+	        }
+	    }
 	}
 	
 }

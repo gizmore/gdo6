@@ -104,7 +104,7 @@ final class GDT_Response extends GDT
 	    {
     	    $this->code = $response->code;
 	    }
-		return $response ? $this->addField($response) : $this;
+		return $response ? $this->addFields($response->getFields()) : $this;
 	}
 	
 	public function addHTML($html)
