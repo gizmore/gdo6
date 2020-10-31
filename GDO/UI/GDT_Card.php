@@ -68,6 +68,14 @@ final class GDT_Card extends GDT
 	public function render() { return GDT_Template::php('UI', 'cell/card.php', ['field' => $this]); }
 	public function renderCard() { return $this->render(); }
 	
+	##############
+	### Helper ###
+	##############
+	public function addLabel($key, array $args=null)
+	{
+	    return $this->addField(GDT_Label::make()->label($key, $args));
+	}
+	
 	######################
 	### Creation title ###
 	######################
@@ -75,11 +83,27 @@ final class GDT_Card extends GDT
 	 * Use the subtitle to render creation stats. User (with avatar), Date, Age.
 	 * @return self
 	 */
-	public function creatorHeader(GDT $title=null)
+	public function creatorHeader(GDT $title=null, $byField=null, $atField=null)
 	{
 	    /** @var $user GDO_User **/
-	    $user = $this->gdo->gdoColumnOf(GDT_CreatedBy::class)->getValue();
-	    $date = $this->gdo->gdoColumnOf(GDT_CreatedAt::class);
+	    if ($byField)
+	    {
+	        $byField = $this->gdo->gdoColumn($byField);
+	    }
+	    else
+	    {
+	        $byField = $this->gdo->gdoColumnOf(GDT_CreatedBy::class);
+	    }
+	    $user = $byField->getValue();
+
+	    if ($atField)
+	    {
+	        $atField = $this->gdo->gdoColumn($atField);
+	    }
+	    else
+	    {
+    	    $date = $this->gdo->gdoColumnOf(GDT_CreatedAt::class);
+	    }
 	    
 	    $this->subtitle = GDT_Container::make();
 	    

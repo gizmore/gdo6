@@ -276,7 +276,7 @@ class GDO_Module extends GDO
 	### Init ###
 	############
 	public function __wakeup() { $this->inited = false; } # TODO: wakeup knows that language and settings are also memcached soon? :)
-	private $inited;
+	private $inited = false;
 	public function initModule()
 	{
 		if (!$this->inited)
@@ -285,6 +285,7 @@ class GDO_Module extends GDO
 			if ($this->isEnabled())
 			{
 				$this->onInit();
+// 				GDT_Hook::initModule($this);
 			}
 		}
 	}

@@ -12,7 +12,7 @@ use GDO\User\GDO_UserPermission;
 use GDO\Util\BCrypt;
 use GDO\User\GDO_Permission;
 use GDO\Core\ModuleLoader;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 
 class InstallAdmins extends MethodForm
 {

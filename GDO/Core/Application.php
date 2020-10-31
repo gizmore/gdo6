@@ -2,7 +2,7 @@
 namespace GDO\Core;
 
 use GDO\Util\Common;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 
 /**
  * The application can control main behaviour settings.
@@ -47,12 +47,13 @@ class Application
         ini_set('date.timezone', 'UTC');
 		date_default_timezone_set('UTC');
 		$this->loader = new ModuleLoader(GDO_PATH . 'GDO/');
+		$this->initThemes();
 	}
 	
 	public function __destruct()
 	{
 		Logger::flush();
-		GDO_Session::commit();
+// 		GDO_Session::commit();
 	}
 	
 	public function isWindows() { return defined('PHP_WINDOWS_VERSION_MAJOR'); }
@@ -82,9 +83,14 @@ class Application
 	### Themes ###
 	##############
 	private $themes = GWF_THEMES;
-	public function getThemes() { return is_array($this->themes) ? $this->themes : explode(',', $this->themes); }
-	public function hasTheme($theme) { return in_array($theme, $this->getThemes(), true); }
-	public function setThemes(array $themes) { $this->themes = $themes; return $this; }
+	public function getThemes() { return $this->themes; }
+	public function hasTheme($theme) { return isset($this->themes[$theme]); }
+// 	public function setThemes(array $themes) { $this->themes = $themes; return $this; }
+	public function initThemes()
+	{
+	    $this->themes = explode(',', $this->themes);
+	    $this->themes = array_combine($this->themes, $this->themes);
+	}
 
 }
 

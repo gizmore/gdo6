@@ -44,7 +44,7 @@ final class GDO_UserSetting extends GDO
 	public function gdoColumns()
 	{
 		return array(
-			GDT_User::make('uset_user')->primary(),
+			GDT_User::make('uset_user')->primary()->index(),
 			GDT_Name::make('uset_name')->primary(),
 			GDT_String::make('uset_value')->notNull(),
 		);

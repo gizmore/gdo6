@@ -26,11 +26,14 @@ ini_set('display_errors', 1);
 global $GDT_LOADED; $GDT_LOADED = 0; # perf
 spl_autoload_register(function($name){
     $name = GDO_PATH . str_replace('\\', '/', $name) . '.php';
-    if (is_file($name))
-	{
-		global $GDT_LOADED; $GDT_LOADED++; # perf
-		require $name;
-	}
+    try
+    {
+    	include $name;
+    	global $GDT_LOADED; $GDT_LOADED++; # perf
+    }
+    catch (Throwable $e)
+    {
+    }
 });
 	
 # Global utility

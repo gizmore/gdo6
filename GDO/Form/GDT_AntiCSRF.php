@@ -2,7 +2,7 @@
 namespace GDO\Form;
 use GDO\Core\GDT_Template;
 use GDO\Core\GDT;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 use GDO\Util\Random;
 
 /**

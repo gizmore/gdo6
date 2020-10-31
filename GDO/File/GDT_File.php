@@ -2,7 +2,7 @@
 namespace GDO\File;
 
 use GDO\Core\GDT_Template;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 use GDO\Util\Arrays;
 use GDO\Core\GDO;
 use GDO\DB\GDT_Object;

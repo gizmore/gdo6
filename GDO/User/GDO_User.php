@@ -17,6 +17,7 @@ use GDO\DB\GDT_UInt;
 use GDO\Date\GDT_Birthdate;
 use GDO\Date\GDT_Timezone;
 use GDO\Avatar\GDT_Avatar;
+use GDO\Session\GDO_Session;
 /**
  * The holy user object.
  * @author gizmore

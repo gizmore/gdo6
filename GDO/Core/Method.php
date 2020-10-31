@@ -7,7 +7,7 @@ use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Util\Strings;
 use GDO\UI\WithTitle;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 use GDO\Date\Time;
 
 /**
@@ -160,8 +160,8 @@ abstract class Method
 	public function getModuleName() { return Strings::substrTo(Strings::substrFrom(get_called_class(), '\\'), '\\'); }
 	public function module() { return ModuleLoader::instance()->getModule($this->getModuleName()); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
-	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args); }
-	public function message($key, array $args=null, $log=true) { return GDT_Success::responseWith($key, $args); }
+	public function error($key, array $args=null) { Website::topResponse()->add(GDT_Error::responseWith($key, $args)); return GDT_Response::make()->code(405); }
+	public function message($key, array $args=null, $log=true) { Website::topResponse()->add(GDT_Success::responseWith($key, $args)); return GDT_Response::make(); }
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
 	

@@ -2,6 +2,7 @@
 namespace GDO\UI;
 
 use GDO\Core\GDT;
+use GDO\Core\GDT_Hook;
 use GDO\Core\WithFields;
 
 /**
@@ -62,6 +63,12 @@ class GDT_Container extends GDT
 	    }
 	    $back .= '</div>';
 	    return $back;
+	}
+	
+	public function callHook($hookname)
+	{
+	    GDT_Hook::callHook($hookname, $this);
+	    return $this;
 	}
 	
 }

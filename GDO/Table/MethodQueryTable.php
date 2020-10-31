@@ -38,7 +38,7 @@ abstract class MethodQueryTable extends Method
 	 */
 	public function getHeaders()
 	{
-		return $this->getQuery()->table->gdoColumns();
+		return $this->getQuery()->table->gdoColumnsCache();
 	}
 	
 	public function onDecorateTable(GDT_Table $table) {}

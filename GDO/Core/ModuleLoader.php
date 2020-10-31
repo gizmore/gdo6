@@ -54,9 +54,14 @@ final class ModuleLoader
 	 */
 	public function getEnabledModules()
 	{
-		return array_filter($this->modules, function(GDO_Module $module){
-			return $module->isEnabled();
-		});
+	    static $enabled;
+	    if ($enabled === null)
+	    {
+	        $enabled = array_filter($this->modules, function(GDO_Module $module){
+    			return $module->isEnabled();
+    		});
+	    }
+	    return $enabled;
 	}
 	
 	/**
@@ -312,7 +317,7 @@ final class ModuleLoader
 		# Query all module vars
 		$result = GDO_ModuleVar::table()->
 			select('module_name, mv_name, mv_value')->
-			join('LEFT JOIN gdo_module ON module_id=mv_module_id')->exec();
+			join('JOIN gdo_module ON module_id=mv_module_id')->exec();
 		# Assign them to the modules
 		while ($row = $result->fetchRow())
 		{

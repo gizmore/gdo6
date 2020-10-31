@@ -15,7 +15,7 @@ gdo6(PHP) runs on PHP 5.6 and later versions up to (7.4) and requires a few PHP 
 
 These modules are optional
 
-    apt-get install php-memcached php-gmp
+    apt-get install php-memcached php-gmp php-mcrypt
 
 
 ### GDO6 Core
@@ -140,6 +140,8 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-qrcode QRCode
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
+    # git clone --recursive https://github.com/gizmore/gdo6-session-db Session
+    # git clone --recursive https://github.com/gizmore/gdo6-session-cookie Session
     # git clone --recursive https://github.com/gizmore/gdo6-shoutbox Shoutbox
     git clone --recursive https://github.com/gizmore/gdo6-sitemap Sitemap
     ## git clone --recursive https://github.com/gizmore/gdo6-slaytags Slaytags

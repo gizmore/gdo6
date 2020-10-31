@@ -5,11 +5,12 @@ use GDO\Core\Logger;
 use GDO\Language\Trans;
 use GDO\UI\GDT_Page;
 use GDO\User\GDO_User;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 use GDO\DB\Database;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Response;
 use GDO\Core\Website;
+use GDO\UI\GDT_HTMLPage;
 
 @include 'protected/config.php';
 if (!defined('GWF_CONFIGURED'))
@@ -38,6 +39,8 @@ if (GDO_User::current()->isAuthenticated())
 	Logger::init(GDO_User::current()->getUserName(), GWF_ERROR_LEVEL); # 2nd init with username
 }
 
+$page = GDT_Page::make('page');
+
 # All fine!
 define('GWF_CORE_STABLE', 1);
 try
@@ -54,7 +57,10 @@ try
     $response = $method->exec();
 	if ($session = GDO_Session::instance())
     {
-		$session->commit();
+        if (!Application::instance()->isAjax())
+        {
+            $session->commit();
+        }
     }
 }
 catch (Exception $e)
@@ -81,6 +87,6 @@ switch ($app->getFormat())
         }
         else
         {
-            echo GDT_Page::make()->html($content . $response->renderHTML())->render();
+            echo $page->html($content . $response->renderHTML())->render();
         }
 }

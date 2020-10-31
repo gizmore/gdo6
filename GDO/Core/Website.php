@@ -2,7 +2,7 @@
 namespace GDO\Core;
 use GDO\UI\GDT_Link;
 use GDO\UI\GDT_Panel;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 /**
  * General Website utility.
  * @author gizmore
@@ -54,12 +54,11 @@ final class Website
 					{
 						header('Location: ' . $url);
 					}
-					
-					return GDT_Success::responseWith('msg_redirect', [GDT_Link::anchor($url), $time]);
 				}
-			case 'json': return ['redirect' => $url, 'redirectWait' => $time];
 		}
+		return self::topResponse()->add(GDT_Success::responseWith('msg_redirect', [GDT_Link::anchor($url), $time]));
 	}
+
 	private static function ajaxRedirect($url, $time)
 	{
 		# Don't do this at home kids!
@@ -177,6 +176,49 @@ final class Website
 	public static function outputStarted()
 	{
 		return headers_sent() || ob_get_contents();
+	}
+	
+	####################
+	### Top Response ###
+	####################
+	public static $TOP_RESPONSE;
+	public static function topResponse()
+	{
+	    if (!self::$TOP_RESPONSE)
+	    {
+	        self::$TOP_RESPONSE = GDT_Response::make();
+	    }
+	    return self::$TOP_RESPONSE;
+	}
+	
+	public static function renderTopResponse()
+	{
+	    if (self::$TOP_RESPONSE)
+	    {
+	        return self::$TOP_RESPONSE->render();
+	    }
+	}
+	
+	
+	#####################
+	### JSON Response ###
+	#####################
+	public static $JSON_RESPONSE;
+	public static function jsonResponse()
+	{
+	    if (!self::$JSON_RESPONSE)
+	    {
+	        self::$JSON_RESPONSE = GDT_Response::make();
+	    }
+	    return self::$JSON_RESPONSE;
+	}
+	
+	public static function renderJSONResponse()
+	{
+	    if (self::$JSON_RESPONSE)
+	    {
+	        return self::$JSON_RESPONSE->renderJSON();
+	    }
 	}
 	
 	####################

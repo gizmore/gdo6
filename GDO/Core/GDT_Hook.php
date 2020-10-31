@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Core;
+
 /**
  * Hooks do not render any output.
  * Hooks add messages to the IPC queue 1, which are/can be consumed by the websocket server.
@@ -7,17 +8,16 @@ namespace GDO\Core;
  * Hooks follow this convetions.
  * 1) The hook name is camel-case, e.g: 'UserAuthenticated'.
  * 2) The method name in your object has to be hookUserAuthenticated in this example.
- * 3) The hook name should include the module name, e.g. LoginSuccess, FriendsAccepted.
+ * 3) The hook name should include the module name, e.g. LoginSuccess, FriendsAccepted, CoreInitiated.
  * 4) Annotate your hooks somewhere in your code with @hook LoginSuccess.
  *
  * @see Module_Websocket
  * 
  * Since v6.0, hooks are a gdo type and behave like a yielder displayhook. <?= GDT_Hook::make()->event('LeftBar')->render(); ?>
- *
- * @todo Find a way to generate hook lists for senders and receivers (dev informative). Maybe reflection for receiver and grep for sender
+ * The yielder was a bad ide and got removed in 6.10. hooks for navs and sections need to be called early.
  *
  * @author gizmore
- * @version 6.05
+ * @version 6.11
  * @since 3.00
  */
 final class GDT_Hook extends GDT
@@ -25,15 +25,42 @@ final class GDT_Hook extends GDT
 	public static $CALLS = 0;
 	public static $IPC_CALLS = 0;
 	
+	############
+	### Init ###
+	############
+	/**
+	 * @var [GDO_Module[]]
+	 */
+	private static $HOOKS = [];
+	public static function initModule(GDO_Module $module)
+	{
+// 	    foreach (get_class_methods($module) as $m)
+// 	    {
+// 	        if ( ($m[0] == 'h') && ($m[1] == 'o') && ($m[2]=='o') && ($m[3] === 'k') )
+// 	        {
+// 	            self::initHook($m, $module);
+// 	        }
+// 	    }
+	}
+	
+// 	private static function initHook($hookName, GDO_Module $module)
+// 	{
+// 	    if (!isset(self::$HOOKS[$hookName]))
+// 	    {
+// 	        self::$HOOKS[$hookName] = [];
+// 	    }
+// 	    self::$HOOKS[$hookName][] = $module;
+// 	}
+	
 	###########
 	### API ###
 	###########
-	public static function renderHook($event, ...$args)
-	{
-		$hook = self::make()->event($event);
-		if (count($args)) $hook->eventArgs(...$args);
-		return $hook->render()->html;
-	}
+// 	public static function renderHook($event, ...$args)
+// 	{
+// 		$hook = self::make()->event($event);
+// 		if (count($args)) $hook->eventArgs(...$args);
+// 		return $hook->render()->html;
+// 	}
 
 	#############
 	### Event ###
@@ -70,27 +97,40 @@ final class GDT_Hook extends GDT
 		return self::call($event, false, $args);
 	}
 	
-/**
-	 * Simply try to call a function on all active modules.
-	 * As on gwf5 all modules are always loaded, there is not much logic involved.
-	 *
+    /**
+	 * Call a hook.
+	 * Only registered modules are called since 6.11.
 	 * @param string $event
+	 * @param boolean $ipc
 	 * @param array $args
 	 */
 	private static function call($event, $ipc, array $args)
 	{
 		self::$CALLS++;
 		$method_name = "hook$event";
-		foreach (ModuleLoader::instance()->getModules() as $module)
-		{
-			if ($module->isEnabled())
-			{
-				if (method_exists($module, $method_name))
-				{
-					call_user_func([$module, $method_name], ...$args);
-				}
-			}
-		}
+		
+		/**
+		 * @var $hooks GDO_Module[]
+		 */
+// 		if ($hooks = @self::$HOOKS[$method_name])
+// 		{
+//     		foreach ($hooks as $module)
+//     		{
+//     			call_user_func([$module, $method_name], ...$args);
+//     		}
+// 		}
+// 		else
+// 		{
+// 		    self::$HOOKS[$method_name] = [];
+		    foreach (ModuleLoader::instance()->getEnabledModules() as $module)
+		    {
+		        if (method_exists($module, $method_name))
+		        {
+// 		            self::$HOOKS[$method_name][] = $module;
+		            call_user_func([$module, $method_name], ...$args);
+		        }
+		    }
+// 		}
 		
 		# Call IPC hooks
 		if ( ($ipc) && (GWF_IPC) && 

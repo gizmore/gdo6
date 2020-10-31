@@ -6,7 +6,7 @@ use GDO\UI\GDT_Bar;
 use GDO\Util\Strings;
 use GDO\Core\Application;
 use GDO\User\GDO_User;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 use GDO\Util\Javascript;
 use GDO\Util\Common;
 use GDO\Core\Website;

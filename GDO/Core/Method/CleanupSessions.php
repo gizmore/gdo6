@@ -1,7 +1,7 @@
 <?php
 namespace GDO\Core\Method;
 use GDO\DB\Database;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 use GDO\Date\Time;
 use GDO\Cronjob\MethodCronjob;
 use GDO\Core\Application;

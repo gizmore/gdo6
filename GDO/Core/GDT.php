@@ -49,10 +49,9 @@ abstract class GDT
 	public static function make($name=null)
 	{
 	    self::$COUNT++;
-		$type = get_called_class();
-		$obj = new $type();
-		/** @var $obj self **/
-		return $obj->name($name === null ? $obj->name : $name);
+	    $c = get_called_class();
+		$obj = new $c();
+		return $obj->name($name ? $name : $obj->name);
 	}
 	
 	############
