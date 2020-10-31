@@ -57,10 +57,7 @@ try
     $response = $method->exec();
 	if ($session = GDO_Session::instance())
     {
-        if (!Application::instance()->isAjax())
-        {
-            $session->commit();
-        }
+        $session->commit();
     }
 }
 catch (Exception $e)

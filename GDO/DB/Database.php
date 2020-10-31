@@ -6,6 +6,7 @@ use GDO\Core\Logger;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
 use Exception;
+use PhpParser\Node\Stmt\Else_;
 
 /**
  * mySQLi abstraction.
@@ -170,12 +171,13 @@ class Database
 	###################
 	### Table cache ###
 	###################
+	
 	/**
 	 * @param string $classname
 	 * @throws GDOError
 	 * @return \GDO\Core\GDO
 	 */
-	public static function tableS($classname)
+	public static function tableS($classname, $initCache=true)
 	{
 		if (!isset(self::$TABLES[$classname]))
 		{
@@ -191,7 +193,7 @@ class Database
 			self::$COLUMNS[$classname] = self::hashedColumns($gdo);
 
 			/** @var $gdo \GDO\Core\GDO **/
-			if ($gdo->gdoCached() || $gdo->memCached())
+			if ($initCache && ($gdo->gdoCached() || $gdo->memCached()))
 			{
 				$gdo->initCache();
 			}

@@ -13,8 +13,15 @@ use GDO\Util\Random;
  */
 class GDT_AntiCSRF extends GDT
 {
-	public $editable = false;
+    public $name = 'xsrf';
+    public $editable = false;
 	public function name($name=null) { return $this; }
+
+	public function __construct()
+	{
+	    $this->csrfToken();
+	}
+	
 	##############
 	### Expire ###
 	##############
@@ -38,8 +45,6 @@ class GDT_AntiCSRF extends GDT
 	#################
 	### Construct ###
 	#################
-	public $name = 'xsrf';
-	
 	public function csrfToken()
 	{
 		$csrf = '';

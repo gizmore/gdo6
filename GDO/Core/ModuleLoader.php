@@ -5,6 +5,7 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
 use Exception;
+use GDO\DB\Database;
 /**
  * Module loader.
  *
@@ -141,7 +142,7 @@ final class ModuleLoader
 		{
 			$module->initModule();
 		}
-
+		
 		$app = Application::instance();
 		if ( (!$app->isInstall()) && (!$app->isCLI()) )
 		{

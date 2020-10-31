@@ -1,7 +1,9 @@
 <?php
 namespace GDO\User;
 
+use GDO\Core\GDO;
 use GDO\Core\GDO_Module;
+use GDO\Session\GDO_Session;
 
 /**
  * GDO_User related types and plugins.
@@ -20,13 +22,17 @@ final class Module_User extends GDO_Module
 
 	public function getClasses()
 	{
-		return array(
+	    $classes = array(
 			GDO_User::class,
-			GDO_Session::class,
 			GDO_UserPermission::class,
 			GDO_UserSetting::class,
 			GDO_UserSettingBlob::class,
 		);
+	    if (is_a(GDO_Session::class, GDO::class, true))
+	    {
+	        $classes[] = GDO_Session::class;
+	    }
+	    return $classes;
 	}
 	
 }

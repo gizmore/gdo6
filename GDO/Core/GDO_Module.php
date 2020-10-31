@@ -366,7 +366,8 @@ class GDO_Module extends GDO
 	##############
 	### Assets ###
 	##############
-	public function nocacheVersion() { return "v={$this->getVersion()}&vc=".Module_Core::instance()->cfgAssetVersion(); }
+	private static $_NC;
+	public function nocacheVersion() { if (!self::$_NC) self::$_NC = "v={$this->getVersion()}&vc=".Module_Core::instance()->cfgAssetVersion(); return self::$_NC; }
 	public function addBowerJavascript($path) { return $this->addJavascript('bower_components/'.$path); }
 	public function addJavascript($path) { return Javascript::addJavascript($this->wwwPath($path.'?'.$this->nocacheVersion())); }
 	public function addBowerCSS($path) { return $this->addCSS('bower_components/'.$path); }
