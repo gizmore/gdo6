@@ -108,8 +108,10 @@ final class ModuleLoader
 	 * Sorted by priority to be spinlock free.
 	 * @return GDO_Module[]
 	 */
+// 	private $loadCached = false;
 	public function loadModulesCache()
 	{
+	    $this->loadCached = true;
 		if (false === ($cache = Cache::get('gdo_modules')))
 		{
 			$cache = $this->loadModulesA();
@@ -121,6 +123,7 @@ final class ModuleLoader
 			$this->initFromCache($cache);
 		}
 		
+// 		$this->loadCached = false;
 		return $this->modules;
 	}
 	
@@ -134,10 +137,10 @@ final class ModuleLoader
 	{
 		foreach ($this->modules as $module)
 		{
+			$module->onLoadLanguage();
 		    if ($module->isEnabled())
 		    {
     			$module->registerThemes();
-    			$module->onLoadLanguage();
 		    }
 		}
 		Trans::inited();
@@ -156,15 +159,12 @@ final class ModuleLoader
 					if (!$module->isInited())
 					{
 						$module->onIncludeScripts();
+						$module->initedModule();
 					}
 				}
 			}
 		}
 
-		foreach ($this->modules as $module)
-		{
-			$module->initedModule();
-		}
 	}
 	
 	##################
@@ -214,6 +214,12 @@ final class ModuleLoader
 			}
 
 			$this->sortModules('module_priority');
+			
+// 			if ($this->loadCached)
+// 			{
+// 			    Cache::set('gdo_modules', $this->modules);
+// 			}
+			
 			$this->initModules();
 		}
 		return $this->modules;
@@ -240,8 +246,9 @@ final class ModuleLoader
 // 				}
 			}
 		}
-		catch (Exception $e)
+		catch (\Throwable $e)
 		{
+		    die('X');
 			return false;
 		}
 		return $this->modules;
@@ -256,7 +263,7 @@ final class ModuleLoader
 	{
 		if (FileUtil::isFile("$path/Module_$entry.php"))
 		{
-			$this->loadModuleFS($entry, false);
+			$this->loadModuleFS($entry, true);
 		}
 	}
 	
@@ -279,13 +286,16 @@ final class ModuleLoader
 					$this->modules[$name] = $module;
 					if ($init)
 					{
+					    $module->onLoadLanguage();
+						$module->buildConfigCache();
 						$module->registerThemes();
+						$module->registerSettings();
 						$module->initModule();
 					}
 				}
 			}
 		}
-		return @$this->modules[$name];
+		return $this->modules[$name];
 	}
 	
 	/**
@@ -302,6 +312,7 @@ final class ModuleLoader
 		/** @var $instance GDO_Module **/
 		$instance = new $klass();
 		$instance->isTable = false;
+// 		$instance->buildConfigCache();
 // 		if (!$instance instanceof GDO_Module)
 // 		{
 // 			throw new GDOError('err_no_module', [html($name)]);
@@ -320,6 +331,11 @@ final class ModuleLoader
 	 */
 	public function initModuleVars()
 	{
+	    foreach ($this->modules as $module)
+	    {
+	        $module->buildConfigCache();
+	    }
+	    
 		# Query all module vars
 		$result = GDO_ModuleVar::table()->
 			select('module_name, mv_name, mv_value')->

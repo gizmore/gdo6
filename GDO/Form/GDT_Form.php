@@ -68,9 +68,12 @@ class GDT_Form extends GDT
 	##############
 	public function render()
 	{
-	    $gdo = $this->gdo;
 		self::$CURRENT = $this;
-		$this->withFields(function(GDT $gdt) use ($gdo){$gdt->gdo($gdo);}); # reset form fields correctly.
+		
+	    if ($gdo = $this->gdo)
+	    {
+// 	        $this->withFields(function(GDT $gdt) use ($gdo){$gdt->gdo($gdo);}); # reset form fields correctly.
+	    }
 		$back = GDT_Template::php('Form', 'cell/form.php', ['form' => $this]);
 		self::$CURRENT = null;
 		return $back;

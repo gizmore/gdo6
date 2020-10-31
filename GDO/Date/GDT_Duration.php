@@ -1,8 +1,8 @@
 <?php
 namespace GDO\Date;
 
-use GDO\DB\GDT_UInt;
 use GDO\Core\GDT_Template;
+use GDO\DB\GDT_String;
 
 /**
  * Duration field int in seconds.
@@ -10,28 +10,25 @@ use GDO\Core\GDT_Template;
  * @version 6.10
  * @since 6.00
  */
-class GDT_Duration extends GDT_UInt
+class GDT_Duration extends GDT_String
 {
 	public function defaultLabel() { return $this->label('duration'); }
 
 	public function __construct()
 	{
 		$this->icon('time');
+		$this->ascii();
+		$this->max(16);
 	}
 
 	public function toValue($var)
 	{
-	    return Time::humanDuration($var);
+	    return Time::humanToSeconds($var);
 	}
 	
 	public function toVar($value)
 	{
-		return Time::humanToSeconds($value);
-	}
-	
-	public function displayVar()
-	{
-	    return $this->getValue();
+	    return Time::humanDuration($value);
 	}
 	
 	public function renderCell()

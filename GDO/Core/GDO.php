@@ -165,7 +165,7 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-	    return true;
+	    return array_key_exists($key, $this->gdoVars);
 // 	    return array_key_exists($key, $this->gdoVars) || array_key_exists($key, $this->gdoColumnsCache());
 	}
 	
@@ -1175,7 +1175,7 @@ abstract class GDO
 	 * @param string $columnName
 	 * @param bool $ascending
 	 */
-	public function sort(array $array, $columnName, $ascending=true)
+	public function sort(array &$array, $columnName, $ascending=true)
 	{
 		return $this->gdoColumn($columnName)->sort($array, $ascending);
 	}

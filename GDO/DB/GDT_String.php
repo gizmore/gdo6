@@ -63,7 +63,7 @@ class GDT_String extends GDT
 	public function getVar()
 	{
 		$var = trim(parent::getVar());
-		return empty($var) ? null : $var;
+		return $var === '' ? null : $var;
 	}
 	
 	######################

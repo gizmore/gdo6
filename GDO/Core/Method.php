@@ -5,7 +5,6 @@ use GDO\DB\Database;
 use GDO\Register\Module_Register;
 use GDO\User\GDO_User;
 use GDO\Util\Common;
-use GDO\Util\Strings;
 use GDO\UI\WithTitle;
 use GDO\Session\GDO_Session;
 use GDO\Date\Time;

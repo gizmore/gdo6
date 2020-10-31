@@ -10,7 +10,6 @@ use GDO\Table\GDT_Sorting;
 use GDO\DB\GDT_Version;
 use GDO\User\GDO_UserSetting;
 use GDO\Util\Javascript;
-use GDO\Util\Strings;
 use GDO\DB\GDT_Checkbox;
 use GDO\User\GDO_UserSettingBlob;
 /**
@@ -101,20 +100,21 @@ class GDO_Module extends GDO
 	private $configCache;
 	public function buildConfigCache()
 	{
-		if (!$this->configCache)
-		{
+// 		if (!$this->configCache)
+// 		{
 			$this->configCache = [];
 			foreach ($this->getConfig() as $gdt)
 			{
-			    $this->configCache[$gdt->name] = $gdt->gdo($this);
+			    $this->configCache[$gdt->name] = $gdt; //->gdo($this);
 			}
-		}
+// 		}
 		return $this->configCache;
 	}
 	
 	public function getConfigCache()
 	{
-	    return $this->getConfigMemcache();
+	    return $this->buildConfigCache();
+// 	    return $this->getConfigMemcache();
 	}
 	
 	private function configCacheKey()
@@ -138,10 +138,10 @@ class GDO_Module extends GDO
 	 */
 	public function getConfigColumn($key)
 	{
-	    $cache = $this->getConfigCache();
-	    if (isset($cache[$key]))
+// 	    $cache = $this->getConfigCache();
+	    if (isset($this->configCache[$key]))
 	    {
-	        return $cache[$key];
+	        return $this->configCache[$key];
 	    }
 	    Website::error('err_unknown_config', [$this->displayName(), html($key)]);
 	}
@@ -150,7 +150,7 @@ class GDO_Module extends GDO
 	{
 	    if ($gdt = $this->getConfigColumn($key))
 	    {
-	        return $gdt->initial;
+	        return $gdt->var;
 	    }
 	}
 	
