@@ -10,7 +10,6 @@ use GDO\DB\Database;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Response;
 use GDO\Core\Website;
-use GDO\UI\GDT_HTMLPage;
 
 @include 'protected/config.php';
 if (!defined('GWF_CONFIGURED'))
@@ -55,7 +54,8 @@ try
     ob_start();
     $method = $app->getMethod();
     $response = $method->exec();
-	if ($session = GDO_Session::instance())
+
+    if ($session = GDO_Session::instance())
     {
         $session->commit();
     }
@@ -84,6 +84,12 @@ switch ($app->getFormat())
         }
         else
         {
-            echo $page->html($content . $response->renderHTML())->render();
+            $page->html($content);
+            if ($response)
+            {
+                $page->html($content . $response->renderHTML());
+            }
+            
+            echo $page->renderCell();
         }
 }

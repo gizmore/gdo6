@@ -36,7 +36,11 @@ final class GDT_CreatedBy extends GDT_User
 	 */
 	public function blankData()
 	{
-	    $user = Application::instance()->isInstall() ? GDO_User::system() : GDO_User::current()->persistent();
+	    $user = GDO_User::current();
+	    if (Application::instance()->isInstall() || (!$user->isPersisted()))
+	    {
+	        $user = GDO_User::system();
+	    }
 	    return [$this->name => $user->getID()];
 	}
 	

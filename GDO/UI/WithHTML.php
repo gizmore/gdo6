@@ -17,4 +17,5 @@ trait WithHTML
 	############
 	public $html = '';
 	public function html($html=null) { $this->html = $html; return $this; }
+	
 }

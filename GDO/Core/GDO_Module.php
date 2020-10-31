@@ -121,6 +121,8 @@ class GDO_Module extends GDO
 				return $gdoType;
 			}
 		}
+		
+		throw new GDOError('err_unknown_config', [$this->displayName(), html($key)]);
 	}
 	
 	public function getConfigVar($key)

@@ -24,9 +24,14 @@ class GDT_Duration extends GDT_UInt
 		return Time::humanToSeconds($var);
 	}
 	
+	public function toVar($value)
+	{
+	    return Time::humanDuration($value);
+	}
+	
 	public function displayVar()
 	{
-	    return Time::humanDuration($this->getVar());
+	    return $this->getVar();
 	}
 	
 	
