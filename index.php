@@ -10,6 +10,8 @@ use GDO\DB\Database;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Response;
 use GDO\Core\Website;
+use GDO\UI\GDT_Container;
+use GDO\UI\GDT_HTML;
 
 set_include_path('.');
 
@@ -86,12 +88,7 @@ switch ($app->getFormat())
         }
         else
         {
-            $page->html($content);
-            if ($response)
-            {
-                $page->html($content . $response->renderHTML());
-            }
-            
-            echo $page->renderCell();
+            $container = GDT_Container::make('c1')->addFields([GDT_HTML::withHTML($content), $response]);
+            echo $page->html($container->renderCell())->renderCell();
         }
 }

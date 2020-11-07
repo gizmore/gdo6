@@ -412,7 +412,7 @@ abstract class GDO
 	    /** @var $gdt GDT **/
 	    if ($gdt = $this->gdoColumnsCache()[$key])
 	    {
-	        return $this->isTable() ? $gdt->gdo(null) : $gdt->gdo($this);
+	        return $gdt->gdtTable($this->table())->gdo($this);
 	    }
 	    else
 	    {
@@ -1053,7 +1053,7 @@ abstract class GDO
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdoBeforeCreate($query);
+		    $gdoType->gdo($this)->gdoBeforeCreate($query);
 		}
 		$this->gdoBeforeCreate();
 	}
@@ -1062,7 +1062,7 @@ abstract class GDO
 	{
 	    foreach ($this->gdoColumnsCache() as $gdoType)
 	    {
-	        $gdoType->gdoBeforeRead($query);
+	        $gdoType->gdo($this)->gdoBeforeRead($query);
 	    }
 	    $this->gdoBeforeRead();
 	}
@@ -1071,7 +1071,7 @@ abstract class GDO
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdoBeforeUpdate($query);
+			$gdoType->gdo($this)->gdoBeforeUpdate($query);
 		}
 		$this->gdoBeforeUpdate();
 	}
@@ -1080,7 +1080,7 @@ abstract class GDO
 	{
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdoBeforeDelete($query);
+		    $gdoType->gdo($this)->gdoBeforeDelete($query);
 		}
 		$this->gdoBeforeDelete();
 	}
@@ -1093,7 +1093,7 @@ abstract class GDO
 		# Trigger event for AutoCol, EditedAt, EditedBy, etc.
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdoAfterCreate();
+		    $gdoType->gdo($this)->gdoAfterCreate();
 		}
 		$this->gdoAfterCreate();
 	}
@@ -1105,7 +1105,7 @@ abstract class GDO
 		# Trigger event for AutoCol, EditedAt, EditedBy, etc.
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdoAfterUpdate();
+		    $gdoType->gdo($this)->gdoAfterUpdate();
 		}
 		$this->gdoAfterUpdate();
 	}
@@ -1118,7 +1118,7 @@ abstract class GDO
 		# Trigger events on GDTs.
 		foreach ($this->gdoColumnsCache() as $gdoType)
 		{
-			$gdoType->gdoAfterDelete();
+		    $gdoType->gdo($this)->gdoAfterDelete();
 		}
 		$this->gdoAfterDelete();
 	}

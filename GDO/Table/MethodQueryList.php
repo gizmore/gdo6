@@ -25,6 +25,7 @@ abstract class MethodQueryList extends MethodQuery
 	
 	public function isOrdered() { return true; }
 	public function isPaginated() { return true; }
+	public function isFiltered() { return false; }
 	public function isQuicksorted() { return false; }
 	public function isQuicksearchable() { return false; }
 	public function defaultOrderField() { return null; }
@@ -84,10 +85,22 @@ abstract class MethodQueryList extends MethodQuery
 		$list->headers($headers);
 		$list->quicksort($this->isQuicksorted());
 		$list->searchable($this->isQuicksearchable());
-		$list->query($this->gdoQuery());
-		$list->countQuery($this->gdoCountQuery());
+		$query = $this->gdoQuery();
+		$list->query($query);
+		$countQuery = $this->gdoCountQuery();
+		$list->countQuery($countQuery);
 		$this->setupTitle($list);
 		$list->listMode($this->gdoListMode());
+		
+		if ($this->isFiltered())
+		{
+    		foreach ($this->gdoFilters() as $gdt)
+    		{
+    		    $gdt->filterQuery($query);
+    		    $gdt->filterQuery($countQuery);
+    		}
+		}
+
 		if ($this->isOrdered())
 		{
 		    $list->ordered(true, $this->defaultOrderField(), $this->defaultOrderDirAsc());

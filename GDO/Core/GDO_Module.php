@@ -306,7 +306,7 @@ class GDO_Module extends GDO
 	############
 	### Init ###
 	############
-	public function __wakeup() { $this->inited = false; } # TODO: wakeup knows that language and settings are also memcached soon? :)
+	public function __wakeup() { $this->inited = false; self::$COUNT++; } # TODO: wakeup knows that language and settings are also memcached soon? :)
 	private $inited = false;
 	public function initModule()
 	{

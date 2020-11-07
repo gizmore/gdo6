@@ -1,11 +1,13 @@
 <?php
 namespace GDO\Form;
-use GDO\Core\GDT;
+
+use GDO\Core\GDO;
 use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Util\Common;
 use GDO\File\GDT_File;
 use GDO\Core\Application;
+
 /**
  * Generic method that uses a GDT_Form.
  * @author gizmore
@@ -62,8 +64,7 @@ abstract class MethodForm extends Method
 	 */
 	public function renderPage()
 	{
-	    $form = $this->getForm();
-		return GDT_Response::makeWith($form);
+	    return GDT_Response::makeWith($this->getForm());
 	}
 	
 	public function defaultTitle()
@@ -120,7 +121,6 @@ abstract class MethodForm extends Method
 			$this->form = GDT_Form::make($this->formName());
 			$this->defaultTitle();
 			$this->createForm($this->form);
-// 			$this->form->withFields(function(GDT $gdt){ $gdt->var = $gdt->initial; });
 		}
 		return $this->form;
 	}

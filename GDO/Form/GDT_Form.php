@@ -66,17 +66,17 @@ class GDT_Form extends GDT
 	##############
 	### Render ###
 	##############
-	public function render()
+	public function renderCell()
 	{
 		self::$CURRENT = $this;
-		
-	    if ($gdo = $this->gdo)
-	    {
-// 	        $this->withFields(function(GDT $gdt) use ($gdo){$gdt->gdo($gdo);}); # reset form fields correctly.
-	    }
 		$back = GDT_Template::php('Form', 'cell/form.php', ['form' => $this]);
 		self::$CURRENT = null;
 		return $back;
+	}
+	
+	public function reset(GDO $gdo)
+	{
+	    $this->withFields(function(GDT $gdt) use ($gdo) { $gdt->gdo($gdt->gdo);; });
 	}
 	
 	################
@@ -135,15 +135,15 @@ class GDT_Form extends GDT
 	#############
 	### Build ###
 	#############
-	public function withGDOValuesFrom(GDO $gdo=null)
+	public function withGDOValuesFrom(GDO $gdo)
 	{
 		$this->fieldWithGDOValuesFrom($this, $gdo);
 		return $this;
 	}
 	
-	private function fieldWithGDOValuesFrom(GDT $gdoType, GDO $gdo=null)
+	private function fieldWithGDOValuesFrom(GDT $gdoType, GDO $gdo)
 	{
-		$gdoType->gdo($gdo);
+	    $gdoType->gdo($gdo);
 		if ($fields = $gdoType->getFields())
 		{
 			foreach ($fields as $field)
@@ -197,7 +197,7 @@ class GDT_Form extends GDT
 	        {
 	            $out = $this->htmlHiddenRec($v, $out);
 	        }
-	        elseif (!$this->getField($k))
+	        elseif (!$this->hasField($k))
 	        {
 	            $out .= sprintf('<input type="hidden" name="%s" value="%s" />', html($k), html($v));
 	        }

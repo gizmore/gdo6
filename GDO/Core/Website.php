@@ -12,11 +12,6 @@ final class Website
 	private static $_links = [];
 	private static $_inline_css = '';
 	
-	public static function redirectMessage($url, $time=12)
-	{
-		return self::redirect($url, $time);
-	}
-	
 	public static function redirectBack($time=0)
 	{
 		return self::redirect(Website::hrefBack(), $time);
@@ -57,7 +52,6 @@ final class Website
 				}
 		}
 		self::topResponse()->add(GDT_Success::responseWith('msg_redirect', [GDT_Link::anchor($url), $time]));
-		return GDT_Response::make();
 	}
 
 	private static function ajaxRedirect($url, $time)
@@ -187,6 +181,21 @@ final class Website
 	    self::topResponse()->addField(GDT_Error::with($key, $args));
 	}
 	
+	/**
+	 * Redirect and show a message at the new page.
+	 * @param string $key
+	 * @param array $args
+	 * @param string $url
+	 * @param number $time
+	 * @return \GDO\Core\GDT_Response
+	 */
+	public static function redirectMessage($key, array $args=null, $url, $time=0)
+	{
+	    self::topResponse()->addField(GDT_Success::with($key, $args));
+	    GDO_Session::set('redirect_message', t($key, $args));
+	    return self::redirect($url, $time);
+	}
+	
 	####################
 	### Top Response ###
 	####################
@@ -195,17 +204,19 @@ final class Website
 	{
 	    if (!self::$TOP_RESPONSE)
 	    {
-	        self::$TOP_RESPONSE = GDT_Response::make();
+	        self::$TOP_RESPONSE = GDT_Response::make('topRespnse');
+	        if ($message = GDO_Session::get('redirect_message'))
+	        {
+	            GDO_Session::remove('redirect_message');
+	            self::$TOP_RESPONSE->addField(GDT_Success::withHTML($message));
+	        }
 	    }
 	    return self::$TOP_RESPONSE;
 	}
 	
 	public static function renderTopResponse()
 	{
-	    if (self::$TOP_RESPONSE)
-	    {
-	        return self::$TOP_RESPONSE->render();
-	    }
+	    echo self::topResponse()->render();
 	}
 	
 	

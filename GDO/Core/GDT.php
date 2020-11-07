@@ -3,7 +3,6 @@ namespace GDO\Core;
 
 use GDO\DB\Query;
 use GDO\Table\GDT_Table;
-use GDO\Util\Strings;
 use GDO\Form\GDT_Form;
 use GDO\DB\GDT_String;
 use GDO\UI\WithIcon;
@@ -52,6 +51,9 @@ abstract class GDT
 		$obj = new static();
 		return $obj->name($name ? $name : $obj->name);
 	}
+	
+	### stats
+	public function __wakeup() { self::$COUNT++; }
 	
 	############
 	### Name ###
@@ -180,6 +182,7 @@ abstract class GDT
 		}
 		return $this;
 	}
+	
 	
 	/**
 	 * Get a param for this GDT from $_REQUEST.

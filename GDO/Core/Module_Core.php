@@ -28,7 +28,7 @@ use GDO\UI\GDT_Bar;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9343';
+	public $gdo_revision = '6.10-r9350';
 
 	##############
 	### Module ###

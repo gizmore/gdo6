@@ -15,7 +15,7 @@ abstract class MethodCard extends Method
     
     public function idName() { return 'id'; }
 
-    public function getID() { return Common::getRequestString('id'); }
+    public function getID() { return Common::getRequestString($this->idName()); }
     
     public function execute()
     {

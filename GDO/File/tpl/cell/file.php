@@ -5,7 +5,7 @@ use GDO\UI\GDT_Icon; ?>
 <?php if ($gdo->isImageType()) : ?>
 <img
  style="display: block; <?=$field->styleSize()?>"
- src="<?= href('File', 'GetFile', '&file='.$gdo->getID()); ?>" />
+ src="<?= ($field->previewHREF . $gdo->getID()) ?>" />
  
 <?php else : ?>
   <?= GDT_Icon::iconS('file'); ?>

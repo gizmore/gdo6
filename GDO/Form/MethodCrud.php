@@ -85,7 +85,6 @@ abstract class MethodCrud extends MethodForm
 	##############
 	public function renderPage()
 	{
-	    $this->getForm()->gdo($this->gdo);
 	    return parent::renderPage();
 	}
 	
@@ -94,7 +93,7 @@ abstract class MethodCrud extends MethodForm
 	##############
 	public function createForm(GDT_Form $form)
 	{
-		$table = $this->gdoTable();
+	    $table = $this->gdoTable();
 		foreach ($table->gdoColumnsCache() as $gdt)
 		{
 			$this->createFormRec($form, $gdt);
@@ -153,12 +152,13 @@ abstract class MethodCrud extends MethodForm
 		
 		if ($this->gdo)
 		{
-		    $form->withGDOValuesFrom($this->gdo);
+    	    $form->withGDOValuesFrom($this->gdo);
 		    $this->crudEditTitle();
 		}
 		else
 		{
-			$this->crudCreateTitle();
+		    $form->withGDOValuesFrom($this->gdoTable());
+		    $this->crudCreateTitle();
 		}
 	}
 	
@@ -207,7 +207,6 @@ abstract class MethodCrud extends MethodForm
 	{
 	    $this->beforeUpdate($form, $this->gdo);
 		$this->gdo->saveVars($form->getFormData());
-		$this->resetForm();
 		$this->message('msg_crud_updated', [$this->gdo->gdoHumanName()]);
 		return $this->afterUpdate($form, $this->gdo);
 	}
