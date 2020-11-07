@@ -18,11 +18,12 @@ return array(
 	'err_copy_chunk_failed' => 'A part of the image could not be copied within the server.',
 	'err_image_format_not_supported' => 'The filetype %s is not a supported image format.',
 	'err_upload_failed' => 'Upload failed: %s',
-	'err_upload_denied' => 'Upload denied: %s.',
+	'err_upload_denied' => 'Upload denied: %s',
 	'err_mimetype' => 'The file for %s has no valid mime type: %s.',
 	'err_no_mime_file' => '%s has no mime file for %s.',
 	'err_filesize_exceeded' => 'The file exceeds the max size of %s.',
 	'msg_uploaded' => 'Your file has been uploaded successfully.',
     'file_download' => 'Download',
     'browse' => 'Browse&hellip;',
+    'cfg_upload_max_size' => 'Default max upload size',
 );

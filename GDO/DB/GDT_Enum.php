@@ -186,7 +186,7 @@ class GDT_Enum extends GDT
 	        }
     		return array_merge(parent::configJSON(), array(
     			'emptyValue' => $this->emptyValue,
-    			'emptyLabel' => $this->emptyLabel,
+    			'emptyLabel' => $this->displayEmptyLabel(),
     		    'completionHref' => $this->completionHref,
     		    'display' => $this->renderCell(),
     		    'selected' => $selected,

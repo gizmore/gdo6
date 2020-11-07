@@ -125,10 +125,10 @@ abstract class GDT
 	public $gdo; # current row / gdo
 	public $var; # String representation
 	public $initial; # Initial var
-	public function gdo(GDO $gdo=null)
+	public function gdo(GDO $gdo)
 	{
 	    $this->gdo = $gdo;
-	    return $gdo ? $this->setGDOData($gdo) : $this->var($this->initial);
+	    return !$gdo->isTable() ? $this->setGDOData($gdo) : $this->var($this->initial);
 	}
 	public function var($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
@@ -141,7 +141,7 @@ abstract class GDT
 	public function getValue() { return $this->toValue($this->getVar()); }
 	public function initial($var=null) { $this->initial = $var === null ? null : (string)$var; return $this->var($var); }
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }
-	public function displayVar() { return html($this->getVar()); }
+	public function displayVar() { return html(trim($this->getVar(), "\r\n\t ")); }
 	public function displayJSON() { return json_encode($this->renderJSON()); }
 
 	public function getFields() {}
@@ -332,7 +332,7 @@ abstract class GDT
 	
 	public $filterField;
 	public function filterField($filterField) { $this->filterField = $filterField; return $this->searchable(); }
-	public function filterValue() { return $this->getRequestVar('f', null, $this->filterField ? $this->filterField : $this->name); }
+	public function filterValue() { return $this->getRequestVar(null, null, $this->filterField ? $this->filterField : $this->name); }
 	
 	/**
 	 * Filter decorator function for database queries.

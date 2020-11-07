@@ -1,0 +1,3 @@
+<?phpuse GDO\UI\GDT_Accordeon;
+use GDO\UI\GDT_Icon;/** @var $field GDT_Accordeon **/$field->addClass('gdt-accordeon closed');
+?><label></label><div <?=$field->htmlAttributes()?>>  <div class="collapse-bar"><?=GDT_Icon::iconS('plus')?><?=html($field->title)?></div>  <div class="uncollapse-bar"><?=GDT_Icon::iconS('minus')?><?=html($field->title)?></div>  <div class="collapse-content"><?=$field->html?><?php foreach ($field->getFields() as $field) : ?><?php echo $field->renderCell(); ?><?php endforeach; ?>  </div></div>

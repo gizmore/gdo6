@@ -88,19 +88,19 @@ abstract class MethodQueryList extends MethodQuery
 		$query = $this->gdoQuery();
 		$list->query($query);
 		$countQuery = $this->gdoCountQuery();
+		if ($this->isFiltered())
+		{
+		    foreach ($this->gdoFilters() as $gdt)
+		    {
+		        $gdt->filterQuery($query);
+		        $gdt->filterQuery($countQuery);
+		    }
+		}
 		$list->countQuery($countQuery);
 		$this->setupTitle($list);
 		$list->listMode($this->gdoListMode());
 		
-		if ($this->isFiltered())
-		{
-    		foreach ($this->gdoFilters() as $gdt)
-    		{
-    		    $gdt->filterQuery($query);
-    		    $gdt->filterQuery($countQuery);
-    		}
-		}
-
+		
 		if ($this->isOrdered())
 		{
 		    $list->ordered(true, $this->defaultOrderField(), $this->defaultOrderDirAsc());
@@ -115,7 +115,7 @@ abstract class MethodQueryList extends MethodQuery
 	
 	protected function setupTitle(GDT_List $list)
 	{
-		$list->title(t('list_'.strtolower($this->gdoShortName()), [$list->countItems()]));
+		$list->title(t('list_'.strtolower($this->getModuleName() . '_' . $this->gdoShortName()), [$list->countItems()]));
 	}
 	
 }

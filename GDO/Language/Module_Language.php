@@ -10,6 +10,7 @@ use GDO\Session\GDO_Session;
 use GDO\Util\Javascript;
 use GDO\Util\Common;
 use GDO\Core\Website;
+use GDO\UI\GDT_Divider;
 
 /**
  * Internationalization Module.
@@ -18,8 +19,8 @@ use GDO\Core\Website;
  * - Provide language select
  * - Provide GDO_Language table
  * @author gizmore
+ * @version 6.10
  * @since 2.0
- * @version 6.09
  */
 final class Module_Language extends GDO_Module
 {
@@ -128,5 +129,7 @@ final class Module_Language extends GDO_Module
 	public function hookLeftBar(GDT_Bar $navbar)
 	{
 	    $navbar->addField(GDT_LangSwitch::make());
+	    $navbar->addField(GDT_Divider::make());
 	}
+	
 }

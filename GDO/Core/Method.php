@@ -48,7 +48,7 @@ abstract class Method
 	 */
 	public function init() {}
 	public function isAjax() { return false; }
-	public function isEnabled() { return true; }
+	public function isEnabled() { $m = $this->getModule(); return $m && $m->isEnabled(); }
 	public function isUserRequired() { return false; }
 	public function isGuestAllowed() { return true; }
 	public function isCookieRequired() { return false; }
@@ -153,11 +153,14 @@ abstract class Method
 	##############
 	### Helper ###
 	##############
+	/**
+	 * @return GDO_Module
+	 */
+	public function getModule() { return ModuleLoader::instance()->getModule($this->getModuleName()); }
 	public function getFormat() { return Application::instance()->getFormat(); }
 	public function getSiteName() { return sitename(); }
 	public function getMethodName() { return $this->gdoShortName(); }
 	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6)-4); }
-	public function module() { return ModuleLoader::instance()->getModule($this->getModuleName()); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
 	public function error($key, array $args=null) { Website::topResponse()->add(GDT_Error::responseWith($key, $args)); return GDT_Response::make()->code(405); }
 	public function message($key, array $args=null, $log=true) { Website::topResponse()->add(GDT_Success::responseWith($key, $args)); return GDT_Response::make(); }

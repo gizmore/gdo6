@@ -19,6 +19,7 @@ use GDO\Date\GDT_Birthdate;
 use GDO\Date\GDT_Timezone;
 use GDO\Avatar\GDT_Avatar;
 use GDO\Session\GDO_Session;
+use GDO\DB\Cache;
 
 /**
  * The holy user object.
@@ -280,11 +281,17 @@ final class GDO_User extends GDO
 	 */
 	public static function withPermission($permission)
 	{
-		return GDO_UserPermission::table()->select('gdo_user.*')->
-		joinObject('perm_user_id')->joinObject('perm_perm_id')->
-		where("perm_name=".self::quoteS($permission))->
-		exec()->
-		fetchAllObjectsAs(self::table());
+	    $key = "all-{$permission}-users";
+	    if (false === ($cache = Cache::get($key)))
+	    {
+	        $cache = GDO_UserPermission::table()->select('gdo_user.*')->
+	        joinObject('perm_user_id')->joinObject('perm_perm_id')->
+	        where("perm_name=".self::quoteS($permission))->
+	        exec()->
+	        fetchAllObjectsAs(self::table());
+	        Cache::set($key, $cache);
+	    }
+	    return $cache;
 	}
 	
 	##############

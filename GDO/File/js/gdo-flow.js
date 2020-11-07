@@ -12,6 +12,7 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 	flow.assignBrowse(input);
 	
 	flow.on('fileAdded', function(file, event){
+		document.getElementById('gdt-loading-pane').classList.remove('done');
 		setTimeout(flow.upload.bind(flow), 200);
 	});
 	flow.on('fileSuccess', function(file,message){
@@ -20,6 +21,8 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 //		console.log(file);
 //		console.log(message);
 		
+		document.getElementById('gdt-loading-pane').classList.add('done');
+
 		var preview = document.getElementById('gdo-file-preview-'+input.name);
 
 		if (!preview) {
@@ -47,14 +50,16 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 		var text = file.file.name + " (" + file.file.size + " bytes)";
 		try {
 			previewString.value = text;
+			previewString.innerHTML = text;
 		} catch (e) {
 			previewString.innerHTML = text;
 		}
 
 	});
 	flow.on('fileError', function(file, message){
+		document.getElementById('gdt-loading-pane').classList.add('done');
 		message = JSON.parse(message);
-		alert(message.data.error);
+		window.GDO.error(message);
 	});
 	
 });

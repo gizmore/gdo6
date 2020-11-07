@@ -31,6 +31,7 @@ class GDT_File extends GDT_Object
 	{
 		$this->table(GDO_File::table());
 		$this->icon('file');
+		$this->maxsize(Module_File::instance()->cfgUploadMaxSize());
 	}
 	
 	############
@@ -53,7 +54,7 @@ class GDT_File extends GDT_Object
 		return $this;
 	}
 	
-	public $maxsize = 4096 * 2048; # 8MB
+	public $maxsize = 1024 * 1024; # 1MB
 	public function maxsize($maxsize)
 	{
 		$this->maxsize = $maxsize;
@@ -138,6 +139,11 @@ class GDT_File extends GDT_Object
 			'previewHREF' => $this->previewHREF,
 			'selectedFiles' => $this->initJSONFiles(),
 		);
+	}
+	
+	public function renderCard()
+	{
+	    return GDT_Template::php('File', 'card/filecard.php', ['field' => $this]);
 	}
 	
 	public function initJSONFiles()
@@ -521,7 +527,7 @@ class GDT_File extends GDT_Object
 		
 		$sumSize = $already + $additive - $substract;
 
-		if ($sumSize > $this->maxsize)
+		if ($this->maxsize && ($sumSize > $this->maxsize))
 		{
 			$this->denyFlowFile($key, $file, t('err_filesize_exceeded', [FileUtil::humanFilesize($this->maxsize)]));
 			return false;

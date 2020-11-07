@@ -68,27 +68,34 @@ finally
 {
     $content = ob_get_contents();
     ob_end_clean();
-
-    if ($session = GDO_Session::instance())
-    {
-        $session->commit();
-    }
 }
 
 # Render Page
 switch ($app->getFormat())
 {
     case 'json':
-    	Website::renderJSON($response->renderJSON());
+        if ($session = GDO_Session::instance())
+        {
+            $session->commit();
+        }
+        Website::renderJSON($response->renderJSON());
+    	break;
         
     case 'html':
         if ($app->isAjax())
         {
-            die($response->renderHTML());
+            $out = $response->renderHTML();
         }
         else
         {
             $container = GDT_Container::make('c1')->addFields([GDT_HTML::withHTML($content), $response]);
-            echo $page->html($container->renderCell())->renderCell();
+            $out = $page->html($container->renderCell())->renderCell();
         }
 }
+
+if ($session = GDO_Session::instance())
+{
+    $session->commit();
+}
+
+echo $out;

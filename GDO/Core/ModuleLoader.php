@@ -143,7 +143,7 @@ final class ModuleLoader
     			$module->registerThemes();
 		    }
 		}
-		Trans::inited();
+		Trans::inited(true);
 		foreach ($this->modules as $module)
 		{
 			$module->initModule();
@@ -215,11 +215,6 @@ final class ModuleLoader
 
 			$this->sortModules('module_priority');
 			
-// 			if ($this->loadCached)
-// 			{
-// 			    Cache::set('gdo_modules', $this->modules);
-// 			}
-			
 			$this->initModules();
 		}
 		return $this->modules;
@@ -256,7 +251,9 @@ final class ModuleLoader
 	
 	private function loadModulesFS()
 	{
+	    Trans::inited(false);
 		Filewalker::traverse($this->path, null, false, array($this, '_loadModuleFS'), false);
+		Trans::inited(true);
 	}
 	
 	public function _loadModuleFS($entry, $path)
@@ -284,17 +281,20 @@ final class ModuleLoader
 				if ($module = self::instanciate($moduleData, true))
 				{
 					$this->modules[$name] = $module;
-					if ($init)
-					{
-					    $module->onLoadLanguage();
-						$module->buildConfigCache();
-						$module->registerThemes();
-						$module->registerSettings();
-						$module->initModule();
-					}
 				}
 			}
 		}
+		
+		if ($init)
+		{
+		    $module = $this->modules[$name];
+		    $module->onLoadLanguage();
+		    $module->buildConfigCache();
+		    $module->registerThemes();
+		    $module->registerSettings();
+		    $module->initModule();
+		}
+		
 		return $this->modules[$name];
 	}
 	

@@ -18,9 +18,14 @@ class GDT_Divider extends GDT
 	public function isSerializable() { return false; }
 	public function defaultLabel() { return $this->noLabel(); }
 	
+	public function renderJSON() {}
 	public function renderCell() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
 	public function renderForm() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
-	public function renderCard() { return '<hr/><hr/>'; }
-	public function renderJSON() {}
+	public function renderCard()
+	{
+	    $label = $this->displayLabel();
+        return '<div class="gdt-card-divider"></div><div class="gdt-card-divider">'.$label.'</div>';
+	}
+	
 	
 }

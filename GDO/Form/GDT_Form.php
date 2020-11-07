@@ -69,6 +69,7 @@ class GDT_Form extends GDT
 	public function renderCell()
 	{
 		self::$CURRENT = $this;
+		$this->withGDOValuesFrom($this->gdo);
 		$back = GDT_Template::php('Form', 'cell/form.php', ['form' => $this]);
 		self::$CURRENT = null;
 		return $back;
@@ -135,15 +136,22 @@ class GDT_Form extends GDT
 	#############
 	### Build ###
 	#############
-	public function withGDOValuesFrom(GDO $gdo)
+	public function withGDOValuesFrom(GDO $gdo=null)
 	{
 		$this->fieldWithGDOValuesFrom($this, $gdo);
 		return $this;
 	}
 	
-	private function fieldWithGDOValuesFrom(GDT $gdoType, GDO $gdo)
+	private function fieldWithGDOValuesFrom(GDT $gdoType, GDO $gdo=null)
 	{
-	    $gdoType->gdo($gdo);
+	    if ($gdo === null)
+	    {
+	        $gdoType->var($gdoType->initial);
+	    }
+	    else
+	    {
+	        $gdoType->gdo($gdo);
+	    }
 		if ($fields = $gdoType->getFields())
 		{
 			foreach ($fields as $field)

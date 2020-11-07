@@ -31,7 +31,8 @@ final class GDO_Country extends GDO
 	public function getISO() { return $this->getVar('c_iso'); }
 	public function getISO3() { return $this->getVar('c_iso3'); }
 	public function displayName() { return t('country_'.strtolower($this->getISO())); }
-
+	public function displayEnglishName() { return ten('country_'.strtolower($this->getISO())); }
+	
 	/**
 	 * Get a country by ID or return a stub object with name "Unknown".
 	 * @param int $id

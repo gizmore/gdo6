@@ -22,6 +22,9 @@ final class Module_Classic extends GDO_Module
     		$this->addCSS('css/gdo6-sidebar.css');
     		$this->addCSS('css/gdo6-classic.css');
     		$this->addCSS('css/gdo6-pulse.css');
+    		
+    		$this->addJavascript('js/gdo6-classic.js');
 	    }
 	}
+	
 }

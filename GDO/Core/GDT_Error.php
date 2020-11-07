@@ -41,7 +41,7 @@ class GDT_Error extends GDT_Panel
 	
 	public static function withHTML($html)
 	{
-		return self::make()->html($html)->icon('report_problem');
+		return self::make('error')->html($html)->icon('report_problem');
 	}
 	
 	##############

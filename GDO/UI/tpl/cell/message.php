@@ -1,2 +1,2 @@
 <?php /** @var $field \GDO\UI\GDT_Message **/ ?>
-<?=$field->getVar()?>
+<?=trim($field->getVar(), "\r\n\t ")?>

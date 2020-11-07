@@ -67,6 +67,7 @@ return array(
 'ago' => '%s fa',
 'duration' => 'Durata',
 'menu' => 'Menù',
+'download' => 'Scarica',
     
 # Generic Buttons
 'btn_back' => 'Indietro',

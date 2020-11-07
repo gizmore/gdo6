@@ -239,10 +239,10 @@ final class Time
 		if (!is_string($duration)) { return 0; }
 		if (is_numeric($duration)) { return (int)$duration; }
 		$duration = trim(strtolower($duration));
-		if (!preg_match('/^(?:(?:[0-9 ]+[sihdwmy])+)$/', $duration)) { return 0; }
+		if (!preg_match('/^(?:(?:[0-9 ]+[sihdwmy]*)+)$/', $duration)) { return 0; }
 		
 		
-		$multis = array('s' => 1,'m' => 60,'h' => 3600,'d' => 86400,'y' => 31536000);
+		$multis = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 86400, 'y' => 31536000);
 		$replace = array(
 			'seconds' => 's', 'second' => 's', 'sec' => 's',
 			'minutes' => 'm', 'minute' => 'm', 'min' => 'm',

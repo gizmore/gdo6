@@ -18,7 +18,7 @@ $firstEditableField = null;
 	  <?php endif; ?>
 <?php foreach ($form->getFields() as $field) : ?>
           <?php if ($field->editable) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
-          <?= $field->gdo($form->gdo)->renderForm(); ?>
+          <?= $field->renderForm(); ?>
 <?php endforeach; ?>
 	  </form>
 	</div>

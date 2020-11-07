@@ -22,7 +22,7 @@ class GDT_Container extends GDT
 
 	private function setupHTML()
 	{
-	    $this->addClass('gdt-container');
+	    $this->addClass('gdo-container');
 	    if ($this->flex)
 	    {
 	        $this->addClass('flx flx-'.$this->flexDirection.' flx-collapse');

@@ -13,6 +13,7 @@ use GDO\Core\GDT;
 use GDO\DB\GDT_DeletedAt;
 use GDO\DB\GDT_DeletedBy;
 use GDO\Date\Time;
+use GDO\Core\Website;
 
 /**
  * Abstract Create|Update|Delete for a GDO.
@@ -94,9 +95,10 @@ abstract class MethodCrud extends MethodForm
 	public function createForm(GDT_Form $form)
 	{
 	    $table = $this->gdoTable();
+// 	    $form->gdo($this->gdo);
 		foreach ($table->gdoColumnsCache() as $gdt)
 		{
-			$this->createFormRec($form, $gdt);
+			$this->createFormRec($form, $gdt->gdo($this->gdoTable()));
 		}
 		$this->createCaptcha($form);
 		$this->createFormButtons($form);
@@ -199,7 +201,8 @@ abstract class MethodCrud extends MethodForm
 		$gdo = $table->blank($data); # object with files gdt
 		$this->beforeCreate($form, $gdo);
 		$gdo->insert();
-        $this->message('msg_crud_created', [$gdo->gdoHumanName()]);
+//         $this->message('msg_crud_created', [$gdo->gdoHumanName()]);
+        Website::redirectMessage('msg_crud_created', [$gdo->gdoHumanName()], $this->href('&'.$this->crudName().'='.$gdo->getID()));
         return $this->afterCreate($form, $gdo);
 	}
 	

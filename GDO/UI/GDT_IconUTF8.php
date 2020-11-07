@@ -64,6 +64,7 @@ final class GDT_IconUTF8
         'lock' => '🔒',
         'male' => '♂',
         'message' => '☶',
+        'minus' => '-',
         'money' => '💰',
         'password' => '⚷',
         'pause' => '⏸',

@@ -1,6 +1,6 @@
 <?php
 return array(
-'lbl_langswitch' => 'Change Language',
+'lbl_langswitch' => 'Language',
 'msg_language_set' => 'Your language has been set to %s.',
 'cfg_languages' => 'Supported languages',
 'mdescr_language_switchlanguage' => 'Change language to %s',

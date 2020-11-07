@@ -40,3 +40,13 @@ window.GDO.toggleAll = function(toggler) {
 		cbx.checked = toggler.checked;
 	});
 };
+
+window.GDO.error = function(response) {
+	if (response.data && response.data.error && response.data.error.error) {
+		var message = response.data.error.error;
+	}
+	else if (response.error) {
+		var message = response.error;
+	}
+	alert(message);
+};

@@ -10,14 +10,15 @@ use GDO\DB\GDT_String;
  */
 class GDT_Title extends GDT_String
 {
+    use WithTitle;
+    
 	public function defaultLabel() { return $this->label('title'); }
+	
 	public $min = 3;
 	public $max = 64;
-	public function __construct()
-	{
-		$this->icon('title');
-	}
 	
-	public function renderCell() { return '<span class="gdt-title">' . $this->getVar() . '</span>'; }
+	public $icon = 'title';
+	
+	public function renderCell() { return '<span class="gdt-title">' . $this->var . '</span>'; }
 	
 }

@@ -32,6 +32,10 @@ final class Completion extends MethodCompletion
             {
                 $result[] = $country;
             }
+            elseif (mb_stripos($country->displayEnglishName(), $q) !== false)
+            {
+                
+            }
             elseif ($q === '')
             {
                 $result[] = $country;

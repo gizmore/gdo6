@@ -12,6 +12,10 @@ div.gdo-body { padding: 64px 0px 0px; min-height: 100%; }
 .gdt-bar > * { flex-grow: 1; text-align: center; }
 .gdo-body .gdt-bar-row { border-bottom: 1px solid #fff; }
 
+/** Sidebar **/
+#gdo-left-bar .gdt-divider, #gdo-right-bar .gdt-divider { background: #333; height: 1px; width: 100%; margin-top: 6px; }
+
+
 /** Buttons **/
 .gdo-icon-button:HOVER { text-decoration: none; }
 a.gdt-button, input[type=submit], a.gdo-icon-button {
@@ -26,6 +30,9 @@ a[disabled] { opacity: 0.25; cursor: text; }
 .gdo-form-slim { padding: 2px 4px; border: none; }
 .gdo-form-slim form { padding: 2px; display: flex; flex-direction: row; align-items: flex-end; flex-wrap: wrap; }
 .gdo-form-slim form > * { padding: 2px; flex-grow: 0; text-align: left; }
+.gdo-form-slim select { min-width: 160px; }
+.gdo-form-large input, .gdo-form-large select { min-width: 240px; }
+.gdo-form input[type=submit] { min-width: auto; }
 .gdo-form .gdo-container { padding: 6px 8px; }
 .gdo-form-slim .gdo-container { padding: 0px 0px; }
 .gdo-form .gdo-container > * { display: block; }
@@ -33,12 +40,12 @@ a[disabled] { opacity: 0.25; cursor: text; }
 .gdo-form .gdo-container > label, .gdo-form .gdo-container > .gdo-icon { display: inline-block; }
 .gdo-form .gdo-required label:before { content: '*'; }
 .gdo-form textarea { width: 100%; }
-.gdo-form select { min-width: 160px; }
 .gdo-form .gdo-link { text-decoration: underline; }
 .gdo-form-title { text-align: center; line-height: 38px; margin-bottom: 6px; background: #eee; }
 input[type=submit]:hover { cursor: pointer; }
 .gdo-form .gdo-gdt_link a { padding: 8px; }
 .gdo-form .gdt-divider { padding: 8px; background: #eee; border: 1px solid #fff; font-weight: bold; }
+textarea { padding: 4px; }
 
 /** Table **/
 .gdo-tblorder { display: inline-block; }
@@ -89,9 +96,12 @@ table.gdo-table td { padding: 0px 2px; }
 .gdt-card-fields label { text-align: right; }
 .gdt-card-avatar > .gdo-file > img { max-width: 48px; max-height: 48px; border-radius: 8px; }
 .gdt-card-footer { font-size: 14px; }
+.gdt-card-divider { background: #eee; min-height: 2px; }
+.gdt-card-title-texts, .gdt-card-title, .gdt-card-subtitle, .gdt-card-title-texts { width: 100%; }
 
 /** Textmessage **/
 .gdo-message blockquote { padding-left: 16px; border: 1px solid #000; }
+.gdt-lyrics .collapse-content { white-space: pre-wrap; }
 
 /** Message **/
 .gdo-error-box,
@@ -104,11 +114,29 @@ table.gdo-table td { padding: 0px 2px; }
 /** Header **/
 #gdo-pagewrap { width: 100%; height: 100%; overflow: auto; }
 footer#gdo-footer, footer#gdo-footer .gdo-bar { min-height: 32px; }
-header#gdo-header, header#gdo-header .gdo-bar { min-height: 64px; }
+header#gdo-header, header#gdo-header .gdo-bar { min-height: 64px; z-index: 1; }
+
 
 /** Panel **/
 .gdo-panel { border: 1px solid #444; padding: 6px 14px; margin: 2px; }
 .gdo-panel > p { margin-bottom: 16px; }
+
+/** Accordeon **/
+.gdt-accordeon.opened .collapse-bar { display: none; }
+.gdt-accordeon.closed .uncollapse-bar { display: none; }
+.gdt-accordeon.closed .collapse-content { display: none; }
+.gdt-accordeon .uncollapse-bar, .gdt-accordeon .collapse-bar { font-size: 18px; background: #eee; }
+.gdt-accordeon .uncollapse-bar:hover, .gdt-accordeon .collapse-bar:hover { cursor: pointer; }
+div.gdt-accordeon { border: 1px dotted #aaa; }
+div.collapse-content { padding: 6px; }
+
+/** Menu **/
+.gdt-menu  > * { margin-left: 16px; display: inline-block; }
+
+/** Loading **/
+.gdt-loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.5; background: #000; z-index: 3; pointer-events: none; }
+.gdt-loading.done { display: none; }
+.gdt-loading span { background: url(ajax-loader.gif) center no-repeat; display: block; height: 100%; }
 
 /** File **/
 .gdo-file-controls { padding: 0px 8px; }

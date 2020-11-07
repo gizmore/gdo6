@@ -3,6 +3,7 @@ use GDO\Core\Website;
 use GDO\Util\Javascript;
 use GDO\Core\Module_Core;
 use GDO\UI\GDT_Page;
+use GDO\UI\GDT_Loading;
 /** @var $page GDT_Page **/
 ?>
 <!DOCTYPE html>
@@ -40,6 +41,8 @@ use GDO\UI\GDT_Page;
 	  <footer id="gdo-footer"><?=$page->bottomNav->render()?></footer>
 	
 	</div>
+	
+	<?=GDT_Loading::make('loading')->renderCell()?>
 	
 	<?=Javascript::displayJavascripts(Module_Core::instance()->cfgMinifyJS() === 'concat')?>
   </body>

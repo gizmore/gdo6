@@ -67,6 +67,7 @@ return array(
 'ago' => '%s ago',
 'duration' => 'Duration',
 'menu' => 'Menu',
+'download' => 'Download',
     
 # Generic Buttons
 'btn_back' => 'Back',

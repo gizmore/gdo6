@@ -42,6 +42,7 @@ function html($html) { return str_replace(['"', "'", '<', '>'], ['\\"', '&#39;',
 function mo() { return Common::getRequestString('mo', GWF_MODULE); }
 function me() { return Common::getRequestString('me', GWF_METHOD); }
 function module_enabled($moduleName) { return ($module = ModuleLoader::instance()->getModule($moduleName)) ? $module->isEnabled() : false; }
+
 # Translation API
 function t($key, array $args=null) { return Trans::t($key, $args); }
 function ten($key, array $args=null) { return Trans::tiso('en', $key, $args); }

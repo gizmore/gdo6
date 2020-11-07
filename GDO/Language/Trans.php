@@ -17,7 +17,7 @@ final class Trans
 	public static $ISO = 'en';
 	
 	private static $PATHS = [];
-	private static $CACHE;
+	private static $CACHE = [];
 	private static $INITED = false;
 	
 	public static $NO_SITENAME = false;
@@ -41,13 +41,13 @@ final class Trans
 	
 	public static function addPath($path)
 	{
-		self::$PATHS[] = $path;
+	    self::$PATHS[$path] = $path;
 	}
 	
-	public static function inited()
+	public static function inited($inited)
 	{
-		self::$INITED = true;
-// 		self::$CACHE = [];
+		self::$INITED = $inited;
+	    self::$CACHE = [];
 	}
 	
 	public static function getCache($iso)

@@ -21,11 +21,6 @@ class Cronjob extends MethodForm
 	public function isTransactional() { return false; }
 	public function getPermission() { return 'admin'; }
 	
-	public function execute()
-	{
-		return $this->renderNavBar()->add(parent::execute());
-	}
-	
 	public function createForm(GDT_Form $form)
 	{
 		$form->addField(GDT_Submit::make()->label('btn_run_cronjob'));

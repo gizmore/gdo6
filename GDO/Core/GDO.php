@@ -472,7 +472,7 @@ abstract class GDO
 	/**
 	 * Find a row by AutoInc Id.
 	 * @param string $id
-	 * @return self
+	 * @return static
 	 */
 	public function find($id=null, $exception=true)
 	{
