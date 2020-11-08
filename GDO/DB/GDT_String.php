@@ -101,7 +101,6 @@ class GDT_String extends GDT
 	##############
 	public function renderCell() { return html($this->getVar()); }
 	public function renderForm() { return GDT_Template::php('DB', 'form/string.php', ['field' => $this]); }
-// 	public function renderJSON() { return array_merge(parent::renderJSON(), ['text' => $this->var]); }
 
 	################
 	### Validate ###
@@ -143,7 +142,14 @@ class GDT_String extends GDT
 			{
 				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}
-			return $this->gdtTable->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
+			if (!$this->gdtTable)
+			{
+			    $this->gdtTable = $this->gdo->table();
+			    if ($this->gdtTable)
+			    {
+			        return $this->gdtTable->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
+			    }
+			}
 		}
 		return true;
 	}

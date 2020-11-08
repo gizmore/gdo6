@@ -22,4 +22,6 @@ return array(
 
 'mdescr_user_adduser' => 'Crea un nuovo utente',
 'mdescr_user_admin' => 'Administrare  utente',
+    
+'user_subtitle' => 'Membro da %s. Livello utente: %s.',
 );

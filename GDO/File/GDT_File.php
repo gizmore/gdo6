@@ -132,7 +132,7 @@ class GDT_File extends GDT_Object
 		return GDT_Template::php('File', 'cell/file.php', ['field' => $this, 'gdo' => $this->getValue()]);
 	}
 	
-	public function renderJSON()
+	public function configJSON()
 	{
 		return array(
 			'mimes' => $this->mimes,

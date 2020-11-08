@@ -55,7 +55,7 @@ abstract class MethodQueryTable extends Method
 		$table->gdo($table->query->table);
 		$table->ordered($this->isOrdered());
 		$table->filtered($this->isFiltered());
-		$table->paginate($this->isPaginated(), $_SERVER['REQUEST_URI'], $this->ipp());
+		$table->paginate($this->isPaginated(), @$_SERVER['REQUEST_URI'], $this->ipp());
 		$this->onDecorateTable($table);
 		return GDT_Response::makeWith($table);
 	}

@@ -41,7 +41,7 @@ class GDT_Table extends GDT
 	### Endpoint ###
 	################
 	public $action;
-	public function __construct() { $this->action = $_SERVER['REQUEST_URI']; }
+	public function __construct() { $this->action = @$_SERVER['REQUEST_URI']; }
 	public function action($action=null) { $this->action = $action; return $this; }
 
 	######################
@@ -396,7 +396,18 @@ class GDT_Table extends GDT
 		$table = $result->table;
 		while ($gdo = $table->fetch($result))
 		{
-			$data[] = $gdo->getGDOVars();
+		    $dat = [];
+		    foreach ($gdo->gdoColumnsCache() as $gdt)
+		    {
+		        if ($json = $gdt->gdo($gdo)->renderJSON())
+		        {
+		            foreach ($json as $k => $v)
+		            {
+    		            $dat[$k] = $v;
+		            }
+		        }
+		    }
+			$data[] = $dat;
 		}
 		return $data;
 	}

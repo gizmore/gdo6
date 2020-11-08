@@ -166,6 +166,26 @@ abstract class Method
 	public function message($key, array $args=null, $log=true) { Website::topResponse()->add(GDT_Success::responseWith($key, $args)); return GDT_Response::make(); }
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
+
+	############
+	### Shim ###
+	############
+	/**
+	 * @param array $params
+	 * @return static
+	 */
+	public function requestParameters(array $params=null)
+	{
+	    $_REQUEST = [];
+	    if ($params)
+	    {
+    	    foreach ($params as $key => $value)
+    	    {
+    	        $_REQUEST[$key] = $value;
+    	    }
+	    }
+	    return $this;
+	}
 	
 	#################
 	### Auto HREF ###

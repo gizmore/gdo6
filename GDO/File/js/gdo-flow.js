@@ -2,7 +2,7 @@
 document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo-flow-file').forEach(function(input){
 	
 	var flow = new Flow({
-		target: location.href + "&ajax=1&fmt=json&flowField="+input.name,
+		target: location.href + "&ajax=1&fmt=json&flowField=" + input.name,
 		withCredentials: true,
 		fileParameterName: input.name,
 		singleFile: input.className.indexOf('multiple') < 0,
@@ -12,16 +12,18 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 	flow.assignBrowse(input);
 	
 	flow.on('fileAdded', function(file, event){
-		document.getElementById('gdt-loading-pane').classList.remove('done');
+		var loadingPane = document.getElementById('gdt-loading-pane');
+		if (loadingPane) {
+			loadingPane.classList.remove('done');
+		}
 		setTimeout(flow.upload.bind(flow), 200);
 	});
 	flow.on('fileSuccess', function(file,message){
 		
-//		console.log(input.name);
-//		console.log(file);
-//		console.log(message);
-		
-		document.getElementById('gdt-loading-pane').classList.add('done');
+		var loadingPane = document.getElementById('gdt-loading-pane');
+		if (loadingPane) {
+			loadingPane.classList.add('done');
+		}
 
 		var preview = document.getElementById('gdo-file-preview-'+input.name);
 
@@ -57,7 +59,10 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 
 	});
 	flow.on('fileError', function(file, message){
-		document.getElementById('gdt-loading-pane').classList.add('done');
+		var loadingPane = document.getElementById('gdt-loading-pane');
+		if (loadingPane) {
+			loadingPane.classList.add('done');
+		}
 		message = JSON.parse(message);
 		window.GDO.error(message);
 	});

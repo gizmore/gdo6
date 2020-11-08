@@ -68,6 +68,7 @@ return array(
 'duration' => 'Dauer',
 'menu' => 'Menü',
 'download' => 'Herunterladen',
+'order' => 'Reihenfolge',
     
 # Generic Buttons
 'btn_back' => 'Zurück',

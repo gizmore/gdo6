@@ -52,4 +52,9 @@ class GDT_Password extends GDT_String
 		}
 		return true;
 	}
+	
+	public function renderJSON()
+	{
+	}
+
 }

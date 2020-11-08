@@ -96,4 +96,11 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 'install_title_9' => 'Install Security',
 'ft_install_security' => 'Finish installation by removing access to install wizard and the protected folder',
 	
+# gdo6 binary
+'msg_config_written' => 'A default config file has been written to protected/%s',
+'msg_available_config' => 'Available config vars for module %s: %s.',
+'msg_set_config' => 'The config var for %s in module %s is currently set to %s.',
+'msg_changed_config' => 'The config var for %s in module %s has been set from %s to %s.',
+'msg_installing_modules' => 'Installing the following dependant modules: %s.',
+    
 );

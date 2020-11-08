@@ -16,13 +16,13 @@ class GDT_Checkbox extends GDT_Select
 		$this->emptyValue = '2';
 		$this->min = 0;
 		$this->max = 1;
+		$this->notNull = true;
 	}
 	
 	public function initChoices()
 	{
-		if (!$this->choices)
+		if ($this->choices === null)
 		{
-			$this->choices = [];
 			$this->choices(array(
 				'0' => t('enum_no'),
 				'1' => t('enum_yes'),

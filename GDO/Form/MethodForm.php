@@ -29,6 +29,29 @@ abstract class MethodForm extends Method
 	
 	public abstract function createForm(GDT_Form $form);
 	
+	############
+	### Shim ###
+	############
+	public function formParametersWithButton(array $params, $button)
+	{
+	    $params[$button] = 'submit';
+	    return $this->formParameters($params);
+	}
+	
+	public function formParameters(array $params=null)
+	{
+	    $form = $this->formName();
+	    $_REQUEST[$form] = [];
+	    if ($params)
+	    {
+    	    foreach ($params as $key => $var)
+    	    {
+    	        $_REQUEST[$form][$key] = $var;
+    	    }
+	    }
+	    return $this;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 * @see \GDO\Core\Method::execute()
@@ -84,7 +107,10 @@ abstract class MethodForm extends Method
 		$form = $this->getForm();
 		if ($flowField = Common::getRequestString('flowField'))
 		{
-			return $form->getField($flowField)->flowUpload();
+		    if ($formField = $form->getField($flowField))
+		    {
+    			return $formField->flowUpload();
+		    }
 		}
 		
 		foreach ($form->getFieldsRec() as $field)
@@ -165,7 +191,7 @@ abstract class MethodForm extends Method
 	public function formInvalid(GDT_Form $form)
 	{
 		$error = $this->error('err_form_invalid');
-		if (Application::instance()->isAjax())
+		if (Application::instance()->isAjax() || Application::instance()->isCLI())
 		{
 			$error->addFields($form->getFields());
 		}

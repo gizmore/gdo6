@@ -32,6 +32,10 @@ final class Website
 	
 	public static function redirect($url, $time=0)
 	{
+	    if (Application::instance()->isCLI())
+	    {
+	        return null;
+	    }
 		switch (Application::instance()->getFormat())
 		{
 			case 'html':
@@ -192,10 +196,14 @@ final class Website
 	public static function redirectMessage($key, array $args=null, $url, $time=0)
 	{
 	    self::topResponse()->addField(GDT_Success::with($key, $args));
-	    if (!Application::instance()->isInstall())
+	    if ( (!Application::instance()->isInstall()) || (Application::instance()->isCLI()) )
 	    {
     	    GDO_Session::set('redirect_message', t($key, $args));
     	    return self::redirect($url, $time);
+	    }
+	    elseif (Application::instance()->isCLI())
+	    {
+	        echo t($key, $args);
 	    }
 	}
 	

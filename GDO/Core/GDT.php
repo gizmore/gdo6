@@ -258,9 +258,7 @@ abstract class GDT
 	public function renderJSON()
 	{
 		return array(
-		    'name' => $this->name,
-			'error' => $this->error,
-		    'var' => $this->var,
+		    $this->name => $this->var,
 		);
 	}
 	

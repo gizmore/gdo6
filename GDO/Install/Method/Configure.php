@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Install\Method;
+
 use GDO\Form\GDT_Form;
 use GDO\Form\MethodForm;
 use GDO\Form\GDT_Submit;
@@ -9,17 +10,28 @@ use GDO\Core\GDT_Template;
 use GDO\DB\Database;
 use GDO\Core\GDOException;
 use GDO\Core\Website;
+use GDO\File\GDT_Path;
+
 /**
  * Create a GDO config with this form.
  * @author gizmore
+ * @version 6.10
  * @since 3.00
- * @version 6.09
  */
 class Configure extends MethodForm
 {
+    public function gdoParameters()
+    {
+        return [
+            GDT_Path::make('filename')->initial('config.php'),
+        ];
+    }
+    
+    public function cfgConfigName() { return $this->gdoParameterVar('filename'); }
+    
 	public function configPath()
 	{
-		return GDO_PATH . 'protected/config.php';
+		return GDO_PATH . 'protected/' . $this->cfgConfigName();
 	}
 	
 	public function createForm(GDT_Form $form)
@@ -40,7 +52,7 @@ class Configure extends MethodForm
 		$content = GDT_Template::php('Install', 'config.php', ['form' => $form]);
 		FileUtil::createDir(dirname($this->configPath()));
 		file_put_contents($this->configPath(), $content);
-		return Website::redirectMessage(Config::hrefStep(3), 2);
+		return Website::redirectMessage('msg_config_written', [html($this->cfgConfigName())], Config::hrefStep(3));
 	}
 	
 	public function onSubmit_test_config(GDT_Form $form)

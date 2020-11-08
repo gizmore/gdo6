@@ -43,7 +43,12 @@ final class GDO_ModuleVar extends GDO
 	public static function removeModuleVar(GDO_Module $module, $varname)
 	{
 		$varname = GDO::escapeS($varname);
-		return self::table()->deleteWhere("mv_module_id={$module->getID()} AND mv_name='$varname'");
+		self::table()->deleteWhere("mv_module_id={$module->getID()} AND mv_name='$varname'");
+		return self::table()->blank(array(
+		    'mv_module_id' => $module->getID(),
+		    'mv_name' => $varname,
+		    'mv_value' => null,
+		));
 	}
 	
 }

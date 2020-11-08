@@ -106,7 +106,7 @@ trait WithFields
 	 * @param string $name
 	 * @return \GDO\Core\GDT
 	 */
-	public function getField($name) { return $this->fields[$name]; }
+	public function getField($name) { return @$this->fields[$name]; }
 	public function hasField($name) { return isset($this->fields[$name]); }
 	public function removeField($name) { unset($this->fields[$name]); }
 	public function removeFields() { $this->fields = []; }
@@ -146,9 +146,16 @@ trait WithFields
 		$json = [];
 		foreach ($this->fields as $gdoType)
 		{
+		    if ($this->gdo)
+		    {
+		        $gdoType->gdo($this->gdo);
+		    }
 			if ($data = $gdoType->renderJSON())
 			{
-				$json[$gdoType->name] = $data;
+			    foreach ($data as $k => $v)
+			    {
+			        $json[$k] = $v;
+			    }
 			}
 		}
 		return $json;
@@ -157,6 +164,9 @@ trait WithFields
 	##############################
 	### Get Fields Recursively ###
 	##############################
+	/**
+	 * @return GDT[]
+	 */
 	public function getFieldsRec()
 	{
 		$fields = [];

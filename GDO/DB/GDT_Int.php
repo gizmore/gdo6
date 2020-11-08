@@ -151,17 +151,6 @@ class GDT_Int extends GDT
 		return $this->getVar();
 	}
 	
-	public function renderJSON()
-	{
-	    return array_merge(parent::renderJSON(), array(
-			'min' => $this->min,
-			'max' => $this->max,
-			'step' => $this->step,
-			'bytes' => $this->bytes,
-			'unsigned' => $this->unsigned,
-	    ));
-	}
-	
 	##############
 	### Filter ###
 	##############

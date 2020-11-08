@@ -4,6 +4,7 @@ use GDO\Core\GDT_Template;
 use GDO\Core\GDT;
 use GDO\Session\GDO_Session;
 use GDO\Util\Random;
+use GDO\Core\Application;
 
 /**
  * GDT_Form CSRF protection
@@ -64,7 +65,12 @@ class GDT_AntiCSRF extends GDT
 	################
 	public function validate($value)
 	{
-		if (!GDO_Session::instance())
+	    if (Application::instance()->isCLI())
+	    {
+	        return true;
+	    }
+	    
+	    if (!GDO_Session::instance())
 		{
 			return $this->error('err_session_required');
 		}

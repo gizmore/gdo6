@@ -24,4 +24,5 @@ return array(
 'mdescr_user_adduser' => 'Nutzer erstellen',
 'mdescr_user_admin' => 'Nutzer administrieren',
 	
+'user_subtitle' => 'Mitglied seit %s. Level: %s',
 );

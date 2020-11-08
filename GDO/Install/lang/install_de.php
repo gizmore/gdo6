@@ -95,4 +95,12 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 
 'install_title_9' => 'Installation absichern',
 'ft_install_security' => 'Installation abschliessen und den Zugang zum Installer und protected Ordner verhindern.',
+
+# gdo6 binary
+'msg_config_written' => 'Eine Standard-Konfigurationsdatei wurde unter protected/%s abgelegt. Sie können diese nun editieren.',
+'msg_available_config' => 'Konfigurationsvariablen für Modul %s: %s.',
+'msg_set_config' => 'Die Konfiguration für %s im Modul %s ist zur Zeit auf %s gesetzt.',
+'msg_changed_config' => 'Die Konfiguration für %s im Modul %s wurde von %s auf %s gesetzt.',
+'msg_installing_modules' => 'Es werden die folgenden Module installiert: %s.',
+    
 );

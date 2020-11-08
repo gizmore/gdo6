@@ -34,7 +34,7 @@ class GDT_Success extends GDT_Panel
 	##############
 	public function renderCell() { return GDT_Template::php('Core', 'cell/success.php', ['field' => $this]); }
 	
-	public function renderJSON()
+	public function configJSON()
 	{
 		return array(
 			'message' => $this->html,

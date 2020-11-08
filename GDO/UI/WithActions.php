@@ -23,7 +23,7 @@ trait WithActions
 	{
 		if (!$this->actions)
 		{
-			$this->actions = GDT_Menu::make();
+			$this->actions = GDT_Menu::make('menu');
 		}
 		return $this->actions;
 	}

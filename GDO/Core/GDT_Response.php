@@ -85,7 +85,7 @@ final class GDT_Response extends GDT
 	private function renderJSONFields()
 	{
 		$back = [];
-		foreach ($this->getFields() as $field)
+		foreach ($this->getFieldsRec() as $field)
 		{
 			if ($json = $field->renderJSON())
 			{

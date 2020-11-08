@@ -17,6 +17,7 @@ use GDO\Mail\GDT_Email;
 use GDO\DB\GDT_String;
 use GDO\Core\GDT_Template;
 use GDO\Core\Logger;
+use GDO\DB\GDT_UInt;
 /**
  * Configuration helper during install wizard.
  * Holds a set of method names for the steps
@@ -182,7 +183,7 @@ class Config
 			GDT_Divider::make()->label('install_config_section_cookies'),
 			GDT_String::make('sess_name')->ascii()->caseS()->initialValue(GWF_SESS_NAME)->required(),
 			GDT_Hidden::make('sess_domain')->initialValue(GWF_SESS_DOMAIN),
-			GDT_Duration::make('sess_time')->initialValue(GWF_SESS_TIME)->required()->min(30),
+			GDT_UInt::make('sess_time')->initialValue(GWF_SESS_TIME)->required()->min(30),
 			GDT_Checkbox::make('sess_js')->initialValue(GWF_SESS_JS),
 			GDT_Checkbox::make('sess_https')->initialValue(GWF_SESS_HTTPS),
 			# Email

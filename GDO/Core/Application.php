@@ -73,7 +73,7 @@ class Application
 	### Format ###
 	##############
 	public function isAjax() { return isset($_GET['ajax']); }
-	public function isHTML() { return $this->getFormat() === self::HTML; }
+	public function isHTML() { return (!$this->isCLI()) && $this->getFormat() === self::HTML; }
 	public function isJSON() { return $this->getFormat() === self::JSON; }
 	public function getFormat() { return Common::getRequestString('fmt', self::HTML); }
 
