@@ -43,7 +43,7 @@ GDO_User::$CURRENT = GDO_User::ghost();
 $modCore = ModuleLoader::instance()->loadModuleFS('Core', 1);
 $modInstall = ModuleLoader::instance()->loadModuleFS('Install', 1);
 // ModuleLoader::instance()->loadModules(false, true);
-Trans::inited();
+Trans::inited(true);
 
 define('GWF_CORE_STABLE', 1);
 try

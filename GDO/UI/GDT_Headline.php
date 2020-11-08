@@ -20,5 +20,11 @@ final class GDT_Headline extends GDT
 	public function renderCell() { return sprintf('<h%1$d>%2$s</h%1$d>', $this->level, $this->html); }
 	public function renderForm() { return $this->renderCell(); }
 	public function renderJSON() { return ['headline' => $this->html, 'level' => $this->level]; }
-	public function renderCard() { return $this->renderCell(); }
+	public function renderCard()
+	{
+	    return
+	    sprintf('<h%1$d>%2$s</h%1$d>', $this->level, $this->displayLabel()).
+	    $this->renderCell();
+	}
+	
 }

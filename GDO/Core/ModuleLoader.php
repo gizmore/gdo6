@@ -112,6 +112,7 @@ final class ModuleLoader
 	public function loadModulesCache()
 	{
 	    $this->loadCached = true;
+	    
 		if (false === ($cache = Cache::get('gdo_modules')))
 		{
 			$cache = $this->loadModulesA();
@@ -281,20 +282,17 @@ final class ModuleLoader
 				if ($module = self::instanciate($moduleData, true))
 				{
 					$this->modules[$name] = $module;
+            		if ($init)
+            		{
+            		    $module->onLoadLanguage();
+            		    $module->buildConfigCache();
+            		    $module->registerThemes();
+            		    $module->registerSettings();
+            		    $module->initModule();
+            		}
 				}
 			}
 		}
-		
-		if ($init)
-		{
-		    $module = $this->modules[$name];
-		    $module->onLoadLanguage();
-		    $module->buildConfigCache();
-		    $module->registerThemes();
-		    $module->registerSettings();
-		    $module->initModule();
-		}
-		
 		return $this->modules[$name];
 	}
 	
@@ -344,7 +342,7 @@ final class ModuleLoader
 		while ($row = $result->fetchRow())
 		{
 		    /** @var $module \GDO\Core\GDO_Module **/
-			if ($module = @$this->modules[$row[0]])
+			if ($module = $this->modules[$row[0]])
 			{
 				if ($var = $module->getConfigColumn($row[1]))
 				{

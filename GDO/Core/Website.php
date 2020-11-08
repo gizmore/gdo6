@@ -192,8 +192,11 @@ final class Website
 	public static function redirectMessage($key, array $args=null, $url, $time=0)
 	{
 	    self::topResponse()->addField(GDT_Success::with($key, $args));
-	    GDO_Session::set('redirect_message', t($key, $args));
-	    return self::redirect($url, $time);
+	    if (!Application::instance()->isInstall())
+	    {
+    	    GDO_Session::set('redirect_message', t($key, $args));
+    	    return self::redirect($url, $time);
+	    }
 	}
 	
 	####################
@@ -205,10 +208,13 @@ final class Website
 	    if (!self::$TOP_RESPONSE)
 	    {
 	        self::$TOP_RESPONSE = GDT_Response::make('topRespnse');
-	        if ($message = GDO_Session::get('redirect_message'))
+	        if (!Application::instance()->isInstall())
 	        {
-	            GDO_Session::remove('redirect_message');
-	            self::$TOP_RESPONSE->addField(GDT_Success::withHTML($message));
+    	        if ($message = GDO_Session::get('redirect_message'))
+    	        {
+    	            GDO_Session::remove('redirect_message');
+    	            self::$TOP_RESPONSE->addField(GDT_Success::withHTML($message));
+    	        }
 	        }
 	    }
 	    return self::$TOP_RESPONSE;

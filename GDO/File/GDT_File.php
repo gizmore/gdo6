@@ -31,7 +31,7 @@ class GDT_File extends GDT_Object
 	{
 		$this->table(GDO_File::table());
 		$this->icon('file');
-		$this->maxsize(Module_File::instance()->cfgUploadMaxSize());
+// 		$this->defaultSize()
 	}
 	
 	############
@@ -54,11 +54,16 @@ class GDT_File extends GDT_Object
 		return $this;
 	}
 	
-	public $maxsize = 1024 * 1024; # 1MB
+	public $maxsize = 1024 * 4096; # 1MB
 	public function maxsize($maxsize)
 	{
 		$this->maxsize = $maxsize;
 		return $this;
+	}
+	
+	public function defaultSize()
+	{
+	    return $this->maxsize(Module_File::instance()->cfgUploadMaxSize());
 	}
 	
 	###############

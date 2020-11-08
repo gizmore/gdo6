@@ -6,7 +6,6 @@ use GDO\Core\Logger;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
 use Exception;
-use PhpParser\Node\Stmt\Else_;
 
 /**
  * mySQLi abstraction.
@@ -273,10 +272,10 @@ class Database
 		
 		$query = "CREATE TABLE IF NOT EXISTS {$gdo->gdoTableIdentifier()} (\n$columnsCode\n) ENGINE = {$gdo->gdoEngine()}";
 		
-		if ($this->debug)
-		{
-			printf("<pre>%s</pre>\n", htmlspecialchars($query));
-		}
+// 		if ($this->debug)
+// 		{
+// 			printf("<pre>%s</pre>\n", htmlspecialchars($query));
+// 		}
 		
 		$this->queryWrite($query);
 		

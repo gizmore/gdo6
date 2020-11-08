@@ -20,6 +20,7 @@ use GDO\Date\GDT_Timezone;
 use GDO\Avatar\GDT_Avatar;
 use GDO\Session\GDO_Session;
 use GDO\DB\Cache;
+use GDO\Country\GDO_Country;
 
 /**
  * The holy user object.
@@ -97,7 +98,7 @@ final class GDO_User extends GDO
 	public function getLangISO() { $iso = $this->getVar('user_language'); return $iso ? $iso : GWF_LANGUAGE; }
 	public function getLanguage() { return GDO_Language::findById($this->getLangISO()); }
 	public function getCountryISO() { return $this->getVar('user_country'); }
-	public function getCountry() { return $this->getValue('user_country'); }
+	public function getCountry() { $c = $this->getValue('user_country'); return $c ? $c : GDO_Country::unknownCountry(); }
 	public function getTimezone() { return $this->getVar('user_timezone'); }
 	public function getBirthdate() { return $this->getVar('user_birthdate'); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
