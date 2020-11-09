@@ -100,14 +100,14 @@ class GDO_Module extends GDO
 	private $configCache;
 	public function buildConfigCache()
 	{
-// 		if (!$this->configCache)
-// 		{
+		if (!$this->configCache)
+		{
 			$this->configCache = [];
 			foreach ($this->getConfig() as $gdt)
 			{
 			    $this->configCache[$gdt->name] = $gdt; //->gdo($this);
 			}
-// 		}
+		}
 		return $this->configCache;
 	}
 	

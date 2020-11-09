@@ -1,11 +1,11 @@
 <?php
 namespace GDO\Core;
+
 use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
-use Exception;
-use GDO\DB\Database;
+
 /**
  * Module loader.
  *
@@ -285,7 +285,7 @@ final class ModuleLoader
             		if ($init)
             		{
             		    $module->onLoadLanguage();
-            		    $module->buildConfigCache();
+            		    $this->initModuleVars();
             		    $module->registerThemes();
             		    $module->registerSettings();
             		    $module->initModule();

@@ -341,6 +341,16 @@ abstract class GDO
 		return $columns;
 	}
 	
+	public function gdoPrimaryKeyValues()
+	{
+	    $values = [];
+	    foreach ($this->gdoPrimaryKeyColumns() as $gdt)
+	    {
+	        $values[$gdt->name] = $this->getVar($gdt->name);
+	    }
+	    return $values;
+	}
+	
 	/**
 	 * Get primary key column names.
 	 * @return string[]
@@ -544,7 +554,7 @@ abstract class GDO
 		{
 			return $this->insert();
 		}
-		$query = $this->query()->replace($this->gdoTableIdentifier())->values($this->getDirtyVars());
+		$query = $this->query()->replace($this->gdoTableIdentifier())->values($this->gdoPrimaryKeyValues())->values($this->getDirtyVars());
 		return $this->insertOrReplace($query);
 	}
 	

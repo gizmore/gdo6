@@ -379,7 +379,7 @@ final class Query
 	
 	public function values(array $values)
 	{
-		$this->values = $values;
+	    $this->values = $this->values ? array_merge($this->values, $values) : $values;
 		return $this;
 	}
 	

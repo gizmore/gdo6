@@ -19,4 +19,7 @@ class GDT_Bar extends GDT_Container
 	public function renderCell() { return GDT_Template::php('UI', 'cell/bar.php', ['bar' => $this]); }
 	public function renderCard() { return GDT_Template::php('UI', 'card/bar.php', ['bar' => $this]); }
 	
+	public $wrap = true;
+	public function wrap($wrap=true) { $this->wrap = $wrap; return $this; }
+	
 }

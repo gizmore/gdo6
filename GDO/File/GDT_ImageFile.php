@@ -18,4 +18,11 @@ final class GDT_ImageFile extends GDT_File
 	use WithImageFile;
 	
 	public function defaultLabel() { return $this->label('image'); }
+	
+	public function __construct()
+	{
+	    parent::__construct();
+	    $this->icon = 'image';
+	}
+	
 }

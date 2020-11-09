@@ -33,7 +33,7 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 		}
 		
 		if (file.file.type && file.file.type.startsWith('image/')) {
-			if (document.querySelector('#gdo-file-preview-'+input.name)) {
+			if (preview) {
 				var div = document.createElement("DIV");
 				div.className = 'gdo-file-preview';
 				var node = document.createElement("IMG");

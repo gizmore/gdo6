@@ -58,5 +58,6 @@ final class GDT_PerfBar extends GDT_Panel
 		);
 	}
 
-	public function render() { return GDT_Template::php('Perf', 'cell/perfbar.php', ['bar' => $this]); }
+	public function renderCell() { return GDT_Template::php('Perf', 'cell/perfbar.php', ['bar' => $this]); }
+
 }

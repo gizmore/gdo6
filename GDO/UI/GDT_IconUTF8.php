@@ -13,7 +13,7 @@ namespace GDO\UI;
 final class GDT_IconUTF8
 {
     public static $MAP = array(
-        'account_box' => '⛁',
+        'account' => '⛁',
         'add' => '✚',
         'alert' => '!',
         'all' => '▤',
@@ -37,9 +37,7 @@ final class GDT_IconUTF8
         'create' => '✚',
         'credits' => '¢',
         'cut' => '✂',
-        'date_range' => '⌚',
         'delete' => '✖',
-        'delete_sweep' => '✖',
         'download' => '⇩',
         'edit' => '✎',
         'email' => '✉',

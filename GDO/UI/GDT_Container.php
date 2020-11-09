@@ -31,38 +31,47 @@ class GDT_Container extends GDT
 	
 	public function renderCell()
 	{
-	    $this->setupHTML();
-		$back = '<div '.$this->htmlAttributes().'>';
-		foreach ($this->fields as $gdt)
-		{
-			$back .= $gdt->renderCell();
-		}
-		$back .= '</div>';
-		return $back;
+	    if ($this->fields)
+	    {
+    	    $this->setupHTML();
+    		$back = '<div '.$this->htmlAttributes().'>';
+    		foreach ($this->fields as $gdt)
+    		{
+    			$back .= $gdt->renderCell();
+    		}
+    		$back .= '</div>';
+    		return $back;
+	    }
 	}
 	
 	public function renderForm()
 	{
-	    $this->setupHTML();
-	    $back = '<div '.$this->htmlAttributes().'>';
-	    foreach ($this->fields as $gdt)
+	    if ($this->fields)
 	    {
-	        $back .= $gdt->renderForm();
+	        $this->setupHTML();
+    	    $back = '<div '.$this->htmlAttributes().'>';
+    	    foreach ($this->fields as $gdt)
+    	    {
+    	        $back .= $gdt->renderForm();
+    	    }
+    	    $back .= '</div>';
+    	    return $back;
 	    }
-	    $back .= '</div>';
-	    return $back;
 	}
 	
 	public function renderCard()
 	{
-	    $this->setupHTML();
-	    $back = '<div '.$this->htmlAttributes().'>';
-	    foreach ($this->fields as $gdt)
+	    if ($this->fields)
 	    {
-	        $back .= $gdt->renderCard();
+	        $this->setupHTML();
+    	    $back = '<div '.$this->htmlAttributes().'>';
+    	    foreach ($this->fields as $gdt)
+    	    {
+    	        $back .= $gdt->renderCard();
+    	    }
+    	    $back .= '</div>';
+    	    return $back;
 	    }
-	    $back .= '</div>';
-	    return $back;
 	}
 	
 	public function callHook($hookname)

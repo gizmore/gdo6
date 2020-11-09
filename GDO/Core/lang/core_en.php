@@ -69,6 +69,9 @@ return array(
 'menu' => 'Menu',
 'download' => 'Download',
 'order' => 'Order',
+'text' => 'Text',
+'num' => 'Num',
+'filter' => 'Filter',
     
 # Generic Buttons
 'btn_back' => 'Back',

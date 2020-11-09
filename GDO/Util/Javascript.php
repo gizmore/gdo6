@@ -47,7 +47,7 @@ final class Javascript
     		$javascripts = $minfied ? MinifyJS::minified(self::$_javascripts) : self::$_javascripts;
     		foreach ($javascripts as $js)
     		{
-    			$back .= sprintf('<script type="text/javascript" src="%s"></script>'."\n", $js);
+    			$back .= sprintf('<script src="%s"></script>'."\n", $js);
     		}
     		$back .= self::displayJavascriptInline();
 	    }
@@ -60,7 +60,7 @@ final class Javascript
 	private static function displayJavascriptInline()
 	{
 	    $inline = self::displayJavascriptOnload();
-	    return $inline ? sprintf('<script type="text/javascript">%s</script>', $inline) : '';
+	    return $inline ? sprintf('<script>%s</script>', $inline) : '';
 	}
 	
 	private static function displayJavascriptOnload()

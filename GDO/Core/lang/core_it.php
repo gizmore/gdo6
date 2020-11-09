@@ -69,6 +69,9 @@ return array(
 'menu' => 'Menù',
 'download' => 'Scarica',
 'order' => 'Sequenza',
+'text' => 'Testo',
+'num' => 'Numero',
+'filter' => 'Filtro',
     
 # Generic Buttons
 'btn_back' => 'Indietro',

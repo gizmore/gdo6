@@ -368,7 +368,7 @@ final class Debug
 		}
 		
 		// Append PRE header.
-		$back = $html ? "<pre class=\"gdo-exception\">\n" : '';
+		$back = $html ? "<span class=\"debug-exception-title\">PHP Exception</span><pre class=\"gdo-exception\">\n" : '';
 		
 		// Append general title message.
 		if ($message !== '')

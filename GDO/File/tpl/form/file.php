@@ -14,7 +14,14 @@
 <div class="gdo-container<?= $field->classError(); ?>">
   <?=$field->htmlIcon()?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
-  <input type="file" <?=$field->htmlID()?> name="<?=$field->name?>" class="gdo-flow-file" />
+  <input
+   type="file"
+<?php if ($field->isImageFile()) : ?>
+   capture="capture"
+<?php endif; ?>
+   <?=$field->htmlID()?>
+   name="<?=$field->name?>"
+   class="gdo-flow-file" />
   <span id="gdo-file-input-<?=$field->name?>"></span>
   <?= $field->htmlError(); ?>
 </div>

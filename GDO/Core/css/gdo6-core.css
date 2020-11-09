@@ -20,8 +20,10 @@ img.gdo-country { width: 24px; height: 17px; position: relative; top: 3px; borde
 .bw { word-break: break-word; }
 
 /** Basic flex **/
-.flx { display: flex; flex-wrap: wrap; }
+.flx { display: flex;  }
+.flx-wrap { flex-wrap: wrap; }
 .flx-row { flex-direction: row; width: 100%; }
 .flx-column { flex-direction: column; }
-.flx > * { flex: 1 1 auto;; margin-right: 8px; }
+.flx > * { flex: 1 1 auto; }
 .flx.flx-collapse > * { flex: 0 1 auto; }
+.flx.noflx { display: block; }

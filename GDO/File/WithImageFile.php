@@ -73,7 +73,6 @@ trait WithImageFile
 	
 	private function onFlowTestImageDimension($key, $file)
 	{
-		
 		return false;
 	}
 	
