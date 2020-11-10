@@ -145,11 +145,11 @@ class GDT_String extends GDT
 			if (!$this->gdtTable)
 			{
 			    $this->gdtTable = $this->gdo->table();
-			    if ($this->gdtTable)
-			    {
-			        return $this->gdtTable->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
-			    }
 			}
+		    if ($this->gdtTable)
+		    {
+		        return $this->gdtTable->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
+		    }
 		}
 		return true;
 	}

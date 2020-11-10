@@ -12,6 +12,7 @@ use GDO\Core\GDT_Response;
 use GDO\Core\Website;
 use GDO\UI\GDT_Container;
 use GDO\UI\GDT_HTML;
+use GDO\Core\GDT_Error;
 
 set_include_path('.');
 
@@ -26,6 +27,7 @@ include 'GDO6.php';
 GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
 
 # Bootstrap
+Database::init();
 $app = new Application();
 Trans::$ISO = GWF_LANGUAGE;
 Logger::init(null, GWF_ERROR_LEVEL); # 1st init as guest
@@ -34,7 +36,6 @@ Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
 Debug::setDieOnError(GWF_ERROR_DIE);
 Debug::setMailOnError(GWF_ERROR_MAIL);
-Database::init();
 ModuleLoader::instance()->loadModulesCache();
 GDO_Session::instance();
 if (GDO_User::current()->isAuthenticated())
@@ -59,10 +60,10 @@ try
     $method = $app->getMethod();
     $response = $method->exec();
 }
-catch (Exception $e)
+catch (Throwable $e)
 {
 	Logger::logException($e);
-    $response = GDT_Response::makeWithHTML(Debug::backtraceException($e))->code(405);
+	$response = GDT_Response::makeWith(GDT_Error::withHTML(Debug::backtraceException($e)))->code(405);
 }
 finally
 {

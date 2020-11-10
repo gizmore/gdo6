@@ -83,6 +83,17 @@ class GDT_Checkbox extends GDT_Select
 	##############
 	### Render ###
 	##############
+	public function displayValue($var)
+	{
+	    switch ($var)
+	    {
+	        case '0': return t('enum_no');
+	        case '1': return t('enum_yes');
+	        case '2': return t('enum_undetermined_yes_no');
+	        default: return t('err_invalid_gdt_var', [$this->gdoHumanName(), html($var)]);
+	    }
+	}
+	
 	public function htmlClass()
 	{
 		return parent::htmlClass() . " gdt-checkbox-{$this->getVar()}";
@@ -97,12 +108,7 @@ class GDT_Checkbox extends GDT_Select
 	
 	public function renderCell()
 	{
-		switch ($this->getVar())
-		{
-			case '0': return t('enum_no');
-			case '1': return t('enum_yes');
-			default: return t('enum_undetermined_yes_no');
-		}
+	    return $this->displayValue($this->getVar());
 	}
 	
 	public function renderFilter()

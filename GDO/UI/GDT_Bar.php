@@ -16,8 +16,9 @@ class GDT_Bar extends GDT_Container
 	use WithFields;
 	use WithPHPJQuery;
 
-	public function renderCell() { return GDT_Template::php('UI', 'cell/bar.php', ['bar' => $this]); }
-	public function renderCard() { return GDT_Template::php('UI', 'card/bar.php', ['bar' => $this]); }
+	public function renderForm() { return GDT_Template::php('UI', 'cell/bar.php', ['bar' => $this, 'form' => true]); }
+	public function renderCell() { return GDT_Template::php('UI', 'cell/bar.php', ['bar' => $this, 'form' => false]); }
+	public function renderCard() { return $this->renderCell(); }
 	
 	public $wrap = true;
 	public function wrap($wrap=true) { $this->wrap = $wrap; return $this; }

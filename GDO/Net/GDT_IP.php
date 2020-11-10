@@ -1,7 +1,8 @@
 <?php
 namespace GDO\Net;
+
 use GDO\DB\GDT_String;
-use GDO\Core\GDT_Template;
+
 /**
  * IP column and rendering.
  * Current IP is assigned at the very bottom.
@@ -33,9 +34,9 @@ final class GDT_IP extends GDT_String
 	public $pattern = "/^[.:0-9a-f]{3,45}$/";
 	public $writable = false;
 	public $editable = false;
+	public $icon = 'url';
+	
 	public function defaultLabel() { return $this->label('ip'); }
-	public function renderForm() { return GDT_Template::php('Net', 'form/ip.php', ['field' => $this]); }
-	public function renderCell() { return $this->getVar(); }
 	
 	/**
 	 * Uppercase IPv6 to speed up DB lookups.

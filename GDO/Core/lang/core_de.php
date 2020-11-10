@@ -169,6 +169,8 @@ return array(
 'err_unknown_gdo_column' => 'Unbekannte GDO Spalte: %s',
 'err_langfile_corrupt' => 'Eine Sprachdatei ist beschädigt: %s',
 'err_unknown_config' => 'Unbekannte Konfiguration in Modul %s: %s',
+'err_set_cookie' => 'Ihr Cookie konnte nicht ein zweites mal gesetzt werden.',
+'err_invalid_gdt_var' => 'Ein GDT Datentyp, %s, hat einen ungültigen Wert: %s.',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',

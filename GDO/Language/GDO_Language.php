@@ -60,7 +60,7 @@ final class GDO_Language extends GDO
 	/**
 	 * @return self
 	 */
-	public function current()
+	public static function current()
 	{
 		return self::getByISOOrUnknown(Trans::$ISO);
 	}

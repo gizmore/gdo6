@@ -4,7 +4,7 @@ use GDO\Install\Installer;
 use GDO\Core\Logger;
 use PHPUnit\TextUI\Command;
 use GDO\Core\Application;
-use GDO\User\GDO_Session;
+use GDO\Session\GDO_Session;
 
 if (PHP_SAPI !== 'cli') { die('Tests can only be run from the command line.'); }
 

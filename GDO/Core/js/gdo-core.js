@@ -26,9 +26,7 @@ window.GDO.error = function(html, title) {
  * @returns interest
  */
 document.addEventListener('DOMContentLoaded', function(){
-	
 	window.GDO.autofocusForm();
-
 }, false);
 
 window.GDO.toggleAll = function(toggler) {

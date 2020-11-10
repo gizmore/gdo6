@@ -1,15 +1,15 @@
 <?php
 /** @var $field \GDO\DB\GDT_Object **/
 ?>
-<div class="gdo-container<?=$field->classError()?>">
+<div class="gdo-container<?=$field->classError()?> gdo-autocomplete">
   <?=$field->htmlIcon()?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input
-   class="gdo-autocomplete"
    autocomplete="off"
    data-config='<?=$field->displayConfigJSON()?>'
    <?=$field->htmlID()?>
    type="search"
+   class="gdo-autocomplete-input"
    <?=$field->htmlPlaceholder()?>
    <?=$field->htmlRequired()?>
    <?=$field->htmlDisabled()?>

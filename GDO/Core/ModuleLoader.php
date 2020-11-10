@@ -147,7 +147,20 @@ final class ModuleLoader
 		Trans::inited(true);
 		foreach ($this->modules as $module)
 		{
-			$module->initModule();
+		    if (!$module->isBlocked())
+		    {
+    			$module->initModule();
+    			if ($blocked = $module->getBlockedModules())
+    			{
+    			    foreach ($blocked as $moduleName)
+    			    {
+    			        if ($blockedModule = $this->getModule($moduleName))
+    			        {
+    			            $blockedModule->setBlocked();
+    			        }
+    			    }
+    			}
+		    }
 		}
 		
 		$app = Application::instance();
@@ -155,17 +168,19 @@ final class ModuleLoader
 		{
 			foreach ($this->modules as $module)
 			{
-				if ($module->isEnabled())
-				{
-					if (!$module->isInited())
-					{
-						$module->onIncludeScripts();
-						$module->initedModule();
-					}
-				}
+			    if (!$module->isBlocked())
+			    {
+    				if ($module->isEnabled())
+    				{
+    					if (!$module->isInited())
+    					{
+    						$module->onIncludeScripts();
+    						$module->initedModule();
+    					}
+    				}
+			    }
 			}
 		}
-
 	}
 	
 	##################

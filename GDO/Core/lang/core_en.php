@@ -169,6 +169,8 @@ return array(
 'err_unknown_gdo_column' => 'Unknown GDO column: %s',
 'err_langfile_corrupt' => 'A languagefile is corrupt: %s',
 'err_unknown_config' => 'Unknwon config field in module %s: %s',
+'err_set_cookie' => 'Your cookie could not been set a second time.',
+'err_invalid_gdt_var' => 'A GDT, %s, has an invalid var: %s.',
     
 # Permissions
 'sel_no_permissions' => 'No permission required',

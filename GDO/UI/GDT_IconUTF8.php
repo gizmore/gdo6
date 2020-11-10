@@ -91,8 +91,9 @@ final class GDT_IconUTF8
     
 	public static function iconS($icon, $iconText, $style)
 	{
-		$icon = isset(self::$MAP[$icon]) ? self::$MAP[$icon] : $icon;
-		return "<span class=\"gdo-icon\"$style title=\"$iconText\">$icon</span>";
+	    $title = $iconText ? ' title="'.html($iconText).'"' : '';
+		$_icon = isset(self::$MAP[$icon]) ? self::$MAP[$icon] : $icon;
+		return "<span class=\"gdo-icon gdo-utf8-icon-$icon\"$style$title>$_icon</span>";
 	}
 
 }

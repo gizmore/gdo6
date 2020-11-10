@@ -45,6 +45,14 @@ class GDO_Module extends GDO
 	/**
 	 * @return string[]
 	 */
+	public function getBlockedModules() {}
+	private $blocked = false;
+	public function isBlocked() { return $this->blocked; }
+	public function setBlocked() { $this->blocked = true; }
+	
+	/**
+	 * @return string[]
+	 */
 	public function dependencies() { return array_unique(array_merge($this->gdoDependencies(), $this->getDependencies())); }
 	
 	/**

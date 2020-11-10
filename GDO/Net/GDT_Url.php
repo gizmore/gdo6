@@ -36,10 +36,7 @@ class GDT_Url extends GDT_String
 	public $min = 0;
 	public $max = 1024;
 	
-	public function __construct()
-	{
-		$this->icon('url');
-	}
+	public $icon = 'url';
 	
 	public function toValue($var)
 	{

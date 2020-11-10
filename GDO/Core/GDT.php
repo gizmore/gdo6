@@ -141,7 +141,8 @@ abstract class GDT
 	public function getValue() { return $this->toValue($this->getVar()); }
 	public function initial($var=null) { $this->initial = $var === null ? null : (string)$var; return $this->var($var); }
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }
-	public function displayVar() { return html(trim($this->getVar(), "\r\n\t ")); }
+	public function displayVar() { return html($this->getVar()); }
+	public function displayValue($var) { return html($var); }
 	public function displayJSON() { return json_encode($this->renderJSON()); }
 
 	public function getFields() {}
@@ -155,7 +156,7 @@ abstract class GDT
 	### Form Naming ###
 	###################
 	public function formVariable() { return GDT_Form::$CURRENT ? GDT_Form::$CURRENT->name : null; }
-	public function formName() { return sprintf('%s[%s]', $this->formVariable(), $this->name); }
+	public function formName() { return GDT_Form::$CURRENT ? sprintf('%s[%s]', $this->formVariable(), $this->name) : $this->name; }
 	public function htmlFormName() { return sprintf(" name=\"%s\"", $this->formName()); }
 	
 	#################
@@ -248,7 +249,7 @@ abstract class GDT
 	public function render() { return $this->renderCell(); }
 	public function renderPDF() { return $this->renderCard(); }
 	public function renderCell() { return $this->renderCellSpan($this->getVar()); }
-	public function renderCellSpan($var) { return sprintf('<span class="%s">%s</span>', $this->gdoClassName(), html($var)); }
+	public function renderCellSpan($var) { return sprintf('<span class="%s">%s</span>', $this->htmlClass(), html($var)); }
 	public function renderCard() { return GDT_Template::php('Core', 'card/gdt.php', ['gdt'=>$this]); }
 	public function renderList() { return $this->render(); }
 	public function renderForm() { return $this->render(); }
@@ -379,9 +380,10 @@ abstract class GDT
 	public function configJSON()
 	{
 	    return array(
+	        'id' => $this->id(),
+	        'name' => $this->name,
 	        'type' => $this->gdoClassName(),
 	        'var' => $this->var,
-	        'name' => $this->name,
 	        'icon' => $this->icon,
 	        'error' => $this->error,
 	        'initial' => $this->initial,

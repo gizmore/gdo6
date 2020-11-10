@@ -44,7 +44,6 @@ Debug::enableExceptionHandler();
 Debug::setDieOnError(GWF_ERROR_DIE);
 Debug::setMailOnError(GWF_ERROR_MAIL);
 Database::init();
-Cache::init();
 ModuleLoader::instance()->loadModulesCache();
 
 ModuleLoader::instance()->loadModuleFS('Install', true);

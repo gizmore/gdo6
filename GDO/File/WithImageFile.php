@@ -1,8 +1,10 @@
 <?php
 namespace GDO\File;
 
+use GDO\UI\WithImageSize;
+
 /**
- * Add this trait for image related file stuff
+ * Add this trait for image related file stuff.
  * 
  * @author gizmore, kalle
  * @version 6.10
@@ -10,6 +12,8 @@ namespace GDO\File;
  */
 trait WithImageFile
 {
+    use WithImageSize;
+    
 	public function isImageFile() { return true; }
 	
 	##############
@@ -31,14 +35,11 @@ trait WithImageFile
 	############
 	### Size ###
 	############
-	public $width;
-	public $height;
-	public function imageSize($width, $height) { $this->width = $width; $this->height = $height; return $this; }
 	public function styleSize()
 	{
-	    if ($this->width)
+	    if ($this->imageWidth)
 	    {
-	        return sprintf('max-width: %spx; max-height: %spx;', $this->width, $this->height);
+	        return sprintf('max-width: %spx; max-height: %spx;', $this->imageWidth, $this->imageHeight);
 	    }
 	}
 	
@@ -170,9 +171,5 @@ trait WithImageFile
 		}
 		return true;
 	}
-	
-	#############
-	### Hooks ###
-	#############
 	
 }

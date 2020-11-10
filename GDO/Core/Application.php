@@ -2,6 +2,7 @@
 namespace GDO\Core;
 
 use GDO\Util\Common;
+use GDO\Session\GDO_Session;
 
 /**
  * The application can control main behaviour settings.
@@ -86,6 +87,10 @@ class Application
 // 	public function setThemes(array $themes) { $this->themes = $themes; return $this; }
 	public function initThemes()
 	{
+	    if (GDO_Session::get('theme_name'))
+	    {
+	        $this->themes = GDO_Session::get('theme_chain');
+	    }
 	    $this->themes = explode(',', $this->themes);
 	    $this->themes = array_combine($this->themes, $this->themes);
 	}

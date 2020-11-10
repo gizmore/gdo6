@@ -169,6 +169,8 @@ return array(
 'err_unknown_gdo_column' => 'Colonna GDO sconosciuta: %s',
 'err_langfile_corrupt' => 'Un file di lingua è danneggiato: %s',
 'err_unknown_config' => 'Configurazione sconosciuta nel modulo %s: %s',
+'err_set_cookie' => 'Il tuo cookie non può essere impostato una seconda volta.',
+'err_invalid_gdt_var' => 'Un tipo di dati GDT, %s, ha un valore non valido: %s.',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',

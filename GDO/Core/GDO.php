@@ -1019,6 +1019,21 @@ abstract class GDO
 		return self::table()->select()->where($condition)->order($order, $asc)->exec()->fetchAllArray2dObject();
 	}
 	
+	public function allCached($order=null, $asc=null)
+	{
+	    if (!$this->memCached())
+	    {
+	        return $this->allWhere('true', $order, $asc);
+	    }
+	    $key = 'all_' . $this->gdoTableName();
+	    if (false === ($cache = Cache::get($key)))
+	    {
+	        $cache = $this->allWhere('true', $order, $asc);
+	        Cache::set($key, $cache);
+	    }
+	    return $cache;
+	}
+	
 	###########################
 	###  Table manipulation ###
 	###########################
