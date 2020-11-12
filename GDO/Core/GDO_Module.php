@@ -226,7 +226,17 @@ class GDO_Module extends GDO
 	 * @return static
 	 */
 	public static function instance() { return ModuleLoader::instance()->getModule(self::getNameS()); }
-	public static function getNameS() { return substr(self::gdoShortNameS(), 7); }
+	
+	private static $nameCache = [];
+	public static function getNameS()
+	{
+	    if ($cache = @self::$nameCache[static::class])
+	    {
+	        return $cache;
+	    }
+	    self::$nameCache[static::class] = $cache = substr(self::gdoShortNameS(), 7);
+	    return $cache;
+	}
 	
 	##############
 	### Getter ###

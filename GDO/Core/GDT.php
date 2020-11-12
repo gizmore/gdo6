@@ -61,7 +61,17 @@ abstract class GDT
 	public $name;
 	public function name($name=null) { $this->name = $name === null ? self::nextName() : $name; return $this; }
 	public function htmlName() { return sprintf(' name="%s"', $this->name); }
-	public function htmlClass() { return " gdo-".strtolower($this->gdoShortName()); }
+	
+	private static $classNameCache = [];
+	public function htmlClass()
+	{
+	    if (!isset(self::$classNameCache[static::class]))
+	    {
+	        self::$classNameCache[static::class] = $cache = " gdo-".strtolower($this->gdoShortName());
+	        return $cache;
+	    }
+	    return self::$classNameCache[static::class];
+	}
 	
 	##############
 	### FormID ###

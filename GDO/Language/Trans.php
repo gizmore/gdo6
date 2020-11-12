@@ -59,7 +59,7 @@ final class Trans
 	{
 		if (!isset(self::$CACHE[$iso]))
 		{
-			self::reload($iso);
+			return self::reload($iso);
 		}
 		return self::$CACHE[$iso];
 	}
@@ -144,6 +144,7 @@ final class Trans
 			$trans = $loaded;
 		}
 		self::$CACHE[$iso] = $trans;
+		return $trans;
 	}
 	
 	public static function hasKey($key)

@@ -16,7 +16,7 @@ trait WithHREF
 	 */
 	public function href($href=null) { $this->href = $href; return $this; }
 
-	public function htmlHREF() { return sprintf(" href=\"%s\"", html($this->href)); }
+	public function htmlHREF() { return sprintf(' href="%s"', $this->href); }
 
 	/**
 	 * Replace a get parameter in URL.

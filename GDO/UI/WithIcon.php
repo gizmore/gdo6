@@ -76,8 +76,7 @@ trait WithIcon
 	##############
 	public function htmlIcon()
 	{
-	    $text = $this->iconText ? t($this->iconText, $this->iconTextArgs) : '';
-	    $text = str_replace('"', "'", $text);
+	    $text = $this->iconText ? html(t($this->iconText, $this->iconTextArgs)) : '';
 		return $this->icon ?
 			self::iconS($this->icon, $text, $this->iconSize, $this->color) :
 			self::rawIconS($this->rawIcon, $text, $this->iconSize, $this->color);

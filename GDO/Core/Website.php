@@ -65,7 +65,7 @@ final class Website
 	}
 	
 	public static function addInlineCSS($css) { self::$_inline_css .= $css; }
-	public static function addCSS($path, $media=0) { self::addLink($path, 'text/css', 'stylesheet', $media); }
+	public static function addCSS($path) { self::addLink($path, 'text/css', 'stylesheet'); }
 	public static function addBowerCSS($path) { self::addCSS("bower_components/$path"); }
 	
 	/**
@@ -78,7 +78,7 @@ final class Website
 	 */
 	public static function addLink($href, $type, $rel)
 	{
-		self::$_links[] = array(html($href), $type, $rel);
+		self::$_links[] = array($href, $type, $rel);
 	}
 	
 	/**
@@ -141,10 +141,10 @@ final class Website
 // 		$mode = array('name', 'http-equiv');
 		foreach (self::$_meta as $meta)
 		{
-			if (!is_array($meta))
-			{
-				continue; # TODO: spaceone fix.
-			}
+// 			if (!is_array($meta))
+// 			{
+// 				continue; # TODO: spaceone fix.
+// 			}
 			list($name, $content, $equiv) = $meta;
 // 			$equiv = $mode[$equiv];
 			$back .= sprintf("<meta %s=\"%s\" content=\"%s\" />\n", $equiv, $name, $content);

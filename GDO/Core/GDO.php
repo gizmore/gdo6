@@ -175,8 +175,8 @@ abstract class GDO
 	 */
 	public function getVar($key)
 	{
-	    return @$this->gdoVars[$key];
-// 		return isset($this->gdoVars[$key]) ? $this->gdoVars[$key] : null;
+// 	    return @$this->gdoVars[$key];
+		return isset($this->gdoVars[$key]) ? $this->gdoVars[$key] : null;
 	}
 	
 	/**
