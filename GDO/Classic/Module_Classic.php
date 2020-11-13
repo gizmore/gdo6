@@ -14,9 +14,11 @@ final class Module_Classic extends GDO_Module
 {
 	public $module_priority = 10; # Include css rather early
 	
+	public function getThemes() { return ['classic']; }
+	
 	public function onIncludeScripts()
 	{
-	    if (in_array('classic', Application::instance()->getThemes(), true))
+	    if (Application::instance()->hasTheme('classic'))
 	    {
     		$this->addCSS('css/gdo6.css');
     		$this->addCSS('css/gdo6-sidebar.css');

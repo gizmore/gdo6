@@ -4,6 +4,6 @@
   <div class="menu-title"><?=$field->displayLabel()?></div>
 <?php endif; ?>
 <?php foreach ($field->getFields() as $gdoType) : ?>
-  <?=$gdoType->render()?>
+  <?=$gdoType->renderCell()?>
 <?php endforeach; ?>
 </div>

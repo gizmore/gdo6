@@ -1,7 +1,8 @@
 "use strict";
 
-var accordeon = document.querySelectorAll('.gdt-accordeon');
-
+/**
+ * Accordeon and Dialog.
+ */
 var c = document.querySelectorAll('.gdt-accordeon .collapse-bar');
 var len = c.length;
 for (var i = 0; i < len; i++) {
@@ -23,3 +24,5 @@ for (var i = 0; i < len; i++) {
 		this.parentNode.classList.add('closed');
 	};
 }
+
+/** Dialog **/

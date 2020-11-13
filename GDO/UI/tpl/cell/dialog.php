@@ -1,0 +1,3 @@
+<?phpuse GDO\UI\GDT_Dialog;
+/** @var $field GDT_Dialog **/
+?><div <?=$field->htmlID()?> <?=$field->htmlAttributes?>>  <dialog<?php if ($field->opened) : ?>open="open"<?php endif;?>>    <div class="gdo-dialog-inner"><?php if ($field->title) : ?>      <h3><?=$field->title?></h3><?php endif; ?>     <?=$field->html?><?php foreach ($field->fields as $gdt) : ?>      <?=$gdt->renderCell()?><?php endforeach; ?>    </div>  </dialog></div>

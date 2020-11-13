@@ -48,3 +48,11 @@ window.GDO.error = function(response) {
 	}
 	alert(message);
 };
+
+window.GDO.openDialog = function(dialogId) {
+	var dlg = document.querySelector('#'+dialogId+' dialog');
+	if (!dlg) {
+		console.error('Cannot find dialog with id ' + dialogId)
+	}
+	dlg.showModal();
+}
