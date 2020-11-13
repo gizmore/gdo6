@@ -46,8 +46,8 @@ class Application
 		self::$instance = $this;
         ini_set('date.timezone', 'UTC');
 		date_default_timezone_set('UTC');
-		$this->loader = new ModuleLoader(GDO_PATH . 'GDO/');
 		$this->initThemes();
+		$this->loader = new ModuleLoader(GDO_PATH . 'GDO/');
 	}
 	
 	public function __destruct()
@@ -84,7 +84,6 @@ class Application
 	private $themes = GWF_THEMES;
 	public function getThemes() { return $this->themes; }
 	public function hasTheme($theme) { return isset($this->themes[$theme]); }
-// 	public function setThemes(array $themes) { $this->themes = $themes; return $this; }
 	public function initThemes()
 	{
 	    if (GDO_Session::get('theme_name'))

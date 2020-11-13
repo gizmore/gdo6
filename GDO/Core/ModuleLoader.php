@@ -136,17 +136,11 @@ final class ModuleLoader
 	
 	public function initModules()
 	{
+		# Block certain modules
 		foreach ($this->modules as $module)
 		{
-			$module->onLoadLanguage();
-		    if ($module->isEnabled())
-		    {
-    			$module->registerThemes();
-		    }
-		}
-		Trans::inited(true);
-		foreach ($this->modules as $module)
-		{
+		    $module->onLoadLanguage();
+		    $module->registerTheme();
 		    if (!$module->isBlocked())
 		    {
     			$module->initModule();
@@ -163,6 +157,8 @@ final class ModuleLoader
 		    }
 		}
 		
+		Trans::inited(true);
+		
 		$app = Application::instance();
 		if ( (!$app->isInstall()) && (!$app->isCLI()) )
 		{
@@ -174,7 +170,7 @@ final class ModuleLoader
     				{
     					if (!$module->isInited())
     					{
-    						$module->onIncludeScripts();
+    					    $module->onIncludeScripts();
     						$module->initedModule();
     					}
     				}
@@ -301,7 +297,7 @@ final class ModuleLoader
             		{
             		    $module->onLoadLanguage();
             		    $this->initModuleVars();
-            		    $module->registerThemes();
+//             		    $module->registerThemes();
             		    $module->registerSettings();
             		    $module->initModule();
             		}

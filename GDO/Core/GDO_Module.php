@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Core;
+
 use GDO\DB\Cache;
 use GDO\DB\Database;
 use GDO\DB\GDT_AutoInc;
@@ -12,12 +13,13 @@ use GDO\User\GDO_UserSetting;
 use GDO\Util\Javascript;
 use GDO\DB\GDT_Checkbox;
 use GDO\User\GDO_UserSettingBlob;
+
 /**
  * GDO base module class.
  * 
  * @author gizmore
- * @since 1.00
  * @version 6.10
+ * @since 1.00
  */
 class GDO_Module extends GDO
 {
@@ -59,7 +61,7 @@ class GDO_Module extends GDO
 	 * Provided theme names in module /thm/$themeName folder.
 	 * @return string[] array of $themeNames
 	 */
-	public function getThemes() {}
+	public function getTheme() {}
 	
 	/**
 	 * GDO classes to install.
@@ -71,7 +73,7 @@ class GDO_Module extends GDO
 	 * Module config GDTs
 	 * @return GDT[]
 	 */
-	public function getConfig() { return []; }
+	public function getConfig() {}
 	
 	############
 	### Info ###
@@ -110,10 +112,13 @@ class GDO_Module extends GDO
 	{
 		if (!$this->configCache)
 		{
-			$this->configCache = [];
-			foreach ($this->getConfig() as $gdt)
+			if ($config = $this->getConfig())
 			{
-			    $this->configCache[$gdt->name] = $gdt; //->gdo($this);
+    			$this->configCache = [];
+    			foreach ($config as $gdt)
+    			{
+    			    $this->configCache[$gdt->name] = $gdt; //->gdo($this);
+    			}
 			}
 		}
 		return $this->configCache;
@@ -349,14 +354,11 @@ class GDO_Module extends GDO
 		return $this->inited;
 	}
 	
-	public function registerThemes()
+	public function registerTheme()
 	{
-		if ($themes = $this->getThemes())
+		if ($theme = $this->getTheme())
 		{
-			foreach ($themes as $theme)
-			{
-				GDT_Template::registerTheme($theme, $this->filePath("thm/$theme/"));
-			}
+		    GDT_Template::registerTheme($theme, $this->filePath("thm/$theme/"));
 		}
 	}
 	

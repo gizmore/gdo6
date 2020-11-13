@@ -28,7 +28,7 @@ use GDO\UI\GDT_Bar;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9369';
+	public $gdo_revision = '6.10-r9371';
 
 	##############
 	### Module ###
@@ -37,7 +37,7 @@ final class Module_Core extends GDO_Module
 
 	public function isCoreModule() { return true; }
 	
-	public function getThemes() { return ['default']; }
+	public function getTheme() { return 'default'; }
 	
 	public function onLoadLanguage() { return $this->loadLanguage('lang/core'); }
 	

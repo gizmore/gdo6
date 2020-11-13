@@ -14,7 +14,7 @@ final class Module_Classic extends GDO_Module
 {
 	public $module_priority = 10; # Include css rather early
 	
-	public function getThemes() { return ['classic']; }
+	public function getTheme() { return 'classic'; }
 	
 	public function onIncludeScripts()
 	{

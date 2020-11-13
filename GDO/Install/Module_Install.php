@@ -17,5 +17,5 @@ class Module_Install extends GDO_Module
 
 	public function onLoadLanguage() { $this->loadLanguage('lang/install'); }
 	public function defaultEnabled() { return false; }
-	public function getThemes() { return ['install']; }
+	public function getTheme() { return 'install'; }
 }
