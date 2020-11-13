@@ -117,6 +117,7 @@ class GDO_Module extends GDO
 	### Events ###
 	##############
 	public function onInit() {}
+	public function onInitSidebar() {}
 	public function onInstall() {}
 	public function onWipe() {}
 	public function onLoad() {}
@@ -166,7 +167,7 @@ class GDO_Module extends GDO
 	public function getID() { return $this->getVar('module_id'); }
 	public function getName() { return $this->getVar('module_name'); }
 	public function getVersion() { return $this->getVar('module_version'); }
-	public function isEnabled() { return !!$this->getVar('module_enabled'); }
+	public function isEnabled() { return $this->getVar('module_enabled'); }
 	public function isInstalled() { return $this->isPersisted(); }
 	public function getSiteName() { return sitename(); }
 	
@@ -248,17 +249,16 @@ class GDO_Module extends GDO
 	############
 	public function __wakeup() { $this->inited = false; self::$COUNT++; }
 	private $inited = false;
-	public function initModule()
-	{
-		if (!$this->inited)
-		{
-			if ($this->isEnabled())
-			{
-//     			$this->registerSettings();
-				$this->onInit();
-			}
-		}
-	}
+// 	public function initModule()
+// 	{
+// 		if (!$this->inited)
+// 		{
+// 			if ($this->isEnabled())
+// 			{
+// 				$this->onInit();
+// 			}
+// 		}
+// 	}
 	
 	public function initedModule()
 	{

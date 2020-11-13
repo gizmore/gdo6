@@ -24,6 +24,9 @@ if (!defined('GWF_CONFIGURED'))
 }
 
 include 'GDO6.php';
+
+$page = GDT_Page::make('page');
+
 GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
 
 # Bootstrap
@@ -42,8 +45,6 @@ if (GDO_User::current()->isAuthenticated())
 {
 	Logger::init(GDO_User::current()->getUserName(), GWF_ERROR_LEVEL); # 2nd init with username
 }
-
-$page = GDT_Page::make('page');
 
 # All fine!
 define('GWF_CORE_STABLE', 1);

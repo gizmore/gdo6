@@ -11,7 +11,8 @@ use GDO\User\GDT_User;
 use GDO\Language\Trans;
 use GDO\DB\GDT_Version;
 use GDO\DB\GDT_Checkbox;
-use GDO\UI\GDT_Bar;
+use GDO\User\GDO_Permission;
+use GDO\UI\GDT_Page;
 
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
@@ -28,7 +29,7 @@ use GDO\UI\GDT_Bar;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9372';
+	public $gdo_revision = '6.10-r9375';
 
 	##############
 	### Module ###
@@ -43,12 +44,12 @@ final class Module_Core extends GDO_Module
 	
 	public function getClasses()
 	{
-		return array(
-			'GDO\Core\GDO_Hook',
-			'GDO\Core\GDO_Module',
-			'GDO\Core\GDO_ModuleVar',
-			'GDO\User\GDO_Permission',
-		);
+	    return [
+	        GDO_Hook::class,
+	        GDO_Module::class,
+	        GDO_ModuleVar::class,
+	        GDO_Permission::class,
+	    ];
 	}
 	
 	public function onInstall()
@@ -61,7 +62,7 @@ final class Module_Core extends GDO_Module
 	##############
 	public function getConfig()
 	{
-		return array(
+		return [
 			GDT_User::make('system_user')->editable(false),
 			GDT_Checkbox::make('show_impressum')->initial('1'),
 			GDT_Divider::make('div_javascript')->label('div_javascript'),
@@ -71,7 +72,7 @@ final class Module_Core extends GDO_Module
 			GDT_Path::make('ng_annotate_path')->initial('ng-annotate')->label('ng_annotate_path'),
 			GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
 			GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
-		);
+		];
 	}
 	
 	/**
@@ -89,11 +90,12 @@ final class Module_Core extends GDO_Module
 	#############
 	### Hooks ###
 	#############
-	public function HookBottomBar(GDT_Bar $navbar)
+	public function onInitSidebar()
 	{
 		if ($this->cfgShowImpressum())
 		{
-			$navbar->addField(GDT_Link::make()->label(t('link_impressum'))->href(href('Core', 'Impressum')));
+		    $navbar = GDT_Page::$INSTANCE->bottomNav;
+			$navbar->addField(GDT_Link::make('link_impressum')->href(href('Core', 'Impressum')));
 		}
 	}
 	

@@ -5,6 +5,7 @@ use GDO\Core\Module_Core;
 use GDO\UI\GDT_Page;
 use GDO\UI\GDT_Loading;
 /** @var $page GDT_Page **/
+$page->loadSidebars();
 ?>
 <!DOCTYPE html>
 <html>

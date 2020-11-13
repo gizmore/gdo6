@@ -148,7 +148,6 @@ final class ModuleLoader
 		    
 		    if (!$module->isBlocked())
 		    {
-    			$module->initModule();
     			if ($blocked = $module->getBlockedModules())
     			{
     			    foreach ($blocked as $moduleName)
@@ -175,6 +174,7 @@ final class ModuleLoader
     				{
     					if (!$module->isInited())
     					{
+    					    $module->onInit();
     					    $module->onIncludeScripts();
     						$module->initedModule();
     					}

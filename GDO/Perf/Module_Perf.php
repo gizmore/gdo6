@@ -5,6 +5,7 @@ use GDO\UI\GDT_Bar;
 use GDO\Core\GDO_Module;
 use GDO\DB\GDT_Enum;
 use GDO\User\GDO_User;
+use GDO\UI\GDT_Page;
 
 /**
  * Performance statistics in footer.
@@ -26,9 +27,9 @@ final class Module_Perf extends GDO_Module
     ##############
     public function getConfig()
     {
-        return array(
+        return [
             GDT_Enum::make('perf_bottom_bar')->enumValues('all', 'staff', 'none')->initial('staff'),
-        );
+        ];
     }
     public function cfgBottomPermission() { return $this->getConfigVar('perf_bottom_bar'); }
 
@@ -39,7 +40,7 @@ final class Module_Perf extends GDO_Module
      * Show performance footer.
      * @param GDT_Bar $bottomBar
      */
-	public function hookBottomBar(GDT_Bar $bottomBar)
+    public function onInitSidebar()
 	{
 	    switch ($this->cfgBottomPermission())
 	    {
@@ -49,7 +50,7 @@ final class Module_Perf extends GDO_Module
 	    }
 	    if ($show)
 	    {
-	        $bottomBar->addField(GDT_PerfBar::make('perf'));
+	        GDT_Page::$INSTANCE->bottomNav->addField(GDT_PerfBar::make('perf'));
 	    }
 	}
 

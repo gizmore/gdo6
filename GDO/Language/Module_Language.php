@@ -2,7 +2,6 @@
 namespace GDO\Language;
 
 use GDO\Core\GDO_Module;
-use GDO\UI\GDT_Bar;
 use GDO\Util\Strings;
 use GDO\Core\Application;
 use GDO\User\GDO_User;
@@ -11,6 +10,8 @@ use GDO\Util\Javascript;
 use GDO\Util\Common;
 use GDO\Core\Website;
 use GDO\UI\GDT_Divider;
+use GDO\DB\GDT_Checkbox;
+use GDO\UI\GDT_Page;
 
 /**
  * Internationalization Module.
@@ -27,7 +28,7 @@ final class Module_Language extends GDO_Module
 	public $module_priority = 2;
 	
 	public function isCoreModule() { return true; }
-	public function getClasses() { return ['GDO\Language\GDO_Language']; }
+	public function getClasses() { return [GDO_Language::class]; }
 	public function onInstall() { LanguageData::onInstall(); }
 	public function onLoadLanguage() { $this->loadLanguage('lang/language'); }
 
@@ -38,8 +39,11 @@ final class Module_Language extends GDO_Module
 	{
 		return array(
 			GDT_Language::make('languages')->all()->multiple()->initial('["'.GWF_LANGUAGE.'"]'),
+		    GDT_Checkbox::make('langswitch_left')->initial('1'),
 		);
 	}
+	
+	public function cfgSwitchLeft() { return $this->getConfigValue('langswitch_left'); }
 	
 	/**
 	 * Get the supported  languages, GWF_LANGUAGE first.
@@ -58,13 +62,20 @@ final class Module_Language extends GDO_Module
 	############
 	### Init ###
 	############
-	public function onInit()
+	public function onInitSidebar()
 	{
 		if (!Application::instance()->isCLI())
 		{
 			$iso = $this->detectISO();
 			Trans::setISO($iso);
 			Website::addMeta(['language', $iso, 'name']);
+		}
+
+		if ($this->cfgSwitchLeft())
+		{
+		    $navbar = GDT_Page::$INSTANCE->leftNav;
+		    $navbar->addField(GDT_LangSwitch::make());
+		    $navbar->addField(GDT_Divider::make());
 		}
 	}
 	
@@ -121,15 +132,6 @@ final class Module_Language extends GDO_Module
 				}
 			}
 		}
-	}
-	
-	#############
-	### Hooks ###
-	#############
-	public function hookLeftBar(GDT_Bar $navbar)
-	{
-	    $navbar->addField(GDT_LangSwitch::make());
-	    $navbar->addField(GDT_Divider::make());
 	}
 	
 }
