@@ -23,6 +23,11 @@ final class GDT_IP extends GDT_String
 		$ip = $ip ? $ip : self::$CURRENT;
 		return ($ip === '::1') || (substr($ip, 0, 4) === '127.');
 	}
+	
+	public function useCurrent($useCurrent=true)
+	{
+	    return $this->initial(self::current());
+	}
 
 	##############
 	### String ###

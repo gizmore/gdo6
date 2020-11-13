@@ -27,8 +27,8 @@ trait WithDatabase
 	public function primary($primary=true) { $this->primary = $primary; return $this; }
 	public function isPrimary() { return $this->primary; }
 	
-	public $index = false;
-	public function index() { $this->index = true; return $this; }
+// 	public $index = false;
+// 	public function index() { $this->index = true; return $this; }
   
 	public $virtual = false;
 	public function virtual($virtual=true) { $this->virtual = $virtual; return $this; }

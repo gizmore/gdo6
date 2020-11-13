@@ -171,6 +171,7 @@ return array(
 'err_unknown_config' => 'Unbekannte Konfiguration in Modul %s: %s',
 'err_set_cookie' => 'Ihr Cookie konnte nicht ein zweites mal gesetzt werden.',
 'err_invalid_gdt_var' => 'Ein GDT Datentyp, %s, hat einen ungültigen Wert: %s.',
+'err_unknown_user_setting' => 'Das Modul %s kennt keine Nutzereinstellung namens %s.',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',

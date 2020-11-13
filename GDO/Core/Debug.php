@@ -224,15 +224,27 @@ final class Debug
 	private static function renderError($message)
 	{
 		http_response_code(405);
-		if (Application::instance()->isJSON())
+		$app = Application::instance();
+		if ($app->isJSON())
 		{
 			return json_encode(array('error' => $message));
 		}
-		$app = Application::instance();
-		$isHTML = $app->isHTML() && (!$app->isAjax());
-		return defined('GWF_CORE_STABLE') && $isHTML ?
-		GDT_Page::make()->html(GDT_Error::withHTML($message)->render())->render() :
-		($message . PHP_EOL);
+		if ($app->isCLI())
+		{
+		    return "$message\n";
+		}
+		else
+		{
+// 		    $message = html($message);
+		}
+		if ($app->isAjax() || (!defined('GWF_CORE_STABLE')))
+		{
+		    return $message;
+		}
+		else
+		{
+		    return GDT_Page::$INSTANCE->html($message)->renderCell();
+		}
 	}
 	public static function disableExceptionHandler()
 	{
@@ -349,11 +361,13 @@ final class Debug
 			$arg = json_encode($arg, 1);
 		}
 		
-		if (mb_strlen($arg) > 32)
+		$arg = str_replace("\\\"", '"', $arg);
+		
+		if (mb_strlen($arg) > 28)
 		{
-			return mb_substr($arg, 0, 15) . '…' . mb_substr($arg, -15);
+			return mb_substr($arg, 0, 12) . '…' . mb_substr($arg, -12);
 		}
-		return $arg;
+		return Application::instance()->isHTML() ? html($arg) : $arg;
 	}
 	private static function backtraceMessage($message, $html = true, array $stack)
 	{

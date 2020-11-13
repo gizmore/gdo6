@@ -67,7 +67,8 @@ Sie können dann hier fortfahren: %s',
 # Admins
 'install_title_6' => 'Administrator anlegen',
 'ft_install_installadmins' => 'Administrator anlegen',
-	
+'msg_admin_created' => 'Ein Administrator namens %s wurde angelegt oder das Passwort wurde zurückgesetzt.',
+
 'install_title_7' => 'Javascript installieren',
 'install_content_7' => '
 <p>Sie sollten nun die Javascript abhängigkeiten installieren.</p>

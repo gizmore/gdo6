@@ -67,7 +67,8 @@ You can then continue with %s.',
 # Admins 
 'install_title_6' => 'Create Admins',
 'ft_install_installadmins' => 'Create Admins',
-	
+'msg_admin_created' => 'An admin named %s has been created or their password has been reset.',
+
 'install_title_7' => 'Install Javascript',
 'install_content_7' => '
 <p>You should now install node,npm,bower,yarn and other javascript components.</p>

@@ -4,7 +4,6 @@ use GDO\Avatar\GDT_Avatar;
 use GDO\User\GDO_User;
 use GDO\Profile\GDT_ProfileLink;
 use GDO\UI\GDT_Label;
-use GDO\User\GDO_UserSetting;
 /** @var $user GDO_User **/
 
 $list = GDT_ListItem::make('user-'.$user->getID());

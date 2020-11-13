@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Country;
+
 use GDO\Core\GDO_Module;
 
 /**

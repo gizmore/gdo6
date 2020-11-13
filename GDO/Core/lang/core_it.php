@@ -171,6 +171,7 @@ return array(
 'err_unknown_config' => 'Configurazione sconosciuta nel modulo %s: %s',
 'err_set_cookie' => 'Il tuo cookie non può essere impostato una seconda volta.',
 'err_invalid_gdt_var' => 'Un tipo di dati GDT, %s, ha un valore non valido: %s.',
+'err_unknown_user_setting' => 'Il modulo %s non ha alcuna impostazione utente chiamata %s.',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',

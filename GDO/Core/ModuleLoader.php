@@ -140,7 +140,12 @@ final class ModuleLoader
 		foreach ($this->modules as $module)
 		{
 		    $module->onLoadLanguage();
-		    $module->registerTheme();
+		    
+	        if ($theme = $module->getTheme())
+	        {
+	            GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+		    }
+		    
 		    if (!$module->isBlocked())
 		    {
     			$module->initModule();
@@ -225,7 +230,7 @@ final class ModuleLoader
 				$this->initModuleVars();
 			}
 
-			$this->sortModules('module_priority');
+			$this->modules = $this->sortModules('module_priority');
 			
 			$this->initModules();
 		}
@@ -247,18 +252,22 @@ final class ModuleLoader
 						$this->modules[$moduleName] = $module->setPersisted(true);
 					}
 				}
-// 				else
-// 				{
-// 					$this->modules[$moduleName] = $module->setPersisted(true);
-// 				}
 			}
+			return $this->modules;
+		}
+		catch (\GDO\DB\DBException $e)
+		{
+		    if (Application::instance()->isCLI())
+		    {
+    		    echo "No Database available yet...\n";
+		    }
+		    return false;
 		}
 		catch (\Throwable $e)
 		{
-		    die('X');
+		    Logger::logException($e);
 			return false;
 		}
-		return $this->modules;
 	}
 	
 	private function loadModulesFS()
@@ -295,11 +304,11 @@ final class ModuleLoader
 					$this->modules[$name] = $module;
             		if ($init)
             		{
-            		    $module->onLoadLanguage();
-            		    $this->initModuleVars();
+//             		    $module->onLoadLanguage();
+//             		    $this->initModuleVars();
 //             		    $module->registerThemes();
-            		    $module->registerSettings();
-            		    $module->initModule();
+//             		    $module->registerSettings();
+//             		    $module->initModule();
             		}
 				}
 			}
@@ -346,20 +355,39 @@ final class ModuleLoader
 	    }
 	    
 		# Query all module vars
-		$result = GDO_ModuleVar::table()->
-			select('module_name, mv_name, mv_value')->
-			join('JOIN gdo_module ON module_id=mv_module_id')->exec();
-		# Assign them to the modules
-		while ($row = $result->fetchRow())
+		try
 		{
-		    /** @var $module \GDO\Core\GDO_Module **/
-			if ($module = $this->modules[$row[0]])
-			{
-				if ($var = $module->getConfigColumn($row[1]))
-				{
-					$var->initial($row[2]);
-				}
-			}
+    		$result = GDO_ModuleVar::table()->
+    			select('module_name, mv_name, mv_value')->
+    			join('JOIN gdo_module ON module_id=mv_module_id')->exec();
+    		# Assign them to the modules
+    		while ($row = $result->fetchRow())
+    		{
+    		    /** @var $module \GDO\Core\GDO_Module **/
+    			if ($module = $this->modules[$row[0]])
+    			{
+    				if ($var = $module->getConfigColumn($row[1]))
+    				{
+    					$var->initial($row[2]);
+    				}
+    			}
+    		}
+		}
+		catch (\GDO\DB\DBException $e)
+		{
+		    if (Application::instance()->isCLI())
+		    {
+		        echo "No database available yet...\n";
+		    }
+		}
+		catch (\Throwable $e)
+		{
+		    Logger::logException($e);
+		}
+		
+		foreach ($this->modules as $module)
+		{
+    		$module->buildSettingsCache();
 		}
 	}
 	

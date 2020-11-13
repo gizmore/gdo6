@@ -144,7 +144,7 @@ class Database
 				$error = t('err_db_no_link');
 				$errno = 0;
 			}
-			throw new DBException("err_db", [$errno, $error, htmlspecialchars($query)]);
+			throw new DBException("err_db", [$errno, $error, $query]);
 		}
 		$t2 = microtime(true);
 		$timeTaken = $t2 - $t1;

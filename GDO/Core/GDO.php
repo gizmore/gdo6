@@ -1034,6 +1034,12 @@ abstract class GDO
 	    return $cache;
 	}
 	
+	public function removeAllCache()
+	{
+	    $key = 'all_' . $this->gdoTableName();
+	    Cache::remove($key);
+	}
+	
 	###########################
 	###  Table manipulation ###
 	###########################

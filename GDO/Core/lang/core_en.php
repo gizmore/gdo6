@@ -171,6 +171,7 @@ return array(
 'err_unknown_config' => 'Unknwon config field in module %s: %s',
 'err_set_cookie' => 'Your cookie could not been set a second time.',
 'err_invalid_gdt_var' => 'A GDT, %s, has an invalid var: %s.',
+'err_unknown_user_setting' => 'The module %s does not know the user setting %s.',
     
 # Permissions
 'sel_no_permissions' => 'No permission required',

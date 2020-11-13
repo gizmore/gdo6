@@ -16,9 +16,9 @@ final class Module_File extends GDO_Module
 
 	public function getClasses()
 	{
-		return array(
-			'GDO\File\GDO_File', # File table.
-		);
+		return [
+			GDO_File::class,
+		];
 	}
 	
 	public function onLoadLanguage() { return $this->loadLanguage('lang/file'); }

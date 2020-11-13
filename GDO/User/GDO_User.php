@@ -65,7 +65,7 @@ final class GDO_User extends GDO
 			GDT_CreatedAt::make('user_last_activity')->label('last_activity'),
 			GDT_CreatedAt::make('user_register_time')->label('registered_at'),
 		    GDT_Timezone::make('user_timezone')->initial(GWF_TIMEZONE),
-			GDT_IP::make('user_register_ip'),
+			GDT_IP::make('user_register_ip')->useCurrent(),
 		);
 	}
 	

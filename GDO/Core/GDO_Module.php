@@ -13,6 +13,8 @@ use GDO\User\GDO_UserSetting;
 use GDO\Util\Javascript;
 use GDO\DB\GDT_Checkbox;
 use GDO\User\GDO_UserSettingBlob;
+use GDO\User\GDO_User;
+use GDO\DB\GDT_Text;
 
 /**
  * GDO base module class.
@@ -37,12 +39,12 @@ class GDO_Module extends GDO
 	public function isCoreModule() { return false; }
 	public function isSiteModule() { return false; }
 	public function isInstallable() { return true; }
-	public function gdoDependencies() { return ['Core', 'Language', 'Table', 'User', 'Country']; }
+	public function gdoDependencies() { return ['Core', 'Country', 'Language', 'Table', 'User', 'Country']; }
 	
 	/**
 	 * @return string[]
 	 */
-	public function getDependencies() { return []; }
+	public function getDependencies() {}
 	
 	/**
 	 * @return string[]
@@ -55,7 +57,17 @@ class GDO_Module extends GDO
 	/**
 	 * @return string[]
 	 */
-	public function dependencies() { return array_unique(array_merge($this->gdoDependencies(), $this->getDependencies())); }
+	public function dependencies()
+	{
+	    if ($deps = $this->getDependencies())
+	    {
+    	    return array_unique(array_merge($this->gdoDependencies(), $deps));
+	    }
+	    else
+	    {
+	        return $this->gdoDependencies();
+	    }
+	}
 	
 	/**
 	 * Provided theme names in module /thm/$themeName folder.
@@ -100,101 +112,6 @@ class GDO_Module extends GDO
 	}
 	
 	
-	
-	##############
-	### Config ###
-	##############
-	/**
-	 * @var GDT[]
-	 */
-	private $configCache;
-	public function buildConfigCache()
-	{
-		if (!$this->configCache)
-		{
-			if ($config = $this->getConfig())
-			{
-    			$this->configCache = [];
-    			foreach ($config as $gdt)
-    			{
-    			    $this->configCache[$gdt->name] = $gdt; //->gdo($this);
-    			}
-			}
-		}
-		return $this->configCache;
-	}
-	
-	public function getConfigCache()
-	{
-	    return $this->buildConfigCache();
-// 	    return $this->getConfigMemcache();
-	}
-	
-	private function configCacheKey()
-	{
-	    return $this->getName().'_config_cache';
-	}
-	
-	public function getConfigMemcache()
-	{
-	    $key = $this->configCacheKey();
-	    if (false === ($cache = Cache::get($key)))
-	    {
-	        $cache = $this->buildConfigCache();
-	        Cache::set($key, $cache);
-	    }
-	    return $cache;
-	}
-	
-	/**
-	 * @param GDT
-	 */
-	public function getConfigColumn($key)
-	{
-// 	    $cache = $this->getConfigCache();
-	    if (isset($this->configCache[$key]))
-	    {
-	        return $this->configCache[$key];
-	    }
-	    Website::error('err_unknown_config', [$this->displayName(), html($key)]);
-	}
-	
-	public function getConfigVar($key)
-	{
-	    if ($gdt = $this->getConfigColumn($key))
-	    {
-	        return $gdt->var;
-	    }
-	}
-	
-	public function getConfigValue($key)
-	{
-		if ($gdt = $this->getConfigColumn($key))
-		{
-		    return $gdt->toValue($gdt->initial);
-		}
-	}
-	
-	public function saveConfigVar($key, $var)
-	{
-		GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->initial($var));
-		Cache::remove('gdo_modules');
-	}
-	
-	public function saveConfigValue($key, $value)
-	{
-		GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->initialValue($value));
-		Cache::remove('gdo_modules');
-	}
-	
-	public function removeConfigVar($key)
-	{
-		if ($gdt = $this->getConfigColumn($key))
-		{
-		    $gdt->initial(null);
-    		GDO_ModuleVar::removeModuleVar($this, $key);
-		}
-	}
 	
 	##############
 	### Events ###
@@ -329,7 +246,7 @@ class GDO_Module extends GDO
 	############
 	### Init ###
 	############
-	public function __wakeup() { $this->inited = false; self::$COUNT++; } # TODO: wakeup knows that language and settings are also memcached soon? :)
+	public function __wakeup() { $this->inited = false; self::$COUNT++; }
 	private $inited = false;
 	public function initModule()
 	{
@@ -337,9 +254,8 @@ class GDO_Module extends GDO
 		{
 			if ($this->isEnabled())
 			{
-    			$this->registerSettings();
+//     			$this->registerSettings();
 				$this->onInit();
-// 				GDT_Hook::initModule($this);
 			}
 		}
 	}
@@ -354,58 +270,285 @@ class GDO_Module extends GDO
 		return $this->inited;
 	}
 	
-	public function registerTheme()
-	{
-		if ($theme = $this->getTheme())
-		{
-		    GDT_Template::registerTheme($theme, $this->filePath("thm/$theme/"));
-		}
-	}
-	
 	public function loadLanguage($path)
 	{
 		Trans::addPath($this->filePath($path));
 		return $this;
 	}
 	
+	#####################
+	### Module Config ###
+	#####################
+	/**
+	 * @var GDT[]
+	 */
+	private $configCache = null;
+	public function buildConfigCache()
+	{
+	    if ($this->configCache === null)
+	    {
+	        if ($config = $this->getConfig())
+	        {
+                $this->configCache = [];
+	            foreach ($config as $gdt)
+	            {
+	                $this->configCache[$gdt->name] = $gdt; //->gdo($this);
+	            }
+	        }
+	        else
+	        {
+	            $this->configCache = false;
+	        }
+	    }
+	    return $this->configCache;
+	}
+	
+	public function getConfigCache()
+	{
+	    return $this->buildConfigCache();
+	}
+	
+	private function configCacheKey()
+	{
+	    return $this->getName().'_config_cache';
+	}
+	
+	public function getConfigMemcache()
+	{
+	    $key = $this->configCacheKey();
+	    if (false === ($cache = Cache::get($key)))
+	    {
+	        $cache = $this->buildConfigCache();
+	        Cache::set($key, $cache);
+	    }
+	    return $cache;
+	}
+	
+	/**
+	 * @param GDT
+	 */
+	public function getConfigColumn($key)
+	{
+	    if (isset($this->configCache[$key]))
+	    {
+	        return $this->configCache[$key];
+	    }
+	    Website::error('err_unknown_config', [$this->displayName(), html($key)]);
+	}
+	
+	public function getConfigVar($key)
+	{
+	    if ($gdt = $this->getConfigColumn($key))
+	    {
+	        return $gdt->var;
+	    }
+	}
+	
+	public function getConfigValue($key)
+	{
+	    if ($gdt = $this->getConfigColumn($key))
+	    {
+	        return $gdt->toValue($gdt->initial);
+	    }
+	}
+	
+	public function saveConfigVar($key, $var)
+	{
+	    GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->initial($var));
+	    Cache::remove('gdo_modules');
+	}
+	
+	public function saveConfigValue($key, $value)
+	{
+	    GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->initialValue($value));
+	    Cache::remove('gdo_modules');
+	}
+	
+	public function removeConfigVar($key)
+	{
+	    if ($gdt = $this->getConfigColumn($key))
+	    {
+	        $gdt->initial(null);
+	        GDO_ModuleVar::removeModuleVar($this, $key);
+	    }
+	}
+	
 	###################
 	### User config ###
 	###################
-	/**
-	 * @return GDT[]
-	 */
-	public function getUserConfig(){}
-	/**
-	 * @return GDT[]
-	 */
-	public function getUserSettings(){}
-	public function getUserSettingsURL(){}
+	# 4 methods to override
+	public function getUserSettingsURL() {}
 	
 	/**
 	 * @return GDT[]
 	 */
-	public function getUserSettingBlobs(){}
-	public function registerSettings()
+	public function getUserConfig() {}
+	/**
+	 * @return GDT[]
+	 */
+	public function getUserSettings() {}
+	
+	/**
+	 * @return GDT[]
+	 */
+	public function getUserSettingBlobs() {}
+	
+	# API
+	public function setting($key)
 	{
-		$this->_registerSettings($this->getUserConfig());
-		$this->_registerSettings($this->getUserSettings());
-		$this->_registerSettings($this->getUserSettingBlobs(), true);
+	    return $this->userSetting(GDO_User::current(), $key);
 	}
-	private function _registerSettings(array $settings=null, $blob=false)
+	
+	/**
+	 * 
+	 * @param GDO_User $user
+	 * @param string $key
+	 * @return GDT
+	 */
+	public function userSetting(GDO_User $user, $key)
 	{
-		if ($settings)
-		{
-			foreach ($settings as $setting)
-			{
-				$blob ? GDO_UserSettingBlob::register($setting) : GDO_UserSetting::register($setting);
-			}
-		}
+	    if ($gdt = $this->getSetting($key))
+	    {
+    	    $settings = $this->loadUserSettings($user);
+    	    if (isset($settings[$key]))
+    	    {
+    	        $gdt->initial($settings[$key]);
+    	    }
+    	    return $gdt;
+	    }
+	}
+	
+	public function settingVar($key)
+	{
+	    return $this->userSettingVar(GDO_User::current(), $key);
+	}
+	
+	public function settingValue($key)
+	{
+	    return $this->userSettingValue(GDO_User::current(), $key);
+	}
+	
+	public function userSettingVar(GDO_User $user, $key)
+	{
+	    return $this->userSetting($user, $key)->var;
+	}
+	
+	public function userSettingValue(GDO_User $user, $key)
+	{
+	    $gdt = $this->userSetting($user, $key);
+	    return $gdt->toValue($gdt->var);
+	}
+	
+	public function saveSetting($key, $var)
+	{
+	    return self::saveUserSetting(GDO_User::current(), $key, $var);
+	}
+	
+	public function saveUserSetting(GDO_User $user, $key, $var)
+	{
+	    $gdt = $this->getSetting($key);
+	    $data = [
+	        'uset_user' => $user->getID(),
+	        'uset_name' => $key,
+	        'uset_value' => $var,
+	    ];
+	    $entry = ($gdt instanceof GDT_Text) ? GDO_UserSettingBlob::blank($data) : GDO_UserSetting::blank($data);
+	    $entry->replace();
+	    return $gdt;
+	}
+	
+	public function increaseSetting($key, $by=1)
+	{
+	    return $this->increaseUserSetting(GDO_User::current(), $key, $by);
+	}
+	
+	public function increaseUserSetting(GDO_User $user, $key, $by=1)
+	{
+	    return $this->saveUserSetting($user, $key, $this->userSettingVar($user, $key) + $by);
+	}
+	
+	# Cache
+	/**
+	 * @var GDT[]
+	 */
+	private $userConfigCache = null;
+	
+	public function getSettingsCache()
+	{
+	    return $this->buildSettingsCache();
+	}
+
+	private function getSetting($key)
+	{
+	    if (isset($this->userConfigCache[$key]))
+	    {
+    	    return $this->userConfigCache[$key];
+	    }
+	    else
+	    {
+	        throw new GDOError('err_unknown_user_setting', [$this->displayName(), html($key)]);
+	    }
+	}
+	
+	public function buildSettingsCache()
+	{
+	    if ($this->userConfigCache === null)
+	    {
+    	    $this->userConfigCache = [];
+    	    if ($config = $this->getUserConfig())
+    	    {
+    	        foreach ($config as $gdt)
+    	        {
+    	            $gdt->editable(false);
+    	            $this->userConfigCache[$gdt->name] = $gdt;
+    	        }
+    	    }
+    	    if ($config = $this->getUserSettings())
+    	    {
+    	        foreach ($config as $gdt)
+    	        {
+    	            $this->userConfigCache[$gdt->name] = $gdt;
+    	        }
+    	    }
+    	    if ($config = $this->getUserSettingBlobs())
+    	    {
+    	        foreach ($config as $gdt)
+    	        {
+    	            $this->userConfigCache[$gdt->name] = $gdt;
+    	        }
+    	    }
+	    }
+	    return $this->userConfigCache;
+	}
+	
+	private function loadUserSettings(GDO_User $user)
+	{
+	    if (null === ($settings = $user->tempGet('gdo_setting')))
+	    {
+	        $settings = self::loadUserSettingsB($user);
+	        $user->tempSet('gdo_setting', $settings);
+	        $user->recache();
+	    }
+	    return $settings;
+	}
+	
+	private function loadUserSettingsB(GDO_User $user)
+	{
+	    if (!$user->isPersisted())
+	    {
+	        return [];
+	    }
+	    return array_merge(
+	        GDO_UserSetting::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair(),
+	        GDO_UserSettingBlob::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair(),
+	    );
 	}
 	
 	##############
 	### Method ###
 	##############
 	/**
+	 * @deprecated Use Method::make() instead.
 	 * @param string $methodName
 	 * @return Method
 	 */
