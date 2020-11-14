@@ -64,7 +64,7 @@ try
 catch (Throwable $e)
 {
 	Logger::logException($e);
-	$response = GDT_Response::makeWith(GDT_Error::withHTML(Debug::backtraceException($e)))->code(405);
+	$response = GDT_Error::responseException($e);
 }
 finally
 {

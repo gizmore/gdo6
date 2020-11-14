@@ -1,7 +1,10 @@
-<?php /** @var $field \GDO\DB\GDT_String **/ ?>
+<?php
+/** @var $field \GDO\DB\GDT_String **/
+/** @var $f string **/
+?>
 <input
- name="f[<?=$field->name?>]"
+ name="<?=$f?>[f][<?=$field->name?>]"
  type="search"
  size="<?=min($field->max, 16)?>"
- value="<?=html($field->filterValue())?>"
+ value="<?=html($field->filterVar($f))?>"
  placeholder="<?=t('string_filter')?>" />

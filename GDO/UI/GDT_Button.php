@@ -1,7 +1,9 @@
 <?php
 namespace GDO\UI;
+
 use GDO\Core\GDT_Template;
 use GDO\Form\WithFormFields;
+
 /**
  * @author gizmore
  * @version 6.10
@@ -18,9 +20,9 @@ class GDT_Button extends GDT_Label
 	use WithPHPJQuery;
 	use WithAnchorRelation;
 	
-	public $primary = true;
-	public function primary() { $this->primary = true; return $this; }
-	public function secondary() { $this->primary = false; return $this; }
+// 	public $primary = true;
+// 	public function primary() { $this->primary = true; return $this; }
+// 	public function secondary() { $this->primary = false; return $this; }
 	
 	##############
 	### Render ###
@@ -39,12 +41,12 @@ class GDT_Button extends GDT_Label
 	#############
 	public function gdoHREF()
 	{
-		return $this->href ? $this->href : call_user_func(array($this->gdo, 'href_'.$this->name));
+		return $this->href ? $this->href : call_user_func([$this->gdo, 'href_'.$this->name]);
 	}
 	
 	public function gdoLabel()
 	{
-		return call_user_func(array($this->gdo, 'display_'.$this->name));
+		return call_user_func([$this->gdo, 'display_'.$this->name]);
 	}
 	
 	public function displayHeaderLabel()

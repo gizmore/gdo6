@@ -69,8 +69,8 @@ echo $pagemenu;
 ?>
 <!-- Begin List -->
 <div class="gdt-list">
-<?php if ($field->title) : ?>
-  <h3><?=$field->title?></h3>
+<?php if ($field->hasTitle()) : ?>
+  <h3><?=$field->renderTitle()?></h3>
 <?php endif; ?>
 <?php
 while ($gdo = $result->fetchObject()) :

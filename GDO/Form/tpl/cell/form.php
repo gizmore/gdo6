@@ -4,10 +4,10 @@ $firstEditableField = null;
 <!-- Begin Form -->
 <div class="gdo-form <?=$form->htmlClassSlim()?>">
 	<div class="gdo-form-inner">
-<?php if ($form->title || $form->info) : ?>
+<?php if ($form->hasTitle() || $form->info) : ?>
 	  <div class="gdo-form-head">
-<?php if ($form->title) : ?>
-		<h2 class="gdo-form-title"><?= $form->title; ?></h2>
+<?php if ($form->hasTitle()) : ?>
+		<h2 class="gdo-form-title"><?=$form->renderTitle()?></h2>
 <?php endif; ?>
 <?php if ($form->info) : ?>
 		<p><?= $form->info; ?></p>

@@ -57,9 +57,9 @@ class GDT_ObjectSelect extends GDT_Select
 		return $this->getValue();
 	}
 	
-	public function renderFilter()
+	public function renderFilter($f)
 	{
-		return GDT_Template::php('DB', 'filter/object.php', ['field'=>$this]);
+		return GDT_Template::php('DB', 'filter/object.php', ['field' => $this, 'f' => $f]);
 	}
 	
 	#############

@@ -74,6 +74,7 @@ final class GDT_IconUTF8
         'search' => '🔍',
         'settings' => '⚙',
         'star' => '★',
+        'table' => '☷',
         'tag' => '⛓',
         'thumbs_up' => '👍',
         'thumbs_down' => '👎',

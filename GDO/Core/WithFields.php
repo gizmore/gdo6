@@ -144,7 +144,7 @@ trait WithFields
 	public function renderJSON()
 	{
 		$json = [];
-		foreach ($this->fields as $gdoType)
+		foreach ($this->getFieldsRec() as $gdoType)
 		{
 		    if ($this->gdo)
 		    {

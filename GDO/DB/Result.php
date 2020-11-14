@@ -8,9 +8,13 @@ use GDO\Core\GDT;
  * @author gizmore
  * @version 6.05
  * @since 6.00
+ * @see ArrayResult
  */
 class Result
 {
+    /**
+     * @var GDO
+     */
 	public $table;
 	private $result;
 	private $useCache;

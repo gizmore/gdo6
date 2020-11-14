@@ -1,7 +1,7 @@
 <?php /** @var $field \GDO\DB\GDT_Int **/ ?>
 <input
- name="f[<?= $field->filterField ? $field->filterField : $field->name; ?>]"
+ name="<?=$f?>[f][<?= $field->filterField ? $field->filterField : $field->name; ?>]"
  type="text"
- value="<?= html($field->filterValue()); ?>"
+ value="<?=html($field->filterVar($f))?>"
  size="5"
  placeholder="<?=t('object_filter')?>"  />

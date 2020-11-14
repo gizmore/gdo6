@@ -154,14 +154,14 @@ class GDT_Int extends GDT
 	##############
 	### Filter ###
 	##############
-	public function renderFilter()
+	public function renderFilter($f)
 	{
-		return GDT_Template::php('DB', 'filter/int.php', ['field'=>$this]);
+		return GDT_Template::php('DB', 'filter/int.php', ['field' => $this, 'f' => $f]);
 	}
 	
-	public function filterQuery(Query $query)
+	public function filterQuery(Query $query, $rq=null)
 	{
-		if ($filter = $this->filterValue())
+		if ($filter = $this->filterVar($rq))
 		{
 			$min = (int)Strings::substrTo($filter, '-', $filter);
 			$max = (int)Strings::substrFrom($filter, '-', $filter);
@@ -170,15 +170,12 @@ class GDT_Int extends GDT
 		}
 	}
 	
-	public function filterGDO(GDO $gdo)
+	public function filterGDO(GDO $gdo, $filtervalue)
 	{
-		if ($filter = (string)$this->filterValue())
-		{
-			$min = Strings::substrTo($filter, '-', $filter);
-			$max = Strings::substrFrom($filter, '-', $filter);
-			$var = $this->getVar();
-			return ($var < $min) || ($var > $max);
-		}
+	    $min = Strings::substrTo($filtervalue, '-', $filtervalue);
+	    $max = Strings::substrFrom($filtervalue, '-', $filtervalue);
+		$var = $gdo->getVar($this->name);
+		return ($var >= $min) && ($var <= $max);
 	}
 	
 	public function gdoCompare(GDO $a, GDO $b)
@@ -204,8 +201,8 @@ class GDT_Int extends GDT
 	{
 	    $nameI = GDO::escapeIdentifierS($this->name);
 	    $searchTerm = GDO::escapeSearchS($searchTerm);
-	    return sprintf('%s%s LIKE \'%%%s%%\'',
-	        $fkTable ? $fkTable.'.' : '', $nameI, $searchTerm);
+	    return sprintf('%s.%s LIKE \'%%%s%%\'',
+	        $fkTable ? $fkTable : $this->gdtTable->gdoTableName() , $nameI, $searchTerm);
 	}
 	
 	##############

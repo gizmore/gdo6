@@ -8,6 +8,7 @@ use GDO\Form\GDT_Submit;
 use GDO\Form\MethodForm;
 use Exception;
 use GDO\UI\GDT_Panel;
+use GDO\UI\GDT_HTML;
 /**
  * Development aid for testing cronjobs.
  * 
@@ -34,7 +35,7 @@ class Cronjob extends MethodForm
 			ob_start();
 			echo "<pre>"; \GDO\Core\Cronjob::run(); echo "</pre>\n<br/>";
 			$html = ob_get_contents();
-			return $this->renderPage()->addField(GDT_Panel::withHTML($html));
+			return $this->renderPage()->addField(GDT_HTML::withHTML($html));
 		}
 		catch (Exception $ex)
 		{

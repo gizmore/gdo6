@@ -12,19 +12,14 @@ use GDO\Core\GDT;
  */
 final class GDT_Headline extends GDT
 {
-	use WithHTML;
+    use WithText;
 	
 	public $level = 5;
 	public function level($level) { $this->level = $level; return $this; }
 	
-	public function renderCell() { return sprintf('<h%1$d>%2$s</h%1$d>', $this->level, $this->html); }
+	public function renderCell() { return sprintf('<h%1$d>%2$s</h%1$d>', $this->level, $this->renderText()); }
 	public function renderForm() { return $this->renderCell(); }
-	public function renderJSON() { return ['headline' => $this->html, 'level' => $this->level]; }
-	public function renderCard()
-	{
-	    return
-	    sprintf('<h%1$d>%2$s</h%1$d>', $this->level, $this->displayLabel()).
-	    $this->renderCell();
-	}
+	public function renderJSON() { return ['headline' => $this->renderText(), 'level' => $this->level]; }
+	public function renderCard() { return sprintf('<em></em><h%1$d>%2$s</h%1$d>', $this->level, $this->renderText()); }
 	
 }

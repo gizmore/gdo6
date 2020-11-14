@@ -16,6 +16,8 @@ return array(
 'country' => 'Natiuone',
 'created_at' => 'Creato il',
 'created_by' => 'Creato da',
+'edited_at' => 'Modificato il',
+'edited_by' => 'Modificato da',
 'deleted_at' => 'Cancellato il',
 'deleted_by' => 'Cancellato da',
 'credits' => 'Credito',
@@ -72,6 +74,7 @@ return array(
 'text' => 'Testo',
 'num' => 'Numero',
 'filter' => 'Filtro',
+'actions' => 'Azioni',
     
 # Generic Buttons
 'btn_back' => 'Indietro',
@@ -100,6 +103,7 @@ return array(
 'order_dir' => 'Direction',
 'asc' => 'Ascending',
 'desc' => 'Descending',
+'lbl_search_criteria' => 'Ricerca: %s',
     
 # Generic Messages
 'msg_form_saved' => 'I vostri dati sono stati memmorizzati com successo.',

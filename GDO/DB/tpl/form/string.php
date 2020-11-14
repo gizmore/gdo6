@@ -3,7 +3,7 @@
   <?= $field->htmlIcon(); ?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input
-   type="text"
+   type="<?=$field->_inputType?>"
    <?=$field->htmlID()?>
    <?=$field->htmlRequired()?>
    <?=$field->htmlPattern()?>

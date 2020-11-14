@@ -22,10 +22,16 @@ use GDO\DB\GDT_EditedAt;
  */
 final class GDT_Card extends GDT
 {
-	use WithTitle;
 	use WithFields;
 	use WithActions;
 	use WithPHPJQuery;
+	
+	#############
+	### Title ###
+	#############
+	/** @var $title GDT **/
+	public $title;
+	public function title($title) { $this->title = $title; return $this; }
 	
 	################
 	### Subtitle ###
@@ -37,7 +43,7 @@ final class GDT_Card extends GDT
 	##############
 	### Avatar ###
 	##############
-	/** @var $avatar GDT **/
+	/** @var $avatar GDT_Avatar **/
 	public $avatar;
 	public function avatar($avatar) { $this->avatar = $avatar; return $this; }
 	
@@ -65,8 +71,7 @@ final class GDT_Card extends GDT
 	##############
 	### Render ###
 	##############
-	public function render() { return GDT_Template::php('UI', 'cell/card.php', ['field' => $this]); }
-	public function renderCard() { return $this->render(); }
+	public function renderCell() { return GDT_Template::php('UI', 'cell/card.php', ['field' => $this]); }
 	
 	##############
 	### Helper ###
@@ -125,7 +130,7 @@ final class GDT_Card extends GDT
 	    }
 	    else
 	    {
-	        $profileLink = GDT_Label::make()->rawLabel($user->displayNameLabel());
+	        $profileLink = GDT_Label::make()->labelRaw($user->displayNameLabel());
 	    }
 	    $this->subtitle->addField($profileLink);
 	    $this->subtitle->addField(GDT_DateDisplay::make($date->name)->gdo($this->gdo)->addClass('ri'));

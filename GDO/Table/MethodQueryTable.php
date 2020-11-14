@@ -1,63 +1,57 @@
 <?php
 namespace GDO\Table;
 
-use GDO\Core\Method;
 use GDO\DB\Query;
-use GDO\Core\GDT;
-use GDO\Core\GDT_Response;
+use GDO\Core\GDOException;
 
 /**
  * A method that displays a table.
  * 
  * @author gizmore
- * @version 5.0
+ * @version 6.10
  * @since 3.0
+ * @see GDT_Table
  */
-abstract class MethodQueryTable extends Method
+abstract class MethodQueryTable extends MethodTable
 {
-	public function ipp() { return Module_Table::instance()->cfgItemsPerPage(); }
-	public function isOrdered() { return true; }
-	public function isFiltered() { return true; }
-	public function isPaginated() { return true; }
-	
 	################
 	### Abstract ###
 	################
+	public function getResult()
+	{
+	    throw new GDOException("Shuld not return result for queried methods!");
+	}
+    
 	/**
 	 * @return Query
 	 */
-	public abstract function getQuery();
+	public function getQuery()
+	{
+	    return $this->gdoTable()->select('*');
+	}
 	
 	public function getCountQuery()
 	{
-	    return $this->getQuery()->copy()->selectOnly('COUNT(*)');
+	    return $this->getQuery()->selectOnly('COUNT(*)');
 	}
 	
-	/**
-	 * @return GDT[]
-	 */
-	public function getHeaders()
+	protected function setupTitlePrefix()
 	{
-		return $this->getQuery()->table->gdoColumnsCache();
+	    return 'table';
 	}
-	
-	public function onDecorateTable(GDT_Table $table) {}
 	
 	############
 	### Exec ###
 	############
-	public function execute()
+	protected function setupCollection(GDT_Table $table)
 	{
-		$table = GDT_Table::make('table');
-		$table->addHeaders($this->getHeaders());
-		$table->query($this->getQuery());
-		$table->countQuery($this->getCountQuery());
-		$table->gdo($table->query->table);
-		$table->ordered($this->isOrdered());
-		$table->filtered($this->isFiltered());
-		$table->paginate($this->isPaginated(), @$_SERVER['REQUEST_URI'], $this->ipp());
-		$this->onDecorateTable($table);
-		return GDT_Response::makeWith($table);
+	    parent::setupCollection($table);
+	}
+	
+	protected function calculateTable(GDT_Table $table)
+	{
+	    $table->query($this->getQuery());
+	    $table->countQuery($this->getCountQuery());
 	}
 
 }

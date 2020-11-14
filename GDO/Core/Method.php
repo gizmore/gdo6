@@ -89,11 +89,11 @@ abstract class Method
 	{
 		if ($this->paramCache === null)
 		{
-			$this->paramCache = $this->gdoParameters();
-			if (!$this->paramCache)
-			{
-				$this->paramCache = [];
-			}
+		    $this->paramCache = [];
+		    foreach ($this->gdoParameters() as $gdt)
+		    {
+		        $this->paramCache[$gdt->name] = $gdt;
+		    }
 		}
 		return $this->paramCache;
 	}

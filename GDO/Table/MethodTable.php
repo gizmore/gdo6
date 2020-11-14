@@ -5,40 +5,114 @@ use GDO\Core\Method;
 use GDO\DB\ArrayResult;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Fields;
+use GDO\Core\GDO;
+use GDO\UI\GDT_SearchField;
+
 /**
  * A method that displays a table from memory ArrayResult.
  * 
  * @author gizmore
- * @version 6.08
+ * @version 6.10
  * @since 3.0
  */
 abstract class MethodTable extends Method
 {
-	public function ipp() { return Module_Table::instance()->cfgItemsPerPage(); }
-
-	public function isOrdered() { return true; }
-	public function isFiltered() { return true; }
-	public function isPaginated() { return true; }
-
-	public function getOrderName() { return 'o'; }
-	public function getDefaultOrder() { return null; }
-	public function getDefaultOrderDir() { return true; }
+    ################
+    ### Abstract ###
+    ################
+    /**
+     * @return GDO
+     */
+    public abstract function gdoTable();
+    
+    /**
+     * @return ArrayResult
+     */
+    public function getResult() { return new ArrayResult([], $this->gdoTable()); }
+    
+    /**
+     * @return GDT_Fields
+     */
+    public function gdoHeaders() { return $this->gdoTable()->gdoColumnsCache(); }
+    
+    public function getHeaderName() { return 'o'; }
+    
+    /**
+     * On creation.
+     * @param GDT_Table $table
+     */
+    public function createTable(GDT_Table $table) {}
+    
+    /**
+     * @var GDT_Table
+     */
+    protected $table;
+    
+    public function __construct()
+    {
+        $this->table = $this->createCollection();
+        $this->table->addHeaders($this->gdoHeaders());
+        if ($this->isSearched())
+        {
+            $this->table->addHeader(GDT_SearchField::make('search'));
+        }
+        
+        if ($this->isPaginated())
+        {
+            $this->table->addHeader(GDT_PageNum::make('page'));
+            $this->table->addHeader(GDT_IPP::make('ipp'));
+        }
+    }
+    
+    /**
+     * @return GDT_Table|GDT_List
+     */
+    public function createCollection() { $this->table = GDT_Table::make('table'); return $this->table; }
+    
+    ##################
+    ### 5 features ###
+    ##################
+	public function isOrdered() { return true; } # GDT$orderable
+	public function isSearched() { return true; } # GDT$searchable
+	public function isFiltered() { return true; } # GDT#filterable
+	public function isPaginated() { return true; } # creates a GDT_Pagemenu
+	public function isSorted() { return true; } # Uses js/ajax and GDO needs to have GDT_Sort column.
 	
-	################
-	### Abstract ###
-	################
-	/**
-	 * @return GDT_Fields
-	 */
-	public abstract function getHeaders();
+	###
+	public function getDefaultOrder()
+	{
+	    foreach ($this->table->getHeaderFields() as $gdt)
+	    {
+	        if ($gdt->orderable)
+	        {
+	            return $gdt->name;
+	        }
+	    }
+	}
 	
-	/**
-	 * @return ArrayResult
-	 */
-	public abstract function getResult();
+	public function getDefaultOrderDir()
+	{
+	    return true;
+    }
 	
-	public function createTable(GDT_Table $table) {}
-
+	public function getIPP()
+	{
+	    $o = $this->table->headers->name;
+	    return $this->table->getHeaderField('ipp')->getRequestVar($o, Module_Table::instance()->cfgItemsPerPage());
+	}
+	
+	public function getPage()
+	{
+	    $o = $this->table->headers->name;
+	    return $this->table->getHeaderField('page')->getRequestVar($o, '1');
+	}
+	
+	public function getSearchTerm()
+	{
+	    $table = $this->table;
+	    return $table->getHeaderField('search')->getRequestVar($table->headers->name);
+	}
+	
 	###############
 	### Execute ###
 	###############
@@ -47,19 +121,75 @@ abstract class MethodTable extends Method
 		return $this->renderTable();
 	}
 	
+	protected function setupTitlePrefix() { return 'method_table'; }
+	protected function setupTitle(GDT_Table $table)
+	{
+	    if ($prefix = $this->setupTitlePrefix())
+	    {
+	        $key = strtolower(sprintf('%s_%s_%s', $prefix, $this->getModuleName(), $this->gdoShortName()));
+	        $numItems = $table->getPageMenu()->numItems;
+	        $table->title($key, [$numItems]);
+    	    return $this->title($key, [$numItems]);
+	    }
+	    return $this;
+	}
+	
+	protected function setupCollection(GDT_Table $table)
+	{
+	    $table->gdo($this->gdoTable());
+	    
+	    # 5 features
+	    $table->ordered($this->isOrdered(), $this->getDefaultOrder(), $this->getDefaultOrderDir());
+	    $table->filtered($this->isFiltered());
+	    $table->searched($this->isSearched());
+	    $table->paginated($this->isPaginated());
+	    $table->sorted($this->isSorted());
+	}
+	
 	public function renderTable()
 	{
-		$table = GDT_Table::make();
-		$table->addHeaders($this->getHeaders());
-		$table->ordered($this->isOrdered());
-		$table->filtered($this->isFiltered());
-		$table->paginate($this->isPaginated(), $this->ipp());
-		$this->createTable($table);
-		$result = $this->getResult();
-		$table->multisort($result, $this->getDefaultOrder(), $this->getDefaultOrderDir(), $this->getOrderName());
-		$result->data = array_values($result->data);
-		$table->result($result);
-		return GDT_Response::makeWith($table);
+        $table = $this->table;
+	    $this->setupCollection($table);
+	    $this->createTable($table);
+	    $this->calculateTable($table);
+
+	    if ($pagemenu = $table->getPageMenu())
+	    {
+	        $pagemenu->headers($table->headers);
+    	    $pagemenu->ipp($this->getIPP());
+    	    $pagemenu->page($this->getPage());
+	    }
+	    $table->getResult();
+	    
+	    $this->setupTitle($table);
+	    
+	    return GDT_Response::makeWith($table);
+	}
+	
+	protected function calculateTable(GDT_Table $table)
+	{
+	    # Exec
+	    $result = $this->getResult();
+	    
+	    # Exec features
+	    if ($this->isFiltered())
+	    {
+	        $result = $result->filterResult($result->fullData, $this->gdoTable(), $table->getHeaderFields(), $table->headers->name);
+	    }
+	    if ($this->isSearched())
+	    {
+	        $result = $result->searchResult($result->data, $this->gdoTable(), $table->getHeaderFields(), $this->getSearchTerm());
+	    }
+	    if ($this->isOrdered())
+	    {
+	        $result = $table->multisort($result, $this->getDefaultOrder(), $this->getDefaultOrderDir());
+	    }
+	    if ($table->pagemenu)
+	    {
+	        $result = $table->pagemenu->paginateResult($result, $this->getPage(), $this->getIPP());
+	    }
+	    
+	    $table->result($result);
 	}
 	
 }

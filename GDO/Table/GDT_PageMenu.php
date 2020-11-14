@@ -8,6 +8,8 @@ use GDO\Core\GDT_Template;
 use GDO\UI\WithHREF;
 use GDO\UI\WithLabel;
 use GDO\UI\GDT_Link;
+use GDO\Core\WithFields;
+use GDO\Core\GDT_Fields;
 
 class GDT_PageMenu extends GDT
 {
@@ -16,6 +18,7 @@ class GDT_PageMenu extends GDT
 	
 	public $orderable = false;
 	public $searchable = false;
+	public $filterable = false;
 	
 	public $numItems = 0;
 	public function items($numItems)
@@ -27,23 +30,49 @@ class GDT_PageMenu extends GDT
 	public $ipp = 10;
 	public function ipp($ipp)
 	{
-		$this->ipp = $ipp;
+	    $this->ipp = $ipp;
+	    return $this;
+	}
+	
+	public $page = 1;
+	public function page($page)
+	{
+		$this->page = $page;
 		return $this;
 	}
 	
-	/**
-	 * Set num items via query.
-	 * @optional
-	 * @param Query $query
-	 * @return self
-	 */
-	public function query(Query $query)
+	public $shown = 5;
+	public function shown($shown)
 	{
-		$this->query = $query->copy()->selectOnly('COUNT(*)');
-		$this->numItems = $this->query->exec()->fetchValue();
-		return $this;
+	    $this->shown = $shown;
+	    return $this;
 	}
-	private $query = null;
+	
+	/**
+	 * @var GDT_Fields
+	 */
+	public $headers;
+	public function headers(GDT_Fields $headers)
+	{
+	    $this->headers = $headers;
+	    return $this;
+	}
+	
+	
+// 	/**
+// 	 * Set num items via query.
+// 	 * @optional
+// 	 * @param Query $query
+// 	 * @return self
+// 	 */
+// 	public function query(Query $query)
+// 	{
+// 		$this->query = $query;
+// 		$this->numItems = $this->query->exec()->fetchValue();
+// 		return $this;
+// 	}
+	
+// 	private $query = null;
 	
 	public function getPages()
 	{
@@ -55,14 +84,7 @@ class GDT_PageMenu extends GDT
 		return max(array(intval((($numItems-1) / $ipp)+1), 1));
 	}
 	
-	public $shown = 3;
-	public function shown($shown)
-	{
-		$this->shown = $shown;
-		return $this;
-	}
-	
-	public function filterQuery(Query $query)
+	public function filterQuery(Query $query, $rq=null)
 	{
 		$query->limit($this->ipp, $this->getFrom());
 		return $this;
@@ -73,7 +95,7 @@ class GDT_PageMenu extends GDT
 	 */
 	public function getPage()
 	{
-		return (int) Math::clamp($this->filterValue(), 1, $this->getPages());
+		return (int) Math::clamp($this->page, 1, $this->getPages());
 	}
 	
 	public function getFrom()
@@ -99,11 +121,6 @@ class GDT_PageMenu extends GDT
 	##############
 	### Render ###
 	##############
-	public function initJSON()
-	{
-		return $this->renderJSON();
-	}
-	
 	public function renderCell()
 	{
 		switch (Application::instance()->getFormat())
@@ -111,17 +128,6 @@ class GDT_PageMenu extends GDT
 			case 'json': return $this->renderJSON();
 			case 'html': default: return $this->renderHTML();
 		}
-	}
-	
-	public function renderJSON()
-	{
-		return array(
-			'href' => $this->href,
-			'items' => $this->numItems,
-			'ipp' => $this->ipp,
-			'page' => $this->getPage(),
-			'pages' => $this->getPages(),
-		);
 	}
 	
 	public function renderHTML()
@@ -136,19 +142,20 @@ class GDT_PageMenu extends GDT
 		}
 	}
 	
-	private function replaceHREF($page)
+	public function configJSON()
 	{
-		$this->href = preg_replace("#[&?]f\\[{$this->name}\\]=\\d+#", '', $this->href);
-		if (!strpos($this->href, '?'))
-		{
-			return $this->href . '?f[' . $this->name . ']='. $page;
-		}
-		else
-		{
-			return $this->href . '&f[' . $this->name . ']='. $page;
-		}
+	    return [
+	        'href' => $this->href,
+	        'items' => $this->numItems,
+	        'ipp' => $this->ipp,
+	        'page' => $this->getPage(),
+	        'pages' => $this->getPages(),
+	    ];
 	}
 	
+	#############
+	### Items ###
+	#############
 	private function pagesObject()
 	{
 		$curr = $this->getPage();
@@ -182,6 +189,20 @@ class GDT_PageMenu extends GDT
 		}
 		
 		return $pages;
+	}
+	
+	private function replaceHREF($page)
+	{
+	    $o = $this->headers->name;
+	    $this->href = preg_replace("#[&?]{$o}\\[{$this->name}\\]=\\d+#", '', $this->href);
+	    if (!strpos($this->href, '?'))
+	    {
+	        return $this->href . '?'.$o.'[' . $this->name . ']='. $page;
+	    }
+	    else
+	    {
+	        return $this->href . '&'.$o.'[' . $this->name . ']='. $page;
+	    }
 	}
 	
 	/**

@@ -25,6 +25,10 @@ class GDT_Timestamp extends GDT
 	use WithOrder;
 	
 	public $icon = 'time';
+
+	public $orderable = true;
+	public $filterable = true;
+	public $searchable = false;
 	
 	#############
 	### Value ###

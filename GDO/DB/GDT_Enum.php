@@ -58,6 +58,11 @@ class GDT_Enum extends GDT
 		return $var === $this->emptyValue ? null : $var;
 	}
 	
+	public function displayValue($var)
+	{
+	    return $this->enumLabel($var);
+	}
+	
 	############
 	### Enum ###
 	############
@@ -97,14 +102,14 @@ class GDT_Enum extends GDT
 	/**
 	 * Render select filter header.
 	 */
-	public function renderFilter() { return GDT_Template::php('DB', 'filter/enum.php', ['field' => $this]); }
+	public function renderFilter($f) { return GDT_Template::php('DB', 'filter/enum.php', ['field' => $this, 'f' => $f]); }
 	
 	/**
 	 * Filter value is an array.
 	 */
-	public function filterValue()
+	public function filterVar($rq=null)
 	{
-		if ($filter = parent::filterValue())
+		if ($filter = parent::filterVar($rq))
 		{
 			if ($filter = is_array($filter) ? $filter : json_decode($filter))
 			{
@@ -117,9 +122,9 @@ class GDT_Enum extends GDT
 	/**
 	 * Add where clause to query on filter.
 	 */
-	public function filterQuery(Query $query)
+	public function filterQuery(Query $query, $rq=null)
 	{
-		$filter = $this->filterValue();
+		$filter = $this->filterVar($rq);
 		if (!empty($filter))
 		{
 			$filter = array_map(['GDO\\Core\\GDO', 'escapeS'], $filter);

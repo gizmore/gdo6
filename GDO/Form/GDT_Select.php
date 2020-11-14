@@ -95,6 +95,12 @@ class GDT_Select extends GDT_ComboBox
 	    return (!$gdo) || $gdo->isTable() ? $this->var($this->emptyValue) : parent::setGDOData($gdo);
 	}
 	
+	public function displayValue($var)
+	{
+	    $value = $this->toValue($var);
+	    return $this->renderChoice($value);
+	}
+	
 	################
 	### Validate ###
 	################
@@ -224,7 +230,7 @@ class GDT_Select extends GDT_ComboBox
 		}
 		else 
 		{
-			return $this->var === (string)$value ? self::SELECTED : '';
+			return $this->getVar() === (string)$value ? self::SELECTED : '';
 		}
 	}
 	

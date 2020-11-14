@@ -6,6 +6,7 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\WithFields;
 use GDO\UI\WithTitle;
+use GDO\UI\GDT_SearchField;
 
 /**
  * An HTML Form.
@@ -218,5 +219,32 @@ class GDT_Form extends GDT
 	    return sprintf('<input type="hidden" name="mo" value="%s" /><input type="hidden" name="me" value="%s" />',
 	        html(@$_REQUEST['mo']), html(@$_REQUEST['me']));
 	}
-	
+
+	###############
+	### Display ###
+	###############
+	/**
+	 * Display a label with filter criteria.
+	 * @return string
+	 */
+	public function displaySearchCriteria()
+	{
+	    $data = [];
+	    foreach ($this->getFieldsRec() as $gdt)
+	    {
+	        if ($gdt->filterable || $gdt->searchable || $gdt->orderable || ($gdt instanceof GDT_SearchField))
+	        {
+    	        if (!($var = $gdt->filterVar($this->name)))
+    	        {
+    	            $var = $gdt->getVar();
+    	        }
+    	        if ($var)
+    	        {
+    	            $data[] = sprintf('%s: %s', $gdt->displayLabel(), $gdt->displayValue($var));
+    	        }
+	        }
+	    }
+	    return t('lbl_search_criteria', [implode(', ', $data)]);
+	}
+
 }

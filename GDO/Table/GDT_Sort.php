@@ -3,6 +3,11 @@ namespace GDO\Table;
 
 use GDO\DB\GDT_Int;
 
+/**
+ * This GDT makes a GDO table sortable.
+ * @author gizmore
+ * @version 6.10
+ */
 class GDT_Sort extends GDT_Int
 {
 	public function __construct()

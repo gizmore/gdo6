@@ -14,14 +14,14 @@ final class ResponseTest extends TestCase
     public function testRendersNestedFields()
     {
         $r1 = GDT_Response::make();
-        $p1 = GDT_Paragraph::withHTML('par1');
+        $p1 = GDT_Paragraph::make()->textRaw('par1');
         $r1->addField($p1);
         $r2 = GDT_Response::make();
-        $p2 = GDT_Paragraph::withHTML('par2');
+        $p2 = GDT_Paragraph::make()->textRaw('par2');
         $r2->addField($p2);
         $r1->add($r2);
         $c = GDT_Container::make();
-        $p3 = GDT_Paragraph::withHTML('par3');
+        $p3 = GDT_Paragraph::make()->textRaw('par3');
         $c->addField($p3);
         $r2->addField($c);
         
@@ -35,7 +35,7 @@ final class ResponseTest extends TestCase
     public function testAddingNullResponse()
     {
         $r1 = GDT_Response::make();
-        $p1 = GDT_Paragraph::withHTML('par1');
+        $p1 = GDT_Paragraph::make()->textRaw('par1');
         $r1->addField($p1);
         $r1->add(null);
         assertEquals(200, $r1->code);

@@ -26,7 +26,7 @@ class GDT_Label extends GDT
 	
 	public function renderCard()
 	{
-	    return $this->renderCell();
+	    return $this->displayLabel();
 	}
 
 }

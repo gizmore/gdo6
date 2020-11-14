@@ -1,14 +1,16 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDO;
 use GDO\Core\GDT;
+
 /**
  * Mimics a GDO Result from database.
  * Used in, e.g. Admin_Modules overview, as its loaded from FS.
  * 
  * @author gizmore
+ * @version 6.10
  * @since 5.00
- * @version 6.05
  */
 final class ArrayResult extends Result
 {
@@ -29,59 +31,74 @@ final class ArrayResult extends Result
 		$this->table = $table;
 		$this->reset();
 	}
-	
+
+	#############
+	### Table ###
+	#############
+	public function reset() { $this->index = 0; return $this; }
+	public function numRows() { return count($this->data); }
+	public function fetchRow() { return array_values($this->fetchAssoc()); }
+	public function fetchAssoc() { return $this->fetchObject()->getGDOVars(); }
+	public function fetchAs(GDO $table) { return $this->fetchObject(); }
+	public function fetchObject() { return isset($this->data[$this->index]) ? $this->data[$this->index++] : null; }
+
+	##############
+	### Filter ###
+	##############
 	/**
-	 * 
-	 * @param array $data
+	 *
+	 * @param GDO[] $data
 	 * @param GDO $table
 	 * @param GDT[] $filters
 	 * @return ArrayResult
 	 */
-	public static function filtered(array $data, GDO $table, array $filters)
+	public function filterResult(array $data, GDO $table, array $filters, $rq)
 	{
-		foreach ($filters as $filter)
-		{
-			$filtered = [];
-			foreach ($data as $gdo)
-			{
-				if (!$filter->gdo($gdo)->filterGDO($gdo))
-				{
-					$filtered[] = $gdo;
-				}
-			}
-			$data = $filtered;
-		}
-		return new self($data, $table);
-	}
-	
-	public function reset()
-	{
-		$this->index = 0;
-		return $this;
-	}
-	
-	public function numRows()
-	{
-		return count($this->data);
+	    foreach ($filters as $gdt)
+	    {
+	        if ($gdt->filterable)
+	        {
+	            if ($filter = $gdt->filterVar($rq))
+	            {
+	                $keep = [];
+	                foreach ($data as $gdo)
+	                {
+	                    if ($gdt->filterGDO($gdo, $filter))
+    	                {
+    	                    $keep[] = $gdo;
+    	                }
+	                }
+	                $data = $keep;
+	            }
+	        }
+	    }
+	    $this->data = $data;
+	    return $this;
 	}
 
-	public function fetchRow()
+	##############
+	### Search ###
+	##############
+	/**
+	 * Deepsearch a static result.
+	 * @param GDO[] $data
+	 * @param GDO $table
+	 * @param GDT[] $filters
+	 * @param string $searchTerm
+	 */
+	public function searchResult(array $data, GDO $table, array $filters, $searchTerm)
 	{
-		return array_values($this->fetchAssoc());
-	}
-
-	public function fetchAssoc()
-	{
-		return $this->fetchObject()->getGDOVars();
+	    foreach ($filters as $gdt)
+	    {
+    	    $hits = [];
+	        if ($gdt->searchable)
+	        {
+	            foreach ($data as $gdo)
+	            {
+	            }
+	        }
+	    }
+	    return new self($data, $table);
 	}
 	
-	public function fetchAs(GDO $table)
-	{
-		return $this->fetchObject();
-	}
-	
-	public function fetchObject()
-	{
-		return isset($this->data[$this->index]) ? $this->data[$this->index++] : null;
-	}
 }

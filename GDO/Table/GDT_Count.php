@@ -22,4 +22,5 @@ class GDT_Count extends GDT
 	{
 		return $this->num++;
 	}
+
 }

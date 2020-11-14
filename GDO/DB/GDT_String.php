@@ -40,9 +40,9 @@ class GDT_String extends GDT
 	
 	public $_inputType = 'text';
 	
+	public $orderable = true;
 	public $filterable = true;
 	public $searchable = true;
-	public $orderable = true;
 	
 	public function utf8() { return $this->encoding(self::UTF8); }
 	public function ascii() { return $this->encoding(self::ASCII); }
@@ -178,22 +178,23 @@ class GDT_String extends GDT
 	##############
 	### filter ###
 	##############
-	public function renderFilter()
+	public function renderFilter($f)
 	{
-		return GDT_Template::php('DB', 'filter/string.php', ['field'=>$this]);
+		return GDT_Template::php('DB', 'filter/string.php', ['field' => $this, 'f' => $f]);
 	}
 	
     public function searchCondition($searchTerm, $fkTable=null)
     {
         $collate = $this->caseSensitive ? (' '.$this->gdoCollateDefine(false)) : '';
         $condition = sprintf('%s%s%s LIKE \'%%%s%%\'', 
-            $fkTable ? $fkTable.'.' : '', $this->identifier(), $collate, GDO::escapeSearchS($searchTerm));
+            $fkTable ? ($fkTable.'.') : ($this->gdo ? ($this->gdo->gdoTableName().'.') : ''),
+                $this->identifier(), $collate, GDO::escapeSearchS($searchTerm));
         return $condition;
     }
 	
-	public function filterQuery(Query $query)
+    public function filterQuery(Query $query, $rq=null)
 	{
-		if ($filter = (string)$this->filterValue())
+		if ($filter = (string)$this->filterVar($rq))
 		{
 		    $this->applyQueryFilter($query, $filter);
 		}
@@ -205,14 +206,11 @@ class GDT_String extends GDT
 	    $this->filterQueryCondition($query, $condition);
 	}
 	
-	public function filterGDO(GDO $gdo)
+	public function filterGDO(GDO $gdo, $filtervalue)
 	{
-		if ($filter = $this->filterValue())
-		{
-			$pattern = chr(1).preg_quote($filter, chr(1)).chr(1);
-			if ($this->caseSensitive) { $pattern .= 'i'; } # Switch to case-i if necessary
-			return !preg_match($pattern, $this->getVar());
-		}
+	    $pattern = chr(1).preg_quote($filtervalue, chr(1)).chr(1);
+		if ($this->caseSensitive) { $pattern .= 'i'; } # Switch to case-i if necessary
+		return preg_match($pattern, $gdo->getVar($this->name));
 	}
 	
 	##############

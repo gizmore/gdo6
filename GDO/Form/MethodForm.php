@@ -107,6 +107,7 @@ abstract class MethodForm extends Method
 		$form = $this->getForm();
 		if ($flowField = Common::getRequestString('flowField'))
 		{
+		    /** @var $formField GDT_File **/
 		    if ($formField = $form->getField($flowField))
 		    {
     			return $formField->flowUpload();
@@ -163,10 +164,16 @@ abstract class MethodForm extends Method
 		unset($this->form);
 	}
 	
-	public function title($title=null)
+	public function title($key=null, array $args=null)
 	{
-		$this->getForm()->title($title);
-		return parent::title($title);
+	    $this->getForm()->title($key, $args);
+	    return parent::title($key, $args);
+	}
+	
+	public function titleRaw($title)
+	{
+	    $this->getForm()->titleRaw($title);
+	    return parent::titleRaw($title);
 	}
 	
 	###

@@ -20,11 +20,13 @@ use GDO\Date\GDT_DateDisplay;
 final class GDT_ListItem extends GDT
 {
 	use WithPHPJQuery;
-	use WithTitle;
 	
 	public $avatar;
 	public function avatar($avatar) { $this->avatar = $avatar; return $this; }
 	public function userAvatar(GDO_User $user) { return $this->avatar(GDT_Avatar::make()->user($user)); }
+	
+	public $title;
+	public function title($title) { $this->title = $title; return $this; }
 	
 	public $subtitle;
 	public function subtitle($subtitle) { $this->subtitle = $subtitle; return $this; }
@@ -68,7 +70,7 @@ final class GDT_ListItem extends GDT
 	    }
 	    else
 	    {
-	        $profileLink = GDT_Label::make()->rawLabel($user->displayNameLabel());
+	        $profileLink = GDT_Label::make()->labelRaw($user->displayNameLabel());
 	    }
 	    $this->subtitle->addField($profileLink);
 	    $this->subtitle->addField(GDT_DateDisplay::make($date->name)->gdo($this->gdo)->addClass('ri'));

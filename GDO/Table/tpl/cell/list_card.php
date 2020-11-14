@@ -1,5 +1,4 @@
 <?php
-
 /** @var $field \GDO\Table\GDT_List **/
 $result = $field->getResult();
 
@@ -9,7 +8,9 @@ $pages = $pagemenu->render();
 
 <?=$pages?>
 <div class="gdo-list-card">
-  <h3 class="title"><?= $field->title; ?></h3>
+<?php if ($field->hasTitle()) : ?>
+  <h3><?=$field->renderTitle()?></h3>
+<?php endif; ?>
   <ul>
 	<li>
 <?php

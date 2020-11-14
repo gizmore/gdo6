@@ -38,7 +38,7 @@ abstract class MethodCompletionSearch extends MethodCompletion
     /**
      * @return Query
      */
-    public function gdoQuery() { return $this->gdoTable()->select()->limit($this->getMaxSuggestions()); }
+    public function getQuery() { return $this->gdoTable()->select()->limit($this->getMaxSuggestions()); }
     
 	############
 	### Exec ###
@@ -46,7 +46,7 @@ abstract class MethodCompletionSearch extends MethodCompletion
 	public function execute()
 	{
 	    $table = $this->gdoTable();
-	    $query = $this->gdoQuery();
+	    $query = $this->getQuery();
 	    $gdtTable = GDT_Table::make()->gdo($table);
 	    $gdtTable->headersWith($this->gdoHeaderColumns());
 	    $gdtTable->bigSearchQuery($query, $this->getSearchTerm());

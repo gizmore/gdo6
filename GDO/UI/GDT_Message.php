@@ -16,15 +16,7 @@ use GDO\DB\GDT_Text;
  */
 class GDT_Message extends GDT_Text
 {
-	public function __construct()
-	{
-		$this->icon('message');
-	}
-	
-// 	public function toValue($var)
-// 	{
-// 	    return $this->renderCell();
-// 	}
+    public $icon = 'message';
 	
 	##############
 	### Render ###
@@ -43,14 +35,6 @@ class GDT_Message extends GDT_Text
 	################
 	### Validate ###
 	################
-// 	public function validate($value)
-// 	{
-// 		if (parent::validate($value))
-// 		{
-// 			return true;
-// 		}
-// 	}
-	
 	private function getPurifier()
 	{
 		static $purifier;

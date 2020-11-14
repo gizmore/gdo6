@@ -13,8 +13,8 @@ $result = $field->getResult();
 <?=GDT_Form::hiddenMoMe()?>
 <?php endif; ?>
 <div class="gdo-table">
-  <?php if ($field->title) : ?>
-  <h3><?=$field->title?></h3>
+  <?php if ($field->hasTitle()) : ?>
+  <h3><?=$field->renderTitle()?></h3>
   <?php endif; ?>
   <table id="gwfdt-<?=$field->name?>" class="gdo-table">
 	<thead>
@@ -28,7 +28,7 @@ $result = $field->getResult();
 			<?php endif; ?>
 		  </label>
 		  <?php if ($field->filtered) : ?>
-			<?= $gdoType->renderFilter(); ?>
+			<?= $gdoType->renderFilter($headers->name); ?>
 		  <?php endif; ?>
 		</th>
 	  <?php endforeach; ?>

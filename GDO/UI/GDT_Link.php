@@ -20,6 +20,10 @@ class GDT_Link extends GDT_String
 	use WithPHPJQuery;
 	use WithAnchorRelation;
 
+	public $orderable = false;
+	public $filterable = false;
+	public $searchable = false;
+	
 	################
 	### Relation ###
 	################
@@ -50,7 +54,7 @@ class GDT_Link extends GDT_String
 	public static function anchor($href, $label=null)
 	{
 		$label = $label !== null ? $label : $href;
-		return self::make()->href($href)->rawLabel($label)->render();
+		return self::make()->href($href)->labelRaw($label)->render();
 	}
 	
 	##############

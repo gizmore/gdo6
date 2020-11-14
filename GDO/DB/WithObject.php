@@ -252,27 +252,26 @@ trait WithObject
 	##############
 	### Filter ###
 	##############
-	public function renderFilter()
+	public function renderFilter($f)
 	{
-		return GDT_Template::php('DB', 'filter/object.php', ['field'=>$this]);
+		return GDT_Template::php('DB', 'filter/object.php', ['field' => $this, 'f' => $f]);
 	}
 	
 	/**
 	 * Proxy filter to the filterColumn.
-	 * {@inheritDoc}
 	 * @see \GDO\DB\GDT_Int::filterQuery()
 	 * @see \GDO\DB\GDT_String::filterQuery()
 	 */
-	public function filterQuery(Query $query)
+	public function filterQuery(Query $query, $rq=null)
 	{
 		if ($field = $this->filterField)
 		{
-			$this->table->gdoColumn($field)->filterQuery($query);
+		    $this->table->gdoColumn($field)->filterQuery($query, $rq);
 			return $this;
 		}
 		else
 		{
-			return parent::filterQuery($query);
+		    return parent::filterQuery($query, $rq);
 		}
 	}
 	
@@ -296,7 +295,8 @@ trait WithObject
 	        $name = GDO::escapeIdentifierS($this->name);
 	        $fk = $table->gdoPrimaryKeyColumn()->name;
 	        $fkI = GDO::escapeIdentifierS($fk);
-	        $query->join("LEFT JOIN {$table->gdoTableName()} {$nameT} ON {$name} = {$nameT}.{$fkI}");
+	        $myT = $this->gdtTable->gdoTableName();
+	        $query->join("LEFT JOIN {$table->gdoTableName()} {$nameT} ON {$myT}.{$name} = {$nameT}.{$fkI}");
 	    }
 	    
 	    $where = [];

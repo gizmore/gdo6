@@ -175,7 +175,6 @@ abstract class GDO
 	 */
 	public function getVar($key)
 	{
-// 	    return @$this->gdoVars[$key];
 		return isset($this->gdoVars[$key]) ? $this->gdoVars[$key] : null;
 	}
 	
@@ -335,7 +334,7 @@ abstract class GDO
 			}
 			else
 			{
-				break; # XXX: early break is only possible because we start all tables with their PKs.
+				break; # early break is possible because we start all tables with their PKs.
 			}
 		}
 		return $columns;
@@ -1197,6 +1196,7 @@ abstract class GDO
 	 * @return \GDO\Core\GDT_Response
 	 */
 	public function responseCard() { return GDT_Response::makeWithHTML($this->renderCard()); }
+	
 	###############
 	### Sorting ###
 	###############
@@ -1209,6 +1209,25 @@ abstract class GDO
 	public function sort(array &$array, $columnName, $ascending=true)
 	{
 		return $this->gdoColumn($columnName)->sort($array, $ascending);
+	}
+	
+	#############
+	### Order ###
+	#############
+	public function getDefaultOrder()
+	{
+	    foreach ($this->gdoColumnsCache() as $gdt)
+	    {
+	        if ($gdt->orderable)
+	        {
+	            return $gdt->name;
+	        }
+	    }
+	}
+	
+	public function getDefaultOrderDir()
+	{
+	    return true;
 	}
 	
 	#######################

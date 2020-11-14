@@ -13,14 +13,11 @@ use GDO\Core\WithFields;
  */
 class GDT_Panel extends GDT
 {
-	use WithIcon;
-	use WithHTML;
 	use WithTitle;
-	use WithPHPJQuery;
+	use WithText;
 	use WithFields;
+	use WithPHPJQuery;
 	
-	public function isError() { return false; }
-
 	public function renderCell() { return GDT_Template::php('UI', 'cell/panel.php', ['field' => $this]); }
 
 }

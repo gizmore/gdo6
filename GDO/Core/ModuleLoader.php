@@ -8,9 +8,11 @@ use GDO\Language\Trans;
 
 /**
  * Module loader.
+ * Can load from DB and/or FS.
+ * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.05
+ * @version 6.10
  * @since 3.00
  */
 final class ModuleLoader

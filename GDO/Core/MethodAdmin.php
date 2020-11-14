@@ -30,4 +30,7 @@ trait MethodAdmin
 	    GDT_Page::$INSTANCE->topTabs->addField(GDT_Template::responsePHP('Admin', 'perm_tabs.php'));
 	}
 	
+
+	protected function setupTitlePrefix() {} # intentionally null title for admin methods.
+	
 }

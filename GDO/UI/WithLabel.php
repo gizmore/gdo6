@@ -1,25 +1,36 @@
 <?php
 namespace GDO\UI;
 
+/**
+ * Add a label to a GDT.
+ * 
+ * @author gizmore
+ * @version 6.10
+ * @since 6.02
+ */
 trait WithLabel
 {
-	public $label;
+    /**
+     * @param string $name
+     * @return static
+     */
+    public function name($name=null) { $this->name = $name ? $name : self::nextName(); return $this->defaultLabel(); }
+    
+    public $label;
 	public $labelArgs;
 	public $labelRaw;
 
-	public function name($name=null) { $this->name = $name ? $name : self::nextName(); return $this->defaultLabel(); }
-
+	public function noLabel() { return $this->labelRaw(''); }
 	public function hasLabel() { return $this->label || $this->labelRaw; }
 	public function defaultLabel() { return $this->label($this->name); }
-	public function noLabel() { return $this->rawLabel(''); }
 	
 	/**
 	 * @param string $key
 	 * @param array $args
-	 * @return self
+	 * @return static
 	 */
 	public function label($key, array $args=null) { $this->labelRaw = null; $this->label = $key; $this->labelArgs = $args; return $this; }
-	public function rawLabel($label=null) { $this->labelRaw = $label; return $this; }
+	public function labelRaw($label=null) { $this->labelRaw = $label; return $this; }
 	
 	public function displayLabel()
 	{

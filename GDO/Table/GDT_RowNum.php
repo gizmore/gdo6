@@ -1,7 +1,9 @@
 <?php
 namespace GDO\Table;
+
 use GDO\Core\GDT_Template;
 use GDO\DB\GDT_Checkbox;
+
 /**
  * Can be first element in a @link GWF_Table to show checkmar selection.
  * Table header is select all Tristate.
@@ -29,12 +31,7 @@ final class GDT_RowNum extends GDT_Checkbox
 	### Different filter header ###
 	###############################
 	public function displayHeaderLabel() { return ''; }
-// 	public function renderFilter()
-// 	{
-// 		$this->num = 0;
-// 		return GDT_Template::php('Table', 'filter/rownum.php', ['field'=>$this]);
-// 	}
-	
+
 	public function renderHeader()
 	{
 		return GDT_Template::php('Table', 'filter/rownum.php', ['field'=>$this]);
@@ -43,8 +40,6 @@ final class GDT_RowNum extends GDT_Checkbox
 	public function renderCell()
 	{
 		return GDT_Template::php('Table', 'cell/rownum.php', ['field'=>$this]);
-		
 	}
-	
 	
 }

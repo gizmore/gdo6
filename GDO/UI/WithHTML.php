@@ -1,5 +1,6 @@
 <?php
 namespace GDO\UI;
+
 /**
  * Adds plain html variable.
  * @author gizmore
@@ -8,7 +9,7 @@ trait WithHTML
 {
 	/**
 	 * @param $html
-	 * @return self
+	 * @return static
 	 */
 	public static function withHTML($html) { return self::make()->html($html); }
 
@@ -16,6 +17,6 @@ trait WithHTML
 	### HTML ###
 	############
 	public $html = '';
-	public function html($html=null) { $this->html = $html; return $this; }
+	public function html($html) { $this->html = $html; return $this; }
 	
 }

@@ -1,14 +1,15 @@
 <?php
 namespace GDO\Table;
 
-use GDO\Core\Method;
 /**
  * A method that displays a list.
  * 
  * @author gizmore
- * @version 5.0
- * @since 3.0
+ * @version 6.10
+ * @since 6.00
  */
-abstract class MethodList extends Method
+abstract class MethodList extends MethodTable
 {
+    public function createCollection() { $this->table = GDT_List::make(); return $this->table; }
+
 }

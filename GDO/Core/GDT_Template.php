@@ -40,10 +40,10 @@ class GDT_Template extends GDT
 	public function render() { return $this->renderTemplate(); }
 	public function renderCell() { return $this->renderTemplate(); }
 	public function renderForm() { return $this->renderTemplate(); }
-	public function renderFilter() { return $this->renderTemplate(); }
-	public function renderTemplate()
+	public function renderFilter($f) { return $this->renderTemplate($f); }
+	public function renderTemplate($f=null)
 	{
-		$tVars = ['field'=>$this];
+		$tVars = ['field'=>$this, 'f' => $f];
 		$tVars = $this->templateVars ? array_merge($this->templateVars, $tVars) : $tVars;
 		return self::php($this->templateModule, $this->templatePath, $tVars);
 	}

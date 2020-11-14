@@ -454,6 +454,8 @@ class GDO_Module extends GDO
 	    ];
 	    $entry = ($gdt instanceof GDT_Text) ? GDO_UserSettingBlob::blank($data) : GDO_UserSetting::blank($data);
 	    $entry->replace();
+	    $user->tempUnset('gdo_setting');
+	    $user->recache();
 	    return $gdt;
 	}
 	

@@ -24,7 +24,7 @@ abstract class MethodQueryCard extends Method
 	/**
 	 * @return \GDO\Core\GDO
 	 */
-	public function gdoQueryCard()
+	public function getQueryCard()
 	{
 		return $this->gdoTable()->find(Common::getGetString('id'));
 	}
@@ -36,7 +36,7 @@ abstract class MethodQueryCard extends Method
 	
 	public function renderCard()
 	{
-		if ($object = $this->gdoQueryCard())
+		if ($object = $this->getQueryCard())
 		{
 			return $object->responseCard();
 		}

@@ -16,6 +16,8 @@ return array(
 'country' => 'Land',
 'created_at' => 'Erstellt am',
 'created_by' => 'Erstellt von',
+'edited_at' => 'Geändert am',
+'edited_by' => 'Geändert von',
 'deleted_at' => 'Gelöscht am',
 'deleted_by' => 'Gelöscht von',
 'credits' => 'Kredite',
@@ -72,6 +74,7 @@ return array(
 'text' => 'Text',
 'num' => 'Num',
 'filter' => 'Filter',
+'actions' => 'Aktionen',
     
 # Generic Buttons
 'btn_back' => 'Zurück',
@@ -100,6 +103,7 @@ return array(
 'order_dir' => 'Richtung',
 'asc' => 'Aufsteigend',
 'desc' => 'Absteigend',
+'lbl_search_criteria' => 'Kriterien: %s',
     
 # Generic Messages
 'msg_form_saved' => 'Ihre Daten wurden erfolgreich gespeichert.',

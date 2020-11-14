@@ -6,6 +6,7 @@ use GDO\Table\GDT_Table;
 use GDO\Form\GDT_Form;
 use GDO\DB\GDT_String;
 use GDO\UI\WithIcon;
+use GDO\Util\Strings;
 
 /**
  * Base class for all GDT.
@@ -23,11 +24,33 @@ use GDO\UI\WithIcon;
  * @see \GDO\DB\GDT_String - Database supporting string baseclass
  * @see \GDO\DB\GDT_Enum - Database supporting enum class
  * @see \GDO\UI\GDT_Paragraph - Simple text rendering
+ * @see \GDO\Table\MethodQueryList - highest class in table methods.
  */
 abstract class GDT
 {
 	use WithName;
 	use WithIcon;
+	
+	# Same as $gdo but always set and always the table.
+	/** @var $gdtTable GDO **/
+	public $gdtTable;
+	/**
+	 * @var GDO
+	 */
+	public $gdo; # current row / gdo
+	public $name; # html id
+	public $var; # String representation
+	public $initial; # Initial var
+	public $unique; # DB
+	public $primary; # DB
+	public $readable = true; # can see
+	public $writable = true; # user can change?
+	public $editable = true; # user can change?
+	public $hidden = false; # hide in tables, forms, lists and cards.
+	public $notNull = false; # DB
+	public $orderable = false; # GDT_Table
+	public $filterable = false; # GDT_Table
+	public $searchable = false; # GDT_Table
 	
 	###############
 	### Factory ###
@@ -58,9 +81,8 @@ abstract class GDT
 	############
 	### Name ###
 	############
-	public $name;
 	public function name($name=null) { $this->name = $name === null ? self::nextName() : $name; return $this; }
-	public function htmlName() { return sprintf(' name="%s"', $this->name); }
+	public function htmlName() { return Strings::startsWith($this->name, 'gdo-') ? '' :  sprintf(' name="%s"', $this->name); }
 	
 	private static $classNameCache = [];
 	public function htmlClass()
@@ -83,12 +105,10 @@ abstract class GDT
 	###########
 	### RWE ###
 	###########
-	public $readable = true;
 	public function readable($readable) { $this->readable = $readable; return $this; }
-	public $writable = true;
 	public function writable($writable) { $this->writable = $writable; return $this; }
-	public $editable = true;
 	public function editable($editable) { $this->editable = $editable; return $this->writable($editable); }
+	public function hidden($hidden) { $this->hidden = $hidden; return $this;}
 
 	#############
 	### Error ###
@@ -121,20 +141,11 @@ abstract class GDT
 	#############
 	### Table ###
 	#############
-	# Same as $this->gdo but always set and always a table.
-	/** @var $table GDO **/
-	public $gdtTable;
 	public function gdtTable(GDO $table) { $this->gdtTable = $table; return $this; }
 	
 	#################
 	### Var/Value ###
 	#################
-	/**
-	 * @var GDO
-	 */
-	public $gdo; # current row / gdo
-	public $var; # String representation
-	public $initial; # Initial var
 	public function gdo(GDO $gdo)
 	{
 	    $this->gdo = $gdo;
@@ -197,11 +208,11 @@ abstract class GDT
 	
 	/**
 	 * Get a param for this GDT from $_REQUEST.
+	 * $firstlevel can be like o1[o][field]
+	 * $name hackery can be like iso][en][field.
 	 * 
 	 * $firstLevel usually is [form]
 	 * Override default with simple get param.
-	 * 
-	 * @todo: Slow and bad code. Rewrite it.
 	 * 
 	 * @param string $firstLevel
 	 * @param string $default
@@ -213,44 +224,53 @@ abstract class GDT
 	{
 		$name = $name === null ? $this->name : $name;
 		
-		$default = isset($_REQUEST[$name]) ? $_REQUEST[$name] : $default; # change default to non form param if present.
+
+		# Bring hackery in the firstlevel format
+		if (strpos($name, ']'))
+		{
+		    $parts = explode('][', $name);
+		    $name = array_pop($parts);
+		    foreach ($parts as $part)
+		    {
+		        $firstLevel .= "[{$part}]";
+		    }
+		}
 		
-		$path = '';
+		$arr = $_REQUEST;
 		if ($firstLevel)
 		{
-			if (!isset($_REQUEST[$firstLevel]))
-			{
-				return $default;
-			}
-			$path = $firstLevel.']';
+		    $next = Strings::substrTo($firstLevel, '[', $firstLevel);
+	        $next = trim($next, '[]');
+	        if (!isset($arr[$next]))
+	        {
+	            return $default;
+	        }
+	        $arr = $arr[$next];
+	        $firstLevel = '[' . Strings::substrFrom($firstLevel, '[');
 		}
-		$arr = $_REQUEST;
-		
-		# Allow nested form checkboxes and stuff
-		$path .= '['.$name;
-		$path = explode('][', $path);
-		foreach ($path as $child)
+		while ($firstLevel)
 		{
-			$child = trim($child, '[]');
-			if (isset($arr[$child]))
-			{
-				$arr = $arr[$child];
-			}
-			else
-			{
-				return $default;
-			}
+    		if (isset($arr[$name]))
+    		{
+    		    return $arr[$name];
+    		}
+    		if (is_array($arr))
+    		{
+    		    $next = Strings::substrTo($firstLevel, ']');
+    		    $next = ltrim($next, '[');
+    		    if (!isset($arr[$next]))
+    		    {
+    		        return $default;
+    		    }
+    		    $arr = $arr[$next];
+    		    $firstLevel = Strings::substrFrom($firstLevel, ']');
+    		}
+    		else
+    		{
+    		    break;
+    		}
 		}
-		
-		if (is_array($arr))
-		{
-			return empty($arr) ? null : $arr;
-		}
-		else
-		{
-			$arr = trim($arr);
-			return $arr === '' ? null : $arr;
-		}
+		return isset($arr[$name]) ? $arr[$name] : $default;
 	}
 	
 	##############
@@ -263,16 +283,10 @@ abstract class GDT
 	public function renderCard() { return GDT_Template::php('Core', 'card/gdt.php', ['gdt'=>$this]); }
 	public function renderList() { return $this->render(); }
 	public function renderForm() { return $this->render(); }
-	public function renderFilter() {}
+	public function renderFilter($f) {}
 	public function renderHeader() {}
 	public function renderChoice($choice) { return is_object($choice) ? $choice->renderChoice() : $choice; }
-	public function renderJSON()
-	{
-		return array(
-		    $this->name => $this->var,
-		);
-	}
-	
+	public function renderJSON() { return [$this->name => $this->var]; }
 	
 	public $labelArgs;
 	public function labelArgs(...$labelArgs) { $this->labelArgs = $labelArgs; return $this; }
@@ -284,7 +298,6 @@ abstract class GDT
 	################
 	### Validate ###
 	################
-	public $notNull = false;
 	public function notNull($notNull=true) { $this->notNull = $notNull; return $this; }
 	public function errorNotNull() { return $this->error('err_not_null'); }
 	public function onValidated() {}
@@ -319,7 +332,6 @@ abstract class GDT
 	#############
 	### Order ###
 	#############
-	public $orderable = true;
 	public function orderable($orderable=true) { $this->orderable = $orderable; return $this; }
 	
 	public $orderField;
@@ -329,25 +341,26 @@ abstract class GDT
 	public $orderDefaultAsc = true;
 	public function orderDefaultAsc($defaultAsc=true) { $this->orderDefaultAsc = $defaultAsc; return $this; }
 	public function orderDefaultDesc($defaultDesc=true) { $this->orderDefaultAsc = !$defaultDesc; return $this; }
+
+	public function orderVar($rq=null) { return $this->getRequestVar("$rq[o]", $this->initial, $this->filterField ? $this->filterField : $this->name); }
 	
 	##############
 	### Filter ###
 	##############
-	public $searchable = false;
 	public function searchable($searchable=true) { $this->searchable = $searchable; return  $this; }
 	
-	public $filterable = false;
 	public function filterable($filterable=true) { $this->filterable = $filterable; return  $this; }
 	
 	public $filterField;
 	public function filterField($filterField) { $this->filterField = $filterField; return $this->searchable(); }
-	public function filterValue() { return $this->getRequestVar(null, null, $this->filterField ? $this->filterField : $this->name); }
+
+	public function filterVar($rq=null) { return $this->getRequestVar("{$rq}[f]", $this->initial, $this->filterField ? $this->filterField : $this->name); }
 	
 	/**
 	 * Filter decorator function for database queries.
 	 * @see GDT_String
 	 */
-	public function filterQuery(Query $query) {}
+	public function filterQuery(Query $query, $rq=null) {}
 
 	/**
 	 * Extend query with searching for a term. Used in quicksearch.
@@ -369,13 +382,11 @@ abstract class GDT
 	 * @see GDT_String
 	 * @param GDO $gdo
 	 */
-	public function filterGDO(GDO $gdo) {}
+	public function filterGDO(GDO $gdo, $rq) {}
 	
 	################
 	### Database ###
 	################
-	public $unique;
-	public $primary;
 	public function gdoColumnDefine() {}
 	
 	##############

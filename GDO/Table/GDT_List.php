@@ -9,7 +9,6 @@ use GDO\Core\GDT;
  * 
  * Control ->itemTemplate(GDT) which defaults to GDT_GWF.
  * Control ->listMode(1|2) for cards or list items.
- * Control ->quicksort(true) for a quicksearch and order form.
  * 
  * @author gizmore
  * @version 6.10
@@ -22,13 +21,16 @@ class GDT_List extends GDT_Table
 	const MODE_CARD = 1;
 	const MODE_LIST = 2;
 	
-	private $listMode= self::MODE_CARD;
+	private $listMode = self::MODE_LIST;
 	public function listMode($mode)
 	{
 		$this->listMode = $mode;
 		return $this;
 	}
 	
+	################
+	### Template ###
+	################
 	public $itemTemplate;
 	public function itemTemplate(GDT $gdoType)
 	{
@@ -40,12 +42,6 @@ class GDT_List extends GDT_Table
 	{
 		return $this->itemTemplate ? $this->itemTemplate : GDT_GWF::make();
 	}
-	
-	#################
-	### Quicksort ###
-	#################
-	public $quicksort = true;
-	public function quicksort($quicksort=true) { $this->quicksort = $quicksort; return $this; }
 	
 	##############
 	### Render ###
@@ -59,7 +55,6 @@ class GDT_List extends GDT_Table
 	public function configJSON()
 	{
 	    return array_merge(parent::configJSON(), [
-	        'quicksort' => $this->quicksort,
 	        'listMode' => $this->listMode,
 	    ]);
 	}

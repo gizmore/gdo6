@@ -1,11 +1,17 @@
 <?php
 namespace GDO\Core;
+
 use GDO\UI\GDT_Link;
-use GDO\UI\GDT_Panel;
 use GDO\Session\GDO_Session;
+use GDO\UI\GDT_HTML;
+
 /**
  * General Website utility.
+ * 
  * @author gizmore
+ * @version 6.10
+ * @since 6.00
+ * @see \GDO\UI\GDT_Page
  */
 final class Website
 {
@@ -41,7 +47,7 @@ final class Website
 			case 'html':
 				if (Application::instance()->isAjax())
 				{
-					return GDT_Response::makeWith(GDT_Panel::withHTML(self::ajaxRedirect($url, $time)));
+					return GDT_Response::makeWith(GDT_HTML::withHTML(self::ajaxRedirect($url, $time)));
 				}
 				else
 				{
@@ -222,7 +228,7 @@ final class Website
     	        if ($message = GDO_Session::get('redirect_message'))
     	        {
     	            GDO_Session::remove('redirect_message');
-    	            self::$TOP_RESPONSE->addField(GDT_Success::withHTML($message));
+    	            self::$TOP_RESPONSE->addField(GDT_Success::make()->textRaw($message));
     	        }
 	        }
 	    }

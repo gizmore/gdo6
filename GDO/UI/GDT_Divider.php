@@ -1,13 +1,15 @@
 <?php
 namespace GDO\UI;
+
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+
 /**
- * A horizontal divider.
+ * A horizontal divider. HR tag.
  * 
  * @author gizmore
- * @since 6.00
  * @version 6.10
+ * @since 6.00
  */
 class GDT_Divider extends GDT
 {
@@ -26,6 +28,5 @@ class GDT_Divider extends GDT
 	    $label = $this->displayLabel();
         return '<div class="gdt-card-divider"></div><div class="gdt-card-divider">'.$label.'</div>';
 	}
-	
 	
 }
