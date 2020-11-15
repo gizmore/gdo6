@@ -20,9 +20,9 @@ class GDT_Button extends GDT_Label
 	use WithPHPJQuery;
 	use WithAnchorRelation;
 	
-// 	public $primary = true;
-// 	public function primary() { $this->primary = true; return $this; }
-// 	public function secondary() { $this->primary = false; return $this; }
+	public $primaryButton = true;
+	public function primary() { $this->primaryButton = true; return $this; }
+	public function secondary() { $this->primaryButton = false; return $this; }
 	
 	##############
 	### Render ###

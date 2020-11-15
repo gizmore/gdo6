@@ -180,7 +180,7 @@ final class GDO_User extends GDO
 	public function hasPermissionObject(GDO_Permission $permission) { return $this->hasPermission($permission->getName()); }
 	public function hasPermission($permission) { return array_key_exists($permission, $this->loadPermissions()); }
 	public function isAdmin() { return $this->hasPermission('admin'); }
-	public function isStaff() { return $this->hasPermission('staff'); }
+	public function isStaff() { return $this->hasPermission('staff') || $this->hasPermission('admin'); }
 	public function changedPermissions() { $this->tempUnset('gdo_permission'); return $this->recache(); }
 	
 	public function getLevel()
