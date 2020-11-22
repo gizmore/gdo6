@@ -319,7 +319,7 @@ final class Debug
 	}
 	public static function backtraceException($e, $html = true, $message = '')
 	{
-		$message = sprintf("PHP Exception$message: %s in %s line %s", $e->getMessage(), self::shortpath($e->getFile()), $e->getLine());
+		$message = sprintf("PHP Exception %s: %s in %s line %s", $message, $e->getMessage(), self::shortpath($e->getFile()), $e->getLine());
 		return self::backtraceMessage($message, $html, $e->getTrace());
 	}
 	private static function backtraceArgs(array $args = null)

@@ -1,6 +1,8 @@
 <?php
 namespace GDO\File;
+
 use GDO\DB\GDT_UInt;
+
 /**
  * Display int as human readable filesize.
  * @author gizmore
@@ -15,4 +17,11 @@ final class GDT_Filesize extends GDT_UInt
 	{
 		return FileUtil::humanFilesize($this->getValue());
 	}
+
+	
+	public function toValue($var)
+	{
+	    return (int) FileUtil::humanToBytes($var);
+	}
+	
 }

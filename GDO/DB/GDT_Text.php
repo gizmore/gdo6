@@ -18,8 +18,13 @@ class GDT_Text extends GDT_String
 	
 	public function gdoColumnDefine()
 	{
-		$collate = $this->gdoCollateDefine($this->caseSensitive);
-		return "{$this->identifier()} TEXT({$this->max}) CHARSET {$this->gdoCharsetDefine()} {$collate}{$this->gdoNullDefine()}";
+		return "{$this->identifier()} {$this->gdoColumnDefineB()}";
+	}
+	
+	protected function gdoColumnDefineB()
+	{
+	    $collate = $this->gdoCollateDefine($this->caseSensitive);
+	    return "TEXT({$this->max}) CHARSET {$this->gdoCharsetDefine()} {$collate}{$this->gdoNullDefine()}";
 	}
 	
 	public function validate($value)

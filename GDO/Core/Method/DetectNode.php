@@ -25,7 +25,7 @@ final class DetectNode extends Method
 		$response->add($this->detectUglify());
 		
 		$url = href('Admin', 'Configure', '&module=Core');
-		return $this->renderNavBar('GWF')->add($response)->add(Website::redirectMessage($url));
+		return $response->add(Website::redirect($url, 12));
 	}
 	
 	/**

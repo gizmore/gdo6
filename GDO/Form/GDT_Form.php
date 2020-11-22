@@ -101,8 +101,9 @@ class GDT_Form extends GDT
 	    # Check field
 		if (($field->writable) && (!$field->error))
 		{
-			$value = $field->getValidationValue();
-			if (!$field->validate($value))
+		    $var = $field->getVar();
+// 			$value = $field->getValidationValue();
+			if (!$field->validate($field->toValue($var)))
 			{
 				self::$VALIDATING_SUCCESS = false;
 				if (!$field->error)
@@ -112,7 +113,7 @@ class GDT_Form extends GDT
 			}
 			else
 			{
-				$field->value($value);
+				$field->var($var);
 			}
 		}
 		# Recursive

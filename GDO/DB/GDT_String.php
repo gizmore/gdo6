@@ -188,7 +188,7 @@ class GDT_String extends GDT
         $collate = $this->caseSensitive ? (' '.$this->gdoCollateDefine(false)) : '';
         $condition = sprintf('%s%s%s LIKE \'%%%s%%\'', 
             $fkTable ? ($fkTable.'.') : ($this->gdo ? ($this->gdo->gdoTableName().'.') : ''),
-                $this->identifier(), $collate, GDO::escapeSearchS($searchTerm));
+                $this->searchField ? $this->searchField : $this->name, $collate, GDO::escapeSearchS($searchTerm));
         return $condition;
     }
 	

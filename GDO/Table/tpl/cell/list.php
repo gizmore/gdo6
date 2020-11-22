@@ -1,58 +1,79 @@
 <?php
 use GDO\Table\GDT_List;
 use GDO\Form\GDT_Form;
+use GDO\UI\GDT_Accordeon;
 use GDO\UI\GDT_SearchField;
 use GDO\Form\GDT_Submit;
 use GDO\Form\GDT_Select;
-use GDO\UI\GDT_Bar;
 
 /** @var $field GDT_List **/
 
 ###################
 ### Search Form ###
 ###################
-if ($field->quicksort && $field->headers && $field->headers->fieldCount())
+if ($field->headers)
 {
-    $haveSearch = $haveOrder = false;
+    # The list search criteria form.
+    $frm = GDT_Form::make($field->headers->name)->slim()->methodGET();
     
-    $formSearch = GDT_Form::make($field->headers->name)->slim()->methodGET();
-    if ($field->searchable && $field->headers->searchableFieldCount())
+    # Searchable input
+    if ($field->searched)
     {
-        $haveSearch = 1;
-        $formSearch->addField(GDT_SearchField::make('search'));
+        $searchable = [];
+        foreach ($field->headers->fields as $gdt)
+        {
+            if ($gdt->searchable)
+            {
+                $searchable[] = $gdt;
+            }
+        }
+        if (count($searchable))
+        {
+            $frm->addField(GDT_SearchField::make('search'));
+        }
     }
-
-##################
-### Order Form ###
-##################
-    if ($field->orderable && $field->headers && $field->headers->orderableFieldCount())
+    
+    # Orderable select
+    if ($field->ordered)
     {
-        $haveOrder = 1;
-        $formOrder = $formSearch;
-        $select = GDT_Select::make('order_by')->icon('arrow_up');
+        $orderable = [];
         foreach ($field->headers->fields as $gdt)
         {
             if ($gdt->orderable)
             {
-                $select->choices[$gdt->name] = $gdt->displayLabel();
+                if (!$gdt->hidden)
+                {
+                    $orderable[$gdt->name] = $gdt->displayLabel();
+                }
             }
         }
-        $select->initial($field->orderDefault);
-        $formOrder->addField($select);
         
-        $ascdesc = GDT_Select::make('order_dir');
-        $ascdesc->choices['ASC'] = t('asc');
-        $ascdesc->choices['DESC'] = t('desc');
-        $ascdesc->initial($field->orderDefaultAsc ? 'ASC' : 'DESC');
-        $formOrder->addField($ascdesc);
+        if (count($orderable))
+        {
+            $select = GDT_Select::make('order_by')->icon('arrow_up');
+            $select->choices($orderable);
+            $select->initial($field->orderDefault);
+            $frm->addField($select);
+            
+            $ascdesc = GDT_Select::make('order_dir');
+            $ascdesc->choices['ASC'] = t('asc');
+            $ascdesc->choices['DESC'] = t('desc');
+            $ascdesc->initial($field->orderDefaultAsc ? 'ASC' : 'DESC');
+            $frm->addField($ascdesc);
+        }
     }
     
-    if ($haveSearch || $haveOrder)
+    if ($field->filtered)
     {
-        $formSearch->addField(GDT_Submit::make('btn_search'));
-        $bar = GDT_Bar::make()->horizontal();
-        $bar->addFields([$formSearch]);
-        echo $bar->render();
+        # Not supported yet
+    }
+    
+    # Show quicksearch form in accordeon
+    if (count($frm->fields))
+    {
+        $frm->addField(GDT_Submit::make());
+        $accordeon = GDT_Accordeon::make()->addField($frm)->title($frm->displaySearchCriteria());
+        echo $accordeon->renderCell();
     }
 }
 

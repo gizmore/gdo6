@@ -37,7 +37,7 @@ function href($module, $method, $append='') { $iso = Trans::$ISO; return GWF_WEB
 function hrefDefault() { return href(GWF_MODULE, GWF_METHOD); }
 function quote($value) { return GDO::quoteS($value); }
 function json_quote($s) { return str_replace("'", "&#39;", $s); }
-function html($html) { return str_replace(['"', "'", '<', '>'], ['\\"', '&#39;', '&lt;', '&gt;'], $html); }
+function html($html) { return str_replace(['&', '"', "'", '<', '>'], ['&amp;', '&quot;', '&#39;', '&lt;', '&gt;'], $html); }
 function mo() { return Common::getRequestString('mo', GWF_MODULE); }
 function me() { return Common::getRequestString('me', GWF_METHOD); }
 function module_enabled($moduleName) { return ($module = ModuleLoader::instance()->getModule($moduleName)) ? $module->isEnabled() : false; }

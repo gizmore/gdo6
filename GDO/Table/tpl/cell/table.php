@@ -20,6 +20,7 @@ $result = $field->getResult();
 	<thead>
 	  <tr>
 	  <?php foreach($headers as $gdoType) : ?>
+	  <?php if (!$gdoType->hidden) : ?>
 		<th class="<?=$gdoType->htmlClass()?>">
 		  <label>
 			<?= $gdoType->renderHeader(); ?>
@@ -28,9 +29,10 @@ $result = $field->getResult();
 			<?php endif; ?>
 		  </label>
 		  <?php if ($field->filtered) : ?>
-			<?= $gdoType->renderFilter($headers->name); ?>
+			<?= $gdoType->renderFilter($field->headers->name); ?>
 		  <?php endif; ?>
 		</th>
+      <?php endif;?>
 	  <?php endforeach; ?>
 	  </tr>
 	</thead>
@@ -40,8 +42,10 @@ $result = $field->getResult();
 	  <?php foreach($headers as $gdoType) :
 // 	  $col = $field->getField($gdoType->name);
 // 	  $gdoType = $col ? $col : $gdoType;
+	  if (!$gdoType->hidden) :
 	  $gdoType->gdo($gdo); ?>
 		<td class="<?=$gdoType->htmlClass()?>"><?= $gdoType->renderCell(); ?></td>
+	  <?php endif; ?>
 	  <?php endforeach; ?>
 	</tr>
 	<?php endwhile; ?>

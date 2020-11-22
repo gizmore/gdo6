@@ -174,7 +174,7 @@ class GDT_Int extends GDT
 	{
 	    $min = Strings::substrTo($filtervalue, '-', $filtervalue);
 	    $max = Strings::substrFrom($filtervalue, '-', $filtervalue);
-		$var = $gdo->getVar($this->name);
+		$var = $this->getVar(); # $gdo->getVar($this->name);
 		return ($var >= $min) && ($var <= $max);
 	}
 	
@@ -199,7 +199,7 @@ class GDT_Int extends GDT
 	 */
 	public function searchCondition($searchTerm, $fkTable=null)
 	{
-	    $nameI = GDO::escapeIdentifierS($this->name);
+	    $nameI = GDO::escapeIdentifierS($this->searchField ? $this->searchField : $this->name);
 	    $searchTerm = GDO::escapeSearchS($searchTerm);
 	    return sprintf('%s.%s LIKE \'%%%s%%\'',
 	        $fkTable ? $fkTable : $this->gdtTable->gdoTableName() , $nameI, $searchTerm);

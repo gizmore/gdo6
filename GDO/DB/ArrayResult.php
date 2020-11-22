@@ -58,12 +58,12 @@ final class ArrayResult extends Result
 	    {
 	        if ($gdt->filterable)
 	        {
-	            if ($filter = $gdt->filterVar($rq))
+	            if (null != ($filter = $gdt->filterVar($rq)))
 	            {
 	                $keep = [];
 	                foreach ($data as $gdo)
 	                {
-	                    if ($gdt->filterGDO($gdo, $filter))
+	                    if ($gdt->gdo($gdo)->filterGDO($gdo, $filter))
     	                {
     	                    $keep[] = $gdo;
     	                }

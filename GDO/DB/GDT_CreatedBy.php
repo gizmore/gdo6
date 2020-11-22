@@ -19,6 +19,7 @@ final class GDT_CreatedBy extends GDT_User
 {
 	public $writable = false; # no visible in form? / no editing allowed?
 	public $editable = false; # no editing allowed (disabled, nochange/ignore)
+// 	public $hidden = true;
 	
 	public function defaultLabel() { return $this->label('created_by'); }
 	

@@ -108,7 +108,7 @@ abstract class GDT
 	public function readable($readable) { $this->readable = $readable; return $this; }
 	public function writable($writable) { $this->writable = $writable; return $this; }
 	public function editable($editable) { $this->editable = $editable; return $this->writable($editable); }
-	public function hidden($hidden) { $this->hidden = $hidden; return $this;}
+	public function hidden($hidden=true) { $this->hidden = $hidden; return $this;}
 
 	#############
 	### Error ###
@@ -224,7 +224,6 @@ abstract class GDT
 	{
 		$name = $name === null ? $this->name : $name;
 		
-
 		# Bring hackery in the firstlevel format
 		if (strpos($name, ']'))
 		{
@@ -347,6 +346,7 @@ abstract class GDT
 	##############
 	### Filter ###
 	##############
+	public $searchField;
 	public function searchable($searchable=true) { $this->searchable = $searchable; return  $this; }
 	
 	public function filterable($filterable=true) { $this->filterable = $filterable; return  $this; }

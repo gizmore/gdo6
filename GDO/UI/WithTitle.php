@@ -18,6 +18,9 @@ trait WithTitle
 	
 	public $titleRaw;
 	public function titleRaw($title) { $this->titleRaw = $title; return $this; }
+
+	public $titleEscaped = true;
+	public function titleEscaped($escaped) { $this->titleEscaped = $escaped; return $this; }
 	
 	public function hasTitle() { return $this->titleKey || $this->titleArgs; }
 

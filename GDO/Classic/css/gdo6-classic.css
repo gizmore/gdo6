@@ -12,6 +12,8 @@ div.gdo-body { padding: 64px 0px 0px; min-height: 100%; }
 .gdt-bar > * { flex-grow: 1; text-align: center; }
 .gdo-body .gdt-bar-row { border-bottom: 1px solid #fff; }
 
+.gdo-container.flx.flx-row.flx-collapse > * { margin-right: 8px; }
+ 
 /** Sidebar **/
 #gdo-left-bar .gdt-divider, #gdo-right-bar .gdt-divider { background: #333; height: 1px; width: 100%; margin-top: 6px; }
 
@@ -81,6 +83,7 @@ table.gdo-table td { padding: 0px 2px; }
 .gdt-li-lower { border-top: 1px solid #bbb; font-size: 14px; }
 .gdt-li-subtext { padding: 2px 8px; }
 .gdt-list-item:last-child { border-bottom: 1px solid #333; }
+.gdt-li-content { flex: auto; }
 
 /** Card **/
 .gdo-list-card { }

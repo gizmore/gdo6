@@ -18,6 +18,7 @@ class GDT_CreatedAt extends GDT_DateTime
 	public $notNull = true;
 	public $writable = false;
 	public $editable = false;
+// 	public $hidden = true;
 	public $orderDefaultAsc = false;
 	
 	public function defaultLabel() { return $this->label('created_at'); }

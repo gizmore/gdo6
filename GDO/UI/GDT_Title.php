@@ -19,6 +19,10 @@ class GDT_Title extends GDT_String
 	
 	public $icon = 'title';
 	
-	public function renderCell() { return '<span class="gdt-title">' . $this->var . '</span>'; }
+	public function renderCell()
+	{
+	    $text = $this->titleEscaped ? html($this->var) : $this->var;
+	    return '<span class="gdt-title">' . $text. '</span>'; 
+	}
 	
 }

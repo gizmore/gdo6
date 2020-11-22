@@ -117,8 +117,8 @@ final class GDO_File extends GDO
 		$file = self::blank(array(
 			'file_name' => $values['name'],
 			'file_size' => $values['size'],
-			'file_type' => $values['mime']
-		))->tempPath($values['path']);
+			'file_type' => $values['type']
+		))->tempPath($values['tmp_name']);
 		
 		if ($file->isImageType())
 		{
@@ -162,8 +162,8 @@ final class GDO_File extends GDO
 		$values = array(
 			'name' => $name,
 			'size' => filesize($path),
-			'mime' => mime_content_type($path),
-			'path' => $path,
+			'type' => mime_content_type($path),
+			'tmp_name' => $path,
 		);
 		return self::fromForm($values);
 	}

@@ -1,4 +1,4 @@
-* { margin: 0; padding: 0; text-decoration: none; box-sizing: border-box; list-style: none; }
+* { margin: 0; padding: 0; box-sizing: border-box; list-style: none; }
 span, img, a, i, b, em { display: inline-block; }
 .cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
 .ce { text-align: center; margin: auto; }

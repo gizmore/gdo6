@@ -7,7 +7,7 @@ return array(
 'file_type' => 'Tipo di file',
 'filesize' => 'Grandezza file',
 '_filesize' => array(
-	'Byte',
+	'B',
 	'KB',
 	'MB',
 	'GB',

@@ -211,6 +211,17 @@ abstract class GDO
 	public function setGDOVars(array $vars, $dirty=false)
 	{
 		$this->gdoVars = $vars;
+		foreach ($this->gdoColumnsCache() as $gdt)
+		{
+		    if ($data = $gdt->gdo($this)->getGDOData())
+		    {
+    		    foreach ($data as $k => $v)
+    		    {
+    		        $this->gdoVars[$k] = $v;
+    		    }
+		    }
+		}
+		
 		$this->dirty = $dirty;
 		return $this;
 	}
@@ -632,15 +643,21 @@ abstract class GDO
 		$query = $this->updateQuery();
 		foreach ($vars as $key => $var)
 		{
-			if (array_key_exists($key, $this->gdoVars))
-			{
-				if ($this->gdoVars[$key] !== $var)
-				{
-					$query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
-					$this->markClean($key);
-					$worthy = true; # We got a change
-				}
-			}
+// 		    if ($gdt = $this->gdoColumn($key))
+// 		    {
+// 		        foreach ($gdt->getGDOData() as $k => $v)
+		        {
+		            if (array_key_exists($key, $this->gdoVars))
+		            {
+		                if ($this->gdoVars[$key] !== $var)
+		                {
+		                    $query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
+		                    $this->markClean($key);
+		                    $worthy = true; # We got a change
+		                }
+		            }
+		        }
+// 		    }
 		}
 
 		# Call hooks even when not needed. Because its needed on GDT_Files
@@ -710,7 +727,10 @@ abstract class GDO
     					{
     						$setClause .= ',';
     					}
-    					$setClause .= $column->identifier() . "=" . $this->quoted($column->name);
+    					foreach ($column->getGDOData() as $k => $v)
+    					{
+        					$setClause .= $k . '=' . self::quoteS($v);
+    					}
     				}
 			    }
 			}
@@ -767,6 +787,10 @@ abstract class GDO
 		$gdoVars = [];
 		foreach ($table->gdoColumnsCache() as $column)
 		{
+		    if (isset($initial[$column->name]))
+		    {
+		        $column->initial($initial[$column->name]);
+		    }
 			if ($data = $column->blankData())
 			{
 			    foreach ($data as $k => $v)

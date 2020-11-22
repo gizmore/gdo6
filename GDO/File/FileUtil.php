@@ -72,4 +72,23 @@ final class FileUtil
 		: sprintf("%.0{$digits}f%s", ($bytes+$rem/$factor), $txt[$i]);
 	}
 	
+	public static function humanToBytes($s)
+	{
+	    $txt = t('_filesize');
+	    foreach ($txt as $pow => $b)
+	    {
+	        if ($pow > 0)
+	        {
+	            if (stripos($s, $b) !== false)
+	            {
+	                $pow+1;
+	                $mul = preg_replace('/[^\\.0-9]/', '', $mul);
+	                return bcmul($mul, bcpow(1024, $pow));
+	            }
+	        }
+	    }
+	    return (int)$s;
+	}
+	
+	
 }
