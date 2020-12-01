@@ -101,3 +101,9 @@ label[for="gdo-right-nav"] {
 #gdo-right-bar .gdo-bar {
 	display: block;
 }
+
+#gdo-left-bar .gdt-menu,
+#gdo-right-bar .gdt-menu {
+	display: flex;
+	flex-direction: column;
+}

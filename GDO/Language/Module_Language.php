@@ -62,15 +62,18 @@ final class Module_Language extends GDO_Module
 	############
 	### Init ###
 	############
+	public function onInit()
+	{
+	    $iso = $this->detectISO();
+	    Trans::setISO($iso);
+	    if (!Application::instance()->isCLI())
+	    {
+	        Website::addMeta(['language', $iso, 'name']);
+	    }
+	}
+	
 	public function onInitSidebar()
 	{
-		if (!Application::instance()->isCLI())
-		{
-			$iso = $this->detectISO();
-			Trans::setISO($iso);
-			Website::addMeta(['language', $iso, 'name']);
-		}
-
 		if ($this->cfgSwitchLeft())
 		{
 		    $navbar = GDT_Page::$INSTANCE->leftNav;

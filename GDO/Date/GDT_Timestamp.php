@@ -56,6 +56,17 @@ class GDT_Timestamp extends GDT
 		return $this->initialValue($time);
 	}
 	
+	public function inputToVar($input)
+	{
+	    return $input;
+// 	    return Time::getDate(Time::getUserInputTimestamp($input));
+	}
+
+// 	public function getGDOData()
+// 	{
+// 	    return [$this->name => $this->var];
+// 	}
+	
 	#####################
 	### Starting view ###
 	#####################
@@ -153,12 +164,12 @@ class GDT_Timestamp extends GDT
 	##############
 	public function configJSON()
 	{
-		return array(
+		return array_merge(parent::configJSON(), [
 			'dateStartView' => $this->dateStartView,
 			'format' => $this->format,
 			'minDate' => $this->minDate,
 			'maxDate' => $this->maxDate,
-		);
+		]);
 	}
 	
 }

@@ -200,6 +200,11 @@ class Result
 		return $values;
 	}
 	
+	public function fetchColumn()
+	{
+	    return $this->fetchAllValues();
+	}
+	
 	############
 	### JSON ###
 	############

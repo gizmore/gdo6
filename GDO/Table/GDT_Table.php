@@ -134,7 +134,7 @@ class GDT_Table extends GDT
 	public $pagemenu;
 	public function paginateDefault($href=null)
 	{
-		return $this->paginate(true, $href, Module_Table::instance()->cfgItemsPerPage());
+		return $this->paginated(true, $href, Module_Table::instance()->cfgItemsPerPage());
 	}
 	public function paginated($paginated=true, $href=null, $ipp=0)
 	{
@@ -279,7 +279,10 @@ class GDT_Table extends GDT
     	            }
     	        }
     	    }
-    	    $query->where(implode(' OR ', $where));
+    	    if ($where)
+    	    {
+    	        $query->where(implode(' OR ', $where));
+    	    }
     	    $first = false;
 	    }
 	}

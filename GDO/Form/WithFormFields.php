@@ -31,7 +31,7 @@ trait WithFormFields
 	
 	public $placeholder;
 	public function placeholder($placeholder) { $this->placeholder = $placeholder; return $this; }
-	public function htmlPlaceholder() { return sprintf(' placeholder="%s"', html($this->placeholder)); }
+	public function htmlPlaceholder() { return sprintf(' placeholder="%s"', html(t($this->placeholder))); }
 
 	/**
 	 * Change a request var globally on the fly.

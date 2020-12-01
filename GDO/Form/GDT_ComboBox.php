@@ -3,6 +3,7 @@ namespace GDO\Form;
 
 use GDO\Core\WithCompletion;
 use GDO\DB\GDT_String;
+use GDO\Core\GDT_Template;
 
 /**
  * A combobox is a string with additional completion and dropdown.
@@ -27,8 +28,19 @@ class GDT_ComboBox extends GDT_String
 	public function configJSON()
 	{
 	    return array_merge(parent::configJSON(), array(
+	        'selected' => [
+	            'id' => $this->getVar(),
+	            'text' => $this->getVar(),
+	            'display' => $this->getVar(),
+	        ],
 	        'completionHref' => $this->completionHref,
+	        'combobox' => 1,
 	    ));
+	}
+	
+	public function renderForm()
+	{
+	    return GDT_Template::php('Form', 'form/combobox.php', ['field' => $this]);
 	}
 	
 }

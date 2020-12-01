@@ -137,7 +137,7 @@ class GDT_Message extends GDT_Text
 	### Render ###
 	##############
     public function renderCell() { return $this->getVarOutput(); }
-    public function renderCard() { return $this->getVarOutput(); }
+    public function renderCard() { return '<em></em>' . $this->getVarOutput(); }
     public function renderForm() { return GDT_Template::php('UI', 'form/message.php', ['field'=>$this]); }
 	public function renderList() { return '<div class="gdo-message-condense">'.$this->renderCell().'</div>'; }
 	
@@ -164,9 +164,6 @@ class GDT_Message extends GDT_Text
 			$config->set('URI.DisableExternalResources', false);
 			$config->set('URI.DisableResources', false);
 			$config->set('HTML.TargetBlank', true);
-// 			$config->set('HTML.AllowedElements', 'div,blockquote,span,a,b,i,strike,h1,h2,h3,h4,h5,font,center,pre,code,img,figure');
-// 			$config->set('Attr.AllowedClasses', 'quote-from,quote-by');
-// 			$config->set('HTML.AllowedAttributes', 'a.href,a.rel,a.target,pre.class,code.class,img.src,img.alt,figure.style');
 			$config->set('HTML.Allowed', 'a[href|rel|target],pre[class],code[class],img[src|alt],figure[style|class],figcaption');
 			$config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
 			$config->set('HTML.SafeObject', true);

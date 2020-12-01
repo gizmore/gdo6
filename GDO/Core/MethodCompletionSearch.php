@@ -48,7 +48,7 @@ abstract class MethodCompletionSearch extends MethodCompletion
 	    $table = $this->gdoTable();
 	    $query = $this->getQuery();
 	    $gdtTable = GDT_Table::make()->gdo($table);
-	    $gdtTable->headersWith($this->gdoHeaderColumns());
+	    $gdtTable->addFields($this->gdoHeaderColumns());
 	    $gdtTable->bigSearchQuery($query, $this->getSearchTerm());
 	    $result = $query->exec();
 	    $response = [];

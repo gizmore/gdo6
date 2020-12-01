@@ -47,7 +47,8 @@ a[disabled] { opacity: 0.25; cursor: text; }
 input[type=submit]:hover { cursor: pointer; }
 .gdo-form .gdo-gdt_link a { padding: 8px; }
 .gdo-form .gdt-divider { padding: 8px; background: #eee; border: 1px solid #fff; font-weight: bold; }
-textarea { padding: 4px; }
+input, textarea { padding: 4px; }
+
 
 /** Table **/
 .gdo-tblorder { display: inline-block; }

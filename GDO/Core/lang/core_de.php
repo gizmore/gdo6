@@ -190,6 +190,7 @@ return array(
 'enum_member' => 'Mitglied',
 
 # Dateformats
+'df_parse' => 'd.m.Y H:i:s',
 'df_day' => 'd.m.Y',
 'df_short' => 'd.m.Y H:i',
 'df_long' => 'd.m.Y H:i:s',

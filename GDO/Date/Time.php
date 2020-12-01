@@ -59,6 +59,29 @@ final class Time
 	    return $date === null ? Application::$MICROTIME : strtotime($date);
 	}
 	
+	public static function getUserInputTimestamp($date)
+	{
+	    if ($date === null)
+	    {
+	        return Application::$MICROTIME;
+	    }
+	    if (strlen($date) === 10)
+	    {
+	        $date .= ' 00:00:00.000';
+	    }
+	    elseif (strlen($date) === 18)
+	    {
+	        $date .= ' .000';
+	    }
+	    
+	    $t = t('df_parse');
+	    $to = GDO_User::current()->getTimezoneObject();
+	    
+	    $d = DateTime::createFromFormat($t, $date, $to);
+
+	    return $d->getTimestamp();
+	}
+	
 	###############
 	### Display ###
 	###############

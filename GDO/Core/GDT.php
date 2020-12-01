@@ -154,6 +154,7 @@ abstract class GDT
 	public function var($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
 	public function toVar($value) { return ($value === null) || ($value === '') ? null : (string) $value; }
+	public function inputToVar($input) { return $input; }
 	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
 	public function hasVar() { return !!$this->getVar(); }
 	public function getVar() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->var) : $this->var; }
@@ -212,7 +213,6 @@ abstract class GDT
 	 * $name hackery can be like iso][en][field.
 	 * 
 	 * $firstLevel usually is [form]
-	 * Override default with simple get param.
 	 * 
 	 * @param string $firstLevel
 	 * @param string $default
@@ -251,7 +251,7 @@ abstract class GDT
 		{
     		if (isset($arr[$name]))
     		{
-    		    return $arr[$name];
+    		    return $this->inputToVar($arr[$name]);
     		}
     		if (is_array($arr))
     		{
@@ -269,7 +269,7 @@ abstract class GDT
     		    break;
     		}
 		}
-		return isset($arr[$name]) ? $arr[$name] : $default;
+		return isset($arr[$name]) ? $this->inputToVar($arr[$name]) : $default;
 	}
 	
 	##############

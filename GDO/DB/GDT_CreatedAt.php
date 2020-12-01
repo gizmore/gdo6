@@ -31,5 +31,10 @@ class GDT_CreatedAt extends GDT_DateTime
 	{
 		return [$this->name => Time::getDate()];
 	}
+	
+	public function displayValue($var)
+	{
+	    return $this->gdo->gdoColumn($var)->displayLabel();
+	}
 
 }
