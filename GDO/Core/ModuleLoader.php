@@ -304,13 +304,9 @@ final class ModuleLoader
 				if ($module = self::instanciate($moduleData, true))
 				{
 					$this->modules[$name] = $module;
-            		if ($init)
-            		{
-//             		    $module->onLoadLanguage();
-//             		    $this->initModuleVars();
-//             		    $module->registerThemes();
-//             		    $module->registerSettings();
-//             		    $module->initModule();
+					if ($init)
+					{
+					    $module->buildConfigCache();
             		}
 				}
 			}

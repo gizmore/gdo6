@@ -12,6 +12,7 @@ use GDO\UI\WithHREF;
 use GDO\UI\WithTitle;
 use GDO\UI\WithActions;
 use GDO\Core\WithFields;
+use GDO\Util\Classes;
 
 /**
  * A filterable, searchable, orderable, paginatable, sortable collection of GDT[] in headers.
@@ -188,7 +189,7 @@ class GDT_Table extends GDT
 		{
 			if (!($this->result = $this->queryResult()))
 			{
-				$this->result = new ArrayResult([]);
+				$this->result = new ArrayResult([], $this->gdtTable);
 			}
 		}
 		return $this->result;
@@ -211,16 +212,6 @@ class GDT_Table extends GDT
 	    $this->countQuery = $this->getFilteredQuery($query);
 	    return $this;
 	}
-	
-// 	public function getQuery()
-// 	{
-// 		return $this->query;
-// 	}
-	
-// 	public function getCountQuery()
-// 	{
-// 	    return $this->countQuery;
-// 	}
 	
 	public function getFilteredQuery(Query $query)
 	{
@@ -335,13 +326,23 @@ class GDT_Table extends GDT
 		        {
 		            if ($cols = @$cols['o'])
 		            {
+		                $o = '1';
             			foreach ($cols as $name => $asc)
             			{
             				if ($field = $headers->getField($name))
             				{
             					if ($field->orderable)
             					{
-            						$query->order($field->orderFieldName(), !!$asc);
+            						if ( (Classes::class_uses_trait($field, 'GDO\\DB\\WithObject')) &&
+            						     ($field->orderFieldName() !== $field->name) )
+            						{
+           						        $query->joinObject($field->name, 'JOIN', "o{$o}");
+           						        $query->order("o{$o}.".$field->orderFieldName(), !!$asc);
+            						}
+            						else
+            						{
+            						    $query->order($field->orderFieldName(), !!$asc);
+            						}
             						$hasCustomOrder = true;
             					}
             				}

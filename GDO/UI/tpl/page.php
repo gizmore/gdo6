@@ -18,20 +18,23 @@ $page->loadSidebars();
 	<?=Website::displayLink()?>
   </head>
   <body>
-		<input type="checkbox" id="gdo-left-nav" class="gdo-nav" />
-		<input type="checkbox" id="gdo-right-nav" class="gdo-nav" />
+    
+    <input type="checkbox" id="gdo-left-nav" class="gdo-nav" />
+    <input type="checkbox" id="gdo-right-nav" class="gdo-nav" />
 
-		<nav id="gdo-left-bar" class="gdo-nav-bar"><?=$page->leftNav->render()?></nav>
-		<label for="gdo-left-nav"></label>
+    <nav id="gdo-left-bar" class="gdo-nav-bar"><?=$page->leftNav->render()?></nav>
+    <label for="gdo-left-nav"></label>
 
-		<nav id="gdo-right-bar" class="gdo-nav-bar"><?=$page->rightNav->render()?></nav>
-		<label for="gdo-right-nav"></label>
+    <nav id="gdo-right-bar" class="gdo-nav-bar"><?=$page->rightNav->render()?></nav>
+    <label for="gdo-right-nav"></label>
   
 	<div id="gdo-pagewrap">
 	
 	  <header id="gdo-header"><?=$page->topNav->render()?></header>
 	
 	  <div class="gdo-body">
+		<label for="gdo-left-nav" id="gdo-left-nav2"></label>
+		<label for="gdo-right-nav" id="gdo-right-nav2"></label>
 		<div class="gdo-main">
 		  <?=$page->topTabs->render()?>
 		  <?=Website::renderTopResponse()?>

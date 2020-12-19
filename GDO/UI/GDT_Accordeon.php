@@ -22,4 +22,20 @@ final class GDT_Accordeon extends GDT_Panel
         return '<label></label>' . $this->renderCell();
     }
     
+    ##############
+    ### Opened ###
+    ##############
+    public $opened = false;
+    public function opened($opened=true)
+    {
+        $this->opened = $opened;
+        return $this;
+    }
+    
+    public function closed($closed=true)
+    {
+        $this->opened = !$closed;
+        return $this;
+    }
+    
 }

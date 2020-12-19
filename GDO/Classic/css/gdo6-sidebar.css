@@ -107,3 +107,25 @@ label[for="gdo-right-nav"] {
 	display: flex;
 	flex-direction: column;
 }
+
+#gdo-pagewrap #gdo-left-nav2,
+#gdo-pagewrap #gdo-right-nav2 {
+	top: 0px;
+	position: fixed;
+	height: 100vh;
+	width: 100%;
+	opacity: 0.5;
+	background: #000;
+	margin: 0;
+	display: none;
+}
+
+#gdo-left-nav:checked ~ #gdo-pagewrap #gdo-left-nav2 {
+	display: block!important;
+	left: 256px;
+}
+
+#gdo-right-nav:checked ~ #gdo-pagewrap #gdo-right-nav2 {
+	display: block!important;
+	right: 256px;
+}

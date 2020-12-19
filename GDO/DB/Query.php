@@ -344,7 +344,7 @@ final class Query
 	 * @return \GDO\DB\Query
 	 * @see GDO
 	 */
-	public function joinObject($key, $join='JOIN')
+	public function joinObject($key, $join='JOIN', $tableAlias='')
 	{
 		if (!($gdoType = $this->table->gdoColumn($key)))
 		{
@@ -359,9 +359,11 @@ final class Query
 			($gdoType instanceof GDT_ObjectSelect) )
 		{
 			$table = $gdoType->foreignTable();
-			$ftbl = $table->gdoTableIdentifier();
+			$ftbl = $tableAlias ? $tableAlias : $table->gdoTableIdentifier();
 			$atbl = $this->table->gdoTableIdentifier();
-			$join = "{$join} {$table->gdoTableIdentifier()} ON $ftbl.{$table->gdoPrimaryKeyColumn()->identifier()}=$atbl.{$gdoType->identifier()}";
+			$tableAlias = $tableAlias ? " AS {$tableAlias}" : '';
+			
+			$join = "{$join} {$table->gdoTableIdentifier()}{$tableAlias} ON {$ftbl}.{$table->gdoPrimaryKeyColumn()->identifier()}=$atbl.{$gdoType->identifier()}";
 		}
 		else
 		{
