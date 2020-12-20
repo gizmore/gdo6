@@ -30,6 +30,7 @@ GDO/*
 !GDO/Install/
 !GDO/Language/
 !GDO/Mail/
+!GDO/Perf/
 !GDO/Net/
 !GDO/PHPInfo/
 !GDO/Table/
