@@ -23,10 +23,10 @@ final class GDT_Page extends GDT
     use WithTitle;
     
     # The 4 nav areas-
-    public GDT_Bar $topNav;
-    public GDT_Bar $leftNav;
-    public GDT_Bar $rightNav;
-    public GDT_Bar $bottomNav;
+    public $topNav;
+    public $leftNav;
+    public $rightNav;
+    public $bottomNav;
 
     public GDT_Container $topTabs; # Admin or module tabs.
     

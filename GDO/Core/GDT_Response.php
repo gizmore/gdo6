@@ -70,12 +70,21 @@ final class GDT_Response extends GDT
 	
 	public function renderHTML()
 	{
-		$html = '';
-		foreach ($this->getFields() as $field)
-		{
-			$html .= $field->render();
-		}
-		return $html;
+	    return $this->_renderHTMLRec($this);
+	}
+	
+	private function _renderHTMLRec(GDT $gdt)
+	{
+	    $html = '';
+	    if ($fields = $gdt->getFields())
+	    {
+    	    foreach ($fields as $field)
+    	    {
+    	        $html .= $field->render();
+    	        $html .= $this->_renderHTMLRec($field);
+    	    }
+	    }
+	    return $html;
 	}
 	
 	public function renderJSON()

@@ -6,12 +6,15 @@ use GDO\Core\GDO;
 use GDO\Net\GDT_Url;
 use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
+
 /**
  * GDO autoloader and public functions.
  * @author gizmore
- * @since 6.00
  * @version 6.10
+ * @since 6.00
  */
+
+# perf
 define('GWF_PERF_START', microtime(true));
 
 # Autoconf path
@@ -49,12 +52,10 @@ function tiso($iso, $key, array $args=null) { return Trans::tiso($iso, $key, $ar
 function tusr(GDO_User $user, $key, array $args=null) { return Trans::tiso($user->getLangISO(), $key, $args); }
 function tt($date=null, $format='short', $default='---') { return Time::displayDate($date, $format, $default); }
 
-# Deprecated #
 /**
  * Use GDO\\Module\\Method\\Class::make() instead
  * @param string $module
  * @param string $method
  * @return \GDO\Core\Method
- * @deprecated
  */
-function method($module, $method) { $klass = "GDO\\$module\\Method\\$method"; return new $klass(); }
+function method($moduleName, $methodName) { $klass = "GDO\\$moduleName\\Method\\$methodName"; return new $klass(); }
