@@ -81,7 +81,7 @@ final class GDT_Response extends GDT
     	    foreach ($fields as $field)
     	    {
     	        $html .= $field->render();
-    	        $html .= $this->_renderHTMLRec($field);
+//     	        $html .= $this->_renderHTMLRec($field);
     	    }
 	    }
 	    return $html;
