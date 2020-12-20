@@ -53,8 +53,10 @@ final class GDT_PerfBar extends GDT_Panel
 			'gdoLangFiles' => Trans::numFiles(),
 			'gdoTemplates' => GDT_Template::$CALLS,
 			'gdoHooks' => GDT_Hook::$CALLS,
+		    'gdoHookNames' => GDT_Hook::$CALL_NAMES,
 			'gdoIPC' => GDT_Hook::$IPC_CALLS,
 			'gdoMails' => Mail::$SENT,
+		    
 		);
 	}
 

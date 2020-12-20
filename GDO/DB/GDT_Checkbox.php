@@ -1,16 +1,22 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Form\GDT_Select;
 use GDO\Core\GDT_Template;
+
 /**
  * Boolean Checkbox.
- * Implemented as select to reflect undetermined status. Also HTML does not send unchecked boxes.
+ * Implemented as select to reflect undetermined status. Also HTML does not send unchecked boxes over HTTP.
  * @author gizmore
- * @since 5.0
  * @version 6.10
+ * @since 5.0
  */
 class GDT_Checkbox extends GDT_Select
 {
+    # db var representation. Null is the third state.
+    const TRUE = '1';
+    const FALSE = '0';
+    
 	public function __construct()
 	{
 		$this->emptyValue = '2';
@@ -39,6 +45,11 @@ class GDT_Checkbox extends GDT_Select
 	################
 	### Database ###
 	################
+	/**
+	 * Get TINYINT(1) column define.
+	 * {@inheritDoc}
+	 * @see \GDO\DB\GDT_String::gdoColumnDefine()
+	 */
 	public function gdoColumnDefine()
 	{
 		return "{$this->identifier()} TINYINT(1) UNSIGNED {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
@@ -90,8 +101,13 @@ class GDT_Checkbox extends GDT_Select
 	        case '0': return t('enum_no');
 	        case '1': return t('enum_yes');
 	        case '2': return t('enum_undetermined_yes_no');
-	        default: return t('err_invalid_gdt_var', [$this->gdoHumanName(), html($var)]);
+	        default: return $this->errorInvalidVar($var);
 	    }
+	}
+	
+	protected function errorInvalidVar($var)
+	{
+	    return t('err_invalid_gdt_var', [$this->gdoHumanName(), html($var)]);
 	}
 	
 	public function htmlClass()
@@ -119,6 +135,10 @@ class GDT_Checkbox extends GDT_Select
 	####################
 	### Dynamic Icon ###
 	####################
+	/**
+	 * Init label icon with thumb up or thumb down.
+	 * @return \GDO\DB\GDT_Checkbox
+	 */
 	private function initThumbIcon()
 	{
 	    switch ($this->getVar())

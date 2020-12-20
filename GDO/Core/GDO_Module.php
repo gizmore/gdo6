@@ -170,6 +170,7 @@ class GDO_Module extends GDO
 	public function isEnabled() { return $this->getVar('module_enabled'); }
 	public function isInstalled() { return $this->isPersisted(); }
 	public function getSiteName() { return sitename(); }
+	public function env($key, $default=null) { return env("M_{$this->getName()}_{$key}", $default); }
 	
 	###############
 	### Display ###

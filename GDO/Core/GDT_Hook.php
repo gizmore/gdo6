@@ -22,8 +22,9 @@ namespace GDO\Core;
  */
 final class GDT_Hook extends GDT
 {
-	public static $CALLS = 0;
-	public static $IPC_CALLS = 0;
+	public static $CALLS = 0; # Num Hook calls.
+	public static $IPC_CALLS = 0; # Num calls with additional IPC for websocket server.
+	public static $CALL_NAMES = []; # called event names to hint in debugging/optimization.
 	
 	############
 	### Init ###
@@ -31,7 +32,7 @@ final class GDT_Hook extends GDT
 	/**
 	 * @var [GDO_Module[]]
 	 */
-	private static $HOOKS = [];
+// 	private static $HOOKS = [];
 	public static function initModule(GDO_Module $module)
 	{
 // 	    foreach (get_class_methods($module) as $m)
@@ -106,7 +107,10 @@ final class GDT_Hook extends GDT
 	 */
 	private static function call($event, $ipc, array $args)
 	{
+	    # Perf
+	    self::$CALL_NAMES[] = $event . ($ipc ? '+IPC' : '');
 		self::$CALLS++;
+		
 		$method_name = "hook$event";
 		
 		/**

@@ -15,10 +15,11 @@ final class GDT_ModuleFeature extends GDT
 	public function renderCell()
 	{
 		$features = '';
-		if ($this->getModule()->getThemes())
+		if ($this->getModule()->getTheme())
 		{
 			$features .= 'theme';
 		}
 		return $features;
 	}
+	
 }

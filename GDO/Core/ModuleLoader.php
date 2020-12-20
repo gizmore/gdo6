@@ -308,7 +308,12 @@ final class ModuleLoader
 					{
 					    $module->buildConfigCache();
 					    $module->buildSettingsCache();
-            		}
+					    $module->onLoadLanguage();
+					    if ($theme = $module->getTheme())
+					    {
+					        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+					    }
+					}
 				}
 			}
 		}

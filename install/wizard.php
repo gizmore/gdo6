@@ -39,6 +39,8 @@ new InstallerApp();
 # Current user is ghost
 GDO_User::$CURRENT = GDO_User::ghost();
 
+GDT_Page::make();
+
 # Load only two basic modules from FS for installation process.
 $modCore = ModuleLoader::instance()->loadModuleFS('Core', 1);
 $modInstall = ModuleLoader::instance()->loadModuleFS('Install', 1);

@@ -9,12 +9,9 @@ use GDO\Form\GDT_Hidden;
 use GDO\UI\GDT_Cell;
 use GDO\UI\GDT_Panel;
 use GDO\Install\GDT_ModuleFeature;
-use GDO\UI\GDT_Link;
-use GDO\Install\Module_Install;
 use GDO\Install\Config;
-use GDO\DB\GDT_Checkbox;
 
-echo GDT_Panel::make()->html(t('install_modules_info_text'))->render();
+echo GDT_Panel::make()->text('install_modules_info_text')->render();
 
 /**
  * @var array $modules

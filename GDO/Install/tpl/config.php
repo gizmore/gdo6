@@ -63,7 +63,7 @@ else
 	{
 		$value = $value ? 'true' : 'false';
 	}
-	printf("define('GWF_%s', %s);\n", strtoupper($name), $value);
+	printf("define('GWF_%1\$s', env('GWF_%1\$s', %2\$s));\n", strtoupper($name), $value);
 }
 ?>
 <?php endforeach; ?>

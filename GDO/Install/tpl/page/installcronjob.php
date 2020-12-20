@@ -14,4 +14,4 @@ MAILTO={$email}<br/>
 * * * * * {$path}<br/>
 </gdo-code><br/>
 EOC;
-echo GDT_Panel::make()->html(t('install_cronjob_info', [$content, Config::linkStep(6)]))->render();
+echo GDT_Panel::make()->text('install_cronjob_info', [$content, Config::linkStep(6)])->render();

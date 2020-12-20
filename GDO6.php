@@ -6,6 +6,7 @@ use GDO\Core\GDO;
 use GDO\Net\GDT_Url;
 use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
+use GDO\Core\Env;
 
 /**
  * GDO autoloader and public functions.
@@ -44,6 +45,8 @@ function html($html) { return str_replace(['&', '"', "'", '<', '>'], ['&amp;', '
 function mo() { return Common::getRequestString('mo', GWF_MODULE); }
 function me() { return Common::getRequestString('me', GWF_METHOD); }
 function module_enabled($moduleName) { return ($module = ModuleLoader::instance()->getModule($moduleName)) ? $module->isEnabled() : false; }
+function env($key, $default=null) { return Env::get($key, $default); }
+function def($key, $default=null) { return defined($key) ? constant($key) : $default; }
 
 # Translation API
 function t($key, array $args=null) { return Trans::t($key, $args); }

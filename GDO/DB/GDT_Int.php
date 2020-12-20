@@ -163,10 +163,13 @@ class GDT_Int extends GDT
 	{
 		if ($filter = $this->filterVar($rq))
 		{
-			$min = (int)Strings::substrTo($filter, '-', $filter);
-			$max = (int)Strings::substrFrom($filter, '-', $filter);
-			$nam = $this->identifier();
-			$this->filterQueryCondition($query, "$nam >= $min AND $nam <= $max");
+		    if ($filter > 0) # 0.0 is not filtered?
+		    {
+    			$min = (int)Strings::substrTo($filter, '-', $filter);
+    			$max = (int)Strings::substrFrom($filter, '-', $filter);
+    			$nam = $this->identifier();
+    			$this->filterQueryCondition($query, "$nam >= $min AND $nam <= $max");
+		    }
 		}
 	}
 	

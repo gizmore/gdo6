@@ -30,9 +30,9 @@ foreach ($optional as $i => $test)
 <?php
 if ($valid)
 {
-	echo GDT_Panel::make()->html(t('install_system_ok', [Config::linkStep(3)]))->render();
+	echo GDT_Panel::make()->textRaw(t('install_system_ok', [Config::linkStep(3)]))->render();
 }
 else 
 {
-	echo GDT_Panel::make()->html(t('install_system_not_ok', [Config::linkStep(2)]))->render();
+	echo GDT_Panel::make()->textRaw(t('install_system_not_ok', [Config::linkStep(2)]))->render();
 }

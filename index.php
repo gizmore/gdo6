@@ -15,6 +15,7 @@ use GDO\UI\GDT_HTML;
 use GDO\Core\GDT_Error;
 
 set_include_path('.');
+include 'GDO6.php';
 
 @include 'protected/config.php';
 if (!defined('GWF_CONFIGURED'))
@@ -22,8 +23,6 @@ if (!defined('GWF_CONFIGURED'))
     echo "<!DOCTYPE html><html><body><h1>GDO6</h1><p>Please create a config.php, preferrably with <a href=\"install/wizard.php\">the install wizard.</a></p></body></html>\n";
     die();
 }
-
-include 'GDO6.php';
 
 $page = GDT_Page::make('page');
 

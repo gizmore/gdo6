@@ -2,7 +2,7 @@
 namespace GDO\UI;
 
 /**
- * Should be extended to reflect a jQuery API on php objects.
+ * Should be extended to reflect a jQuery API on PHP objects.
  * 
  * @author gizmore
  * @since 6.07

@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Table;
+
 use GDO\DB\Query;
 use GDO\Core\GDT;
 use GDO\Util\Math;
@@ -8,10 +9,15 @@ use GDO\Core\GDT_Template;
 use GDO\UI\WithHREF;
 use GDO\UI\WithLabel;
 use GDO\UI\GDT_Link;
-use GDO\Core\WithFields;
 use GDO\Core\GDT_Fields;
 use GDO\DB\ArrayResult;
 
+/**
+ * Pagemenu widget.
+ * @author gizmore
+ * @version 6.10
+ * @since 6.02
+ */
 class GDT_PageMenu extends GDT
 {
 	use WithHREF;
@@ -171,7 +177,7 @@ class GDT_PageMenu extends GDT
 		$pages[] = new PageMenuItem($curr, $this->replaceHREF($curr), true);
 		for ($i = 1; $i <= $this->shown; $i++)
 		{
-			$page = $curr- $i;
+			$page = $curr - $i;
 			if ($page > 0)
 			{
 				array_unshift($pages, new PageMenuItem($page, $this->replaceHREF($page)));
@@ -221,7 +227,11 @@ class GDT_PageMenu extends GDT
 	public function relationForPage(PageMenuItem $page)
 	{
 		$current = $this->getPage();
-		if ( ($page->page - 1) == $current)
+		if (!is_numeric($page->page))
+		{
+		    return GDT_Link::REL_NOFOLLOW;
+		}
+		elseif ( ($page->page - 1) == $current)
 		{
 			return GDT_Link::REL_NEXT;
 		}

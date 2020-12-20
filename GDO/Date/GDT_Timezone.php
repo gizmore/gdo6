@@ -22,6 +22,8 @@ final class GDT_Timezone extends GDT_Select
         $this->initChoices();
         $this->initial(GWF_TIMEZONE);
         $this->icon('time');
+        $this->caseS();
+        $this->ascii();
     }
     
     public function initChoices()
@@ -33,4 +35,5 @@ final class GDT_Timezone extends GDT_Select
         }
         return $this;
     }
+
 }

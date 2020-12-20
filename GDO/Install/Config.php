@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Install;
+
 use GDO\UI\GDT_Link;
 use GDO\UI\GDT_Divider;
 use GDO\DB\GDT_Enum;
@@ -18,6 +19,7 @@ use GDO\DB\GDT_String;
 use GDO\Core\GDT_Template;
 use GDO\Core\Logger;
 use GDO\DB\GDT_UInt;
+
 /**
  * Configuration helper during install wizard.
  * Holds a set of method names for the steps
@@ -106,6 +108,7 @@ class Config
 		if (!defined('GWF_ERROR_MAIL')) define('GWF_ERROR_MAIL', false);
 		# Database
 		if (!defined('GWF_SALT')) define('GWF_SALT', Random::randomKey(16));
+		if (!defined('GWF_DB_ENABLED')) define('GWF_DB_ENABLED', false);
 		if (!defined('GWF_DB_HOST')) define('GWF_DB_HOST', 'localhost');
 		if (!defined('GWF_DB_USER')) define('GWF_DB_USER', '');
 		if (!defined('GWF_DB_PASS')) define('GWF_DB_PASS', '');

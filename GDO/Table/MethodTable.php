@@ -142,8 +142,8 @@ abstract class MethodTable extends Method
 	    $table->ordered($this->isOrdered(), $this->getDefaultOrder(), $this->getDefaultOrderDir());
 	    $table->filtered($this->isFiltered());
 	    $table->searched($this->isSearched());
-	    $table->paginated($this->isPaginated());
 	    $table->sorted($this->isSorted());
+	    $table->paginated($this->isPaginated());
 	}
 	
 	public function renderTable()
@@ -184,9 +184,11 @@ abstract class MethodTable extends Method
 	    {
 	        $result = $table->multisort($result, $this->getDefaultOrder(), $this->getDefaultOrderDir());
 	    }
-	    if ($table->pagemenu)
+	    
+	    if ($this->isPaginated())
 	    {
-	        $result = $table->pagemenu->paginateResult($result, $this->getPage(), $this->getIPP());
+	        $this->table->pagemenu->items(count($result->data));
+	        $result = $this->table->pagemenu->paginateResult($result, $this->getPage(), $this->getIPP());
 	    }
 	    
 	    $table->result($result);

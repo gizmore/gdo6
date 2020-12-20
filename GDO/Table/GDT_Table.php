@@ -147,14 +147,10 @@ class GDT_Table extends GDT
 			$this->pagemenu = GDT_PageMenu::make('page');
 			$this->pagemenu->href($href);
 			$this->pagemenu->ipp($ipp);
+			$o = $this->headers->name;
+			$this->pagemenu->page($this->headers->getField('page')->getRequestVar("$o", '1', 'page'));
+// 			$this->pagemenu->items($this->getResult()->numRows());
 			$this->href($href);
-			
-			# If result is already there. it is a static array.
-			if ($this->result)
-			{
-				$this->countItems = count($this->result->fullData);
-				$this->result->data = array_slice($this->result->fullData, $this->getPageMenu()->getFrom(), $ipp);
-			}
 		}
 		return $this->ipp($ipp);
 	}
@@ -290,9 +286,9 @@ class GDT_Table extends GDT
 	{
 		if ($this->countItems === null)
 		{
-			$this->countItems = $this->countQuery ? 
-			$this->countQuery->exec()->fetchValue() :
-			$this->getResult()->numRows();
+		    $this->countItems = $this->countQuery ? 
+			    $this->countQuery->exec()->fetchValue() :
+			    $this->getResult()->numRows();
 		}
 		return $this->countItems;
 	}
@@ -313,6 +309,7 @@ class GDT_Table extends GDT
 			# Convert single to multiple fake
 		    if (isset($_REQUEST[$o]['order_by']))
 		    {
+                unset($_REQUEST[$o]['o']);
 	            $by = $_REQUEST[$o]['order_by'];
 	            $_REQUEST[$o]['o'][$by] = $_REQUEST[$o]['order_dir'] === 'ASC';
 // 	            unset($_REQUEST[$o]['order_by']);
@@ -376,8 +373,14 @@ class GDT_Table extends GDT
 	{
 		if ($this->pagemenu)
 		{
-			$this->pagemenu->items($this->countItems());
-			$this->pagemenu->href($this->href);
+		    if ($this->query)
+		    {
+		        if (!$this->countItems)
+		        {
+        			$this->pagemenu->items($this->countItems());
+		        }
+		    }
+// 			$this->pagemenu->href($this->href);
 		}
 		return $this->pagemenu;
 	}

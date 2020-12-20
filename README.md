@@ -12,11 +12,12 @@ In GDO6 the same type system (GDT) applies to all widgets, like tables, forms an
 Write a GDT once, write the validation once, and use the same GDType everywhere in your code.
 There are types like Email, Username, Geoposition, Country, Object, File, Image, Enum, Duration, Serialize, ComboBox, Date, CreatedBy and many more.
 
-The performance is quite okay with responsive timing and about 5MB memory footprint with 90+ modules loaded.
+The performance is quite okay with responsive timing and about 5MB memory footprint with 100+ modules loaded.
+
 
 ## Why?
 
-I was unhappy with RubyOnRails and recoded my framework from scratch. I took the best ideas from all my experience to create the GDT - GizmoreDataType - System, Which i think is missing on all frameworks i have seen.
+I was unhappy with RubyOnRails and recoded my framework from scratch. I took the best ideas from all my experience to create the GDT - GizmoreDataType - System, Which i think is missing on all frameworks i have seen so far.
 
 Read https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_AND_GDT.md to learn more about GDT.
  
@@ -48,28 +49,42 @@ Read https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_AND_GDT.md to learn mo
  
  - Yarn: Some modules come with javascript dependencies. Install all of them easily via ./gdo_yarn.sh
  
- - JS: There is a JS minifier that builds a single .js out of all js assets on the fly. Protect your JS code with that uglyfier via setting an option.
+ - JS: There is a JS minifier that builds a single .js out of all js assets on the fly. Protect your JS code with that uglyfier via setting an option. (TODO: deny access to the src files :O (ouch)
  
  - WYSIWYG: GDT_Message allows html to be typed by users. HTMLPurifier is used to securely allow that. The module gdo6-tinymce adds a nice editor on top of that.
 
  - Logger: The logger writes logfiles for each user individually.
  
+ - Modular: Plug your site together by cloning modules into the GDO/ folder. Some Modules like Session or Captcha exist in different versions. For example session can be stored serverwide via db or on the clients via AES encryption. The crypto is untested. Multiple Captcha module providers are planned. Want a roboto font or font awesome icons, just clone and install the module and the assets are there in source and build. There are two modules to extend GDT_Message editing; CKEditor and tinyMCE.
+ 
+ - DBA layer is nicely handwritten in about 2,500 lines of code(LOC). Keep in mind it replaces sophisticated DBA like activerecord or PDO. It works only with MariaDB at the moment, and this is not planned to be changed. The GDO-DBA is doing a nice job in performance and readability. The single-identity, 2-layer-cached engine is quite fun to use and easy to learn. What is missing is stuff like "has_many", "belongs_to", "etc.". The foreign key usage and management is excellent though, combined primary keys and foreign keys are supported.
+ 
+ - Want some config in your module? Just return an array of GDT in your GDO_Module::getConfig(). That's it. With one line you get all the validation and editing comfort of any GDT, from which there are over 100 widgets now.
+ 
+ - Easily create search forms that search the whole db or whole tables for a filter value. Multisorting is supported.
+ 
+ - Can't access the webserver yet? Run any GDO command and manage your installation via CLI. Just php gdo.php install Captcha and you are ready to go.
+ 
 
-## Missing features
+## Missing/Questionable features
 
- - Unit Tests: Currently there are only very few unit tests. My strategy is to issue error mails on any little error.
+ - The dependency management is not that great yet. There is a mapping missing between modulenames and gdo6-module repository. (Damn). On the other hand the GDO/ cloning strategy works out very well.
 
- - Only a few designs. Currently there is one ugly classic design, a bootstrap theme and an angular material design.
+ - The DB-Free, "simple single static sites" use case is not supported yet. :(
+
+ - Currently there are only very few Unit Tests. My additional strategy is to issue error mails on any little error, notice or warning. (Some Test are being written. Methods have defined GDT[] gdoParamters() which can be even fuzzed with a couple of lines)
+
+ - Lack of quality design. Currently there is one fairly ugly classic design, a bootstrap theme, a jquerymobile theme and an angular material design. If you are into html/css/design please have a look 
 
  - The I18n is not that great. Pluralization, for example, is not supported.
  
- - Currently there are no SEO friendly urls. This is on TODO!
+ - Currently there are no SEO friendly urls. This is on TODO! (Still far away todo)
  
  - Some modules are not that mature yet. For example the forum module is missing lots of design and features like unread threads or search highlight.
  
  - There is only one configuration file. Rest of config is in modules. It would be cool if ENV could override module and config settings
  
- - There is no CMS module and i think i don't want one. I create site via code, not via click.
+ - There is no CMS module and i think i don't want one. I create site via code, not via click. (Module_Blog is planned though)
 
 
 ## Demo
@@ -77,6 +92,8 @@ Read https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_AND_GDT.md to learn mo
 A demo site with material design and almost all modules is available here: http://gdo6.gizmore.org
 
 A demo site with classic design and almost all modules is (SOON) available here: http://classic.gdo6.gizmore.org (NOT YET)
+
+A demo site with bootstrap4 theme is available here: http://mettwitze.gizmore.org
 
 
 ## Installation
