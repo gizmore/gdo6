@@ -52,4 +52,4 @@ favicon.*
 vendor/
 
 # Ignore env.php
-env.php
+/env.php
