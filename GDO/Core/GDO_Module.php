@@ -542,7 +542,7 @@ class GDO_Module extends GDO
 	    }
 	    return array_merge(
 	        GDO_UserSetting::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair(),
-	        GDO_UserSettingBlob::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair(),
+	        GDO_UserSettingBlob::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair()
 	    );
 	}
 	
