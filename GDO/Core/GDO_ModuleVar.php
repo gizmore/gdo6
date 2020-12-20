@@ -1,12 +1,14 @@
 <?php
 namespace GDO\Core;
+
 use GDO\DB\GDT_Name;
 use GDO\DB\GDT_Object;
 use GDO\DB\GDT_String;
+
 /**
  * Module config table.
  * @author gizmore
- * @version 6.05
+ * @version 6.10
  * @since 3.00
  */
 final class GDO_ModuleVar extends GDO

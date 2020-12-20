@@ -40,6 +40,6 @@ final class Security extends MethodForm
 		HTAccess::protectFolder(GDO_PATH.'files');
 		HTAccess::protectFolder(GDO_PATH.'protected');
 		HTAccess::protectFolder(GDO_PATH.'install');
-		return Website::redirectMessage(GWF_WEB_ROOT)->add($this->renderPage());
+		return Website::redirect(GWF_WEB_ROOT);
 	}
 }

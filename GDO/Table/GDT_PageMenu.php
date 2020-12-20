@@ -10,6 +10,7 @@ use GDO\UI\WithLabel;
 use GDO\UI\GDT_Link;
 use GDO\Core\WithFields;
 use GDO\Core\GDT_Fields;
+use GDO\DB\ArrayResult;
 
 class GDT_PageMenu extends GDT
 {
@@ -116,6 +117,12 @@ class GDT_PageMenu extends GDT
 	public static function indexToPageS($index, $ipp)
 	{
 		return intval($index / $ipp) + 1;
+	}
+	
+	public function paginateResult(ArrayResult $result, $page, $ipp)
+	{
+	    $result->data = array_slice($result->data, self::getFromS($page, $ipp), $ipp);
+	    return $result;
 	}
 	
 	##############

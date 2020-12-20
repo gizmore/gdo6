@@ -25,8 +25,7 @@ class GDT_Divider extends GDT
 	public function renderForm() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
 	public function renderCard()
 	{
-	    $label = $this->displayLabel();
-        return '<div class="gdt-card-divider"></div><div class="gdt-card-divider">'.$label.'</div>';
+	    return '<div class="gdt-card-divider">'.$this->displayLabel().'</div>';
 	}
 	
 }

@@ -13,6 +13,10 @@ final class GDT_Response extends GDT
 {
 	use WithFields;
 	
+	public static $CODE = 200;
+	
+	public static function globalError() { return self::$CODE >= 400; }
+	
 	####################
 	### JSON Details ###
 	####################
@@ -102,7 +106,7 @@ final class GDT_Response extends GDT
 	{
 	    if ($response && $response->code != 200)
 	    {
-    	    $this->code = $response->code;
+	        self::$CODE = $this->code = $response->code;
 	    }
 		return $response ? $this->addFields($response->getFields()) : $this;
 	}

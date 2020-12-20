@@ -32,7 +32,7 @@ class Installer
 		
 		if (!$module->isPersisted())
 		{
-			GDO_Module::table()->deleteWhere('module_name = '.$module->quoted('module_name'))->exec();
+			GDO_Module::table()->deleteWhere('module_name = '.$module->quoted('module_name'));
 			$module->setVars(['module_enabled'=>'1', 'module_version'=>'6.00', 'module_priority' => $module->module_priority]);
 			$module->insert();
 			self::upgradeTo($module, '6.00');

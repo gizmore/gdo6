@@ -76,7 +76,7 @@ final class GDO_UserPermission extends GDO
 	
 	public static function revokePermission(GDO_User $user, GDO_Permission $permission)
 	{
-		self::table()->deleteWhere("perm_user_id={$user->getID()} AND perm_perm_id={$permission->getID()}")->exec();
+		return self::table()->deleteWhere("perm_user_id={$user->getID()} AND perm_perm_id={$permission->getID()}");
 	}
 	
 	public static function revoke(GDO_User $user, $permission)

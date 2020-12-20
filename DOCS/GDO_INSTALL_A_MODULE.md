@@ -18,6 +18,11 @@ E.g: gdo6-jquery as JQuery
 
     cd gdo6/GDO
     git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
+
+This way it is possible to have different module providers for a module.
+A good example is the "Session" module which comes in db and cookie versions.
+Another example would be "Captcha" wheras there is currently only one, but re-captcha is planned.
+ 
     
 ## Install javascript dependencies
 

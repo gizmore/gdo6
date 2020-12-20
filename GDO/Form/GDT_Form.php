@@ -102,8 +102,8 @@ class GDT_Form extends GDT
 		if (($field->writable) && (!$field->error))
 		{
 		    $var = $field->getVar();
-// 			$value = $field->getValidationValue();
-			if (!$field->validate($field->toValue($var)))
+			$value = $field->getValidationValue();
+			if (!$field->validate($value))
 			{
 				self::$VALIDATING_SUCCESS = false;
 				if (!$field->error)
@@ -113,7 +113,8 @@ class GDT_Form extends GDT
 			}
 			else
 			{
-				$field->var($var);
+			    # Conversion again because some values might change their ID attribute (GDT_File)
+			    $field->var($field->toVar($value));
 			}
 		}
 		# Recursive

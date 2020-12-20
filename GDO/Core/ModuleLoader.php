@@ -307,6 +307,7 @@ final class ModuleLoader
 					if ($init)
 					{
 					    $module->buildConfigCache();
+					    $module->buildSettingsCache();
             		}
 				}
 			}

@@ -73,10 +73,4 @@ class GDT_Container extends GDT
 	    }
 	}
 	
-// 	public function callHook($hookname)
-// 	{
-// 	    GDT_Hook::callHook($hookname, $this);
-// 	    return $this;
-// 	}
-	
 }

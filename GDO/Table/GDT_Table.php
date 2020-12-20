@@ -132,6 +132,7 @@ class GDT_Table extends GDT
 	##################
 	### Pagination ###
 	##################
+	/** @var $pagemnu GDT_PageMenu **/
 	public $pagemenu;
 	public function paginateDefault($href=null)
 	{

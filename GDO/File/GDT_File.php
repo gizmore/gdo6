@@ -54,7 +54,7 @@ class GDT_File extends GDT_Object
 		return $this;
 	}
 	
-	public $maxsize = 1024 * 4096; # 1MB
+	public $maxsize = 1024 * 4096; # 4MB
 	public function maxsize($maxsize)
 	{
 		$this->maxsize = $maxsize;
@@ -335,7 +335,10 @@ class GDT_File extends GDT_Object
 						$file->insert();
 						$this->beforeCopy($file);
 						$file->copy();
-// 						$this->gdo->setVar($this->name, $file->getID());
+						if ($this->gdo)
+						{
+						    $this->gdo->setVar($this->name, $file->getID());
+						}
 						$this->var($file->getID());
 						$this->files[] = $file;
 					}
@@ -423,10 +426,10 @@ class GDT_File extends GDT_Object
 			{
 				$files[] = GDO_File::fromForm(array(
 					'name' => $_FILES[$key]['name'],
-					'mime' => $_FILES[$key]['type'],
+					'type' => $_FILES[$key]['type'],
 					'size' => $_FILES[$key]['size'],
 					'dir' => dirname($_FILES[$key]['tmp_name']),
-					'path' => $_FILES[$key]['tmp_name'],
+					'tmp_name' => $_FILES[$key]['tmp_name'],
 					'error' => $_FILES[$key]['error'],
 				));
 			}
@@ -444,10 +447,10 @@ class GDT_File extends GDT_Object
 		{
 			return GDO_File::fromForm(array(
 				'name' => @file_get_contents($dir.'/name'),
-				'mime' => @file_get_contents($dir.'/mime'),
+				'type' => @file_get_contents($dir.'/mime'),
 				'size' => filesize($dir.'/0'),
 				'dir' => $dir,
-				'path' => $dir.'/0',
+				'tmp_name' => $dir.'/0',
 			));
 		}
 	}

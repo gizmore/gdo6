@@ -25,7 +25,7 @@ final class Process
     public static function commandPath($command, $windowsSuffix='.*')
     {
         $whereIsCommand = self::isWindows() ? 'where' : 'which';
-        $command = PHP_OS === 'WINNT' ? "$command$windowsSuffix" : $command;
+        $command = self::isWindows() ? "$command$windowsSuffix" : $command;
     
         $pipes = [];
         $process = proc_open(

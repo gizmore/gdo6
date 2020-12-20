@@ -28,18 +28,7 @@ class GDT_Message extends GDT_Text
     public static $DECODER = [self::class, 'DECODE'];
     public static function DECODE($s)
     {
-//         try
-        {
-            return '<div class="gdt-message ck-content">' . self::getPurifier()->purify($s) . '</div>';
-        }
-//         catch (\Error $e)
-//         {
-//             return t('err_decode_message');
-//         }
-//         catch (\Throwable $e)
-//         {
-//             return t('err_decode_message');
-//         }
+        return '<div class="gdt-message ck-content">' . self::getPurifier()->purify($s) . '</div>';
     }
     
     public static function plaintext($html)
@@ -48,9 +37,10 @@ class GDT_Message extends GDT_Text
         {
             return null;
         }
-        $html = preg_replace('#<a .*href="(.*)".*>(.*)</a>#', ' $2($1) ', $html);
-        $html = preg_replace('#<[^\\>]*>#', ' ', $html);
         $html = preg_replace("#\r?\n#", ' ', $html);
+        $html = preg_replace('#<a .*href="(.*)".*>(.*)</a>#', ' $2($1) ', $html);
+        $html = preg_replace('#</p>#i', "\n", $html);
+        $html = preg_replace('#<[^\\>]*>#', ' ', $html);
         $html = preg_replace('# +#', ' ', $html);
         return $html;
     }
@@ -137,7 +127,7 @@ class GDT_Message extends GDT_Text
 	### Render ###
 	##############
     public function renderCell() { return $this->getVarOutput(); }
-    public function renderCard() { return '<em></em>' . $this->getVarOutput(); }
+    public function renderCard() { return '<div class="gdt-message-card">'.$this->getVarOutput().'</div>'; }
     public function renderForm() { return GDT_Template::php('UI', 'form/message.php', ['field'=>$this]); }
 	public function renderList() { return '<div class="gdo-message-condense">'.$this->renderCell().'</div>'; }
 	
@@ -164,7 +154,7 @@ class GDT_Message extends GDT_Text
 			$config->set('URI.DisableExternalResources', false);
 			$config->set('URI.DisableResources', false);
 			$config->set('HTML.TargetBlank', true);
-			$config->set('HTML.Allowed', 'a[href|rel|target],pre[class],code[class],img[src|alt],figure[style|class],figcaption');
+			$config->set('HTML.Allowed', 'a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption');
 			$config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
 			$config->set('HTML.SafeObject', true);
 			$config->set('Attr.AllowedRel', array('nofollow'));

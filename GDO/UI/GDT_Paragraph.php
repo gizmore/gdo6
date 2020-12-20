@@ -19,6 +19,6 @@ final class GDT_Paragraph extends GDT
 	    return sprintf('<p class="gdt-paragraph">%s</p>', $this->renderText()); 
 	}
 	
-	public function renderCard() { return '<em></em>' . $this->renderCell(); }
+// 	public function renderCard() { return '<em></em>' . $this->renderCell(); }
 
 }

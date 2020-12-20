@@ -15,16 +15,6 @@ use GDO\DB\GDT_Index;
  */
 final class GDO_UserSettingBlob extends GDO
 {
-// 	################
-// 	### Settings ###
-// 	################
-// 	/**
-// 	 * @var \GDO\Core\GDT
-// 	 */
-// 	private static $settings;
-// 	public static function register(GDT $gdoType) { self::$settings[$gdoType->name] = $gdoType; }
-// 	public static function isRegistered($name) { return isset(self::$settings[$name]); }
-	
 	###########
 	### GDO ###
 	###########
@@ -40,52 +30,4 @@ final class GDO_UserSettingBlob extends GDO
 		);
 	}
 	
-// 	public static function load(GDO_User $user)
-// 	{
-// 		return self::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair();
-// 	}
-	
-// 	public static function get($key)
-// 	{
-// 		return self::userGet(GDO_User::current(), $key);
-// 	}
-
-// 	public static function userGet(GDO_User $user, $key)
-// 	{
-// 		if (null === ($settings = $user->tempGet('gdo_setting_blob')))
-// 		{
-// 			$settings = self::load($user);
-// 			$user->tempSet('gdo_setting_blob', $settings);
-// 			$user->recache();
-// 		}
-// 		$gdoType = self::$settings[$key];
-// 		return $gdoType->initial(@$settings[$key]);
-// 	}
-
-// 	public static function set($key, $value)
-// 	{
-// 		return self::userSet(GDO_User::current(), $key, $value);
-// 	}
-	
-// 	public static function userSet(GDO_User $user, $key, $value)
-// 	{
-// 		$userid = $user->getID();
-// 		if ($value === null)
-// 		{
-// 			self::table()->deleteWhere("uset_user=$userid AND uset_name=".quote($key))->exec();
-// 		}
-// 		else
-// 		{
-// 			self::blank(array(
-// 				'uset_user' => $userid,
-// 				'uset_name' => $key,
-// 				'uset_value' => $value
-// 			))->replace();
-// 		}
-// 		$user->tempUnset('gdo_setting_blob');
-		
-// 		self::userGet($user, $key)->var($value);
-		
-// 		GDT_Hook::callWithIPC('UserSettingChange', $user, $key, $value);
-// 	}
 }

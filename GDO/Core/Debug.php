@@ -317,10 +317,10 @@ final class Debug
 	{
 		return self::backtraceMessage($message, $html, debug_backtrace());
 	}
-	public static function backtraceException($e, $html = true, $message = '')
+	public static function backtraceException(\Throwable $e, $html = true, $message = '')
 	{
-		$message = sprintf("PHP Exception %s: %s in %s line %s", $message, $e->getMessage(), self::shortpath($e->getFile()), $e->getLine());
-		return self::backtraceMessage($message, $html, $e->getTrace());
+		$message = sprintf("PHP Exception: %s in %s line %s", $e->getMessage(), self::shortpath($e->getFile()), $e->getLine());
+		return self::backtraceMessage($message, $html, $e->getTrace(), $e->getLine(), $e->getFile());
 	}
 	private static function backtraceArgs(array $args = null)
 	{
@@ -365,11 +365,11 @@ final class Debug
 		
 		if (mb_strlen($arg) > 28)
 		{
-			return mb_substr($arg, 0, 12) . '…' . mb_substr($arg, -12);
+			return mb_substr($arg, 0, 14) . '…' . mb_substr($arg, -14);
 		}
 		return Application::instance()->isHTML() ? html($arg) : $arg;
 	}
-	private static function backtraceMessage($message, $html = true, array $stack)
+	private static function backtraceMessage($message, $html = true, array $stack, $lastLine='?', $lastFile='[unknown file]')
 	{
 // 		$badformat = false;
 		
@@ -382,7 +382,7 @@ final class Debug
 		}
 		
 		// Append PRE header.
-		$back = $html ? "<span class=\"debug-exception-title\">PHP Exception</span><pre class=\"gdo-exception\">\n" : '';
+		$back = $html ? "<pre class=\"gdo-exception\">\n" : '';
 		
 		// Append general title message.
 		if ($message !== '')
@@ -391,14 +391,14 @@ final class Debug
 		}
 		
 		$implode = [];
-		$preline = 'Unknown';
-		$prefile = 'Unknown';
+		$preline = $lastLine;
+		$prefile = $lastFile;
 		$longest = 0;
 		$i = 0;
 		
 		foreach ($stack as $row)
 		{
-			if ($i ++ > 0)
+			if (++$i > 0)
 			{
 				$function = sprintf('%s%s(%s)', isset($row['class']) ? $row['class'] . $row['type'] : '', $row['function'], self::backtraceArgs(isset($row['args']) ? $row['args'] : null));
 				$implode[] = array(
@@ -410,7 +410,14 @@ final class Debug
 					$len,
 					$longest));
 			}
-			$preline = isset($row['line']) ? $row['line'] : '?';
+// 			if ($i === 1)
+// 			{
+//     			$preline = isset($row['line']) ? $row['line'] : $lastLine;
+// 			}
+// 			else
+// 			{
+			    $preline = isset($row['line']) ? $row['line'] : '?';
+// 			}
 			$prefile = isset($row['file']) ? $row['file'] : '[unknown file]';
 		}
 		

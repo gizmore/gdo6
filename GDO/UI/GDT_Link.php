@@ -57,13 +57,20 @@ class GDT_Link extends GDT_String
 		return self::make()->href($href)->labelRaw($label)->render();
 	}
 	
+	public static function urlencodeSEO($url)
+	{
+	    $url = str_replace([' '], '_', $url);
+	    return urlencode($url);
+	}
+	
 	##############
 	### Render ###
 	##############
 	public function renderCell() { return GDT_Template::php('UI', 'cell/link.php', ['link' => $this]); }
 	public function renderCard()
 	{
-	    return $this->renderCell() . $this->renderCellSpan(html($this->initial));
+	    return $this->renderCell();
+// 	    return $this->displayLabel() . $this->renderCell();Span(html($this->initial));
 	}
 	public function renderForm() { return $this->renderCell(); }
 	

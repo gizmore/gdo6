@@ -5,10 +5,16 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
+/**
+ * File system utilities.
+ * 
+ * @author gizmore
+ * @version 6.10
+ * @since 6.00
+ */
 final class FileUtil
 {
-    public static function isFile($filename) { return stream_resolve_include_path($filename) !== false; }
-//     public static function isFile($filename) { return is_file($filename); }
+    public static function isFile($filename) { return stream_resolve_include_path($filename) !== false; } # fast check
     public static function isDir($filename) { return is_dir($filename); }
 	public static function createDir($path) { return self::isDir($path) && is_writable($path) ? true : @mkdir($path, GWF_CHMOD, true); }
 	public static function dirsize($path)
@@ -23,9 +29,34 @@ final class FileUtil
 			}
 		}
 		return $bytes;
-		
 	}
 	
+	/**
+	 * Replace DIR separator with OS agnostic character.
+	 * @param string $path
+	 * @return string
+	 */
+	public static function path($path)
+	{
+	    return str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path);
+	}
+	
+	/**
+	 * Convert dir separator to unix style.
+	 * Used in mysql source filename :/
+	 * @param string $path
+	 * @return string
+	 */
+	public static function linuxPath($path)
+	{
+	    return str_replace(['/', '\\'], '/', $path);
+	}
+	
+/**
+	 * Scandir without '.' and '..'. 
+	 * @param string $dir
+	 * @return array
+	 */
 	public static function scandir($dir)
 	{
 		$files = array_slice(scandir($dir), 2);
@@ -55,7 +86,10 @@ final class FileUtil
 		}
 		return false;
 	}
-	
+
+	################
+	### Filesize ###
+	################
 	public static function humanFilesize($bytes, $factor='1024', $digits='2')
 	{
 		$txt = t('_filesize');
@@ -81,14 +115,13 @@ final class FileUtil
 	        {
 	            if (stripos($s, $b) !== false)
 	            {
-	                $pow+1;
+// 	                $pow += 1;
 	                $mul = preg_replace('/[^\\.0-9]/', '', $mul);
 	                return bcmul($mul, bcpow(1024, $pow));
 	            }
 	        }
 	    }
-	    return (int)$s;
+	    return (int) $s;
 	}
-	
 	
 }

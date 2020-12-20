@@ -155,6 +155,7 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     ## git clone --recursive https://github.com/gizmore/gdo6-wechall WeChall
     # git clone --recursive https://github.com/gizmore/gdo6-whois Whois
     ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
+    git clone --recursive https://github.com/gizmore/gdo6-zip ZIP
     
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
 

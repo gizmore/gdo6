@@ -26,7 +26,7 @@ final class Stream
 		return $result;
 	}
 	
-	public static function _path($path)
+	private static function _path($path)
 	{
 		if ($fh = fopen($path, 'rb'))
 		{
@@ -126,6 +126,18 @@ final class Stream
 	        flush();
 	    }
 	    fclose($fp);
+	}
+	
+	public static function serveText($content, $fileName)
+	{
+	    header('Content-Type: application/octet-stream');
+	    header('Content-Disposition: attachment; filename='.html($fileName));
+	    header('Expires: 0');
+	    header('Cache-Control: must-revalidate');
+	    header('Pragma: public');
+	    header('Content-Length: ' . strlen($content));
+	    header('Content-Size: '. strlen($content));
+        echo $content;
 	}
 
 }

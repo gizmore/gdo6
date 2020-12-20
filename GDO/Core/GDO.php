@@ -535,27 +535,39 @@ abstract class GDO
 		return $query;
 	}
 	
+	public function delete()
+	{
+	    return $this->deleteB();
+	}
+	
 	/**
+	 * Delete multiple rows, but still one by one to trigger all events correctly.
 	 * @param string $condition
 	 * @return \GDO\DB\Query
-	 * @deprecated Better delete one by one with events!
 	 */
 	public function deleteWhere($condition)
 	{
-		return $this->query()->delete($this->gdoTableIdentifier())->where($condition);
+	    $result = $this->table()->select()->where($condition)->exec();
+	    while ($gdo = $result->fetchObject())
+	    {
+	        $gdo->deleteB();
+	    }
+	    return $this;
 	}
 	
-	public function delete()
+	private function deleteB()
 	{
-		if ($this->persisted)
-		{
-			$query = $this->deleteWhere($this->getPKWhere());
-			$this->beforeDelete($query);
-			$query->exec();
-			$this->afterDelete();
-			$this->uncache();
-		}
-		return $this;
+	    if ($this->persisted)
+	    {
+	        $query = $this->query()->delete($this->gdoTableIdentifier())->where($this->getPKWhere());
+	        $this->beforeDelete($query);
+	        $query->exec();
+	        $this->afterDelete();
+	        $this->persisted = false;
+	        $this->uncache();
+	    }
+	    return $this;
+	    
 	}
 	
 	public function replace()
@@ -789,7 +801,7 @@ abstract class GDO
 		{
 		    if (isset($initial[$column->name]))
 		    {
-		        $column->initial($initial[$column->name]);
+		        $column->var($initial[$column->name]);
 		    }
 			if ($data = $column->blankData())
 			{

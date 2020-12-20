@@ -131,8 +131,8 @@ trait WithImageFile
 			$file = GDO_File::fromForm(array(
 				'name' => $original->getName(),
 				'size' => $original->getSize(),
-				'mime' => $original->getType(),
-				'path' => $dest,
+				'type' => $original->getType(),
+				'tmp_name' => $dest,
 			));
 			return $file;
 		}
