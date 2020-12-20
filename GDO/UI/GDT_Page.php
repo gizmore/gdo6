@@ -28,7 +28,7 @@ final class GDT_Page extends GDT
     public $rightNav;
     public $bottomNav;
 
-    public GDT_Container $topTabs; # Admin or module tabs.
+    public $topTabs; # Admin or module tabs.
     
     /**
      * Call nav hooks early
