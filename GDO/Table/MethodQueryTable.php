@@ -52,7 +52,6 @@ abstract class MethodQueryTable extends MethodTable
 	{
 	    $table->query($this->getQuery());
 	    $table->countQuery($this->getCountQuery());
-// 	    $table->paginated($this->isPaginated());
 	}
 
 }

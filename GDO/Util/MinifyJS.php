@@ -1,15 +1,18 @@
 <?php
 namespace GDO\Util;
+
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
+
 /**
  * Very basic on-the-fly javascript mangler.
- * Changes are detected by md5 only.
- * You can configure this feature in Module_Core.
+ * Changes are detected by md5.
+ * You can configure this feature in Module_Core. Make sure you detect the binaries.
+ * Output goes to assets/ now instead of temp/ as temp/ is a protected folder.
  * 
  * @author gizmore
+ * @version 6.10
  * @since 4.1
- * @version 6.07
  * @see Module_Core
  */
 final class MinifyJS
@@ -28,7 +31,7 @@ final class MinifyJS
 	
 	private $skipMinified = false;
 	
-	public static function tempDirS($path='') { return GDO_PATH . 'temp/minify/' . $path; }
+	public static function tempDirS($path='') { return GDO_PATH . 'assets/' . $path; }
 
 	public static function minified(array $javascripts)
 	{
@@ -62,12 +65,12 @@ final class MinifyJS
 		{
 			foreach ($this->input as $path)
 			{
-				if (strpos($path, '://') || strpos($path, 'ndex.php?'))
+				if (strpos($path, '://') || strpos($path, 'ndex.php?')) # ndex returns 1
 				{
 					$this->external[] = $path;
 				}
 			}
-			$this->external[] = "temp/minify/$earlyhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
+			$this->external[] = "assets/$earlyhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
 			return $this->external;
 		}
 		
@@ -105,7 +108,7 @@ final class MinifyJS
 		copy($finalpath, $earlypath);
 		
 		# Abuse external as small JS.
-		$this->external[] = "temp/minify/$finalhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
+		$this->external[] = "assets/$finalhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
 		return $this->external;
 	}
 	

@@ -176,6 +176,7 @@ return array(
 'err_set_cookie' => 'Il tuo cookie non può essere impostato una seconda volta.',
 'err_invalid_gdt_var' => 'Un tipo di dati GDT, %s, ha un valore non valido: %s.',
 'err_unknown_user_setting' => 'Il modulo %s non ha alcuna impostazione utente chiamata %s.',
+'err_nothing_happened' => 'Niente è cambiato anche se qualcosa sarebbe dovuto accadere.',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',
@@ -269,6 +270,7 @@ return array(
 # Config
 'cfg_system_user' => 'System Benutzer',
 'cfg_show_impressum' => 'Impressum im Footer anzeigen?',
+'cfg_show_privacy' => 'Datenschutz im Footer anzeigen?',
 'cfg_div_javascript' => 'Javascript',
 'cfg_minify_js' => 'Javascript Minifizierungs-Modus',
 'cfg_nodejs_path' => 'Pfad zu nodejs',
@@ -279,4 +281,5 @@ return array(
 'err_nodejs_not_found' => 'Konnte nodejs nicht finden',
 'err_annotate_not_found' => 'Konnte ng-annotate nicht finden',
 'err_uglify_not_found' => 'Konnte uglify nicht finden',
+'link_privacy' => 'Datenschutz',
 );

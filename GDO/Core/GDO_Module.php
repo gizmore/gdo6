@@ -15,6 +15,7 @@ use GDO\DB\GDT_Checkbox;
 use GDO\User\GDO_UserSettingBlob;
 use GDO\User\GDO_User;
 use GDO\DB\GDT_Text;
+use GDO\Tests\Module_Tests;
 
 /**
  * GDO base module class.
@@ -53,6 +54,14 @@ class GDO_Module extends GDO
 	private $blocked = false;
 	public function isBlocked() { return $this->blocked; }
 	public function setBlocked() { $this->blocked = true; }
+
+	/**
+	 * Skip these folders in unit tests using strpos.
+	 * 
+	 * @see Module_Tests
+	 * @return string[]
+	 */
+	public function thirdPartyFolders() {}
 	
 	/**
 	 * @return string[]
@@ -70,8 +79,8 @@ class GDO_Module extends GDO
 	}
 	
 	/**
-	 * Provided theme names in module /thm/$themeName folder.
-	 * @return string[] array of $themeNames
+	 * Provided theme name in module /thm/$themeName/ folder.
+	 * @return string $themeName
 	 */
 	public function getTheme() {}
 	
@@ -110,8 +119,6 @@ class GDO_Module extends GDO
 		}
 		return '';
 	}
-	
-	
 	
 	##############
 	### Events ###
@@ -248,18 +255,9 @@ class GDO_Module extends GDO
 	############
 	### Init ###
 	############
-	public function __wakeup() { $this->inited = false; self::$COUNT++; }
+// 	public function __wakeup() { $this->inited = false; self::$COUNT++; }
+
 	private $inited = false;
-// 	public function initModule()
-// 	{
-// 		if (!$this->inited)
-// 		{
-// 			if ($this->isEnabled())
-// 			{
-// 				$this->onInit();
-// 			}
-// 		}
-// 	}
 	
 	public function initedModule()
 	{
@@ -284,6 +282,11 @@ class GDO_Module extends GDO
 	 * @var GDT[]
 	 */
 	private $configCache = null;
+	
+	/**
+	 * Get module configuration hashed and cached.
+	 * @return GDT[]
+	 */
 	public function buildConfigCache()
 	{
 	    if ($this->configCache === null)
@@ -377,24 +380,32 @@ class GDO_Module extends GDO
 	###################
 	### User config ###
 	###################
-	# 4 methods to override
+	/**
+	 * Special URL for settings.
+	 */
 	public function getUserSettingsURL() {}
 	
 	/**
+	 * Config that the user cannot change.
 	 * @return GDT[]
 	 */
 	public function getUserConfig() {}
+	
 	/**
+	 * User changeable settings.
 	 * @return GDT[]
 	 */
 	public function getUserSettings() {}
 	
 	/**
+	 * User changeable settings in a blob table. For e.g. signature.
 	 * @return GDT[]
 	 */
 	public function getUserSettingBlobs() {}
 	
-	# API
+	####################
+	### Settings API ###
+	####################
 	public function setting($key)
 	{
 	    return $this->userSetting(GDO_User::current(), $key);
@@ -563,7 +574,7 @@ class GDO_Module extends GDO
 	##############
 	### Assets ###
 	##############
-	private static $_NC;
+	private static $_NC; # nocache appendix
 	public function nocacheVersion() { if (!self::$_NC) self::$_NC = "v={$this->getVersion()}&vc=".Module_Core::instance()->cfgAssetVersion(); return self::$_NC; }
 	public function addBowerJavascript($path) { return $this->addJavascript('bower_components/'.$path); }
 	public function addJavascript($path) { return Javascript::addJavascript($this->wwwPath($path.'?'.$this->nocacheVersion())); }

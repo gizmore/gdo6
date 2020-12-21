@@ -16,13 +16,10 @@ final class GDT_PageNum extends GDT_UInt
     public $orderable = false;
     public $hidden = true;
     
-    public $bytes = 2;
+    public $bytes = '2';
     
     public function defaultLabel() { return $this->label('page'); }
     
-    public function __construct()
-    {
-        $this->initial('1');
-    }
+    public $initial = '1';
     
 }

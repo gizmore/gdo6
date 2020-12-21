@@ -9,7 +9,7 @@ use GDO\UI\GDT_HTML;
  * @author gizmore
  * @version 6.05
  */
-final class GDT_Response extends GDT
+class GDT_Response extends GDT
 {
 	use WithFields;
 	
@@ -81,7 +81,10 @@ final class GDT_Response extends GDT
     	    foreach ($fields as $field)
     	    {
     	        $html .= $field->render();
-//     	        $html .= $this->_renderHTMLRec($field);
+    	        if ($field instanceof GDT_Response)
+    	        {
+        	        $html .= $this->_renderHTMLRec($field); # #XXX: only responses recursively.
+    	        }
     	    }
 	    }
 	    return $html;

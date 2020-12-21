@@ -221,6 +221,18 @@ class GDT_String extends GDT
 	    return $this->searchCondition($searchTerm);
 	}
 	
+	public function searchGDO($searchTerm)
+	{
+	    if ($this->caseSensitive)
+	    {
+	        return stripos($this->getVar(), $searchTerm) !== false;
+	    }
+	    else
+	    {
+	        return strpos($this->getVar(), $searchTerm) !== false;
+	    }
+	}
+	
 	##############
 	### Config ###
 	##############

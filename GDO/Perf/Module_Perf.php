@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Perf;
 
-use GDO\UI\GDT_Bar;
 use GDO\Core\GDO_Module;
 use GDO\DB\GDT_Enum;
 use GDO\User\GDO_User;
@@ -38,7 +37,6 @@ final class Module_Perf extends GDO_Module
     ############
     /**
      * Show performance footer.
-     * @param GDT_Bar $bottomBar
      */
     public function onInitSidebar()
 	{
@@ -46,7 +44,7 @@ final class Module_Perf extends GDO_Module
 	    {
 	        case 'none': $show = false; break;
 	        case 'staff': $show = GDO_User::current()->hasPermission('staff'); break;
-	        case 'all': $show = true;
+	        case 'all': $show = true; break;
 	    }
 	    if ($show)
 	    {

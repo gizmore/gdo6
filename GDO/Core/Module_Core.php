@@ -29,7 +29,7 @@ use GDO\UI\GDT_Page;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9397'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9405'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
@@ -41,6 +41,8 @@ final class Module_Core extends GDO_Module
 	public function getTheme() { return 'default'; }
 	
 	public function onLoadLanguage() { return $this->loadLanguage('lang/core'); }
+	
+	public function thirdPartyFolders() { return ['/protected/', '/htmlpurifier/', '/bin/']; }
 	
 	public function getClasses()
 	{
@@ -64,8 +66,9 @@ final class Module_Core extends GDO_Module
 	{
 		return [
 			GDT_User::make('system_user')->editable(false)->initial($this->env('system_user')),
-			GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum')),
-			GDT_Divider::make('div_javascript')->label('div_javascript'),
+		    GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum')),
+		    GDT_Checkbox::make('show_privacy')->initial($this->env('show_privacy')),
+		    GDT_Divider::make('div_javascript')->label('div_javascript'),
 			GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial($this->env('minify_js', 'no')),
 			GDT_Path::make('nodejs_path')->initial($this->env('nodejs_path', 'nodejs'))->label('nodejs_path'),
 		    GDT_Path::make('uglifyjs_path')->initial($this->env('uglifyjs_path', 'uglifyjs'))->label('uglifyjs_path'),
@@ -81,6 +84,7 @@ final class Module_Core extends GDO_Module
 	public function cfgSystemUser() { return $this->getConfigValue('system_user'); }
 	public function cfgSystemUserID() { return $this->getConfigVar('system_user'); }
 	public function cfgShowImpressum() { return $this->getConfigValue('show_impressum'); }
+	public function cfgShowPrivacy() { return $this->getConfigValue('show_privacy'); }
 	public function cfgMinifyJS() { return $this->getConfigVar('minify_js'); }
 	public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
 	public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
@@ -92,10 +96,14 @@ final class Module_Core extends GDO_Module
 	#############
 	public function onInitSidebar()
 	{
+	    $navbar = GDT_Page::$INSTANCE->bottomNav;
 		if ($this->cfgShowImpressum())
 		{
-		    $navbar = GDT_Page::$INSTANCE->bottomNav;
 			$navbar->addField(GDT_Link::make('link_impressum')->href(href('Core', 'Impressum')));
+		}
+		if ($this->cfgShowPrivacy())
+		{
+		    $navbar->addField(GDT_Link::make('link_privacy')->href(href('Core', 'Privacy')));
 		}
 	}
 	

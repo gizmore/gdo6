@@ -67,6 +67,23 @@ trait WithFields
 	    return $this;
 	}
 	
+	public function addFieldFirst(GDT $field)
+	{
+	    $newFields = [$field->name => $field];
+	    foreach ($this->fields as $name => $gdt)
+	    {
+	        $newFields[$name] = $gdt;
+	    }
+	    $this->fields = $newFields;
+	    return $this;
+	}
+	
+	public function clearFields()
+	{
+	    $this->fields = [];
+	    return $this;
+	}
+	
 	/**
 	 * Return all fields in this collection.
 	 * @return \GDO\Core\GDT[]

@@ -29,7 +29,8 @@ class GDT_CreatedAt extends GDT_DateTime
 	 */
 	public function blankData()
 	{
-		return [$this->name => Time::getDate()];
+	    $var = $this->var ? $this->var : Time::getDate();
+		return [$this->name => Time::getDate(Time::getTimestamp($var))];
 	}
 	
 	public function displayValue($var)

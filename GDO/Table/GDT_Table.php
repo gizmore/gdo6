@@ -8,6 +8,7 @@ use GDO\DB\Query;
 use GDO\DB\Result;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+use GDO\UI\GDT_SearchField;
 use GDO\UI\WithHREF;
 use GDO\UI\WithTitle;
 use GDO\UI\WithActions;
@@ -72,7 +73,7 @@ class GDT_Table extends GDT
 	### Endpoint ###
 	################
 	public $action;
-	public function __construct() { $this->action = @$_SERVER['REQUEST_URI']; }
+	public function __construct() { $this->action = @$_SERVER['REQUEST_URI']; $this->makeHeaders(); }
 	public function action($action=null) { $this->action = $action; return $this; }
 
 	##############
@@ -89,6 +90,23 @@ class GDT_Table extends GDT
 	{
 	    $this->hideEmpty = $hideEmpty;
 	    return $this;
+	}
+	
+	####################### 
+	### Default headers ###
+	#######################
+	public function setupHeaders($searched=false, $paginated=false, $ordered=false, $filtered=false, $sorted=false)
+	{
+	    if ($searched)
+	    {
+	        $this->addHeader(GDT_SearchField::make('search'));
+	    }
+	    
+	    if ($paginated)
+	    {
+	        $this->addHeader(GDT_PageNum::make('page'));
+	        $this->addHeader(GDT_IPP::make('ipp'));
+	    }
 	}
 	
 	######################

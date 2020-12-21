@@ -1,7 +1,7 @@
 <?php
 namespace GDO\Table\Test;
 
-use PHPUnit\Framework\TestCase;
+use GDO\Tests\TestCase;
 
 final class SearchableTest extends TestCase
 {

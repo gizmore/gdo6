@@ -52,19 +52,24 @@ final class ModuleLoader
 	}
 	
 	/**
+	 * @var GDO_Module[]
+	 */
+	public static $ENABLED_MODULES = null;
+	
+	/**
 	 * Get all enabled and loaded modules.
 	 * @return GDO_Module[]
 	 */
 	public function getEnabledModules()
 	{
-	    static $enabled;
-	    if ($enabled === null)
+	    if (self::$ENABLED_MODULES === null)
 	    {
 	        $enabled = array_filter($this->modules, function(GDO_Module $module){
     			return $module->isEnabled();
     		});
+	        self::$ENABLED_MODULES = $enabled;
 	    }
-	    return $enabled;
+	    return self::$ENABLED_MODULES;
 	}
 	
 	/**

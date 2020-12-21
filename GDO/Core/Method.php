@@ -84,7 +84,14 @@ abstract class Method
 	 */
 	public function gdoParameters() { return []; }
 	
+	/**
+	 * @var GDT[]
+	 */
 	private $paramCache = null;
+	
+	/**
+	 * @return GDT[]
+	 */
 	public function gdoParameterCache()
 	{
 		if ($this->paramCache === null)
@@ -97,7 +104,6 @@ abstract class Method
 		}
 		return $this->paramCache;
 	}
-	
 	
 	/**
 	 * @param string $key

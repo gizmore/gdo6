@@ -2,8 +2,8 @@
 namespace GDO\Core\Test;
 
 use GDO\Core\GDT_Response;
+use GDO\Tests\TestCase;
 use GDO\UI\GDT_Paragraph;
-use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertContains;
 use function PHPUnit\Framework\assertStringContainsString;
 use GDO\UI\GDT_Container;
@@ -38,7 +38,7 @@ final class ResponseTest extends TestCase
         $p1 = GDT_Paragraph::make()->textRaw('par1');
         $r1->addField($p1);
         $r1->add(null);
-        assertEquals(200, $r1->code);
+        assertEquals(200, GDT_Response::$CODE);
     }
 
 }

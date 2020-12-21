@@ -22,6 +22,8 @@ class GDT_Checkbox extends GDT_Select
 		$this->emptyValue = '2';
 		$this->min = 0;
 		$this->max = 1;
+		$this->ascii();
+		$this->caseS();
 		$this->notNull = true;
 	}
 	
@@ -72,7 +74,7 @@ class GDT_Checkbox extends GDT_Select
 	{
 		if ($value === true) { return '1'; }
 		elseif ($value === false) { return '0'; }
-		else return null;
+		else { return null; }
 	}
 	
 	public function toValue($var)
@@ -96,11 +98,14 @@ class GDT_Checkbox extends GDT_Select
 	##############
 	public function displayValue($var)
 	{
+	    if ($var === null)
+	    {
+	        return t('enum_undetermined_yes_no');
+	    }
 	    switch ($var)
 	    {
 	        case '0': return t('enum_no');
 	        case '1': return t('enum_yes');
-	        case '2': return t('enum_undetermined_yes_no');
 	        default: return $this->errorInvalidVar($var);
 	    }
 	}

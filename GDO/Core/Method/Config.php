@@ -5,6 +5,7 @@ use GDO\Core\GDO_Module;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Website;
 use GDO\Core\MethodAjax;
+
 /**
  * API Request to get all module configs.
  * Useful for JS Apps.
@@ -26,15 +27,15 @@ final class Config extends MethodAjax
 	private function getModuleConfig(GDO_Module $module)
 	{
 		$json = [];
-		foreach ($module->getConfigCache() as $type)
+		if ($config = $module->getConfigCache())
 		{
-			$value = $module->getConfigValue($type->name);
-// 			if ($value instanceof GDO)
-// 			{
-// 				$value = $value->getID();
-// 			}
-			$json[$type->name] = $type->toVar($value);
+    		foreach ($config as $type)
+    		{
+    			$value = $module->getConfigValue($type->name);
+    			$json[$type->name] = $type->toVar($value);
+    		}
 		}
 		return $json;
 	}
+
 }

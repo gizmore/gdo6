@@ -57,6 +57,8 @@ class Application
 	
 	public function isWindows() { return defined('PHP_WINDOWS_VERSION_MAJOR'); }
 	
+	public function isUnitTests() { return false; }
+	
 	/**
 	 * @return \GDO\Core\Method
 	 */

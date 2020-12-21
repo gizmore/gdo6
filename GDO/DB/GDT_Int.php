@@ -196,6 +196,12 @@ class GDT_Int extends GDT
 	    return $this->searchCondition($searchTerm);
 	}
 	
+	public function searchGDO($searchTerm)
+	{
+	    $haystack = (string) $this->getVar();
+	    return strpos($haystack, $searchTerm) !== false;
+	}
+	
 	/**
 	 * Build a search condition.
 	 * @param string $searchTerm

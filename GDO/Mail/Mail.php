@@ -1,6 +1,11 @@
 <?php
 namespace GDO\Mail;
+
 use GDO\Core\Debug;
+use GDO\Core\GDT_Template;
+use GDO\MailGPG\GDO_PublicKey;
+use GDO\User\GDO_User;
+
 /**
  * Will send very simple html and plaintext mails.
  * Supports GPG signing and encryption.
@@ -9,15 +14,12 @@ use GDO\Core\Debug;
  * @TODO: Make use of staff cc?
  * @TODO: Test Attechments in combination with GPG
  * @author gizmore
- * @version 3.0
- * @since 2008
+ * @version 6.00
+ * @since 1.00
  * */
-use GDO\Core\GDT_Template;
-use GDO\MailGPG\GDO_PublicKey;
-use GDO\User\GDO_User;
 final class Mail
 {
-	public static $SENT = 0;
+	public static $SENT = 0; # perf
 	public static $DEBUG = GWF_DEBUG_EMAIL;
 	
 	const HEADER_NEWLINE = "\n";
@@ -317,6 +319,7 @@ final class Mail
 	/**
 	 * Check if we have sent this email recently
 	 * @return boolean - true if already sent
+	 * @TODO implement - the idea is to detect if some mails are repeatedly sent, like minutely cronjob exceptions.
 	 */
 	private function alreadySent()
 	{
@@ -406,4 +409,5 @@ final class Mail
 
 		return $back;
 	}
+	
 }

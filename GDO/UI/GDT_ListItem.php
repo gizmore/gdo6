@@ -44,7 +44,7 @@ final class GDT_ListItem extends GDT
 	 * Use the subtitle to render creation stats. User (with avatar), Date, Age.
 	 * @return self
 	 */
-	public function creatorHeader(GDT $title=null)
+	public function creatorHeader(GDT $title=null, $dateformat='short')
 	{
 	    /** @var $user GDO_User **/
 	    $user = $this->gdo->gdoColumnOf(GDT_CreatedBy::class)->getValue();
@@ -73,7 +73,7 @@ final class GDT_ListItem extends GDT
 	        $profileLink = GDT_Label::make()->labelRaw($user->displayNameLabel());
 	    }
 	    $this->subtitle->addField($profileLink);
-	    $this->subtitle->addField(GDT_DateDisplay::make($date->name)->gdo($this->gdo)->addClass('ri'));
+	    $this->subtitle->addField(GDT_DateDisplay::make($date->name)->dateformat($dateformat)->gdo($this->gdo)->addClass('ri'));
 	    
 	    if ($title)
 	    {

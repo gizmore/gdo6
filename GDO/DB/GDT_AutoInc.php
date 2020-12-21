@@ -4,6 +4,7 @@ namespace GDO\DB;
  * The auto inc column is unsigned and sets the primary key after insertions.
  *
  * @author gizmore
+ * @version 6.10
  * @since 5.0
  * @see GDT_CreatedAt
  * @see GDT_CreatedBy
@@ -15,6 +16,7 @@ final class GDT_AutoInc extends GDT_UInt
 	############
 	### Base ###
 	############
+	public $notNull = true;
 	public $writable = false;
 	public $editable = false;
 	public $hidden = true;

@@ -20,7 +20,7 @@ final class Website
 	
 	public static function redirectBack($time=0)
 	{
-		return self::redirect(Website::hrefBack(), $time);
+		return self::redirect(self::hrefBack(), $time);
 	}
 	
 	public static function hrefBack()
@@ -167,14 +167,17 @@ final class Website
 	{
 		if (!Application::instance()->isCLI())
 		{
-			header('Content-Type: application/json');
+			@header('Content-Type: application/json');
 		}
 		
 		echo json_encode($json, JSON_PRETTY_PRINT);
 
 		if ($die)
 		{
-		    die(0);
+		    if (!Application::instance()->isUnitTests())
+		    {
+		        die(0);
+		    }
 		}
 	}
 	

@@ -176,6 +176,7 @@ return array(
 'err_set_cookie' => 'Ihr Cookie konnte nicht ein zweites mal gesetzt werden.',
 'err_invalid_gdt_var' => 'Ein GDT Datentyp, %s, hat einen ungültigen Wert: %s.',
 'err_unknown_user_setting' => 'Das Modul %s kennt keine Nutzereinstellung namens %s.',
+'err_nothing_happened' => 'Nichts hat sich geändert obwohl etwas geschehen sollte.',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',
@@ -269,6 +270,7 @@ return array(
 # Config
 'cfg_system_user' => 'System Benutzer',
 'cfg_show_impressum' => 'Impressum im Footer anzeigen?',
+'cfg_show_privacy' => 'Datenschutz im Footer anzeigen?',
 'cfg_div_javascript' => 'Javascript',
 'cfg_minify_js' => 'Javascript Minifizierungs-Modus',
 'cfg_nodejs_path' => 'Pfad zu nodejs',
@@ -279,4 +281,5 @@ return array(
 'err_nodejs_not_found' => 'Konnte nodejs nicht finden',
 'err_annotate_not_found' => 'Konnte ng-annotate nicht finden',
 'err_uglify_not_found' => 'Konnte uglify nicht finden',
+'link_privacy' => 'Datenschutz',
 );

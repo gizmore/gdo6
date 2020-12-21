@@ -21,23 +21,23 @@ class GDT_Select extends GDT_ComboBox
 	public function getVar()
 	{
 // 		$this->fixEmptyMultiple();
-		
-		if (null === ($value = $this->getRequestVar($this->formVariable(), $this->var)))
+	    $var = null;
+		if (null === ($var = $this->getRequestVar($this->formVariable(), $this->var)))
 		{
-			$value = $this->multiple ? '[]' : null;
+			$var = $this->multiple ? '[]' : null;
 		}
 		elseif ($this->multiple)
 		{
-			if (is_array($value))
+			if (is_array($var))
 			{
-				$value = json_encode($value);
+				$var = json_encode($var);
 			}
 		}
-		elseif ($value === $this->emptyValue)
+		elseif ($var === $this->emptyValue)
 		{
-			$value = null;
+			$var = null;
 		}
-		return $value;
+		return $var;
 	}
 	
 	public function getValue()
@@ -98,6 +98,13 @@ class GDT_Select extends GDT_ComboBox
 	public function displayValue($var)
 	{
 	    $value = $this->toValue($var);
+	    if ($this->multiple)
+	    {
+	        $value = array_map(function($gdo){ 
+	            return $this->renderChoice($gdo); },
+	            $value);
+	        return implode(', ', $value);
+	    }
 	    return $this->renderChoice($value);
 	}
 	

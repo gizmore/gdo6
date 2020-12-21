@@ -176,6 +176,7 @@ return array(
 'err_set_cookie' => 'Your cookie could not been set a second time.',
 'err_invalid_gdt_var' => 'A GDT, %s, has an invalid var: %s.',
 'err_unknown_user_setting' => 'The module %s does not know the user setting %s.',
+'err_nothing_happened' => 'Nothing has changed despite your action.',
     
 # Permissions
 'sel_no_permissions' => 'No permission required',
@@ -268,6 +269,7 @@ return array(
 # Config
 'cfg_system_user' => 'System user',
 'cfg_show_impressum' => 'Show impressum in footer?',
+'cfg_show_privacy' => 'Show privacy in footer?',
 'cfg_div_javascript' => 'Javascript',
 'cfg_minify_js' => 'Javascript minification mode',
 'cfg_nodejs_path' => 'Path to nodejs',
@@ -278,4 +280,5 @@ return array(
 'err_nodejs_not_found' => 'Could not find nodejs',
 'err_annotate_not_found' => 'Could not find ng-annotate',
 'err_uglify_not_found' => 'Could not find uglify',
+'link_privacy' => 'Privacy',
 );

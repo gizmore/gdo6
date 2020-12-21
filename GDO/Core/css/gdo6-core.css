@@ -27,3 +27,4 @@ img.gdo-country { width: 24px; height: 17px; position: relative; top: 3px; borde
 .flx > * { flex: 1 1 auto; }
 .flx.flx-collapse > * { flex: 0 1 auto; }
 .flx.noflx { display: block; }
+.flx-row > * { align-self: center; }

@@ -12,12 +12,12 @@ echo '<';echo '?';echo "php\n";
 ###############################
 ### GDO6 Configuration File ###
 ###############################
+if (defined('GWF_CONFIGURED')) return;
 <?php
 $tz = $form->getField('timezone')->var;
 $created = Time::getDate(microtime(true));
 $form->getField('sitecreated')->var($created);
 ?>
-
 <?php foreach ($form->fields as $field) : ?>
 <?php
 if ($field instanceof GDT_Divider)

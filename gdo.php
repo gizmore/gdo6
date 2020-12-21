@@ -11,9 +11,18 @@ use GDO\Core\GDO_ModuleVar;
 use GDO\Form\MethodForm;
 use GDO\User\GDO_User;
 use GDO\Util\BCrypt;
-use GDO\Net\GDT_IP;
-use GDO\User\GDO_Permission;
 use GDO\User\GDO_UserPermission;
+
+/**
+ * The gdo.php executable manages modules and config via the CLI.
+ * 
+ * @version 6.10
+ * @since 6.10
+ * @see gdo_update.sh
+ * @see gdo_test.sh
+ * @see gdo_yarn.sh
+ * @see gdo_bower.sh
+ */
 
 /** @var $argc int **/
 /** @var $argv array **/
@@ -38,9 +47,9 @@ if ($argc === 1)
     printUsage();
 }
 
-require 'protected/config.php';
+require 'GDO6.php';
 
-require_once 'GDO6.php';
+require 'protected/config.php';
 
 new Application();
 Trans::$ISO = GWF_LANGUAGE;
@@ -52,8 +61,6 @@ Debug::setDieOnError(GWF_ERROR_DIE);
 Debug::setMailOnError(GWF_ERROR_MAIL);
 Database::init();
 ModuleLoader::instance()->loadModules(true, true);
-
-// ModuleLoader::instance()->loadModuleFS('Install', true);
 
 define('GWF_CORE_STABLE', 1);
 
@@ -127,6 +134,7 @@ if ($argv[1] === 'admin')
     GDO_UserPermission::grant($user, 'cronjob');
     $user->recache();
     echo t('msg_admin_created', [$argv[2]]) . "\n";
+    echo PHP_EOL;
 }
 
 if ($argv[1] === 'wipe')
@@ -140,6 +148,7 @@ if ($argv[1] === 'wipe')
     if ($response->isError())
     {
         echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
+        echo PHP_EOL;
     }
 }
 
@@ -161,6 +170,7 @@ if ($argv[1] === 'config')
         $keys = implode(', ', $vars);
         $keys = $keys ? $keys : t('none');
         echo t('msg_available_config', [$module->getName(), $keys]);
+        echo PHP_EOL;
         die(0);
     }
 
@@ -169,6 +179,7 @@ if ($argv[1] === 'config')
     {
         $config = $module->getConfigColumn($key);
         echo t('msg_set_config', [$key, $module->getName(), $config->initial]);
+        echo PHP_EOL;
         die(0);
     }
     
@@ -179,10 +190,12 @@ if ($argv[1] === 'config')
         if (!$gdt->validate($gdt->toValue($var)))
         {
             echo json_encode($gdt->configJSON());
+            echo PHP_EOL;
             die(1);
         }
         $moduleVar = GDO_ModuleVar::createModuleVar($module, $gdt);
         echo t('msg_changed_config', [$gdt->displayLabel(), $module->getName(), $gdt->initial, $moduleVar->getVarValue()]);
+        echo PHP_EOL;
         die(0);
     }
 }
@@ -213,4 +226,5 @@ if ($argv[1] === 'call')
     
     $response = $method->execute();
     echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
+    echo PHP_EOL;
 }

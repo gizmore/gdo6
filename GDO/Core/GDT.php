@@ -161,7 +161,7 @@ abstract class GDT
 	public function getParameterVar() { return $this->getRequestVar(null, $this->var); }
 	public function getParameterValue() { return $this->toValue($this->getParameterVar()); }
 	public function getValue() { return $this->toValue($this->getVar()); }
-	public function initial($var=null) { $this->initial = $var === null ? null : (string)$var; return $this->var($var); }
+	public function initial($var=null) { $this->initial = $this->var = $var === null ? null : (string)$var; return $this; }
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }
 	public function displayVar() { return html($this->getVar()); }
 	public function displayValue($var) { return html($var); }
@@ -197,11 +197,11 @@ abstract class GDT
 	{
 	    if ($gdo->isTable())
 	    {
-	        $this->var = $this->initial;
+	        return $this->var($this->initial);
 	    }
 		elseif ($gdo->hasVar($this->name))
 		{
-			$this->var = $gdo->getVar($this->name);
+		    return $this->var($gdo->getVar($this->name));
 		}
 		return $this;
 	}
@@ -383,6 +383,13 @@ abstract class GDT
 	 * @param GDO $gdo
 	 */
 	public function filterGDO(GDO $gdo, $rq) {}
+	
+	/**
+	 * Filter static result entities for table-wide search.
+	 * @param string $searchTerm
+	 * @return boolean
+	 */
+	public function searchGDO($searchTerm) { return false; }
 	
 	################
 	### Database ###

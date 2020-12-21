@@ -78,7 +78,7 @@ class GDT_Form extends GDT
 	
 	public function reset(GDO $gdo)
 	{
-	    $this->withFields(function(GDT $gdt) use ($gdo) { $gdt->gdo($gdt->gdo);; });
+	    $this->withFields(function(GDT $gdt) use ($gdo) { $gdt->gdo($gdt->gdo); });
 	}
 	
 	################
@@ -101,7 +101,7 @@ class GDT_Form extends GDT
 	    # Check field
 		if (($field->writable) && (!$field->error))
 		{
-		    $var = $field->getVar();
+// 		    $var = $field->getVar();
 			$value = $field->getValidationValue();
 			if (!$field->validate($value))
 			{
@@ -155,6 +155,7 @@ class GDT_Form extends GDT
 	    {
 	        $gdoType->gdo($gdo);
 	    }
+	    
 		if ($fields = $gdoType->getFields())
 		{
 			foreach ($fields as $field)
@@ -168,8 +169,8 @@ class GDT_Form extends GDT
 	public function getFormData()
 	{
 		self::$formData = [];
-		$this->withFields(function(GDT $field) {
-			if ($data = $field->getGDOData())
+		$this->withFields(function(GDT $gdt) {
+		    if ($data = $gdt->getGDOData())
 			{
 			    foreach ($data as $k => $v)
 			    {

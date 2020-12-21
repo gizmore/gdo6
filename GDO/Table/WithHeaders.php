@@ -24,7 +24,7 @@ trait WithHeaders
 	 * @var GDT_Fields
 	 */
 	public $headers;
-	private function makeHeaders() { if (!$this->headers) $this->headers = GDT_Fields::make(self::nextOrderName()); return $this->headers; }
+	public function makeHeaders() { if ($this->headers === null) $this->headers = GDT_Fields::make(self::nextOrderName()); return $this->headers; }
 	public function addHeaders(array $fields) { return count($fields) ? $this->makeHeaders()->addFields($fields) : $this; }
 	public function addHeader(GDT $field) { return $this->makeHeaders()->addField($field); }
 	

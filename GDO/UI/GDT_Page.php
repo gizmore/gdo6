@@ -50,7 +50,10 @@ final class GDT_Page extends GDT
         {
             foreach (ModuleLoader::instance()->getEnabledModules() as $module)
             {
-                $module->onInitSidebar();
+                if ($module->isPersisted())
+                {
+                    $module->onInitSidebar();
+                }
             }
         }
     }

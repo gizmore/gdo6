@@ -103,8 +103,11 @@ abstract class MethodForm extends Method
 	 */
 	public function executeForm()
 	{
-		$response = null;
-		$form = $this->getForm();
+	    $form = $this->getForm();
+	    
+	    $response = null;
+		
+		### Flow upload
 		if ($flowField = Common::getRequestString('flowField'))
 		{
 		    /** @var $formField GDT_File **/
@@ -114,6 +117,7 @@ abstract class MethodForm extends Method
 		    }
 		}
 		
+		### buttons
 		foreach ($form->getFieldsRec() as $field)
 		{
 			if ($field instanceof GDT_Submit)
@@ -122,9 +126,11 @@ abstract class MethodForm extends Method
 				{
 					if ($form->validateForm())
 					{
+					    GDT_Form::$CURRENT = $form;
 					    unset($_REQUEST['nojs']);
 						$response = call_user_func([$this, "onSubmit_{$field->name}"], $form);
 						$form->onValidated();
+						GDT_Form::$CURRENT = null;
 					}
 					else
 					{

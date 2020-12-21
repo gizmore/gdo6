@@ -448,7 +448,7 @@ abstract class GDO
 	{
 	    /** @var $column GDT **/
 		$column = clone $this->gdoColumnsCache()[$key];
-		return $column->gdo($this); #->var($column->initial);
+		return $column->gdo($this);#->var($column->initial);
 	}
 	
 	public function gdoColumnsExcept(...$except)
@@ -799,23 +799,28 @@ abstract class GDO
 		$gdoVars = [];
 		foreach ($table->gdoColumnsCache() as $column)
 		{
+		    $column->var($column->initial);
+		    
 		    if (isset($initial[$column->name]))
 		    {
 		        $column->var($initial[$column->name]);
 		    }
-			if ($data = $column->blankData())
+			
+			if ($data = $column->blankData()) # could be setGDOData?
 			{
+// 			    unset($initial[$column->name]);
 			    foreach ($data as $k => $v)
 			    {
 			        $gdoVars[$k] = $v;
+// 			        $initial[$k] = $v;
 			    }
 			}
 		}
-		if ($initial)
-		{
-			# Merge only existing keys
-			$gdoVars = array_intersect_key($initial, $gdoVars) + $gdoVars;
-		}
+// 		if ($initial)
+// 		{
+// 			# Merge only existing keys
+// 			$gdoVars = array_intersect_key($initial, $gdoVars) + $gdoVars;
+// 		}
 		return $gdoVars;
 	}
 	

@@ -4,31 +4,57 @@ namespace GDO\UI;
 use GDO\Core\GDT_Template;
 use GDO\DB\GDT_Text;
 use GDO\Core\GDO;
+use GDO\Util\Strings;
 
 /**
- * A message is a GDT_Text with an editor.
+ * A message is a GDT_Text with an editor. Classic a textarea.
  * The content is html, filtered through a whitelist with html-purifier.
- * The default editor is simply a textarea, and a gdo6-tinymce is available.
+ * The default editor is simply a textarea, and a gdo6-tinymce / ckeditor is available.
+ * 
+ * @todo: write a Markdown module. Hook into DECODE() to turn input markdown into output html.
  * 
  * @see \GDO\TinyMCE\Module_TinyMCE
+ * @see \GDO\CKEditor\Module_CKEditor
+ * 
  * @author gizmore
- * @since 3.0
- * @version 6.09
+ * @version 6.11
+ * @since 3.00
  */
 class GDT_Message extends GDT_Text
 {
+    private $input;
+    private $output;
+    private $text;
+    
+    ###########
+    ### GDT ###
+    ###########
     public static function make($name=null)
     {
         $gdt = parent::make($name);
+        $gdt->icon('message');
+        # search and order in db via plaintext field.
         $gdt->orderField = $gdt->name . '_text';
         $gdt->searchField = $gdt->name . '_text';
         return $gdt;
     }
     
+    ###############
+    ### Decoder ###
+    ###############
     public static $DECODER = [self::class, 'DECODE'];
     public static function DECODE($s)
     {
         return '<div class="gdt-message ck-content">' . self::getPurifier()->purify($s) . '</div>';
+    }
+    
+    public static function decodeMessage($s)
+    {
+        if ($s === null)
+        {
+            return null;
+        }
+        return call_user_func(self::$DECODER, $s);
     }
     
     public static function plaintext($html)
@@ -42,15 +68,44 @@ class GDT_Message extends GDT_Text
         $html = preg_replace('#</p>#i', "\n", $html);
         $html = preg_replace('#<[^\\>]*>#', ' ', $html);
         $html = preg_replace('# +#', ' ', $html);
-        return $html;
+        return trim($html);
     }
     
-    public $icon = 'message';
+    ################
+    ### Validate ###
+    ################
+    public static function getPurifier()
+    {
+        static $purifier;
+        if (!isset($purifier))
+        {
+            require GDO_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
+            $config = \HTMLPurifier_Config::createDefault();
+            $config->set('URI.Host', GWF_DOMAIN);
+            $config->set('HTML.Nofollow', true);
+            $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
+            $config->set('URI.DisableExternalResources', false);
+            $config->set('URI.DisableResources', false);
+            $config->set('HTML.TargetBlank', true);
+            $config->set('HTML.Allowed', 'a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption');
+            $config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
+            $config->set('HTML.SafeObject', true);
+            $config->set('Attr.AllowedRel', array('nofollow'));
+            $config->set('HTML.DefinitionID', 'gdo6-message');
+            $config->set('HTML.DefinitionRev', 1);
+            if ($def = $config->maybeGetRawHTMLDefinition())
+            {
+                $def->addElement('figcaption', 'Block', 'Flow', 'Common');
+                $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
+            }
+            $purifier = new \HTMLPurifier($config);
+        }
+        return $purifier;
+    }
     
-    private $input;
-    private $output;
-    private $text;
-    
+    ##########
+    ### DB ###
+    ##########
     public function gdoColumnDefine()
     {
         return
@@ -59,52 +114,9 @@ class GDT_Message extends GDT_Text
         "{$this->name}_text {$this->gdoColumnDefineB()}\n";
     }
     
-    public static function decodeMessage($s)
-    {
-        if ($s === null)
-        {
-            return null;
-        }
-        return call_user_func(self::$DECODER, $s);
-    }
-    
-    public function blankData()
-    {
-        $decoded = self::decodeMessage($this->initial);
-        $text = self::plaintext($decoded);
-        return [
-            "{$this->name}_input" => $this->initial,
-            "{$this->name}_output" => $decoded,
-            "{$this->name}_text" => $text,
-        ];
-    }
-    
-    public function setGDOData(GDO $gdo)
-    {
-        $this->input = $gdo->getVar("{$this->name}_input");
-        $this->output = $gdo->getVar("{$this->name}_output");
-        $this->text = $gdo->getVar("{$this->name}_text");
-        return $this;
-    }
-    
-    public function getGDOData()
-    {
-        $decoded = self::decodeMessage($this->getVar());
-        $text = self::plaintext($decoded);
-        return [
-            "{$this->name}_input" => $this->input,
-            "{$this->name}_output" => $decoded,
-            "{$this->name}_text" => $text,
-        ];
-    }
-    
-    public function var($var=null)
-    {
-        $this->input = $var;
-        $this->output = self::decodeMessage($var);
-        $this->text = self::plaintext($this->output);
-        return parent::var($var);
-    }
+    ######################
+    ### 3 column hacks ###
+    ######################
     
     public function initial($var=null)
     {
@@ -114,15 +126,81 @@ class GDT_Message extends GDT_Text
         return parent::initial($var);
     }
     
-    public function toValue($var)
+    /**
+     * If we set a var, value and plaintext get's precomputed.
+     * {@inheritDoc}
+     * @see \GDO\Core\GDT::var()
+     */
+    public function var($var=null)
     {
-        return self::decodeMessage($var);
+        $this->input = $var;
+        $this->output = self::decodeMessage($var);
+        $this->text = self::plaintext($this->output);
+        return parent::var($var);
     }
     
+    public function blankData()
+    {
+        return [
+            "{$this->name}_input" => $this->input,
+            "{$this->name}_output" => $this->output,
+            "{$this->name}_text" => $this->text,
+        ];
+    }
+    
+    /**
+     * Set GDO Data is called when the GDO sets up the GDT.
+     * We copy the 3 text columns and revert a special naming hack in module news; 'iso][en][colum_name' could be it's name.
+     * {@inheritDoc}
+     * @see \GDO\Core\GDT::setGDOData()
+     */
+    public function setGDOData(GDO $gdo)
+    {
+        $name = Strings::rsubstrFrom($this->name, '[', $this->name); # @XXX: ugly hack for news tabs!
+        if ($gdo->hasVar("{$name}_input"))
+        {
+            $this->input = $gdo->getVar("{$name}_input");
+            $this->output = $gdo->getVar("{$name}_output");
+            $this->text = $gdo->getVar("{$name}_text");
+        }
+        return $this;
+    }
+    
+    /**
+     * getGDOData() is called when the gdo wants to update it's gdoVars.
+     * This happens when formData() is plugged into saveVars() upon update and creation.
+     * {@inheritDoc}
+     * @see \GDO\Core\GDT::getGDOData()
+     */
+    public function getGDOData()
+    {
+//         $decoded = self::decodeMessage($this->getVar());
+//         $text = self::plaintext($decoded);
+        return [
+            "{$this->name}_input" => $this->input,
+            "{$this->name}_output" => $this->output,
+            "{$this->name}_text" => $this->text,
+        ];
+    }
+    
+    public function toVar($value)
+    {
+        return "<pre>%s\n</pre>\n";
+    }
+    
+//     public function toValue($var)
+//     {
+//         return $this->output; #self::decodeMessage($var);
+//     }
+    
+    
+    ##############
+    ### Getter ###
+    ##############
     public function getVar() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->input, "{$this->name}") : $this->input; }
     public function getVarInput() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->input, "{$this->name}") : $this->input; }
     public function getVarOutput() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->output, "{$this->name}_output") : $this->output; }
-    
+
     ##############
 	### Render ###
 	##############
@@ -137,37 +215,5 @@ class GDT_Message extends GDT_Text
 	public $nowysiwyg = false;
 	public function nowysiwyg($nowysiwyg=true) { $this->nowysiwyg = $nowysiwyg; return $this; }
 	public function classEditor() { return $this->nowysiwyg ? 'as-is' : 'wysiwyg'; }
-	
-	################
-	### Validate ###
-	################
-	public static function getPurifier()
-	{
-		static $purifier;
-		if (!isset($purifier))
-		{
-			require GDO_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
-			$config = \HTMLPurifier_Config::createDefault();
-			$config->set('URI.Host', GWF_DOMAIN);
-			$config->set('HTML.Nofollow', true);
-			$config->set('HTML.Doctype', 'HTML 4.01 Transitional');
-			$config->set('URI.DisableExternalResources', false);
-			$config->set('URI.DisableResources', false);
-			$config->set('HTML.TargetBlank', true);
-			$config->set('HTML.Allowed', 'a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption');
-			$config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
-			$config->set('HTML.SafeObject', true);
-			$config->set('Attr.AllowedRel', array('nofollow'));
-			$config->set('HTML.DefinitionID', 'gdo6-message');
-			$config->set('HTML.DefinitionRev', 1);
-			if ($def = $config->maybeGetRawHTMLDefinition())
-			{
-			    $def->addElement('figcaption', 'Block', 'Flow', 'Common');
-			    $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
-			}
-			$purifier = new \HTMLPurifier($config);
-		}
-		return $purifier;
-	}
 	
 }

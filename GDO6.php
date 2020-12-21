@@ -30,7 +30,7 @@ ini_set('display_errors', 1);
 global $GDT_LOADED; $GDT_LOADED = 0; # perf
 spl_autoload_register(function($name){
     $name = str_replace('\\', '/', $name) . '.php';
-    include $name;
+    require_once $name;
     global $GDT_LOADED; $GDT_LOADED++; # perf
 });
 	

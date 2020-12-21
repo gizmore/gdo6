@@ -1,7 +1,7 @@
 <?php
 namespace GDO\UI\Test;
 
-use PHPUnit\Framework\TestCase;
+use GDO\Tests\TestCase;
 use GDO\UI\GDT_Message;
 use function PHPUnit\Framework\assertTrue;
 

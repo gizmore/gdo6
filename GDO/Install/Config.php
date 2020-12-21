@@ -12,7 +12,6 @@ use GDO\DB\GDT_Checkbox;
 use GDO\Util\Random;
 use GDO\DB\GDT_Int;
 use GDO\Net\GDT_Port;
-use GDO\Date\GDT_Duration;
 use GDO\User\GDT_Realname;
 use GDO\Mail\GDT_Email;
 use GDO\DB\GDT_String;
@@ -108,7 +107,7 @@ class Config
 		if (!defined('GWF_ERROR_MAIL')) define('GWF_ERROR_MAIL', false);
 		# Database
 		if (!defined('GWF_SALT')) define('GWF_SALT', Random::randomKey(16));
-		if (!defined('GWF_DB_ENABLED')) define('GWF_DB_ENABLED', false);
+		if (!defined('GWF_DB_ENABLED')) define('GWF_DB_ENABLED', true);
 		if (!defined('GWF_DB_HOST')) define('GWF_DB_HOST', 'localhost');
 		if (!defined('GWF_DB_USER')) define('GWF_DB_USER', '');
 		if (!defined('GWF_DB_PASS')) define('GWF_DB_PASS', '');
@@ -118,7 +117,7 @@ class Config
 		if (!defined('GWF_MEMCACHE')) define('GWF_MEMCACHE', true);
 		if (!defined('GWF_MEMCACHE_PREFIX')) define('GWF_MEMCACHE_PREFIX', '1_');
 		if (!defined('GWF_MEMCACHE_HOST')) define('GWF_MEMCACHE_HOST', '127.0.0.1');
-		if (!defined('GWF_MEMCACHE_PORT')) define('GWF_MEMCACHE_PORT', 61220);
+		if (!defined('GWF_MEMCACHE_PORT')) define('GWF_MEMCACHE_PORT', 61221);
 		if (!defined('GWF_MEMCACHE_TTL')) define('GWF_MEMCACHE_TTL', 1800);
 		# Cookies
 		if (!defined('GWF_SESS_NAME')) define('GWF_SESS_NAME', 'GDO6');
@@ -169,7 +168,8 @@ class Config
 			# Database
 			GDT_Divider::make()->label('install_config_section_database'),
 			GDT_Hidden::make('salt')->initialValue(GWF_SALT),
-			GDT_String::make('db_host')->initialValue(GWF_DB_HOST),
+		    GDT_Checkbox::make('db_enabled')->initialValue(GWF_DB_ENABLED),
+		    GDT_String::make('db_host')->initialValue(GWF_DB_HOST),
 			GDT_String::make('db_user')->initialValue(GWF_DB_USER),
 			GDT_String::make('db_pass')->initialValue(GWF_DB_PASS),
 			GDT_String::make('db_name')->initialValue(GWF_DB_NAME),

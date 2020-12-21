@@ -21,6 +21,7 @@ use GDO\Avatar\GDT_Avatar;
 use GDO\Session\GDO_Session;
 use GDO\DB\Cache;
 use GDO\Country\GDO_Country;
+use GDO\Language\Trans;
 
 /**
  * The holy user object.
@@ -221,10 +222,13 @@ final class GDO_User extends GDO
 	 */
 	public static function current() { self::$CURRENT = self::$CURRENT ? self::$CURRENT : GDO_Session::user(); return self::$CURRENT; }
 	
+	public static function setCurrent(GDO_User $user) { self::$CURRENT = $user; Trans::setISO($user->getLangISO()); }
+
 	/**
 	 * @var GDO_User
 	 */
 	public static $CURRENT;
+	
 	
 	/**
 	 * @return GDO_User

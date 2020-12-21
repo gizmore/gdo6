@@ -16,10 +16,10 @@ use GDO\Mail\Mail;
  */
 final class Debug
 {
-	private static $die = true;
+	private static $die = false;
 	private static $enabled = false;
 	private static $exception = false;
-	private static $MAIL_ON_ERROR = true;
+	private static $MAIL_ON_ERROR = false;
 	
 	// Call this to auto inc.
 	public static function init()
@@ -159,7 +159,7 @@ final class Debug
 				break;
 		}
 		
-		$is_html = (PHP_SAPI !== 'cli') && (Application::instance()->isHTML());
+		$is_html = (!Application::instance()->isCLI()) && (Application::instance()->isHTML());
 		
 		if ($is_html)
 		{
@@ -177,7 +177,7 @@ final class Debug
 		}
 		
 		// Output error
-		if (PHP_SAPI === 'cli')
+		if (Application::instance()->isCLI())
 		{
 			file_put_contents('php://stderr', self::backtrace($message, false) . PHP_EOL);
 		}

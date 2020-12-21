@@ -6,7 +6,6 @@ use GDO\DB\ArrayResult;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Fields;
 use GDO\Core\GDO;
-use GDO\UI\GDT_SearchField;
 
 /**
  * A method that displays a table from memory ArrayResult.
@@ -52,22 +51,17 @@ abstract class MethodTable extends Method
     {
         $this->table = $this->createCollection();
         $this->table->addHeaders($this->gdoHeaders());
-        if ($this->isSearched())
-        {
-            $this->table->addHeader(GDT_SearchField::make('search'));
-        }
-        
-        if ($this->isPaginated())
-        {
-            $this->table->addHeader(GDT_PageNum::make('page'));
-            $this->table->addHeader(GDT_IPP::make('ipp'));
-        }
+        $this->table->setupHeaders($this->isSearched(), $this->isPaginated());
     }
     
     /**
      * @return GDT_Table|GDT_List
      */
-    public function createCollection() { $this->table = GDT_Table::make('table'); return $this->table->gdtTable($this->gdoTable()); }
+    public function createCollection()
+    {
+        $this->table = GDT_Table::make('table');
+        return $this->table->gdtTable($this->gdoTable());
+    }
     
     ##################
     ### 5 features ###
@@ -152,17 +146,8 @@ abstract class MethodTable extends Method
 	    $this->setupCollection($table);
 	    $this->createTable($table);
 	    $this->calculateTable($table);
-
-	    if ($pagemenu = $table->getPageMenu())
-	    {
-	        $pagemenu->headers($table->headers);
-    	    $pagemenu->ipp($this->getIPP());
-    	    $pagemenu->page($this->getPage());
-	    }
 	    $table->getResult();
-	    
 	    $this->setupTitle($table);
-	    
 	    return GDT_Response::makeWith($table);
 	}
 	

@@ -18,6 +18,7 @@ final class SystemTest extends Method
 				FileUtil::createDir(GDO_PATH . 'protected'),
 				FileUtil::createDir(GDO_PATH . 'files'),
 				FileUtil::createDir(GDO_PATH . 'temp'),
+			    FileUtil::createDir(GDO_PATH . 'assets'),
 				$this->testBower(),
 				function_exists('mb_strlen'),
 			),

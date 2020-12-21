@@ -2,9 +2,9 @@
 
 gdo6 does NOT use composer for package management. Instead you use git to install and update gdo6 modules.
 
-gdo6 is NOT PSR-4 compliant. It has an own minimal and optimized autoloader. Although it is similiar to PSR-4 it is not compatible.
+gdo6 is NOT PSR-4 compliant. It has an own minimal and optimized autoloader. Although it is similiar to PSR-4 it is not compatible, yet.
 
-gdo6 has the ability to exchange modules for another. An example is Captcha; You clone one of the captcha modules as GDO/Captcha and have chosen your captcha implementation that way.
+gdo6 has the ability to exchange modules for another. An example is Captcha; You clone one of the captcha modules as GDO/Captcha and have chosen your captcha implementation that way. This seems not easily possible with PSR-4, or is it?
 
 
 ## Installing a gdo6 module

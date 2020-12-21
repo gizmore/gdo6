@@ -17,7 +17,6 @@ final class GDT_IconUTF8
         'add' => '✚',
         'alert' => '!',
         'all' => '▤',
-        'alarm_on' => '☄',
         'arrow_down' => '▼',
         'arrow_left' => '←',
         'arrow_right' => '‣',

@@ -58,7 +58,8 @@ final class ArrayResult extends Result
 	    {
 	        if ($gdt->filterable)
 	        {
-	            if (null != ($filter = $gdt->filterVar($rq)))
+	            $filter = trim($gdt->filterVar($rq));
+	            if ( ($filter !== null) && ($filter !== '') )
 	            {
 	                $keep = [];
 	                foreach ($data as $gdo)
@@ -80,7 +81,7 @@ final class ArrayResult extends Result
 	### Search ###
 	##############
 	/**
-	 * Deepsearch a static result.
+	 * Deepsearch a static result. Like a global table search.
 	 * @param GDO[] $data
 	 * @param GDO $table
 	 * @param GDT[] $filters
@@ -88,17 +89,27 @@ final class ArrayResult extends Result
 	 */
 	public function searchResult(array $data, GDO $table, array $filters, $searchTerm)
 	{
-	    foreach ($filters as $gdt)
+	    if ($searchTerm !== null)
 	    {
-    	    $hits = [];
-	        if ($gdt->searchable)
-	        {
-	            foreach ($data as $gdo)
-	            {
-	            }
-	        }
+	        $hits = [];
+            foreach ($data as $gdo)
+            {
+        	    foreach ($filters as $gdt)
+        	    {
+        	        if ($gdt->searchable)
+        	        {
+       	                if ($gdt->gdo($gdo)->searchGDO($searchTerm))
+       	                {
+       	                    $hits[] = $gdo;
+       	                    break;
+        	            }
+        	        }
+        	    }
+            }
+            $data = $hits;
 	    }
-	    return new self($data, $table);
+	    $this->data = $data;
+	    return $this;
 	}
 	
 }

@@ -201,7 +201,6 @@ abstract class MethodCrud extends MethodForm
 		$gdo = $table->blank($data); # object with files gdt
 		$this->beforeCreate($form, $gdo);
 		$gdo->insert();
-//         $this->message('msg_crud_created', [$gdo->gdoHumanName()]);
         Website::redirectMessage('msg_crud_created', [$gdo->gdoHumanName()], $this->href('&'.$this->crudName().'='.$gdo->getID()));
         return $this->afterCreate($form, $gdo);
 	}
