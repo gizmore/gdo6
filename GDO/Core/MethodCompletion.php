@@ -22,12 +22,12 @@ abstract class MethodCompletion extends MethodAjax
 	public function getSearchTerm() { return trim(Common::getRequestString('query'), "\r\n\t "); }
 	public function getMaxSuggestions() { return Module_Table::instance()->cfgSuggestionsPerRequest(); }
 	
-	############
-	### Exec ###
-	############
-	/**
-	 * The json should return id, text, display.
-	 */
-	public abstract function execute();
+// 	############
+// 	### Exec ###
+// 	############
+// 	/**
+// 	 * The json should return id, text, display.
+// 	 */
+// 	public abstract function execute();
 	
 }

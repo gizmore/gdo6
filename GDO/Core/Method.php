@@ -33,7 +33,7 @@ abstract class Method
 	/**
 	 * @return GDT_Response
 	 */
-	abstract public function execute();
+	public abstract function execute();
 	
 	/**
 	 * @return static
