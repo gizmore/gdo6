@@ -80,7 +80,7 @@ trait WithPHPJQuery
 		$rules = '';
 		foreach ($this->css as $key => $value)
 		{
-			$rules .= "$key: $value;";
+			$rules .= "$key: $value; ";
 		}
 		return $this->attr('style', $rules);
 	}
