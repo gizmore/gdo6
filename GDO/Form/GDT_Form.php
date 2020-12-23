@@ -176,13 +176,16 @@ class GDT_Form extends GDT
 	{
 		self::$formData = [];
 		$this->withFields(function(GDT $gdt) {
-		    if ($data = $gdt->getGDOData())
-			{
-			    foreach ($data as $k => $v)
-			    {
-    			    self::$formData[$k] = $v;
-			    }
-			}
+		    if ($gdt->writable)
+		    {
+    		    if ($data = $gdt->getGDOData())
+    			{
+    			    foreach ($data as $k => $v)
+    			    {
+        			    self::$formData[$k] = $v;
+    			    }
+    			}
+		    }
 		});
 		return self::$formData;
 	}

@@ -16,6 +16,7 @@ final class GDT_Country extends GDT_ObjectSelect
 		$this->emptyLabel('not_specified');
 		$this->min = $this->max = 2;
 		$this->icon('flag');
+		$this->withCompletion();
 	}
 	
 	public function withCompletion()
