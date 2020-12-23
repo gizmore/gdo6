@@ -244,7 +244,7 @@ class GDT_Message extends GDT_Text
         $form = $this->formVariable();
         if ($form)
         {
-            return $this->getRequestVar($form, $this->input, "{$this->name}");
+            return $this->getRequestVar($form, $this->var, "{$this->name}");
         }
         return $this->var;
     }
