@@ -379,6 +379,7 @@ class GDT_Table extends GDT
 		
 		if ($this->pagemenu)
 		{
+		    $this->getPageMenu();
 			$this->pagemenu->filterQuery($query);
 		}
 		
