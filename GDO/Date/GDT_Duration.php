@@ -14,7 +14,7 @@ class GDT_Duration extends GDT_String
 {
 	public function defaultLabel() { return $this->label('duration'); }
 
-	public function __construct()
+	protected function __construct()
 	{
 		$this->icon('time');
 		$this->ascii();
@@ -23,12 +23,12 @@ class GDT_Duration extends GDT_String
 
 	public function toValue($var)
 	{
-	    return Time::humanToSeconds($var);
+	    return $var === null ? null : Time::humanToSeconds($var);
 	}
 	
 	public function toVar($value)
 	{
-	    return Time::humanDuration($value);
+	    return $value === null ? null : Time::humanDuration($value);
 	}
 	
 	public function renderCell()

@@ -255,7 +255,7 @@ class GDO_Module extends GDO
 	############
 	### Init ###
 	############
-// 	public function __wakeup() { $this->inited = false; self::$COUNT++; }
+	public function __wakeup() { $this->inited = false; self::$COUNT++; }
 
 	private $inited = false;
 	

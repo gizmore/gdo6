@@ -8,6 +8,13 @@ use GDO\Session\GDO_Session;
 use GDO\File\FileUtil;
 use GDO\UI\GDT_Page;
 use GDO\Core\Debug;
+use GDO\Core\GDO_Module;
+use GDO\DB\Cache;
+
+/**
+ * Launch all unit tests.
+ * Unit tests should reside in <Module>/Test/FooTest.php
+ */
 
 if (PHP_SAPI !== 'cli') { die('Tests can only be run from the command line.'); }
 
@@ -21,6 +28,7 @@ Debug::setMailOnError(GWF_ERROR_EMAIL);
 // Debug::setDieOnError(GWF_ERROR_DIE);
 Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
+Cache::init();
 Database::init();
 GDO_Session::init();
 
@@ -29,13 +37,13 @@ final class TestApp extends Application
     private $cli = false;
     public function cli($cli) { $this->cli = $cli; return $this; }
     public function isCLI() { return $this->cli; } # override CLI mode to test HTML rendering.
-    
     public function isUnitTests() { return true; }
-
 }
+
 
 $app = new TestApp();
 GDT_Page::make();
+
 
 #############################
 ### Simulate HTTP env a bit #
@@ -54,6 +62,35 @@ $_SERVER['QUERY_STRING'] = 'mo=' . GWF_MODULE . '&me=' . GWF_METHOD;
 $_SERVER['REQUEST_METHOD'] = 'GET';
 $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
 #########################################################################
+
+/** @var $argc int **/
+/** @var $argv string[] **/
+if ($argc === 2)
+{
+    echo "Loading modules\n";
+    $modules = $app->loader->loadModules(true, true);
+    echo "Installing module\n";
+    $module = $app->loader->getModule($argv[1]);
+    Installer::installModule($module);
+    
+    # Run core warmup
+    $core = $app->loader->getModule('Core');
+    runTestSuite($core);
+    $lang = $app->loader->getModule('Language');
+    runTestSuite($lang);
+    
+    # Running the test
+    $testDir = $module->filePath('Test');
+    if (FileUtil::isDir($testDir))
+    {
+        runTestSuite($module);
+    }
+    else 
+    {
+        echo "Module Test Directory is not there?";
+    }
+    return;
+}
 
 echo "Dropping Test Database: ".GWF_DB_NAME.".\n";
 Database::instance()->queryWrite("DROP DATABASE " . GWF_DB_NAME);
@@ -82,11 +119,16 @@ foreach ($modules as $module)
             echo "Installing {$module->getName()}\n";
             Installer::installModule($module);
         }
-        
-        echo "Running tests for {$module->getName()}\n";
-        $command = new Command();
-        $command->run(['phpunit', $testDir], false);
-        echo "Done with {$module->getName()}\n";
-        echo "----------------------------------------\n";
+        runTestSuite($module);
     }
+}
+
+function runTestSuite(GDO_Module $module)
+{
+    $testDir = $module->filePath('Test');
+    echo "Verarbeite Tests für {$module->getName()}\n";
+    $command = new Command();
+    $command->run(['phpunit', $testDir], false);
+    echo "Done with {$module->getName()}\n";
+    echo "----------------------------------------\n";
 }

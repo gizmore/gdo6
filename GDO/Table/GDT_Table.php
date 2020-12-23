@@ -73,7 +73,7 @@ class GDT_Table extends GDT
 	### Endpoint ###
 	################
 	public $action;
-	public function __construct() { $this->action = @$_SERVER['REQUEST_URI']; $this->makeHeaders(); }
+	protected function __construct() { $this->action = @$_SERVER['REQUEST_URI']; $this->makeHeaders(); }
 	public function action($action=null) { $this->action = $action; return $this; }
 
 	##############

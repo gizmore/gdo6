@@ -165,20 +165,19 @@ final class Website
 	 */
 	public static function renderJSON($json, $die=true)
 	{
-		if (!Application::instance()->isCLI())
+	    if (Application::instance()->isUnitTests())
+	    {
+	        return; # assume this method works in tests and dont output anything.
+	    }
+	        
+	    if (!Application::instance()->isCLI())
 		{
 			@header('Content-Type: application/json');
 		}
 		
-		echo json_encode($json, JSON_PRETTY_PRINT);
+		echo json_encode($json, JSON_PRETTY_PRINT); # pretty json
 
-		if ($die)
-		{
-		    if (!Application::instance()->isUnitTests())
-		    {
-		        die(0);
-		    }
-		}
+		if ($die) die(0);
 	}
 	
 	public static function outputStarted()

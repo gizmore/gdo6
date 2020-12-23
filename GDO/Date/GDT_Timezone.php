@@ -16,7 +16,7 @@ final class GDT_Timezone extends GDT_Select
     
     public function defaultLabel() { return $this->label('timezone'); }
     
-    public function __construct()
+    protected function __construct()
     {
         $this->notNull(true);
         $this->initChoices();

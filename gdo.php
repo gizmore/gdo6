@@ -12,6 +12,7 @@ use GDO\Form\MethodForm;
 use GDO\User\GDO_User;
 use GDO\Util\BCrypt;
 use GDO\User\GDO_UserPermission;
+use GDO\DB\Cache;
 
 /**
  * The gdo.php executable manages modules and config via the CLI.
@@ -73,7 +74,7 @@ if ($argv[1] === 'configure')
     }
 }
 
-if ($argv[1] === 'install')
+elseif ($argv[1] === 'install')
 {
     if ($argc !== 3)
     {
@@ -113,9 +114,11 @@ if ($argv[1] === 'install')
         }
         
     }
+    
+    Cache::flush();
 }
 
-if ($argv[1] === 'admin')
+elseif ($argv[1] === 'admin')
 {
     if ($argc !== 4)
     {
@@ -137,7 +140,7 @@ if ($argv[1] === 'admin')
     echo PHP_EOL;
 }
 
-if ($argv[1] === 'wipe')
+elseif ($argv[1] === 'wipe')
 {
     if ($argc !== 3)
     {
@@ -152,7 +155,7 @@ if ($argv[1] === 'wipe')
     }
 }
 
-if ($argv[1] === 'config')
+elseif ($argv[1] === 'config')
 {
     if ( ($argc === 2) || ($argc > 5) )
     {
@@ -200,7 +203,7 @@ if ($argv[1] === 'config')
     }
 }
 
-if ($argv[1] === 'call')
+elseif ($argv[1] === 'call')
 {
     if ( ($argc !== 4) && ($argc !== 5) && ($argc !== 6) )
     {
@@ -227,4 +230,9 @@ if ($argv[1] === 'call')
     $response = $method->execute();
     echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
     echo PHP_EOL;
+}
+else
+{
+    echo "Unknown command {$argv[1]}\n\n";
+    printUsage();
 }

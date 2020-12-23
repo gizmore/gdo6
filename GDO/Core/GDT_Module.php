@@ -5,7 +5,7 @@ use GDO\DB\GDT_ObjectSelect;
 
 final class GDT_Module extends GDT_ObjectSelect
 {
-    public function __construct()
+    protected function __construct()
     {
         $this->table(GDO_Module::table());
     }

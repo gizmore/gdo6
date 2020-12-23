@@ -7,6 +7,7 @@ use GDO\Core\GDT_Template;
 use GDO\Core\WithFields;
 use GDO\UI\WithTitle;
 use GDO\UI\GDT_SearchField;
+use GDO\Core\Application;
 
 /**
  * An HTML Form.
@@ -23,7 +24,7 @@ class GDT_Form extends GDT
 	use WithFields;
 	use WithTitle;
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->action = @$_SERVER['REQUEST_URI'];
 		$this->writable = false;
@@ -109,6 +110,11 @@ class GDT_Form extends GDT
 				if (!$field->error)
 				{
 					$field->error('err_field_errorneus');
+				}
+				# I hate code that is not always necessary. 
+				if (Application::instance()->isUnitTests())
+				{
+				    echo "{$field->name}: {$field->error}\n";
 				}
 			}
 			else

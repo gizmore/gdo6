@@ -5,7 +5,7 @@
   <?=$field->htmlIcon()?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input
-   autocomplete="off"
+   <?=$field->htmlAutocompleteOff()?>
    data-config='<?=$field->displayConfigJSON()?>'
    <?=$field->htmlID()?>
    type="search"

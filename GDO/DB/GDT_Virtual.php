@@ -18,7 +18,7 @@ final class GDT_Virtual extends GDT
     use WithLabel;
     use WithDatabase;
     
-    public function __construct()
+    protected function __construct()
     {
         $this->virtual = true;
     }

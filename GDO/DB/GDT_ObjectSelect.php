@@ -20,7 +20,7 @@ class GDT_ObjectSelect extends GDT_Select
 	
 	public function getChoices()
 	{
-		return $this->table->all();
+		return $this->table ? $this->table->all() : [];
 	}
 	
 	public function initChoices()
@@ -95,7 +95,11 @@ class GDT_ObjectSelect extends GDT_Select
 	
 	public function toValue($var)
 	{
-		return $this->multiple ? $this->getValueMulti($var) : $this->getValueSingle($var);
+	    if ($this->foreignTable())
+	    {
+    		return $this->multiple ? $this->getValueMulti($var) : $this->getValueSingle($var);
+	    }
+	    return $this->multiple ? [] : null;
 	}
 	
 	public function getValueSingle($id)

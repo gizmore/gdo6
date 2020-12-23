@@ -3,6 +3,7 @@ namespace GDO\Core\Method;
 use GDO\Core\Method;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDO;
+use GDO\Core\Website;
 /**
  * Get all types used in all tables.
  * Get the type class hierarchy.
@@ -60,6 +61,7 @@ final class GetTypes extends Method
 			}
 		}
 		
-		die(json_encode(['fields' => $fields, 'types' => $types]));
+		$json = ['fields' => $fields, 'types' => $types];
+		Website::renderJSON($json);
 	}
 }

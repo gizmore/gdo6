@@ -12,7 +12,7 @@ final class GDT_EmailFormat extends GDT_Enum
 	const TEXT = 'text';
 	const HTML = 'html';
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->enumValues(self::TEXT, self::HTML);
 	}

@@ -40,4 +40,10 @@ final class GDT_AutoInc extends GDT_UInt
 			$this->gdo->setVar($this->name, $id, false);
 		}
 	}
+	
+	public function blankData()
+	{
+	    return [$this->name => null]; # prevent old values to be used.
+	}
+	
 }

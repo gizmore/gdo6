@@ -10,7 +10,7 @@ use GDO\DB\GDT_String;
  */
 class GDT_Password extends GDT_String
 {
-	public function __construct()
+	protected function __construct()
 	{
 		$this->min = 59;
 		$this->max = 60;

@@ -5,7 +5,7 @@ use GDO\Core\GDT_Template;
 
 class GDT_Tooltip extends GDT_Icon
 {
-	public function __construct()
+	protected function __construct()
 	{
 		$this->icon('help');
 	}

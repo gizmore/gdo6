@@ -4,6 +4,7 @@ use GDO\Core\Method;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDO;
 use GDO\DB\GDT_Enum;
+use GDO\Core\Website;
 /**
  * Get enum values for all tables
  * @author gizmore
@@ -48,7 +49,7 @@ final class GetEnums extends Method
 				{
 					if ($gdoType instanceof GDT_Enum)
 					{
-						$columns[$module->getName().'.config.'.$name] = $gdoType->enumValues;
+						$columns[$module->getName().'.config.'.$gdoType->name] = $gdoType->enumValues;
 					}
 				}
 			}
@@ -76,6 +77,6 @@ final class GetEnums extends Method
 			}
 		}
 		
-		die(json_encode($columns));
+		Website::renderJSON($columns);
 	}
 }

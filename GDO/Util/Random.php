@@ -1,14 +1,21 @@
 <?php
 namespace GDO\Util;
+
 /**
- * Random functions.
+ * Random utility functions.
+ * 
+ * @TODO: Write a fantasy name generator that works with syllabels.
+ * 
  * @author gizmore
  * @author noother
+ * 
+ * @version 6.10
+ * @since 3.05
  */
 final class Random
 {
 	const TOKEN_LEN = 16;
-	const RAND_MAX = 4294967295; # 2147483647
+	const RAND_MAX = 4294967295;
 	
 	const NUMERIC = '0123456789';
 	const ALPHAUP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -31,6 +38,7 @@ final class Random
 
 	/**
 	 * Generate a randomkey from a charset. A bit slow but should be random.
+	 * 
 	 * @param $len int
 	 * @param $alpha string or true
 	 * @return string
@@ -49,6 +57,7 @@ final class Random
 	
 	/**
 	 * Secure and evenly distributed random generator.
+	 * 
 	 * @author noother
 	 * @author gizmore
 	 * @param int $min
@@ -75,4 +84,24 @@ final class Random
 		# Evenly distributed
 		return (int) ( $min + ($max-$min+1) * ($n/(self::RAND_MAX+1)) );
 	}
+	
+	################
+	### Insecure ### but faster
+	################
+	public static function mrand($min=null, $max=null)
+	{
+	    return rand($min, $max);
+	}
+	
+	public static function mrandomKey($len=self::TOKEN_LEN, $alpha=self::ALPHANUMUPLOW)
+	{
+	    $alphalen = strlen($alpha) - 1;
+	    $key = '';
+	    for($i = 0; $i < $len; $i++)
+	    {
+	        $key .= $alpha[self::mrand(0, $alphalen)];
+	    }
+	    return $key;
+	}
+
 }

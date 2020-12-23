@@ -9,7 +9,7 @@ use GDO\DB\GDT_UInt;
  */
 class GDT_Sorting extends GDT_UInt
 {
-	public function __construct()
+	protected function __construct()
 	{
 		$this->min = 0;
 		$this->max = 65535;

@@ -10,7 +10,7 @@ use GDO\DB\GDT_Int;
  */
 class GDT_Sort extends GDT_Int
 {
-	public function __construct()
+	protected function __construct()
 	{
 		$this->min = 0;
 		$this->max = 65535;

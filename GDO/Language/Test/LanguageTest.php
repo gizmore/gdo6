@@ -22,21 +22,17 @@ final class LanguageTest extends TestCase
         $languages = $module->cfgSupported();
         assertGreaterThanOrEqual(3, count($languages), 'Check if 3 languages can be supported via Language config.');
         
-        $de1 = tiso('de', 'btn_submit');
-        $en1 = tiso('en', 'btn_submit');
+        $de1 = tiso('de', 'btn_send');
+        $en1 = tiso('en', 'btn_send');
         assertNotEquals($de1, $en1, 'english should differ from german');
         
         Trans::setISO('de');
-        $de2 = t('btn_submit');
+        $de2 = t('btn_send');
         Trans::setISO('en');
-        $en2 = t('btn_submit');
+        $en2 = t('btn_send');
         assertNotEquals($de1, $en1, 'german should differ from english');
         assertEquals($de1, $de2, 'german should be identical');
         assertEquals($en1, $en2, 'english should be identical');
-        
-        
-        
-        
     }
     
 }

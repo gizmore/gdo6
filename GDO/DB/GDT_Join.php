@@ -13,6 +13,7 @@ final class GDT_Join extends GDT
 	# Ducktype database related fields
 	public $unique = false;
 	public $primary = false;
+	public $virtual = false;
 	
 	############
 	### Join ###

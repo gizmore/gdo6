@@ -29,7 +29,7 @@ use GDO\UI\GDT_Page;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9405'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9407'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
@@ -66,8 +66,8 @@ final class Module_Core extends GDO_Module
 	{
 		return [
 			GDT_User::make('system_user')->editable(false)->initial($this->env('system_user')),
-		    GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum')),
-		    GDT_Checkbox::make('show_privacy')->initial($this->env('show_privacy')),
+		    GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum', '0')),
+		    GDT_Checkbox::make('show_privacy')->initial($this->env('show_privacy', '0')),
 		    GDT_Divider::make('div_javascript')->label('div_javascript'),
 			GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial($this->env('minify_js', 'no')),
 			GDT_Path::make('nodejs_path')->initial($this->env('nodejs_path', 'nodejs'))->label('nodejs_path'),

@@ -6,7 +6,7 @@ namespace GDO\UI;
  */
 final class GDT_BackButton extends GDT_IconButton
 {
-	public function __construct()
+	protected function __construct()
 	{
 		$this->icon('back');
 		$this->label('btn_back');

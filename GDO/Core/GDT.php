@@ -7,6 +7,11 @@ use GDO\Form\GDT_Form;
 use GDO\DB\GDT_String;
 use GDO\UI\WithIcon;
 use GDO\Util\Strings;
+use GDO\Form\GDT_Validator;
+use GDO\DB\GDT_Int;
+use GDO\Form\GDT_Select;
+use GDO\Form\GDT_ComboBox;
+use GDO\DB\GDT_Enum;
 
 /**
  * Base class for all GDT.
@@ -17,7 +22,7 @@ use GDO\Util\Strings;
  * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
  * 
  * @author gizmore
- * @version 6.10
+ * @version 6.11
  * @since 6.00
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
@@ -44,10 +49,10 @@ abstract class GDT
 	public $unique; # DB
 	public $primary; # DB
 	public $readable = true; # can see
-	public $writable = true; # user can change?
-	public $editable = true; # user can change?
+	public $writable = true; # can change
+	public $editable = true; # user can change
 	public $hidden = false; # hide in tables, forms, lists and cards.
-	public $notNull = false; # DB
+	public $notNull = false; # adds cascade when used with a primary key.
 	public $orderable = false; # GDT_Table
 	public $filterable = false; # GDT_Table
 	public $searchable = false; # GDT_Table
@@ -55,14 +60,18 @@ abstract class GDT
 	###############
 	### Factory ###
 	###############
-	private static $nameNr = 1;
-	public static function nextName() { return 'gdo-'.(self::$nameNr++); }
-	public function hasName() { return substr($this->name, 0, 4) !== 'gdo-'; }
+	/**
+	 * Make constructor private, so GDT::make() has to be used.
+	 * This makes sure that we can safely put advanced init stuff in the make() function.
+	 */
+	protected function __construct() {}
+	
+	public static $COUNT = 0; # Total GDT created
 
-	###############
-	### Factory ###
-	###############
-	public static $COUNT = 0;
+	private static $nameNr = 1; # Auto naming
+	public static function nextName() { return 'gdt-'.(self::$nameNr++); }
+	public function hasName() { return substr($this->name, 0, 4) !== 'gdt-'; }
+
 	/**
 	 * Create a GDT instance.
 	 * @param string $name
@@ -151,9 +160,28 @@ abstract class GDT
 	    $this->gdo = $gdo;
 	    return !$gdo->isTable() ? $this->setGDOData($gdo) : $this->var($this->initial);
 	}
+	
+	/**
+	 * Set the var.
+	 * @param string $var
+	 * @return self
+	 */
 	public function var($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
+	
+	/**
+	 * Set the var via value. Converted vie toVar($value).
+	 * @param mixed $value
+	 * @return self
+	 */
 	public function value($value) { $this->var = $this->toVar($value); return $this; }
+	
+	/**
+	 * Convert the value to var.
+	 * @param mixed $value
+	 * @return string
+	 */
 	public function toVar($value) { return ($value === null) || ($value === '') ? null : (string) $value; }
+	
 	public function inputToVar($input) { return $input; }
 	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
 	public function hasVar() { return !!$this->getVar(); }
@@ -300,9 +328,39 @@ abstract class GDT
 	public function notNull($notNull=true) { $this->notNull = $notNull; return $this; }
 	public function errorNotNull() { return $this->error('err_not_null'); }
 	public function onValidated() {}
+	
+	/**
+	 * Validation is a great experience in GDO6.
+	 * 
+	 * Almost all GDT have a quite decent validator. There is also a GDT to top that; The GDT_Validator.
+	 * This GDT parameterizes the target GDT to validate, the value to validate, and the form to check for related fields.
+	 * To indicate an error return false. Please use $gdt->error() to make the field in question blink and noting your error description.
+	 * 
+	 * The GDT base class only has a validator algorithm for notNull checks. "You need to fill out this field."
+	 * GDT_String takes care of almost 65% of the rest of the input validation. Regex, Lengths, Charset, NotNull, Uniqueness.
+	 * The rest is datetime and numbers. Then you almost got all validations figured out for free by object orientated programming paradigms.
+	 * Well, to indicate an error to the form, you call an error method on the faulty GDT and give him an error; "Your input needs to be at least 2 chars in length.".
+	 * The UI is indicating the faulty field. Animations possibly help in identifying the problem.
+	 * 
+	 * @example where the terms of service have to be clicked.
+	 * @example $gdt = GDT_Form::$CURRENT->getField('tos'); $tos = $gdt->getVar() return $tos === true ? true : $gdt->error('You need to acknowledge this checkbox and read the privacy guidelines first.');
+	 * @example return $value ? true : $gdt->error('err_tos_needs_to_be_truthy'); 
+	 * 
+	 * The target $gdt field is an argument as well as the $value and the $form, if you really have to add validation rules.
+	 * 
+	 * @see GDT_Int for the integer validator.
+	 * @see GDT_String for the string validator.
+	 * @see GDT_Validator which is needed rarely. An example is the IP check in Register. 
+	 * @see GDT_Select
+	 * @see GDT_ComboBox
+	 * @see GDT_Enum
+	 * 
+	 * @param mixed $value
+	 * @return boolean 
+	 */
 	public function validate($value)
 	{
-		if ( ($value === null) && ($this->notNull) )
+		if ( ($value === null) && $this->notNull)
 		{
 			return $this->errorNotNull();
 		}

@@ -14,7 +14,7 @@ class GDT_User extends GDT_Object
 {
 	public function defaultLabel() { return $this->label('user'); }
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->orderField = 'user_name';
 		$this->table(GDO_User::table());

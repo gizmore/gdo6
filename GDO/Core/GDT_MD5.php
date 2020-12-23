@@ -9,7 +9,7 @@ final class GDT_MD5 extends GDT_Char
 	public $encoding = self::BINARY;
 	public $caseSensitive = true;
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->length(16);
 	}

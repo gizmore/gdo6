@@ -3,6 +3,7 @@ namespace GDO\Language\Method;
 use GDO\Language\GDO_Language;
 use GDO\Language\GDT_Language;
 use GDO\Core\MethodCompletion;
+use GDO\Core\Website;
 
 final class Completion extends MethodCompletion
 {
@@ -28,6 +29,7 @@ final class Completion extends MethodCompletion
 				);
 			}
 		}
-		die(json_encode($response));
+		
+		Website::renderJSON($response);
 	}
 }

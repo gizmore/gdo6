@@ -18,7 +18,7 @@ class GDT_AntiCSRF extends GDT
     public $editable = false;
 	public function name($name=null) { return $this; }
 
-	public function __construct()
+	protected function __construct()
 	{
 	    $this->csrfToken();
 	}
@@ -65,7 +65,8 @@ class GDT_AntiCSRF extends GDT
 	################
 	public function validate($value)
 	{
-	    if (Application::instance()->isCLI())
+	    $app = Application::instance();
+	    if ($app->isCLI() || $app->isUnitTests())
 	    {
 	        return true;
 	    }

@@ -36,4 +36,9 @@ Switch to the gdo root folder and invoke helpers. These install all javascript d
 
 Open the gdo6 admin panel and install the module. In recovery cases you can try the install wizard.
 
+## Install the module via command line
+
+    cd gdo6
+    php gdo.php install <ModuleName>
+
 That's it!

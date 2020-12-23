@@ -12,7 +12,7 @@ namespace GDO\DB;
  */
 final class GDT_Version extends GDT_Decimal
 {
-    public function __construct()
+    protected function __construct()
     {
         $this->digits(2, 2);
         $this->min("1.00");

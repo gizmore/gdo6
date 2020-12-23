@@ -19,7 +19,7 @@ final class GDT_IPP extends GDT_UInt
     
     public function defaultLabel() { return $this->label('ipp'); }
     
-    public function __construct()
+    protected function __construct()
     {
         $this->initial(Module_Table::instance()->cfgItemsPerPage());
     }

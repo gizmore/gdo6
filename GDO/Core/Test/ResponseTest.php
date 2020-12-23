@@ -25,7 +25,7 @@ final class ResponseTest extends TestCase
         $c->addField($p3);
         $r2->addField($c);
         
-        $html = $r1->renderCell();
+        $html = $r1->render();
         
         assertStringContainsString('par1', $html);
         assertStringContainsString('par2', $html);

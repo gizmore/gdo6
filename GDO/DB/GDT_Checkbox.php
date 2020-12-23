@@ -17,14 +17,15 @@ class GDT_Checkbox extends GDT_Select
     const TRUE = '1';
     const FALSE = '0';
     
-	public function __construct()
+	protected function __construct()
 	{
 		$this->emptyValue = '2';
 		$this->min = 0;
 		$this->max = 1;
 		$this->ascii();
 		$this->caseS();
-		$this->notNull = true;
+// 		$this->notNull = true;
+// 		$this->initial = '0';
 	}
 	
 	public function initChoices()

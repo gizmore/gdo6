@@ -33,7 +33,7 @@ final class GDT_Page extends GDT
     /**
      * Call nav hooks early
      */
-    public function __construct()
+    protected function __construct()
     {
         self::$INSTANCE = $this;
         $this->topTabs = GDT_Container::make('topTabs')->vertical();

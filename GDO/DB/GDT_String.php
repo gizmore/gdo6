@@ -11,13 +11,18 @@ use GDO\UI\WithPHPJQuery;
 
 /**
  * Basic String type with database support.
- * Base class for further textual data like a text(area) or message.
+ * Base class for further textual data like a text or message.
  * Used "With" Traits: label, formfields, tooltip, order, database and phpjquery.
  * Provided Variables: encoding, pattern, caseSensitive, min, max
  * 
+ * @TODO: The validator needs to check ascii encoding to 0x7F boundary. Everything else is not 7bit ascii!
+ * 
  * @author gizmore
- * @version 6.08
+ * 
+ * @version 6.10
  * @since 6.00
+ * 
+ * @see \GDO\UI\GDT_Message
  */
 class GDT_String extends GDT
 {
@@ -133,20 +138,28 @@ class GDT_String extends GDT
 		}
 	}
 	
+	/**
+	 * A quite tricky feature is the unique validation.
+	 * 
+	 * @param unknown $value
+	 * @return boolean
+	 */
 	private function validateUnique($value)
 	{
 		if ($this->unique)
 		{
+		    # Where my value is the rows value. Max 1 allowed, if it's me.
 			$condition = "{$this->identifier()}=".GDO::quoteS($value);
 			if ($this->gdo && $this->gdo->getID())
 			{
+			    # If i am the only one, i am unique. Waiting for a second...
 				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}
-			if (!$this->gdtTable)
+			if (!$this->gdtTable) # TODO: a gdt should always have a GDO as table by default. we could default with a base GDT like GDT_String. 
 			{
-			    $this->gdtTable = $this->gdo->table();
+			    $this->gdtTable = $this->gdo->table(); # ugly
 			}
-		    if ($this->gdtTable)
+		    if ($this->gdtTable) # ugly
 		    {
 		        return $this->gdtTable->select('COUNT(*)')->where($condition)->first()->exec()->fetchValue() === '0';
 		    }
@@ -161,18 +174,27 @@ class GDT_String extends GDT
 	
 	private function strlenError()
 	{
+	    # We have both limits set. So a between error.
 		if ( ($this->max !== null) && ($this->min !== null) )
 		{
 			return $this->error('err_strlen_between', [$this->min, $this->max]);
 		}
+		
+		# we only have max
 		elseif ($this->max !== null)
 		{
 			return $this->error('err_strlen_too_large', [$this->max]);
 		}
+		
+		# or we only have a min
 		elseif ($this->min !== null)
 		{
 			return $this->error('err_strlen_too_small', [$this->min]);
 		}
+		
+		# or no length restrictions at all. no action required except return true one stack up
+		# TODO: set the default max value to 1 or 2MB
+#		return true;
 	}
 	
 	##############

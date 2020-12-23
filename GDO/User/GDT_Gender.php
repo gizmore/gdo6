@@ -18,7 +18,7 @@ class GDT_Gender extends GDT_Enum
 	
 	public function defaultLabel() { return $this->label('gender'); }
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->icon('gender');
 		$this->enumValues(self::NONE, self::MALE, self::FEMALE);

@@ -225,7 +225,8 @@ final class ModuleLoader
 		
 		if ($loadFS && (!$this->loadedFS) )
 		{
-			$this->loadModulesFS();
+		    $init = !$loadDB;
+			$this->loadModulesFS($init);
 			$loaded = $this->loadedFS = true;
 		}
 		
@@ -277,18 +278,18 @@ final class ModuleLoader
 		}
 	}
 	
-	private function loadModulesFS()
+	private function loadModulesFS($init=true)
 	{
 	    Trans::inited(false);
-		Filewalker::traverse($this->path, null, false, array($this, '_loadModuleFS'), false);
+		Filewalker::traverse($this->path, null, false, array($this, '_loadModuleFS'), false, $init);
 		Trans::inited(true);
 	}
 	
-	public function _loadModuleFS($entry, $path)
+	public function _loadModuleFS($entry, $path, $init)
 	{
 		if (FileUtil::isFile("$path/Module_$entry.php"))
 		{
-			$this->loadModuleFS($entry, true);
+			$this->loadModuleFS($entry, $init);
 		}
 	}
 	

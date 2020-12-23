@@ -14,7 +14,7 @@ class GDT_Token extends GDT_Char
 	
 	public function defaultLabel() { return $this->label('token'); }
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->length(self::$LENGTH);
 	}

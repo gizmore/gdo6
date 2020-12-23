@@ -22,18 +22,23 @@ use GDO\Util\Strings;
  */
 class GDT_Message extends GDT_Text
 {
-    private $input;
-    private $output;
-    private $text;
+    public $icon = 'message';
+    
+    private $input; # Raw user input
+    private $output; # Decoded input to output 
+    private $text; # Output with removed html for search
     
     ###########
     ### GDT ###
     ###########
+    /**
+     * On make, setup order and search field.
+     * @param string $name
+     * @return self
+     */
     public static function make($name=null)
     {
         $gdt = parent::make($name);
-        $gdt->icon('message');
-        # search and order in db via plaintext field.
         $gdt->orderField = $gdt->name . '_text';
         $gdt->searchField = $gdt->name . '_text';
         return $gdt;
@@ -64,7 +69,7 @@ class GDT_Message extends GDT_Text
             return null;
         }
         $html = preg_replace("#\r?\n#", ' ', $html);
-        $html = preg_replace('#<a .*href="(.*)".*>(.*)</a>#', ' $2($1) ', $html);
+        $html = preg_replace('#<a .*href="(.*)".*>(.*)</a>#i', ' $2($1) ', $html);
         $html = preg_replace('#</p>#i', "\n", $html);
         $html = preg_replace('#<[^\\>]*>#', ' ', $html);
         $html = preg_replace('# +#', ' ', $html);
@@ -87,7 +92,7 @@ class GDT_Message extends GDT_Text
             $config->set('URI.DisableExternalResources', false);
             $config->set('URI.DisableResources', false);
             $config->set('HTML.TargetBlank', true);
-            $config->set('HTML.Allowed', 'a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption');
+            $config->set('HTML.Allowed', 'br,a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption');
             $config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
             $config->set('HTML.SafeObject', true);
             $config->set('Attr.AllowedRel', array('nofollow'));
@@ -102,6 +107,41 @@ class GDT_Message extends GDT_Text
         }
         return $purifier;
     }
+    
+    /**
+     * Validate via String validation twice, the input and output variants.
+     * {@inheritDoc}
+     * @see \GDO\DB\GDT_Text::validate()
+     */
+    public function validate($value)
+    {
+        # Check raw input for length and pattern etc.
+        if (!parent::validate($value))
+        {
+            return false;
+        }
+        
+        # Decode the message
+        $decoded = self::decodeMessage($this->getVar());
+        $text = self::plaintext($decoded);
+        
+        # Check decoded input for length and pattern etc.
+        if (!parent::validate($decoded))
+        {
+            return false;
+        }
+        
+        # Assign input variations.
+        $this->input = $value;
+        $this->output = $decoded;
+        $this->text = $text;
+        return true;
+    }
+
+//     public function getValidationValue()
+//     {
+//         return $this->getVarInput();
+//     }
     
     ##########
     ### DB ###
@@ -174,8 +214,6 @@ class GDT_Message extends GDT_Text
      */
     public function getGDOData()
     {
-//         $decoded = self::decodeMessage($this->getVar());
-//         $text = self::plaintext($decoded);
         return [
             "{$this->name}_input" => $this->input,
             "{$this->name}_output" => $this->output,
@@ -183,24 +221,37 @@ class GDT_Message extends GDT_Text
         ];
     }
     
-    public function toVar($value)
-    {
-        return "<pre>%s\n</pre>\n";
-    }
+//     /**
+//      * Turn an output string to an input string.
+//      * {@inheritDoc}
+//      * @see \GDO\Core\GDT::toVar()
+//      */
+//     public function toVar($value)
+//     {
+//         return "<pre>{$value}\n</pre>\n";
+//     }
     
 //     public function toValue($var)
 //     {
 //         return $this->output; #self::decodeMessage($var);
 //     }
     
-    
     ##############
     ### Getter ###
     ##############
-    public function getVar() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->input, "{$this->name}") : $this->input; }
-    public function getVarInput() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->input, "{$this->name}") : $this->input; }
-    public function getVarOutput() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->output, "{$this->name}_output") : $this->output; }
-
+    public function getVar()
+    {
+        $form = $this->formVariable();
+        if ($form)
+        {
+            return $this->getRequestVar($form, $this->input, "{$this->name}");
+        }
+        return $this->var;
+    }
+    public function getVarInput() { return $this->input; }
+    public function getVarOutput() { return $this->output; }
+    public function getVarText() { return $this->text; }
+    
     ##############
 	### Render ###
 	##############

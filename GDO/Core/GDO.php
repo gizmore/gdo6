@@ -211,16 +211,16 @@ abstract class GDO
 	public function setGDOVars(array $vars, $dirty=false)
 	{
 		$this->gdoVars = $vars;
-		foreach ($this->gdoColumnsCache() as $gdt)
-		{
-		    if ($data = $gdt->gdo($this)->getGDOData())
-		    {
-    		    foreach ($data as $k => $v)
-    		    {
-    		        $this->gdoVars[$k] = $v;
-    		    }
-		    }
-		}
+// 		foreach ($this->gdoColumnsCache() as $gdt)
+// 		{
+// 		    if ($data = $gdt->gdo($this)->getGDOData())
+// 		    {
+//     		    foreach ($data as $k => $v)
+//     		    {
+//     		        $this->gdoVars[$k] = $v;
+//     		    }
+// 		    }
+// 		}
 		
 		$this->dirty = $dirty;
 		return $this;
@@ -789,9 +789,9 @@ abstract class GDO
 	}
 	
 	/**
-	 * raw initial string data.
-	 * @param array $initial
-	 * @return array
+	 * Raw initial string data.
+	 * @param array $initial data to copy
+	 * @return array the new blank data1
 	 */
 	public static function blankData(array $initial = null)
 	{
@@ -799,28 +799,29 @@ abstract class GDO
 		$gdoVars = [];
 		foreach ($table->gdoColumnsCache() as $column)
 		{
-		    $column->var($column->initial);
-		    
 		    if (isset($initial[$column->name]))
 		    {
 		        $column->var($initial[$column->name]);
+		        if ($data = $column->getGDOData())
+		        {
+		            foreach ($data as $k => $v)
+		            {
+		                $gdoVars[$k] = $v;
+		            }
+		        }
 		    }
-			
-			if ($data = $column->blankData()) # could be setGDOData?
+		    elseif ($data = $column->blankData()) # could be setGDOData?
 			{
-// 			    unset($initial[$column->name]);
 			    foreach ($data as $k => $v)
 			    {
 			        $gdoVars[$k] = $v;
-// 			        $initial[$k] = $v;
 			    }
 			}
+			else
+			{
+			    $gdoVars[$column->name] = $column->initial;
+			}
 		}
-// 		if ($initial)
-// 		{
-// 			# Merge only existing keys
-// 			$gdoVars = array_intersect_key($initial, $gdoVars) + $gdoVars;
-// 		}
 		return $gdoVars;
 	}
 	

@@ -10,7 +10,7 @@ use GDO\Core\GDT_Template;
  */
 final class GDT_Country extends GDT_ObjectSelect
 {
-	public function __construct()
+	protected function __construct()
 	{
 		$this->table(GDO_Country::table());
 		$this->emptyLabel('not_specified');

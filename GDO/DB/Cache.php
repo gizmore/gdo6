@@ -2,6 +2,7 @@
 namespace GDO\DB;
 
 use GDO\Core\GDO;
+
 /**
  * Cache is a global object cache, where each fetched object (with the same key) from the database results in the same instance.
  * This way you can never have two dangling out of sync users in your application.
@@ -21,8 +22,8 @@ use GDO\Core\GDO;
  * The other memcached keys work on a per row basis with table_name_id as key.
  * 
  * @author gizmore
+ * @version 6.10
  * @since 5.0
- * @version 5.0
  * @license MIT
  */
 class Cache
@@ -213,7 +214,7 @@ class Cache
 				{
 					self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$gkey, $mcached, GWF_MEMCACHE_TTL);
 				}
-				$this->newDummy();
+    			$this->newDummy();
 			}
 			$this->cache[$key] = $mcached;
 		}

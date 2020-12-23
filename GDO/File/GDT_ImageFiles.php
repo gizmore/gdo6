@@ -10,7 +10,7 @@ final class GDT_ImageFiles extends GDT_Files
 	
 	public function defaultLabel() { return $this->label('images'); }
 	
-	public function __construct()
+	protected function __construct()
 	{
 		parent::__construct();
 		$this->mime('image/gif');

@@ -8,13 +8,12 @@ use GDO\Tests\MethodTest;
 use GDO\Tests\TestCase;
 use function PHPUnit\Framework\assertTrue;
 use function PHPUnit\Framework\assertFalse;
-use GDO\Core\ModuleLoader;
-use GDO\File\Filewalker;
 use function PHPUnit\Framework\assertFileIsReadable;
 use function PHPUnit\Framework\assertNull;
 use GDO\Core\GDO;
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertEquals;
+use GDO\Form\MethodForm;
 
 /**
  * Automated coverage tests for all modules.
@@ -26,6 +25,7 @@ use function PHPUnit\Framework\assertEquals;
  * - Make one instance of every GDO encountered.
  * - Try to exec every method that only has default paramaters - @TODO Many methods need to fulfil the gdoParameters() paradigm. 
  * 
+ * @TODO: Move this to the Module_Tests. Make Module_Tests prio 0. 
  * @author gizmore
  * @version 6.10
  * @since 6.10
@@ -88,32 +88,32 @@ final class AutoCoverageTest extends TestCase
         assertFalse($user->isMember(), 'Test if guests are non members.');
     }
     
-    public function testRequireAllPHPFilesForSyntaxErrors()
-    {
-        echo "Including all GDO files to test for syntax errors.\n"; ob_flush();
+//     public function testRequireAllPHPFilesForSyntaxErrors()
+//     {
+//         echo "Including all GDO files to test for syntax errors.\n"; ob_flush();
         
-        ModuleLoader::$ENABLED_MODULES = null; # reset
-        $loader = ModuleLoader::instance();
-        $modules = $loader->getEnabledModules();
+//         ModuleLoader::$ENABLED_MODULES = null; # reset
+//         $loader = ModuleLoader::instance();
+//         $modules = $loader->getEnabledModules();
     
-        # Build blacklist folders
-        foreach ($modules as $module)
-        {
-            if ($folders = $module->thirdPartyFolders())
-            {
-                foreach ($folders as $folder)
-                {
-                    self::$BLACKLIST_FOLDERS[] = $folder;
-                }
-            }
-        }
+//         # Build blacklist folders
+//         foreach ($modules as $module)
+//         {
+//             if ($folders = $module->thirdPartyFolders())
+//             {
+//                 foreach ($folders as $folder)
+//                 {
+//                     self::$BLACKLIST_FOLDERS[] = $folder;
+//                 }
+//             }
+//         }
         
-        # Include all files!
-        foreach ($modules as $module)
-        {
-            Filewalker::traverse($module->filePath(), '#\\.php$#', [$this, 'requirePHPFile']);
-        }
-    }
+//         # Include all files!
+//         foreach ($modules as $module)
+//         {
+//             Filewalker::traverse($module->filePath(), '#\\.php$#', [$this, 'requirePHPFile']);
+//         }
+//     }
     
     public static $BLACKLIST_FOLDERS = [
         '/tpl/',
@@ -167,12 +167,18 @@ final class AutoCoverageTest extends TestCase
         echo "Testing blank() handling on all GDO\n"; ob_flush();
         foreach (get_declared_classes() as $klass)
         {
+            $k = new \ReflectionClass($klass);
+            if ($k->isAbstract())
+            {
+                continue;
+            }
+            
             $parents = class_parents($klass);
             if (in_array('GDO\\Core\\GDO', $parents, true))
             {
 //                 echo "Checking GDO $klass\n"; ob_flush();
                 $table = GDO::tableFor($klass);
-                if (!$table->gdoAbstract())
+                if ($table)
                 {
                     $count++;
                     # Test GDO creation.
@@ -193,12 +199,25 @@ final class AutoCoverageTest extends TestCase
             $parents = class_parents($klass);
             if (in_array('GDO\\Core\\Method', $parents, true))
             {
+                $k = new \ReflectionClass($klass);
+                if ($k->isAbstract())
+                {
+                    continue;
+                }
+                
                 /** @var $method \GDO\Core\Method **/
                 $method = call_user_func([$klass, 'make']);
                 
                 $methodName =  $method->getModuleName() . '::' . $method->getMethodName();
                 
                 $requiredParams = $method->gdoParameterCache();
+                
+                if ($method instanceof MethodForm)
+                {
+                    /** @var $method \GDO\Form\GDT_Form **/
+                    $formParams = $method->getForm()->getFieldsRec();
+                    $requiredParams = array_merge($requiredParams, $formParams);
+                }
                 
                 $parameters = [];
                 
@@ -215,7 +234,7 @@ final class AutoCoverageTest extends TestCase
                         }
                         
                         # But maybe now
-                        if ($var = MethodTest::make()->plugParam($gdt))
+                        if ($var = MethodTest::make()->plugParam($gdt, $method))
                         {
                             $parameters[$name] = $var;
                             $trivial = true;

@@ -1,10 +1,9 @@
 <?php
 namespace GDO\UI;
 
-use GDO\Core\GDT_Template;
-use GDO\DB\GDT_Text;
-
 /**
+ * A message encrypted with the user's password.
+ * @TODO: implement
  * @author gizmore
  * @version 6.10
  * @since 6.10

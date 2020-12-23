@@ -9,7 +9,7 @@ class GDT_EditButton extends GDT_Button
 		return $name ? parent::name($name) : $this;
 	}
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->name = "edit";
 		$this->icon('edit');

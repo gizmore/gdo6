@@ -27,7 +27,7 @@ class GDT_File extends GDT_Object
 	public function defaultLabel() { return $this->label('file'); }
 	public function isImageFile() { return false; }
 	
-	public function __construct()
+	protected function __construct()
 	{
 		$this->table(GDO_File::table());
 		$this->icon('file');
