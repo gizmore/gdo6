@@ -799,6 +799,7 @@ abstract class GDO
 		$gdoVars = [];
 		foreach ($table->gdoColumnsCache() as $column)
 		{
+		    $column->gdo($table);
 		    if (isset($initial[$column->name]))
 		    {
 		        $column->var($initial[$column->name]);
