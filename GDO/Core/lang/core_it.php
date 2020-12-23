@@ -185,6 +185,7 @@ return array(
 'perm_staff' => 'Dippendente',
 	
 # User types
+'enum_bot' => 'Bot',
 'enum_ghost' => 'Fantasma',
 'enum_guest' => 'Ospite',
 'enum_system' => 'Sistema',

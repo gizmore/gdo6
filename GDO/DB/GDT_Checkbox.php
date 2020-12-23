@@ -135,7 +135,7 @@ class GDT_Checkbox extends GDT_Select
 	
 	public function renderFilter($f)
 	{
-		return GDT_Template::php('DB', 'filter/boolean.php', ['field' => $this, 'f'=> $f]);
+		return GDT_Template::php('DB', 'filter/checkbox.php', ['field' => $this, 'f'=> $f]);
 	}
 
 	####################

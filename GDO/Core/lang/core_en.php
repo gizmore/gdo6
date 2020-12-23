@@ -185,6 +185,7 @@ return array(
 'perm_staff' => 'Staff',
 
 # User types
+'enum_bot' => 'Bot',
 'enum_ghost' => 'Ghost',
 'enum_guest' => 'Guest',
 'enum_system' => 'System',
