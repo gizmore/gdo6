@@ -15,7 +15,9 @@ final class GetTransData extends MethodAjax
 {
 	public function execute()
 	{
-	    Website::renderJSON(Trans::getCache(Trans::$ISO));
+	    $langdata = json_encode(Trans::getCache(Trans::$ISO), JSON_PRETTY_PRINT);
+	    $code = sprintf('window.GDO_TRANS = {}; window.GDO_TRANS.CACHE = %s;', $langdata);
+	    echo $code;
 	}
 	
 }

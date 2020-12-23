@@ -8,7 +8,6 @@ use GDO\User\GDO_User;
 use GDO\Session\GDO_Session;
 use GDO\DB\Database;
 use GDO\Core\ModuleLoader;
-use GDO\Core\GDT_Response;
 use GDO\Core\Website;
 use GDO\UI\GDT_Container;
 use GDO\UI\GDT_HTML;
@@ -79,7 +78,15 @@ switch ($app->getFormat())
         {
             $session->commit();
         }
-        Website::renderJSON($response->renderJSON());
+        if ($content)
+        {
+            echo $content;
+        }
+        if ($response)
+        {
+            Website::renderJSON($response->renderJSON());
+        }
+        die(0);
     	break;
         
     case 'html':

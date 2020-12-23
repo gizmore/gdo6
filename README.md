@@ -107,11 +107,11 @@ Read https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_AND_GDT.md to learn mo
 
 ## Demo
 
-A demo site with material design and almost all modules is available here: http://gdo6.gizmore.org
+A demo site with material design is available here: https://geo2country.gizmore.org
 
-A demo site with classic design and almost all modules is (SOON) available here: http://classic.gdo6.gizmore.org (NOT YET)
+A demo site with bootstrap4 theme is available here: https://mettwitze.gizmore.org
 
-A demo site with bootstrap4 theme is available here: http://mettwitze.gizmore.org
+A demo site with jQueryMobile theme is available here: https://service.busch-peine.de
 
 
 ## Installation
