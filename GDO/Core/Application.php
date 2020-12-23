@@ -46,7 +46,16 @@ class Application
 		self::$instance = $this;
         ini_set('date.timezone', 'UTC');
 		date_default_timezone_set('UTC');
-		$this->initThemes();
+		
+		if (PHP_SAPI !== 'cli')
+		{
+			$this->initThemes();
+		}
+		else
+		{
+			$this->themes = ['default'];
+		}
+
 		$this->loader = new ModuleLoader(GDO_PATH . 'GDO/');
 	}
 	

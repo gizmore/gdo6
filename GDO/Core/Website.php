@@ -203,6 +203,12 @@ final class Website
 	 */
 	public static function redirectMessage($key, array $args=null, $url, $time=0)
 	{
+		if (Application::instance()->isCLI())
+		{
+			echo t($key, $args) . "\n";
+			return;
+		}
+		
 	    $url = $url === null ? self::hrefBack() : $url;
 	    self::topResponse()->addField(GDT_Success::with($key, $args));
 	    if ( (!Application::instance()->isInstall()) || (Application::instance()->isCLI()) )

@@ -267,7 +267,8 @@ final class ModuleLoader
 		{
 		    if (Application::instance()->isCLI())
 		    {
-    		    echo "No Database available yet...\n";
+    		    echo "The table gdo_module does not exist yet.\n";
+				echo "You can ignore this error if you are using the CLI installer.\n";
 		    }
 		    return false;
 		}
