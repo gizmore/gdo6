@@ -12,6 +12,7 @@ use GDO\Core\Website;
 use GDO\UI\GDT_Container;
 use GDO\UI\GDT_HTML;
 use GDO\Core\GDT_Error;
+use GDO\Mail\Mail;
 
 set_include_path('.');
 include 'GDO6.php';
@@ -62,6 +63,7 @@ try
 catch (Throwable $e)
 {
 	Logger::logException($e);
+	Debug::debugException($e, false); # send exception mail
 	$response = GDT_Error::responseException($e);
 }
 finally

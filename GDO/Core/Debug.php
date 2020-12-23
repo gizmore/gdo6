@@ -197,30 +197,41 @@ final class Debug
 	}
 	public static function exception_handler($e)
 	{
-		$is_html = Application::instance()->isHTML();
-		$firstLine = sprintf("%s in %s Line %s", $e->getMessage(), $e->getFile(), $e->getLine());
-		
-		$mail = self::$MAIL_ON_ERROR;
-		$log = true;
-		
-		// Send error to admin?
-		if ($mail)
-		{
-			self::sendDebugMail($firstLine . "\n" . $e->getTraceAsString());
-		}
-		
-		// Log it?
-		if ($log)
-		{
-			Logger::logCritical($firstLine);
-			Logger::flush();
-		}
-		
-		// $content = ''; while (ob_get_level() > 0) { $content .= ob_get_contents(); ob_end_clean(); }
-		$message = self::backtraceException($e, $is_html, ' (XH)');
-		echo self::renderError($message);
-		return true;
+	    return self::debugException($e);
 	}
+	
+	public static function debugException(\Throwable $e, $render=true)
+	{
+	    $is_html = Application::instance()->isHTML();
+	    $firstLine = sprintf("%s in %s Line %s", $e->getMessage(), $e->getFile(), $e->getLine());
+	    
+	    $mail = self::$MAIL_ON_ERROR;
+	    $log = true;
+	    
+	    // Send error to admin?
+	    if ($mail)
+	    {
+	        self::sendDebugMail($firstLine . "\n" . $e->getTraceAsString());
+	    }
+	    
+	    // Log it?
+	    if ($log)
+	    {
+	        Logger::logCritical($firstLine);
+	        Logger::flush();
+	    }
+	    
+	    // $content = ''; while (ob_get_level() > 0) { $content .= ob_get_contents(); ob_end_clean(); }
+	    $message = self::backtraceException($e, $is_html, ' (XH)');
+	    
+	    if ($render)
+	    {
+	        echo self::renderError($message);
+	    }
+	    
+	    return true;
+	}
+	
 	private static function renderError($message)
 	{
 		http_response_code(405);
