@@ -1,5 +1,6 @@
 <?php
 use GDO\Core\Application;
+
 ############
 ### Init ###
 ############
@@ -9,8 +10,8 @@ if (php_sapi_name() !== 'cli')
     die(-1);
 }
 
-require 'protected/config.php';
 require 'GDO6.php';
+require 'protected/config.php';
 
 use GDO\DB\Database;
 use GDO\Core\Logger;
@@ -21,5 +22,5 @@ final class CronjobApplication extends Application
 {
     public function isCLI() { return true; }
 }
-$app = new CronjobApplication();
+new CronjobApplication();
 Cronjob::run();
