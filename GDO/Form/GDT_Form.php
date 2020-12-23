@@ -112,7 +112,7 @@ class GDT_Form extends GDT
 					$field->error('err_field_errorneus');
 				}
 				# I hate code that is not always necessary. 
-				if (Application::instance()->isUnitTests())
+				if (Application::instance()->isUnitTests() || Application::instance()->isInstall())
 				{
 				    echo "{$field->name}: {$field->error}\n";
 				}
