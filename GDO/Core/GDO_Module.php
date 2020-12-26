@@ -358,7 +358,8 @@ class GDO_Module extends GDO
 	
 	public function saveConfigVar($key, $var)
 	{
-	    GDO_ModuleVar::createModuleVar($this, $this->getConfigColumn($key)->initial($var));
+	    $gdt = $this->getConfigColumn($key);
+	    GDO_ModuleVar::createModuleVar($this, $gdt->initial($var));
 	    Cache::remove('gdo_modules');
 	}
 	

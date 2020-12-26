@@ -305,9 +305,15 @@ class GDT_Table extends GDT
 	{
 		if ($this->countItems === null)
 		{
-		    $this->countItems = $this->countQuery ? 
-			    $this->countQuery->exec()->fetchValue() :
-			    $this->getResult()->numRows();
+		    if ($this->countQuery)
+		    {
+    		    $query = $this->getFilteredQuery($this->countQuery);
+		        $this->countItems = $query->exec()->fetchValue();
+		    }
+		    else
+		    {
+		        $this->countItems = $this->getResult()->numRows();
+		    }
 		}
 		return $this->countItems;
 	}
@@ -377,11 +383,11 @@ class GDT_Table extends GDT
 			}
 		}
 		
-		if ($this->pagemenu)
-		{
-		    $this->getPageMenu();
-			$this->pagemenu->filterQuery($query);
-		}
+// 		if ($this->pagemenu)
+// 		{
+// 		    $this->getPageMenu();
+// 			$this->pagemenu->filterQuery($query);
+// 		}
 		
 		return $this->query->exec();
 	}

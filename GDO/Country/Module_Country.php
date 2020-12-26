@@ -11,7 +11,7 @@ use GDO\Core\GDO_Module;
  */
 class Module_Country extends GDO_Module
 {
-	public $module_priority = 3;
+	public $module_priority = 2;
 	
 	public function isCoreModule() { return true; }
 	

@@ -81,13 +81,13 @@ abstract class MethodCrud extends MethodForm
 	    }
 	}
 	
-	##############
-	### Render ###
-	##############
-	public function renderPage()
-	{
-	    return parent::renderPage();
-	}
+// 	##############
+// 	### Render ###
+// 	##############
+// 	public function renderPage()
+// 	{
+// 	    return parent::renderPage();
+// 	}
 	
 	##############
 	### Create ###

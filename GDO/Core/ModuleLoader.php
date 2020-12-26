@@ -311,7 +311,7 @@ final class ModuleLoader
 				if ($module = self::instanciate($moduleData, true))
 				{
 					$this->modules[$name] = $module;
-					if ($init)
+// 					if ($init)
 					{
 					    $module->buildConfigCache();
 					    $module->buildSettingsCache();

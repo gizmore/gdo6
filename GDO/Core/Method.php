@@ -111,21 +111,17 @@ abstract class Method
 	 */
 	public function gdoParameter($key)
 	{
-		foreach ($this->gdoParameterCache() as $gdt)
-		{
-			if ($gdt->name === $key)
-			{
-				$var = $gdt->getRequestVar(null, $gdt->initial);
-				$value = $gdt->toValue($var);
-				$gdt->var = $var;
-				if (!$gdt->validate($value))
-				{
-					throw new GDOException($gdt->error);
-// 					$gdt->var = $gdt->initial;
-				}
-				return $gdt;
-			}
-		}
+	    if ($gdt = @$this->gdoParameterCache()[$key])
+	    {
+	        $var = $gdt->getRequestVar(null, $gdt->initial);
+	        $value = $gdt->toValue($var);
+	        if (!$gdt->validate($value))
+	        {
+	            throw new GDOException($gdt->error);
+	        }
+	        $gdt->var($var);
+	        return $gdt;
+	    }
 	}
 	
 	/**

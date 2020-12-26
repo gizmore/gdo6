@@ -7,6 +7,7 @@ use GDO\Core\GDOException;
 /**
  * A method that displays a table.
  * 
+ * 
  * @author gizmore
  * @version 6.10
  * @since 3.0
@@ -52,6 +53,12 @@ abstract class MethodQueryTable extends MethodTable
 	{
 	    $table->query($this->getQuery());
 	    $table->countQuery($this->getCountQuery());
+	    if ($this->isPaginated())
+	    {
+    	    $pagemenu = $table->getPageMenu();
+    	    $pagemenu->filterQuery($table->query);
+	    }
+	    
 	}
 
 }

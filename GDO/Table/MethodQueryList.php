@@ -4,6 +4,7 @@ namespace GDO\Table;
 
 /**
  * Abstract class that renders a list.
+ * Not filtered by default.
  *
  * @author gizmore
  * @version 6.10
@@ -11,7 +12,9 @@ namespace GDO\Table;
  */
 abstract class MethodQueryList extends MethodQueryTable
 {
-	public function listName() { return 'list'; }
+    public function isFiltered() { return false; }
+    
+    public function listName() { return 'list'; }
 	
 	public function gdoListMode() { return GDT_List::MODE_LIST; }
 	

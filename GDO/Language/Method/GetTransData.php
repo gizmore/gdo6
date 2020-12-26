@@ -3,7 +3,7 @@ namespace GDO\Language\Method;
 
 use GDO\Core\MethodAjax;
 use GDO\Language\Trans;
-use GDO\Core\Website;
+use GDO\Core\Application;
 
 /**
  * Get all translation data for the current language.
@@ -17,7 +17,10 @@ final class GetTransData extends MethodAjax
 	{
 	    $langdata = json_encode(Trans::getCache(Trans::$ISO), JSON_PRETTY_PRINT);
 	    $code = sprintf('window.GDO_TRANS = {}; window.GDO_TRANS.CACHE = %s;', $langdata);
-	    echo $code;
+	    if (!Application::instance()->isUnitTests())
+	    {
+	        echo $code;
+	    }
 	}
 	
 }

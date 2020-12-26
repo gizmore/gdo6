@@ -6,6 +6,7 @@ use GDO\Core\Logger;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
 use Exception;
+use GDO\Util\Strings;
 
 /**
  * mySQLi abstraction.
@@ -410,4 +411,27 @@ class Database
 	{
 		return $this->enableForeignKeyCheck("0");
 	}
+	
+	##############
+	### Import ###
+	##############
+	public function parseSQLFile($path)
+	{
+	    $fh = fopen($path, 'r');
+	    $command = '';
+	    while ($line = fgets($fh))
+	    {
+	        if ( (Strings::startsWith($line, '-- ')) ||
+	            (Strings::startsWith($line, '/*')) )
+	        {
+	            continue;
+	        }
+	        $command .= $line;
+	        if (Strings::endsWith(trim($line), ';'))
+	        {
+    	        $this->query($command);
+	        }
+	    }
+	}
+	
 }

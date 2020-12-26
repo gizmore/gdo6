@@ -45,7 +45,7 @@ abstract class MethodTable extends Method
     /**
      * @var GDT_Table
      */
-    protected $table;
+    public $table;
     
     public function __construct()
     {

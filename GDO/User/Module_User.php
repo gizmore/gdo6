@@ -13,7 +13,7 @@ use GDO\Session\GDO_Session;
  */
 final class Module_User extends GDO_Module
 {
-	public $module_priority = 5;
+	public $module_priority = 3;
 	
 	public function isCoreModule() { return true; }
 	public function onInstall() { OnInstall::onInstall(); }

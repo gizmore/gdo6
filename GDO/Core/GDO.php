@@ -799,29 +799,33 @@ abstract class GDO
 		$gdoVars = [];
 		foreach ($table->gdoColumnsCache() as $column)
 		{
-		    $column->gdo($table);
+		    # init gdt with initial var.
 		    if (isset($initial[$column->name]))
 		    {
 		        $column->var($initial[$column->name]);
-		        if ($data = $column->getGDOData())
+		    }
+		    else
+		    {
+		        $column->var($column->initial);
+		    }
+		    
+		    # loop over blank data
+		    if ($data = $column->blankData())
+		    {
+		        foreach ($data as $k => $v)
 		        {
-		            foreach ($data as $k => $v)
+		            if (isset($initial[$k]))
 		            {
+		                # override with initial
+		                $gdoVars[$k] = $initial[$k];
+		            }
+		            else
+		            {
+		                # Use blank data as is
 		                $gdoVars[$k] = $v;
 		            }
 		        }
 		    }
-		    elseif ($data = $column->blankData()) # could be setGDOData?
-			{
-			    foreach ($data as $k => $v)
-			    {
-			        $gdoVars[$k] = $v;
-			    }
-			}
-			else
-			{
-			    $gdoVars[$column->name] = $column->initial;
-			}
 		}
 		return $gdoVars;
 	}

@@ -59,6 +59,11 @@ class GDT_Response extends GDT
 	##############
 	### Render ###
 	##############
+	public function render()
+	{
+	    return $this->renderCell();
+	}
+	
 	public function renderCell()
 	{
 		switch (Application::instance()->getFormat())

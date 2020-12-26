@@ -32,7 +32,7 @@ class Cache
 	public static function get($key) { return GWF_MEMCACHE ? self::$MEMCACHED->get(GWF_MEMCACHE_PREFIX.$key) : false; }
 	public static function set($key, $value) { if (GWF_MEMCACHE) self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$key, $value); }
 	public static function remove($key) { if (GWF_MEMCACHE) self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$key); }
-	public static function flush() { if (GWF_MEMCACHE) self::$MEMCACHED->flush(); Cache::cooldown(); }
+	public static function flush() { if (GWF_MEMCACHE) { self::$MEMCACHED->flush(); Cache::cooldown(); } }
 	public static function init()
 	{
 		if (GWF_MEMCACHE)
