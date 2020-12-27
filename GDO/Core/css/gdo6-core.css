@@ -2,7 +2,7 @@
 span, img, a, i, b, em { display: inline-block; }
 .cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
 .ce { text-align: center; margin: auto; }
-.gdo-exception { white-space: pre; font-family: monospace; }
+.gdo-exception { white-space: pre-line; font-family: monospace; }
 .gdo-tblorder { display: inline-block; }
 img.gdo-country { width: 24px; height: 17px; position: relative; top: 3px; border: 1px solid #555; }
 .b { display: block; }

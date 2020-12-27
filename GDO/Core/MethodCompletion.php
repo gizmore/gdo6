@@ -3,6 +3,7 @@ namespace GDO\Core;
 
 use GDO\Util\Common;
 use GDO\Table\Module_Table;
+use GDO\UI\GDT_SearchField;
 
 /**
  * Generic autocompletion base code.
@@ -16,6 +17,13 @@ use GDO\Table\Module_Table;
  */
 abstract class MethodCompletion extends MethodAjax
 {
+    public function gdoParameters()
+    {
+        return [
+            GDT_SearchField::make('query')->notNull(),
+        ];
+    }
+    
     #############
     ### Input ###
     #############

@@ -177,6 +177,8 @@ return array(
 'err_invalid_gdt_var' => 'Un tipo di dati GDT, %s, ha un valore non valido: %s.',
 'err_unknown_user_setting' => 'Il modulo %s non ha alcuna impostazione utente chiamata %s.',
 'err_nothing_happened' => 'Niente è cambiato anche se qualcosa sarebbe dovuto accadere.',
+'err_external_url_not_allowed' => 'Gli URL esterni non sono consentiti.',
+'err_upload_move' => 'Non è stato possibile spostare un file da %s a %s.',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',

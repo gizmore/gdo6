@@ -177,6 +177,8 @@ return array(
 'err_invalid_gdt_var' => 'A GDT, %s, has an invalid var: %s.',
 'err_unknown_user_setting' => 'The module %s does not know the user setting %s.',
 'err_nothing_happened' => 'Nothing has changed despite your action.',
+'err_external_url_not_allowed' => 'External URL are not allowed.',
+'err_upload_move' => 'File could not be moved from %s to %s.',
     
 # Permissions
 'sel_no_permissions' => 'No permission required',

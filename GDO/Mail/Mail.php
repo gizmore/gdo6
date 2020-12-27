@@ -21,6 +21,7 @@ final class Mail
 {
 	public static $SENT = 0; # perf
 	public static $DEBUG = GWF_DEBUG_EMAIL;
+	public static $ENABLE = GWF_ENABLE_EMAIL;
 	
 	const HEADER_NEWLINE = "\n";
 	const GPG_PASSPHRASE = ''; #GWF_EMAIL_GPG_SIG_PASS;
@@ -211,6 +212,7 @@ final class Mail
 	public function send($cc, $bcc, $message, $html=true)
 	{
 		self::$SENT++;
+		
 		if (count($this->attachments) > 0)
 		{
 			return $this->sendWithAttachments($cc, $bcc);
@@ -238,11 +240,16 @@ final class Mail
 		}
 		else
 		{
-			return mail($to, $subject, $encrypted, $headers); //, '-r ' . $this->sender);
+		    if (!self::$ENABLE)
+		    {
+		        return;
+		    }
+		    
+		    return mail($to, $subject, $encrypted, $headers); //, '-r ' . $this->sender);
 		}
 	}
 	
-	public function sendWithAttachments($cc, $bcc)
+	private function sendWithAttachments($cc, $bcc)
 	{
 		$to = $this->getUTF8Receiver();
 		$from = $this->getUTF8Sender();
@@ -312,7 +319,12 @@ final class Mail
 		}
 		else
 		{
-			return @mail($to, $subject, $message, $headers); #, '-r ' . $this->sender);
+		    if (!self::$ENABLE)
+		    {
+		        return;
+		    }
+		    
+		    return @mail($to, $subject, $message, $headers); #, '-r ' . $this->sender);
 		}
 	}
 	

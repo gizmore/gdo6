@@ -9,6 +9,7 @@ use GDO\Core\GDT_Template;
 use GDO\Util\Strings;
 use GDO\Core\GDOException;
 use GDO\DB\GDT_UInt;
+use GDO\Core\Debug;
 /**
  * File database storage.
  * 
@@ -182,7 +183,9 @@ final class GDO_File extends GDO
 		FileUtil::createDir(self::filesDir());
 		if (!@copy($this->path, $this->getDestPath()))
 		{
-			throw new GDOError('err_upload_move', [html($this->path), html($this->getDestPath())]);
+			throw new GDOError('err_upload_move', [
+			    html(Debug::shortpath($this->path)), 
+			    html(Debug::shortpath($this->getDestPath()))]);
 		}
 		$this->path = null;
 		return $this;

@@ -126,6 +126,7 @@ class Config
 		if (!defined('GWF_SESS_JS')) define('GWF_SESS_JS', true);
 		if (!defined('GWF_SESS_HTTPS')) define('GWF_SESS_HTTPS', false);
 		# Email
+		if (!defined('GWF_ENABLE_EMAIL')) define('GWF_ENABLE_EMAIL', false);
 		if (!defined('GWF_BOT_NAME')) define('GWF_BOT_NAME', GWF_SITENAME . ' support');
 		if (!defined('GWF_BOT_EMAIL')) define('GWF_BOT_EMAIL', 'support@'.GWF_DOMAIN);
 		if (!defined('GWF_ADMIN_EMAIL')) define('GWF_ADMIN_EMAIL', 'administrator@'.GWF_DOMAIN);
@@ -191,7 +192,8 @@ class Config
 			GDT_Checkbox::make('sess_https')->initialValue(GWF_SESS_HTTPS),
 			# Email
 			GDT_Divider::make()->label('install_config_section_email'),
-			GDT_Realname::make('bot_name')->required()->initialValue(GWF_BOT_NAME),
+		    GDT_Checkbox::make('enable_email')->initialValue(GWF_ENABLE_EMAIL),
+		    GDT_Realname::make('bot_name')->required()->initialValue(GWF_BOT_NAME),
 			GDT_Email::make('bot_email')->required()->initialValue(GWF_BOT_EMAIL),
 			GDT_Email::make('admin_email')->required()->initialValue(GWF_ADMIN_EMAIL),
 			GDT_Email::make('error_email')->required()->initialValue(GWF_ERROR_EMAIL),

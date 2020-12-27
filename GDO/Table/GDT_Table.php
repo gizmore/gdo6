@@ -229,6 +229,7 @@ class GDT_Table extends GDT
 	    return $this;
 	}
 	
+	private $filtersApplied = false;
 	public function getFilteredQuery(Query $query)
 	{
 		if ($this->filtered)
@@ -307,8 +308,7 @@ class GDT_Table extends GDT
 		{
 		    if ($this->countQuery)
 		    {
-    		    $query = $this->getFilteredQuery($this->countQuery);
-		        $this->countItems = $query->exec()->fetchValue();
+		        $this->countItems = $this->countQuery->exec()->fetchValue();
 		    }
 		    else
 		    {

@@ -78,11 +78,11 @@ final class FileUtil
 					}
 					else
 					{
-						@unlink($dir."/".$object);
+						unlink($dir."/".$object);
 					}
 				}
 			}
-			return @rmdir($dir);
+			return rmdir($dir);
 		}
 		return false;
 	}

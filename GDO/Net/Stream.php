@@ -1,6 +1,9 @@
 <?php
 namespace GDO\Net;
+
 use GDO\File\GDO_File;
+use GDO\Core\Application;
+
 /**
  * File utility to stream downloads in chunks.
  * 
@@ -48,8 +51,8 @@ final class Stream
 	
 	public static function serve(GDO_File $file, $variant='', $disposition=true)
 	{
-		header('Content-Type: '.$file->getType());
-		header('Content-Size: '.$file->getSize());
+	    hdr('Content-Type: '.$file->getType());
+	    hdr('Content-Size: '.$file->getSize());
 		if ($disposition)
 		{
 			header('Content-Disposition: attachment; filename="'.htmlspecialchars($file->getName()).'"');
@@ -65,15 +68,15 @@ final class Stream
 	 */
 	public static function serveWithRange(GDO_File $gdoFile, $variant='')
 	{
-	    $size = $gdoFile->getSize();
+	    $size = $length = $gdoFile->getSize();
 	    $start = 0;
 	    $end = $size - 1;
 
 	    $file = $gdoFile->getVariantPath($variant);
 	    $fp = fopen($file, 'rb');
 	    
-	    header('Content-type: ' . $gdoFile->getType());
-	    header('Accept-Ranges: 0-' . $size);
+	    hdr('Content-type: ' . $gdoFile->getType());
+	    hdr('Accept-Ranges: 0-' . $size);
 
 	    if (isset($_SERVER['HTTP_RANGE']))
 	    {
@@ -84,8 +87,8 @@ final class Stream
 	        list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
 	        if (strpos($range, ',') !== false)
 	        {
-	            header('HTTP/1.1 416 Requested Range Not Satisfiable');
-	            header("Content-Range: bytes $start-$end/$size");
+	            hdr('HTTP/1.1 416 Requested Range Not Satisfiable');
+	            hdr("Content-Range: bytes $start-$end/$size");
 	            exit;
 	        }
 	        if ($range == '-')
@@ -101,19 +104,19 @@ final class Stream
 	        $c_end = ($c_end > $end) ? $end : $c_end;
 	        if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size)
 	        {
-	            header('HTTP/1.1 416 Requested Range Not Satisfiable');
-	            header("Content-Range: bytes $start-$end/$size");
-	            exit;
+	            hdr('HTTP/1.1 416 Requested Range Not Satisfiable');
+	            hdr("Content-Range: bytes $start-$end/$size");
+	            return;
 	        }
 	        $start  = $c_start;
 	        $end    = $c_end;
 	        $length = $end - $start + 1;
 	        fseek($fp, $start);
-	        header('HTTP/1.1 206 Partial Content');
+	        hdr('HTTP/1.1 206 Partial Content');
 	    }
 	    
-	    header("Content-Range: bytes $start-$end/$size");
-	    header("Content-Length: ".$length);
+	    hdr("Content-Range: bytes $start-$end/$size");
+	    hdr("Content-Length: ".$length);
 	    
 	    $buffer = 1024 * 8;
 	    while (!feof($fp) && ($p = ftell($fp)) <= $end)
@@ -122,22 +125,35 @@ final class Stream
 	        {
 	            $buffer = $end - $p + 1;
 	        }
-	        echo fread($fp, $buffer);
-	        flush();
+	        
+	        $data = fread($fp, $buffer);
+	        
+	        if (!Application::instance()->isUnitTests())
+	        {
+    	        echo $data;
+    	        flush();
+	        }
 	    }
 	    fclose($fp);
+	    if (!Application::instance()->isUnitTests())
+	    {
+	        die();
+	    }
 	}
 	
 	public static function serveText($content, $fileName)
 	{
-	    header('Content-Type: application/octet-stream');
-	    header('Content-Disposition: attachment; filename='.html($fileName));
-	    header('Expires: 0');
-	    header('Cache-Control: must-revalidate');
-	    header('Pragma: public');
-	    header('Content-Length: ' . strlen($content));
-	    header('Content-Size: '. strlen($content));
-        echo $content;
+	    hdr('Content-Type: application/octet-stream');
+	    hdr('Content-Disposition: attachment; filename='.html($fileName));
+	    hdr('Expires: 0');
+	    hdr('Cache-Control: must-revalidate');
+	    hdr('Pragma: public');
+	    hdr('Content-Length: ' . strlen($content));
+	    hdr('Content-Size: '. strlen($content));
+	    if (!Application::instance()->isUnitTests())
+	    {
+	        echo $content;
+	    }
 	}
 
 }

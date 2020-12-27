@@ -19,9 +19,7 @@ final class Admin extends Method
 		$response = GDT_Response::makeWith($menu);
 		
 		# Tabs first
-		$tabs = $this->renderNavBar('User');
-		return $tabs->add($response);
+		return $response;
 	}
 
-	
 }

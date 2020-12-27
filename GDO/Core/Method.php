@@ -36,7 +36,7 @@ abstract class Method
 	public abstract function execute();
 	
 	/**
-	 * @return static
+	 * @return self
 	 */
 	public static function make() { return new static(); }
 	

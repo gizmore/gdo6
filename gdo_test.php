@@ -18,7 +18,7 @@ use GDO\DB\Cache;
 if (PHP_SAPI !== 'cli') { die('Tests can only be run from the command line.'); }
 
 require_once 'vendor/autoload.php';
-require_once 'protected/config_unit_test.php';
+require_once 'protected/config.php';
 require_once 'GDO6.php';
 
 Logger::init('system', GWF_ERROR_LEVEL);
@@ -110,7 +110,7 @@ $modules = $app->loader->loadModules(false, true);
 
 foreach ($modules as $module)
 {
-    if ($module->defaultEnabled())
+//     if ($module->defaultEnabled())
     {
         if (!$module->isPersisted())
         {

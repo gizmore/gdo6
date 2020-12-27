@@ -7,6 +7,7 @@ use GDO\Net\GDT_Url;
 use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Env;
+use GDO\Core\Application;
 
 /**
  * GDO autoloader and public functions.
@@ -47,7 +48,18 @@ function me() { return Common::getRequestString('me', GWF_METHOD); }
 function module_enabled($moduleName) { return ($module = ModuleLoader::instance()->getModule($moduleName)) ? $module->isEnabled() : false; }
 function env($key, $default=null) { return Env::get($key, $default); }
 function def($key, $default=null) { return defined($key) ? constant($key) : $default; }
-
+function hdr($header, $replace=null)
+{
+    $app = Application::instance();
+    if ($app->isUnitTests())
+    {
+        echo $header . PHP_EOL;
+    }
+    elseif (!$app->isCLI())
+    {
+        header($header, $replace);
+    }
+}
 # Translation API
 function t($key, array $args=null) { return Trans::t($key, $args); }
 function ten($key, array $args=null) { return Trans::tiso('en', $key, $args); }
