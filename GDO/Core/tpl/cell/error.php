@@ -7,6 +7,8 @@ use GDO\UI\GDT_Icon; ?>
   <p><?php $field->renderText()?></p>
   <?php endif; ?>
 <?php else : ?>
+  <?php if ($field->hasText()) : ?>
   <p><?=GDT_Icon::iconS('error')?><?=$field->renderText()?></p>
+  <?php endif; ?>
 <?php endif; ?>
 </div>

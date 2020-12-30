@@ -16,7 +16,7 @@ $result = $field->getResult();
   <?php if ($field->hasTitle()) : ?>
   <h3><?=$field->renderTitle()?></h3>
   <?php endif; ?>
-  <table id="gwfdt-<?=$field->name?>" class="gdo-table">
+  <table id="gwfdt-<?=$field->name?>">
 	<thead>
 	  <tr>
 	  <?php foreach($headers as $gdoType) : ?>

@@ -298,7 +298,7 @@ class GDT_Table extends GDT
 	/**
 	 * @var int
 	 */
-	private $countItems = null;
+	public $countItems = null;
 	/**
 	 * @return int the total number of matching rows. 
 	 */

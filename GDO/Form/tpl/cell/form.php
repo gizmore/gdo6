@@ -23,7 +23,7 @@ $firstEditableField = null;
 	    <?=$form->htmlHidden()?>
 	  <?php endif; ?>
 <?php foreach ($form->getFields() as $field) : ?>
-          <?php if ($field->editable && (!$field->var)) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
+          <?php if ($field->editable && (!$field->initial)) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
           <?= $field->renderForm(); ?>
 <?php endforeach; ?>
 	  </form>
