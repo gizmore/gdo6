@@ -28,8 +28,8 @@ $page = GDT_Page::make('page');
 
 Database::init();
 GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
-$app = new Application();
 ModuleLoader::instance()->loadModulesCache();
+$app = new Application();
 
 # Bootstrap
 Trans::$ISO = GWF_LANGUAGE;
