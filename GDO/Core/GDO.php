@@ -739,7 +739,7 @@ abstract class GDO
     					{
     						$setClause .= ',';
     					}
-    					foreach ($column->getGDOData() as $k => $v)
+    					foreach ($column->gdo($this)->getGDOData() as $k => $v)
     					{
         					$setClause .= $k . '=' . self::quoteS($v);
     					}

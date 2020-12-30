@@ -222,7 +222,13 @@ final class GDO_User extends GDO
 	 */
 	public static function current() { self::$CURRENT = self::$CURRENT ? self::$CURRENT : GDO_Session::user(); return self::$CURRENT; }
 	
-	public static function setCurrent(GDO_User $user) { self::$CURRENT = $user; Trans::setISO($user->getLangISO()); return $user; }
+	public static function setCurrent(GDO_User $user=null)
+	{
+	    $user = $user === null ? self::ghost() : $user;
+	    self::$CURRENT = $user;
+	    Trans::setISO($user->getLangISO());
+	    return $user;
+	}
 
 	/**
 	 * @var GDO_User

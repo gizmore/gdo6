@@ -56,7 +56,7 @@ class Application
 			$this->themes = ['default'];
 		}
 
-		$this->loader = new ModuleLoader(GDO_PATH . 'GDO/');
+        $this->loader = ModuleLoader::instance() ? ModuleLoader::instance() : new ModuleLoader(GDO_PATH . 'GDO/');
 	}
 	
 	public function __destruct()
