@@ -33,7 +33,7 @@ class GDT_Container extends GDT
 	    if ($this->fields)
 	    {
     	    $this->setupHTML();
-    		$back = '<div '.$this->htmlAttributes().'>';
+    		$back = '<div '.$this->htmlID().' '.$this->htmlAttributes().'>';
     		foreach ($this->fields as $gdt)
     		{
     			$back .= $gdt->renderCell();
@@ -48,7 +48,7 @@ class GDT_Container extends GDT
 	    if ($this->fields)
 	    {
 	        $this->setupHTML();
-    	    $back = '<div '.$this->htmlAttributes().'>';
+	        $back = '<div '.$this->htmlID().' '.$this->htmlAttributes().'>';
     	    foreach ($this->fields as $gdt)
     	    {
     	        $back .= $gdt->renderForm();
@@ -63,7 +63,7 @@ class GDT_Container extends GDT
 	    if ($this->fields)
 	    {
 	        $this->setupHTML();
-    	    $back = '<div '.$this->htmlAttributes().'>';
+	        $back = '<div '.$this->htmlID().' '.$this->htmlAttributes().'>';
     	    foreach ($this->fields as $gdt)
     	    {
     	        $back .= $gdt->renderCard();

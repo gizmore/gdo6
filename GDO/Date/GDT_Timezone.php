@@ -24,6 +24,7 @@ final class GDT_Timezone extends GDT_Select
         $this->icon('time');
         $this->caseS();
         $this->ascii();
+        $this->completionHref(href('Core', 'TimezoneComplete'));
     }
     
     public function initChoices()

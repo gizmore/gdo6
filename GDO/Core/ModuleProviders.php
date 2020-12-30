@@ -78,6 +78,7 @@ final class ModuleProviders
         'News' => 'gdo6-news',
         'OnlineUsers' => 'gdo6-online-users',
         'OpenTimes' => 'gdo6-opentimes',
+        'Pagecounter' => 'gdo6-pagecounter',
         'Payment' => 'gdo6-payment',
         'PaymentBank' => 'gdo6-payment-bank',
         'PaymentCredits' => 'gdo6-payment-credits',

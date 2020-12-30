@@ -5,7 +5,7 @@ if ($bar->wrap)
     $bar->addClass('flx-wrap');
 }
 ?>
-<div <?=$bar->htmlAttributes()?>>
+<div <?=$bar->htmlID()?> <?=$bar->htmlAttributes()?>>
 <?php if ($bar->fields) : ?>
   <?php foreach ($bar->fields as $field) : ?>
 	<?=$form ? $field->renderForm() : $field->renderCell()?>

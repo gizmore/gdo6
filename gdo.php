@@ -35,6 +35,7 @@ function printUsage()
     $exe = $argv[0];
     echo "Usage: php $exe configure <filename.php>\n";
     echo "Usage: php $exe install <module>\n";
+//     echo "Usage: php $exe providers <module>\n"; # TODO: Show a list of providers for module dependencies.
     echo "Usage: php $exe admin <username> <password>\n";
     echo "Usage: php $exe wipe <module>\n";
     echo "Usage: php $exe config <module>\n";

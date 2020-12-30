@@ -1,6 +1,9 @@
 # GDO6 installation process
 
 This document describes the installation process of gdo6.
+Basically you start with cloning the core gdo6 and then clone more modules into 'gdo6/GDO/'.
+Then you either run the install/wizard.php or use the CLI to install a gdo6 environment.
+
 
 ### Operating System
 
@@ -157,7 +160,16 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     # git clone --recursive https://github.com/gizmore/gdo6-whois Whois
     ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
     git clone --recursive https://github.com/gizmore/gdo6-zip ZIP
-    
+
+### After cloning    
+
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
 
-    
+### CLI install
+
+    php gdo.php configure
+    php gdo.php install <Module>
+    php gdo.php admin <user> <pass>
+
+
+

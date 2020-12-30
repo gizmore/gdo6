@@ -29,7 +29,7 @@ use GDO\UI\GDT_Page;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9424'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9425'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
@@ -68,6 +68,7 @@ final class Module_Core extends GDO_Module
 			GDT_User::make('system_user')->editable(false)->initial($this->env('system_user')),
 		    GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum', '0')),
 		    GDT_Checkbox::make('show_privacy')->initial($this->env('show_privacy', '0')),
+		    GDT_Checkbox::make('allow_guests')->initial($this->env('allow_guests', '1')),
 		    GDT_Divider::make('div_javascript')->label('div_javascript'),
 			GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial($this->env('minify_js', 'no')),
 			GDT_Path::make('nodejs_path')->initial($this->env('nodejs_path', 'nodejs'))->label('nodejs_path'),
@@ -90,6 +91,7 @@ final class Module_Core extends GDO_Module
 	public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
 	public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
 	public function cfgAssetVersion() { return sprintf('%.02f', $this->getConfigVar('asset_revision')); }
+	public function cfgAllowGuests() { return $this->getConfigValue('allow_guests'); }
 	
 	#############
 	### Hooks ###
