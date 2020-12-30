@@ -26,11 +26,12 @@ if (!defined('GWF_CONFIGURED'))
 
 $page = GDT_Page::make('page');
 
+$app = new Application();
+Database::init();
+ModuleLoader::instance()->loadModulesCache();
 GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
 
 # Bootstrap
-Database::init();
-$app = new Application();
 Trans::$ISO = GWF_LANGUAGE;
 Logger::init(null, GWF_ERROR_LEVEL); # 1st init as guest
 Debug::init();
@@ -38,7 +39,6 @@ Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
 Debug::setDieOnError(GWF_ERROR_DIE);
 Debug::setMailOnError(GWF_ERROR_MAIL);
-ModuleLoader::instance()->loadModulesCache();
 GDO_Session::instance();
 if (GDO_User::current()->isAuthenticated())
 {
