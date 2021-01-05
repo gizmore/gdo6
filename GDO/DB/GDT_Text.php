@@ -14,7 +14,7 @@ class GDT_Text extends GDT_String
 {
 	public function defaultLabel() { return $this->label('message'); }
 	
-	public $max = 4096;
+	public $max = 65535;
 	
 	public function gdoColumnDefine()
 	{

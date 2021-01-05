@@ -26,7 +26,14 @@ final class GDT_IP extends GDT_String
 	
 	public function useCurrent($useCurrent=true)
 	{
-	    return $this->initial(self::current());
+	    if (!$useCurrent)
+	    {
+	        return $this->initial(null);
+	    }
+	    else
+	    {
+    	    return $this->initial(self::current());
+	    }
 	}
 
 	##############

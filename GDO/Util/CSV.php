@@ -17,7 +17,7 @@ final class CSV
     
     public function eachLine($callable)
     {
-        $fh = fopen($callable, 'r');
+        $fh = fopen($this->path, 'r');
         while ($row = fgetcsv($fh))
         {
             $callable($row);

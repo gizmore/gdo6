@@ -4,12 +4,14 @@ use GDO\Util\Javascript;
 use GDO\Core\Module_Core;
 use GDO\UI\GDT_Page;
 use GDO\UI\GDT_Loading;
+use GDO\Language\GDO_Language;
 /** @var $page GDT_Page **/
 $page->loadSidebars();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?=GDO_Language::current()->getISO()?>">
   <head>
+    <title><?=Website::displayTitle()?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="index, follow" />

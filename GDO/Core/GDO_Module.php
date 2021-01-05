@@ -203,14 +203,18 @@ class GDO_Module extends GDO
 	 * @param string $path
 	 * @return string
 	 */
-	public function filePath($path='') { return GDO_PATH.$this->wwwPath($path); }
+	public function filePath($path='') { return rtrim(GDO_PATH, '/').$this->wwwPath($path); }
 	
 	/**
 	 * Relative www path for a resource.
 	 * @param string $path
 	 * @return string
 	 */
-	public function wwwPath($path='') { return "GDO/{$this->getName()}/$path"; }
+	public function wwwPath($path='')
+	{
+	    $path = trim($path, '/');
+	    return GWF_WEB_ROOT . "GDO/{$this->getName()}/$path";
+	}
 	
 	/**
 	 * Filesystem path for a temp file. Absolute path to the gdo6/temp/{module}/ folder.

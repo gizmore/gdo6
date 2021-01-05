@@ -91,6 +91,12 @@ abstract class GDT
 	### Name ###
 	############
 	public function name($name=null) { $this->name = $name === null ? self::nextName() : $name; return $this; }
+	
+	/**
+	 * name is deprecated in anchors
+	 * @deprecated
+	 * @return string
+	 */
 	public function htmlName() { return Strings::startsWith($this->name, 'gdo-') ? '' :  sprintf(' name="%s"', $this->name); }
 	
 	private static $classNameCache = [];

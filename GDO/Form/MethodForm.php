@@ -7,6 +7,7 @@ use GDO\Core\Method;
 use GDO\Util\Common;
 use GDO\File\GDT_File;
 use GDO\Core\Application;
+use GDO\Language\Trans;
 
 /**
  * Generic method that uses a GDT_Form.
@@ -92,9 +93,14 @@ abstract class MethodForm extends Method
 	
 	public function defaultTitle()
 	{
-		$module = strtolower($this->getModuleName());
-		$method = strtolower($this->getMethodName());
-		return $this->title(t("ft_{$module}_{$method}"));
+	    $this->title(t($this->getDefaultTitleLangKey()));
+	}
+	
+	protected function getDefaultTitleLangKey()
+	{
+	    $module = strtolower($this->getModuleName());
+	    $method = strtolower($this->getMethodName());
+	    return "ft_{$module}_{$method}";
 	}
 	
 	/**
@@ -209,6 +215,19 @@ abstract class MethodForm extends Method
 			$error->addFields($form->getFields());
 		}
 		return $error;
+	}
+	
+	#################
+	### SEO Title ###
+	#################
+	public function getTitle()
+	{
+	    $dtlk = $this->getDefaultTitleLangKey();
+	    if (Trans::hasKey($dtlk))
+	    {
+	        return t($dtlk, [sitename()]);
+	    }
+	    return t($this->getTitleLangKey(), [sitename()]);
 	}
 	
 }

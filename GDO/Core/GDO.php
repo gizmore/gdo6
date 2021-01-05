@@ -186,7 +186,11 @@ abstract class GDO
 	 */
 	public function setVar($key, $var, $markDirty=true)
 	{
-		$this->gdoVars[$key] = $var === null ? null : (string)$var;
+	    $gdt = $this->gdoColumn($key);
+        foreach ($gdt->var($var)->getGDOData() as $k => $v)
+        {
+    		$this->gdoVars[$k] = $v === null ? null : (string)$v;
+        }
 		return $markDirty ? $this->markDirty($key) : $this;
 	}
 	
@@ -735,12 +739,12 @@ abstract class GDO
 			    {
     				if ( ($this->dirty === true) || (isset($this->dirty[$column->name])) )
     				{
-    					if ($setClause !== '')
-    					{
-    						$setClause .= ',';
-    					}
     					foreach ($column->gdo($this)->getGDOData() as $k => $v)
     					{
+        					if ($setClause !== '')
+        					{
+        						$setClause .= ',';
+        					}
         					$setClause .= $k . '=' . self::quoteS($v);
     					}
     				}

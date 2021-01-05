@@ -119,7 +119,7 @@ final class Website
 	 * @todo possible without key but same functionality?
 	 * @todo strings as params? addMeta($name, $content, $mode, $overwrite)
 	 */
-	public static function addMeta(array $metaA, $overwrite=false)
+	public static function addMeta(array $metaA, $overwrite=true)
 	{
 		if ((false === $overwrite) && (isset(self::$_meta[$metaA[0]]) === true))
 		{
@@ -153,7 +153,10 @@ final class Website
 // 			}
 			list($name, $content, $equiv) = $meta;
 // 			$equiv = $mode[$equiv];
-			$back .= sprintf("<meta %s=\"%s\" content=\"%s\" />\n", $equiv, $name, $content);
+            if ($content)
+            {
+                $back .= sprintf("<meta %s=\"%s\" content=\"%s\" />\n", $equiv, $name, $content);
+            }
 		}
 		return $back;
 	}
@@ -282,6 +285,20 @@ final class Website
 	public static function displayHead()
 	{
 		return self::$HEAD;
+	}
+	
+	#############
+	### Title ###
+	#############
+	private static $TITLE = GWF_SITENAME;
+	public static function setTitle($title)
+	{
+	    self::$TITLE = $title;
+	}
+	
+	public static function displayTitle()
+	{
+	    return html(self::$TITLE);
 	}
 
 }

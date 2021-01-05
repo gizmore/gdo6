@@ -8,6 +8,7 @@ use GDO\Util\Common;
 use GDO\UI\WithTitle;
 use GDO\Session\GDO_Session;
 use GDO\Date\Time;
+use GDO\Language\Trans;
 
 /**
  * Abstract baseclass for all methods.
@@ -63,6 +64,29 @@ abstract class Method
 	public function saveLastUrl() { return true; }
 	public function showInSitemap() { return true; }
 	
+	#############
+	### Title ###
+	#############
+	public function getTitle()
+	{
+	    $key = $this->getTitleLangKey();
+	    if (Trans::hasKey($key))
+	    {
+	        $title = t($key);
+	    }
+	    else
+	    {
+	        $title = $this->getModule()->displayName() . ' ' . $this->getMethodName();
+	    }
+	    return $title;
+	}
+	
+	public function getTitleLangKey()
+	{
+	    return strtolower('mtitle_' . $this->getModuleName() . '_' . $this->getMethodName());
+	}
+	
+	
 	###################
 	### Description ###
 	###################
@@ -73,7 +97,15 @@ abstract class Method
 	
 	public function getDescription()
 	{
-		return t($this->getDescriptionLangKey());
+	    $key = $this->getDescriptionLangKey();
+	    if (Trans::hasKey($key))
+	    {
+    		return t($key, [sitename()]);
+	    }
+	    else
+	    {
+	        return $this->getTitle();
+	    }
 	}
 	
 	######################
@@ -109,10 +141,11 @@ abstract class Method
 	 * @param string $key
 	 * @return GDT
 	 */
-	public function gdoParameter($key)
+	public function gdoParameter($key, $initial=null)
 	{
 	    if ($gdt = @$this->gdoParameterCache()[$key])
 	    {
+    	    if ($initial !== null) $gdt->initial($initial); 
 	        $var = $gdt->getRequestVar(null, $gdt->initial);
 	        $value = $gdt->toValue($var);
 	        if (!$gdt->validate($value))
@@ -323,6 +356,8 @@ abstract class Method
 			
 			# SEO
 			Website::addMeta(['description', $this->getDescription(), 'name']);
+			Website::setTitle($this->getTitle());
+
 			
 			# Wrap transaction start
 			if ($transactional) $db->transactionBegin();
@@ -345,7 +380,7 @@ abstract class Method
 			
 			return $response;
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			if ($transactional) $db->transactionRollback();
 			throw $e;
