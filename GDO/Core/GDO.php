@@ -167,6 +167,10 @@ abstract class GDO
 	{
 	    foreach ($this->gdoColumnsCache() as $gdt)
 	    {
+	        if ($key === $gdt->name)
+	        {
+	            return true;
+	        }
 	        if ($data = $gdt->gdo($this)->getGDOData())
 	        {
 	            foreach (array_keys($data) as $k)
