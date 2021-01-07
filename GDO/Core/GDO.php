@@ -165,26 +165,12 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-	    foreach ($this->gdoColumnsCache() as $gdt)
-	    {
-	        if ($key === $gdt->name)
-	        {
-	            return true;
-	        }
-	        if ($data = $gdt->gdo($this)->getGDOData())
-	        {
-	            foreach (array_keys($data) as $k)
-	            {
-	                if ($k === $key)
-	                {
-	                    return true;
-	                }
-	            }
-	        }
-	    }
-	    return false;
-// 	    return array_key_exists($key, $this->gdoColumnsCache());
-// 	    return array_key_exists($key, $this->gdoVars) || array_key_exists($key, $this->gdoColumnsCache());
+	    return $this->hasColumn($key);
+	}
+	
+	public function hasColumn($key)
+	{
+	    return isset($this->gdoColumnsCache()[$key]);
 	}
 	
 	/**
@@ -204,12 +190,12 @@ abstract class GDO
 	 */
 	public function setVar($key, $var, $markDirty=true)
 	{
-	    if (!$this->hasVar($key))
-	    {
-	        return $this;
-	    }
-	    $gdt = $this->gdoColumn($key);
-        foreach ($gdt->var($var)->getGDOData() as $k => $v)
+// 	    if (!$this->hasVar($key))
+// 	    {
+// 	        return $this;
+// 	    }
+	    $gdt = $this->gdoColumn($key)->var($var);
+        foreach ($gdt->getGDOData() as $k => $v)
         {
     		$this->gdoVars[$k] = $v === null ? null : (string)$v;
         }
@@ -220,7 +206,10 @@ abstract class GDO
 	{
 		foreach ($vars as $key => $value)
 		{
-			$this->setVar($key, $value, $markDirty);
+		    if ($this->hasColumn($key))
+		    {
+		        $this->setVar($key, $value, $markDirty);
+		    }
 		}
 		return $this;
 	}
@@ -891,10 +880,10 @@ abstract class GDO
 	public static function blank(array $initial = null)
 	{
 		$entity = self::entity(self::blankData($initial))->dirty();
-		foreach ($entity->gdoColumnsCache() as $gdt)
-		{
-		    $gdt->gdo($entity);
-		}
+// 		foreach ($entity->gdoColumnsCache() as $gdt)
+// 		{
+// 		    $gdt->gdo($entity);
+// 		}
 		return $entity;
 	}
 	

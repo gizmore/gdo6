@@ -114,7 +114,7 @@ foreach ($modules as $module)
     {
         if (!$module->isPersisted())
         {
-//             echo "Installing {$module->getName()}\n";
+            echo "Installing {$module->getName()}\n";
             Installer::installModule($module);
         }
         
@@ -125,6 +125,8 @@ foreach ($modules as $module)
         }
     }
 }
+
+echo "Finished.\n";
 
 function runTestSuite(GDO_Module $module)
 {

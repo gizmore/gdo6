@@ -143,16 +143,20 @@ abstract class Method
 	 */
 	public function gdoParameter($key, $initial=null)
 	{
+	    /** @var $gdt GDT **/
 	    if ($gdt = @$this->gdoParameterCache()[$key])
 	    {
-    	    if ($initial !== null) $gdt->initial($initial); 
-	        $var = $gdt->getRequestVar(null, $gdt->initial);
-	        $value = $gdt->toValue($var);
+    	    if ($initial !== null)
+    	    {
+    	        $gdt->initial($initial); 
+    	    }
+    	    
+	        $value = $gdt->getValue();
 	        if (!$gdt->validate($value))
 	        {
 	            throw new GDOException($gdt->error);
 	        }
-	        $gdt->var($var);
+	        $gdt->value($value); # copy to var again.
 	        return $gdt;
 	    }
 	}
@@ -163,7 +167,8 @@ abstract class Method
 	 */
 	public function gdoParameterVar($key)
 	{
-	    return $this->gdoParameter($key)->var;
+	    $gdt = $this->gdoParameter($key);
+	    return $gdt->getRequestVar(null, $gdt->var);
 	}
 	
 	/**
@@ -173,8 +178,8 @@ abstract class Method
 	public function gdoParameterValue($key)
 	{
 		$gdt = $this->gdoParameter($key);
-		return $gdt->getValue();
-// 		return $gdt->toValue($gdt->getVar());
+// 		return $gdt->getValue();
+		return $gdt->toValue($gdt->getVar());
 	}
 	
 	public function methodVars(array $vars)

@@ -53,3 +53,6 @@ vendor/
 
 # Ignore env.php
 /env.php
+
+# PHPUnit
+.phpunit.result.cache

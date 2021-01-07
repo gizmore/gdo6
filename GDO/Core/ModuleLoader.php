@@ -233,7 +233,7 @@ final class ModuleLoader
 		# Loaded one?
 		if ($loaded)
 		{
-			if ($this->loadedDB)
+// 			if ($this->loadedDB)
 			{
 				$this->initModuleVars();
 			}
@@ -377,9 +377,9 @@ final class ModuleLoader
     		    /** @var $module \GDO\Core\GDO_Module **/
     			if ($module = $this->modules[$row[0]])
     			{
-    				if ($var = $module->getConfigColumn($row[1]))
+    				if ($gdt = $module->getConfigColumn($row[1]))
     				{
-    					$var->initial($row[2]);
+    				    $gdt->initial($row[2])->var($row[2]);
     				}
     			}
     		}

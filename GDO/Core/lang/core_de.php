@@ -288,4 +288,5 @@ return array(
     
 # v6.10
 'page_of' => 'Seite %s von %s',
+'cfg_spr' => 'Autocomplete Vorschläge pro Anfrage',
 );

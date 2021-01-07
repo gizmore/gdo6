@@ -300,7 +300,7 @@ class GDO_Module extends GDO
                 $this->configCache = [];
 	            foreach ($config as $gdt)
 	            {
-	                $this->configCache[$gdt->name] = $gdt; //->gdo($this);
+	                $this->configCache[$gdt->name] = $gdt; #->gdo($this);
 	            }
 	        }
 	        else
@@ -356,7 +356,7 @@ class GDO_Module extends GDO
 	{
 	    if ($gdt = $this->getConfigColumn($key))
 	    {
-	        return $gdt->toValue($gdt->initial);
+	        return $gdt->toValue($gdt->var);
 	    }
 	}
 	

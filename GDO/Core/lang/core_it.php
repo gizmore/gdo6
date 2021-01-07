@@ -288,4 +288,5 @@ return array(
 
 # v6.10
 'page_of' => 'Pagina %s di %s',
+'cfg_spr' => 'Suggerimenti per il completamento automatico per richiesta',
 );

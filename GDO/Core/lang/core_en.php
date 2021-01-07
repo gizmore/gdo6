@@ -287,4 +287,5 @@ return array(
 
 # v6.10
 'page_of' => 'Page %s of %s',
+'cfg_spr' => 'Autocomplete suggestions per request',
 );

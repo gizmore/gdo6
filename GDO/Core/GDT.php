@@ -164,7 +164,11 @@ abstract class GDT
 	public function gdo(GDO $gdo)
 	{
 	    $this->gdo = $gdo;
-	    return !$gdo->isTable() ? $this->setGDOData($gdo) : $this->var($this->initial);
+	    if ($this->gdo->hasColumn($this->name))
+	    {
+    	    return !$gdo->isTable() ? $this->setGDOData($gdo) : $this->var($this->initial);
+	    }
+	    return $this;
 	}
 	
 	/**
@@ -191,7 +195,7 @@ abstract class GDT
 	public function inputToVar($input) { return $input; }
 	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
 	public function hasVar() { return !!$this->getVar(); }
-	public function getVar() { $form = $this->formVariable(); return $form ? $this->getRequestVar($form, $this->var) : $this->var; }
+	public function getVar() { return $this->getRequestVar($this->formVariable(), $this->var); }
 	public function getParameterVar() { return $this->getRequestVar(null, $this->var); }
 	public function getParameterValue() { return $this->toValue($this->getParameterVar()); }
 	public function getValue() { return $this->toValue($this->getVar()); }

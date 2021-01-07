@@ -10,6 +10,7 @@ use GDO\UI\WithHREF;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Success;
 use GDO\Core\GDO_Module;
+use GDO\Core\GDT;
 
 /**
  * File input and upload backend for flow.js
@@ -29,6 +30,7 @@ class GDT_File extends GDT_Object
 	
 	protected function __construct()
 	{
+	    parent::__construct();
 		$this->table(GDO_File::table());
 		$this->icon('file');
 // 		$this->defaultSize()
@@ -207,9 +209,10 @@ class GDT_File extends GDT_Object
 	
 	public function getInitialFile()
 	{
-		if ($this->var !== null)
+	    $var = $this->getRequestVar($this->formName(), $this->initial);
+		if ($var !== null)
 		{
-			return GDO_File::getById($this->var);
+			return GDO_File::getById($var);
 		}
 	}
 	
