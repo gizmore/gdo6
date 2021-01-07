@@ -81,7 +81,7 @@ class GDT_PageMenu extends GDT
 	
 // 	private $query = null;
 	
-	public function getPages()
+	public function getPageCount()
 	{
 		return self::getPageCountS($this->numItems, $this->ipp);
 	}
@@ -102,7 +102,7 @@ class GDT_PageMenu extends GDT
 	 */
 	public function getPage()
 	{
-		return (int) Math::clamp($this->page, 1, $this->getPages());
+		return (int) Math::clamp($this->page, 1, $this->getPageCount());
 	}
 	
 	public function getFrom()
@@ -145,7 +145,7 @@ class GDT_PageMenu extends GDT
 	
 	public function renderHTML()
 	{
-		if ($this->getPages() > 1)
+		if ($this->getPageCount() > 1)
 		{
 			$tVars = array(
 				'pagemenu' => $this,
@@ -162,7 +162,7 @@ class GDT_PageMenu extends GDT
 	        'items' => $this->numItems,
 	        'ipp' => $this->ipp,
 	        'page' => $this->getPage(),
-	        'pages' => $this->getPages(),
+	        'pages' => $this->getPageCount(),
 	    ];
 	}
 	
@@ -172,7 +172,7 @@ class GDT_PageMenu extends GDT
 	private function pagesObject()
 	{
 		$curr = $this->getPage();
-		$nPages = $this->getPages();
+		$nPages = $this->getPageCount();
 		$pages = [];
 		$pages[] = new PageMenuItem($curr, $this->replaceHREF($curr), true);
 		for ($i = 1; $i <= $this->shown; $i++)

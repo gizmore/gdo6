@@ -173,7 +173,8 @@ abstract class Method
 	public function gdoParameterValue($key)
 	{
 		$gdt = $this->gdoParameter($key);
-		return $gdt->toValue($gdt->var);
+		return $gdt->getValue();
+// 		return $gdt->toValue($gdt->getVar());
 	}
 	
 	public function methodVars(array $vars)

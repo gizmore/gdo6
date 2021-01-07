@@ -155,7 +155,7 @@ class GDT_Form extends GDT
 	{
 	    if ($gdo === null)
 	    {
-	        $gdoType->var($gdoType->initial);
+// 	        $gdoType->var($gdoType->initial);
 	    }
 	    else
 	    {

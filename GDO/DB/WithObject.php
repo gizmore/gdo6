@@ -63,7 +63,7 @@ trait WithObject
 	
 	public function toValue($var)
 	{
-		if (!empty($var))
+		if ($var !== null)
 		{
 			# Without javascript, convert the name input
 			if (isset($_REQUEST['nocompletion_'.$this->name]))
@@ -118,17 +118,17 @@ trait WithObject
 		}
 	}
 	
-	/**
-	 * @return \GDO\Core\GDO
-	 */
-	public function getObject()
-	{
-		return $this->getValue();
-	}
+// 	/**
+// 	 * @return \GDO\Core\GDO
+// 	 */
+// 	public function getObject()
+// 	{
+// 		return $this->getValue();
+// 	}
 	
 	public function getGDOData()
 	{
-		if ($object = $this->getObject())
+		if ($object = $this->getValue())
 		{
 			# Array for multiple select. ignore. 
 			if (is_array($object))

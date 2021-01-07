@@ -165,7 +165,21 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-	    return array_key_exists($key, $this->gdoVars);
+	    foreach ($this->gdoColumnsCache() as $gdt)
+	    {
+	        if ($data = $gdt->gdo($this)->getGDOData())
+	        {
+	            foreach (array_keys($data) as $k)
+	            {
+	                if ($k === $key)
+	                {
+	                    return true;
+	                }
+	            }
+	        }
+	    }
+	    return false;
+// 	    return array_key_exists($key, $this->gdoColumnsCache());
 // 	    return array_key_exists($key, $this->gdoVars) || array_key_exists($key, $this->gdoColumnsCache());
 	}
 	
@@ -186,6 +200,10 @@ abstract class GDO
 	 */
 	public function setVar($key, $var, $markDirty=true)
 	{
+	    if (!$this->hasVar($key))
+	    {
+	        return $this;
+	    }
 	    $gdt = $this->gdoColumn($key);
         foreach ($gdt->var($var)->getGDOData() as $k => $v)
         {
@@ -214,41 +232,42 @@ abstract class GDO
 	
 	public function setGDOVars(array $vars, $dirty=false)
 	{
-		$this->gdoVars = $vars;
+// 		$this->gdoVars = $vars;
+// 		$newVars = [];
 // 		foreach ($this->gdoColumnsCache() as $gdt)
 // 		{
 // 		    if ($data = $gdt->gdo($this)->getGDOData())
 // 		    {
 //     		    foreach ($data as $k => $v)
 //     		    {
-//     		        $this->gdoVars[$k] = $v;
+//     		        $newVars[$k] = $v;
 //     		    }
 // 		    }
 // 		}
-		
+		$this->gdoVars = $vars;
 		$this->dirty = $dirty;
 		return $this;
 	}
 	
-	/**
-	 * @param string[] $keys
-	 * @return string[]
-	 */
-	public function getVars(array $keys)
-	{
-		$back = [];
-		foreach ($keys as $key)
-		{
-			if ($data = $this->gdoColumn($key)->getGDOData())
-			{
-			    foreach ($data as $k => $v)
-			    {
-			        $back[$k] = $v;
-			    }
-			}
-		}
-		return $back;
-	}
+// 	/**
+// 	 * @param string[] $keys
+// 	 * @return string[]
+// 	 */
+// 	public function getVars(array $keys)
+// 	{
+// 		$back = [];
+// 		foreach ($keys as $key)
+// 		{
+// 			if ($data = $this->gdoColumn($key)->getGDOData())
+// 			{
+// 			    foreach ($data as $k => $v)
+// 			    {
+// 			        $back[$k] = $v;
+// 			    }
+// 			}
+// 		}
+// 		return $back;
+// 	}
 	
 	/**
 	 * Get the gdo value of a column.
@@ -304,7 +323,19 @@ abstract class GDO
 	{
 		if ($this->dirty === true)
 		{
-			return $this->getVars(array_keys($this->gdoColumnsCache()));
+		    $vars = [];
+		    foreach ($this->gdoColumnsCache() as $gdt)
+		    {
+		        if ($data = $gdt->gdo($this)->getGDOData())
+		        {
+		            foreach ($data as $k => $v)
+		            {
+		                $vars[$k] = $v;
+		            }
+		        }
+		    }
+		    return $vars;
+// 			return $this->getVars(array_keys($this->gdoColumnsCache()));
 		}
 		elseif ($this->dirty === false)
 		{
@@ -312,7 +343,22 @@ abstract class GDO
 		}
 		else
 		{
-			return $this->getVars(array_keys($this->dirty));
+		    $vars = [];
+		    foreach ($this->gdoColumnsCache() as $gdt)
+		    {
+		        if (in_array($gdt->name, $this->dirty, true))
+		        {
+    		        if ($data = $gdt->gdo($this)->getGDOData())
+    		        {
+    		            foreach ($data as $k => $v)
+    		            {
+    		                $vars[$k] = $v;
+    		            }
+    		        }
+		        }
+		    }
+		    return $vars;
+// 		    return $this->getVars(array_keys($this->dirty));
 		}
 	}
 	
@@ -436,7 +482,8 @@ abstract class GDO
 	    /** @var $gdt GDT **/
 	    if ($gdt = $this->gdoColumnsCache()[$key])
 	    {
-	        return $gdt->gdtTable($this->table())->gdo($this);
+// 	        return $gdt->gdtTable($this->table())->gdo($this);
+	        return $gdt->gdo($this);
 	    }
 	    else
 	    {
@@ -839,7 +886,12 @@ abstract class GDO
 	 */
 	public static function blank(array $initial = null)
 	{
-		return self::entity(self::blankData($initial))->dirty();
+		$entity = self::entity(self::blankData($initial))->dirty();
+		foreach ($entity->gdoColumnsCache() as $gdt)
+		{
+		    $gdt->gdo($entity);
+		}
+		return $entity;
 	}
 	
 	public function dirty($dirty=true)

@@ -123,7 +123,7 @@ trait WithFields
 	 * @param string $name
 	 * @return \GDO\Core\GDT
 	 */
-	public function getField($name) { return @$this->fields[$name]; }
+	public function getField($name) { return $this->fields[$name]; }
 	public function hasField($name) { return isset($this->fields[$name]); }
 	public function removeField($name) { unset($this->fields[$name]); }
 	public function removeFields() { $this->fields = []; }

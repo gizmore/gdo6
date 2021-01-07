@@ -22,6 +22,8 @@ abstract class MethodForm extends Method
 	 */
 	private $form;
 	
+	protected $pressedButton = null;
+	
 	public function isTransactional() { return true; }
 	
 	public function isUserRequired() { return true; }
@@ -130,6 +132,8 @@ abstract class MethodForm extends Method
 			{
 				if (isset($_REQUEST[$this->formName()][$field->name]))
 				{
+				    $this->pressedButton = $field->name;
+				    
 					if ($form->validateForm())
 					{
 					    GDT_Form::$CURRENT = $form;
@@ -158,8 +162,10 @@ abstract class MethodForm extends Method
 		if (!isset($this->form))
 		{
 			$this->form = GDT_Form::make($this->formName());
+			GDT_Form::$CURRENT = $this->form;
 			$this->defaultTitle();
 			$this->createForm($this->form);
+			GDT_Form::$CURRENT = null;
 		}
 		return $this->form;
 	}

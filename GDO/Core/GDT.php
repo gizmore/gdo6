@@ -233,7 +233,7 @@ abstract class GDT
 	    {
 	        return $this->var($this->initial);
 	    }
-		elseif ($gdo->hasVar($this->name))
+		else #if ($gdo->hasVar($this->name))
 		{
 		    return $this->var($gdo->getVar($this->name));
 		}

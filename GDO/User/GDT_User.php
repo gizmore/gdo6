@@ -34,19 +34,32 @@ class GDT_User extends GDT_Object
 		return $this;
 	}
 	
+	public $fallbackCurrentUser = false;
+	public function fallbackCurrentUser($fallbackCurrentUser=true)
+	{
+	    $this->fallbackCurrentUser = $fallbackCurrentUser;
+	    return $this;
+	}
+	
+	public function getUser() { return $this->getValue(); }
+	
 	/**
 	 * @return GDO_User
 	 */
-	public function getUser()
+	public function getValue()
 	{
-		if (!($user = $this->getValue()))
+		if ($user = parent::getValue())
 		{
-			if ($this->ghost)
-			{
-				$user = GDO_User::ghost();
-			}
+		    return $user;
 		}
-		return $user;
+		if ($this->fallbackCurrentUser)
+		{
+		    return GDO_User::current();
+		}
+		if ($this->ghost)
+		{
+			return GDO_User::ghost();
+		}
 	}
 	
 	public function displayVar()

@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Form;
+
 use GDO\Core\GDT_Template;
 use GDO\Core\GDT;
 use GDO\Session\GDO_Session;
@@ -8,8 +9,9 @@ use GDO\Core\Application;
 
 /**
  * GDT_Form CSRF protection
+ * 
  * @author gizmore
- * @version 5.0
+ * @version 6.10
  * @since 1.0
  */
 class GDT_AntiCSRF extends GDT
@@ -48,16 +50,30 @@ class GDT_AntiCSRF extends GDT
 	#################
 	public function csrfToken()
 	{
-		$csrf = '';
+	    $token = '';
 		if (GDO_Session::instance())
 		{
-			if (!($csrf = GDO_Session::get('xsrf')))
-			{
-				$csrf = Random::randomKey(8);
-				GDO_Session::set('xsrf', $csrf);
-			}
+		    $token = Random::randomKey(8);
+		    $csrf = $this->loadCSRFTokens();
+		    $csrf[$token] = Application::$TIME;
+		    $this->saveCSRFTokens($csrf);
 		}
-		return $csrf;
+		return $token;
+	}
+	
+	###################
+	### Load / Save ###
+	###################
+	private function loadCSRFTokens()
+	{
+	    $csrf = GDO_Session::get('csrfs');
+	    $csrf = json_decode($csrf, true);
+	    return $csrf ? $csrf : [];
+	}
+	
+	private function saveCSRFTokens(array $csrf)
+	{
+	    GDO_Session::set('csrfs', json_encode($csrf));
 	}
 	
 	################
@@ -71,20 +87,35 @@ class GDT_AntiCSRF extends GDT
 	        return true;
 	    }
 	    
+	    # No session, no token
 	    if (!GDO_Session::instance())
 		{
 			return $this->error('err_session_required');
 		}
 
-		# Check session for token
-		$csrf = GDO_Session::get('xsrf');
-		if ($csrf !== $value)
+		# Load tokens
+		$csrf = $this->loadCSRFTokens();
+		
+		# Remove expired
+		foreach ($csrf as $token => $time)
+		{
+		    if (Application::$TIME > ($time + $this->csrfExpire))
+		    {
+		        unset($csrf[$token]);
+		    }
+		}
+		
+		# Token not there
+		if (!isset($csrf[$value]))
 		{
 			return $this->error('err_csrf');
 		}
+
+		# Remove used  token
+		unset($csrf[$value]);
+		$this->saveCSRFTokens($csrf);
 		
-		$csrf = Random::randomKey(8);
-		GDO_Session::set('xsrf', $csrf);
+		# All fine
 		return true;
 	}
 
@@ -100,4 +131,5 @@ class GDT_AntiCSRF extends GDT
 	{
 		return $this->csrfToken();
 	}
+	
 }

@@ -16,13 +16,14 @@ use GDO\UI\WithLabel;
  * 
  * @see GDT_Join
  */
-final class GDT_Virtual extends GDT
+class GDT_Virtual extends GDT
 {
     use WithLabel;
     use WithDatabase;
     
     protected function __construct()
     {
+        parent::__construct();
         $this->virtual = true;
     }
     
@@ -38,7 +39,14 @@ final class GDT_Virtual extends GDT
     /**
      * Select this virtual column as subselect.
      */
-    public function gdoBeforeRead(Query $query) { $query->select("({$this->subquery}) {$this->name}"); }
+    public function gdoBeforeRead(Query $query)
+    {
+        if ($this->subquery)
+        {
+            $query->select("({$this->subquery}) {$this->name}");
+        }
+    }
+    
     public function getGDOData() {} # virtual => no data
     
     #############
@@ -47,11 +55,15 @@ final class GDT_Virtual extends GDT
     /** @var $gdtType GDT **/
     public $gdtType;
     private function proxy() { return $this->gdtType->gdo($this->gdo)->label($this->label, $this->labelArgs); }
-    public function gdtType($className) { $this->gdtType = new $className(); $this->gdtType->name = $this->name; return $this; }
+    public function gdtType($gdt) { $this->gdtType = $gdt; $this->gdtType->name = $this->name; return $this; }
     
     ##############
     ### Render ###
     ##############
+    public function htmlClass() { return $this->gdtType->htmlClass(); }
+
+    public function renderHeader() { return $this->proxy()->renderHeader(); }
+    public function render() { return $this->proxy()->render(); }
     public function renderCell() { return $this->proxy()->renderCell(); }
     public function renderCard() { return $this->proxy()->renderCard(); }
     public function renderForm() { return $this->proxy()->renderForm(); }

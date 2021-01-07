@@ -197,12 +197,12 @@ class GDT_Message extends GDT_Text
     public function setGDOData(GDO $gdo)
     {
         $name = Strings::rsubstrFrom($this->name, '[', $this->name); # @XXX: ugly hack for news tabs!
-        if ($gdo->hasVar("{$name}_input"))
-        {
+//         if ($gdo->hasVar("{$name}_input"))
+//         {
             $this->input = $gdo->getVar("{$name}_input");
             $this->output = $gdo->getVar("{$name}_output");
             $this->text = $gdo->getVar("{$name}_text");
-        }
+//         }
         return $this;
     }
     
@@ -244,7 +244,7 @@ class GDT_Message extends GDT_Text
         $form = $this->formVariable();
         if ($form)
         {
-            return $this->getRequestVar($form, $this->var, "{$this->name}");
+            return $this->getRequestVar($form, $this->input);
         }
         return $this->var;
     }

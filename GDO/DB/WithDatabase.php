@@ -38,7 +38,11 @@ trait WithDatabase
 		return $this->virtual ? $query->having($condition) : $query->where($condition);
 	}
 	
-	public function renderHeader() { return $this->displayLabel(); }
+	public function renderHeader()
+	{
+	    $tt = $this->iconText ? sprintf(' title="%s"', t($this->iconText, $this->iconTextArgs)) : '';
+	    return sprintf('<label%s>%s</label>', $tt, $this->displayLabel());
+	}
 	
 	###########
 	### GDO ###

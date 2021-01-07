@@ -29,6 +29,8 @@ abstract class MethodTable extends Method
      */
     public function getResult() { return new ArrayResult([], $this->gdoTable()); }
     
+    public function getDefaultIPP() { return Module_Table::instance()->cfgItemsPerPage(); }
+    
     /**
      * @return GDT_Fields
      */
@@ -50,7 +52,6 @@ abstract class MethodTable extends Method
     public function __construct()
     {
         $this->table = $this->createCollection();
-        $this->table->addHeaders($this->gdoHeaders());
         $this->table->setupHeaders($this->isSearched(), $this->isPaginated());
     }
     
@@ -92,7 +93,10 @@ abstract class MethodTable extends Method
 	public function getIPP()
 	{
 	    $o = $this->table->headers->name;
-	    return $this->table->getHeaderField('ipp')->getRequestVar($o, Module_Table::instance()->cfgItemsPerPage());
+	    $defaultIPP = $this->getDefaultIPP();
+	    return $this->isPaginated() ?
+	       $this->table->getHeaderField('ipp')->getRequestVar($o, $defaultIPP) :
+	       $defaultIPP;
 	}
 	
 	public function getPage()
@@ -137,7 +141,7 @@ abstract class MethodTable extends Method
 	    $table->filtered($this->isFiltered());
 	    $table->searched($this->isSearched());
 	    $table->sorted($this->isSorted());
-	    $table->paginated($this->isPaginated());
+	    $table->paginated($this->isPaginated(), null, $this->getIPP());
 	}
 	
 	public function renderTable()
@@ -145,6 +149,7 @@ abstract class MethodTable extends Method
         $table = $this->table;
 	    $this->setupCollection($table);
 	    $this->createTable($table);
+	    $this->table->addHeaders($this->gdoHeaders());
 	    $this->calculateTable($table);
 	    $table->getResult();
 	    $this->setupTitle($table);
@@ -169,13 +174,11 @@ abstract class MethodTable extends Method
 	    {
 	        $result = $table->multisort($result, $this->getDefaultOrder(), $this->getDefaultOrderDir());
 	    }
-	    
 	    if ($this->isPaginated())
 	    {
 	        $this->table->pagemenu->items(count($result->data));
 	        $result = $this->table->pagemenu->paginateResult($result, $this->getPage(), $this->getIPP());
 	    }
-	    
 	    $table->result($result);
 	}
 	

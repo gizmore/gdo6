@@ -284,4 +284,7 @@ return array(
 'err_annotate_not_found' => 'Could not find ng-annotate',
 'err_uglify_not_found' => 'Could not find uglify',
 'link_privacy' => 'Privacy',
+
+# v6.10
+'page_of' => 'Page %s of %s',
 );

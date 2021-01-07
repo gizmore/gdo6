@@ -28,7 +28,7 @@ abstract class MethodQueryTable extends MethodTable
 	 */
 	public function getQuery()
 	{
-	    return $this->gdoTable()->select('*');
+	    return $this->gdoTable()->select();
 	}
 	
 	public function getCountQuery()
@@ -44,21 +44,15 @@ abstract class MethodQueryTable extends MethodTable
 	############
 	### Exec ###
 	############
-	protected function setupCollection(GDT_Table $table)
-	{
-	    parent::setupCollection($table);
-	}
-	
 	protected function calculateTable(GDT_Table $table)
 	{
 	    $table->query($this->getQuery());
-	    $table->countQuery($this->getCountQuery());
 	    if ($this->isPaginated())
 	    {
-    	    $pagemenu = $table->getPageMenu();
-    	    $pagemenu->filterQuery($table->query);
+	        $table->countQuery($this->getCountQuery());
+	        $pagemenu = $table->getPageMenu();
+	        $pagemenu->filterQuery($table->query);
 	    }
-	    
 	}
 
 }
