@@ -22,7 +22,7 @@ trait WithTitle
 	public $titleEscaped = true;
 	public function titleEscaped($escaped) { $this->titleEscaped = $escaped; return $this; }
 	
-	public function hasTitle() { return $this->titleKey || $this->titleArgs; }
+	public function hasTitle() { return $this->titleKey || $this->titleRaw; }
 
 	public function renderTitle() { return $this->titleRaw ? $this->titleRaw : t($this->titleKey, $this->titleArgs); }
 	

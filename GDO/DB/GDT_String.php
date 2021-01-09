@@ -141,7 +141,7 @@ class GDT_String extends GDT
 	/**
 	 * A quite tricky feature is the unique validation.
 	 * 
-	 * @param unknown $value
+	 * @param string $value
 	 * @return boolean
 	 */
 	private function validateUnique($value)
