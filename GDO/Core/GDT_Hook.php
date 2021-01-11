@@ -24,7 +24,7 @@ final class GDT_Hook extends GDT
 {
 	public static $CALLS = 0; # Num Hook calls.
 	public static $IPC_CALLS = 0; # Num calls with additional IPC for websocket server.
-	public static $CALL_NAMES = []; # called event names to hint in debugging/optimization.
+// 	public static $CALL_NAMES = []; # called event names to hint in debugging/optimization.
 	
 	############
 	### Init ###
@@ -108,7 +108,7 @@ final class GDT_Hook extends GDT
 	private static function call($event, $ipc, array $args)
 	{
 	    # Perf
-	    self::$CALL_NAMES[] = $event . ($ipc ? '+IPC' : '');
+// 	    self::$CALL_NAMES[] = $event . ($ipc ? '+IPC' : '');
 		self::$CALLS++;
 		
 		$method_name = "hook$event";

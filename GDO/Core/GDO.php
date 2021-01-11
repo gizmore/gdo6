@@ -165,7 +165,7 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-	    return $this->hasColumn($key);
+	    return isset($this->gdoVars[$key]);
 	}
 	
 	public function hasColumn($key)
@@ -179,7 +179,8 @@ abstract class GDO
 	 */
 	public function getVar($key)
 	{
-		return isset($this->gdoVars[$key]) ? $this->gdoVars[$key] : null;
+	    $var = isset($this->gdoVars[$key]) ? $this->gdoVars[$key] : null;
+	    return $var;
 	}
 	
 	/**
@@ -190,10 +191,6 @@ abstract class GDO
 	 */
 	public function setVar($key, $var, $markDirty=true)
 	{
-// 	    if (!$this->hasVar($key))
-// 	    {
-// 	        return $this;
-// 	    }
 	    $gdt = $this->gdoColumn($key)->var($var);
         foreach ($gdt->getGDOData() as $k => $v)
         {
@@ -328,7 +325,6 @@ abstract class GDO
 		        }
 		    }
 		    return $vars;
-// 			return $this->getVars(array_keys($this->gdoColumnsCache()));
 		}
 		elseif ($this->dirty === false)
 		{
@@ -351,7 +347,6 @@ abstract class GDO
 		        }
 		    }
 		    return $vars;
-// 		    return $this->getVars(array_keys($this->dirty));
 		}
 	}
 	
@@ -660,6 +655,9 @@ abstract class GDO
 		return $this->entityQuery()->update($this->gdoTableIdentifier());
 	}
 	
+	/**
+	 * @return self
+	 */
 	public function save()
 	{
 		if (!$this->persisted)
@@ -1032,7 +1030,9 @@ abstract class GDO
 	
 	public function initCached(array $row)
 	{
-		return $this->memCached() ? $this->cache->initGDOMemcached($row) : $this->cache->initCached($row);
+	    return GWF_MEMCACHE && $this->memCached() ? 
+	       $this->cache->initGDOMemcached($row) :
+	       $this->cache->initCached($row);
 	}
 	
 	public function gkey()

@@ -12,6 +12,7 @@ final class CSV
     private $path;
     private $delimiter = ',';
     private $enclosure = '"';
+    private $withHeader = true;
     
     public function __construct($path)
     {
@@ -30,13 +31,46 @@ final class CSV
         return $this;
     }
     
+    public function withHeader($withHeader=true)
+    {
+        $this->$withHeader = $withHeader;
+        return $this;
+    }
+    
     public function eachLine($callable)
     {
         $fh = fopen($this->path, 'r');
-        while ($row = fgetcsv($fh, null, $this->delimiter, $this->enclosure))
+        $first = $this->withHeader;
+        while ($row = fgetcsv($fh, null, $this->delimiter, $this->enclosure, "\""))
         {
-            $callable($row);
+            if ($first)
+            {
+                $first = false;
+            }
+            else
+            {
+                $callable($row);
+            }
         }
+    }
+    
+    public function all()
+    {
+        $all = [];
+        $fh = fopen($this->path, 'r');
+        $first = $this->withHeader;
+        while ($row = fgetcsv($fh, null, $this->delimiter, $this->enclosure, "\""))
+        {
+            if ($first)
+            {
+                $first = false;
+            }
+            else
+            {
+                $all[] = $row;
+            }
+        }
+        return $all;
     }
     
 }

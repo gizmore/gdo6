@@ -29,6 +29,8 @@ abstract class MethodTable extends Method
      */
     public function getResult() { return new ArrayResult([], $this->gdoTable()); }
     
+    public function fetchAs() {}
+    
     public function getDefaultIPP() { return Module_Table::instance()->cfgItemsPerPage(); }
     
     /**
@@ -151,7 +153,12 @@ abstract class MethodTable extends Method
 	    $this->createTable($table);
 	    $this->table->addHeaders($this->gdoHeaders());
 	    $this->calculateTable($table);
-	    $table->getResult();
+	    $result = $table->getResult();
+	    if ($fetchAs = $this->fetchAs())
+	    {
+	        $table->fetchAs($fetchAs);
+	        $result->fetchAs($fetchAs);
+	    }
 	    $this->setupTitle($table);
 	    return GDT_Response::makeWith($table);
 	}

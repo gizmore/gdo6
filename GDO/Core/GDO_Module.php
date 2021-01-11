@@ -469,7 +469,9 @@ class GDO_Module extends GDO
 	        'uset_name' => $key,
 	        'uset_value' => $var,
 	    ];
-	    $entry = ($gdt instanceof GDT_Text) ? GDO_UserSettingBlob::blank($data) : GDO_UserSetting::blank($data);
+	    $entry = ($gdt instanceof GDT_Text) ?
+	       GDO_UserSettingBlob::blank($data) :
+	       GDO_UserSetting::blank($data);
 	    $entry->replace();
 	    $user->tempUnset('gdo_setting');
 	    $user->recache();

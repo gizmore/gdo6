@@ -114,13 +114,13 @@ final class Logger
 		$back = '';
 		foreach ($a as $k => $v)
 		{
-			if ( (stripos($k, 'pass') !== false) || ($k === 'answer') )
+		    if (stripos($k, 'pass') !== false)
 			{
 				$v = 'xxxxx';
 			}
 			elseif (is_array($v) === true)
 			{
-				$v = Arrays::implode(',', $v);
+				$v = Arrays::implode(',', $v); # can fail horribly here
 			}
 			$back .= self::$POST_DELIMITER.$k.'=>'.$v;
 		}

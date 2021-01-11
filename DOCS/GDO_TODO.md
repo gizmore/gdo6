@@ -12,3 +12,5 @@ For a complete todo, please grep -R "@TODO" GDO/.
 - @TODO: Add a table gdo_i18n which holds additional translation data editable via website.
 
 - @TODO: Add postgres. (thx Nekomander)
+
+- @TODO: cache template files and use eval on cache. Try if that is faster than require.

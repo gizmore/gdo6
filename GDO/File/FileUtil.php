@@ -4,6 +4,8 @@ namespace GDO\File;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use GDO\TBS\Module_TBS;
+use GDO\Util\Strings;
 
 /**
  * File system utilities.
@@ -122,6 +124,18 @@ final class FileUtil
 	        }
 	    }
 	    return (int) $s;
+	}
+	
+	#########################
+	### Merge Directories ###
+	#########################
+	public static function mergeDirectory($target, $source)
+	{
+	    Filewalker::traverse($source, null, function($entry, $fullpath) use ($source, $target) {
+	        $newpath = str_replace($source, $target, $fullpath);
+	        FileUtil::createDir(Strings::rsubstrTo($newpath, '/'));
+	        copy($fullpath, $newpath);
+	    });
 	}
 	
 }

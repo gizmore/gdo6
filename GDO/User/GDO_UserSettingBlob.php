@@ -24,7 +24,7 @@ final class GDO_UserSettingBlob extends GDO
 	{
 		return array(
 			GDT_User::make('uset_user')->primary(),
-			GDT_Name::make('uset_name')->primary(),
+			GDT_Name::make('uset_name')->primary()->unique(false),
 			GDT_Text::make('uset_value')->max(65535),
 		    GDT_Index::make('uset_user_index')->indexColumns('uset_user')->hash(),
 		);

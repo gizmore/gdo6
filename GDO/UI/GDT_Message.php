@@ -7,7 +7,7 @@ use GDO\Core\GDO;
 use GDO\Util\Strings;
 
 /**
- * A message is a GDT_Text with an editor. Classic a textarea.
+ * A message is a GDT_Text with an editor. Classic uses a textarea.
  * The content is html, filtered through a whitelist with html-purifier.
  * The default editor is simply a textarea, and a gdo6-tinymce / ckeditor is available.
  * 
@@ -137,11 +137,6 @@ class GDT_Message extends GDT_Text
         $this->text = $text;
         return true;
     }
-
-//     public function getValidationValue()
-//     {
-//         return $this->getVarInput();
-//     }
     
     ##########
     ### DB ###
@@ -197,12 +192,9 @@ class GDT_Message extends GDT_Text
     public function setGDOData(GDO $gdo)
     {
         $name = Strings::rsubstrFrom($this->name, '[', $this->name); # @XXX: ugly hack for news tabs!
-//         if ($gdo->hasVar("{$name}_input"))
-//         {
-            $this->input = $gdo->getVar("{$name}_input");
-            $this->output = $gdo->getVar("{$name}_output");
-            $this->text = $gdo->getVar("{$name}_text");
-//         }
+        $this->input = $gdo->getVar("{$name}_input");
+        $this->output = $gdo->getVar("{$name}_output");
+        $this->text = $gdo->getVar("{$name}_text");
         return $this;
     }
     

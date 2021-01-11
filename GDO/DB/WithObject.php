@@ -140,7 +140,8 @@ trait WithObject
 		}
 		else
 		{
-			return [$this->name => $this->getVar()];
+// 		    return [$this->name => $this->var ? $this->var : null]; # use value anyway
+		    return [$this->name => $this->getVar()]; # bug in import tbs forum
 		}
 	}
 	

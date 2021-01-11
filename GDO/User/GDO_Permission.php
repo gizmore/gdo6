@@ -12,6 +12,8 @@ use GDO\UI\GDT_EditButton;
  */
 final class GDO_Permission extends GDO
 {
+    public function gdoCached() { return false; }
+    
 	public function gdoColumns()
 	{
 		return array(

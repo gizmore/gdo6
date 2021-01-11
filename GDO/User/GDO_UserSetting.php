@@ -27,7 +27,7 @@ final class GDO_UserSetting extends GDO
 	{
 		return array(
 			GDT_User::make('uset_user')->primary(),
-			GDT_Name::make('uset_name')->primary(),
+			GDT_Name::make('uset_name')->primary()->unique(false),
 			GDT_String::make('uset_value'),
 		    GDT_Index::make('uset_user_index')->indexColumns('uset_user')->hash(),
 		);
