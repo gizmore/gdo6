@@ -2,7 +2,6 @@
 namespace GDO\Core;
 
 use GDO\UI\GDT_Panel;
-use GDO\UI\GDT_Paragraph;
 
 /**
  * An error is a panel that additionally logs the given message.

@@ -2,7 +2,6 @@
 namespace GDO\Core;
 
 use GDO\UI\GDT_Panel;
-use GDO\UI\GDT_Paragraph;
 
 /**
  * A success message, the pedant to GDT_Error.

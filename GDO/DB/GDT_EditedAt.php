@@ -25,9 +25,9 @@ final class GDT_EditedAt extends GDT_DateTime
 		$this->gdo->setVar($this->name, $now);
 	}
 
-	public function blankData()
-	{
-	    return [$this->name => Time::getDate()];
-	}
+// 	public function blankData()
+// 	{
+// 	    return [$this->name => Time::getDate()];
+// 	}
 
 }

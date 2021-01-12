@@ -21,11 +21,11 @@ final class GDT_EditedBy extends GDT_User
 		$this->gdo->setVar($this->name, $userId);
 	}
 	
-	public function blankData()
-	{
-	    $user = Application::instance()->isInstall() ? GDO_User::system() : GDO_User::current()->persistent();
-	    $id = $user->getID();
-	    return [$this->name => $id];
-	}
+// 	public function blankData()
+// 	{
+// 	    $user = Application::instance()->isInstall() ? GDO_User::system() : GDO_User::current()->persistent();
+// 	    $id = $user->getID();
+// 	    return [$this->name => $id];
+// 	}
 	
 }

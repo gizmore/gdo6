@@ -3,6 +3,7 @@ namespace GDO\DB;
 use GDO\Core\GDO;
 use GDO\Core\Logger;
 use GDO\Core\GDOException;
+use GDO\Util\Strings;
 /**
  * Query builder.
  * Part of the GDO DBA code.
@@ -51,6 +52,7 @@ final class Query
 	private $order;
 	public  $values;
 	private $limit;
+	private $raw;
 	
 	private $write = false; # Is it a write query?
 	
@@ -91,21 +93,28 @@ final class Query
 	public function copy()
 	{
 		$clone = new self($this->table);
-        $clone->fetchTable = $this->fetchTable;
-		$clone->type = $this->type;
-		$clone->columns = $this->columns;
-		$clone->from = $this->from;
-		$clone->where = $this->where;
-		$clone->join = $this->join;
-		$clone->group = $this->group;
-		$clone->having = $this->having;
-        $clone->order = $this->order;
-        $clone->limit = $this->limit;
-		$clone->from = $this->from;
-		$clone->write = $this->write;
-		$clone->debug = $this->debug;
-		$clone->cached = $this->cached;
-		return $clone;
+		if ($this->raw)
+		{
+		    $clone->raw = $this->raw;
+		}
+		else
+		{
+            $clone->fetchTable = $this->fetchTable;
+    		$clone->type = $this->type;
+    		$clone->columns = $this->columns;
+    		$clone->from = $this->from;
+    		$clone->where = $this->where;
+    		$clone->join = $this->join;
+    		$clone->group = $this->group;
+    		$clone->having = $this->having;
+            $clone->order = $this->order;
+            $clone->limit = $this->limit;
+    		$clone->from = $this->from;
+    		$clone->write = $this->write;
+    		$clone->debug = $this->debug;
+    		$clone->cached = $this->cached;
+    		return $clone;
+		}
 	}
 	
 	/**
@@ -417,7 +426,35 @@ final class Query
 	{
 		return $this->order ? " ORDER BY {$this->order}" : "";
 	}
+	
+	public function raw($raw)
+	{
+	    $this->write = !Strings::startsWith($raw, 'SELECT');
+	    $this->raw = $raw;
+	    return $this;
+	}
 
+	/**
+	 * Build the query string.
+	 * @return string
+	 */
+	public function buildQuery()
+	{
+	    return $this->raw ?
+    	    $this->raw :
+    	    $this->type .
+    	    $this->getSelect() .
+    	    $this->getFrom() .
+    	    $this->getValues() .
+    	    $this->getJoin() .
+    	    $this->getSet() .
+    	    $this->getWhere() .
+    	    $this->getGroup() .
+    	    $this->getHaving() .
+    	    $this->getOrderBy() .
+    	    $this->getLimit();
+	}
+	
 	/**
 	 * Execute a query.
 	 * Returns boolean on writes and a Result on reads.
@@ -446,24 +483,4 @@ final class Query
 		}
 	}
 	
-	/**
-	 * Build the query string.
-	 * @return string
-	 */
-	public function buildQuery()
-	{
-		return
-			$this->type .
-			$this->getSelect() .
-			$this->getFrom() . 
-			$this->getValues() .
-			$this->getJoin() .
-			$this->getSet() .
-			$this->getWhere() .
-			$this->getGroup() .
-			$this->getHaving() .
-			$this->getOrderBy() .
-			$this->getLimit(); 
-	}
-
 }

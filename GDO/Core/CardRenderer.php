@@ -58,9 +58,9 @@ final class CardRenderer
         
         if ($withEditedfooter)
         {
-            if ($editorColumn = $gdo->gdoColumnOf(GDT_EditedBy::class))
+            if ($gdo->gdoColumnOf(GDT_EditedBy::class))
             {
-                if ($editedColumn = $gdo->gdoColumnOf(GDT_EditedAt::class))
+                if ($gdo->gdoColumnOf(GDT_EditedAt::class))
                 {
                     $card->editorFooter();
                 }
