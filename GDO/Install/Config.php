@@ -193,10 +193,10 @@ class Config
 			# Email
 			GDT_Divider::make()->label('install_config_section_email'),
 		    GDT_Checkbox::make('enable_email')->initialValue(GWF_ENABLE_EMAIL),
-		    GDT_Realname::make('bot_name')->required()->initialValue(GWF_BOT_NAME),
-			GDT_Email::make('bot_email')->required()->initialValue(GWF_BOT_EMAIL),
-			GDT_Email::make('admin_email')->required()->initialValue(GWF_ADMIN_EMAIL),
-			GDT_Email::make('error_email')->required()->initialValue(GWF_ERROR_EMAIL),
+		    GDT_Realname::make('bot_name')->required()->initialValue(GWF_BOT_NAME)->label('bot_name'),
+			GDT_Email::make('bot_email')->required()->initialValue(GWF_BOT_EMAIL)->label('bot_mail'),
+			GDT_Email::make('admin_email')->required()->initialValue(GWF_ADMIN_EMAIL)->label('admin_mail'),
+			GDT_Email::make('error_email')->required()->initialValue(GWF_ERROR_EMAIL)->label('error_mail'),
 			GDT_Checkbox::make('debug_email')->initialValue(GWF_DEBUG_EMAIL),
 		);
 	}

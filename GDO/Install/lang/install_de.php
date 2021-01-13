@@ -106,4 +106,9 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 'msg_changed_config' => 'Die Konfiguration für %s im Modul %s wurde von %s auf %s gesetzt.',
 'msg_installing_modules' => 'Es werden die folgenden Module installiert: %s.',
     
+# 6.10
+'bot_mail' => 'Bot Email',
+'bot_name' => 'Bot Name',
+'admin_mail' => 'Administrator Email',
+'error_mail' => 'Fehler Email',
 );

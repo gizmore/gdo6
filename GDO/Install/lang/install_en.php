@@ -105,5 +105,10 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 'msg_set_config' => 'The config var for %s in module %s is currently set to %s.',
 'msg_changed_config' => 'The config var for %s in module %s has been set from %s to %s.',
 'msg_installing_modules' => 'Installing the following dependant modules: %s.',
-    
+
+# 6.10
+'bot_mail' => 'Bot Email',
+'bot_name' => 'Bot Name',
+'admin_mail' => 'Administrator Email',
+'error_mail' => 'Error Email',
 );
