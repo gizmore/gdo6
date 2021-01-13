@@ -21,7 +21,8 @@ trait WithPHPJQuery
 		}
 		if ($value === null)
 		{
-			return @$this->htmlAttributes[$attribute];
+			return isset($this->htmlAttributes[$attribute]) ? 
+			    $this->htmlAttributes[$attribute] : null;
 		}
 		$this->htmlAttributes[$attribute] = $value;
 		return $this;
