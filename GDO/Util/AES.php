@@ -5,14 +5,13 @@ namespace GDO\Util;
  * Helper for AES-256 encryption.
  * Requires mcrypt.
  * @author gizmore
- * @version 6.10
- * @since 6.11
+ * @version 6.11
+ * @since 3.01
  */
 final class AES
 {
 	const IV = 'MyHomeIsMyCastleIamhungrywhereisi'; # <-- 32 chars
-	const MODE = MCRYPT_MODE_CBC;
-	const CIPHER = MCRYPT_RIJNDAEL_256;
+	const CIPHER = 'aes-256-cbc';
 
 	/**
 	 * Encrypt with AES256 using the default IV.
@@ -33,7 +32,7 @@ final class AES
 	 */
 	public static function encrypt4($data, $key, $iv)
 	{
-		return @mcrypt_encrypt(self::CIPHER, $key, $data, self::MODE, hash('SHA256', $iv, true));
+	    return openssl_encrypt($data, self::CIPHER, $key, null, $iv);
 	}
 
 	/**
@@ -45,10 +44,10 @@ final class AES
 	 */
 	public static function encryptIV($data, $password)
 	{
-		$iv_size = @mcrypt_get_iv_size(self::CIPHER, self::MODE);
-		$iv = @mcrypt_create_iv($iv_size, MCRYPT_RAND);
+	    $iv_size = openssl_cipher_iv_length(self::CIPHER);
+	    $iv = openssl_random_pseudo_bytes($iv_size);
 		$key = hash('SHA256', $password, true);
-		return base64_encode($iv).@mcrypt_encrypt(self::CIPHER, $key, $data, self::MODE, $iv);
+	    return base64_encode($iv).openssl_encrypt($data, self::CIPHER, $key, null, $iv);
 	}
 	
 	/**
@@ -59,9 +58,13 @@ final class AES
 	 */
 	public static function decryptIV($data, $password)
 	{
-		$iv = substr($data, 0, 44);
+	    $iv_size = openssl_cipher_iv_length(self::CIPHER);
+	    $iv64 = ((4 * $iv_size / 3) + 3) & ~3;
+	    $iv = substr($data, 0, $iv64);
+	    $iv = base64_decode($iv);
+	    $data = substr($data, $iv64);
 		$key = hash('SHA256', $password, true);
-		return @mcrypt_decrypt(self::CIPHER, $key, substr($data, 44), self::MODE, base64_decode($iv));
+	    return openssl_decrypt($data, self::CIPHER, $key, null, $iv);
 	}
 
 	/**
@@ -83,7 +86,7 @@ final class AES
 	 */
 	public static function decrypt4($data, $key, $iv)
 	{
-		return @mcrypt_decrypt(self::CIPHER, $key, $data, self::MODE, hash('SHA256', $iv, true));
+	    return openssl_decrypt($data, self::CIPHER, $key, null, $iv);
 	}
 
 }
