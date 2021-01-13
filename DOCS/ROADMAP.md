@@ -36,9 +36,7 @@ Pull requests < gimme your ssh key. :)
 - Pagemenu shows dot too early
 - Make a static non-db demo site. (does not work yet)
 
-# More tuts?
+- More tuts
 
 - What is the difference between writable and editable? (writable is still written to db, but cannot be changed from initial – editable accepts user input)
-
-
-
+- Create Javascript minified before performance timing calculations? some sites feel slow but report good timings. i suppose it's Javascript::minify()

@@ -114,7 +114,7 @@ class Config
 		if (!defined('GWF_DB_NAME')) define('GWF_DB_NAME', '');
 		if (!defined('GWF_DB_DEBUG')) define('GWF_DB_DEBUG', false);
 		# Cache
-		if (!defined('GWF_MEMCACHE')) define('GWF_MEMCACHE', true);
+		if (!defined('GWF_MEMCACHE')) define('GWF_MEMCACHE', false);
 		if (!defined('GWF_MEMCACHE_PREFIX')) define('GWF_MEMCACHE_PREFIX', '1_');
 		if (!defined('GWF_MEMCACHE_HOST')) define('GWF_MEMCACHE_HOST', '127.0.0.1');
 		if (!defined('GWF_MEMCACHE_PORT')) define('GWF_MEMCACHE_PORT', 61221);

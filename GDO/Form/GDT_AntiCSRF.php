@@ -16,6 +16,9 @@ use GDO\Core\Application;
  */
 class GDT_AntiCSRF extends GDT
 {
+    const KEYLEN = 6;
+    const MAX_KEYS = 20;
+    
     public $name = 'xsrf';
     public $editable = false;
 	public function name($name=null) { return $this; }
@@ -28,7 +31,7 @@ class GDT_AntiCSRF extends GDT
 	##############
 	### Expire ###
 	##############
-	public $csrfExpire = 7200; # 2 hours is a sensible default.
+	public $csrfExpire = 60*30; # 0.5 hours is a sensible default.
 	public function csrfExpire($csrfExpire)
 	{
 		$this->csrfExpire = $csrfExpire;
@@ -53,7 +56,7 @@ class GDT_AntiCSRF extends GDT
 	    $token = '';
 		if (GDO_Session::instance())
 		{
-		    $token = Random::randomKey(8);
+		    $token = Random::randomKey(self::KEYLEN);
 		    $csrf = $this->loadCSRFTokens();
 		    $csrf[$token] = Application::$TIME;
 		    $this->saveCSRFTokens($csrf);
@@ -73,6 +76,11 @@ class GDT_AntiCSRF extends GDT
 	
 	private function saveCSRFTokens(array $csrf)
 	{
+	    $count = count($csrf);
+// 	    if ($count > 2) # max 2 tokens?
+// 	    {
+// 	        array_slice($csrf, $count - 2);
+// 	    }
 	    GDO_Session::set('csrfs', json_encode($csrf));
 	}
 	
