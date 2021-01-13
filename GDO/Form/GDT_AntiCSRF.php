@@ -77,10 +77,10 @@ class GDT_AntiCSRF extends GDT
 	private function saveCSRFTokens(array $csrf)
 	{
 	    $count = count($csrf);
-// 	    if ($count > 2) # max 2 tokens?
-// 	    {
-// 	        array_slice($csrf, $count - 2);
-// 	    }
+	    if ($count > self::MAX_KEYS) # max 2 tokens?
+	    {
+	        array_slice($csrf, $count - self::MAX_KEYS);
+	    }
 	    GDO_Session::set('csrfs', json_encode($csrf));
 	}
 	
