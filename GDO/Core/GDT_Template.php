@@ -14,6 +14,8 @@ use GDO\File\FileUtil;
  *
  * - Themes is an array, so you can have cascading override.
  * 
+ * - @TODO: Cache template files and use eval on them. maybe that's a tad faster than Filesystem.
+ * 
  * @author gizmore
  * @version 6.05
  * @since 3.00
