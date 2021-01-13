@@ -228,6 +228,7 @@ class GDT_File extends GDT_Object
 		{
 			return [$this->name => $file->getID()];
 		}
+		return [$this->name => null];
 	}
 	
 	/**

@@ -83,6 +83,10 @@ final class DetectNode extends Method
 		}
 		if ($path === null)
 		{
+		    $path = Process::commandPath("uglify", '.cmd');
+		}
+		if ($path === null)
+		{
 			return $this->error('err_uglify_not_found');
 		}
 		Module_Core::instance()->saveConfigVar('uglifyjs_path', $path);

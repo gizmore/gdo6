@@ -29,10 +29,10 @@ Database::init();
 new ModuleLoader(GDO_PATH . 'GDO/');
 GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
 $app = new Application();
-ModuleLoader::instance()->loadModulesCache();
 
 # Bootstrap
 Trans::$ISO = GWF_LANGUAGE;
+ModuleLoader::instance()->loadModulesCache();
 Logger::init(null, GWF_ERROR_LEVEL); # 1st init as guest
 Debug::init();
 Debug::enableErrorHandler();

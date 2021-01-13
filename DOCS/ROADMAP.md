@@ -34,7 +34,7 @@ Pull requests < gimme your ssh key. :)
 - Modules: 3 iconbuttons: install,configure,adminsection
 
 - Pagemenu shows dot too early
-- News edit does not show old input
+- Make a static non-db demo site. (does not work yet)
 
 # More tuts?
 

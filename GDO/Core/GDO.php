@@ -192,10 +192,13 @@ abstract class GDO
 	public function setVar($key, $var, $markDirty=true)
 	{
 	    $gdt = $this->gdoColumn($key)->var($var);
-        foreach ($gdt->getGDOData() as $k => $v)
-        {
-    		$this->gdoVars[$k] = $v === null ? null : (string)$v;
-        }
+	    if ($data = $gdt->getGDOData())
+	    {
+            foreach ($data as $k => $v)
+            {
+        		$this->gdoVars[$k] = $v === null ? null : (string)$v;
+            }
+	    }
 		return $markDirty ? $this->markDirty($key) : $this;
 	}
 	

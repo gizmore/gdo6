@@ -21,7 +21,6 @@ use GDO\Avatar\GDT_Avatar;
 use GDO\Session\GDO_Session;
 use GDO\DB\Cache;
 use GDO\Country\GDO_Country;
-use GDO\Language\Trans;
 
 /**
  * The holy user object.
@@ -226,7 +225,7 @@ final class GDO_User extends GDO
 	{
 	    $user = $user === null ? self::ghost() : $user;
 	    self::$CURRENT = $user;
-	    Trans::setISO($user->getLangISO());
+// 	    Trans::setISO($user->getLangISO());
 	    return $user;
 	}
 

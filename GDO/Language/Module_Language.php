@@ -40,10 +40,12 @@ final class Module_Language extends GDO_Module
 		return array(
 			GDT_Language::make('languages')->all()->multiple()->initial('["'.GWF_LANGUAGE.'"]'),
 		    GDT_Checkbox::make('langswitch_left')->initial('1'),
+		    GDT_Checkbox::make('use_in_javascript')->initial('0'),
 		);
 	}
 	
 	public function cfgSwitchLeft() { return $this->getConfigValue('langswitch_left'); }
+	public function cfgJavascript() { return $this->getConfigValue('use_in_javascript'); }
 	
 	/**
 	 * Get the supported  languages, GWF_LANGUAGE first.
@@ -84,13 +86,16 @@ final class Module_Language extends GDO_Module
 	
 	public function onIncludeScripts()
 	{
-		# Add js trans
-		$iso = Trans::$ISO;
-		$href = $this->href('GetTransData', "&ajax=1&fmt=html&iso={$iso}&".$this->nocacheVersion());
-		Javascript::addJavascript($href);
-
-		# Add cheap translation engine.
-		$this->addJavascript('js/gdo-trans.js');
+	    if ($this->cfgJavascript())
+	    {
+    		# Add js trans
+    		$iso = Trans::$ISO;
+    		$href = $this->href('GetTransData', "&ajax=1&fmt=html&iso={$iso}&".$this->nocacheVersion());
+    		Javascript::addJavascript($href);
+    
+    		# Add cheap translation engine.
+    		$this->addJavascript('js/gdo-trans.js');
+	    }
 	}
 	
 	#################
@@ -98,7 +103,7 @@ final class Module_Language extends GDO_Module
 	#################
 	public function detectISO()
 	{
-		if ($iso = Common::getGetString('_lang'))
+		if ($iso = Common::getRequestString('_lang'))
 		{
 			return $iso;
 		}
