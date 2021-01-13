@@ -36,10 +36,22 @@ final class Security extends MethodForm
 
 	public function onProtect()
 	{
+	    $this->protectFolders();
+	    $this->protectDotfiles();
+	}
+	
+	public function protectFolders()
+	{
 		HTAccess::protectFolder(GDO_PATH.'temp');
 		HTAccess::protectFolder(GDO_PATH.'files');
 		HTAccess::protectFolder(GDO_PATH.'protected');
 		HTAccess::protectFolder(GDO_PATH.'install');
 		return Website::redirect(GWF_WEB_ROOT);
 	}
+	
+	public function protectDotfiles()
+	{
+	    # TODO: Create an .htaccess rule for .git files
+	}
+	
 }

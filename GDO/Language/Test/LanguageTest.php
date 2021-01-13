@@ -3,9 +3,9 @@ namespace GDO\Language\Test;
 
 use GDO\Tests\TestCase;
 use GDO\Language\Module_Language;
+use GDO\Language\Trans;
 use function PHPUnit\Framework\assertGreaterThanOrEqual;
 use function PHPUnit\Framework\assertNotEquals;
-use GDO\Language\Trans;
 use function PHPUnit\Framework\assertEquals;
 
 /**
@@ -33,6 +33,12 @@ final class LanguageTest extends TestCase
         assertNotEquals($de1, $en1, 'german should differ from english');
         assertEquals($de1, $de2, 'german should be identical');
         assertEquals($en1, $en2, 'english should be identical');
+    }
+    
+    public function testHTTPLangDetection()
+    {
+        $iso = Module_Language::instance()->detectAcceptLanguage();
+        assertEquals('de', $iso, 'Test if german language is detected.');
     }
     
 }

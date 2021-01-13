@@ -46,3 +46,5 @@ Pull requests < gimme your ssh key. :)
 - implement ./gdo_test.php <module_name> that only installs core and tests (almost) only the specified module
 
 - Exceptions should use the same Core/Debug stacktrace as errors.
+
+- Make a module to choose if directory view is enabled. Maybe disallow in InstallSecurity is better.. who wants to see all that mixed content?

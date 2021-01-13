@@ -18,8 +18,8 @@ use GDO\DB\Cache;
 if (PHP_SAPI !== 'cli') { die('Tests can only be run from the command line.'); }
 
 require_once 'GDO6.php';
-require_once 'vendor/autoload.php';
 require_once 'protected/config.php';
+require_once 'vendor/autoload.php';
 
 Logger::init('system', GWF_ERROR_LEVEL);
 Debug::init();

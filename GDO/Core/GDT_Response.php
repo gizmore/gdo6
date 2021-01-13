@@ -25,8 +25,7 @@ class GDT_Response extends GDT
 	### Error code ###
 	##################
 	public $code = 200;
-// 	public function code($code) { $this->code = $code; return $this; }
-	public function code($code) { $this->code = 200; return $this; }
+	public function code($code) { $this->code = $code; return $this; }
 	public function errorCode($code=405) { return $this->code($code); }
 	public function isError()
 	{
