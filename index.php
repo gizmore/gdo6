@@ -32,16 +32,17 @@ $app = new Application();
 
 # Bootstrap
 Trans::$ISO = GWF_LANGUAGE;
-ModuleLoader::instance()->loadModulesCache();
 Logger::init(null, GWF_ERROR_LEVEL); # 1st init as guest
 Debug::init();
 Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
 Debug::setDieOnError(GWF_ERROR_DIE);
 Debug::setMailOnError(GWF_ERROR_MAIL);
+ModuleLoader::instance()->loadModulesCache();
 GDO_Session::instance();
 if (GDO_User::current()->isAuthenticated())
 {
+    # @TODO: username can be ambigious? check if guests and members can have the same name. if so make sure the guest prefix is a valid filename on all filesystems.
 	Logger::init(GDO_User::current()->getUserName(), GWF_ERROR_LEVEL); # 2nd init with username
 }
 
