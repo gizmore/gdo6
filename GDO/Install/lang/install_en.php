@@ -14,6 +14,7 @@ return array(
 'install_test_4' => 'Is the assets folder writable?',
 'install_test_5' => 'Are nodejs, npm, bower and yarn available?',
 'install_test_6' => 'Is PHP mbstring installed?',
+'install_test_7' => 'Is a timezone set in php.ini?',
 'install_title_2_optionals' => 'Optional Features',
 'install_optional_0' => 'Is PHP gd installed?',
 'install_optional_1' => 'Is PHP memcached installed?',
