@@ -55,8 +55,9 @@ trait WithDatabase
 
 	public function getGDOData()
 	{
-	    $var = empty($this->var) ? null : $this->var;
-	    return [$this->name => $var];
+	    $v = $this->var;
+	    $v = $v === '' || $v === 0 ? null : $v;
+	    return [$this->name => $v];
 	}
 	
 }

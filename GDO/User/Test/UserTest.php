@@ -20,7 +20,7 @@ final class UserTest extends TestCase
         assertEquals($id, $u1->getID(), 'Test single identity cache with system user');
     }
     
-    public  function testGuestCreation()
+    public function testGuestCreation()
     {
         $user = GDO_User::blank([
             'user_guest_name' => 'Wolfgang',
@@ -28,5 +28,5 @@ final class UserTest extends TestCase
         ])->insert();
         assertFalse($user->isMember(), 'Test if guests are non members.');
     }
-
+    
 }

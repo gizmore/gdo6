@@ -37,7 +37,7 @@ class GDT_Int extends GDT
 	use WithDatabase;
 	use WithOrder;
 
-	public function toValue($var) { return empty($var) ? null : (int) $var; }
+	public function toValue($var) { return $var === null || trim($var) === '' ? null : (int) $var; }
 	
 	public $min;
 	public $max;

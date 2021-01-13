@@ -25,9 +25,9 @@ final class GDO_Permission extends GDO
 	
 	public static function getByName($name) { return self::getBy('perm_name', $name); }
 	
-	public static function getOrCreateByName($name, $level=null) { return self::create($name, $level); }
+	public static function getOrCreateByName($name, $level='0') { return self::create($name, $level); }
 	
-	public static function create($name, $level=null)
+	public static function create($name, $level='0')
 	{
 		if (!($perm = self::getByName($name)))
 		{
@@ -36,7 +36,7 @@ final class GDO_Permission extends GDO
 		elseif ($perm->getLevel() != $level)
 		{
 		    # Fix level because install method makes sure the permission exists.
-		    if ($perm->getLevel() === null)
+		    if ($perm->getLevel() === '0')
 		    {
     		    $perm->saveVar('perm_level', $level);
 		    }
