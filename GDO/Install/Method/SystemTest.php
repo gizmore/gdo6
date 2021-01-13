@@ -21,6 +21,7 @@ final class SystemTest extends Method
 			    FileUtil::createDir(GDO_PATH . 'assets'),
 				$this->testBower(),
 				function_exists('mb_strlen'),
+			    ini_get('date.timezone'),
 			),
 			'optional' => array(
 				function_exists('imagecreate'),
