@@ -30,7 +30,7 @@ use GDO\File\FileUtil;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9461'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9462'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
