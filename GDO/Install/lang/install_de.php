@@ -3,7 +3,8 @@ return array(
 # Welcome
 'install_title_1' => 'Willkommen',
 'install_text_1' => 'Willkommen zu GDO6. Bitte fahren Sie hier fort: %s',
-
+'install_text_2' => 'Falls Sie eine Datenbank verwenden wollen führen Sie bitte folgende MySQL Befehle als root aus.',
+    
 # System Test
 'install_title_2' => 'System–Test',
 'install_title_2_tests' => 'Wichtige Vorraussetzungen',

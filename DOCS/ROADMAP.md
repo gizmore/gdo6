@@ -40,3 +40,9 @@ Pull requests < gimme your ssh key. :)
 
 - What is the difference between writable and editable? (writable is still written to db, but cannot be changed from initial – editable accepts user input)
 - Create Javascript minified before performance timing calculations? some sites feel slow but report good timings. i suppose it's Javascript::minify()
+
+- Automatically set a timezone in installer config (UTC), even if none is set in php.ini
+
+- implement ./gdo_test.php <module_name> that only installs core and tests (almost) only the specified module
+
+- Exceptions should use the same Core/Debug stacktrace as errors.

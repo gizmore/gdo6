@@ -45,13 +45,18 @@ trait WithDatabase
 	}
 	
 	###########
-	### GDO ###
+	### GDT ###
 	###########
 	public function gdoColumnDefine() {}
 	public function gdoNullDefine() { return $this->notNull ? ' NOT NULL' : ' NULL'; }
 	public function gdoInitialDefine() { return isset($this->initial) ? (" DEFAULT ".GDO::quoteS($this->initial)) : ''; }
 	public function identifier() { return $this->name; }
 	public function blankData() { return [$this->name => $this->var]; }
-	public function getGDOData() { return [$this->name => $this->getVar()]; }
+
+	public function getGDOData()
+	{
+	    $var = empty($this->var) ? null : $this->var;
+	    return [$this->name => $var];
+	}
 	
 }

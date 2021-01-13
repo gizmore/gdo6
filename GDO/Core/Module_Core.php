@@ -13,6 +13,7 @@ use GDO\DB\GDT_Version;
 use GDO\DB\GDT_Checkbox;
 use GDO\User\GDO_Permission;
 use GDO\UI\GDT_Page;
+use GDO\File\FileUtil;
 
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
@@ -29,7 +30,7 @@ use GDO\UI\GDT_Page;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9457'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9459'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
@@ -56,6 +57,7 @@ final class Module_Core extends GDO_Module
 	
 	public function onInstall()
 	{
+	    FileUtil::createDir(GDO_PATH.'temp');
 		touch(GDO_PATH.'temp/ipc.socket');
 	}
 	

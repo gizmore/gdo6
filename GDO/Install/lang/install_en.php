@@ -3,7 +3,8 @@ return array(
 # Welcome
 'install_title_1' => 'Welcome',
 'install_text_1' => 'Welcome to GDO6, Please continue here: %s',
-
+'install_text_2' => 'If you plan to use a Database, please execute the following mysql commands.',
+    
 # System Test
 'install_title_2' => 'System–Test',
 'install_title_2_tests' => 'Mandatory Requirements',
