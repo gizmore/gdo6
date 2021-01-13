@@ -199,7 +199,7 @@ final class Time
 		return self::humanDurationRaw($duration, $nUnits, $cache[$iso]);
 	}
 	
-	public static function humanDurationRaw($duration, $nUnits=2, array $units)
+	public static function humanDurationRaw($duration, $nUnits, array $units)
 	{
 		$duration = (int)$duration;
 		$calced = array();

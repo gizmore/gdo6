@@ -380,7 +380,7 @@ final class Debug
 		}
 		return Application::instance()->isHTML() ? html($arg) : $arg;
 	}
-	private static function backtraceMessage($message, $html = true, array $stack, $lastLine='?', $lastFile='[unknown file]')
+	private static function backtraceMessage($message, $html, array $stack, $lastLine='?', $lastFile='[unknown file]')
 	{
 // 		$badformat = false;
 		
