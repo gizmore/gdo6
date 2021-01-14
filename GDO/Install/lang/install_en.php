@@ -46,7 +46,7 @@ return array(
 'install_config_boxinfo_success' => 'Your system looks solid. You can continue with %s',
 'save_config' => 'Save',
 'test_config' => 'Test',
-    
+
 # Modules
 'install_title_4' => 'GDO Modules',
 'install_modules_info_text' => 'Here you can choose the modules to install. Dependencies are not 100% resolved yet.',
@@ -67,7 +67,7 @@ You can paste this into your crontab file:
 
 You can then continue with %s.',
 
-# Admins 
+# Admins
 'install_title_6' => 'Create Admins',
 'ft_install_installadmins' => 'Create Admins',
 'msg_admin_created' => 'An admin named %s has been created or their password has been reset.',
@@ -93,13 +93,13 @@ cd www/gdo6<br/>
 Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 </code>
 ',
-	
+
 'install_title_8' => 'Import Backup',
 'ft_install_importbackup' => 'Import a backup',
-	
+
 'install_title_9' => 'Install Security',
 'ft_install_security' => 'Finish installation by removing access to install wizard and the protected folder',
-	
+
 # gdo6 binary
 'msg_config_written' => 'A default config file has been written to protected/%s',
 'msg_available_config' => 'Available config vars for module %s: %s.',
