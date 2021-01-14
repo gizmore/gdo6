@@ -33,8 +33,7 @@ final class SystemTest extends Method
 	
 	private function testPHPVersion()
 	{
-		$version = floatval(PHP_MAJOR_VERSION. '.' . PHP_MINOR_VERSION);
-		return $version >= 5.6;
+		return version_compare(PHP_VERSION, '5.6.0') >= 0;
 	}
 
 	private function testBower()
