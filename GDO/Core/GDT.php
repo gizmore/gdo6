@@ -218,7 +218,7 @@ abstract class GDT
 	### Form Naming ###
 	###################
 	public function formVariable() { return GDT_Form::$CURRENT ? GDT_Form::$CURRENT->name : null; }
-	public function formName() { return GDT_Form::$CURRENT ? sprintf('%s[%s]', $this->formVariable(), $this->name) : $this->name; }
+	public function formName() { return GDT_Form::$CURRENT ? sprintf('%s[%s]', $this->formVariable(), $this->name) : null; }
 	public function htmlFormName() { return sprintf(" name=\"%s\"", $this->formName()); }
 	
 	#################

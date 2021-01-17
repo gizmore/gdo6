@@ -88,11 +88,23 @@ final class Random
 	################
 	### Insecure ### but faster
 	################
+	/**
+	 * Get an insecure random number.
+	 * @param int $min
+	 * @param int $max
+	 * @return int
+	 */
 	public static function mrand($min=null, $max=null)
 	{
 	    return rand($min, $max);
 	}
 	
+	/**
+	 * Get an insecure random key.
+	 * @param int $len
+	 * @param string $alpha
+	 * @return string
+	 */
 	public static function mrandomKey($len=self::TOKEN_LEN, $alpha=self::ALPHANUMUPLOW)
 	{
 	    $alphalen = strlen($alpha) - 1;

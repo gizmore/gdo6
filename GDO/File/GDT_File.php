@@ -10,7 +10,6 @@ use GDO\UI\WithHREF;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Success;
 use GDO\Core\GDO_Module;
-use GDO\Core\GDT;
 
 /**
  * File input and upload backend for flow.js
@@ -209,7 +208,7 @@ class GDT_File extends GDT_Object
 	
 	public function getInitialFile()
 	{
-	    $var = $this->getRequestVar($this->formName(), $this->initial);
+	    $var = $this->getRequestVar($this->formName(), $this->var);
 		if ($var !== null)
 		{
 			return GDO_File::getById($var);
@@ -248,6 +247,9 @@ class GDT_File extends GDT_Object
 		}
 	}
 	
+	/**
+	 * @return GDO_File
+	 */
 	public function getValue()
 	{
 		$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->files));
@@ -303,56 +305,63 @@ class GDT_File extends GDT_Object
 	################
 	public function validate($value)
 	{
-		$valid = true;
-		/** @var $files \GDO\File\GDO_File[] **/
-		$files = Arrays::arrayed($value);
-		$this->files = [];
-		
-		if ( ($this->notNull) && (empty($files)) )
-		{
-			$valid = $this->error('err_upload_min_files', [1]);
-		}
-		elseif (count($files) < $this->minfiles)
-		{
-			$valid = $this->error('err_upload_min_files', [max(1, $this->minfiles)]);
-		}
-		elseif (count($files) > $this->maxfiles)
-		{
-			$valid = $this->error('err_upload_max_files', [$this->maxfiles]);
-		}
-		else
-		{
-			foreach ($files as $file)
-			{
-				if (!($file->getSize()))
-				{
-					$valid = $this->error('err_file_not_ok', [$file->display('file_name')]);
-				}
-				elseif (!$this->validateFile($file))
-				{
-					$valid = false;
-				}
-				else
-				{
-					if (!$file->isPersisted())
-					{
-						$file->insert();
-						$this->beforeCopy($file);
-						$file->copy();
-						if ($this->gdo)
-						{
-						    $this->gdo->setVar($this->name, $file->getID());
-						}
-						$this->var($file->getID());
-						$this->files[] = $file;
-					}
-				}
-			}
-		}
-// 		if (!$valid)
-		{
-			$this->cleanup();
-		}
+        $valid = true;
+	    try
+	    {
+	        /** @var $files \GDO\File\GDO_File[] **/
+	        $files = Arrays::arrayed($value);
+	        $this->files = [];
+	        
+	        if ( ($this->notNull) && (empty($files)) )
+	        {
+	            $valid = $this->error('err_upload_min_files', [1]);
+	        }
+	        elseif (count($files) < $this->minfiles)
+	        {
+	            $valid = $this->error('err_upload_min_files', [max(1, $this->minfiles)]);
+	        }
+	        elseif (count($files) > $this->maxfiles)
+	        {
+	            $valid = $this->error('err_upload_max_files', [$this->maxfiles]);
+	        }
+	        else
+	        {
+	            foreach ($files as $file)
+	            {
+	                if (!($file->getSize()))
+	                {
+	                    $valid = $this->error('err_file_not_ok', [$file->display('file_name')]);
+	                }
+	                elseif (!$this->validateFile($file))
+	                {
+	                    $valid = false;
+	                }
+	                else
+	                {
+	                    if (!$file->isPersisted())
+	                    {
+	                        $file->insert();
+	                        $this->beforeCopy($file);
+	                        $file->copy();
+	                        if ($this->gdo)
+	                        {
+	                            $this->gdo->setVar($this->name, $file->getID());
+	                        }
+	                        $this->var($file->getID());
+	                        $this->files[] = $file;
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    catch (\Throwable $ex)
+	    {
+	        $valid = false;
+	    }
+	    finally
+	    {
+	        $this->cleanup();
+	    }
 
 		return $valid;
 	}

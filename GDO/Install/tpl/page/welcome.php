@@ -8,6 +8,6 @@ use GDO\Install\Config;
 <p><?= t('install_text_2'); ?></p>
 
 <pre>
-CREATE DATBASE gdo6;
+CREATE DATABASE gdo6;
 GRANT ALL ON gdo6.* TO gdo6@localhost IDENTIFIED BY 'gdo6';
 </pre>

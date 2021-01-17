@@ -27,6 +27,11 @@ class GDT_Files extends GDT_File
 	public function gdoColumnDefine() { return null; } # NO DB column. Your GDO_FileTable has the data.
 	public function getGDOData() {} # Only relation table. Handled by onCreate and onUpdate.
 	public function setGDOData(GDO $gdo=null) { return $this; }
+	
+	/**
+	 * @var $value GDO_File[]
+	 */
+// 	public function toVar($value) { return $value->getID(); } # cannot be saved as column.
 	public function toVar($value) { return null; } # cannot be saved as column.
 	public function isSerializable() { return false; } # cannot be transmitted or serialized.
 	

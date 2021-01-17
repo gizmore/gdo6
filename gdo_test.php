@@ -10,6 +10,7 @@ use GDO\UI\GDT_Page;
 use GDO\Core\Debug;
 use GDO\Core\GDO_Module;
 use GDO\DB\Cache;
+use GDO\Core\ModuleLoader;
 
 /**
  * Launch all unit tests.
@@ -64,32 +65,6 @@ $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
 
 /** @var $argc int **/
 /** @var $argv string[] **/
-// if ($argc === 2)
-// {
-//     echo "Loading modules\n";
-//     $modules = $app->loader->loadModules(true, true);
-//     echo "Installing module\n";
-//     $module = $app->loader->getModule($argv[1]);
-//     Installer::installModule($module);
-    
-//     # Run core warmup
-//     $core = $app->loader->getModule('Core');
-//     runTestSuite($core);
-//     $lang = $app->loader->getModule('Language');
-//     runTestSuite($lang);
-    
-//     # Running the test
-//     $testDir = $module->filePath('Test');
-//     if (FileUtil::isDir($testDir))
-//     {
-//         runTestSuite($module);
-//     }
-//     else 
-//     {
-//         echo "Module Test Directory is not there?";
-//     }
-//     return;
-// }
 
 echo "Dropping Test Database: ".GWF_DB_NAME.". If this hangs something is locking the db.\n";
 Database::instance()->queryWrite("DROP DATABASE " . GWF_DB_NAME);
@@ -99,30 +74,37 @@ Database::instance()->useDatabase(GWF_DB_NAME);
 echo "Loading modules from filesystem\n";
 $modules = $app->loader->loadModules(false, true);
 
-// foreach ($modules as $module)
-// {
-//     if ($module->defaultEnabled())
-//     {
-//         echo "Installing {$module->getName()}\n";
-//         Installer::installModule($module);
-//     }
-// }
+if ($argc === 2)
+{
+    $modules = [
+        'Core', 'Language', 'Country', 'File', 'User',
+        'Tests',
+        $argv[1],
+    ];
+    
+    foreach ($modules as $moduleName)
+    {
+        $module = ModuleLoader::instance()->getModule($moduleName);
+        echo "Installing {$module->getName()}\n";
+        Installer::installModule($module);
+        runTestSuite($module);
+    }
+    echo "Finished.\n";
+    return;
+}
 
 foreach ($modules as $module)
 {
-//     if ($module->defaultEnabled())
+    if (!$module->isPersisted())
     {
-        if (!$module->isPersisted())
-        {
-            echo "Installing {$module->getName()}\n";
-            Installer::installModule($module);
-        }
-        
-        $testDir = $module->filePath('Test');
-        if (FileUtil::isDir($testDir))
-        {
-            runTestSuite($module);
-        }
+        echo "Installing {$module->getName()}\n";
+        Installer::installModule($module);
+    }
+    
+    $testDir = $module->filePath('Test');
+    if (FileUtil::isDir($testDir))
+    {
+        runTestSuite($module);
     }
 }
 
