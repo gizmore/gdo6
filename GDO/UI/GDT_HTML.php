@@ -19,7 +19,7 @@ final class GDT_HTML extends GDT
 	### Render ###
 	##############
 	public function render() { return $this->renderCell(); }
-	public function renderCard() { return $this->renderCell(); }
+	public function renderCard() { return "<div class=\"gdt-html\">{$this->renderCell()}</div>"; }
 	public function renderCell()
 	{
 	    return $this->html;

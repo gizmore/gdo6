@@ -33,17 +33,6 @@ trait WithImageFile
 	public function variant($variant) { $this->variant = $variant; return $this; }
 	
 	############
-	### Size ###
-	############
-	public function styleSize()
-	{
-	    if ($this->imageWidth)
-	    {
-	        return sprintf('max-width: %spx; max-height: %spx;', $this->imageWidth, $this->imageHeight);
-	    }
-	}
-	
-	############
 	### HREF ###
 	############
 	public function displayPreviewHref(GDO_File $file)
@@ -76,23 +65,6 @@ trait WithImageFile
 	{
 		return false;
 	}
-	
-	##############
-	### Bound  ###
-	##############
-	### XXX: Bound checking is done before a possible conversion.
-	###	  It could make sense to set those values to 10,10,2048,2048 or something.
-	###	  This could prevent DoS with giant images.
-	### @see \GDO\File\GDT_File
-	##############
-	public $minWidth;
-	public function minWidth($minWidth) { $this->minWidth = $minWidth; return $this; }
-	public $maxWidth;
-	public function maxWidth($maxWidth) { $this->maxWidth = $maxWidth; return $this; }
-	public $minHeight;
-	public function minHeight($minHeight) { $this->minHeight = $minHeight; return $this; }
-	public $maxHeight;
-	public function maxHeight($maxHeight) { $this->maxHeight = $maxHeight; return $this; }
 	
 	###############
 	### Convert ###

@@ -52,7 +52,8 @@ class Result
 	### Fetch ###
 	#############
 	/**
-	 * Fetch the first value of the next row
+	 * Fetch the first value of the next row.
+	 * @TODO rename to fetchVar()
 	 * @return string
 	 */
 	public function fetchValue()

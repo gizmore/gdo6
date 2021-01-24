@@ -1,6 +1,10 @@
-<?php /** @var $field \GDO\UI\GDT_IconButton **/ ?>
+<?php
+/** @var $field \GDO\UI\GDT_IconButton **/
+/** @var $href string **/
+?>
+<?php $field->addClass('gdo-icon-button'); ?>
 <?php if ($href) : ?>
-<a class="gdo-icon-button"
+<a
  href="<?= $href; ?>"
 <?php if (!$field->writable) : ?>
  onclick="return false;"

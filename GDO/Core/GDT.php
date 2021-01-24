@@ -319,13 +319,13 @@ abstract class GDT
 	public function renderPDF() { return $this->renderCard(); }
 	public function renderCell() { return $this->renderCellSpan($this->getVar()); }
 	public function renderCellSpan($var) { return sprintf('<span class="%s">%s</span>', $this->htmlClass(), html($var)); }
-	public function renderCard() { return GDT_Template::php('Core', 'card/gdt.php', ['gdt'=>$this]); }
+	public function renderCard() { return sprintf('<label>%s</label><span>%s</span>', $this->displayLabel(), $this->displayValue($this->getVar())); }
 	public function renderList() { return $this->render(); }
 	public function renderForm() { return $this->render(); }
 	public function renderFilter($f) {}
 	public function renderHeader() {}
 	public function renderChoice($choice) { return is_object($choice) ? $choice->renderChoice() : $choice; }
-	public function renderJSON() { return [$this->name => $this->var]; }
+	public function renderJSON() { return $this->var; }
 	
 	public $labelArgs;
 	public function labelArgs(...$labelArgs) { $this->labelArgs = $labelArgs; return $this; }

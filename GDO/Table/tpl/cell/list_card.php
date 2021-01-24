@@ -12,9 +12,9 @@ $pages = $pagemenu ? $pagemenu->render() : '';
 ?>
 
 <?=$pages?>
-<div class="gdo-list-card">
+<div class="gdt-list-card">
 <?php if ($field->hasTitle()) : ?>
-  <h3><?=$field->renderTitle()?></h3>
+  <h3 class="gdt-headline"><?=$field->renderTitle()?></h3>
 <?php endif; ?>
   <ul>
 	<li>

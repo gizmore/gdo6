@@ -30,7 +30,7 @@ use GDO\File\FileUtil;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9466'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9469'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
@@ -123,10 +123,20 @@ final class Module_Core extends GDO_Module
 		Javascript::addJavascriptInline($this->gdoConfigJS());
 		Javascript::addJavascriptInline($this->gdoUserJS());
 	}
-	
+
+	/**
+	 * Pretty print gdo config to JS.
+	 * @return string
+	 */
 	public function gdoConfigJS()
 	{
-		return sprintf("window.GDO_CONFIG = {}; window.GWF_PROTOCOL = '%s'; window.GWF_DOMAIN = '%s'; window.GWF_WEB_ROOT = '%s'; window.GWF_LANGUAGE = '%s';",
+		return sprintf(
+		    "window.GDO_CONFIG = {};
+window.GWF_PROTOCOL = '%s';
+window.GWF_DOMAIN = '%s';
+window.GWF_WEB_ROOT = '%s';
+window.GWF_LANGUAGE = '%s';
+",
 			GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT, Trans::$ISO);
 	}
 	

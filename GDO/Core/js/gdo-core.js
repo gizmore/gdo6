@@ -41,7 +41,7 @@ window.GDO.toggleAll = function(toggler) {
 
 window.GDO.error = function(response) {
 	if (response.data && response.data.error && response.data.error.error) {
-		var message = response.data.error.error;
+		var message = response.data.error;
 	}
 	else if (response.error) {
 		var message = response.error;

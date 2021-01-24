@@ -3,10 +3,12 @@
 $gdt->addClass('gdt-list-item');
 ?>
 
-<div <?=$gdt->htmlAttributes()?>>
+<div
+ <?=$gdt->htmlAttributes()?>>
 
 <?php if ($gdt->avatar || $gdt->title || $gdt->subtitle) : ?>
   <div class="gdt-li-upper">
+    <?=$gdt->htmlIcon()?>
 <?php if ($gdt->avatar) : ?>
 	<div class="gdt-li-avatar"><?=$gdt->avatar->renderCell()?></div>
 <?php endif; ?>
@@ -23,13 +25,16 @@ $gdt->addClass('gdt-list-item');
   </div>
 <?php endif; ?>
 
-<?php if ($gdt->image || $gdt->content) : ?>
+<?php if ($gdt->image ||  $gdt->content || $gdt->right) : ?>
   <div class="gdt-li-main">
 <?php if ($gdt->image) : ?>
     <div class="gdt-li-image"><?=$gdt->image->renderCell()?></div>
 <?php endif; ?>
 <?php if ($gdt->content) : ?>
     <div class="gdt-li-content"><?=$gdt->content->renderCell()?></div>
+<?php endif; ?>
+<?php if ($gdt->right) : ?>
+    <div class="gdt-li-right"><?=$gdt->right->renderCell()?></div>
 <?php endif; ?>
   </div>
 <?php endif; ?>

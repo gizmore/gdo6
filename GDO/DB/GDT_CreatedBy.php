@@ -37,6 +37,10 @@ final class GDT_CreatedBy extends GDT_User
 	 */
 	public function blankData()
 	{
+	    if ($this->var)
+	    {
+	        return [$this->name => $this->var];
+	    }
 	    $user = GDO_User::current();
 	    if (Application::instance()->isInstall() || (!$user->isPersisted()))
 	    {

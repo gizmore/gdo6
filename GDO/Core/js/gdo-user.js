@@ -11,9 +11,32 @@ var GDO_User = function(json) {
 	this.name = function(name) { if(name) this.JSON.user_name = name; return this.JSON.user_name; };
 	this.gender = function(gender) { if(gender) this.JSON.user_gender = gender; return this.JSON.user_gender; };
 	this.guestName = function(name) { if(name) this.JSON.user_guest_name = name; return this.JSON.user_guest_name; };
+	this.realName = function(name) { if(name) this.JSON.user_real_name = name; return this.JSON.user_real_name; };
+	this.hasName = function() { return !!this.JSON.user_name; };
 	this.hasGuestName = function() { return !!this.JSON.user_guest_name; };
+	this.hasRealName = function() { return !!this.JSON.user_real_name; };
 
-	this.displayName = function() { return this.hasGuestName() ? this.guestName() : this.name(); };
+	this.level = function() { return this.JSON.user_level; };
+	
+	this.profileLink = function() {
+		return '<a class="gdo-profile-link" title="'+this.displayName()+'" href="'+GWF_WEB_ROOT+'index.php?mo=Profile&amp;me=View&amp;_lang='+GWF_LANGUAGE+'&amp;id='+this.id()+'"><span>'+this.displayName()+'</span></a>';
+	};
+	
+	this.displayName = function() {
+		if (this.hasRealName()) {
+			return "´" + this.realName() + "´";
+		}
+		else if (this.hasGuestName()) {
+			return "~" + this.guestName() + "~";
+		}
+		else if (this.hasName()) {
+			return this.name();
+		}
+		else {
+			return "~~GHOST~~"; // @TODO getGhostname translation from config.
+		}
+	};
+
 	this.displayGender = function() { return this.gender() === 'no_gender' ? '' : this.gender(); };
 	
 	this.update = function(json)

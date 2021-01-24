@@ -112,11 +112,12 @@ abstract class GDO
 	/**
 	 * @var mixed[]
 	 */
-	private $temp;
+	public $temp = null;
 	public function tempReset() { $this->temp = null; }
 	public function tempGet($key) { return @$this->temp[$key]; }
-	public function tempSet($key, $value) { if (!$this->temp) $this->temp = []; $this->temp[$key] = $value; }
-	public function tempUnset($key) { unset($this->temp[$key]); }
+	public function tempSet($key, $value) { if (!$this->temp) $this->temp = []; $this->temp[$key] = $value; return $this; }
+	public function tempUnset($key) { unset($this->temp[$key]); return $this; }
+	public function tempHas($key) { return isset($this->temp[$key]); }
 	
 	##############
 	### Render ###
@@ -689,9 +690,9 @@ abstract class GDO
 		return $by === 0 ? $this : $this->saveVar($key, $this->getVar($key)+$by);
 	}
 	
-	public function saveVar($key, $value, $withHooks=true, &$worthy=false)
+	public function saveVar($key, $var, $withHooks=true, &$worthy=false)
 	{
-		return $this->saveVars([$key => $value], $withHooks, $worthy);
+		return $this->saveVars([$key => $var], $withHooks, $worthy);
 	}
 	
 	public function saveVars(array $vars, $withHooks=true, &$worthy=false)
@@ -741,13 +742,13 @@ abstract class GDO
 		return $this;
 	}
 	
-	public function saveValue($key, $value)
+	public function saveValue($key, $value, $withHooks=true)
 	{
 		$var = $this->gdoColumn($key)->toVar($value);
-		return $this->saveVar($key, $var);
+		return $this->saveVar($key, $var, $withHooks);
 	}
 	
-	public function saveValues(array $values)
+	public function saveValues(array $values, $withHooks=true)
 	{
 		$vars = array();
 		foreach ($values as $key => $value)
@@ -755,7 +756,7 @@ abstract class GDO
 			$this->gdoColumn($key)->setGDOValue($value);
 			$vars[$key] = $this->getVar($key);
 		}
-		return $this->saveVars($vars);
+		return $this->saveVars($vars, $withHooks);
 	}
 	
 	/**

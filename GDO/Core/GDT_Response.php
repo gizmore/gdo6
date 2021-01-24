@@ -108,7 +108,7 @@ class GDT_Response extends GDT
 		$back = [];
 		foreach ($this->getFieldsRec() as $field)
 		{
-			if ($json = $field->renderJSON())
+			if (null !== ($json = $field->renderJSON()))
 			{
 				$back[$field->name] = $json;
 			}

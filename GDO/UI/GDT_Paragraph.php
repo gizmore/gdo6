@@ -10,7 +10,7 @@ use GDO\Core\GDT;
  * @version 6.10
  * @since 6.00
  */
-final class GDT_Paragraph extends GDT
+class GDT_Paragraph extends GDT
 {
     use WithText;
 
@@ -18,7 +18,5 @@ final class GDT_Paragraph extends GDT
 	{
 	    return sprintf('<p class="gdt-paragraph">%s</p>', $this->renderText()); 
 	}
-	
-// 	public function renderCard() { return '<em></em>' . $this->renderCell(); }
 
 }

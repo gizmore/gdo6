@@ -11,6 +11,19 @@ use GDO\UI\GDT_Panel;
  */
 class GDT_Error extends GDT_Panel
 {
+    public static $ERROR = 0;
+    protected function __construct()
+    {
+        if (!self::$ERROR)
+        {
+            $this->name = 'error';
+        }
+        else
+        {
+            $this->name = 'error' . (++self::$ERROR);
+        }
+    }
+    
 	public function hasError() { return true; }
 
 	public static function responseException(\Throwable $e)
@@ -47,7 +60,7 @@ class GDT_Error extends GDT_Panel
 	
 	public function renderJSON()
 	{
-	    return ['error' => $this->renderText()];
+	    return $this->renderText();
 	}
 
 }

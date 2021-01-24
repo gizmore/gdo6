@@ -1,11 +1,15 @@
 <?php
 namespace GDO\Core;
+
 use GDO\DB\GDT_Text;
+
 /**
  * Datatype that uses JSON encoding to store arbitrary data.
+ * 
  * @author gizmore
  * @see \GDO\User\GDO_Session
- * @version 6.05
+ * @version 6.10
+ * @since 6.05
  */
 class GDT_JSON extends GDT_Text
 {
@@ -19,5 +23,6 @@ class GDT_JSON extends GDT_Text
 	public function toVar($value) { return $value === null ? null : self::encode($value); }
 	public function toValue($var) { return $var === null ? null : self::decode($var); }
 
-	public function renderJSON() { return array('json' => $this->toValue($this->getVar())); }
+	public function renderJSON() { return $this->getValue(); }
+
 }

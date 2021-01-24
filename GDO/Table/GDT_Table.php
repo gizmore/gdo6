@@ -14,6 +14,7 @@ use GDO\UI\WithTitle;
 use GDO\UI\WithActions;
 use GDO\Core\WithFields;
 use GDO\Util\Classes;
+use GDO\Core\GDOException;
 
 /**
  * A filterable, searchable, orderable, paginatable, sortable collection of GDT[] in headers.
@@ -256,7 +257,69 @@ class GDT_Table extends GDT
 		    }
 		}
 		
-		return $query;
+		return $this->getOrderedQuery($query);
+	}
+	
+	private function getOrderedQuery(Query $query)
+	{
+	    $headers = $this->headers;
+	    $o = $headers ? $headers->name : 'o';
+	    
+	    $hasCustomOrder = false;
+	    
+	    if ($this->ordered)
+	    {
+	        # Convert single to multiple fake
+	        if (isset($_REQUEST[$o]['order_by']))
+	        {
+	            unset($_REQUEST[$o]['o']);
+	            $by = $_REQUEST[$o]['order_by'];
+	            $_REQUEST[$o]['o'][$by] = $_REQUEST[$o]['order_dir'] === 'ASC';
+	            // 	            unset($_REQUEST[$o]['order_by']);
+	            // 	            unset($_REQUEST[$o]['order_dir']);
+	        }
+	        
+	        if ($this->headers)
+	        {
+	            if ($cols = Common::getRequestArray($o))
+	            {
+	                if ($cols = @$cols['o'])
+	                {
+	                    $o = '1';
+	                    foreach ($cols as $name => $asc)
+	                    {
+	                        if ($field = $headers->getField($name))
+	                        {
+	                            if ($field->orderable)
+	                            {
+	                                if ( (Classes::class_uses_trait($field, 'GDO\\DB\\WithObject')) &&
+	                                    ($field->orderFieldName() !== $field->name) )
+	                                {
+	                                    $query->joinObject($field->name, 'JOIN', "o{$o}");
+	                                    $query->order("o{$o}.".$field->orderFieldName(), !!$asc);
+	                                }
+	                                else
+	                                {
+	                                    $query->order($field->orderFieldName(), !!$asc);
+	                                }
+	                                $hasCustomOrder = true;
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    
+	    if (!$hasCustomOrder)
+	    {
+	        if ($this->orderDefault)
+	        {
+	            $query->order($this->orderDefault, $this->orderDefaultAsc);
+	        }
+	    }
+	    
+	    return $query;
 	}
 	
 	/**
@@ -324,71 +387,6 @@ class GDT_Table extends GDT
 	 */
 	public function queryResult()
 	{
-		$query = $this->query;
-		
-		$headers = $this->headers;
-		$o = $headers ? $headers->name : 'o';
-		
-		if ($this->ordered)
-		{
-			# Convert single to multiple fake
-		    if (isset($_REQUEST[$o]['order_by']))
-		    {
-                unset($_REQUEST[$o]['o']);
-	            $by = $_REQUEST[$o]['order_by'];
-	            $_REQUEST[$o]['o'][$by] = $_REQUEST[$o]['order_dir'] === 'ASC';
-// 	            unset($_REQUEST[$o]['order_by']);
-// 	            unset($_REQUEST[$o]['order_dir']);
-		    }
-		    
-		    $hasCustomOrder = false;
-		    
-		    if ($this->headers)
-		    {
-		        if ($cols = Common::getRequestArray($o))
-		        {
-		            if ($cols = @$cols['o'])
-		            {
-		                $o = '1';
-            			foreach ($cols as $name => $asc)
-            			{
-            				if ($field = $headers->getField($name))
-            				{
-            					if ($field->orderable)
-            					{
-            						if ( (Classes::class_uses_trait($field, 'GDO\\DB\\WithObject')) &&
-            						     ($field->orderFieldName() !== $field->name) )
-            						{
-           						        $query->joinObject($field->name, 'JOIN', "o{$o}");
-           						        $query->order("o{$o}.".$field->orderFieldName(), !!$asc);
-            						}
-            						else
-            						{
-            						    $query->order($field->orderFieldName(), !!$asc);
-            						}
-            						$hasCustomOrder = true;
-            					}
-            				}
-            			}
-		            }
-		        }
-		    }
-		    
-			if (!$hasCustomOrder)
-			{
-				if ($this->orderDefault)
-				{
-					$query->order($this->orderDefault, $this->orderDefaultAsc);
-				}
-			}
-		}
-		
-// 		if ($this->pagemenu)
-// 		{
-// 		    $this->getPageMenu();
-// 			$this->pagemenu->filterQuery($query);
-// 		}
-		
 		return $this->query->exec();
 	}
 	
@@ -401,7 +399,7 @@ class GDT_Table extends GDT
 		{
 		    if ($this->query)
 		    {
-		        if (!$this->countItems)
+		        if ($this->countItems === null)
 		        {
         			$this->pagemenu->items($this->countItems());
 		        }
@@ -482,6 +480,43 @@ class GDT_Table extends GDT
 			$data[] = $dat;
 		}
 		return $data;
+	}
+	
+	################
+	### Page for ###
+	################
+	/**
+	 * Calculate the page for a gdo.
+	 * We do this by examin the order from our filtered query.
+	 * We count(*) the elements that are before or after orderby.
+	 * @param GDO $gdo
+	 * @throws GDOException
+	 */
+	public function getPageFor(GDO $gdo)
+	{
+	    if ($this->result instanceof ArrayResult)
+	    {
+	        throw new GDOException("@TODO implement getPageFor() ArrayResult");
+	    }
+	    else
+	    {
+	        $q = $this->query->copy();
+	        foreach ($q->orderBy as $i => $column)
+	        {
+	            $subq = $gdo->entityQuery()->from($gdo->gdoTableName()." AS sq{$i}")->selectOnly($column)->buildQuery();
+	            $cmpop = $q->orderDir[$i] ? '<' : '>';
+	            $q->where("{$column} {$cmpop} ( {$subq} )");
+	        }
+	        $q->selectOnly('COUNT(*)');
+	        $itemsBefore = $q->exec()->fetchValue();
+	        return $this->getPageForB($itemsBefore);
+	    }
+	}
+	
+	private function getPageForB($itemsBefore)
+	{
+	    $ipp = $this->getPageMenu()->ipp;
+	    return intval( ($itemsBefore + 1) / $ipp ) + 1;
 	}
 
 }

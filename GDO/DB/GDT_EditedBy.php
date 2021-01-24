@@ -15,10 +15,13 @@ final class GDT_EditedBy extends GDT_User
 	
 	public function gdoBeforeUpdate(Query $query)
 	{
-		$userId = GDO_User::current()->getID();
-		$userId = $userId > 0 ? $userId : 1;
-		$query->set($this->identifier() . '=' . $userId);
-		$this->gdo->setVar($this->name, $userId);
+	    if (!$this->var)
+	    {
+    		$userId = GDO_User::current()->getID();
+    		$userId = $userId > 0 ? $userId : 1;
+    		$query->set($this->identifier() . '=' . $userId);
+    		$this->gdo->setVar($this->name, $userId);
+	    }
 	}
 	
 // 	public function blankData()

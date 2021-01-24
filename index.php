@@ -87,6 +87,7 @@ switch ($app->getFormat())
         }
         if ($response)
         {
+            $response->add(Website::$TOP_RESPONSE);
             Website::renderJSON($response->renderJSON());
         }
         die(0);

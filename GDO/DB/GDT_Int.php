@@ -151,6 +151,11 @@ class GDT_Int extends GDT
 		return $this->getVar();
 	}
 	
+// 	public function renderJSON()
+// 	{
+// 	    return [$this->name => $this->var];
+// 	}
+	
 	##############
 	### Filter ###
 	##############

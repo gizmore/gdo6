@@ -10,6 +10,7 @@ use GDO\UI\WithHREF;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Success;
 use GDO\Core\GDO_Module;
+use GDO\UI\WithImageSize;
 
 /**
  * File input and upload backend for flow.js
@@ -21,6 +22,7 @@ use GDO\Core\GDO_Module;
 class GDT_File extends GDT_Object
 {
 	use WithHREF;
+	use WithImageSize;
 	
 	public $multiple = false;
 	
@@ -97,6 +99,33 @@ class GDT_File extends GDT_Object
 		$this->maxfiles = $maxfiles;
 		return $this;
 	}
+	
+	############
+	### Size ###
+	############
+	public function styleSize()
+	{
+	    if ($this->imageWidth)
+	    {
+	        return sprintf('max-width: %spx; max-height: %spx;', $this->imageWidth, $this->imageHeight);
+	    }
+	}
+	##############
+	### Bound  ###
+	##############
+	### XXX: Bound checking is done before a possible conversion.
+	###	  It could make sense to set those values to 10,10,2048,2048 or something.
+	###	  This could prevent DoS with giant images.
+	### @see \GDO\File\GDT_File
+	##############
+	public $minWidth;
+	public function minWidth($minWidth) { $this->minWidth = $minWidth; return $this; }
+	public $maxWidth;
+	public function maxWidth($maxWidth) { $this->maxWidth = $maxWidth; return $this; }
+	public $minHeight;
+	public function minHeight($minHeight) { $this->minHeight = $minHeight; return $this; }
+	public $maxHeight;
+	public function maxHeight($maxHeight) { $this->maxHeight = $maxHeight; return $this; }
 	
 	##############
 	### Action ###

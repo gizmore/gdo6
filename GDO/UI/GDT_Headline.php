@@ -8,6 +8,7 @@ use GDO\Core\GDT;
  * Has a level 1-5 and uses WithHTML to display a non templated h tag.
  * 
  * @author gizmore
+ * @version 6.10
  * @since 6.07
  */
 final class GDT_Headline extends GDT
@@ -17,9 +18,9 @@ final class GDT_Headline extends GDT
 	public $level = 5;
 	public function level($level) { $this->level = $level; return $this; }
 	
-	public function renderCell() { return sprintf('<h%1$d>%2$s</h%1$d>', $this->level, $this->renderText()); }
+	public function renderCell() { return $this->hasText() ? sprintf('<h%1$d class="gdt-headline">%2$s</h%1$d>', $this->level, $this->renderText()) : ''; }
 	public function renderForm() { return $this->renderCell(); }
+	public function renderCard() { return $this->renderCell(); }
 	public function renderJSON() { return ['headline' => $this->renderText(), 'level' => $this->level]; }
-	public function renderCard() { return sprintf('<em></em><h%1$d>%2$s</h%1$d>', $this->level, $this->renderText()); }
 	
 }

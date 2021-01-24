@@ -1,6 +1,6 @@
 # GDO6
 
-A modern approach to the 're-inventing the framework wheel' game. I chose PHP because development is quite fast there. Also with type hinting the code completion is almost charmy and it's quite a fast language. A nice idea for PHP would be an apache or nginx mod that does not terminate the script to speed things further up.
+A modern approach to the 're-inventing the framework wheel' game. I chose PHP because development is quite fast there. Also with type hinting the code completion is almost charmy and it's quite a fast language.
 
 
 ## Gizmore Data Objects 6.10
@@ -112,6 +112,8 @@ A demo site with material design is available here: https://geo2country.gizmore.
 A demo site with bootstrap4 theme is available here: https://mettwitze.gizmore.org
 
 A demo site with jQueryMobile theme is available here: https://service.busch-peine.de
+
+A demo site with classic theme is available here: https://ranzgruppe.com 
 
 
 ## Installation

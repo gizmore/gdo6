@@ -1,10 +1,12 @@
-<?php /** @var $gdo \GDO\File\GDO_File **/
+<?php
+/** @var $gdo \GDO\File\GDO_File **/
+/** @var $field \GDO\File\GDT_File **/
 use GDO\UI\GDT_Icon; ?>
 <?php if (!$gdo) return; ?>
 <div class="gdo-file">
 <?php if ($gdo->isImageType()) : ?>
 <img
- style="display: block; <?=$field->styleSize()?>"
+ style="display: block; max-width: 100%; <?php #$field->styleSize()?>"
  src="<?= ($field->previewHREF . $gdo->getID()) ?>" />
  
 <?php else : ?>

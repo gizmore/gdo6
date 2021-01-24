@@ -37,6 +37,9 @@ final class GDT_ListItem extends GDT
 	public $content;
 	public function content($content) { $this->content = $content; return $this; }
 	
+	public $right;
+	public function right($content) { $this->right = $content; return $this; }
+	
 	public $subtext;
 	public function subtext($subtext) { $this->subtext = $subtext; return $this; }
 	

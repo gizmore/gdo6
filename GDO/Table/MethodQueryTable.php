@@ -3,6 +3,8 @@ namespace GDO\Table;
 
 use GDO\DB\Query;
 use GDO\Core\GDOException;
+use GDO\Core\GDT_Hook;
+use GDO\Core\GDO_Hook;
 
 /**
  * A method that displays a table.
@@ -31,6 +33,9 @@ abstract class MethodQueryTable extends MethodTable
 	    return $this->gdoTable()->select();
 	}
 	
+	/**
+	 * @return Query
+	 */
 	public function getCountQuery()
 	{
 	    return $this->getQuery()->selectOnly('COUNT(*)');
@@ -44,12 +49,16 @@ abstract class MethodQueryTable extends MethodTable
 	############
 	### Exec ###
 	############
+	protected function beforeCalculateTable(GDT_Table $table) {}
 	protected function calculateTable(GDT_Table $table)
 	{
-	    $table->query($this->getQuery());
-	    if ($this->isPaginated())
+	    $query = $this->getQuery();
+	    GDT_Hook::callHook("MethodQueryTable_{$this->getModuleName()}_{$this->getMethodName()}", $query);
+	    $table->query($query);
+        $table->countQuery($this->getCountQuery());
+        $this->beforeCalculateTable($table);
+        if ($this->isPaginated())
 	    {
-	        $table->countQuery($this->getCountQuery());
 	        $pagemenu = $table->getPageMenu();
 	        $pagemenu->filterQuery($table->query);
 	    }

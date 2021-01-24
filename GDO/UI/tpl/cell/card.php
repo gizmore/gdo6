@@ -2,11 +2,11 @@
 /** @var $field \GDO\UI\GDT_Card **/
 $field->addClass('gdt-card');
 ?>
-<div <?=$field->htmlAttributes()?>>
-
+<div
 <?php if ($field->gdo) : ?>
-  <a id="card-<?=$field->gdo->getID()?>" class="n"></a>
+  id="card-<?=$field->gdo->getID()?>"
 <?php endif; ?>
+  <?=$field->htmlAttributes()?>>
 
 <?php if ($field->avatar || $field->title || $field->subtitle) : ?>
   <div class="gdt-card-upper">
@@ -29,10 +29,10 @@ $field->addClass('gdt-card');
 <?php if ($field->image || $field->content || $field->fields) : ?>
   <div class="gdt-card-middle">
 <?php if ($field->image) : ?>
-    <div class="gdt-card-image"><?=$field->image->renderCell()?></div>
+    <div class="gdt-card-image"><?=$field->image->renderCard()?></div>
 <?php endif; ?>
 <?php if ($field->content) : ?>
-    <div class="gdt-card-content"><?=$field->content->renderCell()?></div>
+    <div class="gdt-card-content"><?=$field->content->renderCard()?></div>
 <?php endif; ?>
 <?php if ($field->fields) : ?>
     <div class="gdt-card-fields">

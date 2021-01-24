@@ -108,6 +108,8 @@ final class Query
     		$clone->group = $this->group;
     		$clone->having = $this->having;
             $clone->order = $this->order;
+            $clone->orderBy = $this->orderBy;
+            $clone->orderDir = $this->orderDir;
             $clone->limit = $this->limit;
     		$clone->from = $this->from;
     		$clone->write = $this->write;
@@ -316,10 +318,14 @@ final class Query
 		return $this->order($column, false);
 	}
 	
+	public $orderBy = [];
+	public $orderDir = [];
 	public function order($column=null, $ascending=true)
 	{
 		if ($column)
 		{
+		    $this->orderBy[] = $column;
+		    $this->orderDir[] = $ascending;
 			$order = $column . ($ascending ? ' ASC' : ' DESC');
 			if ($this->order)
 			{
