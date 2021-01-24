@@ -157,7 +157,7 @@ abstract class MethodTable extends Method
 	    if ($fetchAs = $this->fetchAs())
 	    {
 	        $table->fetchAs($fetchAs);
-	        $result->fetchAs($fetchAs);
+	        $result->table = $fetchAs;
 	    }
 	    $this->setupTitle($table);
 	    return GDT_Response::makeWith($table);
