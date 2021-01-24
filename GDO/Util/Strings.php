@@ -14,7 +14,8 @@ final class Strings
 	######################
 	public static function startsWith($s, $with)
 	{
-	    return substr($s, 0, strlen($with)) === $with;
+	    return strpos($s, $with) === 0; 
+// 	    return substr($s, 0, strlen($with)) === $with;
 	}
 	
 	public static function endsWith($s, $with)

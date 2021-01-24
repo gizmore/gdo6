@@ -662,7 +662,7 @@ abstract class GDO
 	/**
 	 * @return self
 	 */
-	public function save()
+	public function save($withHooks=true)
 	{
 		if (!$this->persisted)
 		{
@@ -673,12 +673,18 @@ abstract class GDO
 			if ($setClause = $this->getSetClause())
 			{
 				$query = $this->updateQuery()->set($setClause);
-				$this->beforeUpdate($query);
+				if ($withHooks)
+				{
+				    $this->beforeUpdate($query);
+				}
 				$query->exec();
 				$this->dirty = false;
 				$this->recache(); # save is the only action where we recache!
 				$this->callRecacheHook();
-				$this->gdoAfterUpdate();
+				if ($withHooks)
+				{
+				    $this->afterUpdate();
+				}
 			}
 			$this->dirty = false;
 		}

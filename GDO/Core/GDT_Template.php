@@ -91,17 +91,33 @@ class GDT_Template extends GDT
 	##############
 	### Engine ###
 	##############
-	public static $CALLS = 0;
+	public static $CALLS = 0; # Performance counter
 	
+	/**
+	 * Include a template for a user.
+	 * Sets/Wraps locale ISO for the template call.
+	 * @param GDO_User $user
+	 * @param string $moduleName
+	 * @param string $path
+	 * @param array $tVars
+	 * @return string
+	 */
 	public static function phpUser(GDO_User $user, $moduleName, $path, array $tVars=null)
 	{
 		$old = Trans::$ISO;
-		Trans::$ISO = $user->getLangISO();
+		Trans::setISO($user->getLangISO());
 		$result = self::php($moduleName, $path, $tVars);
 		Trans::$ISO = $old;
 		return $result;
 	}
 	
+	/**
+	 * Include a template.
+	 * @param string $moduleName
+	 * @param string $path
+	 * @param array $tVars
+	 * @return string
+	 */
 	public static function php($moduleName, $path, array $tVars=null)
 	{
 		try
@@ -109,7 +125,7 @@ class GDT_Template extends GDT
 			ob_start();
 			self::$CALLS++;
 			$path = self::getPath($moduleName, $path);
-			if (isset($tVars))
+			if ($tVars)
 			{
 				foreach ($tVars as $__key => $__value)
 				{
@@ -135,6 +151,12 @@ class GDT_Template extends GDT
 		return GDT_Response::makeWith(self::make()->template($moduleName, $path, $tVars));
 	}
 	
+	/**
+	 * Include a static file.
+	 * @param string $moduleName
+	 * @param string $path
+	 * @return string
+	 */
 	public static function file($moduleName, $path)
 	{
 		self::$CALLS++;
