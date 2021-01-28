@@ -274,19 +274,26 @@ class Database
 		
 		$columnsCode = implode(",\n", $columns);
 		
-		$query = "CREATE TABLE IF NOT EXISTS {$gdo->gdoTableIdentifier()} (\n$columnsCode\n) ENGINE = {$gdo->gdoEngine()}";
-		
-// 		if ($this->debug)
-// 		{
-// 			printf("<pre>%s</pre>\n", htmlspecialchars($query));
-// 		}
-		
-		$this->queryWrite($query);
-		
-		if ($reinstall)
+		try
 		{
-			$this->alterTable($gdo);
+		    $this->disableForeignKeyCheck();
+    		$query = "CREATE TABLE IF NOT EXISTS {$gdo->gdoTableIdentifier()} (\n$columnsCode\n) ENGINE = {$gdo->gdoEngine()}";
+    		$this->queryWrite($query);
 		}
+		catch (\Throwable $ex)
+		{
+		    throw $ex;
+		}
+		finally
+		{
+		    $this->enableForeignKeyCheck();
+		}
+		
+// 		@TODO Implement auto alter table... very tricky!
+// 		if ($reinstall)
+// 		{
+// 			$this->alterTable($gdo);
+// 		}
 		
 		return true;
 	}

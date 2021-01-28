@@ -160,9 +160,9 @@ class GDO_Module extends GDO
 	private static $nameCache = [];
 	public static function getNameS()
 	{
-	    if ($cache = @self::$nameCache[static::class])
+	    if (isset(self::$nameCache[static::class]))
 	    {
-	        return $cache;
+	        return self::$nameCache[static::class];
 	    }
 	    self::$nameCache[static::class] = $cache = substr(self::gdoShortNameS(), 7);
 	    return $cache;

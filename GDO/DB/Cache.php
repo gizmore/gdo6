@@ -148,6 +148,7 @@ class Cache
 		{
 			$this->cache[$key]->setGDOVars($assoc);
 		}
+// 		$this->cache[$key]->afterRead();
 		return $this->cache[$key];
 	}
 	

@@ -49,5 +49,9 @@ Pull requests < gimme your ssh key. :)
 
 - Make a module to choose if directory view is enabled. Maybe disallow in InstallSecurity is better.. who wants to see all that mixed content?
 
-- Make ->order() not accept true false... 'foocol', false  .. instead use single paramter 'foocol DESC'.
+NO: Make ->order() not accept true false... 'foocol', false  .. instead use single paramter 'foocol DESC'.
+NO: It is better to have 2 values for order, because some functionality needs both values
 
+- Split birthdate apart in a new module gdo6-birthday?
+
+- Work on SEO. Make sure everything has a title and tags. make urls with gdo.com/ThisIsSEOHahah.html?mo=Mo&me=Me&rest=normal

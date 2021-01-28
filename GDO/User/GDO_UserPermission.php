@@ -5,6 +5,8 @@ use GDO\Core\GDO;
 use GDO\DB\GDT_CreatedAt;
 use GDO\DB\GDT_CreatedBy;
 use GDO\DB\GDT_Index;
+use GDO\Core\GDO_Hook;
+use GDO\Core\GDT_Hook;
 
 /**
  * Table for user<=>permission relations.
@@ -60,7 +62,8 @@ final class GDO_UserPermission extends GDO
 	 */
 	public static function grantPermission(GDO_User $user, GDO_Permission $permission)
 	{
-		return self::blank(array('perm_user_id' => $user->getID(), 'perm_perm_id' => $permission->getID()))->replace();
+		$perm = self::blank(array('perm_user_id' => $user->getID(), 'perm_perm_id' => $permission->getID()))->insert();
+		GDT_Hook::callHook('UserPermissionGranted', $user, $permission);
 	}
 	
 	/**

@@ -17,9 +17,9 @@ window.GDO.autofocusForm = function() {
 	}
 };
 
-window.GDO.error = function(html, title) {
-	alert(html);
-};
+//window.GDO.error = function(html, title) {
+//	alert(html);
+//};
 
 /**
  * Init GDO612js
@@ -55,4 +55,8 @@ window.GDO.openDialog = function(dialogId) {
 		console.error('Cannot find dialog with id ' + dialogId)
 	}
 	dlg.showModal();
+}
+
+window.GDO.href = function(module, method, append) {
+	return GWF_WEB_ROOT + 'index.php?mo=' + module + '&me=' + method + append;
 }

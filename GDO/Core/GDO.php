@@ -409,6 +409,11 @@ abstract class GDO
 	 */
 	private function gdoPrimaryKeyColumnNames()
 	{
+	    static $kcn = null;
+	    if ($kcn !== null)
+	    {
+	        return $kcn;
+	    }
 	    $columns = [];
 	    foreach ($this->gdoColumnsCache() as $column)
 	    {
@@ -421,6 +426,7 @@ abstract class GDO
 	            break; # Assume PKs are first until no more PKs
 	        }
 	    }
+	    $kcn = $columns;
 	    return $columns;
 	}
 	
@@ -1222,7 +1228,7 @@ abstract class GDO
 		$this->gdoBeforeDelete();
 	}
 
-	private function afterCreate()
+	public function afterCreate()
 	{
 		# Flags
 		$this->dirty = false;
@@ -1235,7 +1241,16 @@ abstract class GDO
 		$this->gdoAfterCreate();
 	}
 	
-	private function afterUpdate()
+	public function afterRead()
+	{
+	    foreach ($this->gdoColumnsCache() as $gdoType)
+	    {
+	        $gdoType->gdo($this)->gdoAfterRead();
+	    }
+	    $this->gdoAfterRead();
+	}
+	
+	public function afterUpdate()
 	{
 		# Flags
 		$this->dirty = false;
@@ -1247,7 +1262,7 @@ abstract class GDO
 		$this->gdoAfterUpdate();
 	}
 	
-	private function afterDelete()
+	public function afterDelete()
 	{
 		# Flags
 		$this->dirty = false;
