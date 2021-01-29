@@ -427,11 +427,8 @@ class GDO_Module extends GDO
 	    if ($gdt = $this->getSetting($key))
 	    {
     	    $settings = $this->loadUserSettings($user);
-    	    if (isset($settings[$key]))
-    	    {
-    	        $gdt->initial($settings[$key]);
-    	    }
-    	    return $gdt;
+    	    $var = isset($settings[$key]) ? $settings[$key] : $gdt->initial;
+   	        return $gdt->var($var);
 	    }
 	}
 	
@@ -463,11 +460,11 @@ class GDO_Module extends GDO
 	
 	public function saveUserSetting(GDO_User $user, $key, $var)
 	{
-	    $gdt = $this->getSetting($key);
 	    if (!$user->getID())
 	    {
 	        return $gdt;
 	    }
+	    $gdt = $this->getSetting($key);
 	    $data = [
 	        'uset_user' => $user->getID(),
 	        'uset_name' => $key,

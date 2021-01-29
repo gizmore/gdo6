@@ -204,7 +204,7 @@ final class Website
 	 * @param number $time
 	 * @return \GDO\Core\GDT_Response
 	 */
-	public static function redirectMessage($key, array $args=null, $url, $time=0)
+	public static function redirectMessage($key, array $args=null, $url=null, $time=0)
 	{
 		if (Application::instance()->isCLI())
 		{

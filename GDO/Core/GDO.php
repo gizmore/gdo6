@@ -1073,12 +1073,18 @@ abstract class GDO
 		}
 	}
 	
+	/**
+	 * This function triggers a recache, also over IPC, if IPC is enabled.
+	 */
 	public function recache()
 	{
 		if ($this->table()->cache)
 		{
 			$this->table()->cache->recache($this);
-// 			$this->callRecacheHook();
+			if (GWF_IPC)
+			{
+    			$this->callRecacheHook();
+			}
 		}
 	}
 	

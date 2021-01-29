@@ -65,10 +65,26 @@ class GDT_String extends GDT
 	public function min($min) { $this->min = $min; return $this; }
 	public function max($max) { $this->max = $max; return $this; }
 	
-	public function getVar()
+// 	public function getVar()
+// 	{
+// 		$var = trim(parent::getVar(), "\r\n\t ");
+// 		return $var === '' ? null : $var;
+// 	}
+
+	/**
+	 * Strings trim and convert empty string to null.
+	 */
+	public function var($var=null)
 	{
-		$var = trim(parent::getVar(), "\r\n\t ");
-		return $var === '' ? null : $var;
+	    $var = trim($var, "\r\n\t ");
+	    $this->var = $var === '' ? null : (string)$var;
+	    return $this;
+	}
+	
+	public function inputToVar($input)
+	{
+	    $input = trim($input, "\r\n\t ");
+	    return $input ? $input : null;
 	}
 	
 	######################

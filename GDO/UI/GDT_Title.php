@@ -30,8 +30,15 @@ class GDT_Title extends GDT_String
 	
 	public function renderCell()
 	{
-	    $text = $this->titleEscaped ? html($this->var) : $this->var;
+	    $text = $this->renderTitle();
+	    $text = $this->titleEscaped ? html($text) : $text;
 	    return '<span class="gdt-title">' . $text . '</span>'; 
 	}
 	
+	public function var($var=null)
+	{
+	    $this->titleRaw = $var;
+	    return parent::var($var);
+	}
+
 }

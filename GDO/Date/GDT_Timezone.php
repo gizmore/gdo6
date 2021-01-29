@@ -2,6 +2,7 @@
 namespace GDO\Date;
 
 use GDO\Form\GDT_Select;
+use GDO\DB\GDT_ObjectSelect;
 
 /**
  * Timezone select.
