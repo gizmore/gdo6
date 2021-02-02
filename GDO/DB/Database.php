@@ -7,6 +7,7 @@ use GDO\Core\GDOError;
 use GDO\Core\GDT;
 use Exception;
 use GDO\Util\Strings;
+use GDO\Core\Debug;
 
 /**
  * mySQLi abstraction.
@@ -94,8 +95,8 @@ class Database
 				$t1 = microtime(true);
 				if ($this->link = $this->connect())
 				{
-					$this->query("SET NAMES UTF8");
-					$this->query("SET time_zone = '+00:00'");
+					$this->queryRead("SET NAMES UTF8"); # not really a read but no costy write!
+					$this->queryRead("SET time_zone = '+00:00'");
 				}
 			}
 			catch (Exception $e)
@@ -121,19 +122,22 @@ class Database
 	#############
 	public function queryRead($query)
 	{
-		$this->reads++; self::$READS++;
+		self::$READS++;
+		$this->reads++;
 		return $this->query($query);
 	}
 	
 	public function queryWrite($query)
 	{
-		$this->writes++; self::$WRITES++;
+		self::$WRITES++;
+		$this->writes++;
 		return $this->query($query);
 	}
 	
 	private function query($query)
 	{
-		$this->queries++; self::$QUERIES++;
+		self::$QUERIES++;
+		$this->queries++;
 		$t1 = microtime(true);
 		if (!($result = mysqli_query($this->getLink(), $query)))
 		{
@@ -152,11 +156,16 @@ class Database
 		}
 		$t2 = microtime(true);
 		$timeTaken = $t2 - $t1;
-		$this->queryTime += $timeTaken; self::$QUERY_TIME += $timeTaken;
+		self::$QUERY_TIME += $timeTaken;
+		$this->queryTime += $timeTaken;
 		if ($this->debug)
 		{
 			$timeTaken = sprintf('%.04f', $timeTaken);
 			Logger::log('queries', "#" . self::$QUERIES . ": ({$timeTaken}s) ".$query, Logger::DEBUG);
+			if ($this->debug > 1)
+			{
+			    Logger::log('queries', Debug::backtrace('#' . self::$QUERIES . ' Backtrace', false));
+			}
 		}
 		return $result;
 	}

@@ -84,7 +84,7 @@ class GDT_String extends GDT
 	public function inputToVar($input)
 	{
 	    $input = trim($input, "\r\n\t ");
-	    return $input ? $input : null;
+	    return $input === '' ? null : $input;
 	}
 	
 	######################

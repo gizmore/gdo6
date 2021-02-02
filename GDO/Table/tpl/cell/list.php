@@ -12,6 +12,14 @@ echo GDT_Template::php('Table', 'cell/_listfilter.php', ['field' => $field]);
 $pagemenu = $field->getPageMenu();
 $pagemenu = $pagemenu ? $pagemenu->renderCell() : '';
 
+if (!$field->countItems())
+{
+    if ($field->hideEmpty)
+    {
+        return;
+    }
+}
+
 $result = $field->getResult();
 $template = $field->getItemTemplate();
 

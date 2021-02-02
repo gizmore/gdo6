@@ -21,6 +21,7 @@ use GDO\Avatar\GDT_Avatar;
 use GDO\Session\GDO_Session;
 use GDO\DB\Cache;
 use GDO\Country\GDO_Country;
+use GDO\DB\GDT_Index;
 
 /**
  * The holy user object.
@@ -66,6 +67,8 @@ final class GDO_User extends GDO
 			GDT_CreatedAt::make('user_register_time')->label('registered_at'),
 		    GDT_Timezone::make('user_timezone')->initial(GWF_TIMEZONE),
 			GDT_IP::make('user_register_ip')->useCurrent(),
+		    # Indexes
+		    GDT_Index::make()->indexColumns('user_last_activity'),
 		);
 	}
 	

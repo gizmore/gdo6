@@ -28,17 +28,18 @@ final class GDO_ModuleVar extends GDO
 	public function getVarName() { return $this->getVar('mv_name'); }
 	public function getVarValue() { return $this->getVar('mv_value'); }
 	
-	public static function createModuleVar(GDO_Module $module, GDT $var)
+	public static function createModuleVar(GDO_Module $module, GDT $gdt)
 	{
-		if (null === ($value = $var->getVar()))
+	    $var = $gdt->getVar();
+	    if ($var === null)
 		{
-			$var->initial(null);
-			return self::removeModuleVar($module, $var->name);
+		    $gdt->var($gdt->initial);
+		    return self::removeModuleVar($module, $gdt->name);
 		}
 		return self::table()->blank(array(
 			'mv_module_id' => $module->getID(),
-			'mv_name' => $var->name,
-			'mv_value' => $value,
+		    'mv_name' => $gdt->name,
+			'mv_value' => $var,
 		))->replace();
 	}
 	

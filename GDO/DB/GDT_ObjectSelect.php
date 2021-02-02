@@ -20,7 +20,7 @@ class GDT_ObjectSelect extends GDT_Select
 	
 	public function getChoices()
 	{
-		return $this->table ? $this->table->all() : [];
+		return $this->table ? $this->table->allCached() : [];
 	}
 	
 	public function initChoices()

@@ -19,10 +19,11 @@ class GDT_Checkbox extends GDT_Select
     
 	protected function __construct()
 	{
+	    parent::__construct();
 		$this->emptyValue = '2';
 		$this->min = 0;
 		$this->max = 1;
-		$this->ascii();
+		$this->ascii(); # This enables string search (not binary).
 		$this->caseS();
 // 		$this->notNull = true;
 // 		$this->initial = '0';

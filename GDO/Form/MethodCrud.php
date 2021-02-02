@@ -95,7 +95,7 @@ abstract class MethodCrud extends MethodForm
 	public function createForm(GDT_Form $form)
 	{
 	    $table = $this->gdoTable();
-// 	    $form->gdo($this->gdo);
+	    $form->gdo($this->gdo);
 		foreach ($table->gdoColumnsCache() as $gdt)
 		{
 			$this->createFormRec($form, $gdt->gdo($this->gdoTable()));
@@ -120,12 +120,14 @@ abstract class MethodCrud extends MethodForm
 				}
 				else
 				{
-					$form->addField($gdt);
+// 				    $form->addField($gdt->table->gdoColumnCopy($gdt->name));
+				    $form->addField($gdt);
 				}
 			}
 			elseif (!$gdt->virtual)
 			{
-				$form->addField($gdt);
+// 			    $form->addField($gdt->table->gdoColumnCopy($gdt->name));
+			    $form->addField($gdt);
 			}
 		}
 	}

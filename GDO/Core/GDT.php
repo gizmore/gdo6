@@ -161,16 +161,21 @@ abstract class GDT
 	#################
 	### Var/Value ###
 	#################
-	public function gdo(GDO $gdo)
+	public function gdo(GDO $gdo=null)
 	{
 	    $this->gdo = $gdo;
-	    if ($gdo->hasColumn($this->name))
+	    if ($gdo)
 	    {
-    	    return !$gdo->isTable() ?
-    	       $this->setGDOData($gdo) :
-    	       $this->var($this->initial);
+	        if ($gdo->isTable())
+	        {
+    	       return $this->var($this->initial);
+	        }
+	        else
+	        {
+    	       return $this->setGDOData($gdo);
+	        }
 	    }
-	    return $this;
+	    return $this; //->var($this->initial);
 	}
 	
 	/**
@@ -239,7 +244,7 @@ abstract class GDT
 	    {
 	        return $this->var($this->initial);
 	    }
-		else #if ($gdo->hasVar($this->name))
+		elseif ($gdo->hasVar($this->name))
 		{
 		    return $this->var($gdo->getVar($this->name));
 		}

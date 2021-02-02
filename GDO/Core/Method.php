@@ -369,11 +369,11 @@ abstract class Method
 			if ($transactional) $db->transactionBegin();
 			
 			# Exec 1)before, 2)execute, 3)after
-// 			GDT_Hook::callHook('BeforeExecute', $this);
+			GDT_Hook::callHook('BeforeExecute', $this);
 			$response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
 			$response = $response ? $response->add($this->execute()) : $this->execute();
 			$response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
-// 			GDT_Hook::callHook('AfterExecute', $this);
+			GDT_Hook::callHook('AfterExecute', $this);
 			
 			# Wrap transaction end
 			if ($transactional) $db->transactionEnd();

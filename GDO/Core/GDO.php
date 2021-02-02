@@ -483,7 +483,7 @@ abstract class GDO
 // 	        return $gdt->gdtTable($this->table())->gdo($this);
 	        return $gdt->gdo($this);
 	    }
-	    else
+	    elseif ($throw)
 	    {
 	        throw new GDOError('err_unknown_gdo_column', [html($key)]);
 	    }
@@ -596,12 +596,14 @@ abstract class GDO
 	 */
 	public function deleteWhere($condition)
 	{
+	    $deleted = 0;
 	    $result = $this->table()->select()->where($condition)->exec();
 	    while ($gdo = $result->fetchObject())
 	    {
+	        $deleted++;
 	        $gdo->deleteB();
 	    }
-	    return $this;
+	    return $deleted;
 	}
 	
 	private function deleteB()
@@ -717,17 +719,17 @@ abstract class GDO
 // 		    if ($gdt = $this->gdoColumn($key))
 // 		    {
 // 		        foreach ($gdt->getGDOData() as $k => $v)
-		        {
+// 		        {
 // 		            if (array_key_exists($key, $this->gdoVars))
-		            {
-// 		                if ($this->gdoVars[$key] !== $var)
+// 		            {
+		                if ($var !== $this->gdoVars[$key])
 		                {
 		                    $query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
 		                    $this->markClean($key);
 		                    $worthy = true; # We got a change
 		                }
-		            }
-		        }
+// 		            }
+// 		        }
 // 		    }
 		}
 
@@ -739,7 +741,7 @@ abstract class GDO
 			$query->exec();
 			foreach ($vars as $key => $var)
 			{
-			    if (array_key_exists($key, $this->gdoVars))
+// 			    if (array_key_exists($key, $this->gdoVars)) # speedup?
 			    {
 			        $this->gdoVars[$key] = $var;
 			    }
@@ -1139,14 +1141,21 @@ abstract class GDO
 	
 	public function allCached($order=null, $asc=null)
 	{
+	    static $ALL;
+	    if ($ALL)
+	    {
+	        return $ALL;
+	    }
 	    if (!$this->memCached())
 	    {
-	        return $this->allWhere('true', $order, $asc);
+	        $ALL = $this->allWhere('true', $order, $asc);
+	        return $ALL;
 	    }
+	    
 	    $key = 'all_' . $this->gdoTableName();
 	    if (false === ($cache = Cache::get($key)))
 	    {
-	        $cache = $this->allWhere('true', $order, $asc);
+	        $cache = $ALL = $this->allWhere('true', $order, $asc);
 	        Cache::set($key, $cache);
 	    }
 	    return $cache;

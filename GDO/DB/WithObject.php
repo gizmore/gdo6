@@ -36,6 +36,9 @@ trait WithObject
 	 */
 	public function foreignTable() { return $this->table; }
 	
+	###################
+	### Composition ### @TODO unused, implement composite CRUD forms?
+	###################
 	public $composition = false;
 	public function composition($composition=true) { $this->composition = $composition; return $this; }
 	
@@ -141,7 +144,8 @@ trait WithObject
 		else
 		{
 // 		    return [$this->name => $this->var ? $this->var : null]; # use value anyway
-		    return [$this->name => $this->getVar()]; # bug in import tbs forum
+// 		    return [$this->name => $this->getVar()]; # bug in import tbs forum
+		    return [$this->name => null]; # bug in import tbs forum
 		}
 	}
 	
@@ -171,6 +175,17 @@ trait WithObject
 	###############
 	### Cascade ###
 	###############
+	
+	/**
+	 * Cascade mode for foreign keys.
+	 * Default is SET NULL, so nothing gets lost easily.
+	 * 
+	 * Fun bug was:
+	 *   delete a language => delete all users that use this language
+	 *   triggered by a replace on install module_language.
+	 *   
+	 * @var string
+	 */
 	public $cascade = 'SET NULL';
 
 	public function cascade()
@@ -259,7 +274,9 @@ trait WithObject
 	}
 	
 	/**
-	 * Proxy filter to the filterColumn.
+	 * Proxy filter to the pk filterColumn if specified. else filter like parent.??
+	 * @TODO check
+	 * 
 	 * @see \GDO\DB\GDT_Int::filterQuery()
 	 * @see \GDO\DB\GDT_String::filterQuery()
 	 */
@@ -280,7 +297,8 @@ trait WithObject
 	### Search ###
 	##############
 	/**
-	 * Build huge quicksearch query.
+	 * Build a huge quicksearch query.
+	 * 
 	 * @param Query $query
 	 * @param string $searchTerm
 	 * @param boolean $first
@@ -291,7 +309,7 @@ trait WithObject
         $table = $this->foreignTable();
 	    $nameT = GDO::escapeIdentifierS('t_' . $this->name);
 	    
-	    if ($first)
+	    if ($first) // first time joined this table?
 	    {
 	        $name = GDO::escapeIdentifierS($this->name);
 	        $fk = $table->gdoPrimaryKeyColumn()->name;
