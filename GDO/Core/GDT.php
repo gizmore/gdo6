@@ -48,6 +48,7 @@ abstract class GDT
 	public $initial; # Initial var
 	public $unique; # DB
 	public $primary; # DB
+// 	public $primaryUsing = 'USING HASH';
 	public $readable = true; # can see
 	public $writable = true; # can change
 	public $editable = true; # user can change

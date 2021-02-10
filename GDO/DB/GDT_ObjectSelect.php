@@ -30,8 +30,22 @@ class GDT_ObjectSelect extends GDT_Select
 	
 	public function validate($value)
 	{
-		$this->initChoices();
-		return parent::validate($value);
+// 		$this->initChoices();
+        if ($value === null)
+        {
+            if ($this->notNull)
+            {
+                return $this->errorNotNull();
+            }
+            return true;
+        }
+        
+        if (!$this->getValue())
+        {
+            return $this->errorInvalidChoice();
+        }
+        
+		return true;
 	}
 	
 	##############

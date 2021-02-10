@@ -270,7 +270,7 @@ class Database
 		if (count($primary))
 		{
 			$primary = implode(',', $primary);
-			$columns[] = "PRIMARY KEY ($primary)";
+			$columns[] = "PRIMARY KEY ($primary) USING HASH";
 		}
 
 		foreach ($gdo->gdoColumnsCache() as $column)

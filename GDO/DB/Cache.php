@@ -156,6 +156,7 @@ class Cache
 	public function clearCache()
 	{
 	    $this->cache = [];
+	    $this->all = null;
 	}
 	
 	public function recache(GDO $object)

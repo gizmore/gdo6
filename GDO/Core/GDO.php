@@ -1101,7 +1101,6 @@ abstract class GDO
 	
 	public function clearCache()
 	{
-	    $this->table()->cache->all = null;
 	    if ($this->table()->cache)
 	    {
 	        $this->table()->cache->clearCache();
