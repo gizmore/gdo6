@@ -166,12 +166,12 @@ abstract class GDO
 	 */
 	public function hasVar($key)
 	{
-	    return isset($this->gdoVars[$key]);
+	    return array_key_exists($key, $this->gdoVars);
 	}
 	
 	public function hasColumn($key)
 	{
-	    return isset($this->gdoColumnsCache()[$key]);
+	    return array_key_exists($key, $this->gdoColumnsCache());
 	}
 	
 	/**
@@ -919,7 +919,7 @@ abstract class GDO
 		foreach ($this->gdoPrimaryKeyColumnNames() as $name)
 		{
    			$id2 = $this->getVar($name);
-   			$id = $id ? "{$id}:$id2" : $id2;
+   			$id = $id ? "{$id}:{$id2}" : $id2;
 		}
 		return $id;
 	}
@@ -1101,6 +1101,7 @@ abstract class GDO
 	
 	public function clearCache()
 	{
+	    $this->table()->cache->all = null;
 	    if ($this->table()->cache)
 	    {
 	        $this->table()->cache->clearCache();
@@ -1139,26 +1140,40 @@ abstract class GDO
 		return self::table()->select()->where($condition)->order($order, $asc)->exec()->fetchAllArray2dObject();
 	}
 	
+// 	private static $ALL_CACHE = null;
 	public function allCached($order=null, $asc=null)
 	{
-	    static $ALL;
-	    if ($ALL)
+	    if ($this->cache)
 	    {
-	        return $ALL;
-	    }
-	    if (!$this->memCached())
-	    {
-	        $ALL = $this->allWhere('true', $order, $asc);
-	        return $ALL;
+    	    if ($this->cache->all !== null)
+    	    {
+    	        return $this->cache->all;
+    	    }
 	    }
 	    
-	    $key = 'all_' . $this->gdoTableName();
-	    if (false === ($cache = Cache::get($key)))
+	    if (!$this->memCached())
 	    {
-	        $cache = $ALL = $this->allWhere('true', $order, $asc);
-	        Cache::set($key, $cache);
+	        $cache = $this->allWhere('true', $order, $asc);
+	        if ($this->cache)
+	        {
+	            $this->cache->all = $cache; 
+	        }
+	        return $cache;
 	    }
-	    return $cache;
+	    else
+	    {
+    	    $key = 'all_' . $this->gdoTableName();
+    	    if (false === ($cache = Cache::get($key)))
+    	    {
+    	        $cache = $this->allWhere('true', $order, $asc);
+    	        Cache::set($key, $cache);
+    	        if ($this->cache)
+    	        {
+    	            $this->cache->all = $cache;
+    	        }
+    	    }
+    	    return $cache;
+	    }
 	}
 	
 	public function removeAllCache()

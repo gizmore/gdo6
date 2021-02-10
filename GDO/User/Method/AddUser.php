@@ -21,6 +21,8 @@ final class AddUser extends MethodForm
 {
 	use MethodAdmin;
 	
+	public function isTrivial() { return false; }
+	
 	public function createForm(GDT_Form $form)
 	{
 		$users = GDO_User::table();

@@ -28,6 +28,7 @@ use GDO\Core\GDO;
  */
 class Cache
 {
+    public $all;
 	private static $MEMCACHED;
 	public static function get($key) { return GWF_MEMCACHE ? self::$MEMCACHED->get(GWF_MEMCACHE_PREFIX.$key) : false; }
 	public static function set($key, $value) { if (GWF_MEMCACHE) self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$key, $value); }

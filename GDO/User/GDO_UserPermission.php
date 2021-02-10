@@ -62,8 +62,14 @@ final class GDO_UserPermission extends GDO
 	 */
 	public static function grantPermission(GDO_User $user, GDO_Permission $permission)
 	{
-		$perm = self::blank(array('perm_user_id' => $user->getID(), 'perm_perm_id' => $permission->getID()))->insert();
-		GDT_Hook::callHook('UserPermissionGranted', $user, $permission);
+	    if (!$user->hasPermissionObject($permission))
+	    {
+    		$perm = self::blank([
+    		    'perm_user_id' => $user->getID(),
+    		    'perm_perm_id' => $permission->getID(),
+    		])->insert();
+    		GDT_Hook::callHook('UserPermissionGranted', $user, $permission);
+	    }
 	}
 	
 	/**

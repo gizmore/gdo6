@@ -25,7 +25,7 @@ class GDT_ObjectSelect extends GDT_Select
 	
 	public function initChoices()
 	{
-		return $this->choices === null ? $this->choices($this->getChoices()) : $this;
+		return $this->choices($this->getChoices());
 	}
 	
 	public function validate($value)

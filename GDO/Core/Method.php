@@ -56,6 +56,7 @@ abstract class Method
 	public function isSessionRequired() { return false; }
 	public function isTransactional() { return false; }
 	public function isAlwaysTransactional() { return false; }
+	public function isTrivial() { return true; }
 	public function getPermission() {}
 	public function hasPermission(GDO_User $user) { return true; }
 	public function getUserType() {}

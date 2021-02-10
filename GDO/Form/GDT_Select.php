@@ -125,7 +125,9 @@ class GDT_Select extends GDT_ComboBox
 	
 	public function validate($value)
 	{
-		return $this->multiple ? $this->validateMultiple($value) : $this->validateSingle($value);
+		return $this->multiple ?
+		  $this->validateMultiple($value) :
+		  $this->validateSingle($value);
 	}
 	
 	private function validateMultiple($values)
