@@ -288,4 +288,5 @@ return array(
 # v6.10
 'page_of' => 'Page %s of %s',
 'cfg_spr' => 'Autocomplete suggestions per request',
+'info_page_not_found' => 'The page you are looking for does not exist. If you think this is an error, please contact us.',
 );

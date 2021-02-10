@@ -18,20 +18,32 @@ final class Website
 	private static $_links = [];
 	private static $_inline_css = '';
 	
+	/**
+	 * @deprecated
+	 * @param number $time
+	 * @return NULL|\GDO\Core\GDT_Response
+	 */
 	public static function redirectBack($time=0)
 	{
 		return self::redirect(self::hrefBack(), $time);
 	}
 	
-	public static function hrefBack()
+	/**
+	 * 
+	 * @param string $default
+	 * @return string
+	 */
+	public static function hrefBack($default=null)
 	{
 	    if (Application::instance()->isCLI())
 	    {
-	        return hrefDefault();
+	        return $default ? $default : hrefDefault();
 	    }
 	    if (!($url = GDO_Session::instance()->getLastURL()))
 	    {
-	        $url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : hrefDefault();
+	        $url = isset($_SERVER['HTTP_REFERER']) ?
+	           $_SERVER['HTTP_REFERER'] :
+	           ($default ? $default : hrefDefault());
 	    }
 	    return $url;
 	}
@@ -298,7 +310,12 @@ final class Website
 	
 	public static function displayTitle()
 	{
-	    return html(self::$TITLE);
+	    $title = html(self::$TITLE);
+	    if (Module_Core::instance()->cfgSiteShortTitleAppend())
+	    {
+	        $title .= " [" . GWF_SITENAME . "]";
+	    }
+	    return $title;
 	}
 
 }

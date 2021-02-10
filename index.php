@@ -12,6 +12,7 @@ use GDO\Core\Website;
 use GDO\UI\GDT_Container;
 use GDO\UI\GDT_HTML;
 use GDO\Core\GDT_Error;
+use GDO\Core\Method\Page404;
 
 set_include_path('.');
 include 'GDO6.php';
@@ -51,14 +52,25 @@ define('GWF_CORE_STABLE', 1);
 try
 {
 	$rqmethod = $_SERVER['REQUEST_METHOD'];
-	if (!in_array($rqmethod, ['GET', 'POST'], true))
+	if (!in_array($rqmethod, ['GET', 'POST', 'HEAD'], true))
 	{
 		die('METHOD not processed: ' . $rqmethod);
 	}
 
 	# Exec
     ob_start();
-    $method = $app->getMethod();
+    if (!isset($_GET['mo']))
+    {
+        if ($_SERVER['SCRIPT_FILENAME'] !== 'index.php')
+        {
+            $method = Page404::make();
+        }
+    }
+    
+    if (!isset($method))
+    {
+        $method = $app->getMethod();
+    }
     $response = $method->exec();
 }
 catch (Throwable $e)

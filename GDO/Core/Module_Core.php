@@ -30,7 +30,7 @@ use GDO\File\FileUtil;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9482'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9483'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
@@ -78,6 +78,7 @@ final class Module_Core extends GDO_Module
 		    GDT_Path::make('ng_annotate_path')->initial($this->env('ng_annotate_path', 'ng-annotate'))->label('ng_annotate_path'),
 			GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
 			GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
+			GDT_Checkbox::make('siteshort_title_append')->initial('1'),
 		];
 	}
 	
@@ -94,6 +95,7 @@ final class Module_Core extends GDO_Module
 	public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
 	public function cfgAssetVersion() { return sprintf('%.02f', $this->getConfigVar('asset_revision')); }
 	public function cfgAllowGuests() { return $this->getConfigValue('allow_guests'); }
+	public function cfgSiteShortTitleAppend() { return $this->getConfigValue('siteshort_title_append'); }
 	
 	#############
 	### Hooks ###

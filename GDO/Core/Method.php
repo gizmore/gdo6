@@ -179,7 +179,7 @@ abstract class Method
 	public function gdoParameterValue($key)
 	{
 		$gdt = $this->gdoParameter($key);
-// 		return $gdt->getValue();
+// 		return $gdt->getValue(); # bug!
 		return $gdt->toValue($gdt->getVar());
 	}
 	
@@ -361,19 +361,20 @@ abstract class Method
 			    return $response;
 			}
 			
-			# SEO
-			Website::addMeta(['description', $this->getDescription(), 'name']);
-			Website::setTitle($this->getTitle());
-
-			
 			# Wrap transaction start
 			if ($transactional) $db->transactionBegin();
 			
 			# Exec 1)before, 2)execute, 3)after
 			GDT_Hook::callHook('BeforeExecute', $this);
+			
 			$response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
 			$response = $response ? $response->add($this->execute()) : $this->execute();
 			$response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
+			
+			# SEO
+			Website::setTitle($this->getTitle());
+			Website::addMeta(['description', $this->getDescription(), 'name']);
+			
 			GDT_Hook::callHook('AfterExecute', $this);
 			
 			# Wrap transaction end

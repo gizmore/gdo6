@@ -289,4 +289,5 @@ return array(
 # v6.10
 'page_of' => 'Seite %s von %s',
 'cfg_spr' => 'Autocomplete Vorschläge pro Anfrage',
+'info_page_not_found' => 'Diese Seite existiert nicht. Falls Sie denken, dass es sich um einen Fehler handelt, nehmen Sie bitte Kontakt auf.',
 );

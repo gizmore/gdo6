@@ -46,6 +46,7 @@ class Config
 			'InstallAdmins',
 			'InstallJavascript',
 			'ImportBackup',
+		    'CopyHTAccess',
 			'Security',
 		);
 	}
@@ -91,6 +92,7 @@ class Config
 		if (!defined('GWF_THEMES')) define('GWF_THEMES', '[default]');
 		if (!defined('GWF_MODULE')) define('GWF_MODULE', 'Core');
 		if (!defined('GWF_METHOD')) define('GWF_METHOD', 'Welcome');
+		if (!defined('GWF_SEO_URLS')) define('GWF_SEO_URLS', false);
 		if (!defined('GWF_IPC')) define('GWF_IPC', 'none');
 		if (!defined('GWF_IPC_DEBUG')) define('GWF_IPC_DEBUG', false);
 		# HTTP
@@ -143,6 +145,7 @@ class Config
 			# Site
 			GDT_Divider::make()->label('install_config_section_site'),
 			GDT_String::make('sitename')->initialValue(GWF_SITENAME)->max(16)->label('cfg_sitename'),
+		    GDT_Checkbox::make('seo_urls')->initialValue(GWF_SEO_URLS),
 			GDT_Hidden::make('sitecreated')->var(GWF_SITECREATED),
 		    GDT_Enum::make('language')->enumValues('en', 'de')->initialValue(GWF_LANGUAGE)->required(),
 		    GDT_String::make('timezone')->initialValue(GWF_TIMEZONE)->required(),

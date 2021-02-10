@@ -289,4 +289,5 @@ return array(
 # v6.10
 'page_of' => 'Pagina %s di %s',
 'cfg_spr' => 'Suggerimenti per il completamento automatico per richiesta',
+'info_page_not_found' => 'Questa pagina non esiste. Se pensi che ci sia un errore, contattaci.',
 );

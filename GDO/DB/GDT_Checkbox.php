@@ -14,6 +14,7 @@ use GDO\Core\GDT_Template;
 class GDT_Checkbox extends GDT_Select
 {
     # db var representation. Null is the third state.
+    const UNDETERMINED = '2';
     const TRUE = '1';
     const FALSE = '0';
     
@@ -25,7 +26,7 @@ class GDT_Checkbox extends GDT_Select
 		$this->max = 1;
 		$this->ascii(); # This enables string search (not binary).
 		$this->caseS();
-// 		$this->notNull = true;
+		$this->notNull = true;
 // 		$this->initial = '0';
 	}
 	
@@ -33,10 +34,10 @@ class GDT_Checkbox extends GDT_Select
 	{
 		if ($this->choices === null)
 		{
-			$this->choices(array(
+			$this->choices([
 				'0' => t('enum_no'),
 				'1' => t('enum_yes'),
-			));
+			]);
 			if ($this->undetermined)
 			{
 				$this->emptyInitial(t('please_choose'), $this->emptyValue);

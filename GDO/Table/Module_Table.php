@@ -16,6 +16,8 @@ use GDO\DB\GDT_UInt;
  */
 final class Module_Table extends GDO_Module
 {
+	public $module_priority = 10;
+	
 	public function isCoreModule() { return true; }
 	
 	##############
@@ -23,10 +25,10 @@ final class Module_Table extends GDO_Module
 	##############
 	public function getConfig()
 	{
-		return array(
+		return [
 		    GDT_UInt::make('spr')->initial('20')->max(100),
 		    GDT_UInt::make('ipp')->initial('20')->max(1000),
-		);
+		];
 	}
 	public function cfgItemsPerPage() { return $this->getConfigValue('ipp'); }
 	public function cfgSuggestionsPerRequest() { return $this->getConfigValue('spr'); }

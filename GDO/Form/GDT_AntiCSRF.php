@@ -41,7 +41,7 @@ class GDT_AntiCSRF extends GDT
 	###############
 	### Cleanup ###
 	###############
-	public $csrfMaxTokens = 30; # Last 30 forms should be fine
+	public $csrfMaxTokens = 12; # Last 12 forms should be fine
 	public function csrfMaxTokens($csrfMaxTokens)
 	{
 		$this->csrfMaxTokens = $csrfMaxTokens;

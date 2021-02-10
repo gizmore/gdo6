@@ -10,13 +10,13 @@ class GDT_Select extends GDT_ComboBox
 	
 	protected function __construct()
 	{
-	    $this->initChoices();
+// 	    $this->initChoices();
 	}
 	
-	public function initChoices()
-	{
-	    $this->choices = [];
-	}
+// 	public function initChoices()
+// 	{
+// 	    $this->choices = [];
+// 	}
 	
 	public function getVar()
 	{

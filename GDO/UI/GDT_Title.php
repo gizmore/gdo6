@@ -32,7 +32,7 @@ class GDT_Title extends GDT_String
 	{
 	    $text = $this->renderTitle();
 	    $text = $this->titleEscaped ? html($text) : $text;
-	    return '<span class="gdt-title">' . $text . '</span>'; 
+	    return '<h3 class="gdt-title">' . $text . '</h3>'; 
 	}
 	
 	public function var($var=null)
