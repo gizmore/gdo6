@@ -179,6 +179,7 @@ return array(
 'err_nothing_happened' => 'Nichts hat sich geändert obwohl etwas geschehen sollte.',
 'err_external_url_not_allowed' => 'Externe URLs sind nicht erlaubt.',
 'err_upload_move' => 'Eine Datei konnte nicht von %s nach %s verschoben werden.',
+'err_404' => '404 - Seite nicht gefunden',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',

@@ -19,4 +19,9 @@ final class Page404 extends MethodPage
         http_response_code(404);
     }
     
+    public function getTitle()
+    {
+        return t('err_404');
+    }
+    
 }
