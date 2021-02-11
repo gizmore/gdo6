@@ -217,7 +217,7 @@ elseif ($argv[1] === 'install')
 
 elseif ($argv[1] === 'admin')
 {
-    if ($argc !== 4)
+    if (($argc !== 4) && (($argc !== 5)))
     {
         printUsage();
     }
@@ -226,9 +226,14 @@ elseif ($argv[1] === 'admin')
         $user = GDO_User::blank([
             'user_name' => $argv[2],
             'user_type' => GDO_User::MEMBER,
+            'user_email' => $argc === 5 ? $argv[4] : null,
         ])->insert();
     }
     $user->saveVar('user_password', BCrypt::create($argv[3])->__toString());
+    if ($argc === 5)
+    {
+        $user->saveVar('user_email', $argv[4]);
+    }
     GDO_UserPermission::grant($user, 'admin');
     GDO_UserPermission::grant($user, 'staff');
     GDO_UserPermission::grant($user, 'cronjob');

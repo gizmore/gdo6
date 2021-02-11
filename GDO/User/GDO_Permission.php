@@ -5,6 +5,7 @@ use GDO\Core\GDO;
 use GDO\DB\GDT_AutoInc;
 use GDO\DB\GDT_Name;
 use GDO\UI\GDT_EditButton;
+use GDO\Language\Trans;
 
 /**
  * Permission entity.
@@ -54,7 +55,12 @@ final class GDO_Permission extends GDO
 	###############
 	### Display ###
 	###############
-	public function displayName() { return t('perm_'.$this->getName()); }
+	public function displayName()
+	{
+	    $name = $this->getName();
+	    $key = 'perm_' . $name;
+	    return Trans::hasKey($key) ? t($key) : $name;
+	}
 	public function display_perm_edit() { return GDT_EditButton::make()->href($this->hrefEdit()); }
 	public function display_user_count() { return $this->getVar('user_count'); }
 	public function renderChoice() { return sprintf('%s–%s', $this->getID(), $this->displayName()); }

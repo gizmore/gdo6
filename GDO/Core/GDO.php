@@ -709,6 +709,12 @@ abstract class GDO
 		return $this->saveVars([$key => $var], $withHooks, $worthy);
 	}
 	
+	/**
+	 * @param array $vars
+	 * @param boolean $withHooks
+	 * @param boolean $worthy
+	 * @return \GDO\Core\GDO
+	 */
 	public function saveVars(array $vars, $withHooks=true, &$worthy=false)
 	{
 		$worthy = false; # Anything changed?
@@ -742,9 +748,9 @@ abstract class GDO
 			foreach ($vars as $key => $var)
 			{
 // 			    if (array_key_exists($key, $this->gdoVars)) # speedup?
-			    {
+// 			    {
 			        $this->gdoVars[$key] = $var;
-			    }
+// 			    }
 			}
 			$this->recache(); # save is the only action where we recache!
 			if ($withHooks) $this->callRecacheHook();

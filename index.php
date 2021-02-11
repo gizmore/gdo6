@@ -62,7 +62,7 @@ try
     if (!isset($_REQUEST['mo']))
     { 
         $f = $_SERVER['REQUEST_URI'];
-        if ($f !== (GWF_WEB_ROOT.'index.php'))
+        if ( ($f !== (GWF_WEB_ROOT.'index.php')) && ($f !== '/') )
         {
             $method = Page404::make();
             $_GET['mo'] = $_REQUEST['mo'] = 'Core';

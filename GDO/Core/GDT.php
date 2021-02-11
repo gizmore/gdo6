@@ -475,7 +475,7 @@ abstract class GDT
 	##############
 	### Config ###
 	##############
-	public function displayConfigJSON() { return json_encode($this->configJSON(), JSON_PRETTY_PRINT); }
+	public function displayConfigJSON() { return json_quote(json_encode($this->configJSON(), JSON_PRETTY_PRINT)); }
 
 	/**
 	 * Expose all fields to JSON config.
