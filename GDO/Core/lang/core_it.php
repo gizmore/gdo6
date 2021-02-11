@@ -291,4 +291,21 @@ return array(
 'page_of' => 'Pagina %s di %s',
 'cfg_spr' => 'Suggerimenti per il completamento automatico per richiesta',
 'info_page_not_found' => 'Questa pagina non esiste. Se pensi che ci sia un errore, contattaci.',
+'cfg_allow_guests' => 'Gli account ospiti sono consentiti?',
+'cfg_tt_allow_guests' => 'Attiva le funzioni guest. I moduli dovrebbero controllare questa impostazione.',
+'cfg_siteshort_title_append' => 'Aggiungi il nome breve della pagina nei titoli delle pagine?',
+'cfg_mail_404' => 'Inviare messaggi di errore 404?',
+'mail_subj_404' => '%s: 404 - Pagina non trovata',
+'mail_body_404' => '
+Salve %s,<br/>
+<br/>
+Un utente ha trovato una pagina 404 su %s.<br/>
+<br/>
+IP: %s<br/>
+Utente: %s<br/>
+Pagina: %s<br/>
+Referente: %s<br/>
+<br/>
+Cordiali saluti,<br/>
+%2$s sistema',
 );

@@ -290,4 +290,21 @@ return array(
 'page_of' => 'Page %s of %s',
 'cfg_spr' => 'Autocomplete suggestions per request',
 'info_page_not_found' => 'The page you are looking for does not exist. If you think this is an error, please contact us.',
+'cfg_allow_guests' => 'Are guest accounts allowed?',
+'cfg_tt_allow_guests' => 'Enables guest functionality, globally.',
+'cfg_siteshort_title_append' => 'Append sitename to page titles?',
+'cfg_mail_404' => 'Send 404 Error Mails?',
+'mail_subj_404' => '%s: 404 File not found',
+'mail_body_404' => '
+Hello %s,<br/>
+<br/>
+A client has found a 404 page on %s.<br/>
+<br/>
+IP: %s<br/>
+User: %s<br/>
+Page: %s<br/>
+Referrer: %s<br/>
+<br/>
+Kind Regards,<br/>
+%2$s system',   
 );

@@ -1,8 +1,10 @@
 <?php
 namespace GDO\Core;
+
 use GDO\UI\GDT_Page;
 use GDO\Util\Common;
 use GDO\Mail\Mail;
+use GDO\User\GDO_User;
 
 /**
  * Debug backtrace and error handler.
@@ -291,8 +293,11 @@ final class Debug
 	 */
 	public static function getDebugText($message)
 	{
-		$user = "~~USER~~";
-		// try { $user = GDO_User::current()->displayName(); } catch (Exception $e) { $user = 'ERROR'; }
+		$user = "~~GHOST~~";
+		if (class_exists('GDO_User', false))
+		{
+    		try { $user = GDO_User::current()->displayNameLabel(); } catch (\Throwable $e) { }
+		}
 		$args = array(
 			isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'NULL',
 			isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : self::getMoMe(),
@@ -309,9 +314,13 @@ final class Debug
 		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_GET: %s\n\n_POST: %s\n\nREQUEST: %s\n\n_COOKIE: %s\n\n";
 		return vsprintf($pattern, $args);
 	}
+	
 	private static function getMoMe()
 	{
-		return Common::getGetString('mo') . '/' . Common::getGetString('me');
+		return
+		  Common::getGetString('mo', 'NoModule') .
+		  '/' .
+		  Common::getGetString('me', 'NoMethod');
 	}
 	
 	/**
@@ -328,11 +337,13 @@ final class Debug
 	{
 		return self::backtraceMessage($message, $html, debug_backtrace());
 	}
+	
 	public static function backtraceException(\Throwable $e, $html = true, $message = '')
 	{
 		$message = sprintf("PHP Exception: %s in %s line %s", $e->getMessage(), self::shortpath($e->getFile()), $e->getLine());
 		return self::backtraceMessage($message, $html, $e->getTrace(), $e->getLine(), $e->getFile());
 	}
+	
 	private static function backtraceArgs(array $args = null)
 	{
 		$out = [];
@@ -345,6 +356,7 @@ final class Debug
 		}
 		return implode(",", $out);
 	}
+	
 	private static function backtraceArg($arg)
 	{
 		if ($arg === null)
@@ -460,5 +472,6 @@ final class Debug
 		$path = str_replace(GDO_PATH, '', $path);
 		return trim($path, ' /');
 	}
+	
 }
 	

@@ -59,11 +59,14 @@ try
 
 	# Exec
     ob_start();
-    if (!isset($_GET['mo']))
-    {
-        if ($_SERVER['SCRIPT_FILENAME'] !== 'index.php')
+    if (!isset($_REQUEST['mo']))
+    { 
+        $f = $_SERVER['REQUEST_URI'];
+        if ($f !== (GWF_WEB_ROOT.'index.php'))
         {
             $method = Page404::make();
+            $_GET['mo'] = $_REQUEST['mo'] = 'Core';
+            $_GET['me'] = $_REQUEST['me'] = 'Page404';
         }
     }
     

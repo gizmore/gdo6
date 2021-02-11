@@ -30,7 +30,7 @@ use GDO\File\FileUtil;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9484'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9487'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
@@ -79,6 +79,7 @@ final class Module_Core extends GDO_Module
 			GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
 			GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
 			GDT_Checkbox::make('siteshort_title_append')->initial('1'),
+		    GDT_Checkbox::make('mail_404')->initial('1'),
 		];
 	}
 	
@@ -96,6 +97,7 @@ final class Module_Core extends GDO_Module
 	public function cfgAssetVersion() { return sprintf('%.02f', $this->getConfigVar('asset_revision')); }
 	public function cfgAllowGuests() { return $this->getConfigValue('allow_guests'); }
 	public function cfgSiteShortTitleAppend() { return $this->getConfigValue('siteshort_title_append'); }
+	public function cfgMail404() { return $this->getConfigValue('mail_404'); }
 	
 	#############
 	### Hooks ###

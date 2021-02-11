@@ -54,4 +54,6 @@ NO: It is better to have 2 values for order, because some functionality needs bo
 
 - Split birthdate apart in a new module gdo6-birthday?
 
-- Work on SEO. Make sure everything has a title and tags. make urls with gdo.com/ThisIsSEOHahah.html?mo=Mo&me=Me&rest=normal
+- Work on SEO. Make sure everything has a title and tags. make urls with gdo.com/ThisIsSEOHahah.html?mo=Mo&me=Me&rest=normal (ONGOING)
+
+- Make a site for the periodic table of elements. Gather all data, arrange in different ways. Details to relevant pages. etc.

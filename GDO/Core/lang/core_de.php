@@ -291,4 +291,26 @@ return array(
 'page_of' => 'Seite %s von %s',
 'cfg_spr' => 'Autocomplete Vorschläge pro Anfrage',
 'info_page_not_found' => 'Diese Seite existiert nicht. Falls Sie denken, dass es sich um einen Fehler handelt, nehmen Sie bitte Kontakt auf.',
+
+# v6.10
+'page_of' => 'Seite %s von %s',
+'cfg_spr' => 'Anzahl Vorschläge pro Autocomplete-Requests',
+'info_page_not_found' => 'Diese Seite existiert nicht. Wenn Sie denken, dies ist ein Fehler, nehmen Sie bitte Kontakt mit uns auf.',
+'cfg_allow_guests' => 'Sind Gästekonten erlaubt?',
+'cfg_tt_allow_guests' => 'Aktiviert die Gastfunktionalitäten. Module sollten diese Einstellung prüfen.',
+'cfg_siteshort_title_append' => 'Den Seitenkurznamen in Seitentiteln anhängen?',
+'cfg_mail_404' => '404 Fehler mails senden?',
+'mail_subj_404' => '%s: 404 - Seite nicht gefunden',
+'mail_body_404' => '
+Hallo %s,<br/>
+<br/>
+Ein Nutzer hat eine 404 Seite auf %s gefunden.<br/>
+<br/>
+IP: %s<br/>
+Nutzer: %s<br/>
+Seite: %s<br/>
+Referrer: %s<br/>
+<br/>
+Viele Grüße,<br/>
+%2$s system',
 );
