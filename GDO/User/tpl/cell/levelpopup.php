@@ -1,8 +1,10 @@
 <?php
 use GDO\UI\GDT_Icon;
-use GDO\User\GDT_LevelPopup;
 use GDO\User\GDO_User;
-$field instanceof GDT_LevelPopup;
+use GDO\User\GDT_LevelPopup;
+/**
+ * @var $field GDT_LevelPopup
+ */
 $user = GDO_User::current();
 $levelTooltip = '';
 if ($field->level > 0)

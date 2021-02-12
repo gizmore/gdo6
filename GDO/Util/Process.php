@@ -3,7 +3,9 @@ namespace GDO\Util;
 
 /**
  * Process utilities.
+ * Check if Windows is used.
  * Check if a command is in PATH env.
+ * Turn pathes to OS DIR_SEPARATOR path.
  * 
  * @author gizmore
  * @version 6.10
@@ -11,15 +13,36 @@ namespace GDO\Util;
  */
 final class Process
 {
+    /**
+     * Check if the operating system is Windows.
+     * @return boolean
+     */
     public static function isWindows()
     {
         return PHP_OS === 'WINNT';
     }
     
     /**
+     * Convert DIR separator for operating System.
+     * On Windows we use backslash.
+     * On Linux we keep forward slash, which is default in gdo6.
+     * @param string $path
+     * @return string
+     */
+    public static function osPath($path)
+    {
+        if (self::isWindows())
+        {
+            return str_replace('/', '\\', $path);
+        }
+        return $path;
+    }
+    
+    
+    /**
      * Determines if a command exists on the current environment
      * @param string $command The command to check
-     * @return bool True if the command has been found ; otherwise, false.
+     * @return bool True if the command has been found; otherwise, false.
      * @author https://stackoverflow.com/a/18540185/13599483
      */
     public static function commandPath($command, $windowsSuffix='.*')
@@ -53,6 +76,5 @@ final class Process
         }
         return null;
     }
-    
 
 }

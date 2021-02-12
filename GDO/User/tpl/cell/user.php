@@ -1,5 +1,6 @@
 <?php
 use GDO\User\GDO_User;
-$user instanceof GDO_User;
-// echo GDO_Avatar::renderAvatar($user);
+/**
+ * @var $user GDO_User
+ */
 echo $user->displayNameLabel();

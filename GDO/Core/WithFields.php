@@ -125,6 +125,7 @@ trait WithFields
 	 */
 	public function getField($name) { return $this->fields[$name]; }
 	public function hasField($name) { return isset($this->fields[$name]); }
+	public function hasFields() { return count($this->fields) > 0; }
 	public function removeField($name) { unset($this->fields[$name]); }
 	public function removeFields() { $this->fields = []; }
 

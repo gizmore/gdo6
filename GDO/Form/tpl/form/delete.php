@@ -1,7 +1,7 @@
 <?php /** @var \GDO\Form\GDT_DeleteButton $field **/ ?>
 <input
  type="submit"
- onclick="return confirm('<?=t('confirm_delete')?>')"
- name="<?= $field->name; ?>"
+ onclick="return confirm('<?=$field->displayConfirmText()?>')"
+ name="<?=$field->formName()?>"
  value="<?= $field->displayLabel(); ?>"
  <?= $field->htmlDisabled(); ?> /></input>

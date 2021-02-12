@@ -397,12 +397,16 @@ abstract class Method
 	
 	private function storeLastURL()
 	{
-	    if ($session = GDO_Session::instance())
+	    if ($this->saveLastUrl())
 	    {
-	        if ( ($this->saveLastUrl()) && (!Application::instance()->isAjax()) && (!$this->isAjax()) )
-	        {
-	            $session->setVar('sess_last_url', @$_SERVER['REQUEST_URI']);
-	        }
+    	    if ($session = GDO_Session::instance())
+    	    {
+    	        if ( (!Application::instance()->isAjax()) && (!$this->isAjax()) )
+    	        {
+    	            # Will be saved on process exit.
+    	            $session->setVar('sess_last_url', @$_SERVER['REQUEST_URI']);
+    	        }
+    	    }
 	    }
 	}
 	

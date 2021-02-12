@@ -40,10 +40,10 @@ class Configure extends MethodForm
 		{
 			$form->addField($gdt);
 		}
-		$form->addField(GDT_Submit::make('save_config'));
+		$form->actions()->addField(GDT_Submit::make('save_config'));
 		if (FileUtil::isFile($this->configPath()))
 		{
-			$form->addField(GDT_Submit::make('test_config'));
+			$form->actions()->addField(GDT_Submit::make('test_config'));
 		}
 	}
 

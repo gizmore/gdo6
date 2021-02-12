@@ -15,7 +15,8 @@ Pull requests < gimme your ssh key. :)
 - Enhance Installer: Install Single Module, Clear cache
 - Ordering is tablesort. Sorting is usersort. Know the difference with auto GDT_Sort field and AjaxDnDSorting?
 - Kinda ACL for generic ajax data queries? (6.12)
-
+- Make a new Module_Birthday. Move stuff from account there. hook into news for birthday news.
+- Make a Module_Session for php default session handling.
 # Still todo (issues)
 
 - Make module admin a non dependency. (MethodAdmin)

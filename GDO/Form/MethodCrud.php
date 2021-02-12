@@ -145,13 +145,15 @@ abstract class MethodCrud extends MethodForm
 	
 	public function createFormButtons(GDT_Form $form)
 	{
+		$form->actions()->addField(GDT_Submit::make());
+
 		$form->addFields(array(
-			GDT_Submit::make(),
 			GDT_AntiCSRF::make()
 		));
+
 		if ($this->gdo && $this->canDelete($this->gdo))
 		{
-			$form->addField(GDT_DeleteButton::make());
+			$form->actions()->addField(GDT_DeleteButton::make());
 		}
 		
 		if ($this->gdo)

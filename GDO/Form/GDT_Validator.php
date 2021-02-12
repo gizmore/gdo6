@@ -9,11 +9,13 @@ use GDO\Core\GDT;
  * @see \GDO\Register\Method\Form
  * 
  * @author gizmore
+ * @version 6.10
  * @since 3.0
- * @version 6.07
  */
 class GDT_Validator extends GDT
 {
+    public $editable = false;
+    
 	public $validator;
 	public $validateField;
 	public function validator($fieldName, $validator) { $this->validateField = $fieldName;  $this->validator = $validator; return $this; }

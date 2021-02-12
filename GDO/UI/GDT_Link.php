@@ -20,6 +20,7 @@ class GDT_Link extends GDT_String
 	use WithPHPJQuery;
 	use WithAnchorRelation;
 
+	public $editable = false;
 	public $orderable = false;
 	public $filterable = false;
 	public $searchable = false;

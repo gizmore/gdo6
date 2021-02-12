@@ -12,6 +12,8 @@ use GDO\Core\Debug;
 /**
  * mySQLi abstraction.
  * 
+ * @TODO support postgres?
+ * 
  * @author gizmore
  * @version 6.10
  * @since 3.00
@@ -30,13 +32,14 @@ class Database
 	# Connection
 	private $link, $host, $user, $pass, $db, $debug;
 	
-	# Timing
+	# Perf connection
 	public $reads = 0;
 	public $writes = 0;
 	public $commits = 0;
 	public $queries = 0;
 	public $queryTime = 0;
 	
+	# Perf total
 	public static $READS = 0;
 	public static $WRITES = 0;
 	public static $COMMITS = 0;
@@ -44,11 +47,13 @@ class Database
 	public static $QUERY_TIME = 0;
 	
 	/**
+	 * Available GDO
 	 * @var GDO[]
 	 */
 	private static $TABLES = [];
 
 	/**
+	 * gdoColumns for all GDO
 	 * @var GDT[]
 	 */
 	private static $COLUMNS = [];
@@ -56,9 +61,10 @@ class Database
 	public static function init()
 	{
 		Cache::init();
-		if (GWF_DB_ENABLED)
+		if (GWF_DB_ENABLED) # @TODO should always return an instance?
 		{
-		    return new self(GWF_DB_HOST, GWF_DB_USER, GWF_DB_PASS, GWF_DB_NAME, GWF_DB_DEBUG);
+		    return new self(
+		        GWF_DB_HOST, GWF_DB_USER, GWF_DB_PASS, GWF_DB_NAME, GWF_DB_DEBUG);
 		}
 	}
 	
@@ -95,7 +101,8 @@ class Database
 				$t1 = microtime(true);
 				if ($this->link = $this->connect())
 				{
-					$this->queryRead("SET NAMES UTF8"); # not really a read but no costy write!
+				    # This is more like a read because nothing is written to the disk.
+					$this->queryRead("SET NAMES UTF8");
 					$this->queryRead("SET time_zone = '+00:00'");
 				}
 			}
@@ -114,7 +121,8 @@ class Database
 	
 	public function connect()
 	{
-		return mysqli_connect($this->host, $this->user, $this->pass, $this->db);
+		return mysqli_connect(
+		    $this->host, $this->user, $this->pass, $this->db);
 	}
 	
 	#############
@@ -161,10 +169,12 @@ class Database
 		if ($this->debug)
 		{
 			$timeTaken = sprintf('%.04f', $timeTaken);
-			Logger::log('queries', "#" . self::$QUERIES . ": ({$timeTaken}s) ".$query, Logger::DEBUG);
+			Logger::log('queries', "#" . self::$QUERIES .
+			    ": ({$timeTaken}s) ".$query, Logger::DEBUG);
 			if ($this->debug > 1)
 			{
-			    Logger::log('queries', Debug::backtrace('#' . self::$QUERIES . ' Backtrace', false));
+			    Logger::log('queries', 
+			        Debug::backtrace('#' . self::$QUERIES . ' Backtrace', false));
 			}
 		}
 		return $result;
@@ -286,7 +296,8 @@ class Database
 		try
 		{
 		    $this->disableForeignKeyCheck();
-    		$query = "CREATE TABLE IF NOT EXISTS {$gdo->gdoTableIdentifier()} (\n$columnsCode\n) ENGINE = {$gdo->gdoEngine()}";
+    		$query = "CREATE TABLE IF NOT EXISTS {$gdo->gdoTableIdentifier()} ".
+    		  "(\n$columnsCode\n) ENGINE = {$gdo->gdoEngine()}";
     		$this->queryWrite($query);
 		}
 		catch (\Throwable $ex)
@@ -307,6 +318,7 @@ class Database
 		return true;
 	}
 	
+	# @TODO Implement auto alter table... very tricky!
 // 	/**
 // 	 * Simply alter all columns again.
 // 	 * Check if key changes need to be done.
@@ -340,7 +352,8 @@ class Database
 // // 			if ($define = $column->gdoColumnDefine())
 // // 			{
 // // 				$after = $lastCol === null ? "FIRST" : "AFTER {$lastCol->name}";
-// // 				$query = "ALTER TABLE {$gdo->gdoTableName()} CHANGE COLUMN {$column->name} $define {$after}";
+// // 				$query = "ALTER TABLE {$gdo->gdoTableName()} ".
+// //                   "CHANGE COLUMN {$column->name} $define {$after}";
 // // 				$lastCol = $column;
 // // 				$this->queryWrite($query);
 // // 			}
@@ -350,12 +363,14 @@ class Database
 	
 	public function dropTable(GDO $gdo)
 	{
-		return $this->queryWrite("DROP TABLE IF EXISTS {$gdo->gdoTableIdentifier()}");
+	    $tableName = $gdo->gdoTableIdentifier();
+		return $this->queryWrite("DROP TABLE IF EXISTS {$tableName}");
 	}
 	
 	public function truncateTable(GDO $gdo)
 	{
-		return $this->queryWrite("TRUNCATE TABLE {$gdo->gdoTableIdentifier()}");
+	    $tableName = $gdo->gdoTableIdentifier();
+	    return $this->queryWrite("TRUNCATE TABLE {$tableName}");
 	}
 	
 	###################
@@ -366,14 +381,14 @@ class Database
 		return $this->queryWrite("CREATE DATABASE $databaseName");
 	}
 	
-	public function useDatabase($databaseName)
-	{
-		$this->queryWrite("USE $databaseName");
-	}
-	
 	public function dropDatabase($databaseName)
 	{
 		return $this->queryWrite("DROP DATABASE $databaseName");
+	}
+	
+	public function useDatabase($databaseName)
+	{
+	    $this->queryWrite("USE $databaseName");
 	}
 	
 	###################
@@ -386,12 +401,19 @@ class Database
 	
 	public function transactionEnd()
 	{
-		$this->commits++; self::$COMMITS++;
+	    # Perf
+		$this->commits++;
+		self::$COMMITS++;
+		
+		# Exec and perf
 		$t1 = microtime(true);
 		$result = mysqli_commit($this->getLink());
 		$t2 = microtime(true);
 		$tt = $t2 - $t1;
-		$this->queryTime += $tt; self::$QUERY_TIME += $tt;
+		
+		# Perf
+		$this->queryTime += $tt;
+		self::$QUERY_TIME += $tt;
 		return $result;
 	}
 	
@@ -440,12 +462,18 @@ class Database
 	        if ( (Strings::startsWith($line, '-- ')) ||
 	            (Strings::startsWith($line, '/*')) )
 	        {
+	            # skip comments
 	            continue;
 	        }
+	        
+	        # Append to command
 	        $command .= $line;
+	        
+	        # Finished command
 	        if (Strings::endsWith(trim($line), ';'))
 	        {
-    	        $this->query($command);
+	            # Most likely a write
+    	        $this->queryWrite($command);
 	        }
 	    }
 	}

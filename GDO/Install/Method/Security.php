@@ -31,7 +31,7 @@ final class Security extends MethodForm
 	}
 	public function createForm(GDT_Form $form)
 	{
-		$form->addField(GDT_Submit::make());
+		$form->actions()->addField(GDT_Submit::make());
 	}
 
 	public function onProtect()

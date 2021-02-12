@@ -190,7 +190,7 @@ final class GDO_User extends GDO
 	{
 	    $level = $this->getVar('user_level');
 	    $permLevel = $this->getPermissionLevel();
-	    return max($level, $permLevel);
+	    return (int)max($level, $permLevel);
 	}
 	
 	public function getPermissionLevel()

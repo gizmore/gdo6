@@ -15,6 +15,8 @@ class GDT_Divider extends GDT
 {
 	use WithLabel;
 	
+	public $editable = false;
+	
 	public function blankData() {}
 
 	public function isSerializable() { return false; }

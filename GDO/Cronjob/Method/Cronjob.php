@@ -24,7 +24,7 @@ class Cronjob extends MethodForm
 	
 	public function createForm(GDT_Form $form)
 	{
-		$form->addField(GDT_Submit::make()->label('btn_run_cronjob'));
+		$form->actions()->addField(GDT_Submit::make()->label('btn_run_cronjob'));
 		$form->addField(GDT_AntiCSRF::make());
 	}
 	

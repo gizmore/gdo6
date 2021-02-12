@@ -107,6 +107,11 @@ class GDO_Module extends GDO
 	}
 	
 	public function displayModuleDescription() { return html($this->getModuleDescription()); }
+	
+	/**
+	 * Module description is fetched from README.md by default.
+	 * @return string
+	 */
 	public function getModuleDescription()
 	{
 		if ($readme = @file_get_contents($this->filePath('README.md')))
@@ -117,7 +122,6 @@ class GDO_Module extends GDO
 				return $matches[1];
 			}
 		}
-		return '';
 	}
 	
 	##############
@@ -139,14 +143,14 @@ class GDO_Module extends GDO
 	public function gdoClassName() { return self::class; } # Polymorph fix
 	public function gdoColumns()
 	{
-		return array(
+		return [
 			GDT_AutoInc::make('module_id'),
 			GDT_Name::make('module_name')->notNull()->unique(),
 			GDT_Int::make('module_priority')->notNull()->unsigned()->initial($this->module_priority),
 			GDT_Sorting::make('module_sort'),
 			GDT_Version::make('module_version')->notNull()->initial('0.00'),
 			GDT_Checkbox::make('module_enabled')->notNull()->initial('0'),
-		);
+		];
 	}
 	
 	##############
@@ -221,7 +225,10 @@ class GDO_Module extends GDO
 	 * @param string $filename appendix filename
 	 * @return string the absolute path
 	 */
-	public function tempPath($filename='') { return GDO_PATH . 'temp/' . $this->getName() .'/' . $filename; }
+	public function tempPath($filename='')
+	{
+	    return GDO_PATH . 'temp/' . $this->getName() .'/' . $filename;
+	}
 	
 	#################
 	### Templates ###
@@ -428,7 +435,7 @@ class GDO_Module extends GDO
 	    {
     	    $settings = $this->loadUserSettings($user);
     	    $var = isset($settings[$key]) ? $settings[$key] : $gdt->initial;
-   	        return $gdt->var($var);
+   	        return $gdt->initial($var);
 	    }
 	}
 	
@@ -486,7 +493,8 @@ class GDO_Module extends GDO
 	
 	public function increaseUserSetting(GDO_User $user, $key, $by=1)
 	{
-	    return $this->saveUserSetting($user, $key, $this->userSettingVar($user, $key) + $by);
+	    return $this->saveUserSetting(
+	        $user, $key, $this->userSettingVar($user, $key) + $by);
 	}
 	
 	# Cache
@@ -561,8 +569,10 @@ class GDO_Module extends GDO
 	        return [];
 	    }
 	    return array_merge(
-	        GDO_UserSetting::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair(),
-	        GDO_UserSettingBlob::table()->select('uset_name, uset_value')->where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair()
+	        GDO_UserSetting::table()->select('uset_name, uset_value')->
+	           where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair(),
+	        GDO_UserSettingBlob::table()->select('uset_name, uset_value')->
+	           where("uset_user={$user->getID()}")->exec()->fetchAllArray2dPair()
 	    );
 	}
 	
@@ -583,10 +593,36 @@ class GDO_Module extends GDO
 	### Assets ###
 	##############
 	private static $_NC; # nocache appendix
-	public function nocacheVersion() { if (!self::$_NC) self::$_NC = "v={$this->getVersion()}&vc=".Module_Core::instance()->cfgAssetVersion(); return self::$_NC; }
-	public function addBowerJavascript($path) { return $this->addJavascript('bower_components/'.$path); }
-	public function addJavascript($path) { return Javascript::addJavascript($this->wwwPath($path.'?'.$this->nocacheVersion())); }
-	public function addBowerCSS($path) { return $this->addCSS('bower_components/'.$path); }
-	public function addCSS($path) { return Website::addCSS($this->wwwPath($path.'?'.$this->nocacheVersion())); }
+	public function nocacheVersion()
+	{
+	    if (!self::$_NC)
+	    {
+	        $v = $this->getVersion();
+	        $av = Module_Core::instance()->cfgAssetVersion();
+	        self::$_NC = "v={$v}&av={$av}";
+	    }
+        return self::$_NC;
+	}
+	
+	public function addBowerJavascript($path)
+	{
+	    return $this->addJavascript('bower_components/'.$path);
+	}
+	
+	public function addJavascript($path)
+	{
+	    return Javascript::addJavascript(
+	        $this->wwwPath($path.'?'.$this->nocacheVersion()));
+	}
+	
+	public function addBowerCSS($path)
+	{
+	    return $this->addCSS('bower_components/'.$path);
+	}
+	
+	public function addCSS($path)
+	{
+	    return Website::addCSS($this->wwwPath($path.'?'.$this->nocacheVersion()));
+	}
 
 }

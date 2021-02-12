@@ -165,7 +165,7 @@ final class Debug
 		
 		if ($is_html)
 		{
-			$message = sprintf('<p>%s(EH %s):&nbsp;%s&nbsp;in&nbsp;<b style=\"font-size:16px;\">%s</b>&nbsp;line&nbsp;<b style=\"font-size:16px;\">%s</b></p>', $errnostr, $errno, $errstr, $errfile, $errline) . PHP_EOL;
+			$message = sprintf('<p>%s(EH %s):&nbsp;%s&nbsp;in&nbsp;<b style=\"font-size:16px;\">%s</b>&nbsp;line&nbsp;<b style=\"font-size:16px;\">%s</b></p>', $errnostr, $errno, $errstr, $errfile, $errline);
 		}
 		else
 		{
@@ -354,7 +354,7 @@ final class Debug
 				$out[] = self::backtraceArg($arg);
 			}
 		}
-		return implode(",", $out);
+		return implode(", ", $out);
 	}
 	
 	private static function backtraceArg($arg)
@@ -381,21 +381,22 @@ final class Debug
 		}
 		else
 		{
-			$arg = json_encode($arg, 1);
+			$arg = json_encode($arg);
 		}
 		
-		$arg = str_replace("\\\"", '"', $arg);
+		$arg = Application::instance()->isHTML() ? html($arg) : $arg;
+		$arg = str_replace('&quot;', '"', $arg); # It is safe to inject quotes. Turn back to get length calc right.
+		$arg = str_replace('\\\\', '\\', $arg); # Double backslash was escaped always via json encode?
 		
 		if (mb_strlen($arg) > 28)
 		{
 			return mb_substr($arg, 0, 14) . '…' . mb_substr($arg, -14);
 		}
-		return Application::instance()->isHTML() ? html($arg) : $arg;
+		
+		return $arg;
 	}
 	private static function backtraceMessage($message, $html, array $stack, $lastLine='?', $lastFile='[unknown file]')
 	{
-// 		$badformat = false;
-		
 		// Fix full path disclosure
 		$message = self::shortpath($message);
 		
@@ -417,30 +418,31 @@ final class Debug
 		$preline = $lastLine;
 		$prefile = $lastFile;
 		$longest = 0;
-		$i = 0;
 		
 		foreach ($stack as $row)
 		{
-			if (++$i > 0)
-			{
-				$function = sprintf('%s%s(%s)', isset($row['class']) ? $row['class'] . $row['type'] : '', $row['function'], self::backtraceArgs(isset($row['args']) ? $row['args'] : null));
+		    # Skip debugger trace
+		    if (@$row['class'] !== 'GDO\\Core\\Debug')
+		    {
+		        # Build current call
+				$function = sprintf('%s%s(%s)',
+				    isset($row['class']) ? $row['class'] . $row['type'] : '',
+				    $row['function'],
+				    self::backtraceArgs(isset($row['args']) ? $row['args'] : null));
+				
+				# Collect relevant stack frame
 				$implode[] = array(
 					$function,
 					$prefile,
 					$preline);
-				$len = strlen($function);
-				$longest = max(array(
-					$len,
-					$longest));
+				
+				# Calculations for align
+				$len = mb_strlen($function);
+				$longest = max([$len, $longest]);
 			}
-// 			if ($i === 1)
-// 			{
-//     			$preline = isset($row['line']) ? $row['line'] : $lastLine;
-// 			}
-// 			else
-// 			{
-			    $preline = isset($row['line']) ? $row['line'] : '?';
-// 			}
+
+			# Use line in next frame.
+			$preline = isset($row['line']) ? $row['line'] : '?';
 			$prefile = isset($row['file']) ? $row['file'] : '[unknown file]';
 		}
 		
@@ -448,9 +450,9 @@ final class Debug
 		foreach ($implode as $imp)
 		{
 			list ($func, $file, $line) = $imp;
-			$len = strlen($func);
-			$func .= str_repeat('.', $longest - $len);
-			$copy[] = sprintf('%s %s line %s.', $func, self::shortpath($file), $line);
+			$len = mb_strlen($func);
+			$func .= ' ' . str_repeat('.', $longest - $len);
+			$copy[] = sprintf(' - %s %s line %s.', $func, self::shortpath($file), $line);
 		}
 		
 		$back .= $html ? '<hr/>' : "\n";

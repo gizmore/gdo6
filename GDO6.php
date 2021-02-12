@@ -21,9 +21,10 @@ define('GWF_PERF_START', microtime(true));
 
 # Autoconf path
 define('GDO_PATH', str_replace('\\', '/', __DIR__) . '/');
+chdir(GDO_PATH);
 
 # Verbose error handling
-while (ob_get_level()>0) { ob_end_clean(); }
+// while (ob_get_level()>0) { ob_end_clean(); }
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -49,7 +50,8 @@ function hrefSEO($seoString, $module, $method, $append='')
 {
     if (defined('GWF_SEO_URLS') && GWF_SEO_URLS)
     {
-        return GWF_WEB_ROOT . urlencodeSEO($seoString) . ".html?mo={$module}&me={$method}&_lang=".Trans::$ISO."$append";
+        $html = $seoString === 'index.php' ? '' : '.html'; # append .html?
+        return GWF_WEB_ROOT . urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}&_lang=".Trans::$ISO."$append";
     }
     else
     {

@@ -94,7 +94,7 @@ class GDT_User extends GDT_Object
 	{
 		if ($user = $this->getUser())
 		{
-			return $user->displayName();
+			return $user->displayNameLabel();
 		}
 		return t('unknown');
 	}

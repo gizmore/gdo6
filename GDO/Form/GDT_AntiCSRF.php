@@ -14,7 +14,7 @@ use GDO\Core\Application;
  * @version 6.10
  * @since 1.0
  */
-class GDT_AntiCSRF extends GDT
+class GDT_AntiCSRF extends GDT_Hidden
 {
     const KEYLEN = 6;
     const MAX_KEYS = 20;
@@ -26,6 +26,14 @@ class GDT_AntiCSRF extends GDT
 	protected function __construct()
 	{
 	    $this->csrfToken();
+	}
+	
+	###########
+	### GDT ###
+	###########
+	public function getGDOData()
+	{
+	    # Override GDT_Hidden with null data.
 	}
 	
 	##############

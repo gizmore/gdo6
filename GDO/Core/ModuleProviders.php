@@ -3,6 +3,11 @@ namespace GDO\Core;
 
 /**
  * Official registered gdo6 module mapping.
+ * Installer can spit out repo urls for modules.
+ * Some modules have multiple providers, like gdo6-session-db and gdo6-session-cookie.
+ * Both provide Module_Session.
+ * 
+ * @TODO: Explain how to generate provider list from the huge all-in-one-dev install.
  * @author gizmore
  */
 final class ModuleProviders
@@ -90,6 +95,7 @@ final class ModuleProviders
         'Prism' => 'gdo6-prism',
         'Profile' => 'gdo6-profile',
         'Push' => 'gdo6-push',
+        'Python' => 'gdo6-python',
         'QRCode' => 'gdo6-qrcode',
         'Ranzgruppe' => 'gdo6-ranzgruppe',
         'Recovery' => 'gdo6-recovery',

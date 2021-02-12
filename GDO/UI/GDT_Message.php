@@ -92,7 +92,7 @@ class GDT_Message extends GDT_Text
             $config->set('URI.DisableExternalResources', false);
             $config->set('URI.DisableResources', false);
             $config->set('HTML.TargetBlank', true);
-            $config->set('HTML.Allowed', 'br,a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption');
+            $config->set('HTML.Allowed', 'br,a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption,center,b,i,div[class]');
             $config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
             $config->set('HTML.SafeObject', true);
             $config->set('Attr.AllowedRel', array('nofollow'));

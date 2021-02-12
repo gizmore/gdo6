@@ -5,11 +5,10 @@ use GDO\Core\GDO;
 use GDO\DB\GDT_CreatedAt;
 use GDO\DB\GDT_CreatedBy;
 use GDO\DB\GDT_Index;
-use GDO\Core\GDO_Hook;
 use GDO\Core\GDT_Hook;
 
 /**
- * Table for user<=>permission relations.
+ * Table for user<=>permission relation.
  * @author gizmore
  * @version 6.10
  * @since 6.00
@@ -64,7 +63,7 @@ final class GDO_UserPermission extends GDO
 	{
 	    if (!$user->hasPermissionObject($permission))
 	    {
-    		$perm = self::blank([
+    		self::blank([
     		    'perm_user_id' => $user->getID(),
     		    'perm_perm_id' => $permission->getID(),
     		])->insert();

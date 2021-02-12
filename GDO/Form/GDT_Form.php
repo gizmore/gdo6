@@ -8,6 +8,7 @@ use GDO\Core\WithFields;
 use GDO\UI\WithTitle;
 use GDO\UI\GDT_SearchField;
 use GDO\Core\Application;
+use GDO\UI\GDT_Container;
 
 /**
  * An HTML Form.
@@ -19,15 +20,34 @@ class GDT_Form extends GDT
 {
 	public static $VALIDATING_INSTANCE; # ugly, but hey.
 	public static $VALIDATING_SUCCESS; # ugly, but hey.
-	public static $CURRENT; # ugly, but hey?! performance :)
+	public static $CURRENT; # ugly, but hey.
 	
 	use WithFields;
 	use WithTitle;
 	
 	protected function __construct()
 	{
+	    parent::__construct();
 		$this->action = @$_SERVER['REQUEST_URI'];
 		$this->writable = false;
+	}
+	
+	###############
+	### Buttons ###
+	###############
+	private $actions;
+	public function actions()
+	{
+	    if (!$this->actions)
+	    {
+	        $this->actions = GDT_Container::make($this->name.'_buttons');
+	    }
+	    return $this->actions;
+	}
+	
+	public function hasActions()
+	{
+	    return !empty($this->actions);
 	}
 	
 	############
@@ -71,7 +91,6 @@ class GDT_Form extends GDT
 	public function renderCell()
 	{
 		self::$CURRENT = $this;
-// 		$this->withGDOValuesFrom($this->gdo);
 		$back = GDT_Template::php('Form', 'cell/form.php', ['form' => $this]);
 		self::$CURRENT = null;
 		return $back;
@@ -80,6 +99,18 @@ class GDT_Form extends GDT
 	public function reset(GDO $gdo)
 	{
 	    $this->withFields(function(GDT $gdt) use ($gdo) { $gdt->gdo($gdt->gdo); });
+	}
+	
+	public function hasVisibleFields()
+	{
+	    foreach ($this->getFieldsRec() as $gdt)
+	    {
+	        if (!($gdt instanceof GDT_Hidden))
+	        {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 	
 	################
@@ -102,7 +133,6 @@ class GDT_Form extends GDT
 	    # Check field
 		if (($field->writable) && (!$field->error))
 		{
-// 		    $var = $field->getVar();
 			$value = $field->getValidationValue();
 			if (!$field->validate($value))
 			{

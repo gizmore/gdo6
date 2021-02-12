@@ -71,7 +71,7 @@ if ($field->headers)
     # Show quicksearch form in accordeon
     if (count($frm->fields))
     {
-        $frm->addField(GDT_Submit::make());
+        $frm->actions()->addField(GDT_Submit::make());
         $accordeon = GDT_Accordeon::make()->addField($frm)->title($frm->displaySearchCriteria());
         echo $accordeon->renderCell();
     }

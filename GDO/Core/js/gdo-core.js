@@ -9,24 +9,19 @@ window.GDO = {};
  * Automatically focus the first editable form field.
  */
 window.GDO.autofocusForm = function() {
-	var id = window.GDO_FIRST_EDITABLE_FIELD, e;
+	var id = window.GDO_FIRST_EDITABLE_FIELD;
 	if (id) {
-		if (e = window.document.getElementById(id)) {
-			e.focus();
-		}
+		var e = window.document.getElementById(id);
+		e && e.focus();
 	}
 };
-
-//window.GDO.error = function(html, title) {
-//	alert(html);
-//};
 
 /**
  * Init GDO612js
  * @returns interest
  */
 document.addEventListener('DOMContentLoaded', function(){
-	window.GDO.autofocusForm();
+	setTimeout(window.GDO.autofocusForm, 1);
 }, false);
 
 window.GDO.toggleAll = function(toggler) {
