@@ -32,6 +32,9 @@ class Database
 	# Connection
 	private $link, $host, $user, $pass, $db, $debug;
 	
+	# Const
+	const PRIMARY_USING = 'USING HASH'; # default index algorithm for primary keys.
+	
 	# Perf connection
 	public $reads = 0;
 	public $writes = 0;
@@ -215,8 +218,9 @@ class Database
 			self::$COLUMNS[$classname] = self::hashedColumns($gdo);
 
 			/** @var $gdo \GDO\Core\GDO **/
-			if ($initCache && ($gdo->gdoCached() || $gdo->memCached()))
+// 			if ($initCache && ($gdo->gdoCached() || $gdo->memCached()))
 			{
+			    # Always init a cache item.
 				$gdo->initCache();
 			}
 		}
@@ -280,7 +284,7 @@ class Database
 		if (count($primary))
 		{
 			$primary = implode(',', $primary);
-			$columns[] = "PRIMARY KEY ($primary) USING HASH";
+			$columns[] = "PRIMARY KEY ($primary) " . self::PRIMARY_USING;
 		}
 
 		foreach ($gdo->gdoColumnsCache() as $column)

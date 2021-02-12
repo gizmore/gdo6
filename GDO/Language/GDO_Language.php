@@ -1,33 +1,52 @@
 <?php
 namespace GDO\Language;
+
 use GDO\Core\GDO;
 use GDO\DB\GDT_Char;
 use GDO\Core\GDT_Template;
-use GDO\DB\Cache;
+
 /**
- * Language table
+ * Language table.
+ * 
+ * @see self::allSupported()
+ * 
  * @author gizmore
- * @version 6.05
+ * @version 6.10
  * @since 3.00
  */
 final class GDO_Language extends GDO
 {
 	public static function iso() { return Trans::$ISO; }
 	
+	/**
+	 * Wrap a callback in a temporary changed ISO. Esthetics.
+	 * @param string $iso
+	 * @param callable $callback
+	 * @return mixed
+	 */
 	public static function withIso($iso, $callback)
 	{
 		$old = self::iso();
-		Trans::setISO($iso);
-		$result = call_user_func($callback);
-		Trans::setISO($old);
-		return $result;
+	    try 
+	    {
+    		Trans::setISO($iso);
+    		return call_user_func($callback);
+	    }
+	    catch (\Throwable $t)
+	    {
+	        throw $t;
+	    }
+	    finally
+	    {
+    		Trans::setISO($old);
+	    }
 	}
 	
 	public function gdoColumns()
 	{
-		return array(
+		return [
 		    GDT_Char::make('lang_iso')->primary()->ascii()->length(2),
-		);
+		];
 	}
 	
 	public function getID() { return $this->getISO(); }
@@ -73,20 +92,4 @@ final class GDO_Language extends GDO
 		return Module_Language::instance()->cfgSupported();
 	}
 	
-	/**
-	 * @return self[]
-	 */
-	public function all()
-	{
-		if (false === ($cache = Cache::get('gdo_languages')))
-		{
-			$cache = self::table()->select('*')->exec()->fetchAllArray2dObject();
-			Cache::set('gdo_languages', $cache);
-		}
-		else
-		{
-		    Cache::heat('gdo_languages', $cache);
-		}
-		return $cache;
-	}
 }

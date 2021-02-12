@@ -43,7 +43,7 @@ class GDT_String extends GDT
 	public $min = 0;
 	public $max = 255;
 	
-	public $_inputType = 'text';
+	public $_inputType = 'text'; # HTML input[type]
 	
 	public $orderable = true;
 	public $filterable = true;
@@ -171,7 +171,7 @@ class GDT_String extends GDT
 			    # If i am the only one, i am unique. Waiting for a second...
 				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}
-			if (!$this->gdtTable) # TODO: a gdt should always have a GDO as table by default. we could default with a base GDT like GDT_String. 
+			if (!$this->gdtTable) # TODO: a GDT should always have a GDO as table by default. we could default with a base GDT like GDT_String. 
 			{
 			    $this->gdtTable = $this->gdo->table(); # ugly
 			}
@@ -232,7 +232,7 @@ class GDT_String extends GDT
 	
     public function filterQuery(Query $query, $rq=null)
 	{
-		if ($filter = (string)$this->filterVar($rq))
+		if ($filter = $this->filterVar($rq))
 		{
 		    $this->applyQueryFilter($query, $filter);
 		}
@@ -263,11 +263,11 @@ class GDT_String extends GDT
 	{
 	    if ($this->caseSensitive)
 	    {
-	        return stripos($this->getVar(), $searchTerm) !== false;
+	        return strpos($this->getVar(), $searchTerm) !== false;
 	    }
 	    else
 	    {
-	        return strpos($this->getVar(), $searchTerm) !== false;
+	        return stripos($this->getVar(), $searchTerm) !== false;
 	    }
 	}
 	
@@ -276,13 +276,13 @@ class GDT_String extends GDT
 	##############
 	public function configJSON()
 	{
-		return array_merge(parent::configJSON(), array(
+		return array_merge(parent::configJSON(), [
 			'min' => $this->min,
 			'max' => $this->max,
 			'pattern' => $this->pattern,
 			'encoding' => $this->encoding,
 			'caseS' => $this->caseSensitive,
-		));
+		]);
 	}
 
 }

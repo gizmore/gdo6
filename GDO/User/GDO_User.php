@@ -69,6 +69,7 @@ final class GDO_User extends GDO
 			GDT_IP::make('user_register_ip')->useCurrent(),
 		    # Indexes
 		    GDT_Index::make()->indexColumns('user_last_activity'),
+		    GDT_Index::make()->indexColumns('user_type'),
 		);
 	}
 	

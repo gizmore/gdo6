@@ -28,8 +28,18 @@ use GDO\Core\GDO;
  */
 class Cache
 {
-    public $all;
-	private static $MEMCACHED;
+	private static $MEMCACHED; # Memcached server
+
+	public $all;       # All rows. @see GDO->allCached()
+    public $pkNames;   # Primary Key Column Names
+    public $pkColumns; # Primary Key Columns
+    public $tableName; # Cached transformed table name
+	
+	/**
+	 * @TODO no result should return null?
+	 * @param string $key
+	 * @return boolean
+	 */
 	public static function get($key) { return GWF_MEMCACHE ? self::$MEMCACHED->get(GWF_MEMCACHE_PREFIX.$key) : false; }
 	public static function set($key, $value) { if (GWF_MEMCACHE) self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$key, $value); }
 	public static function remove($key) { if (GWF_MEMCACHE) self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$key); }
@@ -43,8 +53,10 @@ class Cache
 		}
 	}
 	
-	private static $HEAT = [];
-	
+	###############
+	### Preheat ### (not working)
+	###############
+// 	private static $HEAT = [];
 	/**
 	 * Load memcached GDOs into the process cache.
 	 * @param string $key
@@ -71,7 +83,7 @@ class Cache
 	 */
 	public static function cooldown()
 	{
-	    self::$HEAT = [];
+// 	    self::$HEAT = [];
 	}
 	#################
 	### GDO Cache ###
@@ -100,6 +112,7 @@ class Cache
 	{
 		$this->table = $gdo;
 		$this->klass = $gdo->gdoClassName();
+		$this->tableName = strtolower($gdo->gdoShortName());
 		$this->newDummy();
 	}
 
@@ -109,21 +122,21 @@ class Cache
 	}
 	
 	/**
+	 * Try GDO Cache and Memcached.
 	 * @param string $id
 	 * @return GDO
 	 */
 	public function findCached(...$ids)
 	{
 		$id = implode(':', $ids);
-		
 		if (!isset($this->cache[$id]))
 		{
-			if ($mcached = self::get($this->klass . $id))
+			if ($mcached = self::get($this->tableName . $id))
 			{
 				$this->cache[$id] = $mcached;
 			}
 		}
-		return @$this->cache[$id];
+		return isset($this->cache[$id]) ? $this->cache[$id] : null;
 	}
 	
 	public function hasID($id)
@@ -162,24 +175,38 @@ class Cache
 	public function recache(GDO $object)
 	{
 		$back = $object;
+		
+		# GDO cache
 		if ($object->gdoCached())
 		{
-			if (isset($this->cache[$object->getID()]))
+    		$id = $object->getID();
+
+    		# GDO single cache
+			if (isset($this->cache[$id]))
 			{
-				$old = $this->cache[$object->getID()];
+				$old = $this->cache[$id];
 				$old->setGDOVars($object->getGDOVars());
-// 				$old->tempReset();
+// 				$old->tempReset(); # Why no more?
 				$back = $old;
 			}
 			else
 			{
-				$this->cache[$object->getID()] = $object;
+				$this->cache[$id] = $object;
 			}
+			
+			# @TODO check if true: GDO-ALL cache is, in theory, always sync by single identity. true?
+// 			if (isset($this->all[$id]))
+// 			{
+// 			    $this->all[$id] = $back;
+// 			}
 		}
+		
+		# Memcached
 		if (GWF_MEMCACHE && $back->memCached())
 		{
 		    self::$MEMCACHED->replace(GWF_MEMCACHE_PREFIX.$back->gkey(), $back, GWF_MEMCACHE_TTL);
 		}
+		
 		return $back;
 	}
 	
@@ -227,9 +254,10 @@ class Cache
 		}
 		return $this->cache[$key];
 	}
+	
 }
 
-# No memcached stub
+# No memcached stub shim so it won't crash.
 if (!class_exists('Memcached', false))
 {
 	require 'Memcached.php';

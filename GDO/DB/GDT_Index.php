@@ -5,6 +5,7 @@ use GDO\Core\GDT;
 
 /**
  * Index db column definition.
+ * The default algo is HASH. BTREE available
  * 
  * @author gizmore
  * @version 6.10
@@ -43,8 +44,10 @@ class GDT_Index extends GDT
 	private $indexColumns;
 	public function indexColumns(...$indexColumns)
 	{
-		$this->indexColumns = implode(',', array_map(array('GDO\Core\GDO', 'escapeIdentifierS'), $indexColumns));
-		return $this;
+// 	    $this->indexColumns = implode(',', array_map(
+// 	        ['GDO\Core\GDO', 'escapeIdentifierS'], $indexColumns));
+	    $this->indexColumns = implode(',', $indexColumns);
+	    return $this;
 	}
 	
 	##################
@@ -54,7 +57,7 @@ class GDT_Index extends GDT
 	const HASH = 'USING HASH';
 	const BTREE = 'USING BTREE';
 	private $indexFulltext = false;
-	private $indexUsing = false;
+	private $indexUsing = self::HASH;
 	public function hash() { $this->indexUsing = self::HASH; return $this; }
 	public function btree() { $this->indexUsing = self::BTREE; return $this; }
 	public function fulltext() { $this->indexFulltext = self::FULLTEXT; return $this; }

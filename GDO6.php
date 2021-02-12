@@ -87,8 +87,7 @@ function tusr(GDO_User $user, $key, array $args=null) { return Trans::tiso($user
 function tt($date=null, $format='short', $default='---') { return Time::displayDate($date, $format, $default); }
 
 /**
- * @deprecated
- * Use GDO\\Module\\Method\\Class::make() instead
+ * @deprecated - Use GDO\\Module\\Method\\Class::make() instead
  * @param string $module
  * @param string $method
  * @return \GDO\Core\Method

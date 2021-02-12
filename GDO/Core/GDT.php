@@ -12,6 +12,7 @@ use GDO\DB\GDT_Int;
 use GDO\Form\GDT_Select;
 use GDO\Form\GDT_ComboBox;
 use GDO\DB\GDT_Enum;
+use GDO\DB\GDT_Index;
 
 /**
  * Base class for all GDT.
@@ -48,7 +49,7 @@ abstract class GDT
 	public $initial; # Initial var
 	public $unique; # DB
 	public $primary; # DB
-// 	public $primaryUsing = 'USING HASH';
+	// 	public $primaryUsing = GDT_Index::HASH; # one default to rule them all is in @see{Database}
 	public $readable = true; # can see
 	public $writable = true; # can change
 	public $editable = true; # user can change
@@ -100,6 +101,7 @@ abstract class GDT
 	 */
 	public function htmlName() { return Strings::startsWith($this->name, 'gdo-') ? '' :  sprintf(' name="%s"', $this->name); }
 	
+	# @TODO: make htmlClass() abstract and implement every classname in every class. this should give some speedup.
 	private static $classNameCache = [];
 	public function htmlClass()
 	{
@@ -110,6 +112,16 @@ abstract class GDT
 	    }
 	    return self::$classNameCache[static::class];
 	}
+	
+// 	private static $classNameCache;
+// 	public function htmlClass()
+// 	{
+// 	    if (!isset(static::$classNameCache))
+// 	    {
+// 	        static::$classNameCache = " gdo-".strtolower($this->gdoShortName());
+// 	    }
+// 	    return static::$classNameCache;
+// 	}
 	
 	##############
 	### FormID ###
