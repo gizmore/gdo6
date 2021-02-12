@@ -192,6 +192,13 @@ abstract class GDO
 	 */
 	public function setVar($key, $var, $markDirty=true)
 	{
+	    # @TODO: Better use temp? @see Vote/Up
+	    if (!$this->hasColumn($key))
+	    {
+	        $this->gdoVars[$key] = $var;
+	        return $this;
+	    }
+	    
 	    $gdt = $this->gdoColumn($key)->var($var);
 	    if ($data = $gdt->getGDOData())
 	    {
