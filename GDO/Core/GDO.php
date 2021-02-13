@@ -394,7 +394,7 @@ abstract class GDO
      * Get primary key column names.
      * @return string[]
      */
-    private function gdoPrimaryKeyColumnNames()
+    public function gdoPrimaryKeyColumnNames()
     {
         $cache = self::table()->cache;
         

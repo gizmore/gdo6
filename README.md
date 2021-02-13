@@ -115,6 +115,8 @@ A demo site with jQueryMobile theme is available here: https://service.busch-pei
 
 A demo site with classic theme is available here: https://ranzgruppe.com 
 
+A demo site with a custom design is availble here: https://tbs.wechall.net
+
 
 ## Installation
 
