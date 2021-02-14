@@ -226,7 +226,7 @@ class GDT_Table extends GDT
 	public $countQuery;
 	public function countQuery(Query $query)
 	{
-	    $this->countQuery = $this->getFilteredQuery($query);
+	    $this->countQuery = $this->getFilteredQuery($query)->noOrder();
 	    return $this;
 	}
 	

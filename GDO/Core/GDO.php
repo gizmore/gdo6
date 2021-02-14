@@ -564,7 +564,7 @@ abstract class GDO
      */
     public function countWhere($condition='true')
     {
-        return $this->select("COUNT(*)")->where($condition)->exec()->fetchValue();
+        return $this->select('COUNT(*)', false)->where($condition)->noOrder()->exec()->fetchValue();
     }
     
     /**
@@ -596,10 +596,13 @@ abstract class GDO
      * @param string $columns
      * @return \GDO\DB\Query
      */
-    public function select($columns='*')
+    public function select($columns='*', $withHooks=true)
     {
         $query = $this->query()->select($columns)->from($this->gdoTableIdentifier());
-        $this->beforeRead($query);
+        if ($withHooks)
+        {
+            $this->beforeRead($query);
+        }
         return $query;
     }
     

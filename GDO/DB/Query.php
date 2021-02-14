@@ -318,6 +318,13 @@ final class Query
 		return $this->order($column, false);
 	}
 	
+	public function noOrder()
+	{
+	    $this->orderBy = [];
+	    $this->orderDir = [];
+	    return $this;
+	}
+	
 	public $orderBy = [];
 	public $orderDir = [];
 	public function order($column=null, $ascending=true)
