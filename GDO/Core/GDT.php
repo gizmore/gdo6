@@ -12,7 +12,6 @@ use GDO\DB\GDT_Int;
 use GDO\Form\GDT_Select;
 use GDO\Form\GDT_ComboBox;
 use GDO\DB\GDT_Enum;
-use GDO\DB\GDT_Index;
 
 /**
  * Base class for all GDT.
@@ -99,7 +98,7 @@ abstract class GDT
 	 * @deprecated
 	 * @return string
 	 */
-	public function htmlName() { return Strings::startsWith($this->name, 'gdo-') ? '' :  sprintf(' name="%s"', $this->name); }
+// 	public function htmlName() { return Strings::startsWith($this->name, 'gdo-') ? '' :  sprintf(' name="%s"', $this->name); }
 	
 	# @TODO: make htmlClass() abstract and implement every classname in every class. this should give some speedup.
 	private static $classNameCache = [];
