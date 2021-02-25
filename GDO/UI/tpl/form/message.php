@@ -8,6 +8,6 @@
    <?=$field->htmlFormName()?>
    rows="6"
    <?=$field->htmlRequired()?>
-   <?=$field->htmlDisabled()?>><?=html($field->getVarInput())?></textarea>
+   <?=$field->htmlDisabled()?>><?=html($field->getVar())?></textarea>
   <?=$field->htmlError()?>
 </div>

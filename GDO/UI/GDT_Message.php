@@ -5,11 +5,13 @@ use GDO\Core\GDT_Template;
 use GDO\DB\GDT_Text;
 use GDO\Core\GDO;
 use GDO\Util\Strings;
+use GDO\User\GDO_User;
+use GDO\Profile\GDT_ProfileLink;
 
 /**
  * A message is a GDT_Text with an editor. Classic uses a textarea.
  * The content is html, filtered through a whitelist with html-purifier.
- * The default editor is simply a textarea, and a gdo6-tinymce / ckeditor is available.
+ * A gdo6-tinymce / ckeditor is available. Planned is markdown and bbcode.
  * 
  * @todo: write a Markdown module. Hook into DECODE() to turn input markdown into output html.
  * 
@@ -17,7 +19,7 @@ use GDO\Util\Strings;
  * @see \GDO\CKEditor\Module_CKEditor
  * 
  * @author gizmore
- * @version 6.11
+ * @version 6.10
  * @since 3.00
  */
 class GDT_Message extends GDT_Text
@@ -42,6 +44,22 @@ class GDT_Message extends GDT_Text
         $gdt->orderField = $gdt->name . '_text';
         $gdt->searchField = $gdt->name . '_text';
         return $gdt;
+    }
+    
+    ##############
+    ### Quoter ###
+    ##############
+    public static $QUOTER = [self::class, 'QUOTE'];
+    public static function QUOTE(GDO_User $user, $date, $text)
+    {
+        $link = GDT_ProfileLink::make()->withNickname()->forUser($user);
+        return sprintf("<div><blockquote>\n<span class=\"quote-by\">%s</span>\n<span class=\"quote-from\">%s</span>\n%s</blockquote>&nbsp;</div>\n",
+            t('quote_by', [$link->render()]), t('quote_at', [tt($date)]), $text);
+    }
+    
+    public static function quoteMessage(GDO_User $user, $date, $text)
+    {
+        return call_user_func(self::$QUOTER, $user, $date, $text);
     }
     
     ###############
