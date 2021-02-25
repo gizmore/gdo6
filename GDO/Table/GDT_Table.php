@@ -500,14 +500,14 @@ class GDT_Table extends GDT
 	    }
 	    else
 	    {
-	        $q = $this->query->copy()->noOrder();
+	        $q = $this->query->copy()->noJoins();
 	        foreach ($q->orderBy as $i => $column)
 	        {
 	            $subq = $gdo->entityQuery()->from($gdo->gdoTableName()." AS sq{$i}")->selectOnly($column)->buildQuery();
 	            $cmpop = $q->orderDir[$i] ? '<' : '>';
 	            $q->where("{$column} {$cmpop} ( {$subq} )");
 	        }
-	        $q->selectOnly('COUNT(*)');
+	        $q->selectOnly('COUNT(*)')->noOrder();
 	        $itemsBefore = $q->exec()->fetchValue();
 	        return $this->getPageForB($itemsBefore);
 	    }

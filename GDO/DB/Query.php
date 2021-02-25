@@ -437,6 +437,12 @@ final class Query
 		return $this->join ? " {$this->join}" : "";
 	}
 	
+	public function noJoins()
+	{
+	    $this->join = null;
+	    return $this;
+	}
+	
 	public function getGroup()
 	{
 		return $this->group ? " GROUP BY $this->group" : "";
