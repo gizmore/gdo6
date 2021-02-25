@@ -371,7 +371,7 @@ class GDT_Table extends GDT
 		{
 		    if ($this->countQuery)
 		    {
-		        $this->countItems = $this->countQuery->exec()->fetchValue();
+		        $this->countItems = $this->countQuery->noOrder()->noLimit()->exec()->fetchValue();
 		    }
 		    else
 		    {
@@ -500,7 +500,7 @@ class GDT_Table extends GDT
 	    }
 	    else
 	    {
-	        $q = $this->query->copy();
+	        $q = $this->query->copy()->noOrder();
 	        foreach ($q->orderBy as $i => $column)
 	        {
 	            $subq = $gdo->entityQuery()->from($gdo->gdoTableName()." AS sq{$i}")->selectOnly($column)->buildQuery();

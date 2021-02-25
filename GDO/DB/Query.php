@@ -254,6 +254,12 @@ final class Query
 		return $this;
 	}
 	
+	public function noLimit()
+	{
+	    $this->limit = null;
+	    return $this;
+	}
+	
 	/**
 	 * Limit results to one.
 	 * @return self
@@ -320,6 +326,7 @@ final class Query
 	
 	public function noOrder()
 	{
+	    $this->order = null;
 	    $this->orderBy = [];
 	    $this->orderDir = [];
 	    return $this;
