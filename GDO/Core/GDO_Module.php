@@ -435,7 +435,7 @@ class GDO_Module extends GDO
 	    {
     	    $settings = $this->loadUserSettings($user);
     	    $var = isset($settings[$key]) ? $settings[$key] : $gdt->initial;
-   	        return $gdt->initial($var);
+   	        return $gdt->var($var);
 	    }
 	}
 	

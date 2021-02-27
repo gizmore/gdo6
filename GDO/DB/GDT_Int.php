@@ -151,11 +151,6 @@ class GDT_Int extends GDT
 		return $this->getVar();
 	}
 	
-// 	public function renderJSON()
-// 	{
-// 	    return [$this->name => $this->var];
-// 	}
-	
 	##############
 	### Filter ###
 	##############
@@ -182,7 +177,7 @@ class GDT_Int extends GDT
 	{
 	    $min = Strings::substrTo($filtervalue, '-', $filtervalue);
 	    $max = Strings::substrFrom($filtervalue, '-', $filtervalue);
-		$var = $this->getVar(); # $gdo->getVar($this->name);
+		$var = $this->getVar();
 		return ($var >= $min) && ($var <= $max);
 	}
 	
@@ -224,13 +219,13 @@ class GDT_Int extends GDT
 	##############
 	public function configJSON()
 	{
-		return array_merge(parent::configJSON(), array(
+		return array_merge(parent::configJSON(), [
 			'min' => $this->min,
 			'max' => $this->max,
 			'unsigned' => $this->unsigned,
 			'bytes' => $this->bytes,
 			'step' => $this->step,
-		));
+		]);
 	}
 
 }

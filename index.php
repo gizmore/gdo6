@@ -13,6 +13,7 @@ use GDO\UI\GDT_Container;
 use GDO\UI\GDT_HTML;
 use GDO\Core\GDT_Error;
 use GDO\Core\Method\Page404;
+use GDO\Util\Strings;
 
 set_include_path('.');
 include 'GDO6.php';
@@ -62,7 +63,7 @@ try
     if (!isset($_REQUEST['mo']))
     { 
         $f = $_SERVER['REQUEST_URI'];
-        if ( ($f !== (GWF_WEB_ROOT.'index.php')) && ($f !== '/') )
+        if ( ($f !== (GWF_WEB_ROOT.'index.php')) && (Strings::startsWith($f, '/?')) )
         {
             $method = Page404::make();
             $_GET['mo'] = $_REQUEST['mo'] = 'Core';
