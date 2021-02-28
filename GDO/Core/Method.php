@@ -364,21 +364,19 @@ abstract class Method
 			# Wrap transaction start
 			if ($transactional) $db->transactionBegin();
 			
-			# Exec 1)before, 2)execute, 3)after
+			# Exec 1.before - 2.execute - 3.after
 			GDT_Hook::callHook('BeforeExecute', $this);
-			
 			$response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
 			$response = $response ? $response->add($this->execute()) : $this->execute();
 			$response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
-			
-			# SEO
-			Website::setTitle($this->getTitle());
-			Website::addMeta(['description', $this->getDescription(), 'name']);
-			
 			GDT_Hook::callHook('AfterExecute', $this);
 			
 			# Wrap transaction end
 			if ($transactional) $db->transactionEnd();
+			
+			# SEO
+			Website::setTitle($this->getTitle());
+			Website::addMeta(['description', $this->getDescription(), 'name']);
 			
 			# Store last URL in session
 			$this->storeLastURL();
@@ -395,6 +393,9 @@ abstract class Method
 		}
 	}
 	
+	####################
+	### Last Actions ###
+	####################
 	private function storeLastURL()
 	{
 	    if ($this->saveLastUrl())
