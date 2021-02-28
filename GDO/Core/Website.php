@@ -29,7 +29,7 @@ final class Website
 	}
 	
 	/**
-	 * 
+	 * Try to get a referrer URL for hrefBack.
 	 * @param string $default
 	 * @return string
 	 */
@@ -39,7 +39,9 @@ final class Website
 	    {
 	        return $default ? $default : hrefDefault();
 	    }
-	    if (!($url = GDO_Session::instance()->getLastURL()))
+	    
+	    $sess = GDO_Session::instance();
+	    if ( (!$sess) || (!($url = $sess->getLastURL())) )
 	    {
 	        $url = isset($_SERVER['HTTP_REFERER']) ?
 	           $_SERVER['HTTP_REFERER'] :
