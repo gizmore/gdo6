@@ -78,15 +78,18 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-backup Backup
     ## git clone --recursive https://github.com/gizmore/gdo6-blog Blog
     git clone --recursive https://github.com/gizmore/gdo6-bootstrap Bootstrap
+    ## git clone --recursive https://github.com/gizmore/gdo6-bootstrap3 Bootstrap3
     ## git clone --recursive https://github.com/gizmore/gdo6-bootstrap-theme BootstrapTheme
     ## git clone --recursive https://github.com/gizmore/gdo6-buzzerapp Buzzerapp
     git clone --recursive https://github.com/gizmore/gdo6-captcha Captcha
     git clone --recursive https://github.com/gizmore/gdo6-category Category
+    ## git clone --recursive https://github.com/gizmore/gdo6-ckeditor CKEditor
     git clone --recursive https://github.com/gizmore/gdo6-comment Comment
     git clone --recursive https://github.com/gizmore/gdo6-contact Contact
     git clone --recursive https://github.com/gizmore/gdo6-cors CORS
     git clone --recursive https://github.com/gizmore/gdo6-country-coordinates CountryCoordinates
     git clone --recursive https://github.com/gizmore/gdo6-currency Currency
+    ## git clone --recursive https://github.com/gizmore/gdo6-docs Docs
     ## git clone --recursive https://github.com/gizmore/gdo6-dog Dog
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-auth DogAuth
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-irc DogIRC
@@ -115,14 +118,19 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-jpgraph JPGraph
     git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery
     git clone --recursive https://github.com/gizmore/gdo6-jquery-autocomplete JQueryAutocomplete
+    # git clone --recursive https://github.com/gizmore/gdo6-jquery-mobile JQueryMobile
     git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
+    git clone --recursive https://github.com/gizmore/gdo6-language-editor LanguageEditor
     git clone --recursive https://github.com/gizmore/gdo6-links Links
+    git clone --recursive https://github.com/gizmore/gdo6-load-on-click LoadOnClick
     git clone --recursive https://github.com/gizmore/gdo6-login Login
     git clone --recursive https://github.com/gizmore/gdo6-login-as LoginAs
     git clone --recursive https://github.com/gizmore/gdo6-logs Logs
     # git clone --recursive https://github.com/gizmore/gdo6-mail-gpg MailGPG
     git clone --recursive https://github.com/gizmore/gdo6-maps Maps
+    git clone --recursive https://github.com/gizmore/gdo6-markdown Markdown
     # git clone --recursive https://github.com/gizmore/gdo6-material Material
+    git clone --recursive https://github.com/gizmore/gdo6-memberlist Memberlist
     ## git clone --recursive https://git@github.com/gizmore/gdo6-mettwitze Mettwitze
     # git clone --recursive https://github.com/gizmore/gdo6-mibbit Mibbit
     git clone --recursive https://github.com/gizmore/gdo6-moment Moment
@@ -138,20 +146,29 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
     git clone --recursive https://github.com/gizmore/gdo6-pma PhpMyAdmin
     git clone --recursive https://github.com/gizmore/gdo6-pm PM
     git clone --recursive https://github.com/gizmore/gdo6-poll Poll
+    git clone --recursive https://github.com/gizmore/gdo6-prism Prism
     git clone --recursive https://github.com/gizmore/gdo6-profile Profile
     # git clone --recursive https://github.com/gizmore/gdo6-push Push
+    git clone --recursive https://github.com/gizmore/gdo6-python Python
+    ## git clone --recursive https://github.com/gizmore/gdo6-ranzgruppe Ranzgruppe
     git clone --recursive https://github.com/gizmore/gdo6-qrcode QRCode
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
-    # EITHER session-db or session-cookie is required
-    git clone --recursive https://github.com/gizmore/gdo6-session-db Session
-    git clone --recursive https://github.com/gizmore/gdo6-session-cookie Session
+    ###### EITHER session-db or session-cookie is required
+    ###### git clone --recursive https://github.com/gizmore/gdo6-session-db Session
+    ###### git clone --recursive https://github.com/gizmore/gdo6-session-cookie Session
+    git clone --recursive https://github.com/gizmore/gdo6-sevenzip Sevenzip
     # git clone --recursive https://github.com/gizmore/gdo6-shoutbox Shoutbox
     git clone --recursive https://github.com/gizmore/gdo6-sitemap Sitemap
     ## git clone --recursive https://github.com/gizmore/gdo6-slaytags Slaytags
     ## git clone --recursive https://github.com/gizmore/gdo6-statistics Statistics
     git clone --recursive https://github.com/gizmore/gdo6-tag Tag
+    ## git clone --recursive https://github.com/gizmore/gdo6-tbs TBS
+    git clone --recursive https://github.com/gizmore/gdo6-tbs-message TBSBBMessage
     git clone --recursive https://github.com/gizmore/gdo6-tcpdf TCPDF
+    git clone --recursive https://github.com/gizmore/gdo6-test-methods TestMethods
+    git clone --recursive https://github.com/gizmore/gdo6-tests Tests
+    git clone --recursive https://github.com/gizmore/gdo6-theme-switcher ThemeSwitcher
     git clone --recursive https://github.com/gizmore/gdo6-tinymce TinyMCE
     # git clone --recursive https://github.com/gizmore/gdo6-usergroup Usergroup
     git clone --recursive https://github.com/gizmore/gdo6-vote Vote

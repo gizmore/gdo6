@@ -22,7 +22,7 @@ use GDO\DB\GDT_Enum;
  * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
  * 
  * @author gizmore
- * @version 6.11
+ * @version 6.10
  * @since 6.00
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
@@ -111,16 +111,6 @@ abstract class GDT
 	    }
 	    return self::$classNameCache[static::class];
 	}
-	
-// 	private static $classNameCache;
-// 	public function htmlClass()
-// 	{
-// 	    if (!isset(static::$classNameCache))
-// 	    {
-// 	        static::$classNameCache = " gdo-".strtolower($this->gdoShortName());
-// 	    }
-// 	    return static::$classNameCache;
-// 	}
 	
 	##############
 	### FormID ###

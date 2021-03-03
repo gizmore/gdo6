@@ -28,6 +28,7 @@ class Application
 	############
 	public static $TIME;
 	public static $MICROTIME;
+	
 	/**
 	 * Move forward in time.
 	 */
@@ -93,7 +94,7 @@ class Application
 	### Themes ###
 	##############
 	private $themes = GWF_THEMES;
-	public function getThemes() { return $this->themes; }
+	public function &getThemes() { return $this->themes; }
 	public function hasTheme($theme) { return isset($this->themes[$theme]); }
 	public function initThemes()
 	{
@@ -103,8 +104,10 @@ class Application
 	    }
 	    $this->themes = explode(',', $this->themes);
 	    $this->themes = array_combine($this->themes, $this->themes);
+	    return $this;
 	}
 
 }
 
+# setup current time.
 Application::updateTime();

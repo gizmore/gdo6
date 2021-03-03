@@ -5,6 +5,7 @@ use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
+use GDO\DB\Database;
 
 /**
  * Module loader.
@@ -46,7 +47,7 @@ final class ModuleLoader
 	 * Get all loaded modules.
 	 * @return GDO_Module[]
 	 */
-	public function getModules()
+	public function &getModules()
 	{
 		return $this->modules;
 	}
@@ -64,10 +65,10 @@ final class ModuleLoader
 	{
 	    if (self::$ENABLED_MODULES === null)
 	    {
-	        $enabled = array_filter($this->modules, function(GDO_Module $module){
+	        $enabled = array_filter($this->modules, function(GDO_Module $module) {
     			return $module->isEnabled();
     		});
-	        self::$ENABLED_MODULES = $enabled;
+	        self::$ENABLED_MODULES = &$enabled;
 	    }
 	    return self::$ENABLED_MODULES;
 	}
@@ -89,7 +90,7 @@ final class ModuleLoader
 	 */
 	public function getModule($moduleName)
 	{
-		return @$this->modules[$moduleName];
+		return $this->modules[$moduleName];
 	}
 	
 	/**
@@ -368,21 +369,24 @@ final class ModuleLoader
 		# Query all module vars
 		try
 		{
-    		$result = GDO_ModuleVar::table()->
-    			select('module_name, mv_name, mv_value')->
-    			join('JOIN gdo_module ON module_id=mv_module_id')->exec();
-    		# Assign them to the modules
-    		while ($row = $result->fetchRow())
-    		{
-    		    /** @var $module \GDO\Core\GDO_Module **/
-    			if ($module = $this->modules[$row[0]])
-    			{
-    				if ($gdt = $module->getConfigColumn($row[1]))
-    				{
-    				    $gdt->initial($row[2])->var($row[2]);
-    				}
-    			}
-    		}
+		    if (Database::instance())
+		    {
+    		    $result = GDO_ModuleVar::table()->
+        			select('module_name, mv_name, mv_value')->
+        			join('JOIN gdo_module ON module_id=mv_module_id')->exec();
+        		# Assign them to the modules
+        		while ($row = $result->fetchRow())
+        		{
+        		    /** @var $module \GDO\Core\GDO_Module **/
+        			if ($module = $this->modules[$row[0]])
+        			{
+        				if ($gdt = $module->getConfigColumn($row[1]))
+        				{
+        				    $gdt->initial($row[2]); #->var($row[2]);
+        				}
+        			}
+        		}
+		    }
 		}
 		catch (\GDO\DB\DBException $e)
 		{

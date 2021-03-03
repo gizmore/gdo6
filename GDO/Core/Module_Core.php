@@ -30,7 +30,7 @@ use GDO\File\FileUtil;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9506'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+	public $gdo_revision = '6.10-r9509'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
 
 	##############
 	### Module ###
@@ -113,6 +113,11 @@ final class Module_Core extends GDO_Module
 		{
 		    $navbar->addField(GDT_Link::make('link_privacy')->href(href('Core', 'Privacy')));
 		}
+	}
+	
+	public function hookIgnoreDocsFiles(GDT_Array $ignore)
+	{
+	    $ignore->data[] = 'GDO/UI/htmlpurifier/**/*';
 	}
 	
 	##################

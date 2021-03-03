@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Install;
+
 use Exception;
 use GDO\Core\Method;
 use GDO\Core\GDO_Module;
@@ -10,11 +11,12 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\User\GDO_Permission;
 use GDO\Util\Strings;
+
 /**
  * Install helper.
  * @author gizmore
+ * @version 6.10
  * @since 6.00
- * @version 6.05
  */
 class Installer
 {

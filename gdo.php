@@ -14,6 +14,8 @@ use GDO\Util\BCrypt;
 use GDO\User\GDO_UserPermission;
 use GDO\DB\Cache;
 use GDO\Install\Installer;
+use GDO\Util\Strings;
+use GDO\Core\GDO_Module;
 
 /**
  * The gdo.php executable manages modules and config via the CLI.
@@ -29,15 +31,20 @@ use GDO\Install\Installer;
 /** @var $argc int **/
 /** @var $argv array **/
 
+/**
+ * Show usage of the gdo.sh shell command.
+ * @example gdo.sh install Bootstrap
+ */
 function printUsage()
 {
     global $argv;
     $exe = $argv[0];
-    echo "Usage: php $exe configure <filename.php>\n";
+    echo "Usage: php $exe configure [<config.php>] - to generate a protected/config.php\n";
     echo "Usage: php $exe install <module>\n";
-//     echo "Usage: php $exe providers <module>\n"; # TODO: Show a list of providers for module dependencies.
-    echo "Usage: php $exe admin <username> <password>\n";
-    echo "Usage: php $exe wipe <module>\n";
+    echo "Usage: php $exe install_all\n";
+    echo "Usage: php $exe wipe <module> - To uninstall modules\n";
+//  echo "Usage: php $exe providers <module>\n"; # TODO: Show a list of providers for module dependencies.
+    echo "Usage: php $exe admin <username> <password> [<email>] - to (re)set an admin account\n";
     echo "Usage: php $exe config <module>\n";
     echo "Usage: php $exe config <module> <key>\n";
     echo "Usage: php $exe config <module> <key> <var>\n";
@@ -127,24 +134,47 @@ elseif ($argv[1] === 'modules')
 		if (!is_array($p)) $p = [$p];
 		foreach ($p as $provider)
 		{
-			printf("%20s: cd GDO; git clone --recursive {$git}{$provider} {$moduleName}; cd ..\n", $moduleName);
+			printf("%32s: cd GDO; git clone --recursive {$git}{$provider} {$moduleName}; cd ..\n", $moduleName);
 		}
 	}
 }
 
-elseif ($argv[1] === 'install')
+elseif (Strings::startsWith($argv[1], 'install'))
 {
-    if ($argc !== 3)
+    $mode = 1;
+    if ($argv[1] === 'install')
     {
-        printUsage();
+        if ($argc !== 3)
+        {
+            printUsage();
+        }
+    }
+    elseif ($argv[1] === 'install_all')
+    {
+        $mode = 2;
+        if ($argc !== 2)
+        {
+            printUsage();
+        }
     }
 			
 	$git = \GDO\Core\ModuleProviders::GIT_PROVIDER;
-	$allResolved = true; # All required modules provided?
-    $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
-    $deps = $module->dependencies();
-    $deps[] = $module->getName();
+	
+	if ($mode === 1)
+	{
+        $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
+        $deps = $module->dependencies();
+        $deps[] = $module->getName();
+	}
+	elseif ($mode === 2)
+	{
+	    $modules = ModuleLoader::instance()->loadModules(false, true, true);
+	    $deps = array_map(function(GDO_Module $mod){
+	        return $mod->getName();}, $modules);
+	}
+    
     $cnt = 0;
+	$allResolved = true; # All required modules provided?
     while ($cnt !== count($deps))
     {
         $cnt = count($deps);

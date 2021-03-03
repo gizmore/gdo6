@@ -10,20 +10,20 @@ use GDO\Core\Env;
 use GDO\Core\Application;
 
 /**
- * GDO autoloader and public functions.
+ * GDO6 autoloader and public functions.
  * @author gizmore
  * @version 6.10
  * @since 6.00
  */
 
-# perf
+# performance
 define('GWF_PERF_START', microtime(true));
 
 # Autoconf path
 define('GDO_PATH', str_replace('\\', '/', __DIR__) . '/');
 chdir(GDO_PATH);
 
-# Verbose error handling
+# Verbose error handling is default
 // while (ob_get_level()>0) { ob_end_clean(); }
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -35,7 +35,11 @@ spl_autoload_register(function($name){
     $name = str_replace('\\', '/', $name) . '.php';
     if (file_exists($name))
     {
-        require_once $name;
+        /**
+         * @TODO require should be a tad faster than require_once but \
+         * it brings include problems in e.g.: testing suites and other stuff
+         */
+        require $name; 
         global $GDT_LOADED; $GDT_LOADED++; # perf
     }
 });
