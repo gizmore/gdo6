@@ -32,7 +32,7 @@ Trans::$ISO = GWF_LANGUAGE;
 final class InstallerApp extends Application
 {
     public function isInstall() { return true; }
-    public function &getThemes() { return ['install', 'default']; }
+    public function getThemes() { return ['install', 'default']; }
 }
 new InstallerApp();
 

@@ -94,7 +94,7 @@ class Application
 	### Themes ###
 	##############
 	private $themes = GWF_THEMES;
-	public function &getThemes() { return $this->themes; }
+	public function getThemes() { return $this->themes; }
 	public function hasTheme($theme) { return isset($this->themes[$theme]); }
 	public function initThemes()
 	{
