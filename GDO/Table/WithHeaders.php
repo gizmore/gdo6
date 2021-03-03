@@ -24,6 +24,10 @@ trait WithHeaders
 	 * @var GDT_Fields
 	 */
 	public $headers;
+	
+	/**
+	 * @return GDT_Fields
+	 */
 	public function makeHeaders() { if ($this->headers === null) $this->headers = GDT_Fields::make(self::nextOrderName()); return $this->headers; }
 	public function addHeaders(array $fields) { return count($fields) ? $this->makeHeaders()->addFields($fields) : $this; }
 	public function addHeader(GDT $field) { return $this->makeHeaders()->addField($field); }
@@ -66,7 +70,7 @@ trait WithHeaders
 		$sort = $this->make_cmp($orders);
 		
 		# Use it
-		usort($result->data, $sort);
+		uasort($result->getData(), $sort);
 		
 		return $result;
 	}

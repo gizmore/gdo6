@@ -31,6 +31,8 @@ use GDO\DB\GDT_String;
  */
 final class GetFile extends Method
 {
+    public function isTrivial() { return false; } # no trivial method testing.
+    
 	public function getPermission() { return 'admin'; }
 	
 	public function gdoParameters()

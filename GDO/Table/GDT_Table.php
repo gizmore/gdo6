@@ -58,8 +58,20 @@ class GDT_Table extends GDT
 	use WithHeaders;
 	use WithActions;
 	use WithFields;
+
+	###########
+	### GDT ###
+	###########
+	protected function __construct()
+	{
+	    parent::__construct();
+	    $this->action = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
+	    $this->makeHeaders();
+	}
 	
-	### 
+	#####################
+	### Header fields ###
+	#####################
 	public function getHeaderFields()
 	{
 	    return $this->headers ? $this->headers->getFields() : [];
@@ -74,7 +86,6 @@ class GDT_Table extends GDT
 	### Endpoint ###
 	################
 	public $action;
-	protected function __construct() { $this->action = @$_SERVER['REQUEST_URI']; $this->makeHeaders(); }
 	public function action($action=null) { $this->action = $action; return $this; }
 
 	##############
@@ -162,14 +173,13 @@ class GDT_Table extends GDT
 		$ipp = $ipp <= 0 ? Module_Table::instance()->cfgItemsPerPage() : (int)$ipp;
 		if ($paginated)
 		{
-		    $href = $href === null ? @$_SERVER['REQUEST_URI'] : $href;
+		    $href = $href === null ? $this->action : $href;
 			$this->pagemenu = GDT_PageMenu::make('page');
 			$this->pagemenu->headers($this->headers);
 			$this->pagemenu->href($href);
 			$this->pagemenu->ipp($ipp);
 			$o = $this->headers->name;
 			$this->pagemenu->page($this->headers->getField('page')->getRequestVar("$o", '1', 'page'));
-// 			$this->pagemenu->items($this->getResult()->numRows());
 			$this->href($href);
 		}
 		return $this->ipp($ipp);
@@ -275,8 +285,8 @@ class GDT_Table extends GDT
 	            unset($_REQUEST[$o]['o']);
 	            $by = $_REQUEST[$o]['order_by'];
 	            $_REQUEST[$o]['o'][$by] = $_REQUEST[$o]['order_dir'] === 'ASC';
-	            // 	            unset($_REQUEST[$o]['order_by']);
-	            // 	            unset($_REQUEST[$o]['order_dir']);
+// 	            unset($_REQUEST[$o]['order_by']);
+// 	            unset($_REQUEST[$o]['order_dir']);
 	        }
 	        
 	        if ($this->headers)
@@ -404,7 +414,6 @@ class GDT_Table extends GDT
         			$this->pagemenu->items($this->countItems());
 		        }
 		    }
-// 			$this->pagemenu->href($this->href);
 		}
 		return $this->pagemenu;
 	}
@@ -440,12 +449,14 @@ class GDT_Table extends GDT
 	
 	public function renderJSON()
 	{
-		return array_merge($this->configJSON(), ['data'=>$this->renderJSONData()]);
+		return array_merge($this->configJSON(), [
+		    'data'=>$this->renderJSONData(),
+		]);
 	}
 	
 	public function configJSON()
 	{
-		return [
+	    return array_merge(parent::configJSON(), [
 			'tableName' => $this->getResult()->table->gdoClassName(),
 			'pagemenu' => $this->pagemenu ? $this->getPageMenu()->configJSON() : null,
 		    'searchable' => $this->searchable,
@@ -456,7 +467,7 @@ class GDT_Table extends GDT
 		    'orderable' => $this->orderable,
 		    'orderDefaultField' => $this->orderDefault,
 		    'orderDefaultASC' => $this->orderDefaultAsc,
-		];
+	    ]);
 	}
 	
 	private function renderJSONData()

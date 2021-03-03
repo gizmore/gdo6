@@ -246,7 +246,7 @@ class Database
 	 * @param string $classname
 	 * @return GDT[]
 	 */
-	public static function columnsS($classname)
+	public static function &columnsS($classname)
 	{
 		if (!isset(self::$COLUMNS[$classname]))
 		{

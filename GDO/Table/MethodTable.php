@@ -171,11 +171,11 @@ abstract class MethodTable extends Method
 	    # Exec features
 	    if ($this->isFiltered())
 	    {
-	        $result = $result->filterResult($result->fullData, $this->gdoTable(), $table->getHeaderFields(), $table->headers->name);
+	        $result = $result->filterResult($result->getFullData(), $this->gdoTable(), $table->getHeaderFields(), $table->headers->name);
 	    }
 	    if ($this->isSearched())
 	    {
-	        $result = $result->searchResult($result->data, $this->gdoTable(), $table->getHeaderFields(), $this->getSearchTerm());
+	        $result = $result->searchResult($result->getData(), $this->gdoTable(), $table->getHeaderFields(), $this->getSearchTerm());
 	    }
 	    if ($this->isOrdered())
 	    {
@@ -183,7 +183,7 @@ abstract class MethodTable extends Method
 	    }
 	    if ($this->isPaginated())
 	    {
-	        $this->table->pagemenu->items(count($result->data));
+	        $this->table->pagemenu->items(count($result->getData()));
 	        $result = $this->table->pagemenu->paginateResult($result, $this->getPage(), $this->getIPP());
 	    }
 	    $table->result($result);

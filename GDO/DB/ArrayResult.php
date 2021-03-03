@@ -14,24 +14,49 @@ use GDO\Core\GDT;
  */
 final class ArrayResult extends Result
 {
-	/**
+    /**
+     * @var GDO[]
+     */
+    private $data;
+    
+    /**
 	 * @var GDO[]
 	 */
-	public $fullData;
-	/**
-	 * @var GDO[]
-	 */
-	public $data;
+	private $fullData;
 	
+	/**
+	 * @var int
+	 */
 	private $index;
 	
-	public function __construct(array $data, GDO $table)
+	public function __construct(array &$data, GDO $table)
 	{
-		$this->data = $this->fullData = array_values($data);
+		$this->data = &$data;
+		$this->fullData = &$data;
 		$this->table = $table;
 		$this->reset();
 	}
-
+	
+	public function data(array &$data)
+	{
+	    $this->data = &$data;
+	}
+	
+	public function fullData(array &$fullData)
+	{
+	    $this->fullData = &$fullData;
+	}
+	
+	public function &getData()
+	{
+	    return $this->data;
+	}
+	
+	public function &getFullData()
+	{
+	    return $this->fullData;
+	}
+	
 	#############
 	### Table ###
 	#############
@@ -40,8 +65,16 @@ final class ArrayResult extends Result
 	public function fetchRow() { return array_values($this->fetchAssoc()); }
 	public function fetchAssoc() { return $this->fetchObject()->getGDOVars(); }
 	public function fetchAs(GDO $table) { return $this->fetchObject(); }
-	public function fetchObject() { return isset($this->data[$this->index]) ? $this->data[$this->index++] : null; }
-
+	public function fetchObject()
+	{
+	    if ($this->index >= count($this->data))
+	    {
+	        return null;
+	    }
+	    $slice = array_slice($this->data, $this->index++, 1);
+	    return array_pop($slice);
+	}
+	
 	##############
 	### Filter ###
 	##############

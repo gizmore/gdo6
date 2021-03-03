@@ -138,7 +138,7 @@ class GDO_Module extends GDO
 	###########
 	### GDO ###
 	###########
-	public function gdoColumnsCache() { return Database::columnsS(self::class); } # Polymorph fix
+	public function &gdoColumnsCache() { return Database::columnsS(self::class); } # Polymorph fix
 	public function gdoTableName() { return 'gdo_module'; } # Polymorph fix
 	public function gdoClassName() { return self::class; } # Polymorph fix
 	public function gdoColumns()

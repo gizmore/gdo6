@@ -1150,7 +1150,7 @@ abstract class GDO
     /**
      * @return self[]
      */
-    public function all($order=null, $asc=true)
+    public function &all($order=null, $asc=true)
     {
         $order = $order ? $order : $this->gdoPrimaryKeyColumn()->name;
         return self::allWhere('true', $order, $asc);
@@ -1159,7 +1159,7 @@ abstract class GDO
     /**
      * @return self[]
      */
-    public function allWhere($condition='true', $order=null, $asc=true)
+    public function &allWhere($condition='true', $order=null, $asc=true)
     {
         return self::table()->select()->
             where($condition)->order($order, $asc)->
@@ -1185,7 +1185,7 @@ abstract class GDO
      * @param boolean $asc
      * @return self[]
      */
-    public function allCached($order=null, $asc=true)
+    public function &allCached($order=null, $asc=true)
     {
         if ($this->cached())
         {
@@ -1251,7 +1251,7 @@ abstract class GDO
     /**
      * @return GDT[]
      */
-    public function gdoColumnsCache() { return Database::columnsS(static::class); }
+    public function &gdoColumnsCache() { return Database::columnsS(static::class); }
     
     /**
      * @return GDT[]

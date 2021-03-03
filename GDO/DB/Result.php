@@ -163,7 +163,7 @@ class Result
 		return $array2d;
 	}
 	
-	public function fetchAllArray2dObject(GDO $table=null, $json=false)
+	public function &fetchAllArray2dObject(GDO $table=null, $json=false)
 	{
 		$table = $table ? $table : $this->table;
 		$array2d = [];
