@@ -8,15 +8,7 @@ class GDT_Select extends GDT_ComboBox
 {
 	const SELECTED = ' selected="selected"';
 	
-	protected function __construct()
-	{
-// 	    $this->initChoices();
-	}
-	
-// 	public function initChoices()
-// 	{
-// 	    $this->choices = [];
-// 	}
+	public function inputToVar($input) { return $input; }
 	
 	public function getVar()
 	{
