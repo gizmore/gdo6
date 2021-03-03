@@ -90,7 +90,8 @@ final class ModuleLoader
 	 */
 	public function getModule($moduleName)
 	{
-		return $this->modules[$moduleName];
+		return isset($this->modules[$moduleName]) ? 
+		  $this->modules[$moduleName] : null;
 	}
 	
 	/**

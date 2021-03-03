@@ -16,6 +16,8 @@ use GDO\DB\Cache;
 use GDO\Install\Installer;
 use GDO\Util\Strings;
 use GDO\Core\GDO_Module;
+use GDO\UI\GDT_Page;
+use GDO\Core\GDT_Response;
 
 /**
  * The gdo.php executable manages modules and config via the CLI.
@@ -359,8 +361,15 @@ elseif ($argv[1] === 'call')
         }
     }
     
-    $response = $method->execute();
-    echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
+    if ($response = $method->execute())
+    {
+        echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
+    }
+    else
+    {
+        echo GDT_Response::$CODE;
+    }
+    
     echo PHP_EOL;
 }
 else
