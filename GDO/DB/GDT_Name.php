@@ -9,6 +9,7 @@ namespace GDO\DB;
  */
 class GDT_Name extends GDT_String
 {
+	public function plugVar() { return 'Name'; }
 	public function defaultLabel() { return $this->label('name'); }
 
 	const LENGTH = 64;
@@ -19,4 +20,5 @@ class GDT_Name extends GDT_String
 	public $pattern = "/^[A-Za-z][-a-zA-Z_0-9.]{1,63}$/i";
 	public $notNull = true;
 	public $unique = true;
+	
 }

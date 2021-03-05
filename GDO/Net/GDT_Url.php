@@ -130,16 +130,34 @@ class GDT_Url extends GDT_String
 		}
 		
 		# Check reachable
-		if ( ($this->reachable) && (!HTTP::pageExists($value)) )
+		if ($this->reachable)
 		{
 		    if ($value[0] === '/')
 		    {
-		        return true;
+		        return true; # bailout early
 		    }
-		    return $this->error('err_url_not_reachable', [html($value)]);
+		    if (!HTTP::pageExists($value))
+		    {
+    		    return $this->error('err_url_not_reachable', [html($value)]);
+		    }
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * @override
+	 */
+	public function plugVar()
+	{
+	    if ($this->allowExternal)
+	    {
+	        return "https://www.wechall.net";
+	    }
+	    else
+	    {
+	        return hrefDefault();
+	    }
 	}
 
 }

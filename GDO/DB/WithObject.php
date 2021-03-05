@@ -172,6 +172,16 @@ trait WithObject
 		}
 	}
 	
+	public function plugVar()
+	{
+	    $first = $this->table->select()->first()->exec()->fetchObject()->getID();
+        if (@$this->multiple)
+        {
+            return '["' . $first . '"]';
+        }
+        return $first;
+	}
+	
 	###############
 	### Cascade ###
 	###############

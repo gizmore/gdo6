@@ -53,4 +53,10 @@ class GDT_Decimal extends GDT_Int
 			'digitsAfter' => $this->digitsAfter,
 		));
 	}
+	
+	public function plugVar()
+	{
+	    return "3.14";
+	}
+	
 }

@@ -386,6 +386,11 @@ abstract class GDT
 		return true;
 	}
 	
+	public function plugVar()
+	{
+	    return null;
+	}
+	
 	############
 	### Sort ###
 	############

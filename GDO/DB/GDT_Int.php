@@ -112,6 +112,11 @@ class GDT_Int extends GDT
 		}
 	}
 	
+	public function plugVar()
+	{
+	    return "4";
+	}
+	
 	##########
 	### DB ###
 	##########

@@ -213,6 +213,11 @@ class GDT_String extends GDT
 #		return true;
 	}
 	
+	public function plugVar()
+	{
+	    return "Test String <script>alert(1);</script>";
+	}
+	
 	##############
 	### filter ###
 	##############
