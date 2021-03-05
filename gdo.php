@@ -266,7 +266,7 @@ elseif ($argv[1] === 'admin')
     {
         $user->saveVar('user_email', $argv[4]);
     }
-    $user->saveVar('user_deleted', null);
+    $user->saveVar('user_deleted_at', null);
     GDO_UserPermission::grant($user, 'admin');
     GDO_UserPermission::grant($user, 'staff');
     GDO_UserPermission::grant($user, 'cronjob');
