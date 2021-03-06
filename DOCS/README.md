@@ -20,4 +20,20 @@ In this folder you find various documentation files.
 ## Various
 
  - https://github.com/gizmore/gdo6/BLOB/master/DOCS/ROADMAP.md
+ - https://github.com/gizmore/gdo6/BLOB/master/DOCS/IDEAS.md
+ - https://github.com/gizmore/gdo6/BLOB/master/DOCS/PHILOSOPHY.md
+
  
+## Demos
+
+ - https://mettwitze.gizmore.org (Bootstrap Theme)
+ - https://geo2country.gizmore.org (Material Theme)
+ - https://ranzgruppe.com (Classic Theme)
+ - https://service.busch-peine.de (JQueryMobile Theme)
+ - https://gdo6.gizmore.org (Full Stack)
+
+
+## phpDocumentor docs
+
+ - https://gdo6.gizmore.org/GDO/Docs/DOCS
+

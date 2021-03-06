@@ -37,14 +37,11 @@ final class Module_Core extends GDO_Module
     
     /**
      * GDO6 revision string.
-     * 6.11.0 will be the first stable.
+     * 6.11.0 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public $gdo_revision = self::VERSION_MAJOR . '.' . 
-	                       self::VERSION_MINOR . '.' .
-	                       self::VERSION_PATCH . '-' .
-	                       self::VERSION_REV; 
+	public $gdo_revision = '6.10.1-r1004';
 
 	##############
 	### Module ###

@@ -99,6 +99,11 @@ class GDO_Module extends GDO
 	############
 	### Info ###
 	############
+	/**
+	 * Translated module name.
+	 * {@inheritDoc}
+	 * @see \GDO\Core\GDO::displayName()
+	 */
 	public function displayName()
 	{
 		$name = $this->getName();
@@ -178,7 +183,7 @@ class GDO_Module extends GDO
 	public function getID() { return $this->getVar('module_id'); }
 	public function getName() { return $this->getVar('module_name'); }
 	public function getVersion() { return $this->getVar('module_version'); }
-	public function isEnabled() { return $this->getVar('module_enabled'); }
+	public function isEnabled() { return $this->getValue('module_enabled'); }
 	public function isInstalled() { return $this->isPersisted(); }
 	public function getSiteName() { return sitename(); }
 	public function env($key, $default=null) { return env("M_{$this->getName()}_{$key}", $default); }

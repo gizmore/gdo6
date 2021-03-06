@@ -55,7 +55,7 @@ try
 	$rqmethod = $_SERVER['REQUEST_METHOD'];
 	if (!in_array($rqmethod, ['GET', 'POST', 'HEAD'], true))
 	{
-		die('METHOD not processed: ' . $rqmethod);
+		die('HTTP method not processed: ' . html($rqmethod));
 	}
 
 	# Exec

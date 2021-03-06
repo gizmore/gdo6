@@ -1,28 +1,40 @@
 <?php
 namespace GDO\Util;
+
 /**
  * String utility class.
  * 
  * @author gizmore
+ * @version 6.10.1
  * @since 1.0
- * @version 6.11
  */
 final class Strings
 {
 	######################
 	### Start/End with ###
 	######################
+	/**
+	 * Check if a string starts with another string.
+	 * @param string $s
+	 * @param string $with
+	 * @return boolean
+	 */
 	public static function startsWith($s, $with)
 	{
 	    return strpos($s, $with) === 0; 
-// 	    return substr($s, 0, strlen($with)) === $with;
 	}
 	
+	/**
+	 * Check if a string ends with another string.
+	 * @param string $s
+	 * @param string $with
+	 * @return boolean
+	 */
 	public static function endsWith($s, $with)
 	{
-		if ($length = strlen($with))
+		if ($length = mb_strlen($with))
 		{
-			return substr($s, -$length) === $with;
+			return mb_strrpos($s, $with) === (mb_strlen($s) - $length);
 		}
 		return true;
 	}
@@ -30,6 +42,13 @@ final class Strings
 	#########################
 	### Substring to/from ###
 	#########################
+	/**
+	 * Get a substring from a string until an occurance of another string.
+	 * @param string $s Haystack
+	 * @param string $to Needle
+	 * @param ?string $default Default result
+	 * @return ?string
+	 */
 	public static function substrTo($s, $to, $default=null)
 	{
 		if (false !== ($index = strpos($s, $to)))

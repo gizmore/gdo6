@@ -10,6 +10,10 @@ namespace GDO\Core;
  */
 trait WithName
 {
+    /**
+     * Translate this gdo table's name via Trans.
+     * @return string
+     */
 	public function gdoHumanName() { return t(strtolower(self::gdoShortNameS())); }
 	public function gdoClassName() { return static::class; }
 	public function gdoShortName() { $r = new \ReflectionClass($this); return $r->getShortName(); }

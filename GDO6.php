@@ -62,15 +62,13 @@ function hrefSEO($seoString, $module, $method, $append='')
         return GWF_WEB_ROOT . "index.php?mo={$module}&me={$method}&_lang=".Trans::$ISO."$append";
     }
 }
+function urlencodeSEO($str) { return preg_replace('#[^\\.\\p{L}0-9]#', '_', $str); }
+
 function quote($value) { return GDO::quoteS($value); }
 function json_quote($s) { return str_replace("'", "&#39;", $s); }
 function html($html) { return str_replace(['&', '"', "'", '<', '>'], ['&amp;', '&quot;', '&#39;', '&lt;', '&gt;'], $html); }
-function mo() { return Common::getRequestString('mo', GWF_MODULE); }
-function me() { return Common::getRequestString('me', GWF_METHOD); }
-function module_enabled($moduleName) { return ($module = ModuleLoader::instance()->getModule($moduleName)) ? $module->isEnabled() : false; }
 function env($key, $default=null) { return Env::get($key, $default); }
 function def($key, $default=null) { return defined($key) ? constant($key) : $default; }
-function urlencodeSEO($str) { return preg_replace('#[^\\.\\p{L}0-9]#', '_', $str); }
 function hdr($header, $replace=null)
 {
     $app = Application::instance();
@@ -83,13 +81,58 @@ function hdr($header, $replace=null)
         header($header, $replace);
     }
 }
-# Translation API
+
+#######################
+### Translation API ###
+#######################
+
+/**
+ * Global translate function to translate into current language ISO.
+ * @param string $key
+ * @param array $args
+ * @return string
+ */
 function t($key, array $args=null) { return Trans::t($key, $args); }
+
+/**
+ * Global translate function to translate into english.
+ * @see t()
+ * @param string $key
+ * @param array $args
+ * @return string
+ */
 function ten($key, array $args=null) { return Trans::tiso('en', $key, $args); }
+
+/**
+ * Global translate function to translate into an ISO language code.
+ * @param string $iso
+ * @param string $key
+ * @param array $args
+ * @return string
+ */
 function tiso($iso, $key, array $args=null) { return Trans::tiso($iso, $key, $args); }
+
+/**
+ * Global translate function to translate into a user's language.
+ * @param GDO_User $user
+ * @param string $key
+ * @param array $args
+ * @return string
+ */
 function tusr(GDO_User $user, $key, array $args=null) { return Trans::tiso($user->getLangISO(), $key, $args); }
+
+/**
+ * Display a date value into current language iso.
+ * @param string $date Date in DB format.
+ * @param string $format format key from trans file; e.g: 'short', 'long', 'date', 'exact'.
+ * @param string $default the default string to display when date is null or invalid.
+ * @return string
+ */
 function tt($date=null, $format='short', $default='---') { return Time::displayDate($date, $format, $default); }
 
+##################
+### Method API ###
+##################
 /**
  * @deprecated - Use GDO\\Module\\Method\\Class::make() instead
  * @param string $module
@@ -97,3 +140,22 @@ function tt($date=null, $format='short', $default='---') { return Time::displayD
  * @return \GDO\Core\Method
  */
 function method($moduleName, $methodName) { $klass = "GDO\\$moduleName\\Method\\$methodName"; return new $klass(); }
+
+/**
+ * Get requested module name.
+ * @return string
+ */
+function mo() { return Common::getRequestString('mo', GWF_MODULE); }
+
+/**
+ * Get requested method name
+ * @return string
+ */
+function me() { return Common::getRequestString('me', GWF_METHOD); }
+
+/**
+ * Check if a module is enabled.
+ * @param string $moduleName
+ * @return boolean
+ */
+function module_enabled($moduleName) { return ($module = ModuleLoader::instance()->getModule($moduleName)) ? $module->isEnabled() : false; }

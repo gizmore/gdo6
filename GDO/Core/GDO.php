@@ -10,6 +10,7 @@ use GDO\DB\GDT_Int;
 use GDO\DB\GDT_String;
 use GDO\DB\GDT_Enum;
 use GDO\DB\GDT_Name;
+use GDO\Language\Trans;
 
 /**
  * - GDO -
@@ -949,6 +950,11 @@ abstract class GDO
         return $id;
     }
     
+    /**
+     * Display a translated table name with ID.
+     * @see Trans
+     * @return string
+     */
     public function displayName()
     {
         return $this->gdoHumanName() . "#" . $this->getID();

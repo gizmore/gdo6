@@ -8,20 +8,48 @@ use GDO\File\FileUtil;
 /**
  * Very cheap i18n.
  * 
+ * @TODO Check if ini file parsing and using would be faster than php include.
+ * 
  * @author gizmore
+ * @version 6.10.1
  * @since 1.00
- * @version 6.10
  */
 final class Trans
 {
+    /**
+     * @var string
+     */
 	public static $ISO = 'en';
-	
+
+	/**
+	 * Base pathes for translation data files.
+	 * @var string[]
+	 */
 	private static $PATHS = [];
+	
+	/**
+	 * Translation data cache.
+	 * @var string[string]
+	 */
 	private static $CACHE = [];
+	
+	/**
+	 * Are all pathes added?
+	 * @var boolean
+	 */
 	private static $INITED = false;
 	
+	/**
+	 * Shall sitename be appended to seo titles?
+	 * @TODO move
+	 * @var boolean
+	 */
 	public static $NO_SITENAME = false;
 	
+	/**
+	 * Set the current ISO
+	 * @param string $iso
+	 */
 	public static function setISO($iso)
 	{
 	    if ($iso !== self::$ISO)
@@ -38,27 +66,50 @@ final class Trans
 	    }
 	}
 	
+	/**
+	 * Show number of registered translation data base pathes.
+	 * @return int
+	 */
 	public static function numFiles()
 	{
 		return count(self::$PATHS);
 	}
-	
+
+	/**
+	 * Add a translation file to the language file pathes.
+	 * @param string $path
+	 */
 	public static function addPath($path)
 	{
 	    self::$PATHS[$path] = $path;
 	}
 	
+	/**
+	 * Set inited and clear cache.
+	 * @TODO separate calls. maybe cache should not be cleared quickly? no idea. Make performance tests for language loading on init.
+	 * @param bool $inited
+	 */
 	public static function inited($inited)
 	{
 		self::$INITED = $inited;
 	    self::$CACHE = [];
 	}
 	
+	/**
+	 * Get the cache for an ISO.
+	 * @param string $iso
+	 * @return string[string]
+	 */
 	public static function getCache($iso)
 	{
 		return self::load($iso);
 	}
 	
+	/**
+	 * Load a translation data into and from cache.
+	 * @param string $iso
+	 * @return string[string]
+	 */
 	public static function load($iso)
 	{
 		if (!isset(self::$CACHE[$iso]))
@@ -68,11 +119,24 @@ final class Trans
 		return self::$CACHE[$iso];
 	}
 	
+	/**
+	 * Translate into current ISO.
+	 * @param string $key
+	 * @param array $args
+	 * @return string
+	 */
 	public static function t($key, array $args=null)
 	{
 		return self::tiso(self::$ISO, $key, $args);
 	}
 	
+	/**
+	 * Translate into an language ISO.
+	 * @param string $iso
+	 * @param string $key
+	 * @param array $args
+	 * @return string
+	 */
 	public static function tiso($iso, $key, array $args=null)
 	{
 		$cache = self::load($iso);
@@ -151,14 +215,25 @@ final class Trans
 		return $trans;
 	}
 	
+	/**
+	 * Check if a translation key exists.
+	 * @param string $key
+	 * @return boolean
+	 */
 	public static function hasKey($key)
 	{
 		return self::hasKeyIso(self::$ISO, $key);
 	}
-	
+
+	/**
+	 * Check if a translation key exists for an ISO.
+	 * @param string $iso
+	 * @param string $key
+	 * @return boolean
+	 */
 	public static function hasKeyIso($iso, $key)
 	{
 		$cache = self::load($iso);
-		return !!@$cache[$key];
+		return isset($cache[$key]);
 	}
 }
