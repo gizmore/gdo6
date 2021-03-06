@@ -30,7 +30,7 @@ final class Module_Language extends GDO_Module
 	public function isCoreModule() { return true; }
 	public function getClasses() { return [GDO_Language::class]; }
 	public function onInstall() { LanguageData::onInstall(); }
-	public function onLoadLanguage() { $this->loadLanguage('lang/language'); }
+	public function onLoadLanguage() { return $this->loadLanguage('lang/language'); }
 
 	##############
 	### Config ###
@@ -86,6 +86,7 @@ final class Module_Language extends GDO_Module
 	
 	public function onIncludeScripts()
 	{
+	    # If enabled include js trans data and translation engine.
 	    if ($this->cfgJavascript())
 	    {
     		# Add js trans

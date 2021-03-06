@@ -1,11 +1,13 @@
 <?php
-return array(
+return [
 'lbl_langswitch' => 'Sprache',
 'msg_language_set' => 'Ihre Sprache wurde auf %s geändert.',
 'cfg_languages' => 'Unterstützte Sprachen',
 'mdescr_language_switchlanguage' => 'Sprache auf %s wechseln',
 	
-	
+'cfg_use_in_javascript' => 'Kopiere Übersetzungen zum Javascript Client?',
+'tt_cfg_use_in_javascript' => 'Dies lädt die Übersetzungsdateien in den WebBrowser, auf die Client Seite.',
+    
 // 'lang_af' => 'Afrikaans',
 'lang_ar' => 'Arabisch',
 // 'lang_az' => 'Azerbaijani',
@@ -74,4 +76,4 @@ return array(
 
 // 'lang_xb' => 'Bot',
 // 'lang_xf' => 'Fanmglish',
-);
+];

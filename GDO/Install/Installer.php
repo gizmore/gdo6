@@ -4,6 +4,7 @@ namespace GDO\Install;
 use Exception;
 use GDO\Core\Method;
 use GDO\Core\GDO_Module;
+use GDO\Core\ModuleLoader;
 use GDO\DB\Cache;
 use GDO\DB\Database;
 use GDO\Core\GDO;
@@ -182,4 +183,65 @@ class Installer
 		}
 	}
 
+	/**
+	 * Return all modules needed for a module.
+	 * Used in gdo6-docs to generate a module list for a single module documentation output.
+	 * @param String $moduleName
+	 * @return GDO_Module[]
+	 */
+	public static function getDependencyModules($moduleName)
+	{
+	    $git = \GDO\Core\ModuleProviders::GIT_PROVIDER;
+	    $module = ModuleLoader::instance()->getModule($moduleName);
+	    $deps = $module->dependencies();
+	    $cnt = 0;
+	    $allResolved = true; # All required modules provided?
+	    while ($cnt !== count($deps))
+	    {
+	        $cnt = count($deps);
+	        foreach ($deps as $dep)
+	        {
+	            $depmod = ModuleLoader::instance()->getModule($dep);
+	            
+	            if (!$depmod)
+	            {
+	                if ($allResolved === true)
+	                {
+	                    return "Missing dependencie(s)!\n".
+	                       "Please note that this list may not be complete, because missing modules might have more dependencies.\n";
+	                }
+	                $allResolved = false;
+	                $providers = @\GDO\Core\ModuleProviders::$PROVIDERS[$dep];
+	                if (!$providers)
+	                {
+	                    return "{$dep}: Not an official module or a typo somewhere. No Provider known.\n";
+	                }
+	                elseif (is_array($providers))
+	                {
+	                    $back = "{$dep}: Choose between multiple possible providers.\n";
+	                    foreach ($providers as $provider)
+	                    {
+	                        $back .= sprintf("%20s: cd GDO; git clone --recursive {$git}{$provider} {$dep}; cd ..\n", $dep);
+	                    }
+	                    return $back;
+	                }
+	                else
+	                {
+	                    return sprintf("%20s: cd GDO; git clone --recursive {$git}{$providers} {$dep}; cd ..\n", $dep);
+	                }
+	                
+	                continue;
+	            }
+	            
+	            $deps = array_unique(array_merge($depmod->dependencies(), $deps));
+	        }
+	    }
+
+	    $deps[] = $module->getName();
+	    
+	    return array_map(function($dep) { 
+	        return ModuleLoader::instance()->getModule($dep);
+	    }, $deps);
+	}
+	
 }

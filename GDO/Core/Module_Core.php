@@ -30,7 +30,21 @@ use GDO\File\FileUtil;
  */
 final class Module_Core extends GDO_Module
 {
-	public $gdo_revision = '6.10-r9511'; # 6.11 will be the first stable. 6.12 will be the Gi2 edition :)
+    const VERSION_MAJOR = '6';
+    const VERSION_MINOR = '10';
+    const VERSION_PATCH = '1';
+    const VERSION_REV = 'r0000';
+    
+    /**
+     * GDO6 revision string.
+     * 6.11.0 will be the first stable.
+     * 6.12.0 will be the GIZ edition.
+     * @var string
+     */
+	public $gdo_revision = self::VERSION_MAJOR . '.' . 
+	                       self::VERSION_MINOR . '.' .
+	                       self::VERSION_PATCH . '-' .
+	                       self::VERSION_REV; 
 
 	##############
 	### Module ###
