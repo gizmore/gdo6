@@ -22,8 +22,8 @@ use GDO\DB\GDT_Enum;
  * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
  * @see \GDO\DB\GDT_String - Database supporting string baseclass
@@ -225,7 +225,17 @@ abstract class GDT
 	### Form Naming ###
 	###################
 	public function formVariable() { return GDT_Form::$CURRENT ? GDT_Form::$CURRENT->name : null; }
+
+	/**
+	 * Get the form name for postvars baselvl dictionary.
+	 * @return string
+	 */
 	public function formName() { return GDT_Form::$CURRENT ? sprintf('%s[%s]', $this->formVariable(), $this->name) : $this->name; }
+	
+	/**
+	 * Get the form name as html name attribute.
+	 * @return string
+	 */
 	public function htmlFormName() { return sprintf(" name=\"%s\"", $this->formName()); }
 	
 	#################
@@ -283,6 +293,8 @@ abstract class GDT
 		}
 		
 		$arr = $_REQUEST;
+		
+		# Eat firstlevel and build new
 		if ($firstLevel)
 		{
 		    $next = Strings::substrTo($firstLevel, '[', $firstLevel);
@@ -294,6 +306,8 @@ abstract class GDT
 	        $arr = $arr[$next];
 	        $firstLevel = '[' . Strings::substrFrom($firstLevel, '[');
 		}
+		
+		# Now we can iterate the $_REQUEST vars.
 		while ($firstLevel)
 		{
     		if (isset($arr[$name]))
@@ -436,7 +450,7 @@ abstract class GDT
 	public $filterField;
 	public function filterField($filterField) { $this->filterField = $filterField; return $this->searchable(); }
 
-	public function filterVar($rq=null) { return $this->getRequestVar("{$rq}[f]", $this->initial, $this->filterField ? $this->filterField : $this->name); }
+	public function filterVar($rq=null) { return $this->getRequestVar("{$rq}[f]", null, $this->filterField ? $this->filterField : $this->name); }
 	
 	/**
 	 * Filter decorator function for database queries.

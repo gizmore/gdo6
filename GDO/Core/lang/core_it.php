@@ -76,6 +76,9 @@ return array(
 'filter' => 'Filtro',
 'actions' => 'Azioni',
     
+# Core GDO tables
+'gdo_permission' => 'Autorizzazione',
+    
 # Generic Buttons
 'btn_back' => 'Indietro',
 'btn_set' => 'Posare',
@@ -140,7 +143,7 @@ return array(
 'err_url_not_reachable' => 'L´inserimento URL non é stato raggiunto dal Server.',
 'err_method_disabled' => 'Questa funzione é disattivata.',
 'err_not_null' => 'Questo campo non puó rimanrere vuoto.',
-'err_user_type' => 'Il conto non é del tipo %s.',
+'err_user_type' => 'L\'account non è un tipo di %s.',
 'err_table_not_sortable' => 'La tabella %s non puó essere ordinata senza un GDT_Sort.',
 'err_pass_too_short' => 'Il vostro password deve avere una lungezza di minimo %s caratteri.',
 'err_module_method' => 'La funzione non é stata trovata.',
@@ -180,6 +183,7 @@ return array(
 'err_external_url_not_allowed' => 'Gli URL esterni non sono consentiti.',
 'err_upload_move' => 'Non è stato possibile spostare un file da %s a %s.',
 'err_404' => '404 - Pagina non trovata',
+'err_user_no_permission' => 'Nessuna autorizzazione: %s.',
     
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',
@@ -308,4 +312,8 @@ Referente: %s<br/>
 <br/>
 Cordiali saluti,<br/>
 %2$s sistema',
+
+# v6.10.1
+'msg_sort_success' => 'Le voci sono state riordinate.',
+'sorting' => 'Ordi.',
 );

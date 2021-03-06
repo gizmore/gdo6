@@ -7,9 +7,12 @@ use GDO\DB\GDT_ObjectSelect;
  * A module select.
  * Features installed and uninstalled choices.
  * Loads module via module loader.
+ * PlugVar for auto tests is module Core.
+ * 
  * @author gizmore
- * @version 6.10
+ * @version 6.10.1
  * @since 6.02
+ * 
  * @see GDO_Module
  */
 final class GDT_Module extends GDT_ObjectSelect
@@ -20,12 +23,18 @@ final class GDT_Module extends GDT_ObjectSelect
         $this->table(GDO_Module::table());
     }
     
+    ####################
+    ### Un/Installed ###
+    ####################
     public $installed = true;
     public function installed($installed=true) { $this->installed = $installed; return $this; }
     
     public $uninstalled = false;
     public function uninstalled($uninstalled=true) { $this->uninstalled = $uninstalled; return $this; }
     
+    ###############
+    ### Choices ###
+    ###############
     public function initChoices()
     {
         if (!$this->choices)
@@ -43,6 +52,14 @@ final class GDT_Module extends GDT_ObjectSelect
                 }
             }
         }
+    }
+    
+    #################
+    ### Var/Value ###
+    #################
+    public function plugVar()
+    {
+        return 'Core';
     }
     
     public function getValueSingle($moduleName)

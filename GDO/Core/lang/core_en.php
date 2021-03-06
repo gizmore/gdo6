@@ -76,6 +76,9 @@ return array(
 'filter' => 'Filter',
 'actions' => 'Actions',
     
+# Core GDO tables
+'gdo_permission' => 'Permission',
+    
 # Generic Buttons
 'btn_back' => 'Back',
 'btn_set' => 'Set',
@@ -140,7 +143,7 @@ return array(
 'err_url_not_reachable' => 'Your entered URL is not reachable by this server.',
 'err_method_disabled' => 'This function is currently disabled.',
 'err_not_null' => 'This field may not be empty.',
-'err_user_type' => 'Your account is not of membership type %s.',
+'err_user_type' => 'This account is not of membership type %s.',
 'err_table_not_sortable' => 'The %s table cannot be sorted without a GDT_Sort field.',
 'err_pass_too_short' => 'Your password has to be at least %s characters long.',
 'err_module_method' => 'The module and method could not been not found.',
@@ -180,6 +183,7 @@ return array(
 'err_external_url_not_allowed' => 'External URL are not allowed.',
 'err_upload_move' => 'File could not be moved from %s to %s.',
 'err_404' => '404 - File not found',
+'err_user_no_permission' => 'The user needs the %s permission.',
     
 # Permissions
 'sel_no_permissions' => 'No permission required',
@@ -256,12 +260,12 @@ return array(
 'quote_at' => 'at %s',
 	
 # Filter
-'int_filter' => 'num',
-'string_filter' => 'text',
-'object_filter' => 'filter',
-'sel_all' => 'all',
-'sel_checked' => 'active',
-'sel_unchecked' => 'inactive',
+'int_filter' => 'Num',
+'string_filter' => 'Text',
+'object_filter' => 'Filter',
+'sel_all' => 'All',
+'sel_checked' => 'Active',
+'sel_unchecked' => 'Inactive',
 
 # Method description
 'mdescr_core_impressum' => 'Site impressum',
@@ -306,5 +310,9 @@ Page: %s<br/>
 Referrer: %s<br/>
 <br/>
 Kind Regards,<br/>
-%2$s system',   
+%2$s system',
+    
+# v6.10.1
+'msg_sort_success' => 'The items have been re-arranged.',
+'sorting' => 'Sorting',
 );

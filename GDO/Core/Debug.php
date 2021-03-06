@@ -8,17 +8,22 @@ use GDO\User\GDO_User;
 
 /**
  * Debug backtrace and error handler.
+ * 
  * Can send email on PHP errors.
+ * 
  * Also has a method to get debug timings.
  * 
  * @example Debug::enableErrorHandler(); fatal_ooops();
- * @todo it displays and sends two errors for each error
+ * 
+ * @TODO It displays and sends two errors for each error... why?!
+ * 
  * @author gizmore
- * @version 3.02
+ * @version 6.10.1
+ * @since 3.0.1
  */
 final class Debug
 {
-	private static $die = false;
+	private static $die = false; # @TODO uppercase static members
 	private static $enabled = false;
 	private static $exception = false;
 	private static $MAIL_ON_ERROR = false;
@@ -28,9 +33,9 @@ final class Debug
 	{
 	}
 	
-	// ###############
-	// ## Settings ###
-	// ###############
+	###############
+	## Settings ###
+	###############
 	public static function setDieOnError($bool = true)
 	{
 		self::$die = $bool;
@@ -161,7 +166,8 @@ final class Debug
 				break;
 		}
 		
-		$is_html = (!Application::instance()->isCLI()) && (Application::instance()->isHTML());
+		$app = Application::instance();
+		$is_html = (!$app->isCLI()) && (!$app->isUnitTests()) && ($app->isHTML());
 		
 		if ($is_html)
 		{
@@ -179,7 +185,7 @@ final class Debug
 		}
 		
 		// Output error
-		if (Application::instance()->isCLI())
+		if ($app->isCLI())
 		{
 			file_put_contents('php://stderr', self::backtrace($message, false) . PHP_EOL);
 		}
@@ -187,12 +193,11 @@ final class Debug
 		{
 			$message = GWF_ERROR_STACKTRACE ? self::backtrace($message, $is_html) : $message;
 			echo self::renderError($message);
-//			 echo $message;
 		}
 		
 		if (self::$die)
 		{
-			die(1);
+			die(500);
 		}
 		
 		return true;
@@ -204,7 +209,8 @@ final class Debug
 	
 	public static function debugException(\Throwable $e, $render=true)
 	{
-	    $is_html = Application::instance()->isHTML();
+	    $app = Application::instance();
+	    $is_html =  (!$app->isUnitTests()) && $app->isHTML();
 	    $firstLine = sprintf("%s in %s Line %s", $e->getMessage(), $e->getFile(), $e->getLine());
 	    
 	    $mail = self::$MAIL_ON_ERROR;
@@ -242,7 +248,7 @@ final class Debug
 		{
 			return json_encode(array('error' => $message));
 		}
-		if ($app->isCLI())
+		if ($app->isCLI() || $app->isUnitTests())
 		{
 		    return "$message\n";
 		}
@@ -298,7 +304,7 @@ final class Debug
 		{
     		try { $user = GDO_User::current()->displayNameLabel(); } catch (\Throwable $e) { }
 		}
-		$args = array(
+		$args = [
 			isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'NULL',
 			isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : self::getMoMe(),
 			isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'NULL',
@@ -309,8 +315,9 @@ final class Debug
 			print_r($_GET, true),
 		    print_r($_POST, true),
 		    print_r($_REQUEST, true),
-		    print_r($_COOKIE, true));
-		$args = array_map('htmlspecialchars', $args);
+		    print_r($_COOKIE, true),
+		];
+		$args = array_map('html', $args);
 		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_GET: %s\n\n_POST: %s\n\nREQUEST: %s\n\n_COOKIE: %s\n\n";
 		return vsprintf($pattern, $args);
 	}
@@ -384,7 +391,10 @@ final class Debug
 			$arg = json_encode($arg);
 		}
 		
-		$arg = Application::instance()->isHTML() ? html($arg) : $arg;
+		$app = Application::instance();
+		$is_html = $app->isHTML() && (!$app->isUnitTests());
+		
+		$arg = $is_html ? html($arg) : $arg;
 		$arg = str_replace('&quot;', '"', $arg); # It is safe to inject quotes. Turn back to get length calc right.
 		$arg = str_replace('\\\\', '\\', $arg); # Double backslash was escaped always via json encode?
 		
@@ -476,4 +486,3 @@ final class Debug
 	}
 	
 }
-	

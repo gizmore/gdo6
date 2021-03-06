@@ -1,15 +1,18 @@
 <?php
 namespace GDO\DB;
+
 /**
  * Named identifier.
  * Is unique among their table and case-s ascii.
+ * 
  * @author gizmore
- * @version 6.05
- * @since 6.01
+ * @version 6.10.1
+ * @since 6.1.0
  */
 class GDT_Name extends GDT_String
 {
-	public function plugVar() { return 'Name'; }
+	public function plugVar() { return 'Name_' . self::$COUNT; }
+	
 	public function defaultLabel() { return $this->label('name'); }
 
 	const LENGTH = 64;

@@ -9,19 +9,19 @@ use GDO\UI\GDT_HTML;
  * General Website utility.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 3.0.5
  * @see \GDO\UI\GDT_Page
  */
 final class Website
 {
-	private static $_links = [];
+	private static $_links = []; # TODO: Uppercase static members.
 	private static $_inline_css = '';
 	
 	/**
 	 * @deprecated
 	 * @param number $time
-	 * @return NULL|\GDO\Core\GDT_Response
+	 * @return \GDO\Core\GDT_Response
 	 */
 	public static function redirectBack($time=0)
 	{

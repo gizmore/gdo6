@@ -25,17 +25,22 @@ use GDO\DB\GDT_Index;
 
 /**
  * The holy user object.
+ * I really like users that use my stuff, e.g: www.wechall.net
+ * 
  * @author gizmore
- * @since 1.00
- * @version 6.10
+ * @link https://www.wechall.net
+ * @version 6.10.1
+ * @since 1.0.0
  */
 final class GDO_User extends GDO
 {
+    ### User type notation prefixes
     const REAL_NAME_PREFIX = '´';
     const REAL_NAME_POSTFIX = '`';
     const GUEST_NAME_PREFIX = '~';
 	const GHOST_NAME_PREFIX = '~~';
 			
+    ### User types
 	const BOT = 'bot';
 	const SYSTEM = 'system';
 	const GHOST = 'ghost';
@@ -114,7 +119,19 @@ final class GDO_User extends GDO
 	public function getRegisterIP() { return $this->getVar('user_register_ip'); }
 	public function isDeleted() { return $this->getVar('user_deleted_at') !== null; }
 	
+	################
+	### Timezone ###
+	################
+	/**
+	 * Timezone cache
+	 * @var \DateTimeZone
+	 */
 	private $tz = null;
+	
+	/**
+	 * Get the appropiate timezone object for this user.
+	 * @return \DateTimeZone
+	 */
 	public function getTimezoneObject()
 	{
 	    if ($this->tz === null)

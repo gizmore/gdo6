@@ -1,12 +1,17 @@
 <?php
 namespace GDO\User;
+
 use GDO\Core\GDT_Template;
 use GDO\DB\GDT_String;
+
 /**
  * Username field with optional ajax completion.
+ * @TODO autocomplete not implemented here.
+ * @see GDT_User
+ * 
  * @author gizmore
- * @version 6.05
- * @since 5.00
+ * @version 6.10.1
+ * @since 5.0.0
  */
 class GDT_Username extends GDT_String
 {
@@ -47,10 +52,7 @@ class GDT_Username extends GDT_String
 	##############
 	public function render()
 	{
-		$tVars = array(
-			'field' => $this,
-		);
-		return GDT_Template::php('User', 'form/username.php', $tVars);
+	    return GDT_Template::php('User', 'form/username.php', ['field' => $this]);
 	}
 	
 	public function renderCell()
@@ -82,4 +84,10 @@ class GDT_Username extends GDT_String
 		}
 		return true;
 	}
+	
+	public function plugVar()
+	{
+	    return 'Lazer'; # new created user in unit tests.
+	}
+	
 }

@@ -164,7 +164,7 @@ class GDT_File extends GDT_Object
 	
 	public function configJSON()
 	{
-		return array(
+		return [
 			'mimes' => $this->mimes,
 			'minsize' => $this->minsize,
 			'maxsize' => $this->maxsize,
@@ -173,7 +173,7 @@ class GDT_File extends GDT_Object
 			'preview' => $this->preview,
 			'previewHREF' => $this->previewHREF,
 			'selectedFiles' => $this->initJSONFiles(),
-		);
+		];
 	}
 	
 	public function renderCard()
@@ -237,7 +237,7 @@ class GDT_File extends GDT_Object
 	
 	public function getInitialFile()
 	{
-	    $var = $this->getRequestVar($this->formName(), $this->var);
+	    $var = $this->getRequestVar($this->formVariable(), $this->var);
 		if ($var !== null)
 		{
 			return GDO_File::getById($var);

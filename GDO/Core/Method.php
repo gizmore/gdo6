@@ -59,10 +59,40 @@ abstract class Method
 	public function isTrivial() { return true; }
 	public function getPermission() {}
 	public function hasPermission(GDO_User $user) { return true; }
+	
+	/**
+	 * Restrict this method to user types.
+	 * @return string
+	 */
 	public function getUserType() {}
+	
+	/**
+	 * Override this.
+	 * Called after init() was not errorneous.
+	 * @return ?GDT_Response
+	 */
 	public function beforeExecute() {}
+	
+	/**
+	 * Override this.
+	 * Called after execute() was not errorneous.
+	 * @return ?GDT_Response
+	 */
 	public function afterExecute() {}
+	
+	/**
+	 * Override this.
+	 * Should this method save the current URL as last url?
+	 * @see Website->hrefBack()
+	 * @return boolean
+	 */
 	public function saveLastUrl() { return true; }
+	
+	/**
+	 * Override this.
+	 * Should this method be listed in a sitemap.
+	 * @return boolean
+	 */
 	public function showInSitemap() { return true; }
 	
 	#############
@@ -77,7 +107,7 @@ abstract class Method
 	    }
 	    else
 	    {
-	        $title = $this->getModule()->displayName() . ' ' . $this->getMethodName();
+	        $title = $key; # $this->getModule()->displayName() . ' ' . $this->getMethodName();
 	    }
 	    return $title;
 	}
@@ -113,19 +143,26 @@ abstract class Method
 	### GET Parameters ###
 	######################
 	/**
+	 * Valid GET Parameters as GDT array.
+	 * @see GDT
+	 * @see gdoParameter()
+	 * @see gdoParameterVar()
+	 * @see gdoParameterValue()
 	 * @return GDT[]
 	 */
 	public function gdoParameters() { return []; }
 	
 	/**
+	 * Cached GET parameters.
 	 * @var GDT[]
 	 */
 	private $paramCache = null;
 	
 	/**
+	 * Build and/or get the GET parameter cache.
 	 * @return GDT[]
 	 */
-	public function gdoParameterCache()
+	public function &gdoParameterCache()
 	{
 		if ($this->paramCache === null)
 		{
@@ -391,6 +428,24 @@ abstract class Method
 			if ($transactional) $db->transactionRollback();
 			throw $e;
 		}
+	}
+	
+	public function executeWithInit()
+	{
+	    $response = $this->init();
+	    if ($response && $response->isError())
+	    {
+	        return $response;
+	    }
+	    
+	    # Exec 1.before - 2.execute - 3.after
+	    GDT_Hook::callHook('BeforeExecute', $this);
+	    $response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
+	    $response = $response ? $response->add($this->execute()) : $this->execute();
+	    $response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
+	    GDT_Hook::callHook('AfterExecute', $this);
+
+	    return $response;
 	}
 	
 	####################

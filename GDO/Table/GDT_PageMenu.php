@@ -127,8 +127,8 @@ class GDT_PageMenu extends GDT
 	
 	public function paginateResult(ArrayResult $result, $page, $ipp)
 	{
-	    $result->data = array_slice($result->data, self::getFromS($page, $ipp), $ipp);
-	    return $result;
+	    $data = array_slice($result->getData(), self::getFromS($page, $ipp), $ipp);
+	    return $result->data($data);
 	}
 	
 	##############

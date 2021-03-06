@@ -40,11 +40,13 @@ final class ArrayResult extends Result
 	public function data(array &$data)
 	{
 	    $this->data = &$data;
+	    return $this;
 	}
 	
 	public function fullData(array &$fullData)
 	{
 	    $this->fullData = &$fullData;
+	    return $this;
 	}
 	
 	public function &getData()

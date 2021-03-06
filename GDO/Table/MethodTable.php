@@ -8,11 +8,17 @@ use GDO\Core\GDT_Fields;
 use GDO\Core\GDO;
 
 /**
- * A method that displays a table from memory ArrayResult.
+ * A method that displays a table from memory via ArrayResult.
+ * It's the base class for more complex methods like MethodQueryTable or MethodQueryCards.
+ * The basic API is identical for static memory results and queried data.
  * 
  * @author gizmore
- * @version 6.10
- * @since 3.0
+ * @version 6.10.1
+ * @since 3.0.0
+ * @see ArrayResult
+ * @see GDT_Table
+ * @see GDT
+ * @see GDO
  */
 abstract class MethodTable extends Method
 {
@@ -20,28 +26,49 @@ abstract class MethodTable extends Method
     ### Abstract ###
     ################
     /**
+     * Override this with returning your GDO->table()
      * @return GDO
      */
     public abstract function gdoTable();
     
     /**
+     * Override this with returning an ArrayResult with data.
      * @return ArrayResult
      */
     public function getResult() { return new ArrayResult([], $this->gdoTable()); }
-    
+
+    /**
+     * Override this, if it is required to fetch a different class than your gdoTable().
+     * @return GDO
+     */
     public function fetchAs() {}
-    
+
+    /**
+     * Default IPP defaults to config in Module_Table.
+     * @see Module_Table::getConfig()
+     * @return string
+     */
     public function getDefaultIPP() { return Module_Table::instance()->cfgItemsPerPage(); }
     
     /**
+     * Override this.
+     * Return an array of GDT[] for the table headers.
+     * Defaults to all fields from your gdoTable(). 
      * @return GDT_Fields
      */
     public function gdoHeaders() { return $this->gdoTable()->gdoColumnsCache(); }
     
+    /**
+     * The header GDT name.
+     * Defaults to 'o' for get parameters.
+     * You need to adjust this when showing multiple tables or methods in a single page.
+     * @return string
+     */
     public function getHeaderName() { return 'o'; }
     
     /**
-     * On creation.
+     * Override this.
+     * Called upon creation of the GDT_Table.
      * @param GDT_Table $table
      */
     public function createTable(GDT_Table $table) {}
@@ -58,6 +85,7 @@ abstract class MethodTable extends Method
     }
     
     /**
+     * Creates the collection GDT.
      * @return GDT_Table|GDT_List
      */
     public function createCollection()
@@ -69,10 +97,43 @@ abstract class MethodTable extends Method
     ##################
     ### 5 features ###
     ##################
+    /**
+     * Override this.
+     * Return true if this table shall be able to be ordered by headers.
+     * @return boolean
+     */
 	public function isOrdered() { return true; } # GDT$orderable
+
+	/**
+	 * Override this.
+	 * Return true if this table shall be searchable over all columns with one input field.
+	 * This is called "HugeQuery" in the GDT_Table implementation.
+	 * @return boolean
+	 */
 	public function isSearched() { return true; } # GDT$searchable
+
+	/**
+	 * Override this.
+	 * Return true if you want to be able to filter your data by your header columns.
+	 * @return boolean
+	 */
 	public function isFiltered() { return true; } # GDT#filterable
+
+	/**
+	 * Override this.
+	 * Return true if you want pagination for this table method.
+	 * @return boolean
+	 */
 	public function isPaginated() { return true; } # creates a GDT_Pagemenu
+	
+	/**
+	 * Override this.
+	 * Return true if you want to be able to sort this table data manually.
+	 * This requires a GDT_Sort field in your GDO columns / headers as well as MethodSort endpoint.
+	 * @return boolean
+	 * @see GDT_Sort
+	 * @see MethodSort
+	 */
 	public function isSorted() { return true; } # Uses js/ajax and GDO needs to have GDT_Sort column.
 	
 	###

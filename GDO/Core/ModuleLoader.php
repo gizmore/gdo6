@@ -13,8 +13,8 @@ use GDO\DB\Database;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.1
+ * @since 3.0.0
  */
 final class ModuleLoader
 {
@@ -343,14 +343,8 @@ final class ModuleLoader
 		/** @var $instance GDO_Module **/
 		$instance = new $klass();
 		$instance->isTable = false;
-// 		$instance->buildConfigCache();
-// 		if (!$instance instanceof GDO_Module)
-// 		{
-// 			throw new GDOError('err_no_module', [html($name)]);
-// 		}
 		$moduleData['module_priority'] = $instance->module_priority;
 		$instance->setGDOVars($moduleData, $dirty);
-// 		$instance->onLoadLanguage();
 		return $instance;
 	}
 	

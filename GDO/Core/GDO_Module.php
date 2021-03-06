@@ -7,7 +7,6 @@ use GDO\DB\GDT_AutoInc;
 use GDO\Language\Trans;
 use GDO\DB\GDT_Int;
 use GDO\DB\GDT_Name;
-use GDO\Table\GDT_Sorting;
 use GDO\DB\GDT_Version;
 use GDO\User\GDO_UserSetting;
 use GDO\Util\Javascript;
@@ -16,12 +15,13 @@ use GDO\User\GDO_UserSettingBlob;
 use GDO\User\GDO_User;
 use GDO\DB\GDT_Text;
 use GDO\Tests\Module_Tests;
+use GDO\Table\GDT_Sort;
 
 /**
  * GDO base module class.
  * 
  * @author gizmore
- * @version 6.10
+ * @version 6.10.1
  * @since 1.00
  */
 class GDO_Module extends GDO
@@ -64,6 +64,7 @@ class GDO_Module extends GDO
 	public function thirdPartyFolders() {}
 	
 	/**
+	 * Get all module dependencies as moduleName.
 	 * @return string[]
 	 */
 	public function dependencies()
@@ -152,7 +153,7 @@ class GDO_Module extends GDO
 			GDT_AutoInc::make('module_id'),
 			GDT_Name::make('module_name')->notNull()->unique(),
 			GDT_Int::make('module_priority')->notNull()->unsigned()->initial($this->module_priority),
-			GDT_Sorting::make('module_sort'),
+			GDT_Sort::make('module_sort'),
 			GDT_Version::make('module_version')->notNull()->initial('0.00'),
 			GDT_Checkbox::make('module_enabled')->notNull()->initial('0'),
 		];
@@ -440,7 +441,7 @@ class GDO_Module extends GDO
 	    {
     	    $settings = $this->loadUserSettings($user);
     	    $var = isset($settings[$key]) ? $settings[$key] : $gdt->initial;
-   	        return $gdt->var($var);
+   	        return $gdt->initial($var);
 	    }
 	}
 	

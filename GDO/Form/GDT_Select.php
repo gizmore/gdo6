@@ -189,7 +189,7 @@ class GDT_Select extends GDT_ComboBox
 	### Choices ###
 	###############
 	public $emptyValue = '0';
-	public function emptyValue($emptyValue)
+	public function emptyValue($emptyValue='0')
 	{
 		$this->emptyValue = $emptyValue;
 		return $this->emptyLabel('please_choice');
@@ -271,14 +271,14 @@ class GDT_Select extends GDT_ComboBox
 	
 	public function configJSON()
 	{
-		return array_merge(parent::configJSON(), array(
+		return array_merge(parent::configJSON(), [
 			'multiple' => $this->multiple,
 			'selected' => $this->multiple ? $this->getValue() : $this->getSelectedVar(),
 			'minSelected' => $this->minSelected,
 			'maxSelected' => $this->maxSelected,
 		    'emptyValue' => $this->emptyValue,
 		    'emptyLabel' => $this->displayEmptyLabel(),
-		));
+		]);
 	}
 	
 	public function getSelectedVar()

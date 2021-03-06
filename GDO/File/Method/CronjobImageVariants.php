@@ -31,8 +31,11 @@ final class CronjobImageVariants extends MethodCronjob
 	{
 		foreach (ModuleLoader::instance()->getModules() as $module)
 		{
-			$this->createImageVariantsForModuleClasses($module);
-			$this->createImageVariantsForModuleConfig($module);
+		    if ($module->isEnabled())
+		    {
+    			$this->createImageVariantsForModuleClasses($module);
+    			$this->createImageVariantsForModuleConfig($module);
+		    }
 		}
 		
 		$this->logStatistics();

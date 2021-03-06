@@ -76,6 +76,9 @@ return array(
 'filter' => 'Filter',
 'actions' => 'Aktionen',
     
+# Core GDO tables
+'gdo_permission' => 'Berechtigung',
+    
 # Generic Buttons
 'btn_back' => 'Zurück',
 'btn_set' => 'Setzen',
@@ -140,7 +143,7 @@ return array(
 'err_url_not_reachable' => 'Ihre eingegebene URL kann vom Server nicht erreicht werden.',
 'err_method_disabled' => 'Diese Funktion ist deaktiviert',
 'err_not_null' => 'Dieses Feld darf nicht leer sein.',
-'err_user_type' => 'Ihr Konto ist nicht vom Typ %s.',
+'err_user_type' => 'Das Konto ist nicht vom Typ %s.',
 'err_table_not_sortable' => 'Die %s Tabelle kann nicht ohne ein GDT_Sort sortiert werden.',
 'err_pass_too_short' => 'Ihr Passwort muss mindestens %s Zeichen lang sein.',
 'err_module_method' => 'Die Funktion konnte nicht gefunden werden.',
@@ -180,6 +183,7 @@ return array(
 'err_external_url_not_allowed' => 'Externe URLs sind nicht erlaubt.',
 'err_upload_move' => 'Eine Datei konnte nicht von %s nach %s verschoben werden.',
 'err_404' => '404 - Seite nicht gefunden',
+'err_user_no_permission' => 'Der Benutzer benötigt die %s Berechtigung.',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',
@@ -313,4 +317,8 @@ Referrer: %s<br/>
 <br/>
 Viele Grüße,<br/>
 %2$s system',
+
+# v6.10.1
+'msg_sort_success' => 'Die Einträge wurden neu sortiert.',
+'sorting' => 'Sort.',
 );

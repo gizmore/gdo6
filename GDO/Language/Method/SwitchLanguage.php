@@ -15,8 +15,8 @@ use GDO\Net\GDT_Url;
  * Stores your choice in your session.
  * 
  * @author gizmore
- * @since 6.09
- * @version 6.09
+ * @version 6.10.1
+ * @since 6.9.0
  * 
  * @see Module_Language
  * @see GDO_Session
@@ -25,10 +25,10 @@ final class SwitchLanguage extends Method
 {
 	public function gdoParameters()
 	{
-		return array(
+		return [
 			GDT_Language::make('lang')->notNull(),
 			GDT_Url::make('ref')->allowExternal(false)->allowLocal(),
-		);
+		];
 	}
 	
 	public function getDescription()

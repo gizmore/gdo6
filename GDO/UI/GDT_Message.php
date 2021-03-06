@@ -33,6 +33,8 @@ class GDT_Message extends GDT_Text
     ###########
     ### GDT ###
     ###########
+    public static $NUM = 1;
+    public $num = 0;
     /**
      * On make, setup order and search field.
      * @param string $name
@@ -41,6 +43,7 @@ class GDT_Message extends GDT_Text
     public static function make($name=null)
     {
         $gdt = parent::make($name);
+        $gdt->num = self::$NUM++;
         $gdt->orderField = $gdt->name . '_text';
         $gdt->searchField = $gdt->name . '_text';
         return $gdt;

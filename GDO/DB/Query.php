@@ -227,9 +227,26 @@ final class Query
 		$this->type = self::SELECT;
 		if ($columns) # ignore empty
 		{
-			$this->columns = $this->columns ? $this->columns . ", $columns" : " $columns";
+			$this->columns = $this->columns ? 
+			     "{$this->columns}, $columns" : " $columns";
 		}
 		return $this;
+	}
+	
+	/**
+	 * Select a field as first column in query.
+	 * Useful to build count queries out of filtered tables etc.
+	 * @param string $columns
+	 * @return self
+	 */
+	public function selectAtFirst($columns="COUNT(*)")
+	{
+	    if ($columns)
+	    {
+	        $this->columns = $this->columns ? 
+	           " {$columns}, {$this->columns}" : " $columns";
+	    }
+	    return $this;
 	}
 	
 	/**

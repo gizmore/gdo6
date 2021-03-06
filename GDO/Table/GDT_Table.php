@@ -19,16 +19,16 @@ use GDO\Core\GDOException;
 /**
  * A filterable, searchable, orderable, paginatable, sortable collection of GDT[] in headers.
  * 
- * WithHeaders GDT control provide the filterable, searchable and orderable.
+ * WithHeaders GDT control provide the filtered, searched, ordered, paginated and sorted.
  * GDT_Pagemenu is used for paginatable.
- * gdoT
  * 
- * Supports queried Ressult and GDO\Core\ArrayResult.
- * Searchable can crawl multiple fields at once.
- * Filterable can only crawl on field.
- * Orderable enables sorting.
- * The table has a GDT_Pagemenu if desired.
- * A GDO with a GDT_Sort
+ * Supports queried Result and ArrayResult.
+ * 
+ * Searched can crawl multiple fields at once via huge query.
+ * Filtered can crawl on individual fields.
+ * Ordered enables ordering by fields.
+ * Paginated enables pagination via GDT_Pagemenu.
+ * Sorted enables drag and drop sorting via GDT_Sort and Table::Method::Sorting.
  * 
  * The GDT that are used for this are stored via 'WithHeaders' trait.
  * The Header has a name that is used in $REQUEST vars.
@@ -42,14 +42,15 @@ use GDO\Core\GDOException;
  * 
  * @author gizmore
  * 
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  * 
  * @see GDO
  * @see GDT
  * @see GDT_PageMenu
  * @see Result
  * @see ArrayResult
+ * @see MethodQueryTable
  */
 class GDT_Table extends GDT
 {
@@ -212,7 +213,7 @@ class GDT_Table extends GDT
 	 */
 	public function getResult()
 	{
-		if (!($this->result))
+		if (!$this->result)
 		{
 			if (!($this->result = $this->queryResult()))
 			{
@@ -260,7 +261,7 @@ class GDT_Table extends GDT
 		    $s = $this->headers->name;
 		    if (isset($_REQUEST[$s]['search']))
 		    {
-		        if ($searchTerm = trim((string)@$_REQUEST[$s]['search'], "\r\n\t "))
+		        if ($searchTerm = trim($_REQUEST[$s]['search'], "\r\n\t "))
 		        {
 		            $this->bigSearchQuery($query, $searchTerm);
 		        }
@@ -338,7 +339,7 @@ class GDT_Table extends GDT
 	 * Objects that are searchable JOIN automatically and offer more searchable fields.
 	 * In general, GDT_String and GDT_Int is searchable.
 	 * 
-	 * @todo GDT_Enum is not searchable yet.
+	 * @TODO GDT_Enum is not searchable yet.
 	 * 
 	 * @param Query $query
 	 * @param string $searchTerm
@@ -511,7 +512,7 @@ class GDT_Table extends GDT
 	    }
 	    else
 	    {
-	        $q = $this->query->copy()->noJoins();
+	        $q = $this->query->copy(); #->noJoins();
 	        foreach ($q->orderBy as $i => $column)
 	        {
 	            $subq = $gdo->entityQuery()->from($gdo->gdoTableName()." AS sq{$i}")->selectOnly($column)->buildQuery();
