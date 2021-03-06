@@ -62,8 +62,10 @@ try
     ob_start();
     if (!isset($_REQUEST['mo']))
     { 
+        # If we are not index or index, and not start with a query string immediately we have a 404 error.
         $f = $_SERVER['REQUEST_URI'];
-        if ( ($f !== (GWF_WEB_ROOT.'index.php')) && (Strings::startsWith($f, '/?')) )
+        if ( (($f !== (GWF_WEB_ROOT.'index.php')) && ($f !== '/'))
+            && (!Strings::startsWith($f, '/?')) )
         {
             $method = Page404::make();
             $_GET['mo'] = $_REQUEST['mo'] = 'Core';
