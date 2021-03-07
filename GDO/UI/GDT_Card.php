@@ -71,6 +71,7 @@ final class GDT_Card extends GDT
 	##############
 	### Render ###
 	##############
+	public function render() { return $this->renderCell(); }
 	public function renderCard() { return $this->renderCell(); }
 	public function renderCell() { return GDT_Template::php('UI', 'cell/card.php', ['field' => $this]); }
 	
