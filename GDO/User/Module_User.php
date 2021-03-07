@@ -8,8 +8,8 @@ use GDO\Session\GDO_Session;
 /**
  * GDO_User related types and plugins.
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.1
+ * @since 3.0.0
  */
 final class Module_User extends GDO_Module
 {
@@ -22,12 +22,10 @@ final class Module_User extends GDO_Module
 
 	public function getClasses()
 	{
-	    $classes = array(
-			GDO_User::class,
-			GDO_UserPermission::class,
+	    $classes = [
 			GDO_UserSetting::class,
 			GDO_UserSettingBlob::class,
-		);
+	    ];
 	    # Session table if DB session handler
 	    if (is_a(GDO_Session::class, GDO::class, true))
 	    {

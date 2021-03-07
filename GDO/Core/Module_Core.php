@@ -14,6 +14,7 @@ use GDO\DB\GDT_Checkbox;
 use GDO\User\GDO_Permission;
 use GDO\UI\GDT_Page;
 use GDO\File\FileUtil;
+use GDO\User\GDO_UserPermission;
 
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
@@ -33,7 +34,7 @@ final class Module_Core extends GDO_Module
     const VERSION_MAJOR = '6';
     const VERSION_MINOR = '10';
     const VERSION_PATCH = '1';
-    const VERSION_REV = 'r1013';
+    const VERSION_REV = 'r1015';
     
     /**
      * GDO6 revision string.
@@ -41,7 +42,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.1-r1013';
+	public static $GDO_REVISION = '6.10.1-r1015';
 
 	##############
 	### Module ###
@@ -63,6 +64,8 @@ final class Module_Core extends GDO_Module
 	        GDO_Module::class,
 	        GDO_ModuleVar::class,
 	        GDO_Permission::class,
+	        GDO_User::class,
+	        GDO_UserPermission::class,
 	    ];
 	}
 	
