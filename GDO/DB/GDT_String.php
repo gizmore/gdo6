@@ -65,12 +65,6 @@ class GDT_String extends GDT
 	public function min($min) { $this->min = $min; return $this; }
 	public function max($max) { $this->max = $max; return $this; }
 	
-// 	public function getVar()
-// 	{
-// 		$var = trim(parent::getVar(), "\r\n\t ");
-// 		return $var === '' ? null : $var;
-// 	}
-
 	/**
 	 * Strings trim and convert empty string to null.
 	 */
@@ -212,10 +206,16 @@ class GDT_String extends GDT
 		# TODO: set the default max value to 1 or 2MB
 #		return true;
 	}
-	
+
+	/**
+	 * The default string is always trying to inject.
+	 * {@inheritDoc}
+	 * @see \GDO\Core\GDT::plugVar()
+	 */
 	public function plugVar()
 	{
-	    return "Test String <script>alert(1);</script>";
+	    $n = self::$nameNr;
+	    return "TestSTR'\"<script>alert($n)</script>";
 	}
 	
 	##############

@@ -69,7 +69,7 @@ abstract class GDT
 	
 	public static $COUNT = 0; # Total GDT created
 
-	private static $nameNr = 1; # Auto naming
+	protected static $nameNr = 1; # Auto naming
 	public static function nextName() { return 'gdt-'.(self::$nameNr++); }
 	public function hasName() { return substr($this->name, 0, 4) !== 'gdt-'; }
 

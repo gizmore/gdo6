@@ -4,6 +4,7 @@
 	animation-duration: 3s;
 	animation-iteration-count: infinite;
 }
+
 @keyframes pulse-error {
   0% {
     background-color: #fa6;

@@ -8,7 +8,6 @@ use GDO\Core\Application;
  * A module that adds sidebar behaviour to the default theme.
  * 
  * @author gizmore
- *
  */
 final class Module_Classic extends GDO_Module
 {

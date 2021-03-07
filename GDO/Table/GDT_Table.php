@@ -171,7 +171,7 @@ class GDT_Table extends GDT
 	}
 	public function paginated($paginated=true, $href=null, $ipp=0)
 	{
-		$ipp = $ipp <= 0 ? Module_Table::instance()->cfgItemsPerPage() : (int)$ipp;
+		$ipp = $ipp <= 1 ? Module_Table::instance()->cfgItemsPerPage() : (int)$ipp;
 		if ($paginated)
 		{
 		    $href = $href === null ? $this->action : $href;

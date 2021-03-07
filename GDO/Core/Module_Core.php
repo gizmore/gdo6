@@ -25,15 +25,15 @@ use GDO\File\FileUtil;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
 {
     const VERSION_MAJOR = '6';
     const VERSION_MINOR = '10';
     const VERSION_PATCH = '1';
-    const VERSION_REV = 'r1009';
+    const VERSION_REV = 'r1011';
     
     /**
      * GDO6 revision string.
@@ -41,7 +41,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.1-r1009';
+	public static $GDO_REVISION = '6.10.1-r1011';
 
 	##############
 	### Module ###
@@ -134,6 +134,11 @@ final class Module_Core extends GDO_Module
 	##################
 	### Javascript ###
 	##################
+	public function jsMinAppend()
+	{
+	    return $this->cfgMinifyJS() === 'no' ? '' : '.min';
+	}
+	
 	public function onIncludeScripts()
 	{
 		$this->addCSS('css/gdo6-core.css');

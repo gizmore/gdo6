@@ -8,11 +8,11 @@ use GDO\File\FileUtil;
 /**
  * Very cheap i18n.
  * 
- * @TODO Check if ini file parsing and using would be faster than php include.
+ * TODO: Check if ini file parsing and using would be faster than php include.
  * 
  * @author gizmore
  * @version 6.10.1
- * @since 1.00
+ * @since 1.0.0
  */
 final class Trans
 {
@@ -45,6 +45,18 @@ final class Trans
 	 * @var boolean
 	 */
 	public static $NO_SITENAME = false;
+	
+	/**
+	 * Number of missing translation keys for stats and testing.
+	 * @var integer
+	 */
+	public static $MISS = 0;
+	
+	/**
+	 * The keys that are missing in translation.
+	 * @var string[]
+	 */
+	public static $MISSING = [];
 	
 	/**
 	 * Set the current ISO
@@ -148,6 +160,8 @@ final class Trans
 			{
 				if (!($text = @vsprintf($text, $args)))
 				{
+				    self::$MISS++;
+				    self::$MISSING[] = $key;
 					$text = $cache[$key] . ': ';
 					$text .= json_encode($args);
 				}
@@ -155,15 +169,15 @@ final class Trans
 		}
 		else # Fallback key + printargs
 		{
-			$text = $key;
+		    self::$MISS++;
+		    self::$MISSING[] = $key;
+		    $text = $key;
 			if ($args)
 			{
 				$text .= ": ";
 				$text .= json_encode($args);
 			}
-			
 		}
-		
 		return $text;
 	}
 
@@ -236,4 +250,5 @@ final class Trans
 		$cache = self::load($iso);
 		return isset($cache[$key]);
 	}
+
 }

@@ -16,7 +16,6 @@ use GDO\DB\Cache;
 use GDO\Install\Installer;
 use GDO\Util\Strings;
 use GDO\Core\GDO_Module;
-use GDO\UI\GDT_Page;
 use GDO\Core\GDT_Response;
 
 /**
@@ -37,7 +36,7 @@ use GDO\Core\GDT_Response;
  * Show usage of the gdo.sh shell command.
  * @example gdo.sh install Bootstrap
  */
-function printUsage()
+function printUsage($code=1)
 {
     global $argv;
     $exe = $argv[0];
@@ -51,12 +50,12 @@ function printUsage()
     echo "Usage: php $exe config <module> <key>\n";
     echo "Usage: php $exe config <module> <key> <var>\n";
     echo "Usage: php $exe call <module> <method> <json_get_params> <json_form_params>\n";
-    die(0);
+    die($code);
 }
 
 if ($argc === 1)
 {
-    printUsage();
+    printUsage(0);
 }
 
 require 'GDO6.php';

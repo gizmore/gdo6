@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Accordeon and Dialog.
+ * Accordeon
  */
 var c = document.querySelectorAll('.gdt-accordeon .collapse-bar');
 var len = c.length;
