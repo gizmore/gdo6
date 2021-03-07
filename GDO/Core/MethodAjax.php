@@ -12,5 +12,6 @@ abstract class MethodAjax extends Method
 {
 	public function isAjax() { return true; }
 	public function saveLastUrl() { return false; }
+	public function showInSitemap() { return false; }
 	
 }

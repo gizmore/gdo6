@@ -181,7 +181,7 @@ final class GDO_User extends GDO
 	#############
 	### HREFs ###
 	#############
-	public function href_edit_admin() { return href('Admin', 'UserEdit', "&id={$this->getID()}"); }
+	public function href_edit_admin() { return href('Admin', 'UserEdit', "&user={$this->getID()}"); }
 	public function href_perm_revoke() { return href('Admin', 'PermissionRevoke', "&user={$this->getID()}&perm=".$this->getVar('perm_perm_id')); }
 	
 	#############

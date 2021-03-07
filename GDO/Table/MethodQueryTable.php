@@ -46,19 +46,9 @@ abstract class MethodQueryTable extends MethodTable
 	 */
 	public function getCountQuery()
 	{
-	    return $this->getQuery()->selectOnly('COUNT(*)');
+	    return $this->getQuery();
 	}
 
-	/**
-	 * Title prefix for translation keys.
-	 * {@inheritDoc}
-	 * @see \GDO\Table\MethodTable::setupTitlePrefix()
-	 */
-	protected function setupTitlePrefix()
-	{
-	    return 'table';
-	}
-	
 	############
 	### Exec ###
 	############

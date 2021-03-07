@@ -21,10 +21,11 @@ use GDO\Language\Trans;
  * @see MethodQueryTable
  * @see MethodForm
  * @see MethodCrud
+ * @see MethodCronjob
  *
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.1
+ * @since 3.0.0
  */
 abstract class Method
 {
@@ -101,22 +102,13 @@ abstract class Method
 	public function getTitle()
 	{
 	    $key = $this->getTitleLangKey();
-	    if (Trans::hasKey($key))
-	    {
-	        $title = t($key);
-	    }
-	    else
-	    {
-	        $title = $key; # $this->getModule()->displayName() . ' ' . $this->getMethodName();
-	    }
-	    return $title;
+	    return t($key);
 	}
 	
 	public function getTitleLangKey()
 	{
 	    return strtolower('mtitle_' . $this->getModuleName() . '_' . $this->getMethodName());
 	}
-	
 	
 	###################
 	### Description ###
@@ -129,14 +121,26 @@ abstract class Method
 	public function getDescription()
 	{
 	    $key = $this->getDescriptionLangKey();
+	    return Trans::hasKey($key) ? t($key) : $this->getTitle();
+	}
+	
+	################
+	### Keywords ###
+	################
+	public function getKeywordsLangKey()
+	{
+	    return strtolower('mkeywords_' . $this->getModuleName() . '_' . $this->getMethodName());
+	}
+	
+	public function getKeywords()
+	{
+	    $keywords = sitename() . ',' . t('keywords');
+	    $key = $this->getKeywordsLangKey();
 	    if (Trans::hasKey($key))
 	    {
-    		return t($key, [sitename()]);
+	        $keywords .= ',' . t($key);
 	    }
-	    else
-	    {
-	        return $this->getTitle();
-	    }
+	    return $keywords;
 	}
 	
 	######################
@@ -387,65 +391,60 @@ abstract class Method
 	 */
 	public function execWrap()
 	{
-	    $db = Database::instance();
-	    $transactional = $this->transactional();
-	    try
-		{
-			# Init method
-			$response = $this->init();
-			if ($response && $response->isError())
-			{
-			    return $response;
-			}
-			
-			# Wrap transaction start
-			if ($transactional) $db->transactionBegin();
-			
-			# Exec 1.before - 2.execute - 3.after
-			GDT_Hook::callHook('BeforeExecute', $this);
-			$response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
-			$response = $response ? $response->add($this->execute()) : $this->execute();
-			$response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
-			GDT_Hook::callHook('AfterExecute', $this);
-			
-			# Wrap transaction end
-			if ($transactional) $db->transactionEnd();
-			
-			# SEO
-			Website::setTitle($this->getTitle());
-			Website::addMeta(['description', $this->getDescription(), 'name']);
-			
-			# Store last URL in session
-			$this->storeLastURL();
-			
-			# Store last activity in user
-			$this->storeLastActivity();
-			
-			return $response;
-		}
-		catch (\Throwable $e)
-		{
-			if ($transactional) $db->transactionRollback();
-			throw $e;
-		}
+	    # Exec
+	    $response = $this->executeWithInit();
+        
+	    if ( (!$response) || (!$response->isError()) )
+	    {
+	        # SEO
+	        Website::setTitle($this->getTitle());
+	        Website::addMeta(['keywords', $this->getKeywords(), 'name']);
+	        Website::addMeta(['description', $this->getDescription(), 'name']);
+	        
+	        # Store last URL in session
+	        $this->storeLastURL();
+	        
+	        # Store last activity in user
+	        $this->storeLastActivity();
+	    }
+
+	    return $response;
 	}
 	
 	public function executeWithInit()
 	{
-	    $response = $this->init();
-	    if ($response && $response->isError())
+	    try
 	    {
+	        # Init method
+	        $response = $this->init();
+	        if ($response && $response->isError())
+	        {
+	            return $response;
+	        }
+
+	        $db = Database::instance();
+	        $transactional = $this->transactional();
+	        
+	        # Wrap transaction start
+	        if ($transactional) $db->transactionBegin();
+	        
+	        # Exec 1.before - 2.execute - 3.after
+	        GDT_Hook::callHook('BeforeExecute', $this);
+	        $response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
+	        $response = $response ? $response->add($this->execute()) : $this->execute();
+	        $response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
+	        GDT_Hook::callHook('AfterExecute', $this);
+	        
+	        # Wrap transaction end
+	        if ($transactional) $db->transactionEnd();
+	        
 	        return $response;
 	    }
-	    
-	    # Exec 1.before - 2.execute - 3.after
-	    GDT_Hook::callHook('BeforeExecute', $this);
-	    $response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
-	    $response = $response ? $response->add($this->execute()) : $this->execute();
-	    $response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
-	    GDT_Hook::callHook('AfterExecute', $this);
-
-	    return $response;
+	    catch (\Throwable $e)
+	    {
+	        if ($transactional) $db->transactionRollback();
+	        throw $e;
+	    }
 	}
 	
 	####################

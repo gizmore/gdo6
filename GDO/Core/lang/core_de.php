@@ -321,4 +321,5 @@ Viele Grüße,<br/>
 # v6.10.1
 'msg_sort_success' => 'Die Einträge wurden neu sortiert.',
 'sorting' => 'Sort.',
+'mtitle_core_welcome' => 'Willkommen',
 );

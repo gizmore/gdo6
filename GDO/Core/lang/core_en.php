@@ -315,4 +315,5 @@ Kind Regards,<br/>
 # v6.10.1
 'msg_sort_success' => 'The items have been re-arranged.',
 'sorting' => 'Sorting',
+'mtitle_core_welcome' => 'Welcome',
 );

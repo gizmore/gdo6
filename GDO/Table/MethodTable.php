@@ -182,17 +182,19 @@ abstract class MethodTable extends Method
 		return $this->renderTable();
 	}
 	
-	protected function setupTitlePrefix() { return 'method_table'; }
+	public function getTitleLangKey()
+	{
+	    return strtolower('list_'.$this->getModuleName().'_'.$this->getMethodName());
+	}
+	
+	public function getTitle()
+	{
+	    return t($this->getTitleLangKey(), [$this->table->countItems()]);
+	}
+	
 	protected function setupTitle(GDT_Table $table)
 	{
-	    if ($prefix = $this->setupTitlePrefix())
-	    {
-	        $key = strtolower(sprintf('%s_%s_%s', $prefix, $this->getModuleName(), $this->gdoShortName()));
-	        $numItems = $table->getPageMenu()->numItems;
-	        $table->title($key, [$numItems]);
-    	    return $this->title($key, [$numItems]);
-	    }
-	    return $this;
+	    $table->titleRaw($this->getTitle());
 	}
 	
 	protected function setupCollection(GDT_Table $table)

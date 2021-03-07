@@ -33,7 +33,7 @@ a[disabled] { opacity: 0.25; cursor: text; }
 .gdo-form-slim form { padding: 2px; display: flex; flex-direction: row; align-items: flex-end; flex-wrap: wrap; }
 .gdo-form-slim form > * { padding: 2px; flex-grow: 0; text-align: left; }
 .gdo-form-slim select { min-width: 160px; }
-.gdo-form-large input, .gdo-form-large select { min-width: 240px; }
+.gdo-form-large input, .gdo-form-large select { min-width: 280px; }
 .gdo-form input[type=submit] { min-width: auto; }
 .gdo-form .gdo-container { padding: 6px 8px; }
 .gdo-form-slim .gdo-container { padding: 0px 0px; }
@@ -48,21 +48,23 @@ input[type=submit]:hover { cursor: pointer; }
 .gdo-form .gdo-gdt_link a { padding: 8px; }
 .gdo-form .gdt-divider { padding: 8px; background: #eee; border: 1px solid #fff; font-weight: bold; }
 input, textarea { padding: 4px; }
+select { padding: 7px 3px; }
 
 /** Table **/
 .gdo-tblorder { display: inline-block; }
 .gdo-tblorder a.sel { color: gold; }
 .gdo-table th input, .gdo-table th select { display: block; }
 .gdo-table th { vertical-align: bottom; }
-div.gdo-table { overflow: auto; }
-table.gdo-table { min-width: 100%; }
-table.gdo-table thead { background: #ccb; }
-table.gdo-table tbody tr:nth-child(even) { background: #ddd; }
-table.gdo-table tbody tr:nth-child(odd) { background: #eee; }
-table.gdo-table tbody tr:hover { background: #fff; }
-table.gdo-table td.gdt-num { text-align: right; padding-right: 4px; /* font-family: monospace; */ }
-table.gdo-table td.gdo-gdt_country { text-align: center; }
-table.gdo-table td { padding: 0px 2px; }
+.gdo-table { overflow: auto; }
+.gdo-table { min-width: 100%; }
+.gdo-table thead { background: #ccb; }
+.gdo-table tbody tr:nth-child(even) { background: #ddd; }
+.gdo-table tbody tr:nth-child(odd) { background: #eee; }
+.gdo-table tbody tr:hover { background: #fff; }
+.gdo-table td.gdt-num { text-align: right; padding-right: 4px; /* font-family: monospace; */ }
+.gdo-table td.gdo-gdt_country { text-align: center; }
+.gdo-table td { padding: 0px 2px; }
+.gdo-table th select { padding: 4px 2px; }
 
 /** Pagemenu **/
 .gdo-pagemenu ul { display: flex; margin: 0 4px; }

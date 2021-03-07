@@ -1,4 +1,7 @@
-<?php /** @var $field \GDO\DB\GDT_Int **/ ?>
+<?php
+/** @var $field \GDO\DB\GDT_Int **/
+/** @var $f string **/
+?>
 <input
  name="<?=$f?>[f][<?=$field->name?>]"
  type="search"

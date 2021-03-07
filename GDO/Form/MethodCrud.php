@@ -16,9 +16,11 @@ use GDO\Date\Time;
 use GDO\Core\Website;
 
 /**
- * Abstract Create|Update|Delete for a GDO.
+ * Abstract Create|Update|Delete for a GDO using MethodForm.
+ * 
  * @author gizmore
- * @since 5.0
+ * @version 6.10.1
+ * @since 5.1.0
  */
 abstract class MethodCrud extends MethodForm
 {
@@ -36,6 +38,7 @@ abstract class MethodCrud extends MethodForm
 	
 	public function isUserRequired() { return true; }
 	public function isCaptchaRequired() { return !GDO_User::current()->isMember(); }
+	public function showInSitemap() { return false; }
 	
 	public function canCreate(GDO $table) { return true; }
 	public function canUpdate(GDO $gdo) { return true; }
@@ -81,14 +84,6 @@ abstract class MethodCrud extends MethodForm
 	    }
 	}
 	
-// 	##############
-// 	### Render ###
-// 	##############
-// 	public function renderPage()
-// 	{
-// 	    return parent::renderPage();
-// 	}
-	
 	##############
 	### Create ###
 	##############
@@ -120,13 +115,11 @@ abstract class MethodCrud extends MethodForm
 				}
 				else
 				{
-// 				    $form->addField($gdt->table->gdoColumnCopy($gdt->name));
 				    $form->addField($gdt);
 				}
 			}
 			elseif (!$gdt->virtual)
 			{
-// 			    $form->addField($gdt->table->gdoColumnCopy($gdt->name));
 			    $form->addField($gdt);
 			}
 		}
@@ -145,11 +138,9 @@ abstract class MethodCrud extends MethodForm
 	
 	public function createFormButtons(GDT_Form $form)
 	{
-		$form->actions()->addField(GDT_Submit::make());
+		$form->addField(GDT_AntiCSRF::make());
 
-		$form->addFields(array(
-			GDT_AntiCSRF::make()
-		));
+		$form->actions()->addField(GDT_Submit::make());
 
 		if ($this->gdo && $this->canDelete($this->gdo))
 		{
@@ -159,23 +150,26 @@ abstract class MethodCrud extends MethodForm
 		if ($this->gdo)
 		{
     	    $form->withGDOValuesFrom($this->gdo);
-		    $this->crudEditTitle();
 		}
 		else
 		{
 		    $form->withGDOValuesFrom($this->gdoTable());
-		    $this->crudCreateTitle();
 		}
 	}
 	
-	protected function crudCreateTitle()
+	public function getTitle()
 	{
-		$this->title(t('ft_crud_create', [$this->gdoTable()->gdoHumanName()]));
+	    return $this->gdo ? $this->getUpdateTitle() : $this->getCreateTitle();
 	}
 	
-	protected function crudEditTitle()
+	protected function getCreateTitle()
 	{
-		$this->title(t('ft_crud_update', [$this->gdoTable()->gdoHumanName()]));
+		return t('ft_crud_create', [$this->gdoTable()->gdoHumanName()]);
+	}
+	
+	protected function getUpdateTitle()
+	{
+        return t('ft_crud_update', [$this->gdo->gdoHumanName()]);
 	}
 	
 	##############

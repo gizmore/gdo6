@@ -6,9 +6,13 @@ use GDO\DB\GDT_AutoInc;
 use GDO\DB\GDT_Name;
 use GDO\UI\GDT_EditButton;
 use GDO\Language\Trans;
+use GDO\DB\GDT_Virtual;
+use GDO\DB\GDT_UInt;
 
 /**
  * Permission entity.
+ * @version 6.10.1
+ * @since 3.1.0
  * @author gizmore
  */
 final class GDO_Permission extends GDO
@@ -17,11 +21,13 @@ final class GDO_Permission extends GDO
     
 	public function gdoColumns()
 	{
-		return array(
+		return [
 			GDT_AutoInc::make('perm_id'),
 			GDT_Name::make('perm_name')->unique(),
 		    GDT_Level::make('perm_level')->label('perm_level')->bytes(2),
-		);
+		    GDT_Virtual::make('perm_usercount')->gdtType(GDT_UInt::make())->label('user_count')->
+		        subquery("SELECT COUNT(*) FROM gdo_userpermission WHERE perm_perm_id = perm_id"),
+		];
 	}
 	
 	public static function getByName($name) { return self::getBy('perm_name', $name); }
@@ -42,7 +48,6 @@ final class GDO_Permission extends GDO
     		    $perm->saveVar('perm_level', $level);
 		    }
 		}
-		
 		return $perm;
 	}
 	

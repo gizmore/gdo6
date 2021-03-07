@@ -2,6 +2,7 @@
 namespace GDO\DB;
 
 use GDO\Core\GDT;
+use GDO\Table\GDT_Table;
 use GDO\UI\WithLabel;
 
 /**
@@ -11,8 +12,8 @@ use GDO\UI\WithLabel;
  * You need to provide subquery sql and gdt proxy
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.10
+ * @version 6.10.1
+ * @since 6.10.0
  * 
  * @see GDT_Join
  */
@@ -52,19 +53,56 @@ class GDT_Virtual extends GDT
     #############
     ### Proxy ###
     #############
-    /** @var $gdtType GDT **/
+    /**
+     * Encapsulated virtual GDT Proxy
+     * @var GDT
+     **/
     public $gdtType;
-    private function proxy() { return $this->gdtType->gdo($this->gdo)->label($this->label, $this->labelArgs); }
-    public function gdtType($gdt) { $this->gdtType = $gdt; $this->gdtType->name = $this->name; return $this; }
+    
+    /**
+     * Get and setup the proxy GDT
+     * @return GDT
+     */
+    private function proxy()
+    {
+        return $this->gdtType->gdo($this->gdo)->label($this->label, $this->labelArgs);
+    }
+    
+    public function gdtType(GDT $gdt)
+    {
+        $this->gdtType = $gdt;
+        $this->gdtType->name = $this->name;
+        if (isset($gdt->virtual))
+        {
+            $this->gdtType->virtual = true;
+        }
+        $this->filterable = $gdt->filterable;
+        $this->orderable = $gdt->orderable;
+        $this->searchable = $gdt->searchable;
+        return $this;
+    }
     
     ##############
     ### Render ###
     ##############
-    public function htmlClass() { return $this->gdtType->htmlClass(); }
+    public function htmlClass() { return $this->proxy()->htmlClass(); }
 
-    public function renderHeader() { return $this->proxy()->renderHeader(); }
     public function render() { return $this->proxy()->render(); }
     public function renderCell() { return $this->proxy()->renderCell(); }
     public function renderCard() { return $this->proxy()->renderCard(); }
     public function renderForm() { return $this->proxy()->renderForm(); }
+    public function renderHeader() { return $this->proxy()->renderHeader(); }
+    public function renderFilter($f) { return $this->proxy()->renderFilter($f); }
+    
+//  public function displayLabel() { return $this->gdtType->displayLabel(); }
+    public function displayTableOrder(GDT_Table $table)
+    {
+        return $this->proxy()->displayTableOrder($table);
+    }
+    
+    public function filterQuery(Query $query, $rq=null)
+    {
+        return $this->proxy()->filterQuery($query, $rq);
+    }
+
 }

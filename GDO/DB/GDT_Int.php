@@ -12,10 +12,12 @@ use GDO\Table\WithOrder;
 
 /** 
  * Database capable base integer class.
+ * 
  * Control ->bytes(4) for size.
  * Control ->unsigned(true) for unsigned.
  * Control ->min() and ->max() for validation.
  * Control ->step() for html5 fancy.
+ * 
  * Is inherited by GDT_Object for auto_inc relation.
  * Can validate uniqueness.
  * Can compare gdo instances.
@@ -23,8 +25,8 @@ use GDO\Table\WithOrder;
  * Uses WithLabel, WithFormFields, WithDatabase and WithOrder.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  * 
  * @see GDT_UInt
  * @see GDT_Decimal
@@ -37,7 +39,8 @@ class GDT_Int extends GDT
 	use WithDatabase;
 	use WithOrder;
 
-	public function toValue($var) { return $var === null || trim($var) === '' ? null : (int) $var; }
+	public function toValue($var) { return $var === null || trim($var, "\r\n\t ") === '' ? null : (int) $var; }
+	public function inputToVar($input) { return trim($input, "\r\n\t "); }
 	
 	public $min;
 	public $max;
@@ -166,16 +169,104 @@ class GDT_Int extends GDT
 	
 	public function filterQuery(Query $query, $rq=null)
 	{
-		if ($filter = $this->filterVar($rq))
-		{
-		    if ($filter > 0) # 0.0 is not filtered?
-		    {
-    			$min = (int)Strings::substrTo($filter, '-', $filter);
-    			$max = (int)Strings::substrFrom($filter, '-', $filter);
-    			$nam = $this->identifier();
-    			$this->filterQueryCondition($query, "$nam >= $min AND $nam <= $max");
-		    }
-		}
+	    $filter = $this->filterVar($rq);
+	    if ($filter != '')
+	    {
+			$nam = $this->identifier();
+			
+			# Prepare min-max-range condition
+	        [$min, $max] = self::getMinMaxFromFilterVar($filter);
+	        $cond = [];
+	        if ($min !== null)
+	        {
+	            $cond[] = "$nam >= $min";
+	        }
+	        if ($max !== null)
+	        {
+	            $cond[] = "$nam <= $max";
+	        }
+	        
+	        if (count($cond)) # empty can happen on the folowing input: '-'
+	        {
+    			$this->filterQueryCondition($query, implode(' AND ', $cond));
+	        }
+	    }
+	}
+	
+	/**
+	 * Get min and max range from filter var, which is user input.
+	 * Supported are ranges like: a) 4 b) 1-4 c) -4-2 d) -4--2
+	 * @TODO make a challenge: create test cases for patterns, require the user to write a webservice that parses them all correctly.
+	 * @param string $filter
+	 * @return int[] min and max
+	 */
+	public static function getMinMaxFromFilterVar($filter)
+	{
+	    # split by '-'
+	    # mark negative max ('--') with -n
+	    $filter = str_replace(' ', '', $filter);
+	    $filter = str_replace('--', '-n', $filter);
+	    $parts = explode('-', $filter);
+
+	    $i = 0;
+        $min = null; $max = null;
+        $neg_min = 1; $neg_max = 1;
+
+        if ($parts[$i] === '')
+        {
+            $i++;
+            $neg_min = -1; # starts with a minus
+        }
+        
+        if (count($parts) === $i)
+        {
+            return [null, null]; # bad input
+        }
+        
+        if (is_numeric($parts[$i]))
+        {
+            $min = $parts[$i++];
+        }
+        else
+        {
+            return [null, null]; # bad input
+        }
+
+        if (count($parts) === $i)
+        {
+            $min *= $neg_min;
+            return [$min, $min]; # only one number
+        }
+        
+        if ($parts[$i] === '')
+        {
+            $i++;
+        }
+        
+        if (count($parts) === $i)
+        {
+            return [$min * $neg_min, PHP_INT_MAX]; # no max but finished with a sign
+        }
+        
+        if ($parts[$i][0] === 'n')
+        {
+            $neg_max = -1; # '--'
+            $parts[$i] = ltrim($parts[$i], 'n');
+        }
+        
+        if (is_numeric($parts[$i]))
+        {
+            $max = $parts[$i++];
+        }
+
+        if (count($parts) === $i)
+        {
+            $min *= $neg_min;
+            $max *= $neg_max;
+            return $min <= $max ? [$min, $max] : [$max, $min];
+        }
+        
+	    return [null, null]; # some non numeric input left
 	}
 	
 	public function filterGDO(GDO $gdo, $filtervalue)

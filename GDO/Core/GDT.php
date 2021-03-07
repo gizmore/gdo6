@@ -450,7 +450,7 @@ abstract class GDT
 	public $filterField;
 	public function filterField($filterField) { $this->filterField = $filterField; return $this->searchable(); }
 
-	public function filterVar($rq=null) { return $this->getRequestVar("{$rq}[f]", null, $this->filterField ? $this->filterField : $this->name); }
+	public function filterVar($rq=null) { return $this->inputToVar($this->getRequestVar("{$rq}[f]", null, $this->filterField ? $this->filterField : $this->name)); }
 	
 	/**
 	 * Filter decorator function for database queries.

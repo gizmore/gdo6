@@ -316,4 +316,5 @@ Cordiali saluti,<br/>
 # v6.10.1
 'msg_sort_success' => 'Le voci sono state riordinate.',
 'sorting' => 'Ordi.',
+'mtitle_core_welcome' => 'Benvenuto',
 );

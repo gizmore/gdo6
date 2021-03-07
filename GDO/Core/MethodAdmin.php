@@ -31,6 +31,6 @@ trait MethodAdmin
 	}
 	
 
-	protected function setupTitlePrefix() {} # intentionally null title for admin methods.
+// 	protected function setupTitlePrefix() {} # intentionally null title for admin methods.
 	
 }

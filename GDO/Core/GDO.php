@@ -28,8 +28,8 @@ use GDO\Language\Trans;
  * @see Query
  * 
  * @author gizmore@wechall.net
- * @version 6.10
- * @since 3.02
+ * @version 6.10.1
+ * @since 3.2.0
  * @license MIT
  */
 abstract class GDO
@@ -118,10 +118,10 @@ abstract class GDO
     /**
      * @var mixed[]
      */
-    public $temp = null;
+    private $temp = null;
     public function tempReset() { $this->temp = null; }
     public function tempGet($key) { return @$this->temp[$key]; }
-    public function tempSet($key, $value) { if (!$this->temp) $this->temp = []; $this->temp[$key] = $value; return $this; }
+    public function tempSet($key, $value) { if (!isset($this->temp)) $this->temp = []; $this->temp[$key] = $value; return $this; }
     public function tempUnset($key) { unset($this->temp[$key]); return $this; }
     public function tempHas($key) { return isset($this->temp[$key]); }
     

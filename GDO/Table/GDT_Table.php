@@ -169,6 +169,7 @@ class GDT_Table extends GDT
 	{
 		return $this->paginated(true, $href, Module_Table::instance()->cfgItemsPerPage());
 	}
+
 	public function paginated($paginated=true, $href=null, $ipp=0)
 	{
 		$ipp = $ipp <= 1 ? Module_Table::instance()->cfgItemsPerPage() : (int)$ipp;
@@ -237,7 +238,8 @@ class GDT_Table extends GDT
 	public $countQuery;
 	public function countQuery(Query $query)
 	{
-	    $this->countQuery = $this->getFilteredQuery($query)->noOrder();
+	    $tablequery = $this->getFilteredQuery($query)->noOrder()->buildQuery();
+	    $this->countQuery = (new Query($query->table))->select('COUNT(*)')->from(" ( $tablequery ) querytable");
 	    return $this;
 	}
 	

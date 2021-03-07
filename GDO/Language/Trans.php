@@ -122,7 +122,7 @@ final class Trans
 	 * @param string $iso
 	 * @return string[string]
 	 */
-	public static function load($iso)
+	public static function &load($iso)
 	{
 		if (!isset(self::$CACHE[$iso]))
 		{
@@ -181,7 +181,7 @@ final class Trans
 		return $text;
 	}
 
-	private static function reload($iso)
+	private static function &reload($iso)
 	{
 		$trans = [];
 		$trans2 = [];
@@ -234,9 +234,15 @@ final class Trans
 	 * @param string $key
 	 * @return boolean
 	 */
-	public static function hasKey($key)
+	public static function hasKey($key, $withMiss=false)
 	{
-		return self::hasKeyIso(self::$ISO, $key);
+	    $result = self::hasKeyIso(self::$ISO, $key);
+	    if ($withMiss && (!$result))
+	    {
+	        self::$MISS++;
+	        self::$MISSING[] = $key;
+	    }
+	    return $result;
 	}
 
 	/**

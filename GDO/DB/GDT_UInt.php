@@ -9,10 +9,9 @@ namespace GDO\DB;
  * Base class of GDT_Object.
 
  * @author gizmore
- * @version 6.10
- * @since 6.05
+ * @version 6.10.1
+ * @since 6.5.0
  * 
- * @see GDT_Int
  * @see GDT_Object
  */
 class GDT_UInt extends GDT_Int

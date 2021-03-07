@@ -1,6 +1,7 @@
 <?php /** @var $field \GDO\DB\GDT_Enum **/
 $sel = ' selected="selected"';
 $var = $field->getVar();
+$field->addClass('gdt-enum-select')
 ?>
 <div class="gdo-container<?=$field->classError()?>">
   <?=$field->htmlIcon()?>
