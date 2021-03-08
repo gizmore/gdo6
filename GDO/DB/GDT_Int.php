@@ -175,7 +175,7 @@ class GDT_Int extends GDT
 			$nam = $this->identifier();
 			
 			# Prepare min-max-range condition
-	        [$min, $max] = self::getMinMaxFromFilterVar($filter);
+	        list($min, $max) = self::getMinMaxFromFilterVar($filter);
 	        $cond = [];
 	        if ($min !== null)
 	        {
