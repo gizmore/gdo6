@@ -413,8 +413,14 @@ abstract class Method
 	
 	public function executeWithInit()
 	{
+	    $db = Database::instance();
+	    $transactional = $this->transactional();
+	   
 	    try
 	    {
+	        # Wrap transaction start
+	        if ($transactional) $db->transactionBegin();
+	        
 	        # Init method
 	        $response = $this->init();
 	        if ($response && $response->isError())
@@ -422,12 +428,6 @@ abstract class Method
 	            return $response;
 	        }
 
-	        $db = Database::instance();
-	        $transactional = $this->transactional();
-	        
-	        # Wrap transaction start
-	        if ($transactional) $db->transactionBegin();
-	        
 	        # Exec 1.before - 2.execute - 3.after
 	        GDT_Hook::callHook('BeforeExecute', $this);
 	        $response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
