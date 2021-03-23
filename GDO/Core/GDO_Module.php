@@ -222,8 +222,8 @@ class GDO_Module extends GDO
 	 */
 	public function wwwPath($path='')
 	{
-	    $path = ltrim($path, '/');
-	    return GWF_WEB_ROOT . "GDO/{$this->getName()}/$path";
+	    $path = trim($path, '/');
+	    return "/GDO/{$this->getName()}/$path";
 	}
 	
 	/**

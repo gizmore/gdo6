@@ -148,7 +148,7 @@ final class ModuleLoader
 		# Block certain modules
 		foreach ($this->modules as $module)
 		{
-		    $module->onLoadLanguage();
+	        $module->onLoadLanguage();
 		    
 	        if ($theme = $module->getTheme())
 	        {
@@ -341,11 +341,14 @@ final class ModuleLoader
 		$name = $moduleData['module_name'];
 		$klass = "GDO\\$name\\Module_$name";
 		/** @var $instance GDO_Module **/
-		$instance = new $klass();
-		$instance->isTable = false;
-		$moduleData['module_priority'] = $instance->module_priority;
-		$instance->setGDOVars($moduleData, $dirty);
-		return $instance;
+		if (class_exists($klass))
+		{
+    		$instance = new $klass();
+    		$instance->isTable = false;
+    		$moduleData['module_priority'] = $instance->module_priority;
+    		$instance->setGDOVars($moduleData, $dirty);
+    		return $instance;
+		}
 	}
 	
 	############

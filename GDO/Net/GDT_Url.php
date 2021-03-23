@@ -10,8 +10,8 @@ use GDO\UI\WithTitle;
  * Value is a @see URL.
  * 
  * @author gizmore
- * @version 6.10
- * @since 5.0
+ * @version 6.10.1
+ * @since 5.0.0
  */
 class GDT_Url extends GDT_String
 {

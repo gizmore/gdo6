@@ -1,12 +1,14 @@
 <?php
 namespace GDO\Net;
+
 use GDO\DB\GDT_String;
+
 /**
  * Hostname datatype.
  * Optionally validate reachability.
  * @author gizmore
+ * @version 6.10.1
  * @since 6.0.3
- * @version 6.0.3
  */
 final class GDT_Hostname extends GDT_String
 {
@@ -41,6 +43,7 @@ final class GDT_Hostname extends GDT_String
 			}
 			return true;
 		}
+		return false;
 	}
 	
 	public function validateReachable($value)

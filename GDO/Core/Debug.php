@@ -5,6 +5,7 @@ use GDO\UI\GDT_Page;
 use GDO\Util\Common;
 use GDO\Mail\Mail;
 use GDO\User\GDO_User;
+use GDO\Net\GDT_Url;
 
 /**
  * Debug backtrace and error handler.
@@ -304,9 +305,15 @@ final class Debug
 		{
     		try { $user = GDO_User::current()->displayNameLabel(); } catch (\Throwable $e) { }
 		}
+		
+		if ($url = @$_SERVER['REQUEST_URI'])
+		{
+		    $url = class_exists('GDT_Url') ? GDT_Url::absolute($url) : $url;
+		}
+		
 		$args = [
 			isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'NULL',
-			isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : self::getMoMe(),
+			isset($_SERVER['REQUEST_URI']) ? $url : self::getMoMe(),
 			isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'NULL',
 			isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'NULL',
 			isset($_SERVER['USER_AGENT']) ? $_SERVER['USER_AGENT'] : 'NULL',
