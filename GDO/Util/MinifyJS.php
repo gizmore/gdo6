@@ -65,7 +65,9 @@ final class MinifyJS
 		{
 			foreach ($this->input as $path)
 			{
-				if (strpos($path, '://') || strpos($path, 'ndex.php?')) # ndex returns 1
+				if (strpos($path, '://') ||
+				    (strpos($path, '//') === 0) || 
+				    strpos($path, 'ndex.php?')) # ndex returns 1
 				{
 					$this->external[] = $path;
 				}

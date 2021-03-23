@@ -139,7 +139,7 @@ class GDT_Form extends GDT
 				self::$VALIDATING_SUCCESS = false;
 				if (!$field->error)
 				{
-					$field->error('err_field_errorneus');
+					$field->error('err_field_invalid', [$field->displayLabel()]);
 				}
 				# I hate code that is not always necessary. 
 				if (Application::instance()->isUnitTests() || Application::instance()->isInstall())

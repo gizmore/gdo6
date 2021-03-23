@@ -93,18 +93,6 @@ abstract class MethodForm extends Method
 	    return GDT_Response::makeWith($this->getForm());
 	}
 	
-// 	public function defaultTitle()
-// 	{
-// 	    $this->title(t($this->getDefaultTitleLangKey()));
-// 	}
-	
-// 	protected function getDefaultTitleLangKey()
-// 	{
-// 	    $module = strtolower($this->getModuleName());
-// 	    $method = strtolower($this->getMethodName());
-// 	    return "ft_{$module}_{$method}";
-// 	}
-	
 	/**
 	 * Validate the form and execute it.
 	 * @return \GDO\Core\GDT_Response
@@ -163,9 +151,7 @@ abstract class MethodForm extends Method
 		{
 			$this->form = GDT_Form::make($this->formName());
 			$this->form->titleRaw($this->getTitle());
-// 			GDT_Form::$CURRENT = $this->form;
 			$this->createForm($this->form);
-// 			GDT_Form::$CURRENT = null;
 		}
 		return $this->form;
 	}
@@ -181,18 +167,6 @@ abstract class MethodForm extends Method
 		unset($_REQUEST['nojs']);
 		unset($this->form);
 	}
-	
-// 	public function title($key=null, array $args=null)
-// 	{
-// 	    $this->getForm()->title($key, $args);
-// 	    return parent::title($key, $args);
-// 	}
-	
-// 	public function titleRaw($title)
-// 	{
-// 	    $this->getForm()->titleRaw($title);
-// 	    return parent::titleRaw($title);
-// 	}
 	
 	###
 	public function onSubmit_submit(GDT_Form $form)

@@ -7,8 +7,8 @@ use GDO\Core\Application;
  * Add JS here, it calls minify on it, if enabled.
  * 
  * @author gizmore
- * @version 6.11
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  */
 final class Javascript
 {
