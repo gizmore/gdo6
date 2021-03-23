@@ -118,7 +118,7 @@ abstract class GDO
     /**
      * @var mixed[]
      */
-    private $temp = null;
+    public $temp = null;
     public function tempReset() { $this->temp = null; }
     public function tempGet($key) { return @$this->temp[$key]; }
     public function tempSet($key, $value) { if (!isset($this->temp)) $this->temp = []; $this->temp[$key] = $value; return $this; }

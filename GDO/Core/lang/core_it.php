@@ -153,7 +153,7 @@ return array(
 'err_permission_read' => 'Non sei autorizzato a vedere questa voce.',
 'err_permission_update' => 'Questo ogetto non puó essere ellaborato.',
 'err_permission_delete' => 'Questo ogetto non puó essere Cancellato.',
-'err_path_not_exists' => 'Il pfad indicato non é %s: %s',
+'err_path_not_exists' => 'Il Posizione indicato non %2$s: %1$s',
 'err_int_not_between' => 'Il numero deve essere tra %s e %s.',
 'err_min_date' => 'Questa data non deve essere %s.',
 'err_max_date' => 'Questa data deve essere prima del %s.',
@@ -184,7 +184,11 @@ return array(
 'err_upload_move' => 'Non è stato possibile spostare un file da %s a %s.',
 'err_404' => '404 - Pagina non trovata',
 'err_user_no_permission' => 'Nessuna autorizzazione: %s.',
-    
+
+# File
+'is_file' => 'un File',
+'is_folder' => 'una Cartella',
+
 # Permissions
 'sel_no_permissions' => 'Nessuna autorizzazione necessaria.',
 'perm_admin' => 'Administratore',

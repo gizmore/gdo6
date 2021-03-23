@@ -24,6 +24,10 @@ The installation process for a gdo6 module is as follows.
     # Goto Admin->Modules->JQuery
     # Click Install
     
+2b) Enable the module by using ./gdo.sh
+
+    ./gdo.sh install JQuery
+    
 That's it. Your application now includes jquery assets :)
 
  

@@ -45,7 +45,7 @@ final class GDT_Path extends GDT_String
 		{
 			if ( (!is_readable($filename)) || (!call_user_func($this->existing, $filename)) )
 			{
-				return $this->error('err_path_not_exists', [$filename, $this->existing]);
+				return $this->error('err_path_not_exists', [$filename, t($this->existing)]);
 			}
 		}
 		return true;

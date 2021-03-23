@@ -153,7 +153,7 @@ return array(
 'err_permission_read' => 'You are not allowed to see this entry.',
 'err_permission_update' => 'You do not have permissions to edit this object.',
 'err_permission_delete' => 'You do not have permissions to delete this object.',
-'err_path_not_exists' => 'The specified path does not qualify as %s: %s',
+'err_path_not_exists' => 'The specified path does not qualify as %2$s: %1$s',
 'err_int_not_between' => 'This number has to be between %s and %s.',
 'err_min_date' => 'This date has to be after %s.',
 'err_max_date' => 'This date has to be before %s.',
@@ -175,7 +175,7 @@ return array(
 'err_level_too_low' => 'You need a userlevel of %s to do that. Your level is %s.',
 'err_unknown_gdo_column' => 'Unknown GDO column: %s',
 'err_langfile_corrupt' => 'A languagefile is corrupt: %s',
-'err_unknown_config' => 'Unknwon config field in module %s: %s',
+'err_unknown_config' => 'Unknown config field in module %s: %s',
 'err_set_cookie' => 'Your cookie could not been set a second time.',
 'err_invalid_gdt_var' => 'A GDT, %s, has an invalid var: %s.',
 'err_unknown_user_setting' => 'The module %s does not know the user setting %s.',
@@ -184,6 +184,10 @@ return array(
 'err_upload_move' => 'File could not be moved from %s to %s.',
 'err_404' => '404 - File not found',
 'err_user_no_permission' => 'The user needs the %s permission.',
+    
+# File
+'is_file' => 'a File',
+'is_folder' => 'a Folder',
     
 # Permissions
 'sel_no_permissions' => 'No permission required',

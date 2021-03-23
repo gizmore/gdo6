@@ -153,7 +153,7 @@ return array(
 'err_permission_read' => 'Sie dürfen diesen Eintrag nicht sehen.',
 'err_permission_update' => 'Sie dürfen dieses Objekt nicht bearbeiten.',
 'err_permission_delete' => 'Sie dürfen dieses Objekt nicht löschen.',
-'err_path_not_exists' => 'Der angegebene Pfad ist kein %s: %s',
+'err_path_not_exists' => 'Der angegebene Pfad ist %2$s: %1$s',
 'err_int_not_between' => 'Diese Zahl muss zwischen %s und %s betragen.',
 'err_min_date' => 'Dieses Datum muss nach %s sein.',
 'err_max_date' => 'Dieses Datum muss vor %s sein.',
@@ -184,6 +184,10 @@ return array(
 'err_upload_move' => 'Eine Datei konnte nicht von %s nach %s verschoben werden.',
 'err_404' => '404 - Seite nicht gefunden',
 'err_user_no_permission' => 'Der Benutzer benötigt die %s Berechtigung.',
+    
+# File
+'is_file' => 'keine Datei',
+'is_folder' => 'kein Ordner',
     
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',
