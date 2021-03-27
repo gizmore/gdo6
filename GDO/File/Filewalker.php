@@ -29,16 +29,6 @@ final class Filewalker
 			return false;
 		}
 		
-// 		if (is_bool($callback_file))
-// 		{
-// 			$callback_file = [__CLASS__, 'filewalker_stub'];
-// 		}
-		
-// 		if (is_bool($callback_dir))
-// 		{
-// 			$callback_dir = [__CLASS__, 'filewalker_stub'];
-// 		}
-		
 		$dirstack = [];
 		$filestack = [];
 		while ($entry = $dir->read())

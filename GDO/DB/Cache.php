@@ -250,7 +250,7 @@ class Cache
 		}
 		else
 		{
-			$this->cache[$key]->setGDOVars($assoc);
+			$this->cache[$key]->setGDOVars($assoc)->setPersisted();
 		}
 		return $this->cache[$key];
 	}

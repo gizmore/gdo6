@@ -927,7 +927,7 @@ abstract class GDO
      */
     public static function blank(array $initial = null)
     {
-        return self::entity(self::blankData($initial))->dirty();
+        return self::entity(self::blankData($initial))->dirty()->setPersisted(false);
     }
     
     public function dirty($dirty=true)

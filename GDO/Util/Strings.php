@@ -136,4 +136,50 @@ final class Strings
 	    return $back;
 	}
 	
+	###################
+	### Args parser ###
+	###################
+	/**
+	 * Parse a line into args.
+	 * @see https://stackoverflow.com/a/18229461/13599483
+	 * @param string $line
+	 * @return string[]
+	 */
+	public static function args($line)
+	{
+	    $pattern = <<<REGEX
+/
+(?:
+  " ((?:(?<=\\\\)"|[^"])*) "
+|
+  ' ((?:(?<=\\\\)'|[^'])*) '
+|
+  (\S+)
+)
+/x
+REGEX;
+	    /** @var $matches string[] **/
+	    preg_match_all($pattern, $line, $matches, PREG_SET_ORDER);
+	    
+	    # Choose right match
+	    $args = [];
+	    foreach ($matches as $match)
+	    {
+	        if (isset($match[3]))
+	        {
+	            $args[] = $match[3];
+	        }
+	        elseif (isset($match[2]))
+	        {
+	            $args[] = str_replace(['\\\'', '\\\\'], ["'", '\\'], $match[2]);
+	        }
+	        else
+	        {
+	            $args[] = str_replace(['\\"', '\\\\'], ['"', '\\'], $match[1]);
+	        }
+	    }
+	    
+	    return $args;
+	}
+	
 }

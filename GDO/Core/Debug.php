@@ -211,7 +211,7 @@ final class Debug
 	public static function debugException(\Throwable $e, $render=true)
 	{
 	    $app = Application::instance();
-	    $is_html =  (!$app->isUnitTests()) && $app->isHTML();
+	    $is_html = $app ? (!$app->isUnitTests()) && $app->isHTML() : true;
 	    $firstLine = sprintf("%s in %s Line %s", $e->getMessage(), $e->getFile(), $e->getLine());
 	    
 	    $mail = self::$MAIL_ON_ERROR;
@@ -245,6 +245,10 @@ final class Debug
 	{
 		http_response_code(405);
 		$app = Application::instance();
+		if (!$app)
+		{
+		    return html($message);
+		}
 		if ($app->isJSON())
 		{
 			return json_encode(array('error' => $message));
@@ -399,7 +403,7 @@ final class Debug
 		}
 		
 		$app = Application::instance();
-		$is_html = $app->isHTML() && (!$app->isUnitTests());
+		$is_html = $app ? $app->isHTML() && (!$app->isUnitTests()) : true;
 		
 		$arg = $is_html ? html($arg) : $arg;
 		$arg = str_replace('&quot;', '"', $arg); # It is safe to inject quotes. Turn back to get length calc right.

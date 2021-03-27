@@ -29,7 +29,7 @@ final class ModuleProviders
         'Bootstrap3' => 'gdo6-bootstrap3',
         'BootstrapTheme' => 'gdo6-bootstrap-theme',
         'Buzzerapp' => 'gdo6-buzzerapp',
-        'Captcha' => 'gdo6-captcha',
+        'Captcha' => ['gdo6-captcha', 'gdo6-recaptcha2'],
         'Category' => 'gdo6-category',
         'CKEditor' => 'gdo6-ckeditor',
         'Comment' => 'gdo6-comment',

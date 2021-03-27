@@ -50,7 +50,10 @@ final class GDO_UserPermission extends GDO
 		{
 			return [];
 		}
-		return self::table()->select('perm_name, perm_level')->join("JOIN gdo_permission on perm_perm_id = perm_id")->where("perm_user_id={$user->getID()}")->order('perm_level')->exec()->fetchAllArray2dPair();
+		return self::table()->select('perm_name, perm_level')->
+            join("JOIN gdo_permission on perm_perm_id = perm_id")->
+            where("perm_user_id={$user->getID()}")->order('perm_level')->
+            exec()->fetchAllArray2dPair();
 	}
 	
 	/**
@@ -66,7 +69,7 @@ final class GDO_UserPermission extends GDO
     		self::blank([
     		    'perm_user_id' => $user->getID(),
     		    'perm_perm_id' => $permission->getID(),
-    		])->insert();
+    		])->replace();
     		GDT_Hook::callHook('UserPermissionGranted', $user, $permission);
 	    }
 	}

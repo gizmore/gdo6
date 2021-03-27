@@ -123,7 +123,7 @@ abstract class GDT
 	### RWE ###
 	###########
 	public function readable($readable) { $this->readable = $readable; return $this; }
-	public function writable($writable) { $this->writable = $writable; return $this; }
+	public function writable($writable) { $this->writable = $this->editable = $writable; return $this; }
 	public function editable($editable) { $this->editable = $editable; return $this->writable($editable); }
 	public function hidden($hidden=true) { $this->hidden = $hidden; return $this;}
 

@@ -21,6 +21,7 @@ use GDO\Core\Website;
 final class Page404 extends MethodPage
 {
     public function saveLastUrl() { return false; }
+    public function showInSitemap() { return false; }
     
     public function beforeExecute()
     {

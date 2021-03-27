@@ -103,6 +103,7 @@ class Config
 		# Files
 		if (!defined('GWF_CHMOD')) define('GWF_CHMOD', 0770);
 		# Logging
+		if (!defined('GWF_CONSOLE_VERBOSE')) define('GWF_CONSOLE_VERBOSE', false);
 		if (!defined('GWF_ERROR_LEVEL')) define('GWF_ERROR_LEVEL', Logger::_DEFAULT);
 		if (!defined('GWF_ERROR_STACKTRACE')) define('GWF_ERROR_STACKTRACE', true);
 		if (!defined('GWF_ERROR_DIE')) define('GWF_ERROR_DIE', true);
@@ -165,6 +166,7 @@ class Config
 			GDT_Enum::make('chmod')->enumValues((string)0700, (string)0770, (string)0777)->initialValue(GWF_CHMOD),
 			# Logging
 			GDT_Divider::make()->label('install_config_section_logging'),
+		    GDT_Checkbox::make('console_verbose')->initialValue(GWF_CONSOLE_VERBOSE),
 			GDT_Hidden::make('error_level')->initialValue(GWF_ERROR_LEVEL),
 			GDT_Checkbox::make('error_stacktrace')->initialValue(GWF_ERROR_STACKTRACE),
 			GDT_Checkbox::make('error_die')->initialValue(GWF_ERROR_DIE),

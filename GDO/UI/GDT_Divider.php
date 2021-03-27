@@ -5,11 +5,11 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 
 /**
- * A horizontal divider. HR tag.
+ * A horizontal divider tag.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  */
 class GDT_Divider extends GDT
 {

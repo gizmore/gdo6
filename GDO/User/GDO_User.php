@@ -231,9 +231,26 @@ final class GDO_User extends GDO
 	 * Get guest ghost user.
 	 * @return self
 	 */
-	public static function ghost() { return self::table()->blank(['user_id' => '0', 'user_type' => 'ghost']); }
+	public static function ghost()
+	{
+	    return self::blank(['user_type' => 'ghost']);
+	}
 	
-	public static function system() { return self::table()->findWhere("user_type='system'"); }
+	private static $SYSTEM;
+	public function isSystem() { return $this->getID() === '1'; }
+	public static function system()
+	{
+	    if (!self::$SYSTEM)
+	    {
+	        if (!(self::$SYSTEM = self::findById('1')))
+	        {
+	            self::$SYSTEM = self::blank([
+	                'user_id' => '1', 'user_type' => 'system'])->
+	                replace();
+	        }
+	    }
+        return self::$SYSTEM;
+	}
 	
 	/**
 	 * Get current user.
@@ -246,7 +263,7 @@ final class GDO_User extends GDO
 	{
 	    $user = $user === null ? self::ghost() : $user;
 	    self::$CURRENT = $user;
-// 	    Trans::setISO($user->getLangISO());
+// 	    Trans::setISO($user->getLangISO()); # we keep current until we switch.
 	    return $user;
 	}
 

@@ -1,11 +1,11 @@
 <?php
 namespace GDO\Core\Method;
 
-use GDO\Core\Method;
 use GDO\Core\Website;
 use GDO\Core\Module_Core;
+use GDO\Core\MethodAjax;
 
-final class GetCookie extends Method
+final class GetCookie extends MethodAjax
 {
 	public function execute()
 	{
