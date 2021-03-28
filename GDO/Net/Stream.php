@@ -55,10 +55,13 @@ final class Stream
 	    hdr('Content-Size: '.$file->getSize());
 		if ($disposition)
 		{
-			header('Content-Disposition: attachment; filename="'.htmlspecialchars($file->getName()).'"');
+			hdr('Content-Disposition: attachment; filename="'.htmlspecialchars($file->getName()).'"');
 		}
 		self::file($file, $variant);
-		die();
+		if (!Application::instance()->isUnitTests())
+		{
+		    die();
+		}
 	}
 	
 	/**

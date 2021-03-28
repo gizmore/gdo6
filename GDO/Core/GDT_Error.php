@@ -42,6 +42,7 @@ class GDT_Error extends GDT_Panel
 	{
 	    if ($code > 200)
 	    {
+	        GDT_Response::$CODE = $code;
 	        http_response_code($code);
 	    }
 		

@@ -6,6 +6,17 @@ final class OnInstall
 {
 	public static function onInstall()
 	{
+	    $permissions = array(
+	        'cronjob' => 0,
+	        'staff' => 500,
+	        'admin' => 1000,
+	    );
+	    
+	    foreach ($permissions as $perm => $level)
+	    {
+	        GDO_Permission::create($perm, $level);
+	    }
+	    
 		if (!($user = GDO_User::getByName('system')))
 		{
 			$user = GDO_User::blank(array(

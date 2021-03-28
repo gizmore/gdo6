@@ -22,6 +22,7 @@ final class SystemTest extends Method
 				$this->testBower(),
 				function_exists('mb_strlen'),
 			    ini_get('date.timezone'),
+			    function_exists('mime_content_type'),
 			),
 			'optional' => array(
 				function_exists('imagecreate'),
@@ -34,12 +35,11 @@ final class SystemTest extends Method
 	private function testPHPVersion()
 	{
 		$version = floatval(PHP_MAJOR_VERSION. '.' . PHP_MINOR_VERSION);
-		return $version >= 5.6;
+		return $version >= 7.0;
 	}
 
 	private function testBower()
 	{
-		return null;
 	}
 	
 }

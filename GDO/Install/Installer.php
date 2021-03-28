@@ -16,8 +16,8 @@ use GDO\Util\Strings;
 /**
  * Install helper.
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  */
 class Installer
 {
