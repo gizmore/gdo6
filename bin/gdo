@@ -1,0 +1,5 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+cd ..
+
+php bin/gdo.php "$@"

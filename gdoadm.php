@@ -21,8 +21,8 @@ use GDO\Core\GDT_Response;
 /**
  * The gdo.php executable manages modules and config via the CLI.
  * 
- * @version 6.10
- * @since 6.10
+ * @version 6.10.1
+ * @since 6.10.0
  * @see gdo_update.sh
  * @see gdo_test.sh
  * @see gdo_yarn.sh
@@ -44,6 +44,7 @@ function printUsage($code=1)
     echo "Usage: php $exe install <module>\n";
     echo "Usage: php $exe install_all\n";
     echo "Usage: php $exe wipe <module> - To uninstall modules\n";
+    echo "Usage: php $exe wipeall - To erase the whole database\n";
 //  echo "Usage: php $exe providers <module>\n"; # TODO: Show a list of providers for module dependencies.
     echo "Usage: php $exe admin <username> <password> [<email>] - to (re)set an admin account\n";
     echo "Usage: php $exe config <module>\n";
@@ -272,6 +273,17 @@ elseif ($argv[1] === 'admin')
     $user->recache();
     echo t('msg_admin_created', [$argv[2]]) . "\n";
     echo PHP_EOL;
+}
+
+elseif ($argv[1] === 'wipeall')
+{
+    if ($argc !== 2)
+    {
+        printUsage();
+    }
+    Database::instance()->queryWrite("DROP DATABASE " . GWF_DB_NAME);
+    Database::instance()->queryWrite("CREATE DATABASE " . GWF_DB_NAME);
+    printf("The database has been killed.\n");
 }
 
 elseif ($argv[1] === 'wipe')

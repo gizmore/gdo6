@@ -233,7 +233,7 @@ final class GDO_User extends GDO
 	 */
 	public static function ghost()
 	{
-	    return self::blank(['user_type' => 'ghost']);
+	    return self::blank(['user_type' => 'ghost', 'user_id' => '0']);
 	}
 	
 	private static $SYSTEM;
