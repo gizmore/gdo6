@@ -38,7 +38,15 @@ final class TestApp extends Application
     private $cli = false;
     public function cli($cli) { $this->cli = $cli; return $this; }
     public function isCLI() { return $this->cli; } # override CLI mode to test HTML rendering.
-    public function isUnitTests() { return true; }
+    /**
+     * @override
+     * {@inheritDoc}
+     * @see \GDO\Core\Application::isUnitTests()
+     */
+    public function isUnitTests()
+    {
+        return true;
+    }
 }
 
 

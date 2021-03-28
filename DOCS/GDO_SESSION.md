@@ -11,7 +11,7 @@ This module variant stores user sessions in the database.
     cd gdo6/GDO
     git clone --recursive https://github.com/gizmore/gdo6-session-db Session
     cd gdo6
-    php gdo.php install Session
+    php gdoadm.php install Session
     
 ## gdo6-session-cookie
 
@@ -24,4 +24,4 @@ Another downside is that large session data volume might slow down requests a bi
     cd gdo6/GDO
     git clone --recursive https://github.com/gizmore/gdo6-session-cookie Session
     cd gdo6
-    php gdo.php install Session
+    php gdoadm.php install Session

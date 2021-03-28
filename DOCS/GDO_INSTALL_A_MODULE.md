@@ -39,6 +39,11 @@ Open the gdo6 admin panel and install the module. In recovery cases you can try 
 ## Install the module via command line
 
     cd gdo6
-    php gdo.php install <ModuleName>
+    php gdoadm.php install <ModuleName>
+
+## Clearing cache via the command line
+
+    gdo admin.clearcache (soon)
+    
 
 That's it!

@@ -174,7 +174,12 @@ trait WithObject
 	
 	public function plugVar()
 	{
-	    $first = $this->table->select()->first()->exec()->fetchObject()->getID();
+	    $first = $this->table->select()->first()->exec()->fetchObject();
+	    if (!$first)
+	    {
+	        return null;
+	    }
+	    $first = $first->getID();
         if (@$this->multiple)
         {
             return '["' . $first . '"]';

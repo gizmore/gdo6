@@ -12,13 +12,13 @@ GDO6 is running fine on windows and linux.
 
 ### PHP Requirements
 
-gdo6(PHP) runs on PHP 5.6 and later versions up to (7.4) and requires a few PHP modules
+gdo6(PHP) runs on PHP 7.0 and later versions up to (8.0) and requires a few PHP modules
 
     apt-get install php-mbstring php-bcmath php-curl php-mysql php-gd
 
 These modules are optional
 
-    apt-get install php-memcached php-gmp php-mcrypt
+    apt-get install php-memcached php-gmp
 
 
 ### GDO6 Core
@@ -64,6 +64,7 @@ I intend to keep all stuff MIT licensed for as long as possible so one could rea
 
 ### Official gdo6 modules
 
+Copy this list and remove / add modules.
 
     cd www/gdo6/GDO # switch to modules dir
 
@@ -184,9 +185,15 @@ Then make your webserver point to the gdo6 directory and request install/wizard.
 
 ### CLI install
 
-    php gdo.php configure
-    php gdo.php install <Module>
-    php gdo.php admin <user> <pass>
+You can make your PATH env point to gdo6/bin.
+This way, later, you can execute gdo methods via the commandline.
 
+    # install gdo via gdoadm.php
+    cd gdo6
+    php gdoadm.php configure # configure gdo6 installation
+    php gdoadm.php install <Module> # install a module
+    php gdoadm.php admin <user> <pass> [<email>] # create an admin
 
-
+    # Try some commands via gdo6/bin/gdo
+    gdo admin.clearcache # Call clearcache method of module Admin.
+    gdo core.impressum # Call Impressum method of module Core

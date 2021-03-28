@@ -6,6 +6,7 @@ use GDO\DB\Database;
 use GDO\Session\GDO_Session;
 use GDO\UI\GDT_Page;
 use GDO\Core\Application;
+use GDO\Util\Strings;
 
 /**
  * Launch all unit tests.
@@ -13,9 +14,9 @@ use GDO\Core\Application;
  */
 if (PHP_SAPI !== 'cli') { die('Tests can only be run from the command line.'); }
 
-require_once 'protected/config.php';
 require_once 'GDO6.php';
-require_once 'vendor/autoload.php';
+require_once 'protected/config.php';
+// require_once 'vendor/autoload.php';
 
 Logger::init('system', GWF_ERROR_LEVEL);
 Debug::init();
@@ -62,62 +63,16 @@ $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
 /** @var $argc int **/
 /** @var $argv string[] **/
 
-echo "Dropping Test Database: ".GWF_DB_NAME.".\n";
-echo "If this hangs, something is locking the db.\n";
-Database::instance()->queryWrite("DROP DATABASE " . GWF_DB_NAME);
-Database::instance()->queryWrite("CREATE DATABASE " . GWF_DB_NAME);
-Database::instance()->useDatabase(GWF_DB_NAME);
 
-echo "Loading modules from filesystem\n";
-$modules = $app->loader->loadModules(false, true);
+$app->loader->loadModules();
 
-if ($argc === 2)
+$modulename = $argv[1];
+$methodname = Strings::substrFrom($modulename, '.');
+$modulename = Strings::substrTo($modulename, '.');
+$module = $app->loader->getModule($modulename);
+$method = $module->getMethod($methodname);
+
+if ($response = $method->execWrap())
 {
-    $modules = [
-        'Core', 'Language', 'Country',
-        'File', 'User', 'Table',
-        'Tests',
-    ];
-    
-    $modules = array_merge($modules, explode(',', $argv[1]));
-    
-    foreach ($modules as $moduleName)
-    {
-        $module = ModuleLoader::instance()->getModule($moduleName);
-        echo "Installing {$module->getName()}\n";
-        Installer::installModule($module);
-        runTestSuite($module);
-    }
-    echo "Finished.\n";
-    return;
-}
-
-foreach ($modules as $module)
-{
-    if (!$module->isPersisted())
-    {
-        echo "Installing {$module->getName()}\n";
-        Installer::installModule($module);
-    }
-    
-    $testDir = $module->filePath('Test');
-    if (FileUtil::isDir($testDir))
-    {
-        runTestSuite($module);
-    }
-}
-
-echo "Finished.\n";
-
-function runTestSuite(GDO_Module $module)
-{
-    $testDir = $module->filePath('Test');
-    if (FileUtil::isDir($testDir))
-    {
-        echo "Verarbeite Tests für {$module->getName()}\n";
-        $command = new Command();
-        $command->run(['phpunit', $testDir], false);
-        echo "Done with {$module->getName()}\n";
-        echo "----------------------------------------\n";
-    }
+    echo $response->render();
 }

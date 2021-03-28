@@ -106,7 +106,7 @@ if ($argv[1] === 'configure')
     }
 	
 	echo "You should now edit this file by hand.\n";
-	echo "Afterwards execute php gdo.php test config.\n";
+	echo "Afterwards execute {$argv[0]} test config.\n";
 }
 
 elseif ($argv[1] === 'test')
@@ -118,8 +118,8 @@ elseif ($argv[1] === 'test')
 	echo \GDO\Install\Method\SystemTest::make()->execute()->render();
 	
 	echo "Your configuration seems solid.\n";
-	echo "You can now try to php gdo.php install <module>.\n";
-	echo "A list of official modules is shown via php gdo.php modules.\n";
+	echo "You can now try to php {$argv[0]} install <module>.\n";
+	echo "A list of official modules is shown via php {$argv[0]} modules.\n";
 	echo "Before you can install a module, you have to clone it.\n";
 	echo "Example: cd GDO; git clone --recursive https://github.com/gizmore/gdo6-session-cookie Session; cd ..\n";
 	echo "Please note that a Session module is *required* and you have to choose between gdo6-session-db and gdo6-session-cookie.\n";

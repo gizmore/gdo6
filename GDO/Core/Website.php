@@ -67,11 +67,11 @@ final class Website
 				{
 					if ($time > 0)
 					{
-						header("Refresh:$time;url=$url");
+					    hdr("Refresh:$time;url=$url");
 					}
 					else
 					{
-						header('Location: ' . $url);
+						hdr('Location: ' . $url);
 					}
 				}
 		}

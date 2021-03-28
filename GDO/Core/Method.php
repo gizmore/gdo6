@@ -190,7 +190,7 @@ abstract class Method
 	    {
     	    if ($initial !== null)
     	    {
-    	        $gdt->initial($initial); 
+    	        $gdt->var($initial); 
     	    }
     	    
 	        $value = $gdt->getValue();

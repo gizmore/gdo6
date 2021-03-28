@@ -90,6 +90,7 @@ final class ModuleLoader
 	 */
 	public function getModule($moduleName)
 	{
+	    $moduleName = strtolower($moduleName);
 		return isset($this->modules[$moduleName]) ? 
 		  $this->modules[$moduleName] : null;
 	}
@@ -254,7 +255,7 @@ final class ModuleLoader
 			$result = GDO_Module::table()->select('*')->exec();
 			while ($moduleData = $result->fetchAssoc())
 			{
-				$moduleName = $moduleData['module_name'];
+				$moduleName = strtolower($moduleData['module_name']);
 				if (!isset($this->modules[$moduleName]))
 				{
 					if ($module = self::instanciate($moduleData))
@@ -304,7 +305,8 @@ final class ModuleLoader
 	 */
 	public function loadModuleFS($name, $init=true)
 	{
-		if (!isset($this->modules[$name]))
+	    $lowerName = strtolower($name);
+		if (!isset($this->modules[$lowerName]))
 		{
 			$className = "GDO\\$name\\Module_$name";
 			if (class_exists($className))
@@ -312,7 +314,7 @@ final class ModuleLoader
 				$moduleData = GDO_Module::table()->blankData(['module_name' => $name]);
 				if ($module = self::instanciate($moduleData, true))
 				{
-					$this->modules[$name] = $module;
+					$this->modules[$lowerName] = $module;
 // 					if ($init)
 					{
 					    $module->buildConfigCache();
@@ -326,7 +328,7 @@ final class ModuleLoader
 				}
 			}
 		}
-		return $this->modules[$name];
+		return $this->modules[$lowerName];
 	}
 	
 	/**
@@ -376,7 +378,7 @@ final class ModuleLoader
         		while ($row = $result->fetchRow())
         		{
         		    /** @var $module \GDO\Core\GDO_Module **/
-        			if ($module = $this->modules[$row[0]])
+        			if ($module = $this->modules[strtolower($row[0])])
         			{
         				if ($gdt = $module->getConfigColumn($row[1]))
         				{

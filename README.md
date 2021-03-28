@@ -80,9 +80,9 @@ Read https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_AND_GDT.md to learn mo
  
  - Easily create search forms that search the whole db or whole tables for a filter value. Multisorting is supported.
  
- - Can't access the webserver yet? Run any GDO command and manage your installation via CLI. Just php gdo.php install Captcha and you are ready to go.
+ - Can't access the webserver yet? Run any GDO command and manage your installation via CLI. Just "php gdoadm.php install Captcha" and you are ready to go.
  
- You can also use it as swiss army knife: php gdo.php call News Write '{"en" => {"title" => "Trying out gdo6!", "message" => "This news item was created via CLI" }}'
+ You can also use it as swiss army knife: php gdoadm.php call News Write '{"en" => {"title" => "Trying out gdo6!", "message" => "This news item was created via CLI" }}'
  
 
 ## Missing/Questionable features
