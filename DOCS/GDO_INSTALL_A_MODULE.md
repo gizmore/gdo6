@@ -43,7 +43,13 @@ Open the gdo6 admin panel and install the module. In recovery cases you can try 
 
 ## Clearing cache via the command line
 
-    gdo admin.clearcache (soon)
+    php gdoadm.php call Admin ClearCache
+    
+
+or if you have gdo6/bin in your PATH environment and gdo6 is installed properly:
+
+    gdo admin.clearcache
+
     
 
 That's it!

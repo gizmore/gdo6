@@ -7,5 +7,5 @@ Here i list contributors and what they have contributed to the project.
 
 jusb3: [gdo6-session-cookie](https://github.com/gizmore/gdo6-session-cookie) - Fixed crypto problems like padding oracle and others on gdo6-session-cookie, making it more secure. If you want more secure sessions or need more storage, use gdo6-session-db and store them serverside. [pull request](https://github.com/gizmore/gdo6-session-cookie/pull/1)
 
-chrysoberyl: [gdo6](https://github.com/gizmore/gdo6) - A little bit wording for the documentation.
+chrysoberyl: [gdo6](https://github.com/gizmore/gdo6) - A little bit wording for the documentation. [commit](https://github.com/gizmore/gdo6/commit/c3c14b438f6181baf2a9b437bc9728c38c3c707a)
 
