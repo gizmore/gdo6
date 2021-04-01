@@ -9,7 +9,7 @@ if [ $# -gt 0 ]; then
   SLEEP=$1
 fi;
 
-echo "Updating all repos with a sleep of $SLEEP seconds."
+echo "Resetting all repositories with git reset --hard."
 
 find . -iname ".git" -type d -exec sh -c "cd $CORE && cd {} && cd .. && 
 pwd && LANG=en_GB LC_ALL=en_GB git reset --hard" \;

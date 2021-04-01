@@ -3,10 +3,9 @@ namespace GDO\Util;
 
 /**
  * Helper for AES-256 encryption.
- * Requires mcrypt.
  * @author gizmore
- * @version 6.11
- * @since 3.01
+ * @version 6.11.0
+ * @since 3.0.1
  */
 final class AES
 {
