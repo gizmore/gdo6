@@ -17,6 +17,7 @@ use GDO\Install\Installer;
 use GDO\Util\Strings;
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Response;
+use GDO\Install\Method\Security;
 
 /**
  * The gdo.php executable manages modules and config via the CLI.
@@ -104,6 +105,8 @@ if ($argv[1] === 'configure')
     {
         echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
     }
+    
+    Security::make()->protectFolders();
 	
 	echo "You should now edit this file by hand.\n";
 	echo "Afterwards execute {$argv[0]} test config.\n";

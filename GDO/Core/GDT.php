@@ -337,7 +337,7 @@ abstract class GDT
 	### Render ###
 	##############
 	public function render() { return Application::instance()->isCLI() ? $this->renderCLI() : $this->renderCell(); }
-	public function renderCLI() { return $this->renderJSON(); }
+	public function renderCLI() { return json_encode($this->renderJSON(), JSON_PRETTY_PRINT); }
 	public function renderPDF() { return $this->renderCard(); }
 	public function renderCell() { return $this->renderCellSpan($this->getVar()); }
 	public function renderCellSpan($var) { return sprintf('<span class="%s">%s</span>', $this->htmlClass(), html($var)); }

@@ -1,5 +1,7 @@
 <?php
 namespace GDO\Util;
+use GDO\Core\GDOError;
+
 final class HTAccess
 {
 	public static function protectFolder($path)
@@ -14,7 +16,11 @@ final class HTAccess
 EOF;
 		if ( (!is_dir($path)) || (!is_readable($path)) )
 		{
+		    throw new GDOError('err_no_dir');
 		}
-		file_put_contents("$path/.htaccess", $content);
+		else
+		{
+		    file_put_contents("$path/.htaccess", $content);
+		}
 	}
 }
