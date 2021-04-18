@@ -1,14 +1,13 @@
 <?php
 namespace GDO\User;
 
-use GDO\Core\GDT_Template;
 use GDO\DB\GDT_String;
 
 /**
  * Username field with optional ajax completion.
  * @TODO autocomplete not implemented here.
  * @see GDT_User
- * 
+ * @deprecated in favor of GDT_User
  * @author gizmore
  * @version 6.10.1
  * @since 5.0.0
@@ -50,10 +49,10 @@ class GDT_Username extends GDT_String
 	##############
 	### Render ###
 	##############
-	public function render()
-	{
-	    return GDT_Template::php('User', 'form/username.php', ['field' => $this]);
-	}
+// 	public function render()
+// 	{
+// 	    return GDT_Template::php('User', 'form/username.php', ['field' => $this]);
+// 	}
 	
 	public function renderCell()
 	{

@@ -34,7 +34,7 @@ final class Module_Core extends GDO_Module
     const VERSION_MAJOR = '6';
     const VERSION_MINOR = '10';
     const VERSION_PATCH = '1';
-    const VERSION_REV = 'r1028';
+    const VERSION_REV = 'r1029';
     
     /**
      * GDO6 revision string.
@@ -42,7 +42,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.1-r1028';
+	public static $GDO_REVISION = '6.10.1-r1029';
 
 	##############
 	### Module ###

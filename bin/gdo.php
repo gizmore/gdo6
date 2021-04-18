@@ -7,12 +7,7 @@ use GDO\Session\GDO_Session;
 use GDO\UI\GDT_Page;
 use GDO\Core\Application;
 use GDO\Util\Strings;
-
-/**
- * Launch all unit tests.
- * Unit tests should reside in <Module>/Test/FooTest.php
- */
-if (PHP_SAPI !== 'cli') { die('Tests can only be run from the command line.'); }
+if (PHP_SAPI !== 'cli') { die('the console has to be used for this console program.'); }
 
 require_once 'GDO6.php';
 require_once 'protected/config.php';
@@ -20,7 +15,7 @@ require_once 'protected/config.php';
 
 Logger::init('system', GWF_ERROR_LEVEL);
 Debug::init();
-Debug::setMailOnError(GWF_ERROR_EMAIL);
+Debug::setMailOnError(false);
 // Debug::setDieOnError(GWF_ERROR_DIE);
 Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
@@ -70,7 +65,7 @@ $modulename = $argv[1];
 $methodname = Strings::substrFrom($modulename, '.');
 $modulename = Strings::substrTo($modulename, '.');
 $module = $app->loader->getModule($modulename);
-$method = $module->getMethod($methodname);
+$method = $module->getMethodByName($methodname);
 
 if ($response = $method->execWrap())
 {

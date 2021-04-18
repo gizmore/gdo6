@@ -16,6 +16,7 @@ use GDO\User\GDO_User;
 use GDO\DB\GDT_Text;
 use GDO\Tests\Module_Tests;
 use GDO\Table\GDT_Sort;
+use GDO\File\Filewalker;
 
 /**
  * GDO base module class.
@@ -594,6 +595,20 @@ class GDO_Module extends GDO
 	{
 		return method($this->getName(), $methodName);
 	}
+	
+	public function getMethodByName($methodName)
+	{
+	    $files = scandir($this->filePath('Method'));
+	    foreach ($files as $file)
+	    {
+	        if (strcasecmp($methodName, substr($file, 0, -4)) === 0)
+	        {
+	            $method = call_user_func($this->gdoClassName()."\\$methodName", "make");
+	            return $method;
+	        }
+	    }
+	}
+	
 	
 	##############
 	### Assets ###
