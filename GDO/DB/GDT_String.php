@@ -201,10 +201,6 @@ class GDT_String extends GDT
 		{
 			return $this->error('err_strlen_too_small', [$this->min]);
 		}
-		
-		# or no length restrictions at all. no action required except return true one stack up
-		# TODO: set the default max value to 1 or 2MB
-#		return true;
 	}
 
 	/**

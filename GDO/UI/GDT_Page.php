@@ -5,6 +5,7 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Application;
+use GDO\Core\Website;
 
 /**
  * This widget renders the ui/page.php template. the index.php of your site.
@@ -35,8 +36,19 @@ final class GDT_Page extends GDT
      */
     protected function __construct()
     {
+        parent::__construct();
         self::$INSTANCE = $this;
         $this->topTabs = GDT_Container::make('topTabs')->vertical();
+    }
+    
+    public function reset()
+    {
+        $this->topNav = null;
+        $this->leftNav = null;
+        $this->rightNav = null;
+        $this->bottomNav = null;
+        $this->topTabs = GDT_Container::make('topTabs')->vertical();
+        Website::$TOP_RESPONSE = null;
     }
     
     public function loadSidebars()

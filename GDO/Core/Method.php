@@ -248,8 +248,8 @@ abstract class Method
 	public function getMethodName() { return $this->gdoShortName(); }
 	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6)-4); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
-	public function error($key, array $args=null) { Website::topResponse()->add(GDT_Error::responseWith($key, $args)); return GDT_Response::make()->code(405); }
-	public function message($key, array $args=null, $log=true) { Website::topResponse()->add(GDT_Success::responseWith($key, $args)); return GDT_Response::make(); }
+	public function error($key, array $args=null) { Website::topResponse()->add(GDT_Error::responseWith($key, $args)); return GDT_Response::make(); }
+	public function message($key, array $args=null, $log=true) { Website::topResponse()->addField(GDT_Success::with($key, $args)); return GDT_Response::make(); }
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
 
@@ -262,12 +262,12 @@ abstract class Method
 	 */
 	public function requestParameters(array $params=null)
 	{
-	    $_REQUEST = [];
+	    $_REQUEST = $_GET = [];
 	    if ($params)
 	    {
     	    foreach ($params as $key => $value)
     	    {
-    	        $_REQUEST[$key] = $value;
+    	        $_REQUEST[$key] = $_GET[$key] = $value;
     	    }
 	    }
 	    return $this;

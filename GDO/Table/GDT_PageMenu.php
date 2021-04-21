@@ -65,21 +65,17 @@ class GDT_PageMenu extends GDT
 	    return $this;
 	}
 	
-	
-// 	/**
-// 	 * Set num items via query.
-// 	 * @optional
-// 	 * @param Query $query
-// 	 * @return self
-// 	 */
-// 	public function query(Query $query)
-// 	{
-// 		$this->query = $query;
-// 		$this->numItems = $this->query->exec()->fetchValue();
-// 		return $this;
-// 	}
-	
-// 	private $query = null;
+	/**
+	 * Set num items via query.
+	 * @optional
+	 * @param Query $query
+	 * @return self
+	 */
+	public function query(Query $query)
+	{
+		$this->numItems = $query->copy()->selectOnly('COUNT(*)')->exec()->fetchValue();
+		return $this;
+	}
 	
 	public function getPageCount()
 	{

@@ -9,7 +9,6 @@ return array(
 
 # util/gdo and util/gwf fields
 'all' => 'All',
-'birthdate' => 'Birthdate',
 'captcha' => 'Captcha',
 'color' => 'Color',
 'count' => 'Count',

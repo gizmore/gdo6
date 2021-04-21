@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Install\Method;
+
 use GDO\DB\Database;
 use GDO\Core\Method;
 use GDO\Core\ModuleLoader;
@@ -10,11 +11,12 @@ use GDO\Install\Config;
 use GDO\Core\GDT_Success;
 use GDO\DB\Cache;
 use GDO\Core\GDT_Response;
+
 /**
  * Install selected modules.
  * @author gizmore
- * @since 3.00
- * @version 6.05
+ * @version 6.10.1
+ * @since 3.0.0
  */
 final class InstallModules extends Method
 {
@@ -28,7 +30,6 @@ final class InstallModules extends Method
 		Database::init();
 		$loader = ModuleLoader::instance();
 		$loader->loadModules(false, true, true);
-		$loader->sortModules('module_priority');
 		$this->modules = $loader->getInstallableModules();
 		
 		if (isset($_REQUEST['btn_install']))
@@ -127,4 +128,5 @@ final class InstallModules extends Method
 		
 		return $response->addField(GDT_Success::with(t('install_modules_completed', [Config::linkStep(5)])));
 	}
+	
 }

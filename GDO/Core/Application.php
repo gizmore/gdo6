@@ -16,6 +16,7 @@ class Application
 {
 	const HTML = 'html';
 	const JSON = 'json';
+	const CLI = 'cli';
 	
 	/**
 	 * @return self
@@ -86,10 +87,17 @@ class Application
 	### Format ###
 	##############
 	public function isAjax() { return isset($_GET['ajax']); }
-	public function isHTML() { return (!$this->isCLI()) && $this->getFormat() === self::HTML; }
+	public function isHTML() { return $this->getFormat() === self::HTML; }
 	public function isJSON() { return $this->getFormat() === self::JSON; }
-	public function getFormat() { return Common::getRequestString('fmt', self::HTML); }
-
+	public function getFormat()
+	{
+	    if ($this->isCLI())
+	    {
+	        return self::CLI;
+	    }
+	    return Common::getRequestString('fmt', self::HTML);
+	}
+	
 	##############
 	### Themes ###
 	##############

@@ -6,6 +6,7 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Language\Trans;
 use GDO\DB\Database;
+use GDO\Table\Sort;
 
 /**
  * Module loader.
@@ -236,12 +237,10 @@ final class ModuleLoader
 		# Loaded one?
 		if ($loaded)
 		{
-// 			if ($this->loadedDB)
-			{
-				$this->initModuleVars();
-			}
+			$this->initModuleVars();
 
-			$this->modules = $this->sortModules('module_priority');
+			$this->modules = $this->sortModules([
+			    'module_priority' => true, 'module_name' => true]);
 			
 			$this->initModules();
 		}
@@ -406,9 +405,10 @@ final class ModuleLoader
 		}
 	}
 	
-	public function sortModules($columnName, $ascending=true)
+	public function sortModules(array $orders)
 	{
-		return GDO_Module::table()->sort($this->modules, $columnName, $ascending);
+	    Sort::sortArray($this->modules, GDO_Module::table(), $orders);
+	    return $this->modules;
 	}
 	
 }

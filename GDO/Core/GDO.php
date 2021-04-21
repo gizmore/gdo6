@@ -206,14 +206,19 @@ abstract class GDO
         }
         
         $gdt = $this->gdoColumn($key)->var($var);
+        $d = false;
         if ($data = $gdt->getGDOData())
         {
             foreach ($data as $k => $v)
             {
-                $this->gdoVars[$k] = $v === null ? null : (string)$v;
+                if ($this->gdoVars[$k] !== $v)
+                {
+                    $this->gdoVars[$k] = $v === null ? null : (string)$v;
+                    $d = true;
+                }
             }
         }
-        return $markDirty ? $this->markDirty($key) : $this;
+        return $markDirty && $d ? $this->markDirty($key) : $this;
     }
     
     public function setVars(array $vars=null, $markDirty=true)
@@ -712,7 +717,7 @@ abstract class GDO
                 $query->exec();
                 $this->dirty = false;
                 $this->recache(); # save is the only action where we recache!
-                $this->callRecacheHook();
+//                 $this->callRecacheHook();
                 if ($withHooks)
                 {
                     $this->afterUpdate();

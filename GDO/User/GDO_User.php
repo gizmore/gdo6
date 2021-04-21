@@ -15,7 +15,6 @@ use GDO\Mail\GDT_Email;
 use GDO\Mail\GDT_EmailFormat;
 use GDO\Net\GDT_IP;
 use GDO\DB\GDT_UInt;
-use GDO\Date\GDT_Birthdate;
 use GDO\Date\GDT_Timezone;
 use GDO\Avatar\GDT_Avatar;
 use GDO\Session\GDO_Session;
@@ -63,7 +62,6 @@ final class GDO_User extends GDO
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits')->icon('money'),
 			GDT_EmailFormat::make('user_email_fmt')->notNull()->initial(GDT_EmailFormat::HTML),
 			GDT_Gender::make('user_gender'),
-			GDT_Birthdate::make('user_birthdate'),
 			GDT_Country::make('user_country'),
 			GDT_Language::make('user_language')->notNull()->initial(GWF_LANGUAGE),
 			GDT_Password::make('user_password'),
@@ -337,10 +335,10 @@ final class GDO_User extends GDO
 	    if (false === ($cache = Cache::get($key)))
 	    {
 	        $cache = GDO_UserPermission::table()->select('gdo_user.*')->
-	        joinObject('perm_user_id')->joinObject('perm_perm_id')->
-	        where("perm_name=".self::quoteS($permission))->
-	        exec()->
-	        fetchAllObjectsAs(self::table());
+    	        joinObject('perm_user_id')->joinObject('perm_perm_id')->
+    	        where("perm_name=".self::quoteS($permission))->
+    	        exec()->
+    	        fetchAllObjectsAs(self::table());
 	        Cache::set($key, $cache);
 	    }
 	    return $cache;
@@ -379,7 +377,8 @@ final class GDO_User extends GDO
 	
 	public function renderJSON()
 	{
-		return array(
+	    $bday = $this->getBirthdate();
+		return [
 			'user_id' => (int)$this->getID(),
 			'user_name' => $this->getName(),
 			'user_real_name' => $this->getRealName(),
@@ -387,15 +386,15 @@ final class GDO_User extends GDO
 			'user_email' => $this->getMail(),
 			'user_gender' => $this->getGender(),
 			'user_type' => $this->getType(),
-// 			'user_level' => (int)$this->getLevel(),
+			'user_level' => (int)$this->getLevel(),
 			'user_credits' => (int)$this->getCredits(),
 			'user_email_fmt' => $this->getMailFormat(),
 			'user_language' => $this->getLangISO(),
 			'user_country' => $this->getCountryISO(),
 		    'user_timezone' => $this->getTimezone(),
-			'user_birthdate' => Time::getTimestamp($this->getBirthdate()),
+			'user_birthdate' => $bday ? Time::getTimestamp($bday) : 0,
 			'permissions' => $this->loadPermissions(),
-		);
+		];
 	}
 	
 }

@@ -44,10 +44,13 @@ final class GetTypes extends Method
 			$fields[$table->gdoClassName()] = [];
 			foreach ($table->gdoColumnsCache() as $name => $gdoType)
 			{
-				$fields[$table->gdoClassName()][$name] = array(
-					'type' => $gdoType->gdoClassName(),
-					'options' => $gdoType->configJSON(),
-				);
+			    if ($gdoType->isSerializable())
+			    {
+    				$fields[$table->gdoClassName()][$name] = array(
+    					'type' => $gdoType->gdoClassName(),
+    					'options' => $gdoType->configJSON(),
+    				);
+			    }
 			}
 		}
 		

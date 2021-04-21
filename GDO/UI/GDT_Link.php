@@ -54,7 +54,7 @@ class GDT_Link extends GDT_String
 	 */
 	public static function anchor($href, $label=null)
 	{
-		$label = $label !== null ? $label : $href;
+// 		$label = $label !== null ? $label : $href;
 		return self::make()->href($href)->labelRaw($label)->render();
 	}
 	
@@ -70,6 +70,7 @@ class GDT_Link extends GDT_String
 	public function renderForm() { return $this->renderCell(); }
 	public function renderCard() { return $this->renderCell(); }
 	public function renderCell() { return GDT_Template::php('UI', 'cell/link.php', ['link' => $this]); }
+	public function renderJSON() { return trim($this->displayLabel() . " ( $this->href )"); }
 	
 	###################
 	### Link target ###

@@ -12,7 +12,7 @@ trait WithInstance
 	{
 		if (!self::$INSTANCE)
 		{
-			self::$INSTANCE = new self;
+			self::$INSTANCE = new self();
 		}
 		return self::$INSTANCE;
 	}

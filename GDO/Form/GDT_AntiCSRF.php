@@ -2,7 +2,6 @@
 namespace GDO\Form;
 
 use GDO\Core\GDT_Template;
-use GDO\Core\GDT;
 use GDO\Session\GDO_Session;
 use GDO\Util\Random;
 use GDO\Core\Application;
@@ -11,8 +10,8 @@ use GDO\Core\Application;
  * GDT_Form CSRF protection
  * 
  * @author gizmore
- * @version 6.10
- * @since 1.0
+ * @version 6.10.1
+ * @since 1.0.0
  */
 class GDT_AntiCSRF extends GDT_Hidden
 {
@@ -22,9 +21,11 @@ class GDT_AntiCSRF extends GDT_Hidden
     public $name = 'xsrf';
     public $editable = false;
 	public function name($name=null) { return $this; }
+	public function isSerializable() { return false; }
 
 	protected function __construct()
 	{
+	    parent::__construct();
 	    $this->csrfToken();
 	}
 	

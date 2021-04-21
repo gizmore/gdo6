@@ -7,6 +7,7 @@ return [
 	
 'cfg_use_in_javascript' => 'Kopiere Übersetzungen zum Javascript Client?',
 'tt_cfg_use_in_javascript' => 'Dies lädt die Übersetzungsdateien in den WebBrowser, auf die Client Seite.',
+'cfg_langswitch_left' => 'Sprachumschalter in Sidebar anzeigen?',
     
 // 'lang_af' => 'Afrikaans',
 'lang_ar' => 'Arabisch',

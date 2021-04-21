@@ -40,7 +40,7 @@ final class Module_Language extends GDO_Module
 		return array(
 			GDT_Language::make('languages')->all()->multiple()->initial('["'.GWF_LANGUAGE.'"]'),
 		    GDT_Checkbox::make('langswitch_left')->initial('1'),
-		    GDT_Checkbox::make('use_in_javascript')->initial('0'),
+		    GDT_Checkbox::make('use_in_javascript')->initial('1'),
 		);
 	}
 	

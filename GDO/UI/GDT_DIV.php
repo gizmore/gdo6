@@ -12,6 +12,8 @@ final class GDT_DIV extends GDT
     use WithText;
     use WithPHPJQuery;
     
+    public function isSerializable() { return false; }
+    
     public function renderCell()
     {
         return sprintf("<div %s>%s</div>",

@@ -68,8 +68,9 @@ class GDT_Response extends GDT
 	{
 		switch (Application::instance()->getFormat())
 		{
-			case Application::HTML: return $this->renderHTML();
-			case Application::JSON: return $this->renderJSON();
+		    case Application::CLI: return $this->renderCLI();
+		    case Application::HTML: return $this->renderHTML();
+		    case Application::JSON: return $this->renderJSON();
 		}
 	}
 	
@@ -85,10 +86,13 @@ class GDT_Response extends GDT
 	    {
     	    foreach ($fields as $field)
     	    {
-    	        $html .= $field->render();
     	        if ($field instanceof GDT_Response)
     	        {
         	        $html .= $this->_renderHTMLRec($field); # #XXX: only responses recursively.
+    	        }
+    	        else
+    	        {
+    	            $html .= $field->render();
     	        }
     	    }
 	    }
@@ -101,6 +105,24 @@ class GDT_Response extends GDT
 			'code' => $this->code,
 			'data' => $this->renderJSONFields(),
 		);
+	}
+	
+	public function renderCLI()
+	{
+	    return "{$this->code} - " . $this->renderCLIFields();
+	}
+
+	private function renderCLIFields()
+	{
+	    $back = '';
+	    foreach ($this->getFieldsRec() as $field)
+	    {
+	        if (null !== ($out = $field->renderCLI()))
+	        {
+	            $back .= " {$out}";
+	        }
+	    }
+	    return trim($back);
 	}
 	
 	private function renderJSONFields()

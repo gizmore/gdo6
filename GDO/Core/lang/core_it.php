@@ -9,7 +9,6 @@ return array(
 
 # util/gdo and util/gwf fields
 'all' => 'Tutti',
-'birthdate' => 'Data di nascita',
 'captcha' => 'Capcha',
 'color' => 'Colore',
 'count' => 'Quantitá',
@@ -184,7 +183,7 @@ return array(
 'err_upload_move' => 'Non è stato possibile spostare un file da %s a %s.',
 'err_404' => '404 - Pagina non trovata',
 'err_user_no_permission' => 'Nessuna autorizzazione: %s.',
-
+    
 # File
 'is_file' => 'un File',
 'is_folder' => 'una Cartella',

@@ -24,6 +24,8 @@ Avatar - <https://github.com/gizmore/gdo6-avatar>
 
 Backup - <https://github.com/gizmore/gdo6-backup>
 
+Birthday - <https://github.com/gizmore/gdo6-birthday>
+
 Blog - <https://github.com/gizmore/gdo6-blog>
 
 Bootstrap - <https://github.com/gizmore/gdo6-bootstrap>

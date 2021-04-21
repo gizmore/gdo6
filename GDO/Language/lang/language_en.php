@@ -5,9 +5,10 @@ return [
 'cfg_languages' => 'Supported languages',
 'mdescr_language_switchlanguage' => 'Change language to %s',
     
-    'cfg_use_in_javascript' => 'Copy the translation data to JavaScript client?',
-    'tt_cfg_use_in_javascript' => 'This will load the translation javascript file.',
-	
+'cfg_use_in_javascript' => 'Copy the translation data to JavaScript client?',
+'tt_cfg_use_in_javascript' => 'This will load the translation javascript file.',
+'cfg_langswitch_left' => 'Show Language switcher?',
+    
 // 'lang_af' => 'Afrikaans',
 'lang_ar' => 'Arabic',
 // 'lang_az' => 'Azerbaijani',

@@ -1,12 +1,13 @@
 <?php
 namespace GDO\Core;
+
 use GDO\UI\GDT_Page;
 
 /**
  * Admin method decorator trait.
  * @TODO: Add superuser pw check to admin methods.
  * @author gizmore
- * @version 6.10
+ * @version 6.10.1
  */
 trait MethodAdmin
 {
@@ -22,15 +23,18 @@ trait MethodAdmin
 	
 	public function renderNavBar($module=null)
 	{
-	    GDT_Page::$INSTANCE->topTabs->addField(GDT_Template::responsePHP('Admin', 'navbar.php', ['moduleName' => $module]));
+	    if (Application::instance()->isHTML())
+	    {
+	        GDT_Page::$INSTANCE->topTabs->addField(GDT_Template::responsePHP('Admin', 'navbar.php', ['moduleName' => $module]));
+	    }
 	}
 
 	public function renderPermTabs($module=null)
 	{
-	    GDT_Page::$INSTANCE->topTabs->addField(GDT_Template::responsePHP('Admin', 'perm_tabs.php'));
+	    if (Application::instance()->isHTML())
+	    {
+	        GDT_Page::$INSTANCE->topTabs->addField(GDT_Template::responsePHP('Admin', 'perm_tabs.php'));
+	    }
 	}
-	
-
-// 	protected function setupTitlePrefix() {} # intentionally null title for admin methods.
 	
 }

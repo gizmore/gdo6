@@ -8,8 +8,8 @@ use GDO\Core\Website;
 /**
  * Autocomplete adapter for countries.
  * @author gizmore
- * @since 6.00
- * @version 6.10
+ * @version 6.10.1
+ * @since 6.0.0
  */
 final class Completion extends MethodCompletion
 {
@@ -24,7 +24,11 @@ final class Completion extends MethodCompletion
         {
             $name = $country->displayName();
             $iso = $country->getISO();
-            if (strtolower($iso) === $q)
+            if ($q === '')
+            {
+                $result[] = $country;
+            }
+            elseif (strtolower($iso) === $q)
             {
                 array_unshift($result, $country);
             }
@@ -33,10 +37,6 @@ final class Completion extends MethodCompletion
                 $result[] = $country;
             }
             elseif (mb_stripos($country->displayEnglishName(), $q) !== false)
-            {
-                
-            }
-            elseif ($q === '')
             {
                 $result[] = $country;
             }
@@ -48,11 +48,11 @@ final class Completion extends MethodCompletion
         
         $json = [];
         $json = array_map(function(GDO_Country $country) {
-            return array(
+            return [
                 'id' => $country->getID(),
                 'text' => $country->displayName(),
                 'display' => $country->renderChoice(),
-            );
+            ];
         }, $result);
         
         Website::renderJSON($json);

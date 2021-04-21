@@ -296,7 +296,7 @@ elseif ($argv[1] === 'wipe')
         printUsage();
     }
     $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
-    $response = Install::make()->requestParameters(['module' => $module->getName()])->formParametersWithButton([], 'uninstall')->execute();
+    $response = Install::make()->requestParameters(['module' => $module->getName()])->formParametersWithButton([], 'uninstall')->executeWithInit();
     if ($response->isError())
     {
         echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);

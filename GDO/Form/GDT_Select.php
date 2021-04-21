@@ -240,6 +240,7 @@ class GDT_Select extends GDT_ComboBox
 	################
 	public $multiple = false;
 	public function multiple($multiple=true) { $this->multiple = $multiple; return $this; }
+	public function htmlMultiple() { return $this->multiple ? ' multiple="multiple"' : ''; }
 	
 	public $minSelected;
 	public $maxSelected;

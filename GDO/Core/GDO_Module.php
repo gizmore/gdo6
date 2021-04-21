@@ -16,14 +16,13 @@ use GDO\User\GDO_User;
 use GDO\DB\GDT_Text;
 use GDO\Tests\Module_Tests;
 use GDO\Table\GDT_Sort;
-use GDO\File\Filewalker;
 
 /**
  * GDO base module class.
  * 
  * @author gizmore
  * @version 6.10.1
- * @since 1.00
+ * @since 1.0.0
  */
 class GDO_Module extends GDO
 {
@@ -513,6 +512,12 @@ class GDO_Module extends GDO
 	public function getSettingsCache()
 	{
 	    return $this->buildSettingsCache();
+	}
+	
+	public function hasSetting($key)
+	{
+	    $this->buildSettingsCache();
+	    return isset($this->userConfigCache[$key]);
 	}
 
 	private function getSetting($key)
