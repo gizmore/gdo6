@@ -36,4 +36,17 @@ class GDT_Date extends GDT_Timestamp
 	{
 		return substr(parent::toVar($value), 0, 10);
 	}
+	
+	public function htmlValue()
+	{
+	    $seconds = $this->getValue();
+	    $isodate = date('Y-m-d', $seconds);
+	    return sprintf(' value="%s"', $isodate);
+	}
+	
+	public function displayValue($var)
+	{
+	    return Time::displayDate($var, 'day');
+	}
+
 }

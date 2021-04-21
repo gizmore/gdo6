@@ -1,4 +1,4 @@
-<?php /** @var $field \GDO\Date\GDT_DateTime **/ ?>
+<?php /** @var $field \GDO\Date\GDT_Time **/ ?>
 <div class="gdo-container<?=$field->classError()?>">
   <?=$field->htmlIcon()?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>

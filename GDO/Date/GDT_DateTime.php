@@ -20,4 +20,17 @@ class GDT_DateTime extends GDT_Timestamp
 		return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]);
 	}
 	
+	public function htmlValue()
+	{
+	    $seconds = $this->getValue();
+	    $isodate = date('Y-m-d H:i:s', $seconds);
+	    return sprintf(' value="%s"', $isodate);
+	}
+	
+	public function displayValue($var)
+	{
+	    return Time::displayDate($var);
+	}
+	
+	
 }
