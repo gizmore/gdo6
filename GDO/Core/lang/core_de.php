@@ -65,8 +65,6 @@ return array(
 'filesize' => 'Dateigröße',
 'font_weight' => 'Font-Stärke',
 'perm_level' => 'Berechtigungslevel',
-'ago' => 'vor %s',
-'duration' => 'Dauer',
 'menu' => 'Menü',
 'download' => 'Herunterladen',
 'order' => 'Reihenfolge',
@@ -154,8 +152,6 @@ return array(
 'err_permission_delete' => 'Sie dürfen dieses Objekt nicht löschen.',
 'err_path_not_exists' => 'Der angegebene Pfad ist %2$s: %1$s',
 'err_int_not_between' => 'Diese Zahl muss zwischen %s und %s betragen.',
-'err_min_date' => 'Dieses Datum muss nach %s sein.',
-'err_max_date' => 'Dieses Datum muss vor %s sein.',
 'err_db_connect' => 'Datenbankverbindung gescheitert.',
 'err_db_unique' => 'Dieser Eintrag existiert bereits.',
 'err_image_format_not_supported' => 'Das Bildformat wird nicht unterstützt: %s',
@@ -200,17 +196,6 @@ return array(
 'enum_guest' => 'Gast',
 'enum_system' => 'System',
 'enum_member' => 'Mitglied',
-
-# Dateformats
-'df_parse' => 'd.m.Y H:i:s',
-'df_day' => 'd.m.Y',
-'df_short' => 'd.m.Y H:i',
-'df_long' => 'd.m.Y H:i:s',
-'tu_s' => 's',
-'tu_m' => 'm',
-'tu_h' => 'h',
-'tu_d' => 'd',
-'tu_y' => 'y',
 
 # Checkbox
 'enum_undetermined_yes_no' => 'unbekannt',

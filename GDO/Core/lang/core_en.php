@@ -65,8 +65,6 @@ return array(
 'filesize' => 'Filesize',
 'font_weight' => 'Font weight',
 'perm_level' => 'Permission level',
-'ago' => '%s ago',
-'duration' => 'Duration',
 'menu' => 'Menu',
 'download' => 'Download',
 'order' => 'Order',
@@ -154,8 +152,6 @@ return array(
 'err_permission_delete' => 'You do not have permissions to delete this object.',
 'err_path_not_exists' => 'The specified path does not qualify as %2$s: %1$s',
 'err_int_not_between' => 'This number has to be between %s and %s.',
-'err_min_date' => 'This date has to be after %s.',
-'err_max_date' => 'This date has to be before %s.',
 'err_db_connect' => 'Cannot connect to the database.',
 'err_db_unique' => 'This entry already exists.',
 'err_image_format_not_supported' => 'The image format is not supported: %s',
@@ -200,17 +196,6 @@ return array(
 'enum_guest' => 'Guest',
 'enum_system' => 'System',
 'enum_member' => 'Member',
-	
-# Dateformats
-'df_parse' => 'm/d/Y H:i:s',
-'df_day' => 'm/d/Y',
-'df_short' => 'm/d/Y h:i A',
-'df_long' => 'm/d/Y h:i:s A',
-'tu_s' => 's',
-'tu_m' => 'm',
-'tu_h' => 'h',
-'tu_d' => 'd',
-'tu_y' => 'y',
 	
 # Checkbox
 'enum_undetermined_yes_no' => 'unknown',

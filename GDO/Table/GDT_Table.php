@@ -238,8 +238,9 @@ class GDT_Table extends GDT
 	public $countQuery;
 	public function countQuery(Query $query)
 	{
-	    $tablequery = $this->getFilteredQuery($query)->noOrder()->buildQuery();
-	    $this->countQuery = (new Query($query->table))->select('COUNT(*)')->from(" ( $tablequery ) querytable");
+	    $query = $this->getFilteredQuery($query->copy());
+// 	    $tablequery = $this->getFilteredQuery($query)->noOrder()->buildQuery();
+// 	    $this->countQuery = (new Query($query->table))->select('COUNT(*)')->from(" ( $tablequery ) querytable");
 	    return $this;
 	}
 	

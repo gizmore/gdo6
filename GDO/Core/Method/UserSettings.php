@@ -17,7 +17,10 @@ final class UserSettings extends MethodAjax
             $settings[$module->getName()] = [];
             foreach ($moduleSettings as $gdt)
             {
-                $settings[$module->getName()][] = $this->gdtSetting($gdt);
+                if ($gdt->isSerializable())
+                {
+                    $settings[$module->getName()][] = $this->gdtSetting($gdt);
+                }
             }
         }
         die(json_encode($settings, JSON_PRETTY_PRINT));

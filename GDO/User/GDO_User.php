@@ -107,7 +107,7 @@ final class GDO_User extends GDO
 	public function getCountryISO() { return $this->getVar('user_country'); }
 	public function getCountry() { $c = $this->getValue('user_country'); return $c ? $c : GDO_Country::unknownCountry(); }
 	public function getTimezone() { return $this->getVar('user_timezone'); }
-	public function getBirthdate() { return $this->getVar('user_birthdate'); }
+// 	public function getBirthdate() { return $this->getVar('user_birthdate'); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
 	
@@ -377,7 +377,7 @@ final class GDO_User extends GDO
 	
 	public function renderJSON()
 	{
-	    $bday = $this->getBirthdate();
+// 	    $bday = $this->getBirthdate();
 		return [
 			'user_id' => (int)$this->getID(),
 			'user_name' => $this->getName(),
@@ -392,7 +392,7 @@ final class GDO_User extends GDO
 			'user_language' => $this->getLangISO(),
 			'user_country' => $this->getCountryISO(),
 		    'user_timezone' => $this->getTimezone(),
-			'user_birthdate' => $bday ? Time::getTimestamp($bday) : 0,
+// 			'user_birthdate' => $bday ? Time::getTimestamp($bday) : 0,
 			'permissions' => $this->loadPermissions(),
 		];
 	}

@@ -65,8 +65,6 @@ return array(
 'filesize' => 'Dimensione del file',
 'font_weight' => 'Forza dei caratteri',
 'perm_level' => 'Livello di autorizzazione',
-'ago' => '%s fa',
-'duration' => 'Durata',
 'menu' => 'Menù',
 'download' => 'Scarica',
 'order' => 'Sequenza',
@@ -154,8 +152,6 @@ return array(
 'err_permission_delete' => 'Questo ogetto non puó essere Cancellato.',
 'err_path_not_exists' => 'Il Posizione indicato non %2$s: %1$s',
 'err_int_not_between' => 'Il numero deve essere tra %s e %s.',
-'err_min_date' => 'Questa data non deve essere %s.',
-'err_max_date' => 'Questa data deve essere prima del %s.',
 'err_db_connect' => 'Connessione della bancadati fallita.',
 'err_db_unique' => 'Questo inserimento é gia esistente.',
 'err_image_format_not_supported' => 'Il formato dell´imagine non viene supportato: %s',
@@ -200,17 +196,6 @@ return array(
 'enum_guest' => 'Ospite',
 'enum_system' => 'Sistema',
 'enum_member' => 'Membro',
-
-# Dateformats
-'df_parse' => 'd.m.Y H:i:s',
-'df_day' => 'd.m.Y',
-'df_short' => 'd.m.Y H:i',
-'df_long' => 'd.m.Y H:i:s',
-'tu_s' => 's',
-'tu_m' => 'm',
-'tu_h' => 'h',
-'tu_d' => 'd',
-'tu_y' => 'y',
 
 # Checkbox
 'enum_undetermined_yes_no' => 'Sconosciuto',
