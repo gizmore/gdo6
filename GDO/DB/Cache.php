@@ -53,38 +53,6 @@ class Cache
 		}
 	}
 	
-	###############
-	### Preheat ### (not working)
-	###############
-// 	private static $HEAT = [];
-	/**
-	 * Load memcached GDOs into the process cache.
-	 * @param string $key
-	 * @param GDO[] $objects
-	 */
-	public static function heat($key, array $objects)
-	{
-// 	    if (!isset(self::$HEAT[$key]))
-// 	    {
-// 	        self::$HEAT[$key] = true;
-// 	        foreach ($objects as $gdo)
-// 	        {
-// 	            if (!$gdo->gdoCached())
-// 	            {
-// 	                return;
-// 	            }
-// 	            $gdo->table()->cache->recache($gdo);
-// 	        }
-// 	    }
-	}
-	
-	/**
-	 * Re-init heat after a cache flush.
-	 */
-	public static function cooldown()
-	{
-// 	    self::$HEAT = [];
-	}
 	#################
 	### GDO Cache ###
 	#################

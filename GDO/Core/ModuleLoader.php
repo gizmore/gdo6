@@ -203,7 +203,7 @@ final class ModuleLoader
 	
 	public function loadModulesA()
 	{
-		$hasdb = GWF_DB_HOST !== null;
+		$hasdb = !!GWF_DB_ENABLED;
 		return $this->loadModules($hasdb, !$hasdb);
 	}
 	

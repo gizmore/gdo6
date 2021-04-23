@@ -170,9 +170,16 @@ trait WithFields
 		    }
 			if ($data = $gdoType->renderJSON())
 			{
-			    foreach ($data as $k => $v)
+			    if (is_array($data))
 			    {
-			        $json[$k] = $v;
+    			    foreach ($data as $k => $v)
+    			    {
+    			        $json[$k] = $v;
+    			    }
+			    }
+			    else
+			    {
+			        $json[$gdoType->name] = $data;
 			    }
 			}
 		}

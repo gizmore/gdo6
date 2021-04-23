@@ -60,8 +60,9 @@ abstract class GDO
     public function gdoEngine() { return self::INNODB; } # @see self::MYISAM
     public function gdoAbstract() { return false; }
     public function gdoIsTable() { return true; }
-    public function gdoTableIdentifier() { return self::quoteIdentifierS($this->gdoTableName()); }
-
+//     public function gdoTableIdentifier() { return self::quoteIdentifierS($this->gdoTableName()); }
+    public function gdoTableIdentifier() { return $this->gdoTableName(); }
+    
     ################
     ### Escaping ###
     ################
@@ -944,15 +945,28 @@ abstract class GDO
     ##############
     ### Get ID ###
     ##############
+    /**
+     * Id cache
+     * @var $id string
+     */
+//     private $id = null;
     public function getID()
     {
-        $id = '';
-        foreach ($this->gdoPrimaryKeyColumnNames() as $name)
-        {
-               $id2 = $this->getVar($name);
-               $id = $id ? "{$id}:{$id2}" : $id2;
-        }
-        return $id;
+//         if ($this->id === null)
+//         {
+            $id = '';
+            foreach ($this->gdoPrimaryKeyColumnNames() as $name)
+            {
+                   $id2 = $this->getVar($name);
+                   $id = $id ? "{$id}:{$id2}" : $id2;
+            }
+            return $id;
+//             if ($id)
+//             {
+//                 $this->id = $id;
+//             }
+//         }
+//         return $this->id;
     }
     
     /**
