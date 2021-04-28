@@ -13,6 +13,8 @@ use GDO\DB\GDT_Text;
  */
 class GDT_JSON extends GDT_Text
 {
+    public function isSerializable() { return false; }
+    
 	public static function encode($data) { return json_encode($data); }
 	public static function decode($string) { return json_decode($string); }
 

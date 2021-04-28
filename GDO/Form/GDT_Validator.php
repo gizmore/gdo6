@@ -19,6 +19,7 @@ class GDT_Validator extends GDT
 	public $validator;
 	public $validateField;
 	public function validator($fieldName, $validator) { $this->validateField = $fieldName;  $this->validator = $validator; return $this; }
+	public function isSerializable() { return false; }
 	
 	public function validate($value)
 	{
