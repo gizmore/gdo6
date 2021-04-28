@@ -19,7 +19,6 @@ class GDT_Divider extends GDT
 	
 	public function blankData() {}
 
-	public function isSerializable() { return false; }
 	public function defaultLabel() { return $this->noLabel(); }
 	
 	public function renderJSON() {}

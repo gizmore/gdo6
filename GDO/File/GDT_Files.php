@@ -33,7 +33,6 @@ class GDT_Files extends GDT_File
 	 */
 // 	public function toVar($value) { return $value->getID(); } # cannot be saved as column.
 	public function toVar($value) { return null; } # cannot be saved as column.
-	public function isSerializable() { return false; } # cannot be transmitted or serialized.
 	
 	##################
 	### File Table ###

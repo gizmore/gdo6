@@ -18,8 +18,6 @@ class GDT_Index extends GDT
 	###########
 	### GDT ###
 	###########
-	public function isSerializable() { return false; }
-	
 	public function gdoColumnDefine()
 	{
 	    return "{$this->fulltextDefine()} INDEX({$this->indexColumns}) {$this->usingDefine()}";

@@ -30,6 +30,8 @@ class GDT_Timestamp extends GDT
 	public $filterable = true;
 	public $searchable = false;
 	
+	public function isSerializable() { return true; }
+	
 	#############
 	### Value ###
 	#############

@@ -43,7 +43,6 @@ class GDT_Link extends GDT_String
 	const REL_TAG = 'tag';
 	
 	public $caseSensitive = true;
-	public function isSerializable() { return false; }
 	
 	/**
 	 * Output a link / anchor.

@@ -21,7 +21,6 @@ class GDT_AntiCSRF extends GDT_Hidden
     public $name = 'xsrf';
     public $editable = false;
 	public function name($name=null) { return $this; }
-	public function isSerializable() { return false; }
 
 	protected function __construct()
 	{

@@ -38,6 +38,8 @@ class GDT_Int extends GDT
 	use WithFormFields;
 	use WithDatabase;
 	use WithOrder;
+	
+	public function isSerializable() { return true; }
 
 	public function toValue($var) { return $var === null || trim($var, "\r\n\t ") === '' ? null : (int) $var; }
 	public function inputToVar($input) { return trim($input, "\r\n\t "); }

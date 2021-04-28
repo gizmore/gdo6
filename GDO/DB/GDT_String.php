@@ -65,6 +65,8 @@ class GDT_String extends GDT
 	public function min($min) { $this->min = $min; return $this; }
 	public function max($max) { $this->max = $max; return $this; }
 	
+	public function isSerializable() { return true; }
+	
 	/**
 	 * Strings trim and convert empty string to null.
 	 */

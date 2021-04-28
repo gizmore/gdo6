@@ -22,8 +22,6 @@ class GDT_Submit extends GDT
 
 // 	public function defaultLabel() { return $this->label('btn_send'); }
 	
-	public function isSerializable() { return false; }
-	
 	public function name($name=null) { $this->name = $name ? $name : 'submit'; return $this->defaultLabel(); }
 // 	public function renderCell() { return GDT_Template::php('Form', 'cell/submit.php', ['field'=>$this]); }
 	public function renderCell() { return $this->renderForm(); }

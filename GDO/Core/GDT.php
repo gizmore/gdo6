@@ -218,7 +218,7 @@ abstract class GDT
 	public function hasChanged() { return $this->initial !== $this->getVar(); }
 	public function getValidationValue() { return $this->getValue(); }
 	
-	public function isSerializable() { return true; }
+	public function isSerializable() { return false; }
 	public function isPrimary() { return false; }
 	
 	###################
