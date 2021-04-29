@@ -11,7 +11,7 @@ fi;
 
 XARGS_OPTIONS="-P $THREADS -0 -I {}"
 if [ $(uname -s) == "FreeBSD" ]; then
-        XARGS_OPTIONS="-S 1024 -R $XARGS_OPTIONS"
+        XARGS_OPTIONS="-S 1024 -R 2 $XARGS_OPTIONS"
 fi
 
 echo "Updating all repos in parallel threads."
