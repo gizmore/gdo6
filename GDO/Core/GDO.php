@@ -650,7 +650,7 @@ abstract class GDO
         
     }
     
-    public function replace()
+    public function replace($withHooks=true)
     {
         $id = $this->getID();
         if ( (!$id) || preg_match('#^[:0]+$#D', $id) )
@@ -658,24 +658,29 @@ abstract class GDO
             return $this->insert();
         }
         $query = $this->query()->replace($this->gdoTableIdentifier())->values($this->gdoPrimaryKeyValues())->values($this->getDirtyVars());
-        return $this->insertOrReplace($query);
+        return $this->insertOrReplace($query, $withHooks);
     }
     
-    public function insert()
+    public function insert($withHooks=true)
     {
         $query = $this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars());
-        return $this->insertOrReplace($query);
+        return $this->insertOrReplace($query, $withHooks);
     }
     
-    private function insertOrReplace(Query $query)
+    private function insertOrReplace(Query $query, $withHooks)
     {
-        $this->beforeCreate($query);
+        if ($withHooks)
+        {
+            $this->beforeCreate($query);
+        }
         $query->exec();
         $this->dirty = false;
         $this->persisted = true;
-        $this->afterCreate();
-        $this->recache();
-        $this->callRecacheHook();
+        if ($withHooks)
+        {
+            $this->afterCreate();
+        }
+//         $this->recache(); # not needed for new rows?
         return $this;
     }
     

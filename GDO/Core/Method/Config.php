@@ -31,8 +31,11 @@ final class Config extends MethodAjax
 		{
     		foreach ($config as $type)
     		{
-    			$value = $module->getConfigValue($type->name);
-    			$json[$type->name] = $type->toVar($value);
+    		    if ( (!$type->hidden) && $type->isSerializable() )
+    		    {
+    		        $value = $module->getConfigValue($type->name);
+        			$json[$type->name] = $type->toVar($value);
+    		    }
     		}
 		}
 		return $json;

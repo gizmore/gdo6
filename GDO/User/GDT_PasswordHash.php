@@ -8,7 +8,9 @@ use GDO\Util\BCrypt;
  */
 class GDT_PasswordHash extends GDT_Password
 {
-	public function toValue($var)
+    public function isSerializable() { return false; }
+    
+    public function toValue($var)
 	{
 		return $var === null ? null : new BCrypt($var);
 	}
