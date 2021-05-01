@@ -27,9 +27,9 @@ For a "quick" install.
 
 1. Install core:
 
-    mkdir www && cd www
+        mkdir www && cd www
     
-    git clone --recursive https://github.com/gizmore/gdo6
+        git clone --recursive https://github.com/gizmore/gdo6
 
 In case you forgot a recursive:
 
