@@ -1,7 +1,7 @@
 # Contributors of gdo6
 
 Contributing to the gdo6 projects is welcome, and a hacking challenge on www.wechall.net
-Here i list contributors and what they have contributed to the project.
+Here I list contributors and what they have contributed to the project.
 
 ## List of contributors
 
