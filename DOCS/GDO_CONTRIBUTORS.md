@@ -9,3 +9,4 @@ jusb3: [gdo6-session-cookie](https://github.com/gizmore/gdo6-session-cookie) - F
 
 chrysoberyl: [gdo6](https://github.com/gizmore/gdo6) - A little bit wording for the documentation. [commit](https://github.com/gizmore/gdo6/commit/c3c14b438f6181baf2a9b437bc9728c38c3c707a)
 
+tehron: [gdo6](https://github.com/gizmore/gdo6) - Additions to the documentation. [pull request](https://github.com/gizmore/gdo6/pull/9)
