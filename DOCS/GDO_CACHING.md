@@ -12,6 +12,7 @@ GDO does not! It will always return the same object, and can even cache it in me
 
 That is, gdoCached() and/or memCached() is true for your GDO.
 
+I got told the idea is not new. For example PONY ORM also should have a single identity cache, but i could not confirm this yet.
 
 Example:
 
