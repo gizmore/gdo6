@@ -77,6 +77,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-audio Audio
     git clone --recursive https://github.com/gizmore/gdo6-avatar Avatar
     git clone --recursive https://github.com/gizmore/gdo6-backup Backup
+    # git clone --recursive https://github.com/gizmore/gdo6-bbcode BBCode
     git clone --recursive https://github.com/gizmore/gdo6-birthday Birthday
     ## git clone --recursive https://github.com/gizmore/gdo6-blog Blog
     git clone --recursive https://github.com/gizmore/gdo6-bootstrap Bootstrap

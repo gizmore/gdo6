@@ -24,6 +24,7 @@ final class ModuleProviders
         'Audio' => 'gdo6-audio',
         'Avatar' => 'gdo6-avatar',
         'Backup' => 'gdo6-backup',
+        'BBCode' => 'gdo6-bbcode',
         'Birthday' => 'gdo6-birthday',
         'Blog' => 'gdo6-blog',
         'Bootstrap' => 'gdo6-bootstrap',
