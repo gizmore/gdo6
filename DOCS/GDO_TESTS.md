@@ -6,8 +6,9 @@ Modules can have a Test/ folder that is automatically used when invoking
 
 ## Testing configuration
 
-Please run tests in an own test installation, because files/ and the database are overwritten. There is no separate tests config yet.
-There are not much tests yet, some are in modules like "Mettwitze" which are my own sites. But i started to write tests in quite late process of gdo6, and now add a test when a problem occurs. 
+The gdo_test.sh will create a files_test/ folder and load config from protected/config_test.php. The production files are not overwritten.
+There are not much tests yet, and some are in modules like "Mettwitze" which are my own sites.
+I started to write tests in quite late process of gdo6, and now i sometimes add a test when a problem occurs. 
 
 
 ## Testing sequence
