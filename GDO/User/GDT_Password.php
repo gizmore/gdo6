@@ -10,7 +10,9 @@ use GDO\DB\GDT_String;
  */
 class GDT_Password extends GDT_String
 {
-	protected function __construct()
+    public function isSerializable() { return false; }
+    
+    protected function __construct()
 	{
 		$this->min = 59;
 		$this->max = 60;

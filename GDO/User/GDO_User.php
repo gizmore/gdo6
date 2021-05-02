@@ -60,7 +60,7 @@ final class GDO_User extends GDO
 			GDT_Email::make('user_email')->searchable(false),
 			GDT_Level::make('user_level'),
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits')->icon('money'),
-			GDT_EmailFormat::make('user_email_fmt')->notNull()->initial(GDT_EmailFormat::HTML),
+// 			GDT_EmailFormat::make('user_email_fmt')->notNull()->initial(GDT_EmailFormat::HTML),
 			GDT_Gender::make('user_gender'),
 			GDT_Country::make('user_country'),
 			GDT_Language::make('user_language')->notNull()->initial(GWF_LANGUAGE),
