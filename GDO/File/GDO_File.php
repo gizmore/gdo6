@@ -10,6 +10,7 @@ use GDO\Util\Strings;
 use GDO\Core\GDOException;
 use GDO\DB\GDT_UInt;
 use GDO\Core\Debug;
+use GDO\Core\Application;
 /**
  * File database storage.
  * 
@@ -106,7 +107,14 @@ final class GDO_File extends GDO
 	###############
 	public static function filesDir()
 	{
-		return GDO_PATH . 'files/';
+	    if (Application::instance()->isUnitTests())
+	    {
+	        return GDO_PATH . 'files_test';
+	    }
+	    else
+	    {
+	        return GDO_PATH . 'files/';
+	    }
 	}
 	
 	/**

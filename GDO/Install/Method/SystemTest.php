@@ -3,6 +3,7 @@ namespace GDO\Install\Method;
 
 use GDO\Core\Method;
 use GDO\File\FileUtil;
+use GDO\File\GDO_File;
 
 /**
  * Do some tests and output in page.
@@ -16,7 +17,7 @@ final class SystemTest extends Method
 			'tests' => array(
 				$this->testPHPVersion(),
 				FileUtil::createDir(GDO_PATH . 'protected'),
-				FileUtil::createDir(GDO_PATH . 'files'),
+				FileUtil::createDir(GDO_File::filesDir()),
 				FileUtil::createDir(GDO_PATH . 'temp'),
 			    FileUtil::createDir(GDO_PATH . 'assets'),
 				$this->testBower(),
