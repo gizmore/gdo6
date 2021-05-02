@@ -8,7 +8,7 @@ Roughly you can say a security issue will patch all versions.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| >=6.0.0 | :x: |
+| >=6.0.0 | Yes |
 
 
 ## Reporting a Vulnerability
