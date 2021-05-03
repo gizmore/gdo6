@@ -65,7 +65,7 @@ final class Javascript
 	
 	private static function displayJavascriptOnload()
 	{
-		return self::$_javascript_inline ? sprintf('; %s;', self::$_javascript_inline) : '';
+		return self::$_javascript_inline ? sprintf("%s\n", self::$_javascript_inline) : '';
 	}
 
 }
