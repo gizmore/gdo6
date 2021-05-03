@@ -8,8 +8,8 @@ use GDO\DB\GDT_String;
  * An anchor for menus or paragraphs.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  */
 class GDT_Link extends GDT_String
 {
@@ -46,7 +46,7 @@ class GDT_Link extends GDT_String
 	
 	/**
 	 * Output a link / anchor.
-	 * @deprecated
+	 * @deprecated not the default GDT behaviour. Yet ok?
 	 * @param string $href
 	 * @param string $label
 	 * @return string

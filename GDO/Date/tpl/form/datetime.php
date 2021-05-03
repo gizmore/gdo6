@@ -5,9 +5,10 @@
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input
    <?=$field->htmlID()?>
-   type="datetime"
+   type="datetime-local"
+   autocomplete="off"
+   value="<?=tt($field->getVar(), 'local')?>"
    <?=$field->htmlFormName()?>
-   <?=$field->htmlValue()?>
    <?=$field->htmlDisabled()?> />
   <?=$field->htmlError()?>
 </div>

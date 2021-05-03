@@ -239,7 +239,7 @@ final class Mail
 			echo $printmail;
 			return true;
 		}
-		elseif (self::$ENABLE)
+		elseif (self::$ENABLE && module_enabled('Mail'))
 	    {
     	    return mail($to, $subject, $encrypted, $headers);
 		}
@@ -309,7 +309,7 @@ final class Mail
 			printf('<h1>Local EMail:</h1><div>%s<br/>%s</div>', htmlspecialchars($this->subject), $message);
 			return true;
 		}
-		elseif (self::$ENABLE)
+		elseif (self::$ENABLE && module_enabled('Mail'))
 		{
             return mail($to, $subject, $message, $headers);
 		}

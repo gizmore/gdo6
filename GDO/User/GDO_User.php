@@ -87,10 +87,11 @@ final class GDO_User extends GDO
 	public function getRealName() { return $this->getVar('user_real_name'); }
 	public function getGuestName() { return $this->getVar('user_guest_name'); }
 	
-	public function isBot() { return $this->getType() === self::BOT; }
-	public function isGhost() { return $this->getType() === self::GHOST; }
-	public function isGuest() { return $this->getType() === self::GUEST; }
-	public function isMember() { return $this->getType() === self::MEMBER; }
+	public function isBot() { return $this->isType(self::BOT); }
+	public function isGhost() { return $this->isType(self::GHOST); }
+	public function isGuest() { return $this->isType(self::GUEST); }
+	public function isMember() { return $this->isType(self::MEMBER); }
+	public function isType($type) { return $this->getType() === $type; }
 	
 	public function getCredits() { return $this->getVar('user_credits'); }
 	public function isAuthenticated() { return !$this->isGhost(); }
