@@ -76,7 +76,7 @@ class GDT_Link extends GDT_String
 	###################
 	private $target;
 	public function target($target) { $this->target = $target; return $this; }
-	public function targetBlank() { return $this->target('__blank'); }
+	public function targetBlank() { return $this->target('_blank'); }
 	public function htmlTarget() { return $this->target === null ? '' : " target=\"{$this->target}\""; }
 	
 }
