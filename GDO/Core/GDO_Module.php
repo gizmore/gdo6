@@ -223,7 +223,7 @@ class GDO_Module extends GDO
 	 * @param string $path
 	 * @return string
 	 */
-	public function filePath($path='') { return rtrim(GDO_PATH, '/').$this->wwwPath($path); }
+	public function filePath($path='') { return rtrim(GDO_PATH, '/') . $this->wwwPath($path); }
 	
 	/**
 	 * Relative www path for a resource.
@@ -233,7 +233,7 @@ class GDO_Module extends GDO
 	public function wwwPath($path='')
 	{
 	    $path = trim($path, '/');
-	    return "/GDO/{$this->getName()}/$path";
+	    return GWF_WEB_ROOT . "GDO/{$this->getName()}/{$path}";
 	}
 	
 	/**
@@ -273,7 +273,6 @@ class GDO_Module extends GDO
 			default: return GDT_Template::responsePHP($this->getName(), $file, $tVars);
 		}
 	}
-	
 	
 	public function templateFile($file) { return GDT_Template::file($this->getName(), $file); }
 	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args); }

@@ -60,7 +60,6 @@ abstract class GDO
     public function gdoEngine() { return self::INNODB; } # @see self::MYISAM
     public function gdoAbstract() { return false; }
     public function gdoIsTable() { return true; }
-//     public function gdoTableIdentifier() { return self::quoteIdentifierS($this->gdoTableName()); }
     public function gdoTableIdentifier() { return $this->gdoTableName(); }
     
     ################
@@ -767,21 +766,15 @@ abstract class GDO
         $query = $this->updateQuery();
         foreach ($vars as $key => $var)
         {
-//             if ($gdt = $this->gdoColumn($key))
-//             {
-//                 foreach ($gdt->getGDOData() as $k => $v)
-//                 {
-                    if (array_key_exists($key, $this->gdoVars))
-                    {
-                        if ($var !== $this->gdoVars[$key])
-                        {
-                            $query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
-                            $this->markClean($key);
-                            $worthy = true; # We got a change
-                        }
-                    }
-//                 }
-//             }
+            if (array_key_exists($key, $this->gdoVars))
+            {
+                if ($var !== $this->gdoVars[$key])
+                {
+                    $query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
+                    $this->markClean($key);
+                    $worthy = true; # We got a change
+                }
+            }
         }
 
         # Call hooks even when not needed. Because its needed on GDT_Files
@@ -792,10 +785,7 @@ abstract class GDO
             $query->exec();
             foreach ($vars as $key => $var)
             {
-//                 if (array_key_exists($key, $this->gdoVars)) # speedup?
-//                 {
-                    $this->gdoVars[$key] = $var;
-//                 }
+                $this->gdoVars[$key] = $var;
             }
             $this->recache(); # save is the only action where we recache!
             if ($withHooks) $this->callRecacheHook();
@@ -815,7 +805,7 @@ abstract class GDO
     
     public function saveValues(array $values, $withHooks=true)
     {
-        $vars = array();
+        $vars = [];
         foreach ($values as $key => $value)
         {
             $this->gdoColumn($key)->setGDOValue($value);
@@ -964,24 +954,15 @@ abstract class GDO
      * Id cache
      * @var $id string
      */
-//     private $id = null;
     public function getID()
     {
-//         if ($this->id === null)
-//         {
-            $id = '';
-            foreach ($this->gdoPrimaryKeyColumnNames() as $name)
-            {
-                   $id2 = $this->getVar($name);
-                   $id = $id ? "{$id}:{$id2}" : $id2;
-            }
-            return $id;
-//             if ($id)
-//             {
-//                 $this->id = $id;
-//             }
-//         }
-//         return $this->id;
+        $id = '';
+        foreach ($this->gdoPrimaryKeyColumnNames() as $name)
+        {
+            $id2 = $this->getVar($name);
+            $id = $id ? "{$id}:{$id2}" : $id2;
+        }
+        return $id;
     }
     
     /**
@@ -1003,9 +984,9 @@ abstract class GDO
      * @param string $value
      * @return self
      */
-    public static function getBy($key, $value)
+    public static function getBy($key, $var)
     {
-        return self::table()->getWhere(self::quoteIdentifierS($key) . '=' . self::quoteS($value));
+        return self::table()->getWhere(self::quoteIdentifierS($key) . '=' . self::quoteS($var));
     }
     
     /**
@@ -1015,11 +996,11 @@ abstract class GDO
      * @param string $value
      * @return self
      */
-    public static function findBy($key, $value)
+    public static function findBy($key, $var)
     {
-        if (!($gdo = self::getBy($key, $value)))
+        if (!($gdo = self::getBy($key, $var)))
         {
-            self::notFoundException($value);
+            self::notFoundException($var);
         }
         return $gdo;
     }
@@ -1079,7 +1060,7 @@ abstract class GDO
     
     public static function notFoundException($id)
     {
-        throw new GDOError('err_gdo_not_found', [self::table()->gdoHumanName(), $id]);
+        throw new GDOError('err_gdo_not_found', [self::table()->gdoHumanName(), html($id)]);
     }
     
     /**
@@ -1164,7 +1145,6 @@ abstract class GDO
         if ($this->table()->cache)
         {
             $this->table()->cache->uncache($this);
-//             $this->callRecacheHook();
         }
     }
     

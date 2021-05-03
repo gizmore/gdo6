@@ -58,6 +58,7 @@ abstract class Method
 	public function isTransactional() { return false; }
 	public function isAlwaysTransactional() { return false; }
 	public function isTrivial() { return true; }
+	public function isLockingSession() { return true; } # @todo make use of session locking
 	public function getPermission() {}
 	public function hasPermission(GDO_User $user) { return true; }
 	
