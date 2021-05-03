@@ -382,6 +382,7 @@ class GDT_File extends GDT_Object
 	                }
 	            }
 	        }
+	        return $valid;
 	    }
 	    catch (\Throwable $ex)
 	    {
@@ -391,8 +392,6 @@ class GDT_File extends GDT_Object
 	    {
 	        $this->cleanup();
 	    }
-
-		return $valid;
 	}
 	
 	protected function validateFile(GDO_File $file)

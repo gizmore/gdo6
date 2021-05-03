@@ -5,17 +5,23 @@ use GDO\Core\Debug;
 use GDO\Core\GDT_Template;
 use GDO\MailGPG\GDO_PublicKey;
 use GDO\User\GDO_User;
+use GDO\Util\Strings;
 
 /**
  * Will send very simple html and plaintext mails.
  * Supports GPG signing and encryption.
  * Uses UTF8 encoding and features attachments.
+ * 
  * @TODO: Implement cc and bcc
  * @TODO: Make use of staff cc?
  * @TODO: Test Attechments in combination with GPG
+ * @TODO: Implement GPG Signatures
+ * 
+ * @author Inferno
  * @author gizmore
- * @version 6.00
- * @since 1.00
+ * 
+ * @version 6.10.1
+ * @since 1.0.0
  * */
 final class Mail
 {
@@ -44,7 +50,6 @@ final class Mail
 
 	private $allowGPG = true;
 
-// 	public function __construct() {}
 	public function setReply($r) { $this->reply = $r; }
 	public function setReplyName($rn) { $this->replyName = $rn; }
 	public function setSender($s) { $this->sender = $s; }
@@ -140,18 +145,22 @@ final class Mail
 	
 	private static function br2nl($s, $nl=PHP_EOL)
 	{
-		return preg_replace('/< *br *\/? *>/i', $nl, $s);
+		return preg_replace('#< *br */? *>#is', $nl, $s);
 	}
 	
 	public function nestedHTMLBody()
 	{
-		if (!class_exists('GDO\Core\GDT_Template'))
+		if (self::$DEBUG || (!class_exists('GDO\Core\GDT_Template')))
 		{
-			return $this->body;
+		    if (class_exists('GDO\Util\Strings'))
+		    {
+		        return Strings::nl2brHTMLSafe($this->body);
+		    }
+		    return $this->body;
 		}
-		$tVars = array(
+		$tVars = [
 			'content' => $this->body,
-		);
+		];
 		return GDT_Template::php('Mail', 'mail.php', $tVars);
 	}
 
@@ -159,8 +168,8 @@ final class Mail
 	{
 		$body = $this->body;
 		#$body = preg_replace('/<[^>]+>([^<]+)<[^>+]>/', '$1', $body);
-		$body = preg_replace('/<a .*href="([^"]+)".*>([^<]+)<\\/a>/iu', "$1 ($2)", $body);
-		$body = preg_replace('/<[^>]*>/i', '', $body);
+		$body = preg_replace('/<a .*href="([^"]+)".*>([^<]+)<\\/a>/ius', "$1 ($2)", $body);
+		$body = preg_replace('/<[^>]*>/is', '', $body);
 		$body = self::br2nl($body);
 		$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
 		return $body;
@@ -176,7 +185,7 @@ final class Mail
 		if ($mail = $user->getMail())
 		{
 			$this->setReceiver($mail);
-			$this->setReceiverName($user->displayName());
+			$this->setReceiverName($user->displayNameLabel());
 			
 			$this->setupGPG($user);
 	
@@ -193,19 +202,11 @@ final class Mail
 
 	public function sendAsText($cc='', $bcc='')
 	{
-		if ($this->alreadySent())
-		{
-			return true;
-		}
 		return $this->send($cc, $bcc, $this->nestedTextBody(), false);
 	}
 
 	public function sendAsHTML($cc='', $bcc='')
 	{
-		if ($this->alreadySent())
-		{
-			return true;
-		}
 		return $this->send($cc, $bcc, $this->nestedHTMLBody(), true);
 	}
 
@@ -234,18 +235,13 @@ final class Mail
 		$encrypted = $this->encrypt($message);
 		if (self::$DEBUG)
 		{
-			$printmail = sprintf('<h1>Local EMail to %s:</h1><pre>%s<br/>%s</pre>', htmlspecialchars($to), htmlspecialchars($this->subject), $message);
+			$printmail = sprintf('<h1>Local EMail to %s:</h1><div>%s<br/>%s</div>', htmlspecialchars($to), htmlspecialchars($this->subject), $message);
 			echo $printmail;
 			return true;
 		}
-		else
-		{
-		    if (!self::$ENABLE)
-		    {
-		        return;
-		    }
-		    
-		    return mail($to, $subject, $encrypted, $headers); //, '-r ' . $this->sender);
+		elseif (self::$ENABLE)
+	    {
+    	    return mail($to, $subject, $encrypted, $headers);
 		}
 	}
 	
@@ -255,8 +251,8 @@ final class Mail
 		$from = $this->getUTF8Sender();
 		$subject = $this->getUTF8Subject();
 		$random_hash = sha1(microtime(true));
-		$bound_mix = "GWF4-MIX-{$random_hash}";
-		$bound_alt = "GWF4-ALT-{$random_hash}";
+		$bound_mix = "GDO6-MIX-{$random_hash}";
+		$bound_alt = "GDO6-ALT-{$random_hash}";
 		$headers = 
 			"Content-Type: multipart/mixed; boundary=\"{$bound_mix}\"".self::HEADER_NEWLINE
 			."MIME-Version: 1.0".self::HEADER_NEWLINE
@@ -308,36 +304,17 @@ final class Mail
 		
 		$message .= "--$bound_mix--\n\n";
 		
-// 		echo $message;
-		
-// 		$encrypted = $this->encrypt($message);
-		
 		if (self::$DEBUG)
 		{
-			printf('<h1>Local EMail:</h1><pre>%s<br/>%s</pre>', htmlspecialchars($this->subject), $message);
+			printf('<h1>Local EMail:</h1><div>%s<br/>%s</div>', htmlspecialchars($this->subject), $message);
 			return true;
 		}
-		else
+		elseif (self::$ENABLE)
 		{
-		    if (!self::$ENABLE)
-		    {
-		        return;
-		    }
-		    
-		    return @mail($to, $subject, $message, $headers); #, '-r ' . $this->sender);
+            return mail($to, $subject, $message, $headers);
 		}
 	}
 	
-	/**
-	 * Check if we have sent this email recently
-	 * @return boolean - true if already sent
-	 * @TODO implement - the idea is to detect if some mails are repeatedly sent, like minutely cronjob exceptions.
-	 */
-	private function alreadySent()
-	{
-		return false;
-	}
-
 	public function setupGPG(GDO_User $user)
 	{
 		if ($this->allowGPG)

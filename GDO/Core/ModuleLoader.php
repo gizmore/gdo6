@@ -381,7 +381,7 @@ final class ModuleLoader
         			{
         				if ($gdt = $module->getConfigColumn($row[1], false))
         				{
-        				    $gdt->initial($row[2]); #->var($row[2]);
+        				    $gdt->initial($row[2]);
         				}
         			}
         		}

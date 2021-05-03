@@ -8,9 +8,10 @@ namespace GDO\Util;
  * 
  * @author gizmore
  * @author noother
+ * @author dloser
  * 
- * @version 6.10
- * @since 3.05
+ * @version 6.10.1
+ * @since 3.0.5
  */
 final class Random
 {
@@ -28,6 +29,7 @@ final class Random
 	
 	/**
 	 * Get a single random item from an array.
+	 * This is not cryptographically safe.
 	 * @param array $array
 	 * @return mixed
 	 */
@@ -68,7 +70,7 @@ final class Random
 	{
 		# Generate random numbers
 		static $BUFFER;
-		if (empty($BUFFER))
+		if (empty($BUFFER) || (strlen($BUFFER) < 4))
 		{
 			$BUFFER = openssl_random_pseudo_bytes(1024);
 		}

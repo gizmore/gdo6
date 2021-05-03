@@ -756,20 +756,19 @@ abstract class GDO
         $query = $this->updateQuery();
         foreach ($vars as $key => $var)
         {
-//             if ( ($this->dirty === true) || (isset($this->dirty[$key])) )
 //             if ($gdt = $this->gdoColumn($key))
 //             {
 //                 foreach ($gdt->getGDOData() as $k => $v)
 //                 {
-//                     if (array_key_exists($key, $this->gdoVars))
-//                     {
+                    if (array_key_exists($key, $this->gdoVars))
+                    {
                         if ($var !== $this->gdoVars[$key])
                         {
                             $query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
                             $this->markClean($key);
                             $worthy = true; # We got a change
                         }
-//                     }
+                    }
 //                 }
 //             }
         }

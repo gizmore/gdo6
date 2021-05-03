@@ -1,5 +1,6 @@
 <?php
 namespace GDO\File;
+
 use GDO\Core\GDOError;
 
 /**
@@ -8,16 +9,18 @@ use GDO\Core\GDOError;
  * @see http://salman-w.blogspot.de/2009/04/crop-to-fit-image-using-aspphp.html
  * @see https://stackoverflow.com/questions/7489742/php-read-exif-data-and-adjust-orientation
  * 
+ * @todo Use imagemagick and a system/exec call. PHP needs too much mem.
+ * 
  * @author gizmore
- * @version 6.09
- * @since 3.00
+ * @version 6.10.1
+ * @since 3.0.0
  */
 final class ImageResize
 {
 	public static function resize(GDO_File $file, $toWidth, $toHeight, $toFormat=null)
 	{
 		// Gather metadata
-		list($source_width, $source_height, $source_type) = getimagesize($file->path);
+		list($source_width, $source_height) = getimagesize($file->path);
 		$rotation = self::orientation($file);
 		$toFormat = $toFormat == null ? $file->getType() : $toFormat;
 		if ( ($rotation == 8) || ($rotation == 6) )
@@ -60,10 +63,13 @@ final class ImageResize
 			$source_aspect_ratio = $source_width / $source_height;
 			$desired_aspect_ratio = $toWidth / $toHeight;
 			
-			if ($source_aspect_ratio > $desired_aspect_ratio) {
+			if ($source_aspect_ratio > $desired_aspect_ratio)
+			{
 				$temp_height = $toHeight;
 				$temp_width = (int) ($toHeight * $source_aspect_ratio);
-			} else {
+			}
+			else
+			{
 				$temp_width = $toWidth;
 				$temp_height = (int) ($toWidth / $source_aspect_ratio);
 			}
@@ -172,7 +178,7 @@ final class ImageResize
 			case "image/gif": imagegif($image2, $file->path); break;
 			case "image/jpeg": imagejpeg($image2, $file->path); break;
 			case "image/png": imagepng($image2, $file->path); break;
-			default: throw new GDOError('err_image_format_not_supported', [$toFormat]);
+			default: throw new GDOError('err_image_format_not_supported', [$file->getType()]);
 		}
 		
 		imagedestroy($image2);

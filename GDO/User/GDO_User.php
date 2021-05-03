@@ -96,8 +96,8 @@ final class GDO_User extends GDO
 	public function getCredits() { return $this->getVar('user_credits'); }
 	public function isAuthenticated() { return !$this->isGhost(); }
 	
-	public function hasMail() { return !!$this->getMail(); }
-	public function getMail() { return $this->getVar('user_email'); }
+	public function hasMail() { return module_enabled('Mail') && (!!$this->getMail()); }
+	public function getMail() { return module_enabled('Mail') ? $this->getVar('user_email') : null; }
 	public function getMailFormat() { return $this->getVar('user_email_fmt'); }
 	public function wantsTextMail() { return $this->getVar('user_email_fmt') === GDT_EmailFormat::TEXT; }
 	

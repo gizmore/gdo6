@@ -40,7 +40,17 @@ class GDO_Module extends GDO
 	public function isCoreModule() { return false; }
 	public function isSiteModule() { return false; }
 	public function isInstallable() { return true; }
-	public function gdoDependencies() { return ['Core', 'Country', 'Language', 'Table', 'User', 'Country']; }
+	
+	/**
+	 * All modules have at least these dependencies.
+	 */
+	public function gdoDependencies()
+	{
+	    return [
+	        'Core', 'Country', 'Language', 'Date', 'Mail',
+	        'Table', 'User', 'Country', 'Javascript',
+	    ];
+	}
 	
 	/**
 	 * @return string[]
@@ -512,9 +522,13 @@ class GDO_Module extends GDO
 	 */
 	private $userConfigCache = null;
 	
-	public function getSettingsCache()
+	public function &getSettingsCache()
 	{
-	    return $this->buildSettingsCache();
+	    if ($this->userConfigCache === null)
+	    {
+	        $this->buildSettingsCache();
+	    }
+	    return $this->userConfigCache;
 	}
 	
 	public function hasSetting($key)
@@ -616,7 +630,6 @@ class GDO_Module extends GDO
 	        }
 	    }
 	}
-	
 	
 	##############
 	### Assets ###

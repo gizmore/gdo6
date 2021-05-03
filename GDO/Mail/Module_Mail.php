@@ -7,9 +7,10 @@ use GDO\UI\GDT_Page;
 use GDO\UI\GDT_Link;
 
 /**
- * Mail stuff.
- * Some user settings.
- * Send function
+ * - Mail stuff.
+ * - Some user settings.
+ * - Send function.
+ * 
  * @author gizmore
  *
  */
@@ -44,7 +45,8 @@ final class Module_Mail extends GDO_Module
         if ($this->cfgSidebar())
         {
             GDT_Page::$INSTANCE->rightNav->addField(
-                GDT_Link::make('ft_mail_send')->href(href('Mail', 'Send')));
+                GDT_Link::make('ft_mail_send')->href(
+                    href('Mail', 'Send')));
         }
     }
     

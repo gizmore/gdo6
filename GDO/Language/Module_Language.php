@@ -15,13 +15,15 @@ use GDO\UI\GDT_Page;
 
 /**
  * Internationalization Module.
+ * 
  * - Detect language by cookie or http_accept_language
  * - Provide lang switcher via cookie
  * - Provide language select
  * - Provide GDO_Language table
+ * 
  * @author gizmore
- * @version 6.10
- * @since 2.0
+ * @version 6.10.1
+ * @since 2.0.0
  */
 final class Module_Language extends GDO_Module
 {
@@ -37,11 +39,11 @@ final class Module_Language extends GDO_Module
 	##############
 	public function getConfig()
 	{
-		return array(
+		return [
 			GDT_Language::make('languages')->all()->multiple()->initial('["'.GWF_LANGUAGE.'"]'),
 		    GDT_Checkbox::make('langswitch_left')->initial('1'),
 		    GDT_Checkbox::make('use_in_javascript')->initial('1'),
-		);
+		];
 	}
 	
 	public function cfgSwitchLeft() { return $this->getConfigValue('langswitch_left'); }

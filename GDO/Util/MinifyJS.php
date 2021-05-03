@@ -68,7 +68,7 @@ final class MinifyJS
 			{
 				if ((strpos($path, '://')) ||
 				    (strpos($path, '//') === 0) || 
-				    (strpos($path, GWF_WEB_ROOT . 'index.php?') === 0) )
+				    (strpos($path, GWF_WEB_ROOT.'index.php?') === 0) )
 				{
 					$this->external[] = $path;
 				}
@@ -78,6 +78,8 @@ final class MinifyJS
 		}
 		
 		# Pass 2 - Rebuild
+		
+		set_time_limit(120); # may take a while
 		
 		# Minify single files and sort them in concatenate and external
 		$minified = array_map(array($this, 'minifiedJavascriptPath'), $this->input);
@@ -119,7 +121,7 @@ final class MinifyJS
 	{
 		if ( (!strpos($path, '://')) &&
 		     (strpos($path, GWF_WEB_ROOT . 'index.php') !== 0) &&
-		     (strpos($path, '//' !== 0)) )
+		     (strpos($path, '//') !== 0) )
 		{
 			return $this->minifiedJavascript($path);
 		}
