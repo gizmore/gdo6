@@ -9,6 +9,7 @@
  
 # Generated folders
 files/
+files_test/
 assets/
 protected/
 temp/
