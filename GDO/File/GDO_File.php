@@ -109,7 +109,7 @@ final class GDO_File extends GDO
 	{
 	    if (Application::instance()->isUnitTests())
 	    {
-	        return GDO_PATH . 'files_test';
+	        return GDO_PATH . 'files_test/';
 	    }
 	    else
 	    {
