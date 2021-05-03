@@ -1,1 +1,0 @@
-"use strict";function googleCallbackRecaptcha(){var c=document.querySelectorAll(".gdo6-recaptcha2"),t=c.length;for(let e=0;e<t;e++){let t=c[e];var a={theme:"light",size:"compact",sitekey:gdo6_recaptcha_key,callback:function(e){$(t).parent().find("input").val(e)}};window.grecaptcha.render(t,a)}}
