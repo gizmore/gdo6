@@ -18,6 +18,7 @@ use GDO\Util\Strings;
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Response;
 use GDO\Install\Method\Security;
+use GDO\Core\GDT_Hook;
 
 /**
  * The gdo.php executable manages modules and config via the CLI.
@@ -263,6 +264,7 @@ elseif ($argv[1] === 'admin')
             'user_type' => GDO_User::MEMBER,
             'user_email' => $argc === 5 ? $argv[4] : null,
         ])->insert();
+        GDT_Hook::callWithIPC('UserActivated', $user);
     }
     $user->saveVar('user_password', BCrypt::create($argv[3])->__toString());
     if ($argc === 5)
