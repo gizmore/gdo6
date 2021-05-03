@@ -120,7 +120,8 @@ final class Logger
 			}
 			elseif (is_array($v) === true)
 			{
-				$v = Arrays::implode(',', $v); # can fail horribly here
+				$v = 'Array(' . count($v) . ')';
+// 				$v = Arrays::implode(',', $v); # can fail horribly here
 			}
 			$back .= self::$POST_DELIMITER.$k.'=>'.$v;
 		}
@@ -144,7 +145,7 @@ final class Logger
 	public static function logCritical($message)
 	{
 		self::log('critical', $message, self::GWF_CRITICAL);
-		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GWF_CRITICAL); // TODO: formating
+// 		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GWF_CRITICAL); // TODO: formating
 	}
 	public static function logException(\Throwable $e)
 	{

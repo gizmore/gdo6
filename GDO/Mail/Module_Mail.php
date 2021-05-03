@@ -18,6 +18,8 @@ final class Module_Mail extends GDO_Module
 {
     public $module_priority = 30;
     
+    public function isCoreModule() { return true; }
+    
     public function onLoadLanguage()
     {
         return $this->loadLanguage('lang/mail');

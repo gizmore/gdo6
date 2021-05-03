@@ -14,7 +14,7 @@ use GDO\Core\GDO;
  * 
  * @author gizmore
  * @version 6.10.1
- * @since 3.0.0
+ * @since 5.0.0
  * @see ArrayResult
  * @see GDT_Table
  * @see GDT
