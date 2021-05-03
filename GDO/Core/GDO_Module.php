@@ -334,9 +334,13 @@ class GDO_Module extends GDO
 	    return $this->configCache;
 	}
 	
-	public function getConfigCache()
+	public function &getConfigCache()
 	{
-	    return $this->buildConfigCache();
+	    if ($this->configCache === null)
+	    {
+    	    $this->buildConfigCache();
+	    }
+	    return $this->configCache;
 	}
 	
 	private function configCacheKey()
