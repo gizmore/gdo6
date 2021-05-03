@@ -348,13 +348,16 @@ class GDO_Module extends GDO
 	/**
 	 * @param GDT
 	 */
-	public function getConfigColumn($key)
+	public function getConfigColumn($key, $throwError=true)
 	{
 	    if (isset($this->configCache[$key]))
 	    {
 	        return $this->configCache[$key];
 	    }
-	    Website::error('err_unknown_config', [$this->displayName(), html($key)]);
+	    if ($throwError)
+	    {
+	        Website::error('err_unknown_config', [$this->displayName(), html($key)]);
+	    }
 	}
 	
 	public function getConfigVar($key)

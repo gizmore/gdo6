@@ -379,7 +379,7 @@ final class ModuleLoader
         		    /** @var $module \GDO\Core\GDO_Module **/
         			if ($module = $this->modules[strtolower($row[0])])
         			{
-        				if ($gdt = $module->getConfigColumn($row[1]))
+        				if ($gdt = $module->getConfigColumn($row[1], false))
         				{
         				    $gdt->initial($row[2]); #->var($row[2]);
         				}
