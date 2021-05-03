@@ -644,8 +644,9 @@ class GDO_Module extends GDO
 	    if (!self::$_NC)
 	    {
 	        $v = $this->getVersion();
+	        $r = Module_Core::$GDO_REVISION;
 	        $av = Module_Core::instance()->cfgAssetVersion();
-	        self::$_NC = "v={$v}&av={$av}";
+	        self::$_NC = "r={$r}&v={$v}&av={$av}";
 	    }
         return self::$_NC;
 	}
