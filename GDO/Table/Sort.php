@@ -43,6 +43,8 @@ final class Sort
             $_REQUEST[$o]['o'][$column] = $asc ? '1' : '0';
         }
         
+        GDT_Table::$ORDER_NAME--; # Ugly: fix order name prediction
+        
         # sort the result
         $table->multisort($result);
     }

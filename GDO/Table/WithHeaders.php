@@ -35,7 +35,7 @@ trait WithHeaders
 	##############################
 	### REQUEST container name ###
 	##############################
-	private static $ORDER_NAME = 0;
+	public static $ORDER_NAME = 0;
 	public static function nextOrderName()
 	{
 		self::$ORDER_NAME++;
