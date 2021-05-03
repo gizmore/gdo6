@@ -149,11 +149,14 @@ abstract class GDO
         $values = [];
         foreach ($this->gdoColumnsCache() as $gdoType)
         {
-            if ($data = $gdoType->gdo($this)->getGDOData())
+            if ($gdoType->isSerializable())
             {
-                foreach ($data as $k => $v)
+                if ($data = $gdoType->gdo($this)->getGDOData())
                 {
-                    $values[$k] = $v;
+                    foreach ($data as $k => $v)
+                    {
+                        $values[$k] = $v;
+                    }
                 }
             }
         }
@@ -163,8 +166,20 @@ abstract class GDO
     ############
     ### Vars ###
     ############
-    private $gdoVars;
+    
+    /**
+     * Mark vars as dirty.
+     * Either true for all, false for none, or an assoc array with field mappings.
+     * @var boolean,boolean[]
+     */
     private $dirty = false;
+
+    /**
+     * Entity gdt vars.
+     * @var string[]
+     */
+    private $gdoVars;
+    
     public function getGDOVars() { return $this->gdoVars; }
     
     /**
@@ -187,8 +202,7 @@ abstract class GDO
      */
     public function getVar($key)
     {
-        $var = isset($this->gdoVars[$key]) ? $this->gdoVars[$key] : null;
-        return $var;
+        return @$this->gdoVars[$key];
     }
     
     /**
@@ -226,10 +240,7 @@ abstract class GDO
     {
         foreach ($vars as $key => $value)
         {
-            if ($this->hasColumn($key))
-            {
-                $this->setVar($key, $value, $markDirty);
-            }
+            $this->setVar($key, $value, $markDirty);
         }
         return $this;
     }
@@ -283,7 +294,6 @@ abstract class GDO
         {
             $this->dirty = [];
         }
-
         if ($this->dirty !== true)
         {
             $this->dirty[$key] = true;
@@ -571,7 +581,8 @@ abstract class GDO
      */
     public function countWhere($condition='true')
     {
-        return $this->select('COUNT(*)', false)->where($condition)->noOrder()->exec()->fetchValue();
+        return $this->select('COUNT(*)', false)->where($condition)->
+          noOrder()->exec()->fetchValue();
     }
     
     /**
@@ -1145,6 +1156,9 @@ abstract class GDO
         }
     }
     
+    /**
+     * @deprecated Untested and why does it exist?
+     */
     public function uncache()
     {
         if ($this->table()->cache)
