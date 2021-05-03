@@ -476,7 +476,7 @@ final class Debug
 			$copy[] = sprintf(' - %s %s line %s.', $func, self::shortpath($file), $line);
 		}
 		
-		$back .= $html ? '<hr/>' : "\n";
+		$back .= $html ? '<div class="gdt-hr"></div>' : "\n";
 		$back .= sprintf('Backtrace starts in %s line %s.', self::shortpath($prefile), $preline) . "\n";
 		$back .= implode("\n", array_reverse($copy));
 		$back .= $html ? "</pre>\n" : '';

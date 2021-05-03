@@ -24,9 +24,4 @@ abstract class MethodQueryList extends MethodQueryTable
 	       listMode($this->gdoListMode());
 	}
 	
-// 	protected function setupTitlePrefix()
-// 	{
-// 	    return 'list';
-// 	}
-	
 }

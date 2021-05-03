@@ -79,13 +79,14 @@ class GDO_Module extends GDO
 	 */
 	public function dependencies()
 	{
+	    $coreDeps = $this->gdoDependencies();
 	    if ($deps = $this->getDependencies())
 	    {
-    	    return array_unique(array_merge($this->gdoDependencies(), $deps));
+	        return array_merge($coreDeps, $deps);
 	    }
 	    else
 	    {
-	        return $this->gdoDependencies();
+	        return $coreDeps;
 	    }
 	}
 	

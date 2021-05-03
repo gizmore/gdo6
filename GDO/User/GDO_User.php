@@ -93,8 +93,26 @@ final class GDO_User extends GDO
 	public function isMember() { return $this->isType(self::MEMBER); }
 	public function isType($type) { return $this->getType() === $type; }
 	
+	/**
+	 * Check if it is a legit user.
+	 * Either a guest with name or a member.
+	 * @return boolean
+	 */
+	public function isUser()
+	{
+	    switch ($this->getType())
+	    {
+	        case self::MEMBER:
+	            return true;
+	        case self::GUEST:
+        	    return !!$this->getName();
+	        default:
+	            return false;
+	    }
+	}
+	
 	public function getCredits() { return $this->getVar('user_credits'); }
-	public function isAuthenticated() { return !$this->isGhost(); }
+	public function isAuthenticated() { return $this->isUser(); }
 	
 	public function hasMail() { return !!$this->getMail(); }
 	public function getMail() { return $this->getVar('user_email'); }

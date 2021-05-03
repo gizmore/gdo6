@@ -102,6 +102,8 @@ abstract class GDO
         self::$COUNT++;
     }
     
+    public function __wakeup() { self::$COUNT++; }
+    
     #################
     ### Persisted ###
     #################
