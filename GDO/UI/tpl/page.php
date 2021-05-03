@@ -5,6 +5,7 @@ use GDO\Core\Module_Core;
 use GDO\UI\GDT_Page;
 use GDO\UI\GDT_Loading;
 use GDO\Language\GDO_Language;
+use GDO\Javascript\Module_Javascript;
 /** @var $page GDT_Page **/
 $page->loadSidebars();
 ?>
@@ -50,6 +51,6 @@ $page->loadSidebars();
 	
 	<?=GDT_Loading::make('loading')->renderCell()?>
 	
-	<?=Javascript::displayJavascripts(Module_Core::instance()->cfgMinifyJS() === 'concat')?>
+	<?=Javascript::displayJavascripts(Module_Javascript::instance()->cfgMinifyJS() === 'concat')?>
   </body>
 </html>

@@ -4,6 +4,7 @@ namespace GDO\Core;
 use GDO\UI\GDT_Link;
 use GDO\Session\GDO_Session;
 use GDO\UI\GDT_HTML;
+use GDO\UI\GDT_Page;
 
 /**
  * General Website utility.
@@ -308,6 +309,7 @@ final class Website
 	public static function setTitle($title)
 	{
 	    self::$TITLE = $title;
+	    GDT_Page::$INSTANCE->titleRaw(self::displayTitle());
 	}
 	
 	public static function displayTitle()

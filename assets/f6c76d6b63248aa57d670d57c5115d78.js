@@ -1,0 +1,1 @@
+"use strict";function GDO_Trans(){this.CACHE={},this.t=function(i){i=this.CACHE[i]||i;var n=Array.prototype.slice.call(arguments);return n.shift(),vsprintf(i,n)}}var cache;window.GDO_TRANS&&(cache=window.GDO_TRANS.CACHE),window.GDO_TRANS=new GDO_Trans,cache&&(window.GDO_TRANS.CACHE=cache),window.t=window.GDO_TRANS.t.bind(window.GDO_TRANS);

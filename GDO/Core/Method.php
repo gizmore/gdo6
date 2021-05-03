@@ -476,7 +476,7 @@ abstract class Method
 	        if ($user->isPersisted())
 	        {
 	            $lastActivity = substr(Time::getDate(), 0, 16) . ':00.000';
-	            $user->saveVar('user_last_activity', $lastActivity);
+	            $user->saveVar('user_last_activity', $lastActivity, false);
 	        }
 	    }
 	}

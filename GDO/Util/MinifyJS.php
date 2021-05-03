@@ -3,6 +3,7 @@ namespace GDO\Util;
 
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
+use GDO\Javascript\Module_Javascript;
 
 /**
  * Very basic on-the-fly javascript mangler.
@@ -11,9 +12,9 @@ use GDO\Core\Module_Core;
  * Output goes to assets/ now instead of temp/ as temp/ is a protected folder.
  * 
  * @author gizmore
- * @version 6.10
- * @since 4.1
- * @see Module_Core
+ * @version 6.10.1
+ * @since 4.1.0
+ * @see Module_Javascript
  */
 final class MinifyJS
 {
@@ -42,7 +43,7 @@ final class MinifyJS
 	public function __construct(array $javascripts, $skipMinified=false)
 	{
 		$this->input = $javascripts;
-		$module = Module_Core::instance();
+		$module = Module_Javascript::instance();
 		$this->nodejs = $module->cfgNodeJSPath();
 		$this->uglify= $module->cfgUglifyPath();
 		$this->annotate = $module->cfgAnnotatePath();
@@ -65,9 +66,9 @@ final class MinifyJS
 		{
 			foreach ($this->input as $path)
 			{
-				if (strpos($path, '://') ||
+				if ((strpos($path, '://')) ||
 				    (strpos($path, '//') === 0) || 
-				    strpos($path, 'ndex.php?')) # ndex returns 1
+				    (strpos($path, GWF_WEB_ROOT . 'index.php?') === 0) )
 				{
 					$this->external[] = $path;
 				}
@@ -116,7 +117,9 @@ final class MinifyJS
 	
 	public function minifiedJavascriptPath($path)
 	{
-		if ( (!strpos($path, '://')) && (!strpos($path, 'ndex.php')) )
+		if ( (!strpos($path, '://')) &&
+		     (strpos($path, GWF_WEB_ROOT . 'index.php') !== 0) &&
+		     (strpos($path, '//' !== 0)) )
 		{
 			return $this->minifiedJavascript($path);
 		}
@@ -179,4 +182,5 @@ final class MinifyJS
 		$this->external[] = $path;
 		return $path;
 	}
+	
 }

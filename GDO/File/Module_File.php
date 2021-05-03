@@ -34,7 +34,6 @@ final class Module_File extends GDO_Module
 	
 	public function onIncludeScripts()
 	{
-// 		$min = Module_Core::instance()->cfgMinifyJS() === 'no' ? '' : '.min';
 		$this->addBowerJavascript("flow.js/dist/flow.js");
 		$this->addJavascript('js/gdo-flow.js');
 	}

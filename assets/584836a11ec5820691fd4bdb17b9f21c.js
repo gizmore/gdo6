@@ -1,0 +1,1 @@
+"use strict";window.GDO.error=function(o,r){console.error(o);var d=(d=o.error||"")||(o.data?o.data.error:""),e=$('<div id="gdo-error-dialog">'+d+"</div>");$(window.document.body).append(e),$("#gdo-error-dialog").on($.modal.BEFORE_CLOSE,function(o,r){e.remove()}),$("#gdo-error-dialog").modal()};
