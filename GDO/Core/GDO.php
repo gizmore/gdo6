@@ -308,7 +308,7 @@ abstract class GDO
     
     public function isDirty()
     {
-        return $this->dirty === false ? false : (count($this->dirty) > 0);
+        return is_bool($this->dirty) ? $this->dirty : count($this->dirty) > 0;
     }
     
     /**
@@ -751,7 +751,6 @@ abstract class GDO
                     $this->afterUpdate();
                 }
             }
-            $this->dirty = false;
         }
         return $this;
     }
