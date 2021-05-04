@@ -374,7 +374,10 @@ class GDT_File extends GDT_Object
 	                        $file->copy();
 	                        if ($this->gdo)
 	                        {
-	                            $this->gdo->setVar($this->name, $file->getID());
+	                            if (!$this->gdo->isTable())
+	                            {
+	                                $this->gdo->setVar($this->name, $file->getID());
+	                            }
 	                        }
 	                        $this->var($file->getID());
 	                        $this->files[] = $file;

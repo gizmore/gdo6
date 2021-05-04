@@ -14,6 +14,7 @@ use GDO\UI\GDT_HTML;
 use GDO\Core\GDT_Error;
 use GDO\Core\Method\Page404;
 use GDO\Util\Strings;
+use GDO\DB\Cache;
 
 set_include_path('.');
 include 'GDO6.php';
@@ -91,14 +92,19 @@ finally
     ob_end_clean();
 }
 
+# Save session
+if ($session = GDO_Session::instance())
+{
+    $session->commit();
+}
+
+# Fire recache IPC events.
+Cache::recacheHooks();
+
 # Render Page
 switch ($app->getFormat())
 {
     case 'json':
-        if ($session = GDO_Session::instance())
-        {
-            $session->commit();
-        }
         if ($content)
         {
             echo $content;
@@ -121,11 +127,6 @@ switch ($app->getFormat())
             $container = GDT_Container::make('c1')->addFields([GDT_HTML::withHTML($content), $response]);
             $out = $page->html($container->renderCell())->renderCell();
         }
-}
-
-if ($session = GDO_Session::instance())
-{
-    $session->commit();
 }
 
 echo $out;

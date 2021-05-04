@@ -28,7 +28,7 @@ final class Javascript
 	
 	public static function addJavascriptInline($script_html)
 	{
-		self::$_javascript_inline .= $script_html;
+		self::$_javascript_inline .= $script_html . "\n";
 	}
 
 	public static function addBowerJavascript($path)

@@ -57,13 +57,13 @@ class GDO_Module extends GDO
 	 */
 	public function getDependencies() {}
 	
-	/**
-	 * @return string[]
-	 */
-	public function getBlockedModules() {}
-	private $blocked = false;
-	public function isBlocked() { return $this->blocked; }
-	public function setBlocked() { $this->blocked = true; }
+// 	/**
+// 	 * @return string[]
+// 	 */
+// 	public function getBlockedModules() {}
+// 	private $blocked = false;
+// 	public function isBlocked() { return $this->blocked; }
+// 	public function setBlocked() { $this->blocked = true; }
 
 	/**
 	 * Skip these folders in unit tests using strpos.
@@ -233,7 +233,7 @@ class GDO_Module extends GDO
 	 */
 	public function wwwPath($path='')
 	{
-	    $path = trim($path, '/');
+// 	    $path = trim($path, '/'); # not nice to trim it.
 	    return GWF_WEB_ROOT . "GDO/{$this->getName()}/{$path}";
 	}
 	
@@ -553,7 +553,7 @@ class GDO_Module extends GDO
 	    }
 	}
 	
-	public function buildSettingsCache()
+	public function &buildSettingsCache()
 	{
 	    if ($this->userConfigCache === null)
 	    {
@@ -590,7 +590,7 @@ class GDO_Module extends GDO
 	    {
 	        $settings = self::loadUserSettingsB($user);
 	        $user->tempSet('gdo_setting', $settings);
-	        $user->recache();
+// 	        $user->recache();
 	    }
 	    return $settings;
 	}

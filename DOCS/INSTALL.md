@@ -7,7 +7,7 @@ Then you either run the install/wizard.php or use the CLI to install a gdo6 envi
 
 ### Operating System
 
-GDO6 is running fine on windows and linux.
+GDO6 is running fine on windows, linux and BSD.
 
 
 ### PHP Requirements
@@ -130,6 +130,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-login-as LoginAs
     git clone --recursive https://github.com/gizmore/gdo6-logs Logs
     # git clone --recursive https://github.com/gizmore/gdo6-mail-gpg MailGPG
+    # git clone --recursive https://github.com/gizmore/gdo6-maintenance Maintenance
     git clone --recursive https://github.com/gizmore/gdo6-maps Maps
     git clone --recursive https://github.com/gizmore/gdo6-markdown Markdown
     # git clone --recursive https://github.com/gizmore/gdo6-material Material

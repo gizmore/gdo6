@@ -52,7 +52,7 @@ final class GDO_UserPermission extends GDO
 		}
 		return self::table()->select('perm_name, perm_level')->
             join("JOIN gdo_permission on perm_perm_id = perm_id")->
-            where("perm_user_id={$user->getID()}")->order('perm_level')->
+            where("perm_user_id={$user->getID()}")->
             exec()->fetchAllArray2dPair();
 	}
 	

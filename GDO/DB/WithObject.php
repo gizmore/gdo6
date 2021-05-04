@@ -56,7 +56,10 @@ trait WithObject
 	 */
 	public function getValue()
 	{
-		return $this->toValue($this->getVar());
+	    if ($id = $this->getVar())
+	    {
+    		return $this->toValue($id);
+	    }
 	}
 	
 	public function toVar($value)

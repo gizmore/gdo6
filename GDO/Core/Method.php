@@ -17,6 +17,8 @@ use GDO\Language\Trans;
  * Provides transaction wrapping and permission checks.
  * Provides parameters via ->gdoParameters().
  * 
+ * @todo Rename init() to onInit()
+ * 
  * @see MethodTable
  * @see MethodQueryTable
  * @see MethodForm
@@ -483,7 +485,7 @@ abstract class Method
 	        if ($user->isPersisted())
 	        {
 	            $lastActivity = substr(Time::getDate(), 0, 16) . ':00.000';
-	            $user->saveVar('user_last_activity', $lastActivity, false);
+	            $user->saveVar('user_last_activity', $lastActivity);
 	        }
 	    }
 	}

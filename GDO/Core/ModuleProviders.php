@@ -75,6 +75,7 @@ final class ModuleProviders
         'LoginAs' => 'gdo6-login-as',
         'Logs' => 'gdo6-logs',
         'MailGPG' => 'gdo6-mail-gpg',
+        'Maintenance' => 'gdo6-maintenance',
         'Maps' => 'gdo6-maps',
         'Material' => 'gdo6-material',
         'Memberlist' => 'gdo6-memberlist',

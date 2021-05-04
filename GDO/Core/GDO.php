@@ -52,7 +52,7 @@ abstract class GDO
     
     public function gdoCached() { return true; }
     public function memCached() { return $this->gdoCached(); }
-    public function cached() { return $this->gdoCached() || $this->memCached(); }
+    public function cached() { return $this->gdoCached() || (GWF_MEMCACHE && $this->memCached()); }
     
     public function gdoTableName() { return self::table()->cache->tableName; }
     public function gdoDependencies() { return null; }
@@ -102,7 +102,11 @@ abstract class GDO
         self::$COUNT++;
     }
     
-    public function __wakeup() { self::$COUNT++; }
+    public function __wakeup()
+    {
+        self::$COUNT++;
+        $this->recache = false;
+    }
     
     #################
     ### Persisted ###
@@ -566,7 +570,7 @@ abstract class GDO
      */
     public function find($id=null, $exception=true)
     {
-        if ($id && ($gdo = $this->getById($id)) )
+        if ($id && ($gdo = $this->getById($id)))
         {
             return $gdo;
         }
@@ -691,8 +695,8 @@ abstract class GDO
         if ($withHooks)
         {
             $this->afterCreate();
+            $this->cache(); # not needed for new rows?
         }
-//         $this->recache(); # not needed for new rows?
         return $this;
     }
     
@@ -728,14 +732,20 @@ abstract class GDO
             if ($setClause = $this->getSetClause())
             {
                 $query = $this->updateQuery()->set($setClause);
+                
                 if ($withHooks)
                 {
                     $this->beforeUpdate($query);
                 }
+                
                 $query->exec();
                 $this->dirty = false;
-                $this->recache(); # save is the only action where we recache!
-//                 $this->callRecacheHook();
+                
+                if ($withHooks)
+                {
+                    $this->recache(); # save is the only action where we recache!
+                }
+
                 if ($withHooks)
                 {
                     $this->afterUpdate();
@@ -789,8 +799,10 @@ abstract class GDO
             {
                 $this->gdoVars[$key] = $var;
             }
-            $this->recache(); # save is the only action where we recache!
-            if ($withHooks) $this->callRecacheHook();
+            if ($withHooks)
+            {
+                $this->recache();
+            }
         }
 
         # Call hooks even when not needed. Because its needed on GDT_Files
@@ -1132,10 +1144,29 @@ abstract class GDO
         if ($this->cached())
         {
             self::table()->cache->recache($this);
-            if (GWF_IPC)
-            {
-                $this->callRecacheHook();
-            }
+        }
+    }
+    
+    public function recacheMemcached()
+    {
+        if (GWF_MEMCACHE && $this->memCached())
+        {
+            $this->table()->cache->recache($this);
+        }
+    }
+    
+    public $recache = false;
+    public function recaching()
+    {
+        $this->recache = true;
+        return $this;
+    }
+    
+    public function cache()
+    {
+        if ($this->cached())
+        {
+            self::table()->cache->recache($this);
         }
     }
     
@@ -1161,14 +1192,6 @@ abstract class GDO
         return $this;
     }
 
-    public function callRecacheHook()
-    {
-        if ($this->cached())
-        {
-            GDT_Hook::callWithIPC('CacheInvalidate', $this->gdoClassName(), $this->getID());
-        }
-    }
-    
     ###########
     ### All ###
     ###########

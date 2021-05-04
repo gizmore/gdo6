@@ -15,8 +15,8 @@ use GDO\Core\Debug;
  * @TODO support postgres?
  * 
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.1
+ * @since 3.0.0
  * 
  * @see Query
  * @see Result
@@ -124,8 +124,7 @@ class Database
 	
 	public function connect()
 	{
-		return mysqli_connect(
-		    $this->host, $this->user, $this->pass, $this->db);
+		return mysqli_connect($this->host, $this->user, $this->pass, $this->db);
 	}
 	
 	#############

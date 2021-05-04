@@ -64,12 +64,16 @@ abstract class MethodQueryTable extends MethodTable
 	    $query = $this->getQuery();
 	    GDT_Hook::callHook("MethodQueryTable_{$this->getModuleName()}_{$this->getMethodName()}", $query);
 	    $table->query($query);
-        $table->countQuery($this->getCountQuery());
-        $this->beforeCalculateTable($table);
         if ($this->isPaginated())
 	    {
-	        $pagemenu = $table->getPageMenu();
+            $table->countQuery($this->getCountQuery());
+            $this->beforeCalculateTable($table);
+            $pagemenu = $table->getPageMenu();
 	        $pagemenu->filterQuery($table->query);
+	    }
+	    else
+	    {
+	        $this->beforeCalculateTable($table);
 	    }
 	}
 

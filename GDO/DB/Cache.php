@@ -2,6 +2,7 @@
 namespace GDO\DB;
 
 use GDO\Core\GDO;
+use GDO\Core\GDT_Hook;
 
 /**
  * Cache is a global object cache, where each fetched object (with the same key) from the database results in the same instance.
@@ -22,19 +23,27 @@ use GDO\Core\GDO;
  * The other memcached keys work on a per row basis with table_name_id as key.
  * 
  * @author gizmore
- * @version 6.10
- * @since 5.0
+ * @version 6.10.1
+ * @since 5.0.0
  * @license MIT
  */
 class Cache
 {
 	private static $MEMCACHED; # Memcached server
+	
+	/**
+	 * @var GDO[]
+	 */
+	private static $RECACHING = [];
 
+	/**
+	 * @var GDO[]
+	 */
 	public $all;       # All rows. @see GDO->allCached()
     public $pkNames;   # Primary Key Column Names
     public $pkColumns; # Primary Key Columns
     public $tableName; # Cached transformed table name
-	
+    
 	/**
 	 * @TODO no result should return null?
 	 * @param string $key
@@ -63,6 +72,7 @@ class Cache
 	private $table;
 	
 	/**
+	 * @todo re-use in GDT_Table iterations.
 	 * Zero alloc, one item dummy queue.
 	 * @var GDO
 	 */
@@ -74,7 +84,7 @@ class Cache
 	 * The cache
 	 * @var GDO[]
 	 */
-	private $cache = [];
+	public $cache = [];
 
 	public function __construct(GDO $gdo)
 	{
@@ -83,10 +93,26 @@ class Cache
 		$this->tableName = strtolower($gdo->gdoShortName());
 		$this->newDummy();
 	}
+	
+	public static function recacheHooks()
+	{
+        if (GWF_IPC || (GWF_IPC === 'db'))
+        {
+            foreach (self::$RECACHING as $gdo)
+            {
+                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->table()->gdoClassName(), $gdo->getID());
+            }
+        }
+	}
 
 	private function newDummy()
 	{
 		$this->dummy = new $this->klass();
+	}
+	
+	public function getDummy()
+	{
+	    return $this->dummy;
 	}
 	
 	/**
@@ -130,7 +156,6 @@ class Cache
 		{
 			$this->cache[$key]->setGDOVars($assoc);
 		}
-// 		$this->cache[$key]->afterRead();
 		return $this->cache[$key];
 	}
 	
@@ -145,7 +170,7 @@ class Cache
 		$back = $object;
 		
 		# GDO cache
-		if ($object->gdoCached())
+		if ($back->gdoCached())
 		{
     		$id = $object->getID();
 
@@ -154,19 +179,12 @@ class Cache
 			{
 				$old = $this->cache[$id];
 				$old->setGDOVars($object->getGDOVars());
-// 				$old->tempReset(); # Why no more?
 				$back = $old;
 			}
 			else
 			{
-				$this->cache[$id] = $object;
+				$this->cache[$id] = $back;
 			}
-			
-			# @TODO check if true: GDO-ALL cache is, in theory, always sync by single identity. true?
-// 			if (isset($this->all[$id]))
-// 			{
-// 			    $this->all[$id] = $back;
-// 			}
 		}
 		
 		# Memcached
@@ -174,22 +192,31 @@ class Cache
 		{
 		    self::$MEMCACHED->replace(GWF_MEMCACHE_PREFIX.$back->gkey(), $back, GWF_MEMCACHE_TTL);
 		}
+
+	    # Mark for recache
+	    if ($back->recache === false)
+	    {
+	        self::$RECACHING[] = $back->recaching();
+	    }
 		
 		return $back;
 	}
 	
 	public function uncache(GDO $object)
 	{
-		$this->uncacheID($object->getID());
-	}
+	    # Mark for recache
+	    if ($object->recache === false)
+	    {
+	        self::$RECACHING[] = $object->recaching();
+	    }
+	    
+	    $id = $object->getID();
+	    unset($this->cache[$id]);
 
-	public function uncacheID($id)
-	{
-		$className = $this->table->gdoClassName();
-		unset($this->cache[$id]);
-		if (GWF_MEMCACHE)
+		if (GWF_MEMCACHE && $object->memCached())
 		{
-			self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$className . $id);
+    		$className = $object->gdoClassName();
+			self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX . $className . $id);
 		}
 	}
 	

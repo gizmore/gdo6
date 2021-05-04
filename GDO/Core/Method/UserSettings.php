@@ -4,6 +4,7 @@ namespace GDO\Core\Method;
 use GDO\Core\MethodAjax;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT;
+use GDO\Core\Website;
 
 final class UserSettings extends MethodAjax
 {
@@ -23,7 +24,8 @@ final class UserSettings extends MethodAjax
                 }
             }
         }
-        die(json_encode($settings, JSON_PRETTY_PRINT));
+        
+        Website::renderJSON($settings);
     }
 
     private function gdtSetting(GDT $gdt)

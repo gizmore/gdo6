@@ -194,7 +194,7 @@ final class Website
 	        
 	    if (!Application::instance()->isCLI())
 		{
-			@header('Content-Type: application/json');
+			hdr('Content-Type: application/json');
 		}
 		
 		echo json_encode($json, JSON_PRETTY_PRINT); # pretty json
@@ -269,7 +269,6 @@ final class Website
 	{
 	    echo self::topResponse()->render();
 	}
-	
 	
 	#####################
 	### JSON Response ###

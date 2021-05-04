@@ -119,11 +119,8 @@ final class ModuleLoader
 	 * Sorted by priority to be spinlock free.
 	 * @return GDO_Module[]
 	 */
-// 	private $loadCached = false;
 	public function loadModulesCache()
 	{
-	    $this->loadCached = true;
-	    
 		if (false === ($cache = Cache::get('gdo_modules')))
 		{
 			$cache = $this->loadModulesA();
@@ -131,11 +128,8 @@ final class ModuleLoader
 		}
 		else
 		{
-// 		    Cache::heat('gdo_modules', $cache); # is not gdoCached.
 			$this->initFromCache($cache);
 		}
-		
-// 		$this->loadCached = false;
 		return $this->modules;
 	}
 	
@@ -157,19 +151,19 @@ final class ModuleLoader
 	            GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
 		    }
 		    
-		    if (!$module->isBlocked())
-		    {
-    			if ($blocked = $module->getBlockedModules())
-    			{
-    			    foreach ($blocked as $moduleName)
-    			    {
-    			        if ($blockedModule = $this->getModule($moduleName))
-    			        {
-    			            $blockedModule->setBlocked();
-    			        }
-    			    }
-    			}
-		    }
+// 		    if (!$module->isBlocked())
+// 		    {
+//     			if ($blocked = $module->getBlockedModules())
+//     			{
+//     			    foreach ($blocked as $moduleName)
+//     			    {
+//     			        if ($blockedModule = $this->getModule($moduleName))
+//     			        {
+//     			            $blockedModule->setBlocked();
+//     			        }
+//     			    }
+//     			}
+// 		    }
 		}
 		
 		Trans::inited(true);
@@ -179,8 +173,8 @@ final class ModuleLoader
 		{
 			foreach ($this->modules as $module)
 			{
-			    if (!$module->isBlocked())
-			    {
+// 			    if (!$module->isBlocked())
+// 			    {
     				if ($module->isEnabled())
     				{
     					if (!$module->isInited())
@@ -190,7 +184,7 @@ final class ModuleLoader
     						$module->initedModule();
     					}
     				}
-			    }
+// 			    }
 			}
 		}
 	}

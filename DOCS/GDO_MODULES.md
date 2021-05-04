@@ -142,6 +142,8 @@ Logs - <https://github.com/gizmore/gdo6-logs>
 
 MailGPG - <https://github.com/gizmore/gdo6-mail-gpg>
 
+Maintenance - <https://github.com/gizmore/gdo6-maintenance>
+
 Maps - <https://github.com/gizmore/gdo6-maps>
 
 Markdown - <https://github.com/gizmore/gdo6-markdown>
