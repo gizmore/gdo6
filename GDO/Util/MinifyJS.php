@@ -73,7 +73,7 @@ final class MinifyJS
 					$this->external[] = $path;
 				}
 			}
-			$this->external[] = "assets/$earlyhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
+			$this->external[] = "assets/$earlyhash.js?".Module_Core::instance()->nocacheVersion();
 			return $this->external;
 		}
 		
