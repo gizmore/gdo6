@@ -695,7 +695,7 @@ abstract class GDO
         if ($withHooks)
         {
             $this->afterCreate();
-            $this->cache(); # not needed for new rows?
+//             $this->cache(); # not needed for new rows?
         }
         return $this;
     }
@@ -727,8 +727,8 @@ abstract class GDO
         {
             return $this->insert();
         }
-        if ($this->isDirty())
-        {
+//         if ($this->isDirty())
+//         {
             if ($setClause = $this->getSetClause())
             {
                 $query = $this->updateQuery()->set($setClause);
@@ -751,7 +751,7 @@ abstract class GDO
                     $this->afterUpdate();
                 }
             }
-        }
+//         }
         return $this;
     }
     

@@ -120,13 +120,11 @@ switch ($app->getFormat())
     case 'html':
         if ($app->isAjax())
         {
-            $out = $response->renderHTML();
+            echo $response->renderHTML();
         }
         else
         {
             $container = GDT_Container::make('c1')->addFields([GDT_HTML::withHTML($content), $response]);
-            $out = $page->html($container->renderCell())->renderCell();
+            echo $page->html($container->renderCell())->renderCell();
         }
 }
-
-echo $out;
