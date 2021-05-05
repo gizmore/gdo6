@@ -5,8 +5,8 @@ use GDO\Core\GDT_Template;
 use GDO\DB\GDT_Checkbox;
 
 /**
- * Can be first element in a @link GWF_Table to show checkmar selection.
- * Table header is select all Tristate.
+ * Can be first element in a @link GWF_Table to show checkmark selection.
+ * Table header is select-all-tristate.
  * @author gizmore
  */
 final class GDT_RowNum extends GDT_Checkbox

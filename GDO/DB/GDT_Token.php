@@ -1,21 +1,25 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Util\Random;
+
 /**
  * Default random token is 16 chars alphanumeric.
  * 
  * @author gizmore
- * @since 4.0
- * @version 6.0
+ * @version 6.10.2
+ * @since 4.0.0
  */
 class GDT_Token extends GDT_Char
 {
 	public static $LENGTH = 16;
 	
+	public function defaultName() { return 'token'; }
 	public function defaultLabel() { return $this->label('token'); }
 	
 	protected function __construct()
 	{
+	    parent::__construct();
 		$this->length(self::$LENGTH);
 	}
 	

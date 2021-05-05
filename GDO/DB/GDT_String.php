@@ -48,6 +48,9 @@ class GDT_String extends GDT
 	public $orderable = true;
 	public $filterable = true;
 	public $searchable = true;
+	public $readable = true;
+	public $editable = true;
+	public $writable = true;
 	
 	public function utf8() { return $this->encoding(self::UTF8); }
 	public function ascii() { return $this->encoding(self::ASCII); }
@@ -212,8 +215,7 @@ class GDT_String extends GDT
 	 */
 	public function plugVar()
 	{
-	    $n = self::$nameNr;
-	    return "TestSTR'\"<script>alert($n)</script>";
+	    return "TestSTR'\"<script>alert(1)</script>";
 	}
 	
 	##############

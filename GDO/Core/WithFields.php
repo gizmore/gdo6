@@ -6,8 +6,8 @@ namespace GDO\Core;
  * E.g.: GDT_Fields, GDT_Bar, GDT_Response, GDT_Form, GDT_Table->headers.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  * 
  * @see GDT_Bar
  * @see GDT_Table
@@ -33,7 +33,22 @@ trait WithFields
 	 * @var \GDO\Core\GDT[]
 	 */
 	public $fields = [];
-	public function addField(GDT $field=null) { if ($field) $this->fields[$field->name] = $field; return $this; }
+	public function addField(GDT $field=null)
+	{
+	    if ($field)
+	    {
+	        if ($field->name)
+	        {
+    	        $this->fields[$field->name] = $field;
+	        }
+	        else
+	        {
+	            $this->fields[] = $field;
+	        }
+	    }
+        return $this;
+	}
+	
 	public function addFields(array $fields=null)
 	{
 		if ($fields)
@@ -69,12 +84,8 @@ trait WithFields
 	
 	public function addFieldFirst(GDT $field)
 	{
-	    $newFields = [$field->name => $field];
-	    foreach ($this->fields as $name => $gdt)
-	    {
-	        $newFields[$name] = $gdt;
-	    }
-	    $this->fields = $newFields;
+	    $newFields = $field->name ? [$field->name => $field] : [$field];
+	    $this->fields = array_merge($newFields, $this->fields);
 	    return $this;
 	}
 	
@@ -88,7 +99,7 @@ trait WithFields
 	 * Return all fields in this collection.
 	 * @return \GDO\Core\GDT[]
 	 */
-	public function getFields() { return $this->fields; }
+	public function &getFields() { return $this->fields; }
 
 	public function fieldCount() { return $this->fields ? count($this->fields) : 0; }
 	

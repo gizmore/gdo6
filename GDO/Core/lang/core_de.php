@@ -289,4 +289,5 @@ Viele Grüße,<br/>
 'msg_sort_success' => 'Die Einträge wurden neu sortiert.',
 'sorting' => 'Sort.',
 'mtitle_core_welcome' => 'Willkommen',
+'pagemenu_cli' => 'Seite %s / %s',
 );

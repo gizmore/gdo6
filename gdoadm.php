@@ -1,4 +1,6 @@
 <?php
+namespace gdo6;
+
 use GDO\Core\Application;
 use GDO\Core\Debug;
 use GDO\Core\Logger;
@@ -14,45 +16,59 @@ use GDO\Util\BCrypt;
 use GDO\User\GDO_UserPermission;
 use GDO\DB\Cache;
 use GDO\Install\Installer;
-use GDO\Util\Strings;
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Response;
 use GDO\Install\Method\Security;
 use GDO\Core\GDT_Hook;
+use GDO\File\FileUtil;
+use GDO\Util\CLI;
+use GDO\Core\ModuleProviders;
 
 /**
- * The gdo.php executable manages modules and config via the CLI.
+ * The gdoadm.php executable manages modules and config via the CLI.
  * 
- * @version 6.10.1
+ * @see ./gdoadm.sh
+ * 
+ * @author gizmore
+ * @version 6.10.2
  * @since 6.10.0
- * @see gdo_update.sh
- * @see gdo_test.sh
- * @see gdo_yarn.sh
- * @see gdo_bower.sh
+ * 
+ * @see gdo_update.sh - to update your gdo6 installation
+ * @see gdo_reset.sh - to reset your installation to factory defaults. Own files are not deleted
+ * @see gdo_test.sh for unit testing
+ * @see gdo_yarn.sh to install javascript dependencies
+ * @see gdo_bower.sh to install javascript dependencies
+ * @see gdo_post_install.sh to finish the installation process
+ * @see gdo_cronjob.sh - to run the module cronjobs
+ * @see bin/gdo - to invoke a gdo6 method via the CLI
  */
 
 /** @var $argc int **/
-/** @var $argv array **/
+/** @var $argv string[] **/
 
 /**
- * Show usage of the gdo.sh shell command.
- * @example gdo.sh install Bootstrap
+ * Show usage of the gdoadm.sh shell command.
+ * @example gdo.sh install MailGPG
+ * @example gdo mail.send gizmore 'Subject' 'Body text' # @todo: implement it that way
  */
 function printUsage($code=1)
 {
     global $argv;
     $exe = $argv[0];
-    echo "Usage: php $exe configure [<config.php>] - to generate a protected/config.php\n";
-    echo "Usage: php $exe install <module>\n";
-    echo "Usage: php $exe install_all\n";
-    echo "Usage: php $exe wipe <module> - To uninstall modules\n";
-    echo "Usage: php $exe wipeall - To erase the whole database\n";
-//  echo "Usage: php $exe providers <module>\n"; # TODO: Show a list of providers for module dependencies.
-    echo "Usage: php $exe admin <username> <password> [<email>] - to (re)set an admin account\n";
-    echo "Usage: php $exe config <module>\n";
-    echo "Usage: php $exe config <module> <key>\n";
-    echo "Usage: php $exe config <module> <key> <var>\n";
-    echo "Usage: php $exe call <module> <method> <json_get_params> <json_form_params>\n";
+    echo "Usage:\n";
+    echo "php $exe configure [<config.php>] - To generate a protected/config.php\n";
+    echo "php $exe modules [<module>] - To show a list of modules or show module details\n";
+    echo "php $exe install <module>\n";
+    echo "php $exe install_all\n";
+    echo "php $exe wipe <module> - To uninstall modules\n";
+    echo "php $exe wipeall - To erase the whole database\n";
+    echo "php $exe admin <username> <password> [<email>] - to (re)set an admin account\n";
+    echo "php $exe config <module> - To show the config variables for a module\n";
+    echo "php $exe config <module> <key> - To show the description for a module variable\n";
+    echo "php $exe config <module> <key> <var> - To change the value of a module variable\n";
+    echo "php $exe call <module> <method> <json_get_params> <json_form_params>\n";
+    echo PHP_EOL;
+    echo "Tip: you can have a 'cli-only' protected/config_cli.php";
     die($code);
 }
 
@@ -63,14 +79,22 @@ if ($argc === 1)
 
 require 'GDO6.php';
 
-@include 'protected/config.php';
+if (FileUtil::isFile('protected/config_cli.php'))
+{
+    require 'protected/config_cli.php';
+}
+else
+{
+    @include 'protected/config.php';
+}
 
-# Default config 
-$_SERVER['HTTPS'] = 'off';
+CLI::setServerVars();
+
+# Load config defaults
 if (!defined('GWF_CONFIGURED'))
 {
-	define('GWF_DB_ENABLED', false); # CLI is DB Disabled
-	define('GWF_WEB_ROOT', '/');
+	define('GWF_DB_ENABLED', false);
+	define('GDO_WEB_ROOT', '/');
 	\GDO\Install\Config::configure();
 }
 
@@ -132,24 +156,72 @@ elseif ($argv[1] === 'test')
 
 elseif ($argv[1] === 'modules')
 {
-	echo "List of official modules\n";
-	$providers = \GDO\Core\ModuleProviders::$PROVIDERS;
-	$git = \GDO\Core\ModuleProviders::GIT_PROVIDER;
-	foreach ($providers as $moduleName => $p)
-	{
-		if (!is_array($p)) $p = [$p];
-		foreach ($p as $provider)
-		{
-			printf("%32s: cd GDO; git clone --recursive {$git}{$provider} {$moduleName}; cd ..\n", $moduleName);
-		}
-	}
+    if ($argc == 1)
+    {
+        echo "List of official modules\n";
+        $providers = \GDO\Core\ModuleProviders::$PROVIDERS;
+        $git = \GDO\Core\ModuleProviders::GIT_PROVIDER;
+        foreach ($providers as $moduleName => $p)
+        {
+            if (!is_array($p)) $p = [$p];
+            foreach ($p as $provider)
+            {
+                printf("%32s: cd GDO; git clone --recursive {$git}{$provider} {$moduleName}; cd ..\n", $moduleName);
+            }
+        }
+    }
+    elseif ($argv == 2)
+    {
+        $module = ModuleLoader::instance()->getModule($moduleName, true);
+        if (!$module)
+        {
+            echo "Module not found.\n";
+            
+            $providers = @ModuleProviders::$PROVIDERS[$moduleName];
+            if (!$providers)
+            {
+                echo "{$moduleName}: Not an official module or a typo somewhere. No Provider known.\n";
+                echo "Try reading docs/INSTALL.MD\n";
+                echo "You can get a list of modules via {$argv[0]}.\n";
+            }
+            elseif (is_array($providers))
+            {
+                echo "{$moduleName}: Choose between multiple possible providers:\n";
+                foreach ($providers as $provider)
+                {
+                    printf("%20s: cd GDO; git clone --recursive {$git}{$provider} {$moduleName}; cd ..\n", $moduleName);
+                }
+            }
+            else
+            {
+                printf("%20s: cd GDO; git clone --recursive {$git}{$providers} {$moduleName}; cd ..\n", $moduleName);
+            }
+        }
+        else
+        {
+            $deps = implode(', ', $module->getDependencies());
+            echo "Module: {$moduleName}\n";
+            echo "License: {$module->module_license}\n";
+            echo $module->getModuleDescription();
+            echo "\n";
+            if ($deps)
+            {
+                echo "Dependencies: {$deps}";
+            }
+        }
+    }
+    else
+    {
+        printUsage();
+    }
+    
 }
 
-elseif (Strings::startsWith($argv[1], 'install'))
+elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
 {
-    $mode = 1;
     if ($argv[1] === 'install')
     {
+        $mode = 1;
         if ($argc !== 3)
         {
             printUsage();
@@ -169,6 +241,11 @@ elseif (Strings::startsWith($argv[1], 'install'))
 	if ($mode === 1)
 	{
         $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
+        if (!$module)
+        {
+            echo "Unknown module. Try {$argv[0]} modules.\n";
+            die(1);
+        }
         $deps = $module->dependencies();
         $deps[] = $module->getName();
 	}
@@ -223,8 +300,9 @@ elseif (Strings::startsWith($argv[1], 'install'))
 	
 	if (!$allResolved)
 	{
-		echo "Some modules are not provided by your current GDO/ folder.\n";
+		echo "Some required modules are not provided by your current GDO/ folder.\n";
 		echo "Please clone the modules like stated above.\n";
+		echo "Repeat the process until all dependencies are resolved.\n";
 		die(2);
     }
 	
@@ -350,7 +428,8 @@ elseif ($argv[1] === 'config')
         $moduleVar = GDO_ModuleVar::createModuleVar($module, $gdt);
         echo t('msg_changed_config', [$gdt->displayLabel(), $module->getName(), $gdt->initial, $moduleVar->getVarValue()]);
         echo PHP_EOL;
-        die(0);
+        Cache::flush();
+        GDT_Hook::call('ModuleVarsChanged', $module);
     }
 }
 
@@ -380,7 +459,7 @@ elseif ($argv[1] === 'call')
     
     if ($response = $method->execute())
     {
-        echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
+        echo $response->renderCLI();
     }
     else
     {

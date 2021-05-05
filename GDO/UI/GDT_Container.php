@@ -10,18 +10,20 @@ use GDO\Core\WithFields;
  * No template is used yet.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.07
+ * @version 6.10.1
+ * @since 6.7.1
  */
 class GDT_Container extends GDT
 {
     use WithFlex;
 	use WithFields;
 	use WithPHPJQuery;
+	
+	public function defaultName() { return 'cont'; }
 
 	private function setupHTML()
 	{
-	    $this->addClass('gdo-container');
+	    $this->addClass('gdt-container');
 	    if ($this->flex)
 	    {
 	        $this->addClass('flx flx-'.$this->flexDirection.' flx-collapse');

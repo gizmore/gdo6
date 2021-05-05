@@ -105,7 +105,7 @@ final class GDO_User extends GDO
 	        case self::MEMBER:
 	            return true;
 	        case self::GUEST:
-        	    return !!$this->getName();
+        	    return !!$this->getGuestName();
 	        default:
 	            return false;
 	    }

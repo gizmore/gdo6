@@ -68,7 +68,7 @@ final class MinifyJS
 			{
 				if ((strpos($path, '://')) ||
 				    (strpos($path, '//') === 0) || 
-				    (strpos($path, GWF_WEB_ROOT.'index.php?') === 0) )
+				    (strpos($path, GDO_WEB_ROOT.'index.php?') === 0) )
 				{
 					$this->external[] = $path;
 				}
@@ -120,7 +120,7 @@ final class MinifyJS
 	public function minifiedJavascriptPath($path)
 	{
 		if ( (!strpos($path, '://')) &&
-		     (strpos($path, GWF_WEB_ROOT . 'index.php') !== 0) &&
+		     (strpos($path, GDO_WEB_ROOT . 'index.php') !== 0) &&
 		     (strpos($path, '//') !== 0) )
 		{
 			return $this->minifiedJavascript($path);

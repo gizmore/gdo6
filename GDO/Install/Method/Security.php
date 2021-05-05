@@ -47,7 +47,7 @@ final class Security extends MethodForm
 		HTAccess::protectFolder(GDO_File::filesDir());
 		HTAccess::protectFolder(GDO_PATH.'protected');
 		HTAccess::protectFolder(GDO_PATH.'install');
-		return Website::redirect(GWF_WEB_ROOT);
+		return Website::redirect(GDO_WEB_ROOT);
 	}
 	
 	public function protectDotfiles()

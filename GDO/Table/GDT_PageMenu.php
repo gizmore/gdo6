@@ -15,8 +15,8 @@ use GDO\DB\ArrayResult;
 /**
  * Pagemenu widget.
  * @author gizmore
- * @version 6.10
- * @since 6.02
+ * @version 6.10.1
+ * @since 3.1.0
  */
 class GDT_PageMenu extends GDT
 {
@@ -134,6 +134,7 @@ class GDT_PageMenu extends GDT
 	{
 		switch (Application::instance()->getFormat())
 		{
+		    case 'cli': return t('pagemenu_cli', [$this->page, $this->getPageCount()]);
 			case 'json': return $this->renderJSON();
 			case 'html': default: return $this->renderHTML();
 		}
@@ -143,15 +144,15 @@ class GDT_PageMenu extends GDT
 	{
 		if ($this->getPageCount() > 1)
 		{
-			$tVars = array(
+			$tVars = [
 				'pagemenu' => $this,
 				'pages' => $this->pagesObject(),
-			);
+			];
 			return GDT_Template::php('Table', 'cell/pagemenu.php', $tVars);
 		}
 	}
 	
-	public function configJSON()
+	public function renderJSON()
 	{
 	    return [
 	        'href' => $this->href,
@@ -160,6 +161,11 @@ class GDT_PageMenu extends GDT
 	        'page' => $this->getPage(),
 	        'pages' => $this->getPageCount(),
 	    ];
+	}
+	
+	public function configJSON()
+	{
+	    return array_merge($this->renderJSON(), parent::configJSON());
 	}
 	
 	#############

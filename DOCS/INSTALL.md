@@ -85,6 +85,7 @@ Copy this list and remove / add modules.
     ## git clone --recursive https://github.com/gizmore/gdo6-bootstrap-theme BootstrapTheme
     ## git clone --recursive https://github.com/gizmore/gdo6-buzzerapp Buzzerapp
     git clone --recursive https://github.com/gizmore/gdo6-captcha Captcha
+    git clone --recursive https://github.com/gizmore/gdo6-recaptcha2 Captcha
     git clone --recursive https://github.com/gizmore/gdo6-category Category
     ## git clone --recursive https://github.com/gizmore/gdo6-ckeditor CKEditor
     git clone --recursive https://github.com/gizmore/gdo6-comment Comment
@@ -112,6 +113,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-friends Friends
     git clone --recursive https://github.com/gizmore/gdo6-gallery Gallery
     ## git clone --recursive https://github.com/gizmore/gdo6-geo2country Geo2Country
+    # git clone --recursive https://github.com/gizmore/gdo6-google-translate GoogleTranslate
     # git clone --recursive https://github.com/gizmore/gdo6-guestbook Guestbook
     # git clone --recursive https://github.com/gizmore/gdo6-helpdesk Helpdesk
     git clone --recursive https://github.com/gizmore/gdo6-import-gwf3 ImportGWF3
@@ -123,7 +125,8 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-jquery-autocomplete JQueryAutocomplete
     # git clone --recursive https://github.com/gizmore/gdo6-jquery-mobile JQueryMobile
     git clone --recursive https://github.com/gizmore/gdo6-jquery-ui JQueryUI
-    git clone --recursive https://github.com/gizmore/gdo6-language-editor LanguageEditor
+    # git clone --recursive https://github.com/gizmore/gdo6-language-editor LanguageEditor
+    # git clone --recursive https://github.com/gizmore/gdo6-licenses Licenses
     git clone --recursive https://github.com/gizmore/gdo6-links Links
     git clone --recursive https://github.com/gizmore/gdo6-load-on-click LoadOnClick
     git clone --recursive https://github.com/gizmore/gdo6-login Login
@@ -154,8 +157,8 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-profile Profile
     # git clone --recursive https://github.com/gizmore/gdo6-push Push
     git clone --recursive https://github.com/gizmore/gdo6-python Python
-    ## git clone --recursive https://github.com/gizmore/gdo6-ranzgruppe Ranzgruppe
     git clone --recursive https://github.com/gizmore/gdo6-qrcode QRCode
+    ## git clone --recursive https://github.com/gizmore/gdo6-ranzgruppe Ranzgruppe
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
     ###### EITHER session-db or session-cookie is required
@@ -176,6 +179,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-tinymce TinyMCE
     # git clone --recursive https://github.com/gizmore/gdo6-usergroup Usergroup
     git clone --recursive https://github.com/gizmore/gdo6-vote Vote
+    git clone --recursive https://github.com/gizmore/gdo6-website Website
     git clone --recursive https://github.com/gizmore/gdo6-websocket Websocket
     ## git clone --recursive https://github.com/gizmore/gdo6-wechall WeChall
     # git clone --recursive https://github.com/gizmore/gdo6-whois Whois
@@ -187,9 +191,6 @@ Copy this list and remove / add modules.
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
 
 ### CLI install
-
-You can make your PATH env point to gdo6/bin.
-This way, later, you can execute gdo methods via the commandline.
 
     # install gdo via gdoadm.php
     cd gdo6

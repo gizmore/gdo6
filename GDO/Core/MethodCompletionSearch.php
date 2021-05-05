@@ -56,7 +56,7 @@ abstract class MethodCompletionSearch extends MethodCompletion
 	    {
 	        $response[] = $this->renderJSON($gdo);
 	    }
-	    Website::renderJSON($response);
+	    Website::outputJSON($response);
 	}
 	
 }

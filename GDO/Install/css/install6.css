@@ -7,9 +7,9 @@ header { height: 140px; background: red; vertical-align: bottom; }
 .core-module { font-style: italic; }
 .site-module { color: purple; }
 .gdt-divider { background: #eee; padding: 5px; }
-.gdo-gdt_modulefeature,
-td.gdo-gdt_name,
-td.gdo-gdt_template-Install-modulename span,
-.gdo-gdt_template-Install-modulelicense { white-space: nowrap; }
+.gdt_modulefeature,
+td.gdt_name,
+td.gdt_template-Install-modulename span,
+.gdt_template-Install-modulelicense { white-space: nowrap; }
 body > div.gdo-body { padding: 0; }
 .gdt-module-license { font-style: italic; }

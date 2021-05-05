@@ -1,5 +1,6 @@
 <?php
 namespace GDO\File;
+
 use GDO\Core\GDO;
 use GDO\DB\GDT_AutoInc;
 use GDO\Date\GDT_Duration;
@@ -11,12 +12,13 @@ use GDO\Core\GDOException;
 use GDO\DB\GDT_UInt;
 use GDO\Core\Debug;
 use GDO\Core\Application;
+
 /**
  * File database storage.
  * 
  * @author gizmore
- * @version 6.08
- * @since 3.0
+ * @version 6.10.2
+ * @since 6.1.0
  *
  * @see GDT_File
  */
@@ -27,7 +29,7 @@ final class GDO_File extends GDO
 	###########
 	public function gdoColumns()
 	{
-		return array(
+		return [
 			GDT_AutoInc::make('file_id')->label('id'),
 			GDT_String::make('file_name')->notNull(),
 			GDT_MimeType::make('file_type')->notNull(),
@@ -36,8 +38,7 @@ final class GDO_File extends GDO
 			GDT_UInt::make('file_height'),
 			GDT_UInt::make('file_bitrate'),
 			GDT_Duration::make('file_duration'),
-			
-		);
+		];
 	}
 	
 	public function getName() { return $this->getVar('file_name'); }
@@ -93,13 +94,13 @@ final class GDO_File extends GDO
 	
 	public function toJSON()
 	{
-		return array_merge(parent::toJSON(), array(
+		return array_merge(parent::toJSON(), [
 			'id' => $this->getID(),
 			'name' => $this->getName(),
 			'type' => $this->getType(),
 			'size' => $this->getSize(),
 			'initial' => true
-		));
+		]);
 	}
 	
 	###############
@@ -123,21 +124,20 @@ final class GDO_File extends GDO
 	 */
 	public static function fromForm(array $values)
 	{
-		$file = self::blank(array(
+		$file = self::blank([
 			'file_name' => $values['name'],
 			'file_size' => $values['size'],
 			'file_type' => $values['type']
-		))->tempPath($values['tmp_name']);
+		])->tempPath($values['tmp_name']);
 		
 		if ($file->isImageType())
 		{
 			list($width, $height) = getimagesize($file->getPath());
-			$file->setVars(array(
+			$file->setVars([
 				'file_width' => $width,
 				'file_height' => $height,
-			));
+			]);
 		}
-		
 		return $file;
 	}
 	
@@ -168,13 +168,13 @@ final class GDO_File extends GDO
 		{
 			throw new GDOException(t('err_file_not_found', [$path]));
 		}
-		$values = array(
+		$values = [
 			'name' => $name,
 			'size' => filesize($path),
 			'type' => mime_content_type($path),
 			'tmp_name' => $path,
-		);
-		return self::fromForm($values);
+		];
+		return self::fromForm($values)->tempPath($path);
 	}
 	
 	############

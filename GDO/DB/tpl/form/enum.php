@@ -3,7 +3,7 @@ $sel = ' selected="selected"';
 $var = $field->getVar();
 $field->addClass('gdt-enum-select')
 ?>
-<div class="gdo-container<?=$field->classError()?>">
+<div class="gdt-container<?=$field->classError()?>">
   <?=$field->htmlIcon()?>
   <label><?=$field->displayLabel()?></label>
   <select

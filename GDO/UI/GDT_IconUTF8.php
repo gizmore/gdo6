@@ -40,7 +40,6 @@ final class GDT_IconUTF8
         'download' => '⇩',
         'edit' => '✎',
         'email' => '✉',
-        'enhanced_encryption' => '⚷',
         'error' => '⚠',
         'face' => '☺',
         'female' => '♀',

@@ -29,6 +29,9 @@ class GDT_Timestamp extends GDT
 	public $orderable = true;
 	public $filterable = true;
 	public $searchable = false;
+	public $readable = true;
+	public $editable = true;
+	public $writable = true;
 	
 	public function isSerializable() { return true; }
 	
@@ -61,14 +64,8 @@ class GDT_Timestamp extends GDT
 	public function inputToVar($input)
 	{
 	    return $input;
-// 	    return Time::getDate(Time::getUserInputTimestamp($input));
 	}
 
-// 	public function getGDOData()
-// 	{
-// 	    return [$this->name => $this->var];
-// 	}
-	
 	#####################
 	### Starting view ###
 	#####################

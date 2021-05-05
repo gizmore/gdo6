@@ -1,5 +1,6 @@
 <?php
 namespace GDO\UI;
+
 /**
  * Adds icon handling to a GDT.
  * The templates have to echo $field->htmlIcon() to render them.
@@ -11,10 +12,12 @@ namespace GDO\UI;
  * @example echo GDT_Icon::iconS('clock', 16, '#f00');
  * @example echo GDT_Icon::make()->rawIcon($site->getIconImage())->iconSize(20)->render();
  * 
- * @author gizmore
- * @see GDT_Icon - for a standalone icon that is a gdt.
+ * @see GDT_Icon - for a standalone icon that is a GDT.
  * @see GDT_IconUTF8 - for the minimal icon provider.
- * @version 6.10
+ * 
+ * @author gizmore
+ * @version 6.10.1
+ * @since 6.1.0
  */
 trait WithIcon
 {

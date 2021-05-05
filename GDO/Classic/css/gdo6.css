@@ -30,8 +30,8 @@ a { color: #33f; font-weight: 900; }
 .gdt-message textarea { width: 100%; height: 180px; }
 
 /** Table/GDT_Table **/
-.gdo-tblorder a { color: #000; }
-.gdo-tblorder a.sel { color: gold; }
+.gdt-tblorder a { color: #000; }
+.gdt-tblorder a.sel { color: gold; }
 
 /** Core/GDOException **/
 .gdo-exception {

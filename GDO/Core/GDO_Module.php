@@ -233,8 +233,7 @@ class GDO_Module extends GDO
 	 */
 	public function wwwPath($path='')
 	{
-// 	    $path = trim($path, '/'); # not nice to trim it.
-	    return GWF_WEB_ROOT . "GDO/{$this->getName()}/{$path}";
+	    return GDO_WEB_ROOT . "GDO/{$this->getName()}/{$path}";
 	}
 	
 	/**
@@ -622,14 +621,21 @@ class GDO_Module extends GDO
 		return method($this->getName(), $methodName);
 	}
 	
+	/**
+	 * Get a method by name. Case insensitive.
+	 * @param string $methodName
+	 * @return Method
+	 */
 	public function getMethodByName($methodName)
 	{
 	    $files = scandir($this->filePath('Method'));
 	    foreach ($files as $file)
 	    {
-	        if (strcasecmp($methodName, substr($file, 0, -4)) === 0)
+	        $file = substr($file, 0, -4);
+	        if (strcasecmp($methodName, $file) === 0)
 	        {
-	            $method = call_user_func($this->gdoClassName()."\\$methodName", "make");
+	            $className = "\\GDO\\{$this->getName()}\\Method\\{$file}";
+	            $method = call_user_func([$className, 'make']);
 	            return $method;
 	        }
 	    }
@@ -638,15 +644,26 @@ class GDO_Module extends GDO
 	##############
 	### Assets ###
 	##############
-	private static $_NC; # nocache appendix
+	
+	/**
+	 * nocache appendix
+	 * @var string
+	 */
+	private static $_NC;
+
+	/**
+	 * Get the cache poisoner.
+	 * Base is gdo revision string.
+	 * Additionally a cache clear triggers an increase of the assets version.
+	 * @return string
+	 */
 	public function nocacheVersion()
 	{
 	    if (!self::$_NC)
 	    {
-	        $v = $this->getVersion();
-	        $r = Module_Core::$GDO_REVISION;
+	        $v = Module_Core::$GDO_REVISION;
 	        $av = Module_Core::instance()->cfgAssetVersion();
-	        self::$_NC = "r={$r}&v={$v}&av={$av}";
+	        self::$_NC = "v={$v}&av={$av}";
 	    }
         return self::$_NC;
 	}

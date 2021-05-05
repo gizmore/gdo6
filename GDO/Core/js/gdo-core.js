@@ -35,8 +35,8 @@ window.GDO.toggleAll = function(toggler) {
 };
 
 window.GDO.error = function(response) {
-	if (response.data && response.data.error && response.data.error.error) {
-		var message = response.data.error;
+	if (response.json && response.json.error) {
+		var message = response.json.error;
 	}
 	else if (response.error) {
 		var message = response.error;
@@ -53,5 +53,5 @@ window.GDO.openDialog = function(dialogId) {
 }
 
 window.GDO.href = function(module, method, append) {
-	return GWF_WEB_ROOT + 'index.php?mo=' + module + '&me=' + method + append;
+	return GDO_WEB_ROOT + 'index.php?mo=' + module + '&me=' + method + append;
 }

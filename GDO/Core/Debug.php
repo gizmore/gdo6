@@ -16,10 +16,10 @@ use GDO\Net\GDT_Url;
  * 
  * @example Debug::enableErrorHandler(); fatal_ooops();
  * 
- * @TODO It displays and sends two errors for each error... why?!
+ * @TODO: It displays and sends two errors for each error... why?!
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 3.0.1
  */
 final class Debug
@@ -28,6 +28,7 @@ final class Debug
 	private static $enabled = false;
 	private static $exception = false;
 	private static $MAIL_ON_ERROR = false;
+	public static $MAX_ARG_LEN = 28;
 	
 	// Call this to auto inc.
 	public static function init()
@@ -409,9 +410,9 @@ final class Debug
 		$arg = str_replace('&quot;', '"', $arg); # It is safe to inject quotes. Turn back to get length calc right.
 		$arg = str_replace('\\\\', '\\', $arg); # Double backslash was escaped always via json encode?
 		
-		if (mb_strlen($arg) > 28)
+		if (mb_strlen($arg) > self::$MAX_ARG_LEN)
 		{
-			return mb_substr($arg, 0, 14) . '…' . mb_substr($arg, -14);
+		    return mb_substr($arg, 0, self::$MAX_ARG_LEN) . '…' . mb_substr($arg, -14);
 		}
 		
 		return $arg;

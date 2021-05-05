@@ -1,10 +1,7 @@
 <?php
 use GDO\UI\GDT_Button;
-$field instanceof GDT_Button;
+/** @var $field GDT_Button **/
 ?>
-<a class="gdo-button"
- <?= $field->htmlDisabled(); ?>
- <?= $field->htmlHREF(); ?>>
- <?= $field->htmlIcon(); ?>
- <?= $field->displayLabel(); ?>
-</a>
+<a class="gdt-button"
+ <?=$field->htmlDisabled()?>
+ <?=$field->htmlHREF()?>><?=$field->htmlIcon()?><?=$field->displayLabel()?></a>

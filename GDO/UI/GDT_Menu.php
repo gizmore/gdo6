@@ -6,15 +6,18 @@ use GDO\Core\WithFields;
 use GDO\Core\GDT_Template;
 
 /**
- * Popup menu
+ * A popup menu
+ * 
  * @author gizmore
- * @version 6.10
- * @since 6.04
+ * @version 6.10.1
+ * @since 6.4.0
  */
 final class GDT_Menu extends GDT
 {
-	use WithFields;
 	use WithLabel;
+	use WithFields;
+	
+	public function defaultName() { return 'menu'; }
 	
 	public function renderCell() { return GDT_Template::php('UI', 'cell/menu.php', ['field'=>$this]); }
 	

@@ -1,13 +1,16 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDO;
 use GDO\Core\GDT;
+
 /**
  * A Database query result.
  * Use fetchTable() to control the object type for fetching objects. 
+ * 
  * @author gizmore
- * @version 6.05
- * @since 6.00
+ * @version 6.10.1
+ * @since 6.0.0
  * @see ArrayResult
  */
 class Result

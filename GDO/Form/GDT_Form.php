@@ -11,10 +11,16 @@ use GDO\Core\Application;
 use GDO\UI\GDT_Container;
 
 /**
- * An HTML Form.
+ * An (HTML) Form.
+ * 
+ * @see GDT_Table
+ * @see GDT_Card
+ * 
+ * @todo remove ugly static behaviour
+ * 
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.1
+ * @since 3.0.0
  */
 class GDT_Form extends GDT
 {
@@ -25,11 +31,12 @@ class GDT_Form extends GDT
 	use WithFields;
 	use WithTitle;
 	
+	public function defaultName() { return 'form'; }
+	
 	protected function __construct()
 	{
 	    parent::__construct();
 		$this->action = @$_SERVER['REQUEST_URI'];
-		$this->writable = false;
 	}
 	
 	###############
@@ -163,13 +170,15 @@ class GDT_Form extends GDT
 		}
 	}
 	
+	/**
+	 * Form has been successfully validated.
+	 */
 	public function onValidated()
 	{
 		$this->validated = true;
-		foreach ($this->fields as $field)
-		{
+		array_map(function(GDT $field) {
 			$field->onValidated();
-		}
+		}, $this->fields);
 	}
 	
 	#############
@@ -181,24 +190,23 @@ class GDT_Form extends GDT
 		return $this;
 	}
 	
-	private function fieldWithGDOValuesFrom(GDT $gdoType, GDO $gdo=null)
+	/**
+	 * Assign GDO values recursively.
+	 * @param GDT $gdt
+	 * @param GDO $gdo
+	 */
+	private function fieldWithGDOValuesFrom(GDT $gdt, GDO $gdo=null)
 	{
-	    if ($gdo === null)
+	    if ($gdo)
 	    {
-// 	        $gdoType->var($gdoType->initial);
+	        $gdt->gdo($gdo);
 	    }
-	    else
+	    if ($fields = $gdt->getFields())
 	    {
-	        $gdoType->gdo($gdo);
+    	    array_map(function(GDT $gdt) use ($gdo) {
+    	        $this->fieldWithGDOValuesFrom($gdt, $gdo);
+    	    }, $fields);
 	    }
-	    
-		if ($fields = $gdoType->getFields())
-		{
-			foreach ($fields as $field)
-			{
-				$this->fieldWithGDOValuesFrom($field, $gdo);
-			}
-		}
 	}
 	
 	private static $formData; # ugly

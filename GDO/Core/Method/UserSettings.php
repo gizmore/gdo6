@@ -25,7 +25,7 @@ final class UserSettings extends MethodAjax
             }
         }
         
-        Website::renderJSON($settings);
+        Website::outputJSON($settings);
     }
 
     private function gdtSetting(GDT $gdt)

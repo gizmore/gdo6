@@ -8,7 +8,11 @@ namespace GDO\Core;
  * Both provide Module_Session.
  * 
  * @TODO: Explain how to generate provider list from the huge all-in-one-dev install.
+ * @TODO: make the installers use this providers to automatically install module dependencies.
+ * 
  * @author gizmore
+ * @version 6.10.2
+ * @since 6.10.0
  */
 final class ModuleProviders
 {
@@ -59,6 +63,7 @@ final class ModuleProviders
         'Friends' => 'gdo6-friends',
         'Gallery' => 'gdo6-gallery',
         'Geo2Country' => 'gdo6-geo2country',
+        'GoogleTranslate' => 'gdo6-google-translate', 
         'Guestbook' => 'gdo6-guestbook',
         'Helpdesk' => 'gdo6-helpdesk',
         'ImportGWF3' => 'gdo6-import-gwf3',
@@ -70,6 +75,8 @@ final class ModuleProviders
         'JQueryAutocomplete' => 'gdo6-jquery-autocomplete',
         'JQueryMobile' => 'gdo6-jquery-mobile',
         'JQueryUI' => 'gdo6-jquery-ui',
+        'LanguageEditor' => 'gdo6-language-editor',
+        'Licenses' => 'gdo6-licenses',
         'Links' => 'gdo6-links',
         'Login' => 'gdo6-login',
         'LoginAs' => 'gdo6-login-as',

@@ -42,6 +42,6 @@ class Completion extends MethodAjax
 			);
 		}
 	
-		Website::renderJSON($response);
+		Website::outputJSON($response);
 	}
 }

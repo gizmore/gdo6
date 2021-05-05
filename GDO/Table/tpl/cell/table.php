@@ -12,7 +12,7 @@ $result = $field->getResult();
 <form method="get" action="<?= $field->href; ?>" class="b">
 <?=GDT_Form::hiddenMoMe()?>
 <?php endif; ?>
-<div class="gdo-table" id="<?=$field->name?>">
+<div class="gdt-table" id="<?=$field->name?>">
   <?php if ($field->hasTitle()) : ?>
   <h3><?=$field->renderTitle()?></h3>
   <?php endif; ?>

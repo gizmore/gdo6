@@ -7,6 +7,7 @@ use GDO\Core\MethodAjax;
 
 /**
  * AJAX List of all countries.
+ * 
  * @author gizmore
  * @version 6.10.1
  * @since 6.10.1
@@ -22,7 +23,8 @@ final class AjaxList extends MethodAjax
                 'display' => $country->renderChoice(),
             ];
         }, GDO_Country::table()->allCached());
-        Website::renderJSON(array_values($json));
+        
+        Website::outputJSON(array_values($json));
     }
     
 }

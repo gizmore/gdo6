@@ -129,8 +129,12 @@ class Cache
 			{
 				$this->cache[$id] = $mcached;
 			}
+			else
+			{
+			    return false;
+			}
 		}
-		return isset($this->cache[$id]) ? $this->cache[$id] : null;
+		return $this->cache[$id];
 	}
 	
 	public function hasID($id)

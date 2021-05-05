@@ -55,11 +55,11 @@ function hrefSEO($seoString, $module, $method, $append='', $lang=true)
     if (defined('GWF_SEO_URLS') && GWF_SEO_URLS)
     {
         $html = $seoString === 'index.php' ? '' : '.html'; # append .html?
-        $href = GWF_WEB_ROOT . urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}";
+        $href = GDO_WEB_ROOT . urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}";
     }
     else
     {
-        $href = GWF_WEB_ROOT . "index.php?mo={$module}&me={$method}";
+        $href = GDO_WEB_ROOT . "index.php?mo={$module}&me={$method}";
     }
     
     if ($lang)
@@ -71,7 +71,7 @@ function hrefSEO($seoString, $module, $method, $append='', $lang=true)
 
     return $href;
 }
-function urlencodeSEO($str) { return preg_replace('#[^\\.\\p{L}0-9]#', '_', $str); }
+function urlencodeSEO($str) { return trim(preg_replace('#[^\\.\\p{L}0-9]#', '_', $str), '_'); }
 
 function quote($value) { return GDO::quoteS($value); }
 function json_quote($s) { return str_replace("'", "&#39;", $s); }

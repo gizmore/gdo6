@@ -21,7 +21,7 @@ final class Config extends MethodAjax
 		{
 			$json[$module->getName()] = $this->getModuleConfig($module);
 		}
-		Website::renderJSON($json);
+		Website::outputJSON($json);
 	}
 	
 	private function getModuleConfig(GDO_Module $module)

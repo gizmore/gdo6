@@ -1,12 +1,16 @@
 <?php
 namespace GDO\UI;
+
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+
 /**
- * A simple text string.
+ * A simple text label.
+ * Currently only renders in JSON and Card.
  * 
  * @author gizmore
- *
+ * @version 6.10.1
+ * @since 6.0.0
  */
 class GDT_Label extends GDT
 {
@@ -19,9 +23,7 @@ class GDT_Label extends GDT
 	
 	public function renderJSON()
 	{
-		return array(
-			$this->name => $this->displayLabel(),
-		);
+		return $this->displayLabel();
 	}
 	
 	public function renderCard()

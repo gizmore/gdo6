@@ -284,4 +284,5 @@ Cordiali saluti,<br/>
 'msg_sort_success' => 'Le voci sono state riordinate.',
 'sorting' => 'Ordi.',
 'mtitle_core_welcome' => 'Benvenuto',
+'pagemenu_cli' => 'Pagina %s / %s',
 );

@@ -284,4 +284,5 @@ Kind Regards,<br/>
 'msg_sort_success' => 'The items have been re-arranged.',
 'sorting' => 'Sorting',
 'mtitle_core_welcome' => 'Welcome',
+'pagemenu_cli' => 'Page %s of %s',
 );

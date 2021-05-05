@@ -95,7 +95,7 @@ final class GDT_ListItem extends GDT
 	{
 		if (!$this->actions)
 		{
-			$this->actions = GDT_Menu::make()->label('actions');
+		    $this->actions = GDT_Menu::make('actions')->label('actions');
 		}
 		return $this->actions;
 	}

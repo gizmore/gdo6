@@ -23,15 +23,15 @@ use GDO\User\GDO_UserPermission;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
 {
     const VERSION_MAJOR = '6';
     const VERSION_MINOR = '10';
-    const VERSION_PATCH = '1';
-    const VERSION_REV = '1069';
+    const VERSION_PATCH = '2';
+    const VERSION_REV = '1071';
     
     /**
      * GDO6 revision string.
@@ -39,7 +39,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.1-r1069';
+	public static $GDO_REVISION = '6.10.2-r1071';
 
 	##############
 	### Module ###
@@ -144,9 +144,9 @@ final class Module_Core extends GDO_Module
 		    "window.GDO_CONFIG = {};
 window.GWF_PROTOCOL = '%s';
 window.GWF_DOMAIN = '%s';
-window.GWF_WEB_ROOT = '%s';
+window.GDO_WEB_ROOT = '%s';
 window.GWF_LANGUAGE = '%s';",
-			GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT, Trans::$ISO);
+			GWF_PROTOCOL, GWF_DOMAIN, GDO_WEB_ROOT, Trans::$ISO);
 	}
 	
 	public function gdoUserJS()

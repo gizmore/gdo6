@@ -102,7 +102,7 @@ abstract class MethodTable extends Method
      * Return true if this table shall be able to be ordered by headers.
      * @return boolean
      */
-	public function isOrdered() { return true; } # GDT$orderable
+	public function isOrdered() { return true; }
 
 	/**
 	 * Override this.

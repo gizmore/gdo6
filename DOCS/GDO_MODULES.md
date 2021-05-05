@@ -38,6 +38,10 @@ BootstrapTheme - <https://github.com/gizmore/gdo6-bootstrap-theme>
 
 Buzzerapp - <https://github.com/gizmore/gdo6-buzzerapp>
 
+Captcha - <https://github.com/gizmore/gdo6-captcha>
+
+Captcha - <https://github.com/gizmore/gdo6-recaptcha2>
+
 Category - <https://github.com/gizmore/gdo6-category>
 
 CKEditor - <https://github.com/gizmore/gdo6-ckeditor>
@@ -92,15 +96,9 @@ Friends - <https://github.com/gizmore/gdo6-friends>
 
 Gallery - <https://github.com/gizmore/gdo6-gallery>
 
-gdo6-captcha (Captcha) - <https://github.com/gizmore/gdo6-captcha>
-
-gdo6-recaptcha2 (Captcha) - <https://github.com/gizmore/gdo6-recaptcha2>
-
-gdo6-session-cookie (Session) - <https://github.com/gizmore/gdo6-session-cookie>
-
-gdo6-session-db (Session) - <https://github.com/gizmore/gdo6-session-db>
-
 Geo2Country - <https://github.com/gizmore/gdo6-geo2country>
+
+GoogleTranslate - <https://github.com/gizmore/gdo6-google-translate>
 
 Guestbook - <https://github.com/gizmore/gdo6-guestbook>
 
@@ -129,6 +127,8 @@ JQueryMobile - <https://github.com/gizmore/gdo6-jquery-mobile>
 JQueryUI - <https://github.com/gizmore/gdo6-jquery-ui>
 
 LanguageEditor - <https://github.com/gizmore/gdo6-language-editor>
+
+Licenses - <https://github.com/gizmore/gdo6-licenses>
 
 Links - <https://github.com/gizmore/gdo6-links>
 
@@ -202,6 +202,10 @@ Recovery - <https://github.com/gizmore/gdo6-recovery>
 
 Register - <https://github.com/gizmore/gdo6-register>
 
+Session - <https://github.com/gizmore/gdo6-session-cookie>
+
+Session - <https://github.com/gizmore/gdo6-session-db>
+
 Sevenzip - <https://github.com/gizmore/gdo6-sevenzip>
 
 Shoutbox - <https://github.com/gizmore/gdo6-shoutbox>
@@ -236,6 +240,8 @@ Vote - <https://github.com/gizmore/gdo6-vote>
 
 W3CValidator - <https://github.com/gizmore/gdo6-w3c-validator>
 
+Website - <https://github.com/gizmore/gdo6-website>
+
 Websocket - <https://github.com/gizmore/gdo6-websocket>
 
 WeChall - <https://github.com/gizmore/gdo6-wechall>
@@ -245,4 +251,3 @@ Whois - <https://github.com/gizmore/gdo6-whois>
 Wombat - <https://github.com/gizmore/gdo6-wombat>
 
 ZIP - <https://github.com/gizmore/gdo6-zip>
-

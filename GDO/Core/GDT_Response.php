@@ -1,13 +1,16 @@
 <?php
 namespace GDO\Core;
+
 use GDO\UI\GDT_HTML;
 
 /**
  * The response class renders fields according to the request content-type.
- * You can control the content type with the &fmt=json|html GET parameter.
+ * You can control the content type with the &fmt=json|html|cli|xml GET parameter.
+ * The &ajax=1 parameter will drop the gdo6 site around it so you can focus on the data.
  * 
  * @author gizmore
- * @version 6.05
+ * @version 6.10.1
+ * @since 6.0.0
  */
 class GDT_Response extends GDT
 {
@@ -16,10 +19,6 @@ class GDT_Response extends GDT
 	public static $CODE = 200;
 	
 	public static function globalError() { return self::$CODE >= 400; }
-	
-	####################
-	### JSON Details ###
-	####################
 	
 	##################
 	### Error code ###
@@ -101,10 +100,10 @@ class GDT_Response extends GDT
 	
 	public function renderJSON()
 	{
-		return array(
+		return [
 			'code' => $this->code,
-			'data' => $this->renderJSONFields(),
-		);
+			'json' => $this->renderJSONFields(),
+		];
 	}
 	
 	public function renderCLI()
@@ -130,10 +129,11 @@ class GDT_Response extends GDT
 		$back = [];
 		foreach ($this->getFieldsRec() as $field)
 		{
-			if (null !== ($json = $field->renderJSON()))
-			{
-				$back[$field->name] = $json;
-			}
+		    if ($field->name)
+		    {
+		        $json = $field->renderJSON();
+		        $back[$field->name] = $json;
+		    }
 		}
 		return $back;
 	}

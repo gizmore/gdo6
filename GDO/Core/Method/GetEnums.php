@@ -1,12 +1,14 @@
 <?php
 namespace GDO\Core\Method;
+
 use GDO\Core\Method;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDO;
 use GDO\DB\GDT_Enum;
 use GDO\Core\Website;
+
 /**
- * Get enum values for all tables
+ * Get enum values for all entities and GDT.
  * @author gizmore
  */
 final class GetEnums extends Method
@@ -77,6 +79,6 @@ final class GetEnums extends Method
 			}
 		}
 		
-		Website::renderJSON($columns);
+		Website::outputJSON($columns);
 	}
 }

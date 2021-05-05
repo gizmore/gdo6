@@ -3,10 +3,12 @@ namespace GDO\Country\Method;
 
 use GDO\Core\MethodCompletion;
 use GDO\Country\GDO_Country;
-use GDO\Core\Website;
+use GDO\Core\GDT_Response;
+use GDO\Core\GDT_Array;
 
 /**
  * Autocomplete adapter for countries.
+ * 
  * @author gizmore
  * @version 6.10.1
  * @since 6.0.0
@@ -15,7 +17,7 @@ final class Completion extends MethodCompletion
 {
     public function execute()
     {
-        $countries = GDO_Country::table()->all();
+        $countries = GDO_Country::table()->allCached();
         
         $q = mb_strtolower($this->getSearchTerm());
         $max = $this->getMaxSuggestions();
@@ -55,7 +57,7 @@ final class Completion extends MethodCompletion
             ];
         }, $result);
         
-        Website::renderJSON($json);
+        return GDT_Response::makeWith(GDT_Array::make()->data($json));
     }
     
 }

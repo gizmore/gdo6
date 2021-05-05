@@ -10,7 +10,7 @@ final class GetCookie extends MethodAjax
 	public function execute()
 	{
 		$json =  Module_Core::instance()->gdoUserJSON();
-		Website::renderJSON($json);
+		Website::outputJSON($json);
 	}
 	
 }

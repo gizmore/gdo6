@@ -89,11 +89,11 @@ final class ModuleLoader
 	 * @param string $moduleName
 	 * @return GDO_Module
 	 */
-	public function getModule($moduleName)
+	public function getModule($moduleName, $fs=false)
 	{
 	    $moduleName = strtolower($moduleName);
 		return isset($this->modules[$moduleName]) ? 
-		  $this->modules[$moduleName] : null;
+		  $this->modules[$moduleName] : $this->loadModuleFS($moduleName);
 	}
 	
 	/**
@@ -243,6 +243,10 @@ final class ModuleLoader
 	
 	private function loadModulesDB()
 	{
+	    if (!GWF_DB_ENABLED)
+	    {
+	        return false;
+	    }
 		try
 		{
 			$result = GDO_Module::table()->select('*')->exec();
@@ -296,7 +300,7 @@ final class ModuleLoader
 	 * @param boolean $init
 	 * @return \GDO\Core\GDO_Module
 	 */
-	public function loadModuleFS($name, $init=true)
+	public function loadModuleFS($name)
 	{
 	    $lowerName = strtolower($name);
 		if (!isset($this->modules[$lowerName]))
@@ -308,16 +312,13 @@ final class ModuleLoader
 				if ($module = self::instanciate($moduleData, true))
 				{
 					$this->modules[$lowerName] = $module;
-// 					if ($init)
-					{
-					    $module->buildConfigCache();
-					    $module->buildSettingsCache();
-					    $module->onLoadLanguage();
-					    if ($theme = $module->getTheme())
-					    {
-					        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
-					    }
-					}
+				    $module->buildConfigCache();
+				    $module->buildSettingsCache();
+				    $module->onLoadLanguage();
+				    if ($theme = $module->getTheme())
+				    {
+				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+				    }
 				}
 			}
 		}

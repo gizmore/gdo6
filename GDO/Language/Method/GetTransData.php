@@ -19,7 +19,8 @@ final class GetTransData extends MethodAjax
 	    $code = sprintf('window.GDO_TRANS = {}; window.GDO_TRANS.CACHE = %s;', $langdata);
 	    if (!Application::instance()->isUnitTests())
 	    {
-	        echo $code;
+	        hdr('Content-Type: application/javascript');
+	        die($code);
 	    }
 	}
 	
