@@ -14,7 +14,7 @@ use GDO\Table\Sort;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 3.0.0
  */
 final class ModuleLoader
@@ -300,7 +300,7 @@ final class ModuleLoader
 	 * @param boolean $init
 	 * @return \GDO\Core\GDO_Module
 	 */
-	public function loadModuleFS($name)
+	public function loadModuleFS($name, $throw=true)
 	{
 	    $lowerName = strtolower($name);
 		if (!isset($this->modules[$lowerName]))
@@ -320,6 +320,14 @@ final class ModuleLoader
 				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
 				    }
 				}
+			}
+			elseif ($throw)
+			{
+			    throw new GDOError('err_module_method');
+			}
+			else
+			{
+			    return null;
 			}
 		}
 		return $this->modules[$lowerName];

@@ -99,10 +99,21 @@ $page = GDT_Page::make();
 /** @var $argc int **/
 /** @var $argv string[] **/
 
+# copy argv to stdin for the loop
+$stdin = fopen('php://stdin', 'w');
+
+if ($argc > 1)
+{
+    array_shift($argv);
+    $line = implode(' ', $argv);
+    $norepl = true;
+}
+
 try
 {
+    # repl
     $stdin = fopen('php://stdin', 'r');
-    while ($line = fgets($stdin))
+    do
     {
         try
         {
@@ -113,20 +124,31 @@ try
             }
             else
             {
-                echo GDT_Response::$CODE . PHP_EOL;
+                echo GDT_Response::$CODE;
             }
         }
         catch (\Throwable $ex)
         {
             echo GDT_Error::responseException($ex)->render();
         }
+        echo PHP_EOL;
+        
+        if (isset($norepl))
+        {
+            die (GDT_Response::globalError() ? 1 : 0);
+        }
     }
+    while ($line = fgets($stdin));
 }
 catch (\Throwable $ex)
 {
     Logger::logException($ex);
+    echo GDT_Error::responseException($ex)->render();
+    echo PHP_EOL;
 }
 finally
 {
     @fclose($stdin);
 }
+
+die (GDT_Response::globalError() ? 1 : 0);
