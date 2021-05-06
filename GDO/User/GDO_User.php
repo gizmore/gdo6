@@ -29,7 +29,7 @@ use GDO\DB\GDT_Index;
  * @author gizmore
  * @link https://www.wechall.net
  * @link https://mettwitze.gizmore.org
- * @version 6.10.1
+ * @version 6.10.2
  * @since 1.0.0
  */
 final class GDO_User extends GDO
@@ -252,7 +252,7 @@ final class GDO_User extends GDO
 	 */
 	public static function ghost()
 	{
-	    return self::blank(['user_type' => 'ghost']);
+	    return self::blank(['user_id' => '0', 'user_type' => 'ghost']);
 	}
 	
 	private static $SYSTEM;
