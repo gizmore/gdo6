@@ -1,9 +1,10 @@
 <?php
 namespace GDO\User;
+
 use GDO\Core\GDT_Template;
 use GDO\Util\BCrypt;
 use GDO\DB\GDT_String;
-use GDO\Core\GDT;
+
 /**
  * Bcrypt hash form and database value.
  * @author gizmore
@@ -59,7 +60,6 @@ class GDT_Password extends GDT_String
 	
 	public function renderJSON()
 	{
-	    # disabled
 	}
 
 }

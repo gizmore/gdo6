@@ -72,7 +72,7 @@ final class Trans
     		$iso = $iso . '_' . strtoupper($iso) . '.utf-8';
 //     		if (!setlocale(LC_ALL, $iso))
     		{
-    			setlocale(LC_ALL, $iso); # Bug... sometimes it needs two calls?!
+    			setlocale(LC_TIME, $iso); # Bug... sometimes it needs two calls?!
     		}
 //     		self::inited(true);
 	    }
