@@ -43,7 +43,7 @@ final class Time
 	 */
 	public static function getDate($time=null)
 	{
-	    $time = $time === null ? Application::$MICROTIME : $time;
+	    $time = $time === null ? Application::$MICROTIME : (float)$time;
 	    $time = sprintf('%.03f', $time);
 	    $now = DateTime::createFromFormat('U.u', $time);
 	    return $now->format("Y-m-d H:i:s.v");
