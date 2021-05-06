@@ -48,8 +48,9 @@ use GDO\Core\ModuleProviders;
 
 /**
  * Show usage of the gdoadm.sh shell command.
- * @example gdo.sh install MailGPG
- * @example gdo mail.send gizmore 'Subject' 'Body text' # @todo: implement it that way
+ * 
+ * @example gdoadm.sh install MailGPG
+ * @see gdo.php mail.send gizmore 'Subject' 'Body text' # @todo: implement it that way
  */
 function printUsage($code=1)
 {
@@ -143,7 +144,7 @@ elseif ($argv[1] === 'test')
 	{
 		Database::init();
 	}
-	echo \GDO\Install\Method\SystemTest::make()->execute()->render();
+	echo \GDO\Install\Method\SystemTest::make()->execute()->renderCLI();
 	
 	echo "Your configuration seems solid.\n";
 	echo "You can now try to php {$argv[0]} install <module>.\n";
@@ -156,7 +157,7 @@ elseif ($argv[1] === 'test')
 
 elseif ($argv[1] === 'modules')
 {
-    if ($argc == 1)
+    if ($argc == 2)
     {
         echo "List of official modules\n";
         $providers = \GDO\Core\ModuleProviders::$PROVIDERS;
@@ -170,8 +171,9 @@ elseif ($argv[1] === 'modules')
             }
         }
     }
-    elseif ($argv == 2)
+    elseif ($argc == 3)
     {
+        $moduleName = $argv[2];
         $module = ModuleLoader::instance()->getModule($moduleName, true);
         if (!$module)
         {
@@ -199,7 +201,7 @@ elseif ($argv[1] === 'modules')
         }
         else
         {
-            $deps = implode(', ', $module->getDependencies());
+            $deps = implode(', ', $module->dependencies());
             echo "Module: {$moduleName}\n";
             echo "License: {$module->module_license}\n";
             echo $module->getModuleDescription();
@@ -252,8 +254,11 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
 	elseif ($mode === 2)
 	{
 	    $modules = ModuleLoader::instance()->loadModules(false, true, true);
-	    $deps = array_map(function(GDO_Module $mod){
-	        return $mod->getName();}, $modules);
+	    $deps = array_map(function(GDO_Module $mod) {
+	        return $mod->getName(); }, $modules);
+	    
+	    $cnt = count($deps);
+	    echo "Installing all {$cnt} modules.\n";
 	}
     
     $cnt = 0;

@@ -7,8 +7,11 @@ use GDO\Core\GDT_Template;
 /**
  * Boolean Checkbox.
  * Implemented as select to reflect undetermined status. Also HTML does not send unchecked boxes over HTTP.
+ * 
+ * @TODO what about real checkboxes? Not a single one wanted/needed?
+ * 
  * @author gizmore
- * @version 6.10
+ * @version 6.10.2
  * @since 5.0
  */
 class GDT_Checkbox extends GDT_Select
@@ -27,7 +30,6 @@ class GDT_Checkbox extends GDT_Select
 		$this->ascii(); # This enables string search (not binary).
 		$this->caseS();
 		$this->notNull = true;
-// 		$this->initial = '0';
 	}
 	
 	public function initChoices()

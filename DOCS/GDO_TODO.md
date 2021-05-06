@@ -9,7 +9,7 @@ For a complete todo, please grep -R "@TODO" GDO/.
 
 - @TODO: Create a method Register::elevateGuest() to turn guests into members. But first think of a concept for that.
 
-- @TODO: Add a table gdo_i18n which holds additional translation data editable via website.
+- @TODO: Add Ga table GDO_I18n which holds additional translation data editable via website. (see module LanguageEditor)
 
 - @TODO: Add postgres. (thx Nekomander)
 

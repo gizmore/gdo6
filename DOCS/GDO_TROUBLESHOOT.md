@@ -1,5 +1,8 @@
 # GDO6 development troubleshooting
 
+Common pitfalls and possible issues.
+
+
 ## I copied a module as a starting point and it does not show up?
 
 - Make sure you got the right namespace for your module.

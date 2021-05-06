@@ -92,8 +92,11 @@ final class ModuleLoader
 	public function getModule($moduleName, $fs=false)
 	{
 	    $moduleName = strtolower($moduleName);
-		return isset($this->modules[$moduleName]) ? 
-		  $this->modules[$moduleName] : $this->loadModuleFS($moduleName);
+	    if (isset($this->modules[$moduleName]))
+	    {
+	        return $this->modules[$moduleName];
+	    }
+	    return $fs ? $this->loadModuleFS($moduleName) : false;
 	}
 	
 	/**
@@ -102,6 +105,7 @@ final class ModuleLoader
 	 */
 	public function getModuleByID($moduleID)
 	{
+	    $moduleID = (string) $moduleID;
 		foreach ($this->modules as $module)
 		{
 			if ($module->getID() === $moduleID)
@@ -210,6 +214,8 @@ final class ModuleLoader
 	{
 		if ($refresh)
 		{
+		    $this->loadedDB = false;
+		    $this->loadedFS = false;
 			$this->modules = [];
 		}
 		
