@@ -22,7 +22,7 @@ use GDO\DB\GDT_Enum;
  * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 6.0.0
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
@@ -39,16 +39,13 @@ abstract class GDT
 	# Same as $gdo but always set and always the table.
 	/** @var $gdtTable GDO **/
 	public $gdtTable;
-	/**
-	 * @var GDO
-	 */
+	/** @var GDO **/
 	public $gdo; # current row / gdo
 	public $name; # html id
 	public $var; # String representation
 	public $initial; # Initial var
 	public $unique; # DB
 	public $primary; # DB
-// 	public $primaryUsing = GDT_Index::HASH; # one default to rule them all is in @see{Database}
 	public $readable = false; # can see
 	public $writable = false; # can change
 	public $editable = false; # user can change
@@ -69,9 +66,6 @@ abstract class GDT
 	
 	public static $COUNT = 0; # Total GDT created
 
-#	protected static $nameNr = 1; # Auto naming
-// 	public static function nextName() {} # return 'gdt-'.(self::$nameNr++); }
-// 	public function hasName() { return substr($this->name, 0, 4) !== 'gdt-'; }
 	public function hasName() { return $this->name !== null; }
 	public function defaultName() {}
 	
@@ -85,7 +79,6 @@ abstract class GDT
 	    self::$COUNT++;
 		$obj = new static();
 		return $obj->name($name ? $name : $obj->defaultName());
-// 		return $obj->name($name ? $name : $obj->name);
 	}
 	
 	### stats
@@ -95,27 +88,6 @@ abstract class GDT
 	### Name ###
 	############
 	public function name($name=null) { $this->name = $name; return $this; }
-// 	public function name($name=null) { $this->name = $name === null ? self::nextName() : $name; return $this; }
-	
-// 	/**
-// 	 * name is deprecated in anchors
-// 	 * @deprecated
-// 	 * @return string
-// 	 */
-// 	public function htmlName() { return Strings::startsWith($this->name, 'gdo-') ? '' :  sprintf(' name="%s"', $this->name); }
-	
-// 	# @TODO: make htmlClass() abstract and implement every classname in every class. this should give some speedup.
-// 	private static $classNameCache = [];
-// 	public function htmlClass()
-// 	{
-// 	    if (!isset(self::$classNameCache[static::class]))
-// 	    {
-// 	        self::$classNameCache[static::class] = $cache = " gdo-".strtolower($this->gdoShortName());
-// 	        return $cache;
-// 	    }
-// 	    return self::$classNameCache[static::class];
-// 	}
-
     public function htmlClass() { return ' ' . strtolower($this->gdoShortName()); }
 	
 	##############
@@ -143,7 +115,6 @@ abstract class GDT
 	public function htmlError() { return $this->error ? ('<div class="gdo-form-error">' . $this->error . '</div>') : ''; }
 	public function classError()
 	{
-// 	    $class = ' '.str_replace('_', '-', strtolower($this->gdoShortName()));
 	    $class = $this->htmlClass();
 	    if ($this->notNull) $class .= ' gdo-required';
 		if ($this->hasError()) $class .= ' gdo-has-error';
@@ -184,7 +155,7 @@ abstract class GDT
     	       return $this->setGDOData($gdo);
 	        }
 	    }
-	    return $this; //->var($this->initial);
+	    return $this;
 	}
 	
 	/**

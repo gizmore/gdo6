@@ -188,9 +188,12 @@ trait WithFields
     			        $json[$k] = $v;
     			    }
 			    }
-			    else
+			    elseif ($gdoType->isSerializable())
 			    {
-			        $json[$gdoType->name] = $data;
+			        if ($gdoType->name)
+			        {
+			            $json[$gdoType->name] = $data;
+			        }
 			    }
 			}
 		}
@@ -214,9 +217,15 @@ trait WithFields
 	{
 		foreach ($gdt->fields as $_gdt)
 		{
-			$fields[$_gdt->name] = $_gdt;
-			$uses = class_uses($_gdt);
-			if (in_array('GDO\Core\WithFields', $uses, true))
+		    if ($_gdt->name)
+		    {
+    			$fields[$_gdt->name] = $_gdt;
+		    }
+		    else
+		    {
+		        $fields[] = $_gdt;
+		    }
+			if (@$_gdt->fields)
 			{
 				$this->_getFieldsRec($fields, $_gdt);
 			}

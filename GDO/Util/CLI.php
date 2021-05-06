@@ -53,6 +53,20 @@ final class CLI
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7'; # @TODO use output of locale command?
     }
     
+    public static function br2nl($s, $nl=PHP_EOL)
+    {
+        return preg_replace('#< *br */? *>#is', $nl, $s);
+    }
+    
+    public static function htmlToCLI($html)
+    {
+        $html = preg_replace('/<a .*href="([^"]+)".*>([^<]+)<\\/a>/ius', "$1 ($2)", $html);
+        $html = self::br2nl($html);
+        $html = preg_replace('/<[^>]*>/is', '', $html);
+        $html = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
+        return $html;
+    }
+    
     public static function execute($line)
     {
         if (!($line = trim($line, "\r\n\t ")))

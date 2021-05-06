@@ -26,6 +26,7 @@ class GDT_Error extends GDT_Panel
 	
 	public static function responseWith($key, array $args=null, $code=405, $log=true)
 	{
+// 	    $log = Application::instance()->isCLI() ? false : $log;
 		return GDT_Response::makeWith(self::with($key, $args, $code, $log))->code($code);
 	}
 	

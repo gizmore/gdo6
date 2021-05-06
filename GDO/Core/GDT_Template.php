@@ -1,11 +1,13 @@
 <?php
 namespace GDO\Core;
+
 use Exception;
 use GDO\UI\WithLabel;
 use GDO\Util\Strings;
 use GDO\Language\Trans;
 use GDO\User\GDO_User;
 use GDO\File\FileUtil;
+
 /**
  * GWF Template Engine.
  * Very cheap / basic
@@ -17,8 +19,8 @@ use GDO\File\FileUtil;
  * - @TODO: Cache template files and use eval on them. maybe that's a tad faster than Filesystem.
  * 
  * @author gizmore
- * @version 6.05
- * @since 3.00
+ * @version 6.10.2
+ * @since 3.0.0
  */
 class GDT_Template extends GDT
 {
@@ -31,7 +33,9 @@ class GDT_Template extends GDT
 	############
 	### Base ###
 	############
+	public function defaultName() { return 'template'; }
 	public function defaultLabel() { return $this->noLabel(); }
+	
 	public function htmlClass()
 	{
 		$class = parent::htmlClass();
@@ -42,6 +46,9 @@ class GDT_Template extends GDT
 	public function render() { return $this->renderTemplate(); }
 	public function renderCell() { return $this->renderTemplate(); }
 	public function renderForm() { return $this->renderTemplate(); }
+	public function renderJSON() { return $this->renderTemplate(); }
+	public function renderCLI() { return strip_tags($this->renderTemplate()); }
+	
 	public function renderFilter($f) { return $this->renderTemplate($f); }
 	public function renderTemplate($f=null)
 	{

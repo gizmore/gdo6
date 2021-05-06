@@ -5,6 +5,7 @@ use GDO\Core\Debug;
 use GDO\Core\GDT_Template;
 use GDO\MailGPG\GDO_PublicKey;
 use GDO\User\GDO_User;
+use GDO\Util\CLI;
 use GDO\Util\Strings;
 
 /**
@@ -143,11 +144,6 @@ final class Mail
 		return self::sendMailS(GWF_BOT_EMAIL, $to, GWF_SITENAME.": ".$subject, Debug::getDebugText($body), false, true);
 	}
 	
-	private static function br2nl($s, $nl=PHP_EOL)
-	{
-		return preg_replace('#< *br */? *>#is', $nl, $s);
-	}
-	
 	public function nestedHTMLBody()
 	{
 		if (self::$DEBUG || (!class_exists('GDO\Core\GDT_Template')))
@@ -166,13 +162,7 @@ final class Mail
 
 	public function nestedTextBody()
 	{
-		$body = $this->body;
-		#$body = preg_replace('/<[^>]+>([^<]+)<[^>+]>/', '$1', $body);
-		$body = preg_replace('/<a .*href="([^"]+)".*>([^<]+)<\\/a>/ius', "$1 ($2)", $body);
-		$body = preg_replace('/<[^>]*>/is', '', $body);
-		$body = self::br2nl($body);
-		$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
-		return $body;
+	    return CLI::htmlToCLI($this->body);
 	}
 
 	/**

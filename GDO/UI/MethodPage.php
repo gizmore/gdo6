@@ -8,15 +8,16 @@ use GDO\Core\Method;
  * Uses gdoParameters to populate template vars.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.04
+ * @version 6.10.2
+ * @since 6.4.0
  */
 class MethodPage extends Method
 {
 	public function execute()
 	{
 		$name = strtolower($this->gdoShortName());
-		return $this->templatePHP("page/{$name}.php", $this->getTemplateVars());
+		return $this->templatePHP("page/{$name}.php",
+		  $this->getTemplateVars());
 	}
 	
 	protected function getTemplateVars()
@@ -24,8 +25,9 @@ class MethodPage extends Method
 		$tVars = [];
 		foreach ($this->gdoParameters() as $param)
 		{
-			$tVars[$param->name] = $param->getValue();
+			$tVars[$param->name] = $this->gdoParameterValue($param->name);
 		}
 		return $tVars;
 	}
+
 }

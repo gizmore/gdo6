@@ -87,7 +87,8 @@ if (!($user = GDO_User::getBy('user_name', CLI::getUsername())))
         'user_name' => CLI::getUsername(),
         'user_type' => GDO_User::MEMBER,
     ])->insert();
-    echo "Created a new user.";
+    echo t('msg_new_user_created', [CLI::getUsername()]);
+    echo PHP_EOL;
 }
 GDO_User::setCurrent($user);
 Trans::setISO($user->getLangISO());

@@ -11,7 +11,7 @@ use GDO\Core\Application;
 use GDO\UI\GDT_Container;
 
 /**
- * An (HTML) Form.
+ * A form.
  * 
  * @see GDT_Table
  * @see GDT_Card
@@ -19,7 +19,7 @@ use GDO\UI\GDT_Container;
  * @todo remove ugly static behaviour
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 3.0.0
  */
 class GDT_Form extends GDT
@@ -28,10 +28,11 @@ class GDT_Form extends GDT
 	public static $VALIDATING_SUCCESS; # ugly, but hey.
 	public static $CURRENT; # ugly, but hey.
 	
-	use WithFields;
 	use WithTitle;
+	use WithFields;
 	
 	public function defaultName() { return 'form'; }
+	public function isSerializable() { return true; }
 	
 	protected function __construct()
 	{
@@ -103,6 +104,27 @@ class GDT_Form extends GDT
 		return $back;
 	}
 	
+	public function renderJSON()
+	{
+	    $json = [];
+	    foreach ($this->getFieldsRec() as $gdt)
+	    {
+	        if ($gdt->isSerializable())
+	        {
+	            if ($gdt->name)
+	            {
+	                $json[$gdt->name] = $gdt->renderJSON();
+	            }
+	        }
+	    }
+	    return $json;
+	}
+	
+	public function renderCLI()
+	{
+	    return $this->gdoHumanName() . ': ' . json_encode($this->renderJSON(), JSON_THROW_ON_ERROR|JSON_PRETTY_PRINT);
+	}
+	
 	public function reset(GDO $gdo)
 	{
 	    $this->withFields(function(GDT $gdt) use ($gdo) { $gdt->gdo($gdt->gdo); });
@@ -112,7 +134,7 @@ class GDT_Form extends GDT
 	{
 	    foreach ($this->getFieldsRec() as $gdt)
 	    {
-	        if (!($gdt instanceof GDT_Hidden))
+	        if (!$gdt->hidden)
 	        {
 	            return true;
 	        }
@@ -213,7 +235,8 @@ class GDT_Form extends GDT
 	public function getFormData()
 	{
 		self::$formData = [];
-		$this->withFields(function(GDT $gdt) {
+		$this->withFields(function(GDT $gdt)
+		{
 		    if ($gdt->writable)
 		    {
     		    if ($data = $gdt->getGDOData())

@@ -10,13 +10,13 @@ use GDO\Core\Application;
  * GDT_Form CSRF protection
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 1.0.0
  */
 class GDT_AntiCSRF extends GDT_Hidden
 {
     const KEYLEN = 6;
-    const MAX_KEYS = 10;
+    const MAX_KEYS = 12;
     
     public $name = 'xsrf';
     public $editable = false;

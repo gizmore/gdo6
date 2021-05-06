@@ -139,7 +139,7 @@ final class Logger
 	########################
 	public static function logCron($message) { self::rawLog('cron', $message, 0); echo $message.PHP_EOL; }
 	public static function logWebsocket($message) { self::rawLog('websocket', $message, 0); echo $message.PHP_EOL; }
-	public static function logDebug($message) { self::rawLog('debug', $message, self::DEBUG); if (Application::instance()->isCLI()) echo $message.PHP_EOL; }
+	public static function logDebug($message) { self::rawLog('debug', $message, self::DEBUG); }
 	public static function logError($message) { self::log('error', $message, self::GWF_ERROR); }
 	public static function logMessage($message) { self::log('message', $message, self::GWF_MESSAGE); }
 	public static function logWarning($message) { self::log('warning', $message, self::GWF_WARNING); }
@@ -214,10 +214,6 @@ final class Logger
 		# log it?
 		if (true === self::isEnabled($logmode))
 		{
-		    if (PHP_SAPI === 'cli')
-		    {
-		        echo "$message\n";
-		    }
 		    $time = date('H:i');
 			$ip = (false === isset($_SERVER['REMOTE_ADDR']) || self::isDisabled(self::IP))
 				? '' : $_SERVER['REMOTE_ADDR'];

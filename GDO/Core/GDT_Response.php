@@ -20,6 +20,8 @@ class GDT_Response extends GDT
 	
 	public static function globalError() { return self::$CODE >= 400; }
 	
+	public function defaultName() { return 'response'; }
+	
 	##################
 	### Error code ###
 	##################
@@ -108,18 +110,15 @@ class GDT_Response extends GDT
 	
 	public function renderCLI()
 	{
-	    return "{$this->code} - " . $this->renderCLIFields();
+	    return $this->renderCLIFields();
 	}
 
 	private function renderCLIFields()
 	{
 	    $back = '';
-	    foreach ($this->getFieldsRec() as $field)
+	    foreach ($this->fields as $field)
 	    {
-	        if (null !== ($out = $field->renderCLI()))
-	        {
-	            $back .= " {$out}";
-	        }
+	        $back .= $field->renderCLI();
 	    }
 	    return trim($back);
 	}
