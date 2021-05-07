@@ -1,7 +1,7 @@
 # Contributors of gdo6
 
 Contributing to the gdo6 projects is welcome, and a hacking challenge on www.wechall.net
-Here i list contributors and what they have contributed to the project.
+Here I list contributors and what they have contributed to the project.
 
 ## List of contributors
 
@@ -9,3 +9,6 @@ jusb3: [gdo6-session-cookie](https://github.com/gizmore/gdo6-session-cookie) - F
 
 chrysoberyl: [gdo6](https://github.com/gizmore/gdo6) - A little bit wording for the documentation. [commit](https://github.com/gizmore/gdo6/commit/c3c14b438f6181baf2a9b437bc9728c38c3c707a)
 
+tehron: [gdo6](https://github.com/gizmore/gdo6) - Additions to the documentation. [pull request](https://github.com/gizmore/gdo6/pull/9) Improving Install Wizard. [pull_request](https://github.com/gizmore/gdo6/pull/12)
+
+flederohr: [gdo6](https://github.com/gizmore/gdo6) - Made gdo_update.sh use parallel threads via XARGS to speed up updates. [pull request](https://github.com/gizmore/gdo6/pull/6)

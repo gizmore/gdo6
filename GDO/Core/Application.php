@@ -17,6 +17,7 @@ class Application
 	const HTML = 'html';
 	const JSON = 'json';
 	const CLI = 'cli';
+	const XML = 'xml';
 	
 	/**
 	 * @return self

@@ -125,7 +125,7 @@ final class CronjobImageVariants extends MethodCronjob
 	private function createImageVariantsForFiles(GDO $table, GDT_ImageFiles $gdt)
 	{
 		# Select all files from this gdt filetable.
-		$query = $gdt->fileTable->select('gdo_file.*')->joinObject('files_file')->fetchTable(GDO_File::table());
+		$query = $gdt->fileTable->select('gdo_file.*', false)->joinObject('files_file')->fetchTable(GDO_File::table());
 		$result = $query->exec();
 		while ($file = $result->fetchObject())
 		{

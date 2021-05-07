@@ -8,6 +8,8 @@ class Module_Cronjob extends GDO_Module
 	##############
 	### Module ###
 	##############
+    public function isCoreModule() { return true; }
+    
 	public function onLoadLanguage() { return $this->loadLanguage('lang/cronjob'); }
 
 	public function href_administrate_module()

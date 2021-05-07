@@ -1,4 +1,4 @@
-.gdo-container.gdo-has-error {
+.gdt-container.gdo-has-error {
 	background-color: #fa6;
 	animation-name: pulse-error;
 	animation-duration: 3s;

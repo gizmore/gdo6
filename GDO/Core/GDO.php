@@ -52,7 +52,7 @@ abstract class GDO
     
     public function gdoCached() { return true; }
     public function memCached() { return $this->gdoCached(); }
-    public function cached() { return $this->gdoCached() || $this->memCached(); }
+    public function cached() { return $this->gdoCached() || (GWF_MEMCACHE && $this->memCached()); }
     
     public function gdoTableName() { return self::table()->cache->tableName; }
     public function gdoDependencies() { return null; }
@@ -60,7 +60,6 @@ abstract class GDO
     public function gdoEngine() { return self::INNODB; } # @see self::MYISAM
     public function gdoAbstract() { return false; }
     public function gdoIsTable() { return true; }
-//     public function gdoTableIdentifier() { return self::quoteIdentifierS($this->gdoTableName()); }
     public function gdoTableIdentifier() { return $this->gdoTableName(); }
     
     ################
@@ -101,6 +100,12 @@ abstract class GDO
     public function __construct()
     {
         self::$COUNT++;
+    }
+    
+    public function __wakeup()
+    {
+        self::$COUNT++;
+        $this->recache = false;
     }
     
     #################
@@ -149,11 +154,14 @@ abstract class GDO
         $values = [];
         foreach ($this->gdoColumnsCache() as $gdoType)
         {
-            if ($data = $gdoType->gdo($this)->getGDOData())
+            if ($gdoType->isSerializable())
             {
-                foreach ($data as $k => $v)
+                if ($data = $gdoType->gdo($this)->getGDOData())
                 {
-                    $values[$k] = $v;
+                    foreach ($data as $k => $v)
+                    {
+                        $values[$k] = $v;
+                    }
                 }
             }
         }
@@ -163,8 +171,20 @@ abstract class GDO
     ############
     ### Vars ###
     ############
-    private $gdoVars;
+    
+    /**
+     * Mark vars as dirty.
+     * Either true for all, false for none, or an assoc array with field mappings.
+     * @var boolean,boolean[]
+     */
     private $dirty = false;
+
+    /**
+     * Entity gdt vars.
+     * @var string[]
+     */
+    private $gdoVars;
+    
     public function getGDOVars() { return $this->gdoVars; }
     
     /**
@@ -187,8 +207,7 @@ abstract class GDO
      */
     public function getVar($key)
     {
-        $var = isset($this->gdoVars[$key]) ? $this->gdoVars[$key] : null;
-        return $var;
+        return @$this->gdoVars[$key];
     }
     
     /**
@@ -226,10 +245,7 @@ abstract class GDO
     {
         foreach ($vars as $key => $value)
         {
-            if ($this->hasColumn($key))
-            {
-                $this->setVar($key, $value, $markDirty);
-            }
+            $this->setVar($key, $value, $markDirty);
         }
         return $this;
     }
@@ -283,7 +299,6 @@ abstract class GDO
         {
             $this->dirty = [];
         }
-
         if ($this->dirty !== true)
         {
             $this->dirty[$key] = true;
@@ -293,7 +308,7 @@ abstract class GDO
     
     public function isDirty()
     {
-        return $this->dirty === false ? false : (count($this->dirty) > 0);
+        return is_bool($this->dirty) ? $this->dirty : count($this->dirty) > 0;
     }
     
     /**
@@ -555,7 +570,7 @@ abstract class GDO
      */
     public function find($id=null, $exception=true)
     {
-        if ($id && ($gdo = $this->getById($id)) )
+        if ($id && ($gdo = $this->getById($id)))
         {
             return $gdo;
         }
@@ -571,7 +586,8 @@ abstract class GDO
      */
     public function countWhere($condition='true')
     {
-        return $this->select('COUNT(*)', false)->where($condition)->noOrder()->exec()->fetchValue();
+        return $this->select('COUNT(*)', false)->where($condition)->
+          noOrder()->exec()->fetchValue();
     }
     
     /**
@@ -679,8 +695,8 @@ abstract class GDO
         if ($withHooks)
         {
             $this->afterCreate();
+//             $this->cache(); # not needed for new rows?
         }
-//         $this->recache(); # not needed for new rows?
         return $this;
     }
     
@@ -711,26 +727,31 @@ abstract class GDO
         {
             return $this->insert();
         }
-        if ($this->isDirty())
-        {
+//         if ($this->isDirty())
+//         {
             if ($setClause = $this->getSetClause())
             {
                 $query = $this->updateQuery()->set($setClause);
+                
                 if ($withHooks)
                 {
                     $this->beforeUpdate($query);
                 }
+                
                 $query->exec();
                 $this->dirty = false;
-                $this->recache(); # save is the only action where we recache!
-//                 $this->callRecacheHook();
+                
+                if ($withHooks)
+                {
+                    $this->recache(); # save is the only action where we recache!
+                }
+
                 if ($withHooks)
                 {
                     $this->afterUpdate();
                 }
             }
-            $this->dirty = false;
-        }
+//         }
         return $this;
     }
     
@@ -756,22 +777,15 @@ abstract class GDO
         $query = $this->updateQuery();
         foreach ($vars as $key => $var)
         {
-//             if ( ($this->dirty === true) || (isset($this->dirty[$key])) )
-//             if ($gdt = $this->gdoColumn($key))
-//             {
-//                 foreach ($gdt->getGDOData() as $k => $v)
-//                 {
-//                     if (array_key_exists($key, $this->gdoVars))
-//                     {
-                        if ($var !== $this->gdoVars[$key])
-                        {
-                            $query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
-                            $this->markClean($key);
-                            $worthy = true; # We got a change
-                        }
-//                     }
-//                 }
-//             }
+            if (array_key_exists($key, $this->gdoVars))
+            {
+                if ($var !== $this->gdoVars[$key])
+                {
+                    $query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
+                    $this->markClean($key);
+                    $worthy = true; # We got a change
+                }
+            }
         }
 
         # Call hooks even when not needed. Because its needed on GDT_Files
@@ -782,13 +796,12 @@ abstract class GDO
             $query->exec();
             foreach ($vars as $key => $var)
             {
-//                 if (array_key_exists($key, $this->gdoVars)) # speedup?
-//                 {
-                    $this->gdoVars[$key] = $var;
-//                 }
+                $this->gdoVars[$key] = $var;
             }
-            $this->recache(); # save is the only action where we recache!
-            if ($withHooks) $this->callRecacheHook();
+            if ($withHooks)
+            {
+                $this->recache();
+            }
         }
 
         # Call hooks even when not needed. Because its needed on GDT_Files
@@ -805,7 +818,7 @@ abstract class GDO
     
     public function saveValues(array $values, $withHooks=true)
     {
-        $vars = array();
+        $vars = [];
         foreach ($values as $key => $value)
         {
             $this->gdoColumn($key)->setGDOValue($value);
@@ -954,24 +967,15 @@ abstract class GDO
      * Id cache
      * @var $id string
      */
-//     private $id = null;
     public function getID()
     {
-//         if ($this->id === null)
-//         {
-            $id = '';
-            foreach ($this->gdoPrimaryKeyColumnNames() as $name)
-            {
-                   $id2 = $this->getVar($name);
-                   $id = $id ? "{$id}:{$id2}" : $id2;
-            }
-            return $id;
-//             if ($id)
-//             {
-//                 $this->id = $id;
-//             }
-//         }
-//         return $this->id;
+        $id = '';
+        foreach ($this->gdoPrimaryKeyColumnNames() as $name)
+        {
+            $id2 = $this->getVar($name);
+            $id = $id ? "{$id}:{$id2}" : $id2;
+        }
+        return $id;
     }
     
     /**
@@ -993,9 +997,9 @@ abstract class GDO
      * @param string $value
      * @return self
      */
-    public static function getBy($key, $value)
+    public static function getBy($key, $var)
     {
-        return self::table()->getWhere(self::quoteIdentifierS($key) . '=' . self::quoteS($value));
+        return self::table()->getWhere(self::quoteIdentifierS($key) . '=' . self::quoteS($var));
     }
     
     /**
@@ -1005,11 +1009,11 @@ abstract class GDO
      * @param string $value
      * @return self
      */
-    public static function findBy($key, $value)
+    public static function findBy($key, $var)
     {
-        if (!($gdo = self::getBy($key, $value)))
+        if (!($gdo = self::getBy($key, $var)))
         {
-            self::notFoundException($value);
+            self::notFoundException($var);
         }
         return $gdo;
     }
@@ -1069,7 +1073,7 @@ abstract class GDO
     
     public static function notFoundException($id)
     {
-        throw new GDOError('err_gdo_not_found', [self::table()->gdoHumanName(), $id]);
+        throw new GDOError('err_gdo_not_found', [self::table()->gdoHumanName(), html($id)]);
     }
     
     /**
@@ -1139,19 +1143,40 @@ abstract class GDO
         if ($this->cached())
         {
             self::table()->cache->recache($this);
-            if (GWF_IPC)
-            {
-                $this->callRecacheHook();
-            }
         }
     }
     
+    public function recacheMemcached()
+    {
+        if (GWF_MEMCACHE && $this->memCached())
+        {
+            $this->table()->cache->recache($this);
+        }
+    }
+    
+    public $recache = false;
+    public function recaching()
+    {
+        $this->recache = true;
+        return $this;
+    }
+    
+    public function cache()
+    {
+        if ($this->cached())
+        {
+            self::table()->cache->recache($this);
+        }
+    }
+    
+    /**
+     * @deprecated Untested and why does it exist?
+     */
     public function uncache()
     {
         if ($this->table()->cache)
         {
             $this->table()->cache->uncache($this);
-//             $this->callRecacheHook();
         }
     }
     
@@ -1166,14 +1191,6 @@ abstract class GDO
         return $this;
     }
 
-    public function callRecacheHook()
-    {
-        if ($this->cached())
-        {
-            GDT_Hook::callWithIPC('CacheInvalidate', $this->gdoClassName(), $this->getID());
-        }
-    }
-    
     ###########
     ### All ###
     ###########

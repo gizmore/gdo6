@@ -7,8 +7,9 @@ use GDO\DB\GDT_String;
 /**
  * Arbitrary method call on a gdo for cell display.
  * 
+ * @deprecated Ugly idea
  * @author gizmore
- * @since 6.10
+ * @since 6.10.1
  */
 final class GDT_Cell extends GDT
 {
@@ -45,9 +46,9 @@ final class GDT_Cell extends GDT
 	
 	public function renderJSON()
 	{
-		return array(
+		return [
 			$this->name => $this->callMethod(),
-		);
+		];
 	}
 
 }

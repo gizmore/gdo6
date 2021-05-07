@@ -5,23 +5,23 @@ In this folder you find various documentation files.
 
 ## Installation
 
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/INSTALL.md
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/GDO_PACKAGE_MANAGEMENT.md
+ - [INSTALL](INSTALL.md)
+ - [GDO_PACKAGE_MANAGEMENT](GDO_PACKAGE_MANAGEMENT.md)
 
  
 ## Documentation
 
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/GDO_AND_GDT.md
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/GDO_CACHING.md
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/GDO_ICONS.md
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/GDO_TROUBLESHOOT.md
+ - [GDO_AND_GDT](GDO_AND_GDT.md)
+ - [GDO_CACHING](GDO_CACHING.md)
+ - [GDO_ICONS](GDO_ICONS.md)
+ - [GDO_TROUBLESHOOT](GDO_TROUBLESHOOT.md)
 
 
 ## Various
 
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/ROADMAP.md
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/IDEAS.md
- - https://github.com/gizmore/gdo6/BLOB/master/DOCS/PHILOSOPHY.md
+ - [ROADMAP](ROADMAP.md)
+ - [IDEAS](IDEAS.md)
+ - [PHILOSOPHY](PHILOSOPHY.md)
 
  
 ## Demos
@@ -36,4 +36,3 @@ In this folder you find various documentation files.
 ## phpDocumentor docs
 
  - https://gdo6.gizmore.org/GDO/Docs/DOCS
-

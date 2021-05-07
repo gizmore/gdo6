@@ -28,7 +28,8 @@ use GDO\DB\GDT_Index;
  * 
  * @author gizmore
  * @link https://www.wechall.net
- * @version 6.10.1
+ * @link https://mettwitze.gizmore.org
+ * @version 6.10.2
  * @since 1.0.0
  */
 final class GDO_User extends GDO
@@ -51,7 +52,7 @@ final class GDO_User extends GDO
 	###########
 	public function gdoColumns()
 	{
-		return array(
+		return [
 			GDT_AutoInc::make('user_id'),
 			GDT_Username::make('user_name')->unique(),
 			GDT_Enum::make('user_type')->enumValues(self::SYSTEM, self::GHOST, self::BOT, self::GUEST, self::MEMBER)->label('type')->notNull()->initial(self::GUEST),
@@ -60,7 +61,6 @@ final class GDO_User extends GDO
 			GDT_Email::make('user_email')->searchable(false),
 			GDT_Level::make('user_level'),
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits')->icon('money'),
-// 			GDT_EmailFormat::make('user_email_fmt')->notNull()->initial(GDT_EmailFormat::HTML),
 			GDT_Gender::make('user_gender'),
 			GDT_Country::make('user_country'),
 			GDT_Language::make('user_language')->notNull()->initial(GWF_LANGUAGE),
@@ -73,7 +73,7 @@ final class GDO_User extends GDO
 		    # Indexes
 		    GDT_Index::make()->indexColumns('user_last_activity'),
 		    GDT_Index::make()->indexColumns('user_type'),
-		);
+		];
 	}
 	
 	##############
@@ -87,14 +87,32 @@ final class GDO_User extends GDO
 	public function getRealName() { return $this->getVar('user_real_name'); }
 	public function getGuestName() { return $this->getVar('user_guest_name'); }
 	
-	public function isBot() { return $this->getType() === self::BOT; }
-	public function isGhost() { return $this->getType() === self::GHOST; }
-	public function isGuest() { return $this->getType() === self::GUEST; }
-	public function isMember() { return $this->getType() === self::MEMBER; }
+	public function isBot() { return $this->isType(self::BOT); }
+	public function isGhost() { return $this->isType(self::GHOST); }
+	public function isGuest() { return $this->isType(self::GUEST); }
+	public function isMember() { return $this->isType(self::MEMBER); }
+	public function isType($type) { return $this->getType() === $type; }
 	
-// 	public function getLevel() { return $this->getVar('user_level'); }
+	/**
+	 * Check if it is a legit user.
+	 * Either a guest with name or a member.
+	 * @return boolean
+	 */
+	public function isUser()
+	{
+	    switch ($this->getType())
+	    {
+	        case self::MEMBER:
+	            return true;
+	        case self::GUEST:
+        	    return !!$this->getGuestName();
+	        default:
+	            return false;
+	    }
+	}
+	
 	public function getCredits() { return $this->getVar('user_credits'); }
-	public function isAuthenticated() { return !$this->isGhost(); }
+	public function isAuthenticated() { return $this->isUser(); }
 	
 	public function hasMail() { return !!$this->getMail(); }
 	public function getMail() { return $this->getVar('user_email'); }
@@ -107,7 +125,6 @@ final class GDO_User extends GDO
 	public function getCountryISO() { return $this->getVar('user_country'); }
 	public function getCountry() { $c = $this->getValue('user_country'); return $c ? $c : GDO_Country::unknownCountry(); }
 	public function getTimezone() { return $this->getVar('user_timezone'); }
-// 	public function getBirthdate() { return $this->getVar('user_birthdate'); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
 	
@@ -235,7 +252,7 @@ final class GDO_User extends GDO
 	 */
 	public static function ghost()
 	{
-	    return self::blank(['user_type' => 'ghost', 'user_id' => '0']);
+	    return self::blank(['user_id' => '0', 'user_type' => 'ghost']);
 	}
 	
 	private static $SYSTEM;
@@ -247,8 +264,9 @@ final class GDO_User extends GDO
 	        if (!(self::$SYSTEM = self::findById('1')))
 	        {
 	            self::$SYSTEM = self::blank([
-	                'user_id' => '1', 'user_type' => 'system'])->
-	                replace();
+	                'user_id' => '1',
+	                'user_type' => 'system',
+	            ])->replace();
 	        }
 	    }
         return self::$SYSTEM;
@@ -256,7 +274,7 @@ final class GDO_User extends GDO
 	
 	/**
 	 * Get current user.
-	 * Not necisarilly via session!
+	 * Not neccisarilly via session!
 	 * @return self
 	 */
 	public static function current() { self::$CURRENT = self::$CURRENT ? self::$CURRENT : GDO_Session::user(); return self::$CURRENT; }
@@ -377,7 +395,6 @@ final class GDO_User extends GDO
 	
 	public function renderJSON()
 	{
-// 	    $bday = $this->getBirthdate();
 		return [
 			'user_id' => (int)$this->getID(),
 			'user_name' => $this->getName(),
@@ -392,7 +409,6 @@ final class GDO_User extends GDO
 			'user_language' => $this->getLangISO(),
 			'user_country' => $this->getCountryISO(),
 		    'user_timezone' => $this->getTimezone(),
-// 			'user_birthdate' => $bday ? Time::getTimestamp($bday) : 0,
 			'permissions' => $this->loadPermissions(),
 		];
 	}

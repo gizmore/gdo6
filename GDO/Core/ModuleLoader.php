@@ -14,7 +14,7 @@ use GDO\Table\Sort;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 3.0.0
  */
 final class ModuleLoader
@@ -89,11 +89,14 @@ final class ModuleLoader
 	 * @param string $moduleName
 	 * @return GDO_Module
 	 */
-	public function getModule($moduleName)
+	public function getModule($moduleName, $fs=false)
 	{
 	    $moduleName = strtolower($moduleName);
-		return isset($this->modules[$moduleName]) ? 
-		  $this->modules[$moduleName] : null;
+	    if (isset($this->modules[$moduleName]))
+	    {
+	        return $this->modules[$moduleName];
+	    }
+	    return $fs ? $this->loadModuleFS($moduleName) : false;
 	}
 	
 	/**
@@ -102,6 +105,7 @@ final class ModuleLoader
 	 */
 	public function getModuleByID($moduleID)
 	{
+	    $moduleID = (string) $moduleID;
 		foreach ($this->modules as $module)
 		{
 			if ($module->getID() === $moduleID)
@@ -119,11 +123,8 @@ final class ModuleLoader
 	 * Sorted by priority to be spinlock free.
 	 * @return GDO_Module[]
 	 */
-// 	private $loadCached = false;
 	public function loadModulesCache()
 	{
-	    $this->loadCached = true;
-	    
 		if (false === ($cache = Cache::get('gdo_modules')))
 		{
 			$cache = $this->loadModulesA();
@@ -131,11 +132,8 @@ final class ModuleLoader
 		}
 		else
 		{
-// 		    Cache::heat('gdo_modules', $cache); # is not gdoCached.
 			$this->initFromCache($cache);
 		}
-		
-// 		$this->loadCached = false;
 		return $this->modules;
 	}
 	
@@ -157,19 +155,19 @@ final class ModuleLoader
 	            GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
 		    }
 		    
-		    if (!$module->isBlocked())
-		    {
-    			if ($blocked = $module->getBlockedModules())
-    			{
-    			    foreach ($blocked as $moduleName)
-    			    {
-    			        if ($blockedModule = $this->getModule($moduleName))
-    			        {
-    			            $blockedModule->setBlocked();
-    			        }
-    			    }
-    			}
-		    }
+// 		    if (!$module->isBlocked())
+// 		    {
+//     			if ($blocked = $module->getBlockedModules())
+//     			{
+//     			    foreach ($blocked as $moduleName)
+//     			    {
+//     			        if ($blockedModule = $this->getModule($moduleName))
+//     			        {
+//     			            $blockedModule->setBlocked();
+//     			        }
+//     			    }
+//     			}
+// 		    }
 		}
 		
 		Trans::inited(true);
@@ -179,8 +177,8 @@ final class ModuleLoader
 		{
 			foreach ($this->modules as $module)
 			{
-			    if (!$module->isBlocked())
-			    {
+// 			    if (!$module->isBlocked())
+// 			    {
     				if ($module->isEnabled())
     				{
     					if (!$module->isInited())
@@ -190,7 +188,7 @@ final class ModuleLoader
     						$module->initedModule();
     					}
     				}
-			    }
+// 			    }
 			}
 		}
 	}
@@ -216,6 +214,8 @@ final class ModuleLoader
 	{
 		if ($refresh)
 		{
+		    $this->loadedDB = false;
+		    $this->loadedFS = false;
 			$this->modules = [];
 		}
 		
@@ -249,6 +249,10 @@ final class ModuleLoader
 	
 	private function loadModulesDB()
 	{
+	    if (!GWF_DB_ENABLED)
+	    {
+	        return false;
+	    }
 		try
 		{
 			$result = GDO_Module::table()->select('*')->exec();
@@ -302,7 +306,7 @@ final class ModuleLoader
 	 * @param boolean $init
 	 * @return \GDO\Core\GDO_Module
 	 */
-	public function loadModuleFS($name, $init=true)
+	public function loadModuleFS($name, $throw=true)
 	{
 	    $lowerName = strtolower($name);
 		if (!isset($this->modules[$lowerName]))
@@ -314,17 +318,22 @@ final class ModuleLoader
 				if ($module = self::instanciate($moduleData, true))
 				{
 					$this->modules[$lowerName] = $module;
-// 					if ($init)
-					{
-					    $module->buildConfigCache();
-					    $module->buildSettingsCache();
-					    $module->onLoadLanguage();
-					    if ($theme = $module->getTheme())
-					    {
-					        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
-					    }
-					}
+				    $module->buildConfigCache();
+				    $module->buildSettingsCache();
+				    $module->onLoadLanguage();
+				    if ($theme = $module->getTheme())
+				    {
+				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+				    }
 				}
+			}
+			elseif ($throw)
+			{
+			    throw new GDOError('err_module_method');
+			}
+			else
+			{
+			    return null;
 			}
 		}
 		return $this->modules[$lowerName];
@@ -379,9 +388,9 @@ final class ModuleLoader
         		    /** @var $module \GDO\Core\GDO_Module **/
         			if ($module = $this->modules[strtolower($row[0])])
         			{
-        				if ($gdt = $module->getConfigColumn($row[1]))
+        				if ($gdt = $module->getConfigColumn($row[1], false))
         				{
-        				    $gdt->initial($row[2]); #->var($row[2]);
+        				    $gdt->initial($row[2]);
         				}
         			}
         		}

@@ -70,10 +70,10 @@ final class Trans
     		self::$ISO = $iso;
     		# Generate utf8 locale identifier, e.g: de_DE.utf8 and setlocale
     		$iso = $iso . '_' . strtoupper($iso) . '.utf-8';
-    // 		if (!setlocale(LC_TIME, $iso))
-    // 		{
+//     		if (!setlocale(LC_ALL, $iso))
+    		{
     			setlocale(LC_TIME, $iso); # Bug... sometimes it needs two calls?!
-    // 		}
+    		}
 //     		self::inited(true);
 	    }
 	}

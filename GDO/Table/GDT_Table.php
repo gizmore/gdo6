@@ -238,7 +238,7 @@ class GDT_Table extends GDT
 	public $countQuery;
 	public function countQuery(Query $query)
 	{
-	    $query = $this->getFilteredQuery($query->copy());
+	    $this->countQuery = $this->getFilteredQuery($query->copy());
 // 	    $tablequery = $this->getFilteredQuery($query)->noOrder()->buildQuery();
 // 	    $this->countQuery = (new Query($query->table))->select('COUNT(*)')->from(" ( $tablequery ) querytable");
 	    return $this;
@@ -385,7 +385,7 @@ class GDT_Table extends GDT
 		{
 		    if ($this->countQuery)
 		    {
-		        $this->countItems = $this->countQuery->noOrder()->noLimit()->exec()->fetchValue();
+		        $this->countItems = $this->countQuery->selectOnly('COUNT(*)')->noOrder()->noLimit()->exec()->fetchValue();
 		    }
 		    else
 		    {

@@ -31,6 +31,8 @@ final class GDT_Page extends GDT
 
     public $topTabs; # Admin or module tabs.
     
+    public function defaultName() { return 'page'; }
+    
     /**
      * Call nav hooks early
      */
@@ -38,6 +40,7 @@ final class GDT_Page extends GDT
     {
         parent::__construct();
         self::$INSTANCE = $this;
+        $this->reset();
         $this->topTabs = GDT_Container::make('topTabs')->vertical();
     }
     
@@ -62,10 +65,7 @@ final class GDT_Page extends GDT
         {
             foreach (ModuleLoader::instance()->getEnabledModules() as $module)
             {
-                if ($module->isPersisted())
-                {
-                    $module->onInitSidebar();
-                }
+                $module->onInitSidebar();
             }
         }
     }

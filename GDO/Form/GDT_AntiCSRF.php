@@ -10,13 +10,13 @@ use GDO\Core\Application;
  * GDT_Form CSRF protection
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 1.0.0
  */
 class GDT_AntiCSRF extends GDT_Hidden
 {
     const KEYLEN = 6;
-    const MAX_KEYS = 20;
+    const MAX_KEYS = 12;
     
     public $name = 'xsrf';
     public $editable = false;
@@ -25,7 +25,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	protected function __construct()
 	{
 	    parent::__construct();
-	    $this->csrfToken();
+	    $this->var = $this->csrfToken();
 	}
 	
 	###########
@@ -46,15 +46,15 @@ class GDT_AntiCSRF extends GDT_Hidden
 		return $this;
 	}
 	
-	###############
-	### Cleanup ###
-	###############
-	public $csrfMaxTokens = 12; # Last 12 forms should be fine
-	public function csrfMaxTokens($csrfMaxTokens)
-	{
-		$this->csrfMaxTokens = $csrfMaxTokens;
-		return $this;
-	}
+// 	###############
+// 	### Cleanup ###
+// 	###############
+// 	public $csrfMaxTokens = 12; # Last 12 forms should be fine
+// 	public function csrfMaxTokens($csrfMaxTokens)
+// 	{
+// 		$this->csrfMaxTokens = $csrfMaxTokens;
+// 		return $this;
+// 	}
 	
 	#################
 	### Construct ###
@@ -87,7 +87,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	    $count = count($csrf);
 	    if ($count > self::MAX_KEYS) # max 2 tokens?
 	    {
-	        array_slice($csrf, $count - self::MAX_KEYS);
+	        $csrf = array_slice($csrf, $count - self::MAX_KEYS, self::MAX_KEYS);
 	    }
 	    GDO_Session::set('csrfs', json_encode($csrf));
 	}

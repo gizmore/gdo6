@@ -13,20 +13,20 @@ The installation process for a gdo6 module is as follows.
 
 1) Clone the module into your GDO folder with the correct foldername. The correct foldername is important. 
 
-    cd gdo6/GDO # go to module folder
-    git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery # clone this module as JQuery
-    cd gdo6 # go to root folder
-    ./gdo_yarn.sh # Install all js dependencies
+        cd gdo6/GDO # go to module folder
+        git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery # clone this module as JQuery
+        cd gdo6 # go to root folder
+        ./gdo_yarn.sh # Install all js dependencies
     
 2) Enable the module by installing it via admin panel.
 
-    # Login as admin
-    # Goto Admin->Modules->JQuery
-    # Click Install
+        # Login as admin
+        # Goto Admin->Modules->JQuery
+        # Click Install
     
-2b) Enable the module by using ./gdo.sh
+    b) Enable the module by using ./gdoadm.sh
 
-    ./gdo.sh install JQuery
+        ./gdoadm.sh install JQuery
     
 That's it. Your application now includes jquery assets :)
 

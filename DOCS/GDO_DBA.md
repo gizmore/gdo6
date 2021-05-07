@@ -16,16 +16,16 @@ Please note that GDO is not SQL injection safe, but this reduces code complexity
 
 The following classes make up the GDO DBA.
 
-- https://github.com/gizmore/gdo6/blob/master/GDO/DB/Database.php
-- https://github.com/gizmore/gdo6/blob/master/GDO/DB/Query.php
-- https://github.com/gizmore/gdo6/blob/master/GDO/DB/Result.php
-- https://github.com/gizmore/gdo6/blob/master/GDO/DB/ArrayResult.php (for non db stuff)
-- https://github.com/gizmore/gdo6/blob/master/GDO/DB/Cache.php
+- [Database.php](../GDO/DB/Database.php)
+- [Query.php](../GDO/DB/Query.php)
+- [Result.php](../GDO/DB/Result.php)
+- [ArrayResult.php](../GDO/DB/ArrayResult.php) (for non db stuff)
+- [Cache.php](../GDO/DB/Cache.php)
 
 
 ## Caching
 
-See https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_CACHING.md
+See [GDO_CACHING](GDO_CACHING.md)
 
 ## Column types
 
@@ -68,7 +68,3 @@ delete the user Peter:
 delete the user Peter and trigger deletion hook:
 
     GDO_User::table()->select()->where("user_name='Peter'")->exec()->fetchObject()->delete()
-    
-    
- 
-    

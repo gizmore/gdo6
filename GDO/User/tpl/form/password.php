@@ -1,5 +1,5 @@
 <?php /** @var $field \GDO\User\GDT_Password **/ ?>
-<div class="gdo-container<?= $field->classError(); ?>">
+<div class="gdt-container<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
   <label <?=$field->htmlForID()?>><?= $field->displayLabel(); ?></label>
   <input

@@ -10,10 +10,9 @@ use GDO\DB\GDT_String;
  */
 class GDT_Hidden extends GDT_String
 {
-	public $readable = false;
-	public $writable = true;
-	public $editable = false;
-	public $hidden = true;
+    public $writable = true;
+    public $editable = false;
+    public $hidden = true;
 	
 	public function isSerializable() { return false; }
 	

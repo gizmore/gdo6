@@ -9,6 +9,8 @@
  
 # Generated folders
 files/
+files_test/
+assets/
 protected/
 temp/
 
@@ -30,8 +32,9 @@ GDO/*
 !GDO/Install/
 !GDO/Language/
 !GDO/Mail/
-!GDO/Perf/
 !GDO/Net/
+!GDO/Perf/
+!GDO/Javascript/
 !GDO/PHPInfo/
 !GDO/Table/
 !GDO/UI/

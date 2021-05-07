@@ -1,8 +1,10 @@
 <?php
 namespace GDO\User;
+
 use GDO\Core\GDT_Template;
 use GDO\Util\BCrypt;
 use GDO\DB\GDT_String;
+
 /**
  * Bcrypt hash form and database value.
  * @author gizmore
@@ -14,6 +16,7 @@ class GDT_Password extends GDT_String
     
     protected function __construct()
 	{
+        parent::__construct();
 		$this->min = 59;
 		$this->max = 60;
 		$this->encoding = self::ASCII;

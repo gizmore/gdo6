@@ -185,4 +185,3 @@ final class LanguageData
 		return $languages;
 	}
 }
-?>

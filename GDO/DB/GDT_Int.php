@@ -53,6 +53,9 @@ class GDT_Int extends GDT
 	public $searchable = true;
 	public $orderable = true;
 	public $orderDefaultAsc = true;
+	public $readable = true;
+	public $editable = true;
+	public $writable = true;
 	
 	public function step($step) { $this->step = $step; return $this; }
 	public function bytes($bytes = 4) { $this->bytes = $bytes; return $this; }

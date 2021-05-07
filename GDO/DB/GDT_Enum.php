@@ -32,6 +32,9 @@ class GDT_Enum extends GDT
 	
 	public $orderable = true;
 	public $filterable = true;
+	public $readable = true;
+	public $editable = true;
+	public $writable = true;
 	
 	public function isSerializable() { return true; }
 	

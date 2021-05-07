@@ -46,23 +46,32 @@ spl_autoload_register(function($name){
 	
 # Global utility
 function sitename() { return t('sitename'); }
-function url($module, $method, $append='') { return urlSEO('index.php', $module, $method, $append); }
-function urlSEO($seoString, $module, $method, $append='') { return GDT_Url::absolute(hrefSEO($seoString, $module, $method, $append)); }
-function href($module, $method, $append='') { return hrefSEO('index.php', $module, $method, $append); }
+function url($module, $method, $append='', $lang=true) { return urlSEO('index.php', $module, $method, $append, $lang); }
+function urlSEO($seoString, $module, $method, $append='', $lang=true) { return GDT_Url::absolute(hrefSEO($seoString, $module, $method, $append, $lang)); }
+function href($module, $method, $append='', $lang=true) { return hrefSEO('index.php', $module, $method, $append, $lang); }
 function hrefDefault() { return href(GWF_MODULE, GWF_METHOD); }
-function hrefSEO($seoString, $module, $method, $append='')
+function hrefSEO($seoString, $module, $method, $append='', $lang=true)
 {
     if (defined('GWF_SEO_URLS') && GWF_SEO_URLS)
     {
         $html = $seoString === 'index.php' ? '' : '.html'; # append .html?
-        return GWF_WEB_ROOT . urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}&_lang=".Trans::$ISO."$append";
+        $href = GDO_WEB_ROOT . urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}";
     }
     else
     {
-        return GWF_WEB_ROOT . "index.php?mo={$module}&me={$method}&_lang=".Trans::$ISO."$append";
+        $href = GDO_WEB_ROOT . "index.php?mo={$module}&me={$method}";
     }
+    
+    if ($lang)
+    {
+        $href .= '&_lang='.Trans::$ISO;
+    }
+    
+    $href .= $append;
+
+    return $href;
 }
-function urlencodeSEO($str) { return preg_replace('#[^\\.\\p{L}0-9]#', '_', $str); }
+function urlencodeSEO($str) { return trim(preg_replace('#[^\\.\\p{L}0-9]#', '_', $str), '_'); }
 
 function quote($value) { return GDO::quoteS($value); }
 function json_quote($s) { return str_replace("'", "&#39;", $s); }

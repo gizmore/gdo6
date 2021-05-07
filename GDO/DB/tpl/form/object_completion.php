@@ -1,7 +1,7 @@
 <?php
 /** @var $field \GDO\DB\GDT_Object **/
 ?>
-<div class="gdo-container<?=$field->classError()?> gdo-autocomplete">
+<div class="gdt-container<?=$field->classError()?> gdo-autocomplete">
   <?=$field->htmlIcon()?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input

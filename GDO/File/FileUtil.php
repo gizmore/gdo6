@@ -93,7 +93,7 @@ final class FileUtil
 				{
 					if (is_dir($dir."/".$object))
 					{
-						return self::removeDir($dir."/".$object);
+						self::removeDir($dir."/".$object);
 					}
 					else
 					{

@@ -65,6 +65,6 @@ final class GetTypes extends Method
 		}
 		
 		$json = ['fields' => $fields, 'types' => $types];
-		Website::renderJSON($json);
+		Website::outputJSON($json);
 	}
 }

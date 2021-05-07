@@ -4,6 +4,7 @@ namespace GDO\Core;
 use GDO\UI\GDT_Link;
 use GDO\Session\GDO_Session;
 use GDO\UI\GDT_HTML;
+use GDO\UI\GDT_Page;
 
 /**
  * General Website utility.
@@ -108,16 +109,20 @@ final class Website
 	public static function displayLink()
 	{
 		$back = '';
+		
 		foreach(self::$_links as $link)
 		{
 			list($href, $type, $rel) = $link;
 			$back .= sprintf('<link rel="%s" type="%s" href="%s" />'."\n", $rel, $type, $href);
 		}
-		# embedded CSS (move?)
-		if('' !== self::$_inline_css)
+		
+		# embedded CSS (move?) # @todo create a CSS minifier?
+		if(self::$_inline_css)
 		{
-			$back .= sprintf("\n\t<style><!--\n\t%s\n\t--></style>\n", self::indent(self::$_inline_css, 2));
+			$back .= sprintf("\n\t<style><!--\n\t%s\n\t--></style>\n",
+			    self::$_inline_css);
 		}
+		
 		return $back;
 	}
 	
@@ -180,21 +185,22 @@ final class Website
 	 * @param mixed $json
 	 * @param boolean $die
 	 */
-	public static function renderJSON($json, $die=true)
+	public static function renderJSON($json)
+	{
+	    if (!Application::instance()->isCLI())
+		{
+			hdr('Content-Type: application/json');
+		}
+		return json_encode($json, JSON_PRETTY_PRINT); # pretty json
+	}
+	
+	public static function outputJSON($json)
 	{
 	    if (Application::instance()->isUnitTests())
 	    {
 	        return; # assume this method works in tests and dont output anything.
 	    }
-	        
-	    if (!Application::instance()->isCLI())
-		{
-			@header('Content-Type: application/json');
-		}
-		
-		echo json_encode($json, JSON_PRETTY_PRINT); # pretty json
-
-		if ($die) die(0);
+	    echo self::renderJSON($json);
 	}
 	
 	public static function outputStarted()
@@ -265,7 +271,6 @@ final class Website
 	    echo self::topResponse()->render();
 	}
 	
-	
 	#####################
 	### JSON Response ###
 	#####################
@@ -308,6 +313,7 @@ final class Website
 	public static function setTitle($title)
 	{
 	    self::$TITLE = $title;
+	    GDT_Page::$INSTANCE->titleRaw(self::displayTitle());
 	}
 	
 	public static function displayTitle()

@@ -19,7 +19,7 @@ var GDO_User = function(json) {
 	this.level = function() { return this.JSON.user_level; };
 	
 	this.profileLink = function() {
-		return '<a class="gdo-profile-link" title="'+this.displayName()+'" href="'+GWF_WEB_ROOT+'index.php?mo=Profile&amp;me=View&amp;_lang='+GWF_LANGUAGE+'&amp;id='+this.id()+'"><span>'+this.displayName()+'</span></a>';
+		return '<a class="gdo-profile-link" title="'+this.displayName()+'" href="'+GDO_WEB_ROOT+'index.php?mo=Profile&amp;me=View&amp;_lang='+GWF_LANGUAGE+'&amp;id='+this.id()+'"><span>'+this.displayName()+'</span></a>';
 	};
 	
 	this.displayName = function() {

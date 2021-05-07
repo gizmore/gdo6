@@ -1,13 +1,15 @@
 <?php
 namespace GDO\Core;
-use GDO\Util\Arrays;
+
 use GDO\Util\Common;
+
 /**
  * The GDO Logger.
+ * 
  * @author gizmore
  * @author spaceone
- * @version 6.10
- * @since 1.00
+ * @version 6.10.2
+ * @since 1.0.0
  */
 final class Logger
 {
@@ -17,7 +19,6 @@ final class Logger
 	const GWF_CRITICAL = 0x08;
 	const PHP_ERROR = 0x10;
 	const DB_ERROR = 0x20;
-// 	const SMARTY = 0x40;
 	const HTTP_ERROR = 0x80;
 	const HTTP_GET = 0x100;
 	const HTTP_POST = 0x200;
@@ -40,14 +41,14 @@ final class Logger
 	public static $WRITES = 0;
 
 	/**
-	 * Init the logger. If a username is given, the logger will log _additionally_ into a logs/username dir.
+	 * Init the logger. If a username is given, the logger will log into a logs/username dir.
 	 * @param string $username The username for memberlogs
 	 * @param int $logbits bitmask for logging-modes
 	 * @param string $basedir The path to the logfiles. Should be relative.
 	 */
 	public static function init($username=null, $logbits=self::_DEFAULT, $basedir='protected/logs')
 	{
-		self::$username = $username;
+		self::$username = $username; # @TODO sanitize username as it will be a directory name.
 		self::$logbits = $logbits;
 		self::$basedir = GDO_PATH . $basedir;
 	}
@@ -120,7 +121,8 @@ final class Logger
 			}
 			elseif (is_array($v) === true)
 			{
-				$v = Arrays::implode(',', $v); # can fail horribly here
+				$v = 'Array(' . count($v) . ')';
+// 				$v = Arrays::implode(',', $v); # can fail horribly here
 			}
 			$back .= self::$POST_DELIMITER.$k.'=>'.$v;
 		}
@@ -137,18 +139,18 @@ final class Logger
 	########################
 	public static function logCron($message) { self::rawLog('cron', $message, 0); echo $message.PHP_EOL; }
 	public static function logWebsocket($message) { self::rawLog('websocket', $message, 0); echo $message.PHP_EOL; }
-	public static function logDebug($message) { self::rawLog('debug', $message, self::DEBUG); if (Application::instance()->isCLI()) echo $message.PHP_EOL; }
+	public static function logDebug($message) { self::rawLog('debug', $message, self::DEBUG); }
 	public static function logError($message) { self::log('error', $message, self::GWF_ERROR); }
 	public static function logMessage($message) { self::log('message', $message, self::GWF_MESSAGE); }
 	public static function logWarning($message) { self::log('warning', $message, self::GWF_WARNING); }
 	public static function logCritical($message)
 	{
 		self::log('critical', $message, self::GWF_CRITICAL);
-		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GWF_CRITICAL); // TODO: formating
+// 		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GWF_CRITICAL); // TODO: formating
 	}
 	public static function logException(\Throwable $e)
 	{
-		$message = sprintf("%s in %s Line %s\n", $e->getMessage(), $e->getFile(), $e->getLine());
+		$message = sprintf("%s in %s Line %s\n", $e->getMessage(), Debug::shortpath($e->getFile()), $e->getLine());
 		self::log('critical', $message, self::GWF_CRITICAL);
 		$log = Debug::backtraceException($e, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message;
 		self::log('critical_details', $log, self::GWF_CRITICAL);
@@ -212,10 +214,6 @@ final class Logger
 		# log it?
 		if (true === self::isEnabled($logmode))
 		{
-		    if (PHP_SAPI === 'cli')
-		    {
-		        echo "$message\n";
-		    }
 		    $time = date('H:i');
 			$ip = (false === isset($_SERVER['REMOTE_ADDR']) || self::isDisabled(self::IP))
 				? '' : $_SERVER['REMOTE_ADDR'];
@@ -233,7 +231,6 @@ final class Logger
 			self::logB($filename, $message.PHP_EOL);
 		}
 	}
-
 
 	private static function logB($filename, $message)
 	{
@@ -256,7 +253,7 @@ final class Logger
 	{
 		# Create logdir if not exists
 		$filename = self::getFullPath($filename, self::$username);
-		if (false === self::createLogDir($filename))
+		if (!self::createLogDir($filename))
 		{
 			return new GDOException(sprintf('Cannot create logdir "%s" in %s line %s.', dirname($filename), __METHOD__, __LINE__));
 		}
@@ -274,7 +271,7 @@ final class Logger
 		}
 
 		# Write to file
-		if (false === file_put_contents($filename, $message, FILE_APPEND))
+		if (!file_put_contents($filename, $message, FILE_APPEND))
 		{
 			return new GDOException(sprintf('Cannot write logs: logfile "%s" in %s line %s.', $filename, __METHOD__, __LINE__));
 		}

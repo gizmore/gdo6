@@ -107,7 +107,7 @@ class GDT_File extends GDT_Object
 	{
 	    if ($this->imageWidth)
 	    {
-	        return sprintf('max-width: %spx; max-height: %spx;', $this->imageWidth, $this->imageHeight);
+	        return sprintf('max-width: %.01fpx; max-height: %.01fpx;', $this->imageWidth, $this->imageHeight);
 	    }
 	}
 	##############
@@ -374,7 +374,10 @@ class GDT_File extends GDT_Object
 	                        $file->copy();
 	                        if ($this->gdo)
 	                        {
-	                            $this->gdo->setVar($this->name, $file->getID());
+	                            if (!$this->gdo->isTable())
+	                            {
+	                                $this->gdo->setVar($this->name, $file->getID());
+	                            }
 	                        }
 	                        $this->var($file->getID());
 	                        $this->files[] = $file;
@@ -382,6 +385,7 @@ class GDT_File extends GDT_Object
 	                }
 	            }
 	        }
+	        return $valid;
 	    }
 	    catch (\Throwable $ex)
 	    {
@@ -391,8 +395,6 @@ class GDT_File extends GDT_Object
 	    {
 	        $this->cleanup();
 	    }
-
-		return $valid;
 	}
 	
 	protected function validateFile(GDO_File $file)
@@ -487,13 +489,13 @@ class GDT_File extends GDT_Object
 	{
 		if (FileUtil::isFile($dir.'/0'))
 		{
-			return GDO_File::fromForm(array(
+		    return GDO_File::fromForm([
 				'name' => @file_get_contents($dir.'/name'),
 				'type' => @file_get_contents($dir.'/mime'),
 				'size' => filesize($dir.'/0'),
 				'dir' => $dir,
 				'tmp_name' => $dir.'/0',
-			));
+		    ]);
 		}
 	}
 	
@@ -559,7 +561,7 @@ class GDT_File extends GDT_Object
 	{
 		$chunkDir = $this->getChunkDir($key);
 		$chunkNumber = (int) $_REQUEST['flowChunkNumber'];
-		$chunkFile = $chunkDir.'/'.$chunkNumber;
+		$chunkFile = $chunkDir . '/' . $chunkNumber;
 		return @copy($file['tmp_name'], $chunkFile);
 	}
 	

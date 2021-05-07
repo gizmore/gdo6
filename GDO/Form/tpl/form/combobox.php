@@ -1,5 +1,5 @@
 <?php /** @var $field \GDO\Form\GDT_ComboBox **/ ?>
-<div class="gdo-container gdo-completion<?= $field->classError(); ?>">
+<div class="gdt-container gdo-completion<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
   <input

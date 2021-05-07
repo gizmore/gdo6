@@ -1,12 +1,16 @@
 <?php
 namespace GDO\UI;
+
 use GDO\Core\GDT;
+
 /**
  * Just a single icon.
+ * 
  * @see WithIcon
+ * 
  * @author gizmore
- * @since 6.00
  * @version 6.10
+ * @since 6.00
  */
 class GDT_Icon extends GDT
 {

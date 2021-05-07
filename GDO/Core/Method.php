@@ -17,6 +17,8 @@ use GDO\Language\Trans;
  * Provides transaction wrapping and permission checks.
  * Provides parameters via ->gdoParameters().
  * 
+ * @todo Rename init() to onInit()
+ * 
  * @see MethodTable
  * @see MethodQueryTable
  * @see MethodForm
@@ -24,7 +26,7 @@ use GDO\Language\Trans;
  * @see MethodCronjob
  *
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 3.0.0
  */
 abstract class Method
@@ -58,6 +60,7 @@ abstract class Method
 	public function isTransactional() { return false; }
 	public function isAlwaysTransactional() { return false; }
 	public function isTrivial() { return true; }
+	public function isLockingSession() { return true; } # @todo make use of session locking
 	public function getPermission() {}
 	public function hasPermission(GDO_User $user) { return true; }
 	
@@ -91,7 +94,7 @@ abstract class Method
 	
 	/**
 	 * Override this.
-	 * Should this method be listed in a sitemap.
+	 * Should this method be listed in a sitemap?
 	 * @return boolean
 	 */
 	public function showInSitemap() { return true; }
@@ -223,7 +226,6 @@ abstract class Method
 	public function gdoParameterValue($key)
 	{
 		$gdt = $this->gdoParameter($key);
-// 		return $gdt->getValue(); # bug!
 		return $gdt->toValue($gdt->getVar());
 	}
 	
@@ -428,15 +430,27 @@ abstract class Method
 	        $response = $this->init();
 	        if ($response && $response->isError())
 	        {
+	            if ($transactional) $db->transactionEnd();
 	            return $response;
+	        }
+	        
+	        # Hook response
+	        if (!$response)
+	        {
+	            $response = GDT_Response::make();
 	        }
 
 	        # Exec 1.before - 2.execute - 3.after
-	        GDT_Hook::callHook('BeforeExecute', $this);
+	        GDT_Hook::callHook('BeforeExecute', $this, $response);
 	        $response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
+
 	        $response = $response ? $response->add($this->execute()) : $this->execute();
-	        $response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
-	        GDT_Hook::callHook('AfterExecute', $this);
+
+	        if (!$response->isError())
+	        {
+    	        $response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
+    	        GDT_Hook::callHook('AfterExecute', $this, $response);
+	        }
 	        
 	        # Wrap transaction end
 	        if ($transactional) $db->transactionEnd();

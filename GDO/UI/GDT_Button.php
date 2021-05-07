@@ -5,12 +5,15 @@ use GDO\Core\GDT_Template;
 use GDO\Form\WithFormFields;
 
 /**
- * @author gizmore
- * @version 6.10
- * @since 6.01
+ * A simple button.
+ * 
  * @see GDT_Submit
  * @see GDT_Link
  * @see GDT_IconButton
+ * 
+ * @author gizmore
+ * @version 6.10.1
+ * @since 6.1.0
  */
 class GDT_Button extends GDT_Label
 {
@@ -19,6 +22,8 @@ class GDT_Button extends GDT_Label
 	use WithFormFields;
 	use WithPHPJQuery;
 	use WithAnchorRelation;
+	
+	public $writable = true;
 	
 	public $primaryButton = true;
 	public function primary() { $this->primaryButton = true; return $this; }
@@ -41,17 +46,16 @@ class GDT_Button extends GDT_Label
 	#############
 	public function gdoHREF()
 	{
-		return $this->href ? $this->href : call_user_func([$this->gdo, 'href_'.$this->name]);
+	    if ($this->href)
+	    {
+	        return $this->href;
+	    }
+		return call_user_func([$this->gdo, 'href_' . $this->name]);
 	}
 	
 	public function gdoLabel()
 	{
 		return call_user_func([$this->gdo, 'display_'.$this->name]);
-	}
-	
-	public function displayHeaderLabel()
-	{
-		return '';
 	}
 	
 	########################
@@ -60,7 +64,7 @@ class GDT_Button extends GDT_Label
 	public $checkEnabled;
 	public function checkEnabled(callable $checkEnabled)
 	{
-	    $this->checkEnabled = $checkEnabled;
+	    $this->checkEnabled = call_user_func($checkEnabled);
 	    return $this;
 	}
 

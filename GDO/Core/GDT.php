@@ -22,7 +22,7 @@ use GDO\DB\GDT_Enum;
  * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 6.0.0
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
@@ -39,19 +39,16 @@ abstract class GDT
 	# Same as $gdo but always set and always the table.
 	/** @var $gdtTable GDO **/
 	public $gdtTable;
-	/**
-	 * @var GDO
-	 */
+	/** @var GDO **/
 	public $gdo; # current row / gdo
 	public $name; # html id
 	public $var; # String representation
 	public $initial; # Initial var
 	public $unique; # DB
 	public $primary; # DB
-	// 	public $primaryUsing = GDT_Index::HASH; # one default to rule them all is in @see{Database}
-	public $readable = true; # can see
-	public $writable = true; # can change
-	public $editable = true; # user can change
+	public $readable = false; # can see
+	public $writable = false; # can change
+	public $editable = false; # user can change
 	public $hidden = false; # hide in tables, forms, lists and cards.
 	public $notNull = false; # adds cascade when used with a primary key.
 	public $orderable = false; # GDT_Table
@@ -69,10 +66,9 @@ abstract class GDT
 	
 	public static $COUNT = 0; # Total GDT created
 
-	protected static $nameNr = 1; # Auto naming
-	public static function nextName() { return 'gdt-'.(self::$nameNr++); }
-	public function hasName() { return substr($this->name, 0, 4) !== 'gdt-'; }
-
+	public function hasName() { return $this->name !== null; }
+	public function defaultName() {}
+	
 	/**
 	 * Create a GDT instance.
 	 * @param string $name
@@ -82,7 +78,7 @@ abstract class GDT
 	{
 	    self::$COUNT++;
 		$obj = new static();
-		return $obj->name($name ? $name : $obj->name);
+		return $obj->name($name ? $name : $obj->defaultName());
 	}
 	
 	### stats
@@ -91,33 +87,15 @@ abstract class GDT
 	############
 	### Name ###
 	############
-	public function name($name=null) { $this->name = $name === null ? self::nextName() : $name; return $this; }
-	
-	/**
-	 * name is deprecated in anchors
-	 * @deprecated
-	 * @return string
-	 */
-// 	public function htmlName() { return Strings::startsWith($this->name, 'gdo-') ? '' :  sprintf(' name="%s"', $this->name); }
-	
-	# @TODO: make htmlClass() abstract and implement every classname in every class. this should give some speedup.
-	private static $classNameCache = [];
-	public function htmlClass()
-	{
-	    if (!isset(self::$classNameCache[static::class]))
-	    {
-	        self::$classNameCache[static::class] = $cache = " gdo-".strtolower($this->gdoShortName());
-	        return $cache;
-	    }
-	    return self::$classNameCache[static::class];
-	}
+	public function name($name=null) { $this->name = $name; return $this; }
+    public function htmlClass() { return ' ' . strtolower($this->gdoShortName()); }
 	
 	##############
 	### FormID ###
 	##############
 	public function id() { return (GDT_Form::$CURRENT?GDT_Form::$CURRENT->name."_":'').$this->name; }
-	public function htmlID() { return sprintf('id="%s"', $this->id()); }
-	public function htmlForID() { return sprintf('for="%s"', $this->id()); }
+	public function htmlID() { return $this->name ? sprintf('id="%s"', $this->id()) : ''; }
+	public function htmlForID() { return $this->name ? sprintf('for="%s"', $this->id()) : ''; }
 	
 	###########
 	### RWE ###
@@ -137,8 +115,8 @@ abstract class GDT
 	public function htmlError() { return $this->error ? ('<div class="gdo-form-error">' . $this->error . '</div>') : ''; }
 	public function classError()
 	{
-		$class = ' '.str_replace('_', '-', strtolower($this->gdoShortName()));
-		if ($this->notNull) $class .= ' gdo-required';
+	    $class = $this->htmlClass();
+	    if ($this->notNull) $class .= ' gdo-required';
 		if ($this->hasError()) $class .= ' gdo-has-error';
 		return $class;
 	}
@@ -177,7 +155,7 @@ abstract class GDT
     	       return $this->setGDOData($gdo);
 	        }
 	    }
-	    return $this; //->var($this->initial);
+	    return $this;
 	}
 	
 	/**
@@ -241,7 +219,7 @@ abstract class GDT
 	#################
 	### GDO Value ###
 	#################
-	public function blankData() { return [$this->name => $this->var]; }
+	public function blankData() { return $this->name ? [$this->name => $this->var] : null; }
 	public function getGDOData() {}
 	public function setGDOVar($var) { if ($this->gdo) $this->gdo->setVar($this->name, $var); return $this; }
 	public function setGDOValue($value) { return $this->setGDOVar($this->toVar($value)); }
@@ -373,7 +351,7 @@ abstract class GDT
 	 * The GDT base class only has a validator algorithm for notNull checks. "You need to fill out this field."
 	 * GDT_String takes care of almost 65% of the rest of the input validation. Regex, Lengths, Charset, NotNull, Uniqueness.
 	 * The rest is datetime and numbers. Then you almost got all validations figured out for free by object orientated programming paradigms.
-	 * Well, to indicate an error to the form, you call an error method on the faulty GDT and give him an error; "Your input needs to be at least 2 chars in length.".
+	 * Well, to indicate an error to the form, you call an error method on the faulty GDT and give it an error message; "Your input needs to be at least 2 chars in length.".
 	 * The UI is indicating the faulty field. Animations possibly help in identifying the problem.
 	 * 
 	 * @example where the terms of service have to be clicked.

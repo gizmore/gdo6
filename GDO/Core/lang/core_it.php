@@ -205,10 +205,6 @@ return array(
 'image' => 'Imagine',
 'icon' => 'Icona',
 	
-# Email formats
-'enum_html' => 'HTML',
-'enum_text' => 'Text',
-
 # Gender
 'enum_male' => 'Maschile',
 'enum_female' => 'Femminile',
@@ -228,25 +224,17 @@ return array(
 	
 # Config
 'ipp' => 'Iscrizioni per pagina',
-'minify_js' => 'Ottimizzare Javascript',
 'enum_no' => 'No',
 'enum_yes' => 'Si',
-'enum_concat' => 'anche riunire',
 'cfg_ipp' => 'Voci per pagina',
 	
 # Welcome
 'core_welcome_box_info' => 'Benvenuti su %s. Siete registrati come %s.',
 'link_impressum' => 'Area legale',
 
-################################################
-'link_node_detect' => 'Cerca programma uglify',
-'msg_nodejs_detected' => 'Il programma nodejs è stato trovato: <i>%s</i>',
-'msg_annotate_detected' => 'Il programma ng-annotate è stato trovato: <i>%s</i>',
-'msg_uglify_detected' => 'Il programma uglify-js è stato trovato: <i>%s</i>',
 #
 'quote_by' => 'Citato di %s',
 'quote_at' => 'il %s',
-
 	
 # Filter
 'int_filter' => 'Num',
@@ -267,16 +255,7 @@ return array(
 'cfg_system_user' => 'System Benutzer',
 'cfg_show_impressum' => 'Impressum im Footer anzeigen?',
 'cfg_show_privacy' => 'Datenschutz im Footer anzeigen?',
-'cfg_div_javascript' => 'Javascript',
-'cfg_minify_js' => 'Javascript Minifizierungs-Modus',
-'cfg_nodejs_path' => 'Pfad zu nodejs',
-'cfg_uglifyjs_path' => 'Pfad zu uglifyjs',
-'cfg_ng_annotate_path' => 'Pfad zu ng-annotate',
-'cfg_link_node_detect' => 'Javascript Programme auf Server suchen',
 'cfg_asset_revision' => 'Asset Cache Version',
-'err_nodejs_not_found' => 'Konnte nodejs nicht finden',
-'err_annotate_not_found' => 'Konnte ng-annotate nicht finden',
-'err_uglify_not_found' => 'Konnte uglify nicht finden',
 'link_privacy' => 'Datenschutz',
 
 # v6.10
@@ -305,4 +284,5 @@ Cordiali saluti,<br/>
 'msg_sort_success' => 'Le voci sono state riordinate.',
 'sorting' => 'Ordi.',
 'mtitle_core_welcome' => 'Benvenuto',
+'pagemenu_cli' => 'Pagina %s / %s',
 );

@@ -1,9 +1,6 @@
 <?php
 namespace GDO\Core;
 
-use GDO\DB\GDT_Enum;
-use GDO\File\GDT_Path;
-use GDO\UI\GDT_Divider;
 use GDO\UI\GDT_Link;
 use GDO\User\GDO_User;
 use GDO\Util\Javascript;
@@ -26,15 +23,15 @@ use GDO\User\GDO_UserPermission;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
 {
     const VERSION_MAJOR = '6';
     const VERSION_MINOR = '10';
-    const VERSION_PATCH = '1';
-    const VERSION_REV = 'r1038';
+    const VERSION_PATCH = '2';
+    const VERSION_REV = '1077';
     
     /**
      * GDO6 revision string.
@@ -42,7 +39,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.1-r1038';
+	public static $GDO_REVISION = '6.10.2-r1077';
 
 	##############
 	### Module ###
@@ -85,12 +82,6 @@ final class Module_Core extends GDO_Module
 		    GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum', '0')),
 		    GDT_Checkbox::make('show_privacy')->initial($this->env('show_privacy', '0')),
 		    GDT_Checkbox::make('allow_guests')->initial($this->env('allow_guests', '1')),
-		    GDT_Divider::make('div_javascript')->label('div_javascript'),
-			GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial($this->env('minify_js', 'no')),
-			GDT_Path::make('nodejs_path')->initial($this->env('nodejs_path', 'nodejs'))->label('nodejs_path'),
-		    GDT_Path::make('uglifyjs_path')->initial($this->env('uglifyjs_path', 'uglifyjs'))->label('uglifyjs_path'),
-		    GDT_Path::make('ng_annotate_path')->initial($this->env('ng_annotate_path', 'ng-annotate'))->label('ng_annotate_path'),
-			GDT_Link::make('link_node_detect')->href(href('Core', 'DetectNode')),
 			GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
 			GDT_Checkbox::make('siteshort_title_append')->initial('1'),
 		    GDT_Checkbox::make('mail_404')->initial('1'),
@@ -104,10 +95,6 @@ final class Module_Core extends GDO_Module
 	public function cfgSystemUserID() { return $this->getConfigVar('system_user'); }
 	public function cfgShowImpressum() { return $this->getConfigValue('show_impressum'); }
 	public function cfgShowPrivacy() { return $this->getConfigValue('show_privacy'); }
-	public function cfgMinifyJS() { return $this->getConfigVar('minify_js'); }
-	public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
-	public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
-	public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
 	public function cfgAssetVersion() { return sprintf('%.02f', $this->getConfigVar('asset_revision')); }
 	public function cfgAllowGuests() { return $this->getConfigValue('allow_guests'); }
 	public function cfgSiteShortTitleAppend() { return $this->getConfigValue('siteshort_title_append'); }
@@ -137,11 +124,6 @@ final class Module_Core extends GDO_Module
 	##################
 	### Javascript ###
 	##################
-	public function jsMinAppend()
-	{
-	    return $this->cfgMinifyJS() === 'no' ? '' : '.min';
-	}
-	
 	public function onIncludeScripts()
 	{
 		$this->addCSS('css/gdo6-core.css');
@@ -162,10 +144,9 @@ final class Module_Core extends GDO_Module
 		    "window.GDO_CONFIG = {};
 window.GWF_PROTOCOL = '%s';
 window.GWF_DOMAIN = '%s';
-window.GWF_WEB_ROOT = '%s';
-window.GWF_LANGUAGE = '%s';
-",
-			GWF_PROTOCOL, GWF_DOMAIN, GWF_WEB_ROOT, Trans::$ISO);
+window.GDO_WEB_ROOT = '%s';
+window.GWF_LANGUAGE = '%s';",
+			GWF_PROTOCOL, GWF_DOMAIN, GDO_WEB_ROOT, Trans::$ISO);
 	}
 	
 	public function gdoUserJS()

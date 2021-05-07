@@ -15,6 +15,8 @@ use GDO\Util\Strings;
  */
 final class GDT_LangSwitch extends GDT_Select
 {
+    public function defaultName() { return '_lang'; }
+    
 	public function renderCell()
 	{
 		return GDT_Template::php('Language', 'cell/langswitch.php',['field'=>$this]);

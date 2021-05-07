@@ -1,4 +1,4 @@
-#GDT AND GDO
+# GDT AND GDO
 
 ## GDT
 A GDT – or gizmore data type – is something like a component or field, maybe both.

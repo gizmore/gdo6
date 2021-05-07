@@ -1,6 +1,7 @@
 <?php
 use GDO\Table\GDT_RowNum;
-$field instanceof GDT_RowNum;
+/** @var $field GDT_RowNum **/
+
 ?>
 <input
  name="<?=$field->name?>[0]"

@@ -17,8 +17,8 @@ namespace GDO\Core;
  * The yielder was a bad ide and got removed in 6.10. hooks for navs and sections need to be called early.
  *
  * @author gizmore
- * @version 6.11
- * @since 3.00
+ * @version 6.11.1
+ * @since 3.0.0
  */
 final class GDT_Hook extends GDT
 {
@@ -77,7 +77,7 @@ final class GDT_Hook extends GDT
 	##############
 	public function render()
 	{
-		$response = GDT_Response::make('');
+		$response = GDT_Response::make();
 		$args = $this->eventArgs ? array_merge([$response], $this->eventArgs) : [$response];
 		self::call($this->event, false, $args);
 		return $response;
@@ -135,7 +135,11 @@ final class GDT_Hook extends GDT
 		        }
 		    }
 // 		}
-		
+        if (GWF_IPC_DEBUG)
+        {
+            Logger::log('hook', GDO_Hook::encodeHookMessage($event, $args));
+        }
+
 		# Call IPC hooks
 		if ( ($ipc) && (GWF_IPC) && 
 			(!Application::instance()->isInstall()) && 
@@ -223,4 +227,5 @@ final class GDT_Hook extends GDT
 			'hook_message' => GDO_Hook::encodeHookMessage($event, $args),
 		))->insert();
 	}
+	
 }

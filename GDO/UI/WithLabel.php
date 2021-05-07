@@ -5,8 +5,8 @@ namespace GDO\UI;
  * Add a label to a GDT.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.02
+ * @version 6.10.1
+ * @since 6.2.0
  */
 trait WithLabel
 {
@@ -14,7 +14,7 @@ trait WithLabel
      * @param string $name
      * @return static
      */
-    public function name($name=null) { $this->name = $name ? $name : self::nextName(); return $this->defaultLabel(); }
+    public function name($name=null) { $this->name = $name; return $this->defaultLabel(); }
     
     public $label;
 	public $labelArgs;
@@ -42,7 +42,6 @@ trait WithLabel
 		{
 			return t($this->label, $this->labelArgs);
 		}
-		return '';
 	}
 
 }

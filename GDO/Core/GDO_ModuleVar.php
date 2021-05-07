@@ -8,22 +8,23 @@ use GDO\DB\GDT_String;
 /**
  * Module config table.
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.2
+ * @since 3.0.0
  */
 final class GDO_ModuleVar extends GDO
 {
 	public function gdoCached() { return false; }
+	
 	###########
 	### GDO ###
 	###########
 	public function gdoColumns()
 	{
-		return array(
+		return [
 			GDT_Object::make('mv_module_id')->table(GDO_Module::table())->primary(),
 			GDT_Name::make('mv_name')->primary(),
 			GDT_String::make('mv_value')->notNull(),
-		);
+		];
 	}
 	public function getVarName() { return $this->getVar('mv_name'); }
 	public function getVarValue() { return $this->getVar('mv_value'); }
@@ -34,24 +35,29 @@ final class GDO_ModuleVar extends GDO
 	    if ($var === null)
 		{
 		    $gdt->var($gdt->initial);
-		    return self::removeModuleVar($module, $gdt->name);
+		    $moduleVar = self::removeModuleVar($module, $gdt->name);
 		}
-		return self::table()->blank(array(
-			'mv_module_id' => $module->getID(),
-		    'mv_name' => $gdt->name,
-			'mv_value' => $var,
-		))->replace();
+		else
+		{
+		    $moduleVar = self::table()->blank([
+    			'mv_module_id' => $module->getID(),
+    		    'mv_name' => $gdt->name,
+    			'mv_value' => $var,
+    		])->replace();
+		}
+		
+		return $moduleVar;
 	}
 	
 	public static function removeModuleVar(GDO_Module $module, $varname)
 	{
 		$varname = GDO::escapeS($varname);
 		self::table()->deleteWhere("mv_module_id={$module->getID()} AND mv_name='$varname'");
-		return self::table()->blank(array(
+		return self::table()->blank([
 		    'mv_module_id' => $module->getID(),
 		    'mv_name' => $varname,
 		    'mv_value' => null,
-		));
+		]);
 	}
 	
 }

@@ -34,6 +34,7 @@ final class Sort
         # Create a table to sort with
         $table = GDT_Table::make('sort_table');
         $table->addHeaders($result->table->gdoColumnsCache());
+        $table->headers->name = '_mosort_';
         
         # Plug orders into request vars
         $o = $table->headers->name;
@@ -45,6 +46,10 @@ final class Sort
         
         # sort the result
         $table->multisort($result);
+
+        # Ugly: fix order name prediction
+        unset($_REQUEST[$o]);
+        GDT_Table::$ORDER_NAME--;
     }
     
 }

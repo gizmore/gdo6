@@ -4,14 +4,15 @@
 
 In gdo6, my requirement of caching was the following.
 
-Whenever i retrieve an entity of a database, it shall use the same memory adress for the same row.
+Whenever I retrieve an entity of a database, it shall use the same memory address for the same row.
 
-In all ORM i found, Entity::getById(1) does always return a fresh copy.
+In all ORM I found, Entity::getById(1) does always return a fresh copy.
 
 GDO does not! It will always return the same object, and can even cache it in memcached.
 
 That is, gdoCached() and/or memCached() is true for your GDO.
 
+I got told the idea is not new. For example PONY ORM also should have a single identity cache, but i could not confirm this yet.
 
 Example:
 

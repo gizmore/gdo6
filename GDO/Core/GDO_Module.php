@@ -40,20 +40,30 @@ class GDO_Module extends GDO
 	public function isCoreModule() { return false; }
 	public function isSiteModule() { return false; }
 	public function isInstallable() { return true; }
-	public function gdoDependencies() { return ['Core', 'Country', 'Language', 'Table', 'User', 'Country']; }
+	
+	/**
+	 * All modules have at least these dependencies.
+	 */
+	public function gdoDependencies()
+	{
+	    return [
+	        'Core', 'Country', 'Language', 'Date', 'Mail',
+	        'Table', 'User', 'Country', 'Javascript', 'UI',
+	    ];
+	}
 	
 	/**
 	 * @return string[]
 	 */
 	public function getDependencies() {}
 	
-	/**
-	 * @return string[]
-	 */
-	public function getBlockedModules() {}
-	private $blocked = false;
-	public function isBlocked() { return $this->blocked; }
-	public function setBlocked() { $this->blocked = true; }
+// 	/**
+// 	 * @return string[]
+// 	 */
+// 	public function getBlockedModules() {}
+// 	private $blocked = false;
+// 	public function isBlocked() { return $this->blocked; }
+// 	public function setBlocked() { $this->blocked = true; }
 
 	/**
 	 * Skip these folders in unit tests using strpos.
@@ -69,13 +79,14 @@ class GDO_Module extends GDO
 	 */
 	public function dependencies()
 	{
+	    $coreDeps = $this->gdoDependencies();
 	    if ($deps = $this->getDependencies())
 	    {
-    	    return array_unique(array_merge($this->gdoDependencies(), $deps));
+	        return array_merge($coreDeps, $deps);
 	    }
 	    else
 	    {
-	        return $this->gdoDependencies();
+	        return $coreDeps;
 	    }
 	}
 	
@@ -213,7 +224,7 @@ class GDO_Module extends GDO
 	 * @param string $path
 	 * @return string
 	 */
-	public function filePath($path='') { return rtrim(GDO_PATH, '/').$this->wwwPath($path); }
+	public function filePath($path='') { return rtrim(GDO_PATH, '/') . $this->wwwPath($path); }
 	
 	/**
 	 * Relative www path for a resource.
@@ -222,8 +233,7 @@ class GDO_Module extends GDO
 	 */
 	public function wwwPath($path='')
 	{
-	    $path = trim($path, '/');
-	    return "/GDO/{$this->getName()}/$path";
+	    return GDO_WEB_ROOT . "GDO/{$this->getName()}/{$path}";
 	}
 	
 	/**
@@ -263,7 +273,6 @@ class GDO_Module extends GDO
 			default: return GDT_Template::responsePHP($this->getName(), $file, $tVars);
 		}
 	}
-	
 	
 	public function templateFile($file) { return GDT_Template::file($this->getName(), $file); }
 	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args); }
@@ -324,9 +333,13 @@ class GDO_Module extends GDO
 	    return $this->configCache;
 	}
 	
-	public function getConfigCache()
+	public function &getConfigCache()
 	{
-	    return $this->buildConfigCache();
+	    if ($this->configCache === null)
+	    {
+    	    $this->buildConfigCache();
+	    }
+	    return $this->configCache;
 	}
 	
 	private function configCacheKey()
@@ -348,13 +361,16 @@ class GDO_Module extends GDO
 	/**
 	 * @param GDT
 	 */
-	public function getConfigColumn($key)
+	public function getConfigColumn($key, $throwError=true)
 	{
 	    if (isset($this->configCache[$key]))
 	    {
 	        return $this->configCache[$key];
 	    }
-	    Website::error('err_unknown_config', [$this->displayName(), html($key)]);
+	    if ($throwError)
+	    {
+	        Website::error('err_unknown_config', [$this->displayName(), html($key)]);
+	    }
 	}
 	
 	public function getConfigVar($key)
@@ -509,9 +525,13 @@ class GDO_Module extends GDO
 	 */
 	private $userConfigCache = null;
 	
-	public function getSettingsCache()
+	public function &getSettingsCache()
 	{
-	    return $this->buildSettingsCache();
+	    if ($this->userConfigCache === null)
+	    {
+	        $this->buildSettingsCache();
+	    }
+	    return $this->userConfigCache;
 	}
 	
 	public function hasSetting($key)
@@ -532,7 +552,7 @@ class GDO_Module extends GDO
 	    }
 	}
 	
-	public function buildSettingsCache()
+	public function &buildSettingsCache()
 	{
 	    if ($this->userConfigCache === null)
 	    {
@@ -569,7 +589,7 @@ class GDO_Module extends GDO
 	    {
 	        $settings = self::loadUserSettingsB($user);
 	        $user->tempSet('gdo_setting', $settings);
-	        $user->recache();
+// 	        $user->recache();
 	    }
 	    return $settings;
 	}
@@ -601,29 +621,47 @@ class GDO_Module extends GDO
 		return method($this->getName(), $methodName);
 	}
 	
+	/**
+	 * Get a method by name. Case insensitive.
+	 * @param string $methodName
+	 * @return Method
+	 */
 	public function getMethodByName($methodName)
 	{
 	    $files = scandir($this->filePath('Method'));
 	    foreach ($files as $file)
 	    {
-	        if (strcasecmp($methodName, substr($file, 0, -4)) === 0)
+	        $file = substr($file, 0, -4);
+	        if (strcasecmp($methodName, $file) === 0)
 	        {
-	            $method = call_user_func($this->gdoClassName()."\\$methodName", "make");
+	            $className = "\\GDO\\{$this->getName()}\\Method\\{$file}";
+	            $method = call_user_func([$className, 'make']);
 	            return $method;
 	        }
 	    }
 	}
 	
-	
 	##############
 	### Assets ###
 	##############
-	private static $_NC; # nocache appendix
+	
+	/**
+	 * nocache appendix
+	 * @var string
+	 */
+	private static $_NC;
+
+	/**
+	 * Get the cache poisoner.
+	 * Base is gdo revision string.
+	 * Additionally a cache clear triggers an increase of the assets version.
+	 * @return string
+	 */
 	public function nocacheVersion()
 	{
 	    if (!self::$_NC)
 	    {
-	        $v = $this->getVersion();
+	        $v = Module_Core::$GDO_REVISION;
 	        $av = Module_Core::instance()->cfgAssetVersion();
 	        self::$_NC = "v={$v}&av={$av}";
 	    }

@@ -16,7 +16,7 @@ trait WithHREF
 	 */
 	public function href($href=null) { $this->href = $href; return $this; }
 
-	public function htmlHREF() { return sprintf(' href="%s"', $this->href); }
+	public function htmlHREF() { return sprintf(' href="%s"', html($this->href)); }
 
 	/**
 	 * Replace a get parameter in URL.
@@ -27,7 +27,7 @@ trait WithHREF
 	 */
 	public function replacedHREF($key, $value, $href=null)
 	{
-	    $href = $href === null ?  $this->href : $href;
+	    $href = $href === null ? $this->href : $href;
 	    
 	    $new = "&{$key}=" . urlencode($value);
 	    

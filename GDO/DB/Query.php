@@ -349,8 +349,23 @@ final class Query
 	    return $this;
 	}
 	
+	/**
+	 * @var string[]
+	 */
 	public $orderBy = [];
+
+	/**
+	 * @var boolean[]
+	 */
 	public $orderDir = [];
+	
+	/**
+	 * Order clause.
+	 * @todo make it one var. 'foo ASC'
+	 * @param string $column
+	 * @param boolean $ascending
+	 * @return self
+	 */
 	public function order($column=null, $ascending=true)
 	{
 		if ($column)

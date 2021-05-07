@@ -1,5 +1,5 @@
 <?php /** @var $field \GDO\UI\GDT_Slider **/ ?>
-<div class="gdo-container<?= $field->classError(); ?>">
+<div class="gdt-container<?= $field->classError(); ?>">
   <?= $field->htmlIcon(); ?>
   <label <?=$field->htmlForID()?>><?= $field->displayLabel(); ?></label>
 <?php if (is_array($field->step)) : $var = $field->getVar(); ?>

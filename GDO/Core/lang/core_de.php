@@ -205,10 +205,6 @@ return array(
 'image' => 'Bild',
 'icon' => 'Icon',
 	
-# Email formats
-'enum_html' => 'HTML',
-'enum_text' => 'Text',
-
 # Gender
 'enum_male' => 'männlich',
 'enum_female' => 'weiblich',
@@ -228,26 +224,18 @@ return array(
 	
 # Config
 'ipp' => 'Einträge pro Seite',
-'minify_js' => 'Javascript optimieren?',
 'enum_no' => 'Nein',
 'enum_yes' => 'Ja',
-'enum_concat' => 'auch zusammenführen',
 'cfg_ipp' => 'Einträge pro Seite',
 	
 # Welcome
 'core_welcome_box_info' => 'Willkommen auf %s. Sie sind angemeldet als %s.',
 'link_impressum' => 'Impressum',
 
-################################################
-'link_node_detect' => 'uglify Programm suchen…',
-'msg_nodejs_detected' => 'Das nodejs Programm wurde gefunden: <i>%s</i>',
-'msg_annotate_detected' => 'Das ng-annotate Programm wurde gefunden: <i>%s</i>',
-'msg_uglify_detected' => 'Das uglify-js Programm wurde gefunden: <i>%s</i>',
 #
 'quote_by' => 'Zitat von %s',
 'quote_at' => 'am %s',
 
-	
 # Filter
 'int_filter' => 'Num',
 'string_filter' => 'Text',
@@ -267,16 +255,7 @@ return array(
 'cfg_system_user' => 'System Benutzer',
 'cfg_show_impressum' => 'Impressum im Footer anzeigen?',
 'cfg_show_privacy' => 'Datenschutz im Footer anzeigen?',
-'cfg_div_javascript' => 'Javascript',
-'cfg_minify_js' => 'Javascript Minifizierungs-Modus',
-'cfg_nodejs_path' => 'Pfad zu nodejs',
-'cfg_uglifyjs_path' => 'Pfad zu uglifyjs',
-'cfg_ng_annotate_path' => 'Pfad zu ng-annotate',
-'cfg_link_node_detect' => 'Javascript Programme auf Server suchen',
 'cfg_asset_revision' => 'Asset Cache Version',
-'err_nodejs_not_found' => 'Konnte nodejs nicht finden',
-'err_annotate_not_found' => 'Konnte ng-annotate nicht finden',
-'err_uglify_not_found' => 'Konnte uglify nicht finden',
 'link_privacy' => 'Datenschutz',
     
 # v6.10
@@ -310,4 +289,5 @@ Viele Grüße,<br/>
 'msg_sort_success' => 'Die Einträge wurden neu sortiert.',
 'sorting' => 'Sort.',
 'mtitle_core_welcome' => 'Willkommen',
+'pagemenu_cli' => 'Seite %s / %s',
 );

@@ -30,6 +30,6 @@ final class Completion extends MethodCompletion
 			}
 		}
 		
-		Website::renderJSON($response);
+		Website::outputJSON($response);
 	}
 }

@@ -23,7 +23,7 @@ final class TimezoneComplete extends MethodCompletion
             }
         }
         
-        Website::renderJSON($json);
+        Website::outputJSON($json);
     }
     
 }

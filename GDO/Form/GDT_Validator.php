@@ -5,12 +5,14 @@ use GDO\Core\GDT;
 
 /**
  * A field that is an additional validator for a field.
+ * A validator can be applied to a field and specify a method.
+ * The method gets the form, the field, and the field's value to call error on the field.
  * 
  * @see \GDO\Register\Method\Form
  * 
  * @author gizmore
- * @version 6.10
- * @since 3.0
+ * @version 6.10.1
+ * @since 5.0.0
  */
 class GDT_Validator extends GDT
 {

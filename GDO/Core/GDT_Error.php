@@ -12,17 +12,8 @@ use GDO\UI\GDT_Panel;
 class GDT_Error extends GDT_Panel
 {
     public static $ERROR = 0;
-    protected function __construct()
-    {
-        if (!self::$ERROR)
-        {
-            $this->name = 'error';
-        }
-        else
-        {
-            $this->name = 'error' . (++self::$ERROR);
-        }
-    }
+    
+    public function defaultName() { return self::$ERROR === 0 ? 'error' : 'error_' . (++self::$ERROR); }
     
 	public function hasError() { return true; }
 
@@ -35,6 +26,7 @@ class GDT_Error extends GDT_Panel
 	
 	public static function responseWith($key, array $args=null, $code=405, $log=true)
 	{
+// 	    $log = Application::instance()->isCLI() ? false : $log;
 		return GDT_Response::makeWith(self::with($key, $args, $code, $log))->code($code);
 	}
 	
@@ -60,6 +52,11 @@ class GDT_Error extends GDT_Panel
 	public function renderCell() { return GDT_Template::php('Core', 'cell/error.php', ['field' => $this]); }
 	
 	public function renderJSON()
+	{
+	    return $this->renderText();
+	}
+	
+	public function renderCLI()
 	{
 	    return $this->renderText();
 	}

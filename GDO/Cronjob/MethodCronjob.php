@@ -3,12 +3,14 @@ namespace GDO\Cronjob;
 
 use GDO\Core\Logger;
 use GDO\Core\Method;
+
 /**
  * Baseclass method for a cronjob.
+ * @todo Introduce function runEvery() return a duration.
  * 
  * @author gizmore
- * @since 5.0
- * @version 6.05
+ * @version 6.10.1
+ * @since 5.0.0
  */
 abstract class MethodCronjob extends Method
 {
@@ -32,4 +34,5 @@ abstract class MethodCronjob extends Method
 	public function logError($msg) { Logger::logCron('[ERROR] '.$msg); return false; }
 	public function logWarning($msg) { Logger::logCron('[WARNING] '.$msg); }
 	public function logNotice($msg) { Logger::logCron('[NOTICE] '.$msg); }
+
 }

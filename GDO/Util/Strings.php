@@ -96,7 +96,7 @@ final class Strings
 	 */
 	public static function nl2brHTMLSafe($s)
 	{
-	    $s = trim($s, " \r\n");
+	    $s = trim($s, " \r\n\t");
 	    $len = strlen($s);
 	    $open = 0;
 	    $back = '';

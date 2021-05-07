@@ -205,10 +205,6 @@ return array(
 'image' => 'Image',
 'icon' => 'Icon',
 	
-# Email formats
-'enum_html' => 'HTML',
-'enum_text' => 'Text',
-
 # Gender
 'enum_male' => 'male',
 'enum_female' => 'female',
@@ -228,21 +224,14 @@ return array(
 	
 # Config
 'ipp' => 'Items per page (ipp)',
-'minify_js' => 'Minify Javascript On-the-fly?',
 'enum_no' => 'No',
 'enum_yes' => 'Yes',
-'enum_concat' => 'Concatenate',
 'cfg_ipp' => 'Items per page',
 	
 # Welcome
 'core_welcome_box_info' => 'Welcome to %s. You are authenticated as %s.',
 'link_impressum' => 'Imprint',
 
-################################################
-'link_node_detect' => 'Detect uglify binaries…',
-'msg_nodejs_detected' => 'The nodejs binary has been detected: <i>%s</i>',
-'msg_annotate_detected' => 'The ng-annotate binary has been detected: <i>%s</i>',
-'msg_uglify_detected' => 'The uglify-js binary has been detected: <i>%s</i>',
 #
 'quote_by' => 'Quote by %s',
 'quote_at' => 'at %s',
@@ -266,16 +255,7 @@ return array(
 'cfg_system_user' => 'System user',
 'cfg_show_impressum' => 'Show impressum in footer?',
 'cfg_show_privacy' => 'Show privacy in footer?',
-'cfg_div_javascript' => 'Javascript',
-'cfg_minify_js' => 'Javascript minification mode',
-'cfg_nodejs_path' => 'Path to nodejs',
-'cfg_uglifyjs_path' => 'Path to uglifyjs',
-'cfg_ng_annotate_path' => 'Path to ng-annotate',
-'cfg_link_node_detect' => 'Detect Javascript utilities',
 'cfg_asset_revision' => 'Asset revision cache poisoner',
-'err_nodejs_not_found' => 'Could not find nodejs',
-'err_annotate_not_found' => 'Could not find ng-annotate',
-'err_uglify_not_found' => 'Could not find uglify',
 'link_privacy' => 'Privacy',
 
 # v6.10
@@ -304,4 +284,5 @@ Kind Regards,<br/>
 'msg_sort_success' => 'The items have been re-arranged.',
 'sorting' => 'Sorting',
 'mtitle_core_welcome' => 'Welcome',
+'pagemenu_cli' => 'Page %s of %s',
 );

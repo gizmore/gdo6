@@ -99,7 +99,7 @@ class Config
 		if (!defined('GWF_DOMAIN')) define('GWF_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
 		if (!defined('GWF_SERVER')) define('GWF_SERVER', self::detectServerSoftware());
 		if (!defined('GWF_PROTOCOL')) define('GWF_PROTOCOL', @$_SERVER['HTTPS'] === 'on' ? 'https' : 'http');
-		if (!defined('GWF_WEB_ROOT')) define('GWF_WEB_ROOT', Strings::substrTo($_SERVER['SCRIPT_NAME'], 'install/wizard.php'));
+		if (!defined('GDO_WEB_ROOT')) define('GDO_WEB_ROOT', Strings::substrTo($_SERVER['SCRIPT_NAME'], 'install/wizard.php'));
 		# Files
 		if (!defined('GWF_CHMOD')) define('GWF_CHMOD', 0770);
 		# Logging
@@ -160,7 +160,7 @@ class Config
 			GDT_String::make('domain')->required()->initialValue(GWF_DOMAIN),
 			GDT_Enum::make('server')->required()->enumValues('none', 'apache2.2', 'apache2.4', 'nginx', 'other')->initialValue(GWF_SERVER),
 			GDT_Enum::make('protocol')->required()->enumValues('http', 'https')->initialValue(GWF_PROTOCOL),
-			GDT_String::make('web_root')->required()->initialValue(GWF_WEB_ROOT),
+			GDT_String::make('web_root')->required()->initialValue(GDO_WEB_ROOT),
 			# Files
 			GDT_Divider::make()->label('install_config_section_files'),
 			GDT_Enum::make('chmod')->enumValues((string)0700, (string)0770, (string)0777)->initialValue(GWF_CHMOD),

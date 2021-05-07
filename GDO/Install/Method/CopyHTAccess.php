@@ -3,6 +3,7 @@ namespace GDO\Install\Method;
 
 use GDO\Form\GDT_Form;
 use GDO\Form\MethodForm;
+use GDO\Core\GDT_Template;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Submit;
 
@@ -12,15 +13,20 @@ use GDO\Form\GDT_Submit;
  */
 final class CopyHTAccess extends MethodForm
 {
+    public function renderPage()
+    {
+        return GDT_Template::responsePHP('Install', 'page/copyhtaccess.php', ['form' => $this->getForm()]);
+    }
+
     public function createForm(GDT_Form $form)
     {
-        $form->addField(GDT_AntiCSRF::make());
-        $form->actions()->addField(GDT_Submit::make());
+        $form->actions()->addField(GDT_Submit::make()->label('copy_htaccess'));
     }
     
     public function formValidated(GDT_Form $form)
     {
-        
+        copy(GDO_PATH . '.htaccess.example', GDO_PATH . '.htaccess');
+        return parent::formValidated($form)->add($this->renderPage());
     }
     
 }

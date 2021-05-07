@@ -8,8 +8,8 @@ use GDO\Core\GDT;
  * Has a level 1-5 and uses WithHTML to display a non templated h tag.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.07
+ * @version 6.10.1
+ * @since 6.7.0
  */
 final class GDT_Headline extends GDT
 {

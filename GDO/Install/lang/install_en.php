@@ -98,8 +98,14 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 'install_title_8' => 'Import Backup',
 'ft_install_importbackup' => 'Import a backup',
 	
-'install_title_9' => 'Install Security',
+'install_title_9' => 'Copy htaccess (optional)',
+'ft_install_copyhtaccess' => 'Copy default htaccess to gdo6 root',
+'copy_htaccess_info' => '<b>This overwrites a currently present <i>.htaccess</i> file!</b><br>You can then continue with %s.',
+'copy_htaccess' => 'Copy default htaccess',
+
+'install_title_10' => 'Security',
 'ft_install_security' => 'Finish installation by removing access to install wizard and the protected folder',
+'protect_folders' => 'Protect Folders',
 	
 # gdo6 binary
 'msg_config_written' => 'A default config file has been written to protected/%s',

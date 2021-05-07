@@ -11,8 +11,8 @@ use GDO\User\GDO_User;
  * Using mysql date with milliseconds.
  *
  * @author gizmore
- * @version 6.10
- * @since 1.00
+ * @version 6.10.2
+ * @since 1.0.0
  * 
  * @see GDT_Date
  * @see GDT_DateTime
@@ -43,7 +43,7 @@ final class Time
 	 */
 	public static function getDate($time=null)
 	{
-	    $time = $time === null ? Application::$MICROTIME : $time;
+	    $time = $time === null ? Application::$MICROTIME : (float)$time;
 	    $time = sprintf('%.03f', $time);
 	    $now = DateTime::createFromFormat('U.u', $time);
 	    return $now->format("Y-m-d H:i:s.v");
@@ -71,7 +71,7 @@ final class Time
 	    }
 	    elseif (strlen($date) === 18)
 	    {
-	        $date .= ' .000';
+	        $date .= '.000';
 	    }
 	    
 	    $t = t('df_parse');
@@ -121,15 +121,15 @@ final class Time
 	###########
 	### Age ###
 	###########
-	/**
-	 * Compute an age, in years, from a date compared to current date.
-	 * @param $birthdate
-	 * @return int -1 on error
-	 */
-	public static function getAge($birthdate)
-	{
-		return self::getDiff($birthdate)->y;
-	}
+// 	/**
+// 	 * Compute an age, in years, from a date compared to current date.
+// 	 * @param $birthdate
+// 	 * @return int -1 on error
+// 	 */
+// 	public static function getAge($birthdate)
+// 	{
+// 		return self::getDiff($birthdate);
+// 	}
 	
 	public static function getDiff($date)
 	{
@@ -205,16 +205,19 @@ final class Time
 		$calced = array();
 		foreach ($units as $text => $mod)
 		{
-			if (0 < ($remainder = $duration % $mod)) {
+			if (0 < ($remainder = $duration % $mod))
+			{
 				$calced[] = $remainder.$text;
 			}
 			$duration = intval($duration / $mod);
-			if ($duration === 0) {
+			if ($duration === 0)
+			{
 				break;
 			}
 		}
 		
-		if (count($calced) === 0) {
+		if (count($calced) === 0)
+		{
 			return '0'.key($units);
 		}
 		
@@ -223,7 +226,8 @@ final class Time
 		foreach (array_keys($calced) as $key)
 		{
 			$i++;
-			if ($i > $nUnits) {
+			if ($i > $nUnits)
+			{
 				unset($calced[$key]);
 			}
 		}
@@ -264,7 +268,6 @@ final class Time
 		$duration = trim(strtolower($duration));
 		if (!preg_match('/^(?:(?:[0-9 ]+[sihdwmy]*)+)$/', $duration)) { return 0; }
 		
-		
 		$multis = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 86400, 'y' => 31536000);
 		$replace = array(
 			'seconds' => 's', 'second' => 's', 'sec' => 's',
@@ -278,7 +281,8 @@ final class Time
 		
 		$negative = 1;
 		$duration = strtolower(trim($duration));
-		if ($duration[0] == '-') {
+		if ($duration[0] == '-')
+		{
 			$negative = -1;
 		}
 		$duration = trim($duration, '-');
@@ -292,10 +296,12 @@ final class Time
 			if ($d = trim($d))
 			{
 				$unit = substr($d, -1);
-				if (is_numeric($unit)) {
+				if (is_numeric($unit))
+				{
 					$unit = 's';
 				}
-				else {
+				else
+				{
 					$d = substr($d, 0, -1);
 				}
 				$d = intval($d);
@@ -369,4 +375,4 @@ final class Time
 	// 	}
 }
 	
-Time::$UTC = new \DateTimeZone("UTC");
+Time::$UTC = new \DateTimeZone('UTC');
