@@ -33,7 +33,6 @@ class GDT_Template extends GDT
 	############
 	### Base ###
 	############
-	public function defaultName() { return 'template'; }
 	public function defaultLabel() { return $this->noLabel(); }
 	
 	public function htmlClass()
