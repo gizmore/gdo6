@@ -137,6 +137,7 @@ These modules add functionality to the website and are (mostly) own code.
  - [Buzzerapp](https://github.com/gizmore/gdo6-buzzerapp)
  - [GoogleTranslate](https://github.com/gizmore/gdo6-google-translate) (Just copy old code which calls web api without key)
  - [HVSC](https://github.com/gizmore/gdo6-hvsc)
+ - [IAmBen]() (A site dedicated to the iamben for president campaign)
  - [ImportGWF3](https://github.com/gizmore/gdo6-import-gwf3)
  - [JavascriptDetector]() (place a javascript snippet that sets a cookie. This way the js parameter is passed by every request)
  - [LanguageEditor](https://github.com/gizmore/gdo6-language-editor)
