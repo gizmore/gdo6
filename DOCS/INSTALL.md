@@ -172,7 +172,7 @@ Copy this list and remove / add modules.
     ## git clone --recursive https://github.com/gizmore/gdo6-statistics Statistics
     git clone --recursive https://github.com/gizmore/gdo6-tag Tag
     ## git clone --recursive https://github.com/gizmore/gdo6-tbs TBS
-    git clone --recursive https://github.com/gizmore/gdo6-tbs-message TBSBBMessage
+    git clone --recursive https://github.com/gizmore/gdo6-tbs-bbmessage TBSBBMessage
     git clone --recursive https://github.com/gizmore/gdo6-tcpdf TCPDF
     git clone --recursive https://github.com/gizmore/gdo6-test-methods TestMethods
     git clone --recursive https://github.com/gizmore/gdo6-tests Tests
