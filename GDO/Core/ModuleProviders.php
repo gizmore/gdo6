@@ -23,6 +23,7 @@ final class ModuleProviders
         'ActivationAlert' => 'gdo6-activation-alert',
         'Address' => 'gdo6-address',
         'Admin' => 'gdo6-admin',
+        'Alcoholicers' => 'gdo6-alcoholicers',
         'AmPHP' => 'gdo6-amphp',
         'Angular' => 'gdo6-angular',
         'Audio' => 'gdo6-audio',

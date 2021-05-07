@@ -72,6 +72,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-activation-alert ActivationAlert
     git clone --recursive https://github.com/gizmore/gdo6-address Address
     git clone --recursive https://github.com/gizmore/gdo6-admin Admin
+    git clone --recursive https://github.com/gizmore/gdo6-alcoholicers Alcoholicers
     ## git clone --recursive https://github.com/gizmore/gdo6-amphp AmPHP
     # git clone --recursive https://github.com/gizmore/gdo6-angular Angular
     git clone --recursive https://github.com/gizmore/gdo6-audio Audio

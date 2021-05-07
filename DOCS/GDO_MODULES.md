@@ -156,10 +156,11 @@ These modules add functionality to the website and are (mostly) own code.
 
 ## Site ideas
 
+ - [Alcoholicers](https://github.com/gizmore/gdo6-nasdax) (track your alcohol consumption. Build global stats)
  - [Nasdax](https://github.com/gizmore/gdo6-nasdax)
  - [Slaytags](https://github.com/gizmore/gdo6-slaytags) (recode of [slaytags.gizmore.org](http://slaytags.gizmore.org)
  - [WeChall](https://github.com/gizmore/gdo6-wechall) (recode of [wechall.net](https://www.wechall.net)
- - [Whois](https://github.com/gizmore/gdo6-whois) (no idea)
+ - [Whois](https://github.com/gizmore/gdo6-whois) (whois cache / no idea)
  - [Wombat](https://github.com/gizmore/gdo6-wombat) (no idea)
 
 
