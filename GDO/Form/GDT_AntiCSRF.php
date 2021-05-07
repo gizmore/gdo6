@@ -25,7 +25,6 @@ class GDT_AntiCSRF extends GDT_Hidden
 	protected function __construct()
 	{
 	    parent::__construct();
-	    $this->var = $this->csrfToken();
 	}
 	
 	###########
@@ -39,22 +38,12 @@ class GDT_AntiCSRF extends GDT_Hidden
 	##############
 	### Expire ###
 	##############
-	public $csrfExpire = 60*30; # 0.5 hours is a sensible default.
+	public $csrfExpire = 60 * 30; # 0.5 hours is a sensible default.
 	public function csrfExpire($csrfExpire)
 	{
 		$this->csrfExpire = $csrfExpire;
 		return $this;
 	}
-	
-// 	###############
-// 	### Cleanup ###
-// 	###############
-// 	public $csrfMaxTokens = 12; # Last 12 forms should be fine
-// 	public function csrfMaxTokens($csrfMaxTokens)
-// 	{
-// 		$this->csrfMaxTokens = $csrfMaxTokens;
-// 		return $this;
-// 	}
 	
 	#################
 	### Construct ###
@@ -85,7 +74,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	private function saveCSRFTokens(array $csrf)
 	{
 	    $count = count($csrf);
-	    if ($count > self::MAX_KEYS) # max 2 tokens?
+	    if ($count > self::MAX_KEYS)
 	    {
 	        $csrf = array_slice($csrf, $count - self::MAX_KEYS, self::MAX_KEYS);
 	    }
@@ -127,7 +116,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 			return $this->error('err_csrf');
 		}
 
-		# Remove used  token
+		# Remove used token
 		unset($csrf[$value]);
 		$this->saveCSRFTokens($csrf);
 		

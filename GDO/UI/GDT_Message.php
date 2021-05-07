@@ -2,11 +2,11 @@
 namespace GDO\UI;
 
 use GDO\Core\GDT_Template;
-use GDO\DB\GDT_Text;
 use GDO\Core\GDO;
 use GDO\Util\Strings;
 use GDO\User\GDO_User;
 use GDO\Profile\GDT_ProfileLink;
+use GDO\DB\GDT_Text;
 
 /**
  * A message is a GDT_Text with an editor. Classic uses a textarea.
@@ -19,8 +19,8 @@ use GDO\Profile\GDT_ProfileLink;
  * @see \GDO\CKEditor\Module_CKEditor
  * 
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.2
+ * @since 4.0.0
  */
 class GDT_Message extends GDT_Text
 {

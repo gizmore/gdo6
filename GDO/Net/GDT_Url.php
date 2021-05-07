@@ -34,7 +34,7 @@ class GDT_Url extends GDT_String
 	public $noFollow = false;
 	
 	public $min = 0;
-	public $max = 1024;
+	public $max = 768; # Max length for a unique constraint on older mysql systems
 	
 	public $icon = 'url';
 	
