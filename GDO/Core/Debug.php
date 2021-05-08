@@ -193,7 +193,7 @@ final class Debug
 		}
 		else
 		{
-			$message = GWF_ERROR_STACKTRACE ? self::backtrace($message, $is_html) : $message;
+			$message = GDO_ERROR_STACKTRACE ? self::backtrace($message, $is_html) : $message;
 			echo self::renderError($message);
 		}
 		
@@ -262,7 +262,7 @@ final class Debug
 		{
 // 		    $message = html($message);
 		}
-		if ($app->isAjax() || (!defined('GWF_CORE_STABLE')))
+		if ($app->isAjax() || (!defined('GDO_CORE_STABLE')))
 		{
 		    return $message;
 		}
@@ -422,7 +422,7 @@ final class Debug
 		// Fix full path disclosure
 		$message = self::shortpath($message);
 		
-		if (!GWF_ERROR_STACKTRACE)
+		if (!GDO_ERROR_STACKTRACE)
 		{
 			return $html ? sprintf('<pre class="gdo-exception">%s</pre>', $message) . PHP_EOL : $message;
 		}

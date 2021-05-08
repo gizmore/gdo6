@@ -23,7 +23,7 @@ final class URL
 	{
 	    if (Application::instance()->isCLI())
 	    {
-	        return GWF_PROTOCOL;
+	        return GDO_PROTOCOL;
 	    }
 	    return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
 	}

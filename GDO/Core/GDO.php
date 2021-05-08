@@ -52,7 +52,7 @@ abstract class GDO
     
     public function gdoCached() { return true; }
     public function memCached() { return $this->gdoCached(); }
-    public function cached() { return $this->gdoCached() || (GWF_MEMCACHE && $this->memCached()); }
+    public function cached() { return $this->gdoCached() || (GDO_MEMCACHE && $this->memCached()); }
     
     public function gdoTableName() { return self::table()->cache->tableName; }
     public function gdoDependencies() { return null; }
@@ -1108,7 +1108,7 @@ abstract class GDO
     
     public function initCached(array $row)
     {
-        return GWF_MEMCACHE && $this->memCached() ? 
+        return GDO_MEMCACHE && $this->memCached() ? 
            $this->cache->initGDOMemcached($row) :
            $this->cache->initCached($row);
     }
@@ -1148,7 +1148,7 @@ abstract class GDO
     
     public function recacheMemcached()
     {
-        if (GWF_MEMCACHE && $this->memCached())
+        if (GDO_MEMCACHE && $this->memCached())
         {
             $this->table()->cache->recache($this);
         }
@@ -1430,8 +1430,11 @@ abstract class GDO
      */
     public static function gdoHashcodeS(array $gdoVars)
     {
-        ksort($gdoVars); # Ensure order of vars stay the same.
-        return substr(md5(str_repeat(GWF_SALT, 3).json_encode($gdoVars)), 0, 16);
+//         ksort($gdoVars); # Ensure order of vars stay the same.
+        return substr(
+            md5(str_repeat(GDO_SALT, 3).
+                json_encode($gdoVars).
+                str_repeat(GDO_SALT, 3)), 0, 16);
     }
     
     ##############

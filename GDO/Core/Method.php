@@ -300,7 +300,7 @@ abstract class Method
 	 */
 	public function hasUserPermission(GDO_User $user)
 	{
-		if ( ($this->isUserRequired()) && (!$user->isAuthenticated()) )
+		if ( ($this->isUserRequired()) && (!$user->isUser()) )
 		{
 			return false;
 		}

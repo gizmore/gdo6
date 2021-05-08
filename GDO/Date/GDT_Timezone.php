@@ -22,7 +22,7 @@ final class GDT_Timezone extends GDT_Select
         parent::__construct();
         $this->notNull();
         $this->initChoices();
-        $this->initial(GWF_TIMEZONE);
+        $this->initial(GDO_TIMEZONE);
         $this->icon('time');
         $this->caseS();
         $this->ascii();

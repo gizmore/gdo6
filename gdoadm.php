@@ -92,9 +92,9 @@ else
 CLI::setServerVars();
 
 # Load config defaults
-if (!defined('GWF_CONFIGURED'))
+if (!defined('GDO_CONFIGURED'))
 {
-	define('GWF_DB_ENABLED', false);
+	define('GDO_DB_ENABLED', false);
 	define('GDO_WEB_ROOT', '/');
 	\GDO\Install\Config::configure();
 }
@@ -106,18 +106,18 @@ final class InstallerApp extends Application
 }
 
 new InstallerApp(); # Create App
-Trans::$ISO = GWF_LANGUAGE;
-Logger::init(null, GWF_ERROR_LEVEL); # init without username
+Trans::$ISO = GDO_LANGUAGE;
+Logger::init(null, GDO_ERROR_LEVEL); # init without username
 Debug::init();
 Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
-Debug::setDieOnError(GWF_ERROR_DIE);
-Debug::setMailOnError(GWF_ERROR_MAIL);
+Debug::setDieOnError(GDO_ERROR_DIE);
+Debug::setMailOnError(GDO_ERROR_MAIL);
 Database::init();
 Cache::flush();
-ModuleLoader::instance()->loadModules(GWF_DB_ENABLED, true);
+ModuleLoader::instance()->loadModules(GDO_DB_ENABLED, true);
 
-define('GWF_CORE_STABLE', 1);
+define('GDO_CORE_STABLE', 1);
 
 if ($argv[1] === 'configure')
 {
@@ -140,7 +140,7 @@ if ($argv[1] === 'configure')
 
 elseif ($argv[1] === 'test')
 {
-	if (GWF_DB_ENABLED)
+	if (GDO_DB_ENABLED)
 	{
 		Database::init();
 	}
@@ -369,8 +369,8 @@ elseif ($argv[1] === 'wipeall')
     {
         printUsage();
     }
-    Database::instance()->queryWrite("DROP DATABASE " . GWF_DB_NAME);
-    Database::instance()->queryWrite("CREATE DATABASE " . GWF_DB_NAME);
+    Database::instance()->queryWrite("DROP DATABASE " . GDO_DB_NAME);
+    Database::instance()->queryWrite("CREATE DATABASE " . GDO_DB_NAME);
     printf("The database has been killed.\n");
 }
 

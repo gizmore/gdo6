@@ -37,7 +37,7 @@ final class HTTP
 		
 		if (@$url[0] === '/')
 		{
-			$url = GWF_PROTOCOL . '://' . GWF_DOMAIN . $url;
+			$url = GDO_PROTOCOL . '://' . GDO_DOMAIN . $url;
 		}
 
 		if (!($ch = curl_init($url)))

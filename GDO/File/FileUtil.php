@@ -20,7 +20,7 @@ final class FileUtil
     ##############
     public static function isFile($filename) { return stream_resolve_include_path($filename) !== false; } # fast check
     public static function isDir($filename) { return is_dir($filename); }
-	public static function createDir($path) { return (self::isDir($path) && is_writable($path)) ? true : mkdir($path, GWF_CHMOD, true); }
+	public static function createDir($path) { return (self::isDir($path) && is_writable($path)) ? true : mkdir($path, GDO_CHMOD, true); }
 	
 	###############
 	### Dirsize ###

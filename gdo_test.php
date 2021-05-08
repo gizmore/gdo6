@@ -22,10 +22,10 @@ require_once 'GDO6.php';
 require_once 'protected/config_test.php';
 require_once 'vendor/autoload.php';
 
-Logger::init('system', GWF_ERROR_LEVEL);
+Logger::init('system', GDO_ERROR_LEVEL);
 Debug::init();
-Debug::setMailOnError(GWF_ERROR_EMAIL);
-// Debug::setDieOnError(GWF_ERROR_DIE);
+Debug::setMailOnError(GDO_ERROR_EMAIL);
+// Debug::setDieOnError(GDO_ERROR_DIE);
 Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
 Cache::init();
@@ -56,18 +56,18 @@ GDT_Page::make();
 
 #############################
 ### Simulate HTTP env a bit #
-$_SERVER['SERVER_NAME'] = trim(GWF_DOMAIN, "\r\n\t .");
+$_SERVER['SERVER_NAME'] = trim(GDO_DOMAIN, "\r\n\t .");
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 $_SERVER['HTTP_USER_AGENT'] = 'Firefox Gecko MS Opera';
-$_SERVER['REQUEST_URI'] = '/index.php?mo=' . GWF_MODULE . '&me=' . GWF_METHOD;
-$_SERVER['HTTP_REFERER'] = 'http://'.GWF_DOMAIN.'/index.php';
+$_SERVER['REQUEST_URI'] = '/index.php?mo=' . GDO_MODULE . '&me=' . GDO_METHOD;
+$_SERVER['HTTP_REFERER'] = 'http://'.GDO_DOMAIN.'/index.php';
 $_SERVER['HTTP_ORIGIN'] = '127.0.0.2';
 $_SERVER['SCRIPT_NAME'] = '/index.php';
 $_SERVER['SERVER_SOFTWARE']	= 'Apache/2.4.41 (Win64) PHP/7.4.0';
-$_SERVER['HTTP_HOST'] = GWF_DOMAIN;
+$_SERVER['HTTP_HOST'] = GDO_DOMAIN;
 $_SERVER['HTTPS'] = 'off';
 $_SERVER['PHP_SELF'] = '/index.php';
-$_SERVER['QUERY_STRING'] = 'mo=' . GWF_MODULE . '&me=' . GWF_METHOD;
+$_SERVER['QUERY_STRING'] = 'mo=' . GDO_MODULE . '&me=' . GDO_METHOD;
 $_SERVER['REQUEST_METHOD'] = 'GET';
 $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
 #########################################################################
@@ -75,11 +75,11 @@ $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
 /** @var $argc int **/
 /** @var $argv string[] **/
 
-echo "Dropping Test Database: ".GWF_DB_NAME.".\n";
+echo "Dropping Test Database: ".GDO_DB_NAME.".\n";
 echo "If this hangs, something is locking the db.\n";
-Database::instance()->queryWrite("DROP DATABASE " . GWF_DB_NAME);
-Database::instance()->queryWrite("CREATE DATABASE " . GWF_DB_NAME);
-Database::instance()->useDatabase(GWF_DB_NAME);
+Database::instance()->queryWrite("DROP DATABASE " . GDO_DB_NAME);
+Database::instance()->queryWrite("CREATE DATABASE " . GDO_DB_NAME);
+Database::instance()->useDatabase(GDO_DB_NAME);
 
 echo "Loading modules from filesystem\n";
 $modules = $app->loader->loadModules(false, true);

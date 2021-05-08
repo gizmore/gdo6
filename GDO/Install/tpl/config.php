@@ -12,7 +12,7 @@ echo '<';echo '?';echo "php\n";
 ###############################
 ### GDO6 Configuration File ###
 ###############################
-if (defined('GWF_CONFIGURED')) return;
+if (defined('GDO_CONFIGURED')) return;
 <?php
 $tz = $form->getField('timezone')->var;
 $created = Time::getDate(microtime(true));
@@ -63,7 +63,7 @@ else
 	{
 		$value = $value ? 'true' : 'false';
 	}
-	printf("define('GWF_%1\$s', env('GWF_%1\$s', %2\$s));\n", strtoupper($name), $value);
+	printf("define('GDO_%1\$s', env('GDO_%1\$s', %2\$s));\n", strtoupper($name), $value);
 }
 ?>
 <?php endforeach; ?>

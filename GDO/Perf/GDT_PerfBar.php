@@ -24,7 +24,7 @@ final class GDT_PerfBar extends GDT_Panel
 	public static function data()
 	{
 		global $GDT_LOADED;
-		$totalTime = microtime(true) - GWF_PERF_START;
+		$totalTime = microtime(true) - GDO_PERF_START;
 		$phpTime = $totalTime - Database::$QUERY_TIME;
 		$memphp = memory_get_peak_usage(false);
 		$memreal = memory_get_peak_usage(true);

@@ -40,7 +40,7 @@ final class Module_Language extends GDO_Module
 	public function getConfig()
 	{
 		return [
-			GDT_Language::make('languages')->all()->multiple()->initial('["'.GWF_LANGUAGE.'"]'),
+			GDT_Language::make('languages')->all()->multiple()->initial('["'.GDO_LANGUAGE.'"]'),
 		    GDT_Checkbox::make('langswitch_left')->initial('1'),
 		    GDT_Checkbox::make('use_in_javascript')->initial('1'),
 		];
@@ -50,12 +50,12 @@ final class Module_Language extends GDO_Module
 	public function cfgJavascript() { return $this->getConfigValue('use_in_javascript'); }
 	
 	/**
-	 * Get the supported  languages, GWF_LANGUAGE first.
+	 * Get the supported  languages, GDO_LANGUAGE first.
 	 * @return GDO_Language[]
 	 */
 	public function cfgSupported()
 	{
-		$supported = [GWF_LANGUAGE => GDO_Language::table()->find(GWF_LANGUAGE)];
+		$supported = [GDO_LANGUAGE => GDO_Language::table()->find(GDO_LANGUAGE)];
 		if ($additional = $this->getConfigValue('languages'))
 		{
 			$supported = array_merge($supported, $additional);
@@ -118,7 +118,7 @@ final class Module_Language extends GDO_Module
 		{
 			$iso = GDO_User::current()->getLangISO();
 		}
-		return $iso ? $iso : GWF_LANGUAGE;
+		return $iso ? $iso : GDO_LANGUAGE;
 	}
 	
 	public function detectAcceptLanguage()

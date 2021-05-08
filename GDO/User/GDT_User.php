@@ -18,7 +18,7 @@ use GDO\Util\Strings;
  * @TODO: rename fallbackCurrentUser()
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 6.0.0
  */
 class GDT_User extends GDT_Object
@@ -213,7 +213,8 @@ class GDT_User extends GDT_Object
 			{
 				$filter = GDO::escapeSearchS($filter);
 				$filter = "LIKE '%{$filter}%'";
-				$this->filterQueryCondition($query, "user_name $filter OR user_guest_name $filter OR user_real_name $filter");
+				$this->filterQueryCondition($query,
+				    "user_name $filter OR user_guest_name $filter OR user_real_name $filter");
 			}
 		}
 	}

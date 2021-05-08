@@ -12,7 +12,7 @@ final class InstallCronjob extends Method
 	public function execute()
 	{
 		Database::init();
-		$hasdb = GWF_DB_HOST !== null;
+		$hasdb = GDO_DB_HOST !== null;
 		ModuleLoader::instance()->loadModules($hasdb, !$hasdb);
 		return $this->renderPage();
 	}

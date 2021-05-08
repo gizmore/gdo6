@@ -64,10 +64,10 @@ class Database
 	public static function init()
 	{
 		Cache::init();
-		if (GWF_DB_ENABLED) # @TODO should always return an instance?
+		if (GDO_DB_ENABLED) # @TODO should always return an instance?
 		{
 		    return new self(
-		        GWF_DB_HOST, GWF_DB_USER, GWF_DB_PASS, GWF_DB_NAME, GWF_DB_DEBUG);
+		        GDO_DB_HOST, GDO_DB_USER, GDO_DB_PASS, GDO_DB_NAME, GDO_DB_DEBUG);
 		}
 	}
 	

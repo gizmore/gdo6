@@ -49,26 +49,25 @@ class GDT_Object extends GDT_UInt
 	{
 	    if ($gdo = $this->getValue())
 	    {
-	        $selected = array(
+	        $selected = [
 	            'id' => $gdo->getID(),
 	            'text' => $gdo->displayName(),
 	            'display' => json_quote($gdo->renderChoice()),
-	        );
+	        ];
 	    }
 	    else 
 	    {
-	        $selected = array(
+	        $selected = [
 	            'id' => null,
 	            'text' => $this->placeholder,
 	            'display' => $this->placeholder,
-	        );
+	        ];
 	    }
-	    return array_merge(parent::configJSON(), array(
+	    return array_merge(parent::configJSON(), [
 	        'cascade' => $this->cascade,
 	        'selected' => $selected,
 	        'completionHref' => $this->completionHref,
-	    ));
+	    ]);
 	}
-	
 	
 }

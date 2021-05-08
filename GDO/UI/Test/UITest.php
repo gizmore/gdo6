@@ -12,7 +12,7 @@ final class UITest extends TestCase
     {
         $btn = GDT_Button::make()->href(hrefDefault());
         $html = $btn->render();
-        assertStringContainsString(GWF_MODULE, $html, "Test if Button renders without name.");
+        assertStringContainsString(GDO_MODULE, $html, "Test if Button renders without name.");
         
         $form = GDT_Form::make();
         $form->addField($btn);

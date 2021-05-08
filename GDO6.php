@@ -17,7 +17,7 @@ use GDO\Core\Application;
  */
 
 # performance
-define('GWF_PERF_START', microtime(true));
+define('GDO_PERF_START', microtime(true));
 
 # Autoconf path
 define('GDO_PATH', str_replace('\\', '/', __DIR__) . '/');
@@ -49,10 +49,10 @@ function sitename() { return t('sitename'); }
 function url($module, $method, $append='', $lang=true) { return urlSEO('index.php', $module, $method, $append, $lang); }
 function urlSEO($seoString, $module, $method, $append='', $lang=true) { return GDT_Url::absolute(hrefSEO($seoString, $module, $method, $append, $lang)); }
 function href($module, $method, $append='', $lang=true) { return hrefSEO('index.php', $module, $method, $append, $lang); }
-function hrefDefault() { return href(GWF_MODULE, GWF_METHOD); }
+function hrefDefault() { return href(GDO_MODULE, GDO_METHOD); }
 function hrefSEO($seoString, $module, $method, $append='', $lang=true)
 {
-    if (defined('GWF_SEO_URLS') && GWF_SEO_URLS)
+    if (defined('GDO_SEO_URLS') && GDO_SEO_URLS)
     {
         $html = $seoString === 'index.php' ? '' : '.html'; # append .html?
         $href = GDO_WEB_ROOT . urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}";
@@ -154,13 +154,13 @@ function method($moduleName, $methodName) { $klass = "GDO\\$moduleName\\Method\\
  * Get requested module name.
  * @return string
  */
-function mo() { return Common::getRequestString('mo', GWF_MODULE); }
+function mo() { return Common::getRequestString('mo', GDO_MODULE); }
 
 /**
  * Get requested method name
  * @return string
  */
-function me() { return Common::getRequestString('me', GWF_METHOD); }
+function me() { return Common::getRequestString('me', GDO_METHOD); }
 
 /**
  * Check if a module is enabled.

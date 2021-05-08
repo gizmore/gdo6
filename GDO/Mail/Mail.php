@@ -27,12 +27,12 @@ use GDO\Util\Strings;
 final class Mail
 {
 	public static $SENT = 0; # perf
-	public static $DEBUG = GWF_DEBUG_EMAIL;
-	public static $ENABLE = GWF_ENABLE_EMAIL;
+	public static $DEBUG = GDO_DEBUG_EMAIL;
+	public static $ENABLE = GDO_ENABLE_EMAIL;
 	
 	const HEADER_NEWLINE = "\n";
-	const GPG_PASSPHRASE = ''; #GWF_EMAIL_GPG_SIG_PASS;
-	const GPG_FINGERPRINT = ''; #GWF_EMAIL_GPG_SIG;
+	const GPG_PASSPHRASE = ''; #GDO_EMAIL_GPG_SIG_PASS;
+	const GPG_FINGERPRINT = ''; #GDO_EMAIL_GPG_SIG;
 
 	private $reply = '';
 	private $replyName = '';
@@ -82,8 +82,8 @@ final class Mail
 	public static function botMail()
 	{
 		$mail = new self();
-		$mail->setSender(GWF_BOT_EMAIL);
-		$mail->setSenderName(GWF_BOT_NAME);
+		$mail->setSender(GDO_BOT_EMAIL);
+		$mail->setSenderName(GDO_BOT_NAME);
 		return $mail;
 	}
 	
@@ -140,8 +140,8 @@ final class Mail
 
 	public static function sendDebugMail($subject, $body)
 	{
-		$to = defined('GWF_ERROR_EMAIL') ? GWF_ERROR_EMAIL : GWF_ADMIN_EMAIL;
-		return self::sendMailS(GWF_BOT_EMAIL, $to, GWF_SITENAME.": ".$subject, Debug::getDebugText($body), false, true);
+		$to = defined('GDO_ERROR_EMAIL') ? GDO_ERROR_EMAIL : GDO_ADMIN_EMAIL;
+		return self::sendMailS(GDO_BOT_EMAIL, $to, GDO_SITENAME.": ".$subject, Debug::getDebugText($body), false, true);
 	}
 	
 	public function nestedHTMLBody()

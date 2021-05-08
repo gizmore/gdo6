@@ -1,6 +1,6 @@
 <?php
 return array(
-'sitename' => GWF_SITENAME,
+'sitename' => GDO_SITENAME,
 
 'enum_none' => 'Nichts',
 'enum_all' => 'Alle',

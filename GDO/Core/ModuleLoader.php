@@ -201,7 +201,7 @@ final class ModuleLoader
 	
 	public function loadModulesA()
 	{
-		$hasdb = !!GWF_DB_ENABLED;
+		$hasdb = !!GDO_DB_ENABLED;
 		return $this->loadModules($hasdb, !$hasdb);
 	}
 	
@@ -249,7 +249,7 @@ final class ModuleLoader
 	
 	private function loadModulesDB()
 	{
-	    if (!GWF_DB_ENABLED)
+	    if (!GDO_DB_ENABLED)
 	    {
 	        return false;
 	    }

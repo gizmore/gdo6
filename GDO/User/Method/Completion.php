@@ -8,17 +8,17 @@ use GDO\Core\Website;
 use GDO\Core\MethodAjax;
 
 /**
- * Auto completion for GDT_User types.
+ * Auto completion for GDT_User.
  * 
  * @author gizmore
- * @version 6.10
- * @since 5.0
+ * @version 6.10.2
+ * @since 5.0.0
  */
 class Completion extends MethodAjax
 {
 	public static $MAXCOUNT = 20;
 	
-	public function isGuestAllowed() { return false; }
+// 	public function isGuestAllowed() { return false; }
 	
 	public function execute()
 	{

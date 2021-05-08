@@ -135,24 +135,24 @@ final class GDT_Hook extends GDT
 		        }
 		    }
 // 		}
-        if (GWF_IPC_DEBUG)
+        if (GDO_IPC_DEBUG)
         {
             Logger::log('hook', GDO_Hook::encodeHookMessage($event, $args));
         }
 
 		# Call IPC hooks
-		if ( ($ipc) && (GWF_IPC) && 
+		if ( ($ipc) && (GDO_IPC) && 
 			(!Application::instance()->isInstall()) && 
 			(!Application::instance()->isCLI()) )
 		{
 			self::$IPC_CALLS++;
 			
-			if (GWF_IPC_DEBUG)
+			if (GDO_IPC_DEBUG)
 			{
 				Logger::log('ipc', GDO_Hook::encodeHookMessage($event, $args));
 			}
 			
-			if (GWF_IPC === 'db')
+			if (GDO_IPC === 'db')
 			{
 				self::callIPCDB($event, $args);
 			}

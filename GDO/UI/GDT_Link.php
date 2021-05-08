@@ -3,12 +3,13 @@ namespace GDO\UI;
 
 use GDO\Core\GDT_Template;
 use GDO\DB\GDT_String;
+use GDO\Net\URL;
 
 /**
  * An anchor for menus or paragraphs.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 6.0.0
  */
 class GDT_Link extends GDT_String
@@ -78,5 +79,10 @@ class GDT_Link extends GDT_String
 	public function target($target) { $this->target = $target; return $this; }
 	public function targetBlank() { return $this->target('_blank'); }
 	public function htmlTarget() { return $this->target === null ? '' : " target=\"{$this->target}\""; }
+
+	###########
+	### URL ###
+	###########
+	public function getURL() { return new URL($this->href); }
 	
 }

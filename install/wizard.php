@@ -27,7 +27,7 @@ Debug::setMailOnError(false);
 
 Logger::init();
 
-Trans::$ISO = GWF_LANGUAGE;
+Trans::$ISO = GDO_LANGUAGE;
 
 final class InstallerApp extends Application
 {
@@ -47,7 +47,7 @@ $modInstall = ModuleLoader::instance()->loadModuleFS('Install', 1);
 // ModuleLoader::instance()->loadModules(false, true);
 Trans::inited(true);
 
-define('GWF_CORE_STABLE', 1);
+define('GDO_CORE_STABLE', 1);
 try
 {
     # Execute Step

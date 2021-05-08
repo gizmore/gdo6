@@ -37,18 +37,18 @@ final class CLI
     public static function setServerVars()
     {
         $_SERVER['HTTPS'] = 'off';
-        $_SERVER['HTTP_HOST'] = GWF_DOMAIN;
-        $_SERVER['SERVER_NAME'] = GWF_DOMAIN; # @TODO use machines host name.
+        $_SERVER['HTTP_HOST'] = GDO_DOMAIN;
+        $_SERVER['SERVER_NAME'] = GDO_DOMAIN; # @TODO use machines host name.
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1'; # @TODO use machines IP
         $_SERVER['HTTP_USER_AGENT'] = 'Firefox Gecko MS Opera';
-        $_SERVER['REQUEST_URI'] = '/index.php?mo=' . GWF_MODULE . '&me=' . GWF_METHOD;
-        $_SERVER['HTTP_REFERER'] = 'http://'.GWF_DOMAIN.'/index.php';
+        $_SERVER['REQUEST_URI'] = '/index.php?mo=' . GDO_MODULE . '&me=' . GDO_METHOD;
+        $_SERVER['HTTP_REFERER'] = 'http://'.GDO_DOMAIN.'/index.php';
         $_SERVER['HTTP_ORIGIN'] = '127.0.0.2';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
         $_SERVER['SERVER_SOFTWARE']	= 'Apache/2.4.41 (Win64) PHP/7.4.0';
         $_SERVER['HTTPS'] = 'off';
         $_SERVER['PHP_SELF'] = '/index.php';
-        $_SERVER['QUERY_STRING'] = 'mo=' . GWF_MODULE . '&me=' . GWF_METHOD;
+        $_SERVER['QUERY_STRING'] = 'mo=' . GDO_MODULE . '&me=' . GDO_METHOD;
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7'; # @TODO use output of locale command?
     }

@@ -309,7 +309,7 @@ final class Website
 	#############
 	### Title ###
 	#############
-	private static $TITLE = GWF_SITENAME;
+	private static $TITLE = GDO_SITENAME;
 	public static function setTitle($title)
 	{
 	    self::$TITLE = $title;
@@ -321,7 +321,7 @@ final class Website
 	    $title = html(self::$TITLE);
 	    if (Module_Core::instance()->cfgSiteShortTitleAppend())
 	    {
-	        $title .= " [" . GWF_SITENAME . "]";
+	        $title .= " [" . GDO_SITENAME . "]";
 	    }
 	    return $title;
 	}

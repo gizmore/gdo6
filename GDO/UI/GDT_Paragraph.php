@@ -8,7 +8,7 @@ use GDO\Core\GDT;
  * Should render well everywhere as a paragraph might be important text.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 6.0.0
  */
 class GDT_Paragraph extends GDT
@@ -20,6 +20,6 @@ class GDT_Paragraph extends GDT
 	public function renderCell() { return sprintf('<p class="gdt-paragraph">%s</p>', $this->renderText()); }
 	public function renderCLI() { return $this->renderText(); }
 	public function renderJSON() { return $this->renderCLI(); }
-	public function renderForm() { return sprintf('<div>%s</div>', $this->renderCell()); }
+	public function renderForm() { return $this->renderCell(); }
 
 }

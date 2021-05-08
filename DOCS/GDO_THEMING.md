@@ -4,7 +4,7 @@ GDO6 is very flexible when it comes to theming.
 
 Your theme is defined in protected/config.php like this.
 
-    define('GWF_THEME', 'jqui,classic,default');
+    define('GDO_THEME', 'jqui,classic,default');
     
 
 This will instruct the template engine to look for templates in jqui first, then classic, and at last the default theme.
@@ -26,7 +26,7 @@ Create a new module and return a theme name.
 
 After the module is installed you can change the config.
 
-    define('GWF_THEME', 'mytheme,classic,default');
+    define('GDO_THEME', 'mytheme,classic,default');
     
 
 As an example we will change the impressum from the Core module. In the Core module this template is located at GDO/Core/tpl/page/impressum.php.

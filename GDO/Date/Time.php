@@ -341,7 +341,7 @@ final class Time
 	// 	}
 		
 	// 	/**
-	// 	 * Compute the week of the day for a given GWF_Date.
+	// 	 * Compute the week of the day for a given GDO_Date.
 	// 	 * 0=Sunday.
 	// 	 * @param $gdo_date string min length 8
 	// 	 * @return int 0-6

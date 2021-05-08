@@ -20,7 +20,7 @@ class GDT_Url extends GDT_String
     ##############
     ### Static ###
     ##############
-	public static function host() { return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : GWF_DOMAIN; }
+	public static function host() { return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : GDO_DOMAIN; }
 	public static function protocol() { return isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] !== 'off') ? 'https' : 'http'; }
 	public static function absolute($url) { return sprintf('%s://%s%s', self::protocol(), self::host(), self::relative($url)); }
 	public static function relative($url) { return $url; }

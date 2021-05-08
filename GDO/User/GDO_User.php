@@ -63,12 +63,12 @@ final class GDO_User extends GDO
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits')->icon('money'),
 			GDT_Gender::make('user_gender'),
 			GDT_Country::make('user_country'),
-			GDT_Language::make('user_language')->notNull()->initial(GWF_LANGUAGE),
+			GDT_Language::make('user_language')->notNull()->initial(GDO_LANGUAGE),
 			GDT_Password::make('user_password'),
 		    GDT_DeletedAt::make('user_deleted_at'),
 		    GDT_CreatedAt::make('user_last_activity')->label('last_activity'),
 			GDT_CreatedAt::make('user_register_time')->label('registered_at'),
-		    GDT_Timezone::make('user_timezone')->initial(GWF_TIMEZONE),
+		    GDT_Timezone::make('user_timezone')->initial(GDO_TIMEZONE),
 			GDT_IP::make('user_register_ip')->useCurrent(),
 		    # Indexes
 		    GDT_Index::make()->indexColumns('user_last_activity'),
@@ -120,7 +120,7 @@ final class GDO_User extends GDO
 	public function wantsTextMail() { return $this->getVar('user_email_fmt') === GDT_EmailFormat::TEXT; }
 	
 	public function getGender() { return $this->getVar('user_gender'); }
-	public function getLangISO() { $iso = $this->getVar('user_language'); return $iso ? $iso : GWF_LANGUAGE; }
+	public function getLangISO() { $iso = $this->getVar('user_language'); return $iso ? $iso : GDO_LANGUAGE; }
 	public function getLanguage() { return GDO_Language::findById($this->getLangISO()); }
 	public function getCountryISO() { return $this->getVar('user_country'); }
 	public function getCountry() { $c = $this->getValue('user_country'); return $c ? $c : GDO_Country::unknownCountry(); }
@@ -318,7 +318,7 @@ final class GDO_User extends GDO
 	 */
 	public static function getByLogin($login)
 	{
-		return self::table()->select('*')->where(sprintf('user_name=%1$s OR user_email=%1$s', self::quoteS($login)))->first()->exec()->fetchObject();
+		return self::table()->select()->where(sprintf('user_name=%1$s OR user_email=%1$s', self::quoteS($login)))->first()->exec()->fetchObject();
 	}
 	
 	#######################

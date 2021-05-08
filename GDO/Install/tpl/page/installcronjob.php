@@ -4,7 +4,7 @@ use GDO\UI\GDT_Panel;
 ?>
 <h2><?= t('install_title_4'); ?></h2>
 <?php
-$email = GWF_ADMIN_EMAIL;
+$email = GDO_ADMIN_EMAIL;
 $path = GDO_PATH . 'gdo_cronjob.sh > /dev/null';
 $path2 = GDO_PATH . 'gdo_update.sh > /dev/null';
 $content = <<<EOC

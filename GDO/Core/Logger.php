@@ -13,10 +13,10 @@ use GDO\Util\Common;
  */
 final class Logger
 {
-	const GWF_WARNING = 0x01;
-	const GWF_MESSAGE = 0x02;
-	const GWF_ERROR = 0x04;
-	const GWF_CRITICAL = 0x08;
+	const GDO_WARNING = 0x01;
+	const GDO_MESSAGE = 0x02;
+	const GDO_ERROR = 0x04;
+	const GDO_CRITICAL = 0x08;
 	const PHP_ERROR = 0x10;
 	const DB_ERROR = 0x20;
 	const HTTP_ERROR = 0x80;
@@ -140,20 +140,20 @@ final class Logger
 	public static function logCron($message) { self::rawLog('cron', $message, 0); echo $message.PHP_EOL; }
 	public static function logWebsocket($message) { self::rawLog('websocket', $message, 0); echo $message.PHP_EOL; }
 	public static function logDebug($message) { self::rawLog('debug', $message, self::DEBUG); }
-	public static function logError($message) { self::log('error', $message, self::GWF_ERROR); }
-	public static function logMessage($message) { self::log('message', $message, self::GWF_MESSAGE); }
-	public static function logWarning($message) { self::log('warning', $message, self::GWF_WARNING); }
+	public static function logError($message) { self::log('error', $message, self::GDO_ERROR); }
+	public static function logMessage($message) { self::log('message', $message, self::GDO_MESSAGE); }
+	public static function logWarning($message) { self::log('warning', $message, self::GDO_WARNING); }
 	public static function logCritical($message)
 	{
-		self::log('critical', $message, self::GWF_CRITICAL);
-// 		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GWF_CRITICAL); // TODO: formating
+		self::log('critical', $message, self::GDO_CRITICAL);
+// 		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GDO_CRITICAL); // TODO: formating
 	}
 	public static function logException(\Throwable $e)
 	{
 		$message = sprintf("%s in %s Line %s\n", $e->getMessage(), Debug::shortpath($e->getFile()), $e->getLine());
-		self::log('critical', $message, self::GWF_CRITICAL);
+		self::log('critical', $message, self::GDO_CRITICAL);
 		$log = Debug::backtraceException($e, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message;
-		self::log('critical_details', $log, self::GWF_CRITICAL);
+		self::log('critical_details', $log, self::GDO_CRITICAL);
 	}
 	public static function logInstall($message) { self::log('install', $message, self::_NONE); }
 	public static function logHTTP($message) { self::rawLog('http', $message, self::HTTP_ERROR); }
@@ -172,14 +172,14 @@ final class Logger
 	}
 
 	/**
-	 * Recursively create logdir with GWF_CHMOD permissions.
+	 * Recursively create logdir with GDO_CHMOD permissions.
 	 * @param string $filename
 	 * @return boolean
 	 */
 	private static function createLogDir($filename)
 	{
 		$dir = dirname($filename);
-		return is_dir($dir) ? true : (false !== @mkdir($dir, GWF_CHMOD, true));
+		return is_dir($dir) ? true : (false !== @mkdir($dir, GDO_CHMOD, true));
 	}
 
 	/**
@@ -263,7 +263,7 @@ final class Logger
 		{
 			$bool = true;
 			$bool = $bool && (false !== file_put_contents($filename, '<?php die(2); ?>'.PHP_EOL));
-			$bool = $bool && @chmod($filename, GWF_CHMOD&0666);
+			$bool = $bool && @chmod($filename, GDO_CHMOD&0666);
 			if (false === $bool)
 			{
 				return new GDOException(sprintf('Cannot create logfile "%s" in %s line %s.', $filename, __METHOD__, __LINE__));

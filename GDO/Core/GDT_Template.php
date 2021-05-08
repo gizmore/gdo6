@@ -191,7 +191,7 @@ class GDT_Template extends GDT
 	
 	private static function getPathB($moduleName, $path)
 	{
-	    $isos = array_unique(['', '_'.Trans::$ISO, '_'.GWF_LANGUAGE, '_en']);
+	    $isos = array_unique(['', '_'.Trans::$ISO, '_'.GDO_LANGUAGE, '_en']);
 		
 		$path12 = Strings::rsubstrTo($path, '.', $path);
 		$path13 = Strings::rsubstrFrom($path, '.', '');

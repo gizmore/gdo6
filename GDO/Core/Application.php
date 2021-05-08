@@ -74,7 +74,7 @@ class Application
 	/**
 	 * @return \GDO\Core\Method
 	 */
-	public function getMethod() { return method(Common::getRequestString('mo', GWF_MODULE), Common::getRequestString('me', GWF_METHOD)); }
+	public function getMethod() { return method(Common::getRequestString('mo', GDO_MODULE), Common::getRequestString('me', GDO_METHOD)); }
 	
 	################
 	### Override ###
@@ -102,7 +102,7 @@ class Application
 	##############
 	### Themes ###
 	##############
-	private $themes = GWF_THEMES;
+	private $themes = GDO_THEMES;
 	public function getThemes() { return $this->themes; }
 	public function hasTheme($theme) { return isset($this->themes[$theme]); }
 	public function initThemes()

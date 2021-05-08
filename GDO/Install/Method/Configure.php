@@ -57,7 +57,7 @@ class Configure extends MethodForm
 	
 	public function onSubmit_test_config(GDT_Form $form)
 	{
-		$db = new Database(GWF_DB_HOST, GWF_DB_USER, GWF_DB_PASS, GWF_DB_NAME, false);
+		$db = new Database(GDO_DB_HOST, GDO_DB_USER, GDO_DB_PASS, GDO_DB_NAME, false);
 		try
 		{
 			$db->getLink();

@@ -107,7 +107,7 @@ class GDT_Message extends GDT_Text
         {
             require GDO_PATH . 'GDO/UI/htmlpurifier/library/HTMLPurifier.auto.php';
             $config = \HTMLPurifier_Config::createDefault();
-            $config->set('URI.Host', GWF_DOMAIN);
+            $config->set('URI.Host', GDO_DOMAIN);
             $config->set('HTML.Nofollow', true);
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
             $config->set('URI.DisableExternalResources', false);

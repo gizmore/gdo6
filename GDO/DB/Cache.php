@@ -49,16 +49,16 @@ class Cache
 	 * @param string $key
 	 * @return boolean
 	 */
-	public static function get($key) { return GWF_MEMCACHE ? self::$MEMCACHED->get(GWF_MEMCACHE_PREFIX.$key) : false; }
-	public static function set($key, $value) { if (GWF_MEMCACHE) self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$key, $value); }
-	public static function remove($key) { if (GWF_MEMCACHE) self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX.$key); }
-	public static function flush() { if (GWF_MEMCACHE) self::$MEMCACHED->flush(); }
+	public static function get($key) { return GDO_MEMCACHE ? self::$MEMCACHED->get(GDO_MEMCACHE_PREFIX.$key) : false; }
+	public static function set($key, $value) { if (GDO_MEMCACHE) self::$MEMCACHED->set(GDO_MEMCACHE_PREFIX.$key, $value); }
+	public static function remove($key) { if (GDO_MEMCACHE) self::$MEMCACHED->delete(GDO_MEMCACHE_PREFIX.$key); }
+	public static function flush() { if (GDO_MEMCACHE) self::$MEMCACHED->flush(); }
 	public static function init()
 	{
-		if (GWF_MEMCACHE)
+		if (GDO_MEMCACHE)
 		{
 			self::$MEMCACHED = new \Memcached();
-			self::$MEMCACHED->addServer(GWF_MEMCACHE_HOST, GWF_MEMCACHE_PORT);
+			self::$MEMCACHED->addServer(GDO_MEMCACHE_HOST, GDO_MEMCACHE_PORT);
 		}
 	}
 	
@@ -96,7 +96,7 @@ class Cache
 	
 	public static function recacheHooks()
 	{
-        if (GWF_IPC || (GWF_IPC === 'db'))
+        if (GDO_IPC || (GDO_IPC === 'db'))
         {
             foreach (self::$RECACHING as $gdo)
             {
@@ -192,9 +192,9 @@ class Cache
 		}
 		
 		# Memcached
-		if (GWF_MEMCACHE && $back->memCached())
+		if (GDO_MEMCACHE && $back->memCached())
 		{
-		    self::$MEMCACHED->replace(GWF_MEMCACHE_PREFIX.$back->gkey(), $back, GWF_MEMCACHE_TTL);
+		    self::$MEMCACHED->replace(GDO_MEMCACHE_PREFIX.$back->gkey(), $back, GDO_MEMCACHE_TTL);
 		}
 
 	    # Mark for recache
@@ -217,10 +217,10 @@ class Cache
 	    $id = $object->getID();
 	    unset($this->cache[$id]);
 
-		if (GWF_MEMCACHE && $object->memCached())
+		if (GDO_MEMCACHE && $object->memCached())
 		{
     		$className = $object->gdoClassName();
-			self::$MEMCACHED->delete(GWF_MEMCACHE_PREFIX . $className . $id);
+			self::$MEMCACHED->delete(GDO_MEMCACHE_PREFIX . $className . $id);
 		}
 	}
 	
@@ -236,12 +236,12 @@ class Cache
 		if (!isset($this->cache[$key]))
 		{
 			$gkey = $this->dummy->gkey();
-			if (false === ($mcached = self::get(GWF_MEMCACHE_PREFIX.$gkey)))
+			if (false === ($mcached = self::get(GDO_MEMCACHE_PREFIX.$gkey)))
 			{
 				$mcached = $this->dummy->setPersisted();
-				if (GWF_MEMCACHE)
+				if (GDO_MEMCACHE)
 				{
-					self::$MEMCACHED->set(GWF_MEMCACHE_PREFIX.$gkey, $mcached, GWF_MEMCACHE_TTL);
+					self::$MEMCACHED->set(GDO_MEMCACHE_PREFIX.$gkey, $mcached, GDO_MEMCACHE_TTL);
 				}
     			$this->newDummy();
 			}

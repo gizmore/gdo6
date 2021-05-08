@@ -11,8 +11,8 @@ use GDO\Core\GDT_Template;
  * but this is also mixed into GDT_ObjectSelect, hence it is a trait.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.2
+ * @since 6.0.0
  * 
  * @see GDT_Object
  * @see GDT_ObjectSelect
@@ -72,7 +72,7 @@ trait WithObject
 		if ($var !== null)
 		{
 			# Without javascript, convert the name input
-			if (isset($_REQUEST['nocompletion_'.$this->name]))
+			if (@$_REQUEST['nocompletion_'.$this->name])
 			{
 			 	unset($_REQUEST['nocompletion_'.$this->name]);
 			 	if ($user = $this->findByName($var))

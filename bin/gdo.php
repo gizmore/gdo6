@@ -44,7 +44,7 @@ else
     require 'protected/config.php';
 }
 
-Logger::init('system', GWF_ERROR_LEVEL);
+Logger::init('system', GDO_ERROR_LEVEL);
 
 ###################
 ### Application ###
@@ -64,14 +64,14 @@ $app = new GDOApplication();
 ############
 Debug::init();
 Debug::setMailOnError(false);
-Debug::setDieOnError(GWF_ERROR_DIE);
+Debug::setDieOnError(GDO_ERROR_DIE);
 Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
 Debug::$MAX_ARG_LEN = 60;
 Cache::init();
 Database::init();
 
-$app->loader->loadModules(GWF_DB_ENABLED, !GWF_DB_ENABLED, true);
+$app->loader->loadModules(GDO_DB_ENABLED, !GDO_DB_ENABLED, true);
 
 if (module_enabled('Session'))
 {
@@ -92,7 +92,7 @@ if (!($user = GDO_User::getBy('user_name', CLI::getUsername())))
 }
 GDO_User::setCurrent($user);
 Trans::setISO($user->getLangISO());
-Logger::init($user->getName(), GWF_ERROR_LEVEL);
+Logger::init($user->getName(), GDO_ERROR_LEVEL);
 
 $page = GDT_Page::make();
 

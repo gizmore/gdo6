@@ -31,7 +31,7 @@ final class Module_Core extends GDO_Module
     const VERSION_MAJOR = '6';
     const VERSION_MINOR = '10';
     const VERSION_PATCH = '2';
-    const VERSION_REV = '1081';
+    const VERSION_REV = '1082';
     
     /**
      * GDO6 revision string.
@@ -39,7 +39,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.2-r1081';
+	public static $GDO_REVISION = '6.10.2-r1082';
 
 	##############
 	### Module ###
@@ -142,11 +142,11 @@ final class Module_Core extends GDO_Module
 	{
 		return sprintf(
 		    "window.GDO_CONFIG = {};
-window.GWF_PROTOCOL = '%s';
-window.GWF_DOMAIN = '%s';
+window.GDO_PROTOCOL = '%s';
+window.GDO_DOMAIN = '%s';
 window.GDO_WEB_ROOT = '%s';
-window.GWF_LANGUAGE = '%s';",
-			GWF_PROTOCOL, GWF_DOMAIN, GDO_WEB_ROOT, Trans::$ISO);
+window.GDO_LANGUAGE = '%s';",
+			GDO_PROTOCOL, GDO_DOMAIN, GDO_WEB_ROOT, Trans::$ISO);
 	}
 	
 	public function gdoUserJS()

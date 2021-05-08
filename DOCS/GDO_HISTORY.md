@@ -11,9 +11,10 @@ gdo6 Changelog and roadmap.
  
  - HTML classnames have been cleaned up.
  
+ - GWF_ prefixed config defines are now prefixed GDO_. Try `php gwf2gdo.php`
+
  
 ## TODO
 
- - rename GWF_ config prefix to GDO_
- 
- 
+ - Gather a real big todo file.
+

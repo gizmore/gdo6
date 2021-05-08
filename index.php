@@ -22,7 +22,7 @@ use GDO\Core\GDT_JSON;
 require 'GDO6.php';
 
 @include 'protected/config.php';
-if (!defined('GWF_CONFIGURED'))
+if (!defined('GDO_CONFIGURED'))
 {
     die("<!DOCTYPE html><html><body><h1>GDO6</h1><p>Please create a config.php, preferrably with <a href=\"install/wizard.php\">the install wizard.</a></p></body></html>\n");
 }
@@ -31,27 +31,27 @@ $page = GDT_Page::make();
 
 Database::init();
 new ModuleLoader(GDO_PATH . 'GDO/');
-GDO_Session::init(GWF_SESS_NAME, GWF_SESS_DOMAIN, GWF_SESS_TIME, !GWF_SESS_JS, GWF_SESS_HTTPS);
+GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
 $app = new Application();
 
 # Bootstrap
-Trans::$ISO = GWF_LANGUAGE;
-Logger::init(null, GWF_ERROR_LEVEL); # 1st init as guest
+Trans::$ISO = GDO_LANGUAGE;
+Logger::init(null, GDO_ERROR_LEVEL); # 1st init as guest
 Debug::init();
 Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
-Debug::setDieOnError(GWF_ERROR_DIE);
-Debug::setMailOnError(GWF_ERROR_MAIL);
+Debug::setDieOnError(GDO_ERROR_DIE);
+Debug::setMailOnError(GDO_ERROR_MAIL);
 ModuleLoader::instance()->loadModulesCache();
 GDO_Session::instance();
-if (GDO_User::current()->isAuthenticated())
+if (GDO_User::current()->isUser())
 {
     # @TODO: username can be ambigious? check if guests and members can have the same name. if so make sure the guest prefix is a valid filename on all filesystems.
-	Logger::init(GDO_User::current()->getUserName(), GWF_ERROR_LEVEL); # 2nd init with username
+	Logger::init(GDO_User::current()->getUserName(), GDO_ERROR_LEVEL); # 2nd init with username
 }
 
 # All fine!
-define('GWF_CORE_STABLE', 1);
+define('GDO_CORE_STABLE', 1);
 try
 {
 	$rqmethod = $_SERVER['REQUEST_METHOD'];
@@ -78,6 +78,11 @@ try
     if (!isset($method))
     {
         $method = $app->getMethod();
+    }
+
+    if (GDO_DB_ENABLED && $method->isLockingSession())
+    {
+        Database::instance()->lock('sess_'.GDO_Session::instance()->getID());
     }
     
     $response = $method->exec();
