@@ -7,7 +7,7 @@ use GDO\UI\GDT_Page;
  * Admin method decorator trait.
  * @TODO: Add superuser pw check to admin methods.
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  */
 trait MethodAdmin
 {

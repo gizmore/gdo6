@@ -29,7 +29,7 @@ use GDO\DB\GDT_Index;
  * @author gizmore
  * @link https://www.wechall.net
  * @link https://mettwitze.gizmore.org
- * @version 6.10.2
+ * @version 6.10.3
  * @since 1.0.0
  */
 final class GDO_User extends GDO
@@ -89,6 +89,7 @@ final class GDO_User extends GDO
 	
 	public function isBot() { return $this->isType(self::BOT); }
 	public function isGhost() { return $this->isType(self::GHOST); }
+	public function isAnon() { return $this->isGuest() && (!$this->getGuestName()); }
 	public function isGuest() { return $this->isType(self::GUEST); }
 	public function isMember() { return $this->isType(self::MEMBER); }
 	public function isType($type) { return $this->getType() === $type; }
@@ -411,6 +412,24 @@ final class GDO_User extends GDO
 		    'user_timezone' => $this->getTimezone(),
 			'permissions' => $this->loadPermissions(),
 		];
+	}
+	
+	#############
+	### Count ###
+	#############
+	private static $MEMBERCOUNT = null;
+	public static function getMemberCount()
+	{
+	    if (self::$MEMBERCOUNT === null)
+	    {
+	        $key = "gdo_user_membercount";
+	        if (false === (self::$MEMBERCOUNT = Cache::get($key)))
+	        {
+	            self::$MEMBERCOUNT = self::table()->countWhere('user_type="member"');
+	            Cache::set($key, self::$MEMBERCOUNT);
+	        }
+	    }
+	    return self::$MEMBERCOUNT;
 	}
 	
 }

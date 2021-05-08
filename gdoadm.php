@@ -23,6 +23,7 @@ use GDO\Core\GDT_Hook;
 use GDO\File\FileUtil;
 use GDO\Util\CLI;
 use GDO\Core\ModuleProviders;
+use GDO\Util\Strings;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
@@ -380,12 +381,26 @@ elseif ($argv[1] === 'wipe')
     {
         printUsage();
     }
+    
     $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
-    $response = Install::make()->requestParameters(['module' => $module->getName()])->formParametersWithButton([], 'uninstall')->executeWithInit();
+    
+    $response = Install::make()->
+        requestParameters(['module' => $module->getName()])->
+        formParametersWithButton([], 'uninstall')->
+        executeWithInit();
+    
     if ($response->isError())
     {
-        echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
-        echo PHP_EOL;
+        echo $response->renderCLI();
+    }
+    else
+    {
+        $classes = $module->getClasses();
+        $classes = array_map(function($class) {
+            return Strings::rsubstrFrom($class, '\\');
+        }, $classes);
+        printf("The %s module has been wiped from the database.\n", $module->getName());
+        printf("The following GDOs have been wiped: %s.\n", implode(', ', $classes));
     }
 }
 
@@ -478,3 +493,5 @@ else
     echo "Unknown command {$argv[1]}\n\n";
     printUsage();
 }
+
+die(GDT_Response::globalError() ? 1 : 0);

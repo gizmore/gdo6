@@ -130,6 +130,14 @@ class Result
 			}
 		}
 	}
+	
+	public function fetchInto(GDO $gdo)
+	{
+	    if ($gdoVars = $this->fetchAssoc())
+	    {
+	        return $gdo->setGDOVars($gdoVars);
+	    }
+	}
 
 	/**
 	 * @return GDO[]

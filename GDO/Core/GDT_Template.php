@@ -154,7 +154,8 @@ class GDT_Template extends GDT
 	
 	public static function responsePHP($moduleName, $path, array $tVars=null)
 	{
-		return GDT_Response::makeWith(self::make()->template($moduleName, $path, $tVars));
+// 	    return GDT_Response::makeWith(self::make()->template($moduleName, $path, $tVars));
+	    return self::make()->template($moduleName, $path, $tVars);
 	}
 	
 	/**

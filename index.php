@@ -9,15 +9,13 @@ use GDO\Session\GDO_Session;
 use GDO\DB\Database;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Website;
-use GDO\UI\GDT_Container;
-use GDO\UI\GDT_HTML;
 use GDO\Core\GDT_Error;
 use GDO\Core\Method\Page404;
 use GDO\Util\Strings;
 use GDO\DB\Cache;
 use GDO\Core\GDT_JSON;
-
-// set_include_path('.');
+use GDO\Core\GDT_Response;
+use GDO\Core\GDT_Hook;
 
 require 'GDO6.php';
 
@@ -27,7 +25,8 @@ if (!defined('GDO_CONFIGURED'))
     die("<!DOCTYPE html><html><body><h1>GDO6</h1><p>Please create a config.php, preferrably with <a href=\"install/wizard.php\">the install wizard.</a></p></body></html>\n");
 }
 
-$page = GDT_Page::make();
+GDT_Page::make();
+$response = GDT_Response::make();
 
 Database::init();
 new ModuleLoader(GDO_PATH . 'GDO/');
@@ -46,8 +45,11 @@ ModuleLoader::instance()->loadModulesCache();
 $session = GDO_Session::instance();
 if (GDO_User::current()->isUser())
 {
-    # @TODO: username can be ambigious? check if guests and members can have the same name. if so make sure the guest prefix is a valid filename on all filesystems.
-	Logger::init(GDO_User::current()->getUserName(), GDO_ERROR_LEVEL); # 2nd init with username
+    if ($name = GDO_User::current()->getUserName())
+    {
+        $name = str_replace(GDO_User::GUEST_NAME_PREFIX, '_', $name);
+    	Logger::init($name, GDO_ERROR_LEVEL); # 2nd init with username
+    }
 }
 
 # All fine!
@@ -82,10 +84,14 @@ try
 
     if (GDO_DB_ENABLED && $method->isLockingSession() && $session)
     {
-        Database::instance()->lock('sess_'.$session->getID());
+//         Database::instance()->lock('sess_'.$session->getID());
     }
     
+    GDT_Hook::callHook('BeforeRequest', $method);
+    
     $response = $method->exec();
+
+    GDT_Hook::callHook('AfterRequest', $method);
 }
 catch (Throwable $e)
 {
@@ -121,10 +127,14 @@ switch ($app->getFormat())
         }
         else
         {
-            $container = GDT_Container::make('c1')->addFields(
-                [GDT_HTML::withHTML($content), $response]);
-            $content = $page->html($container->renderCell())->renderCell();
+            $content = $content . $response->render(); 
         }
+        
+        $content = GDT_Page::$INSTANCE->html($content)->render();
+        break;
+        
+    case 'XML':
+        $content = $response->render();
         break;
 }
 
@@ -138,4 +148,5 @@ if ($session)
 Cache::recacheHooks();
 
 echo $content;
+
 die(0);

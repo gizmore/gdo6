@@ -5,8 +5,8 @@ namespace GDO\Core;
  * Adds naming conventions to a GDT.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.3
+ * @since 6.0.0
  */
 trait WithName
 {

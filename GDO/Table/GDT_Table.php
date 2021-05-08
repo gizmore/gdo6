@@ -42,7 +42,7 @@ use GDO\Core\GDOException;
  * 
  * @author gizmore
  * 
- * @version 6.10.1
+ * @version 6.10.3
  * @since 6.0.0
  * 
  * @see GDO

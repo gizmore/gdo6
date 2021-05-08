@@ -9,7 +9,7 @@ use GDO\UI\GDT_HTML;
  * The &ajax=1 parameter will drop the gdo6 site around it so you can focus on the data.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 6.0.0
  */
 class GDT_Response extends GDT
@@ -17,6 +17,13 @@ class GDT_Response extends GDT
 	use WithFields;
 	
 	public static $CODE = 200;
+	
+	/**
+	 * @var self
+	 */
+	public static $INSTANCE = null;
+	
+	public static function instance() { return self::$INSTANCE; }
 	
 	public static function globalError() { return self::$CODE >= 400; }
 	
@@ -30,18 +37,19 @@ class GDT_Response extends GDT
 	public function errorCode($code=405) { return $this->code($code); }
 	public function isError()
 	{
-		if ($this->code >= 400)
-		{
-			return true;
-		}
-		foreach ($this->fields as $gdt)
-		{
-			if ($gdt->hasError())
-			{
-				return true;
-			}
-		}
-		return false;
+	    return $this->code >= 400;
+// 		if ($this->code >= 400)
+// 		{
+// 			return true;
+// 		}
+// 		foreach ($this->fields as $gdt)
+// 		{
+// 			if ($gdt->hasError())
+// 			{
+// 				return true;
+// 			}
+// 		}
+// 		return false;
 	}
 	
 	###############
@@ -57,6 +65,15 @@ class GDT_Response extends GDT
 		return self::make()->addHTML($html);
 	}
 	
+	public static function make($name=null)
+	{
+	    if (self::$INSTANCE === null)
+	    {
+	        self::$INSTANCE = parent::make($name);
+	    }
+	    return self::$INSTANCE;
+	}
+	
 	##############
 	### Render ###
 	##############
@@ -67,34 +84,24 @@ class GDT_Response extends GDT
 	
 	public function renderCell()
 	{
-		switch (Application::instance()->getFormat())
+	    self::$INSTANCE = null;
+	    switch (Application::instance()->getFormat())
 		{
 		    case Application::CLI: return $this->renderCLI();
 		    case Application::HTML: return $this->renderHTML();
 		    case Application::JSON: return $this->renderJSON();
+		    case Application::XML: return $this->renderXML();
 		}
 	}
 	
 	public function renderHTML()
 	{
-	    return $this->_renderHTMLRec($this);
-	}
-	
-	private function _renderHTMLRec(GDT $gdt)
-	{
 	    $html = '';
-	    if ($fields = $gdt->getFields())
+	    if ($fields = $this->getFields())
 	    {
     	    foreach ($fields as $field)
     	    {
-    	        if ($field instanceof GDT_Response)
-    	        {
-        	        $html .= $this->_renderHTMLRec($field); # #XXX: only responses recursively.
-    	        }
-    	        else
-    	        {
-    	            $html .= $field->render();
-    	        }
+	            $html .= $field->renderCell();
     	    }
 	    }
 	    return $html;
@@ -140,13 +147,18 @@ class GDT_Response extends GDT
 	################
 	### Chaining ###
 	################
-	public function add(GDT_Response $response=null)
+	public function add(GDT $response=null)
 	{
-	    if ($response && $response->code != 200)
+	    if (!($response instanceof GDT_Response))
 	    {
-	        self::$CODE = $this->code = $response->code;
+	        $this->addField($response);
 	    }
-		return $response ? $this->addFields($response->getFields()) : $this;
+	    return $this;
+// 	    if ($response && $response->code != 200)
+// 	    {
+// 	        self::$CODE = $this->code = $response->code;
+// 	    }
+// 		return $response ? $this->addFields($response->getFields()) : $this;
 	}
 	
 	public function addHTML($html)

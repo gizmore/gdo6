@@ -250,7 +250,7 @@ abstract class Method
 	public function getMethodName() { return $this->gdoShortName(); }
 	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6)-4); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
-	public function error($key, array $args=null) { Website::topResponse()->add(GDT_Error::responseWith($key, $args)); return GDT_Response::make(); }
+	public function error($key, array $args=null) { Website::topResponse()->addField(GDT_Error::responseWith($key, $args)); return GDT_Response::make(); }
 	public function message($key, array $args=null, $log=true) { Website::topResponse()->addField(GDT_Success::with($key, $args)); return GDT_Response::make(); }
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
@@ -442,13 +442,13 @@ abstract class Method
 
 	        # Exec 1.before - 2.execute - 3.after
 	        GDT_Hook::callHook('BeforeExecute', $this, $response);
-	        $response = $response ? $response->add($this->beforeExecute()) : $this->beforeExecute();
+	        $response->add($this->beforeExecute());
 
-	        $response = $response ? $response->add($this->execute()) : $this->execute();
+	        $response->add($this->execute());
 
 	        if (!$response->isError())
 	        {
-    	        $response = $response ? $response->add($this->afterExecute()) : $this->afterExecute();
+	            $response->add($this->afterExecute());
     	        GDT_Hook::callHook('AfterExecute', $this, $response);
 	        }
 	        

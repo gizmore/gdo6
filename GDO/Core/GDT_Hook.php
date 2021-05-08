@@ -126,7 +126,7 @@ final class GDT_Hook extends GDT
 // 		else
 // 		{
 // 		    self::$HOOKS[$method_name] = [];
-		    foreach (ModuleLoader::instance()->getEnabledModules() as $module)
+		    foreach (ModuleLoader::instance()->getModules() as $module)
 		    {
 		        if (method_exists($module, $method_name))
 		        {

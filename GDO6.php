@@ -12,8 +12,8 @@ use GDO\Core\Application;
 /**
  * GDO6 autoloader and public functions.
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.2
+ * @since 6.0.0
  */
 
 # performance
@@ -31,20 +31,21 @@ ini_set('display_errors', 1);
 # Init GDO autoloader
 global $GDT_LOADED;
 $GDT_LOADED = 0; # perf
-spl_autoload_register(function($name){
+
+spl_autoload_register(function($name) {
     $name = str_replace('\\', '/', $name) . '.php';
     if (file_exists($name))
     {
-        /**
-         * @TODO require should be a tad faster than require_once but \
-         * it brings include problems in e.g.: testing suites and other stuff
-         */
-        require $name; 
-        global $GDT_LOADED; $GDT_LOADED++; # perf
+        require $name;
+        # perf
+        global $GDT_LOADED;
+        $GDT_LOADED++;
     }
 });
 	
-# Global utility
+######################
+### Global utility ###
+######################
 function sitename() { return t('sitename'); }
 function url($module, $method, $append='', $lang=true) { return urlSEO('index.php', $module, $method, $append, $lang); }
 function urlSEO($seoString, $module, $method, $append='', $lang=true) { return GDT_Url::absolute(hrefSEO($seoString, $module, $method, $append, $lang)); }
@@ -148,7 +149,11 @@ function tt($date=null, $format='short', $default='---') { return Time::displayD
  * @param string $method
  * @return \GDO\Core\Method
  */
-function method($moduleName, $methodName) { $klass = "GDO\\$moduleName\\Method\\$methodName"; return new $klass(); }
+function method($moduleName, $methodName)
+{
+    $klass = "GDO\\$moduleName\\Method\\$methodName";
+    return new $klass();
+}
 
 /**
  * Get requested module name.
@@ -167,4 +172,8 @@ function me() { return Common::getRequestString('me', GDO_METHOD); }
  * @param string $moduleName
  * @return boolean
  */
-function module_enabled($moduleName) { return ($module = ModuleLoader::instance()->getModule($moduleName)) ? $module->isEnabled() : false; }
+function module_enabled($moduleName)
+{
+    $module = ModuleLoader::instance()->getModule($moduleName);
+    return $module ? $module->isEnabled() : false;
+}

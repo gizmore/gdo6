@@ -7,6 +7,8 @@ use GDO\Mail\Mail;
 use GDO\User\GDO_User;
 use GDO\Net\GDT_IP;
 use GDO\Core\Website;
+use GDO\Core\GDT_Response;
+use GDO\Util\Strings;
 
 /**
  * Render a 404 page.
@@ -15,8 +17,8 @@ use GDO\Core\Website;
  * Send 404 mails optionally.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.10
+ * @version 6.10.2
+ * @since 6.10.0
  */
 final class Page404 extends MethodPage
 {
@@ -25,10 +27,14 @@ final class Page404 extends MethodPage
     
     public function beforeExecute()
     {
+        GDT_Response::$CODE = 404;
         http_response_code(404);
-        if (Module_Core::instance()->cfgMail404())
+        if (!Strings::endsWith($_SERVER['REQUEST_URI'], '.map'))
         {
-            $this->send404Mails();
+            if (Module_Core::instance()->cfgMail404())
+            {
+                $this->send404Mails();
+            }
         }
     }
     

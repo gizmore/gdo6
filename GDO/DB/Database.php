@@ -15,7 +15,7 @@ use GDO\Core\Debug;
  * @TODO support postgres?
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 3.0.0
  * 
  * @see Query
@@ -146,8 +146,6 @@ class Database
 	
 	private function query($query)
 	{
-		self::$QUERIES++;
-		$this->queries++;
 		$t1 = microtime(true);
 		if (!($result = mysqli_query($this->getLink(), $query)))
 		{
@@ -166,8 +164,10 @@ class Database
 		}
 		$t2 = microtime(true);
 		$timeTaken = $t2 - $t1;
-		self::$QUERY_TIME += $timeTaken;
+		$this->queries++;
+		self::$QUERIES++;
 		$this->queryTime += $timeTaken;
+		self::$QUERY_TIME += $timeTaken;
 		if ($this->debug)
 		{
 			$timeTaken = sprintf('%.04f', $timeTaken);
@@ -195,7 +195,6 @@ class Database
 	###################
 	### Table cache ###
 	###################
-	
 	/**
 	 * @param string $classname
 	 * @throws GDOError

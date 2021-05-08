@@ -42,6 +42,7 @@ final class CLI
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1'; # @TODO use machines IP
         $_SERVER['HTTP_USER_AGENT'] = 'Firefox Gecko MS Opera';
         $_SERVER['REQUEST_URI'] = '/index.php?mo=' . GDO_MODULE . '&me=' . GDO_METHOD;
+        $_SERVER['REQUEST_METHOD'] = 'GET';
         $_SERVER['HTTP_REFERER'] = 'http://'.GDO_DOMAIN.'/index.php';
         $_SERVER['HTTP_ORIGIN'] = '127.0.0.2';
         $_SERVER['SCRIPT_NAME'] = '/index.php';

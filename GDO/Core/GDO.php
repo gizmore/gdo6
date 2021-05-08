@@ -185,7 +185,7 @@ abstract class GDO
      */
     private $gdoVars;
     
-    public function getGDOVars() { return $this->gdoVars; }
+    public function &getGDOVars() { return $this->gdoVars; }
     
     /**
      * @param string $key

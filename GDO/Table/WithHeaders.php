@@ -12,8 +12,8 @@ use GDO\Core\GDO;
  * - Implements @\GDO\Core\ArrayResult multisort for use in @\GDO\Table\MethodTable.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.05
+ * @version 6.10.3
+ * @since 6.5.0
  */
 trait WithHeaders
 {
@@ -35,11 +35,10 @@ trait WithHeaders
 	##############################
 	### REQUEST container name ###
 	##############################
-	public static $ORDER_NAME = 0;
+	public static $ORDER_NAME = 1;
 	public static function nextOrderName()
 	{
-		self::$ORDER_NAME++;
-		return "o" . self::$ORDER_NAME;
+		return "o" . (self::$ORDER_NAME++);
 	}
 	
 	###############

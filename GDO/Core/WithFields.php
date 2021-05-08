@@ -6,7 +6,7 @@ namespace GDO\Core;
  * E.g.: GDT_Fields, GDT_Bar, GDT_Response, GDT_Form, GDT_Table->headers.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.2
  * @since 6.0.0
  * 
  * @see GDT_Bar
@@ -198,6 +198,31 @@ trait WithFields
 			}
 		}
 		return $json;
+	}
+	
+	public function renderXML()
+	{
+	    $xml = '';
+	    if ($this->name)
+	    {
+    	    $xml = "<{$this->name}>\n";
+            $xml .= $this->renderXMLFields();
+    	    $xml .= "</{$this->name}>\n";
+	    }
+	    return $xml;
+	}
+	
+	public function renderXMLFields()
+	{
+	    $xml = '';
+	    if ($this->fields)
+	    {
+	        foreach ($this->fields as $gdt)
+	        {
+	            $xml .= $gdt->renderXML();
+	        }
+	    }
+	    return $xml;
 	}
 
 	##############################

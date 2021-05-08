@@ -37,13 +37,11 @@ $result = $field->getResult();
 	  </tr>
 	</thead>
 	<tbody>
-	<?php while ($gdo = $result->fetchAs($field->fetchAs)) : ?>
+	<?php while ($gdo = $result->fetchInto($field->fetchAs->cache->getDummy())) : ?>
 	<tr data-gdo-id="<?= $gdo->getID()?>">
 	  <?php foreach($headers as $gdoType) :
-// 	  $col = $field->getField($gdoType->name);
-// 	  $gdoType = $col ? $col : $gdoType;
 	  if (!$gdoType->hidden) :
-	  $gdoType->gdo($gdo); ?>
+	       $gdoType->gdo($gdo); ?>
 		<td class="<?=$gdoType->htmlClass()?>"><?= $gdoType->renderCell(); ?></td>
 	  <?php endif; ?>
 	  <?php endforeach; ?>

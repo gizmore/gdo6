@@ -18,9 +18,9 @@ use GDO\Core\ModuleLoader;
  */
 if (PHP_SAPI !== 'cli') { die('Tests can only be run from the command line.'); }
 
-require_once 'GDO6.php';
-require_once 'protected/config_test.php';
-require_once 'vendor/autoload.php';
+require 'GDO6.php';
+require 'protected/config_test.php';
+require 'vendor/autoload.php';
 
 Logger::init('system', GDO_ERROR_LEVEL);
 Debug::init();

@@ -23,7 +23,7 @@ use GDO\Core\GDT_Hook;
  * The other memcached keys work on a per row basis with table_name_id as key.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 5.0.0
  * @license MIT
  */
@@ -50,7 +50,7 @@ class Cache
 	 * @return boolean
 	 */
 	public static function get($key) { return GDO_MEMCACHE ? self::$MEMCACHED->get(GDO_MEMCACHE_PREFIX.$key) : false; }
-	public static function set($key, $value) { if (GDO_MEMCACHE) self::$MEMCACHED->set(GDO_MEMCACHE_PREFIX.$key, $value); }
+	public static function set($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->set(GDO_MEMCACHE_PREFIX.$key, $value, $expire); }
 	public static function remove($key) { if (GDO_MEMCACHE) self::$MEMCACHED->delete(GDO_MEMCACHE_PREFIX.$key); }
 	public static function flush() { if (GDO_MEMCACHE) self::$MEMCACHED->flush(); }
 	public static function init()
@@ -91,7 +91,6 @@ class Cache
 		$this->table = $gdo;
 		$this->klass = $gdo->gdoClassName();
 		$this->tableName = strtolower($gdo->gdoShortName());
-		$this->newDummy();
 	}
 	
 	public static function recacheHooks()
@@ -108,10 +107,15 @@ class Cache
 	private function newDummy()
 	{
 		$this->dummy = new $this->klass();
+		return $this->dummy;
 	}
 	
 	public function getDummy()
 	{
+	    if (!$this->dummy)
+	    {
+	        $this->dummy = $this->newDummy();
+	    }
 	    return $this->dummy;
 	}
 	
@@ -149,7 +153,7 @@ class Cache
 	 */
 	public function initCached(array $assoc)
 	{
-		$this->dummy->setGDOVars($assoc);
+		$this->getDummy()->setGDOVars($assoc);
 		$key = $this->dummy->getID();
 		if (!isset($this->cache[$key]))
 		{
@@ -231,7 +235,7 @@ class Cache
 	 */
 	public function initGDOMemcached(array $assoc)
 	{
-		$this->dummy->setGDOVars($assoc);
+		$this->getDummy()->setGDOVars($assoc);
 		$key = $this->dummy->getID();
 		if (!isset($this->cache[$key]))
 		{

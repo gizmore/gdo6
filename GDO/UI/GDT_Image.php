@@ -8,8 +8,8 @@ use GDO\File\GDO_File;
 /**
  * HTML Image element.
  * @author gizmore
- * @version 6.10
- * @since 6.10
+ * @version 6.10.3
+ * @since 6.10.0
  */
 final class GDT_Image extends GDT
 {

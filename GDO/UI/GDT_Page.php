@@ -6,6 +6,7 @@ use GDO\Core\GDT_Template;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Application;
 use GDO\Core\Website;
+use GDO\Core\Module_Core;
 
 /**
  * This widget renders the ui/page.php template. the index.php of your site.
@@ -13,8 +14,8 @@ use GDO\Core\Website;
  * Another section is Website::topResponse()
  * 
  * @author gizmore
- * @version 6.11
- * @since 6.11
+ * @version 6.10.3
+ * @since 6.10.3
  */
 final class GDT_Page extends GDT
 {
@@ -56,18 +57,26 @@ final class GDT_Page extends GDT
     
     public function loadSidebars()
     {
-        $this->topNav = GDT_Bar::make('topNav')->horizontal();
-        $this->leftNav= GDT_Bar::make('leftNav')->vertical();
-        $this->rightNav = GDT_Bar::make('rightNav')->vertical();
-        $this->bottomNav = GDT_Bar::make('bottomNav')->horizontal();
-        $app = Application::instance();
-        if (!$app->isInstall() && !$app->isCLI())
+        if (Module_Core::instance()->cfgLoadSidebars())
         {
-            foreach (ModuleLoader::instance()->getEnabledModules() as $module)
+            $this->topNav = GDT_Bar::make('topNav')->horizontal();
+            $this->leftNav= GDT_Bar::make('leftNav')->vertical();
+            $this->rightNav = GDT_Bar::make('rightNav')->vertical();
+            $this->bottomNav = GDT_Bar::make('bottomNav')->horizontal();
+            $app = Application::instance();
+            if (!$app->isInstall() && !$app->isCLI())
             {
-                $module->onInitSidebar();
+                foreach (ModuleLoader::instance()->getModules() as $module)
+                {
+                    if ($module->isEnabled())
+                    {
+                        $module->onInitSidebar();
+                    }
+                }
             }
+            return true;
         }
+        return false;
     }
     
     public function renderCell()

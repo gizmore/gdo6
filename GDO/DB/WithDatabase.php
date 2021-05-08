@@ -4,32 +4,21 @@ namespace GDO\DB;
 use GDO\Core\GDO;
 
 /**
- * Adds primary attribute.
- * Adds index attribute.
- * Adds virtual attribute.
- * Defaults getGDOData and setGDOData.
+ * Trait for GDT that can make use of the database.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.2
+ * @since 6.0.0
  * 
  * @see GDT
  */
 trait WithDatabase
 {
-// 	public $notNull = false;
-// 	public function notNull($notNull=true) { $this->notNull = $notNull; return $this; }
-	
-// 	public $unique = false;
 	public function unique($unique=true) { $this->unique = $unique; return $this; }
 	
-//	 public $primary = false;
 	public function primary($primary=true) { $this->primary = $primary; return $this->notNull(); }
 	public function isPrimary() { return $this->primary; }
 	
-// 	public $index = false;
-// 	public function index() { $this->index = true; return $this; }
-  
 	public $virtual = false;
 	public function virtual($virtual=true) { $this->virtual = $virtual; return $this; }
 	

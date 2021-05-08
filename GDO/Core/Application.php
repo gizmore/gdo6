@@ -33,11 +33,13 @@ class Application
 	
 	/**
 	 * Move forward in time.
+	 * Or set to a patched value for replays or debugging reasons.
 	 */
-	public static function updateTime()
+	public static function updateTime($microtime=null)
 	{
-	    self::$MICROTIME = microtime(true);
-	    self::$TIME = (int) self::$MICROTIME;
+	    $microtime = $microtime === null ? microtime(true) : $microtime;
+	    self::$TIME = (int) $microtime;
+	    self::$MICROTIME = $microtime;
 	}
 	
 	################
@@ -59,7 +61,9 @@ class Application
 			$this->themes = ['default'];
 		}
 
-        $this->loader = ModuleLoader::instance() ? ModuleLoader::instance() : new ModuleLoader(GDO_PATH . 'GDO/');
+        $this->loader = ModuleLoader::instance() ?
+            ModuleLoader::instance() :
+            new ModuleLoader(GDO_PATH . 'GDO/');
 	}
 	
 	public function __destruct()
@@ -74,7 +78,7 @@ class Application
 	/**
 	 * @return \GDO\Core\Method
 	 */
-	public function getMethod() { return method(Common::getRequestString('mo', GDO_MODULE), Common::getRequestString('me', GDO_METHOD)); }
+	public function getMethod() { return method(mo(), me()); }
 	
 	################
 	### Override ###
@@ -87,7 +91,8 @@ class Application
 	##############
 	### Format ###
 	##############
-	public function isAjax() { return isset($_GET['ajax']); }
+	public function isAjax() { return !!@$_GET['ajax']; }
+	public function isXML() { return $this->getFormat() === self::XML; }
 	public function isHTML() { return $this->getFormat() === self::HTML; }
 	public function isJSON() { return $this->getFormat() === self::JSON; }
 	public function getFormat()

@@ -14,7 +14,7 @@ use GDO\Table\Sort;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 3.0.0
  */
 final class ModuleLoader
@@ -255,7 +255,7 @@ final class ModuleLoader
 	    }
 		try
 		{
-			$result = GDO_Module::table()->select('*')->exec();
+			$result = GDO_Module::table()->select()->exec();
 			while ($moduleData = $result->fetchAssoc())
 			{
 				$moduleName = strtolower($moduleData['module_name']);

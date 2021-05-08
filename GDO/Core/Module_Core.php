@@ -23,23 +23,18 @@ use GDO\User\GDO_UserPermission;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
 {
-    const VERSION_MAJOR = '6';
-    const VERSION_MINOR = '10';
-    const VERSION_PATCH = '2';
-    const VERSION_REV = '1086';
-    
     /**
      * GDO6 revision string.
      * 6.11.0 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.2-r1086';
+	public static $GDO_REVISION = '6.10.3-r1100';
 
 	##############
 	### Module ###
@@ -85,6 +80,7 @@ final class Module_Core extends GDO_Module
 			GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
 			GDT_Checkbox::make('siteshort_title_append')->initial('1'),
 		    GDT_Checkbox::make('mail_404')->initial('1'),
+		    GDT_Checkbox::make('load_sidebars')->initial('1'),
 		];
 	}
 	
@@ -99,6 +95,7 @@ final class Module_Core extends GDO_Module
 	public function cfgAllowGuests() { return $this->getConfigValue('allow_guests'); }
 	public function cfgSiteShortTitleAppend() { return $this->getConfigValue('siteshort_title_append'); }
 	public function cfgMail404() { return $this->getConfigValue('mail_404'); }
+	public function cfgLoadSidebars() { return $this->getConfigValue('load_sidebars'); }
 	
 	#############
 	### Hooks ###

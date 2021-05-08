@@ -5,15 +5,16 @@ use GDO\UI\GDT_Panel;
 
 /**
  * An error is a panel that additionally logs the given message.
+ * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.2
+ * @since 6.0.0
  */
 class GDT_Error extends GDT_Panel
 {
-    public static $ERROR = 0;
+    public static $ERROR = 1;
     
-    public function defaultName() { return self::$ERROR === 0 ? 'error' : 'error_' . (++self::$ERROR); }
+    public function defaultName() { return self::$ERROR === 1 ? 'error' : 'error_' . (++self::$ERROR); }
     
 	public function hasError() { return true; }
 
@@ -26,7 +27,6 @@ class GDT_Error extends GDT_Panel
 	
 	public static function responseWith($key, array $args=null, $code=405, $log=true)
 	{
-// 	    $log = Application::instance()->isCLI() ? false : $log;
 		return GDT_Response::makeWith(self::with($key, $args, $code, $log))->code($code);
 	}
 	
@@ -49,7 +49,10 @@ class GDT_Error extends GDT_Panel
 	##############
 	### Render ###
 	##############
-	public function renderCell() { return GDT_Template::php('Core', 'cell/error.php', ['field' => $this]); }
+	public function renderCell()
+	{
+	    return GDT_Template::php('Core', 'cell/error.php', ['field' => $this]);
+	}
 	
 	public function renderJSON()
 	{

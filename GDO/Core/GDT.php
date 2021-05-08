@@ -78,11 +78,15 @@ abstract class GDT
 	{
 	    self::$COUNT++;
 		$obj = new static();
+// 		Logger::log('gdt', "{$obj->gdoClassName()}");
 		return $obj->name($name ? $name : $obj->defaultName());
 	}
 	
 	### stats
-	public function __wakeup() { self::$COUNT++; }
+	public function __wakeup()
+	{
+	    self::$COUNT++;
+	}
 	
 	############
 	### Name ###
@@ -317,6 +321,8 @@ abstract class GDT
 	public function render() { return Application::instance()->isCLI() ? $this->renderCLI() : $this->renderCell(); }
 	public function renderCLI() { return json_encode($this->renderJSON(), JSON_PRETTY_PRINT); }
 	public function renderPDF() { return $this->renderCard(); }
+	public function renderXML() { return $this->name ? sprintf('<%1$s var="%2$s"></%1$s>', $this->name, html($this->getVar())) : ''; }
+	public function renderJSON() { return $this->var; }
 	public function renderCell() { return $this->renderCellSpan($this->getVar()); }
 	public function renderCellSpan($var) { return sprintf('<span class="%s">%s</span>', $this->htmlClass(), html($var)); }
 	public function renderCard() { return sprintf('<label>%s</label><span>%s</span>', $this->displayLabel(), $this->displayValue($this->getVar())); }
@@ -325,7 +331,6 @@ abstract class GDT
 	public function renderFilter($f) {}
 	public function renderHeader() {}
 	public function renderChoice($choice) { return is_object($choice) ? $choice->renderChoice() : $choice; }
-	public function renderJSON() { return $this->var; }
 	
 	public $labelArgs;
 	public function labelArgs(...$labelArgs) { $this->labelArgs = $labelArgs; return $this; }

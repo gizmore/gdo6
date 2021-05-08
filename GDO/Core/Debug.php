@@ -268,7 +268,7 @@ final class Debug
 		}
 		else
 		{
-		    return GDT_Page::$INSTANCE->html($message)->renderCell();
+		    return GDT_Page::$INSTANCE->html($message)->render();
 		}
 	}
 	public static function disableExceptionHandler()

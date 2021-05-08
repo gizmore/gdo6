@@ -67,6 +67,9 @@ final class ArrayResult extends Result
 	public function fetchRow() { return array_values($this->fetchAssoc()); }
 	public function fetchAssoc() { return $this->fetchObject()->getGDOVars(); }
 	public function fetchAs(GDO $table) { return $this->fetchObject(); }
+	/**
+	 * @return GDO
+	 */
 	public function fetchObject()
 	{
 	    if ($this->index >= count($this->data))
@@ -76,6 +79,14 @@ final class ArrayResult extends Result
 	    $slice = array_slice($this->data, $this->index++, 1);
 	    return array_pop($slice);
 	}
+	public function fetchInto(GDO $gdo)
+	{
+	    if ($o = $this->fetchObject())
+	    {
+	        return $gdo->setGDOVars($o->getGDOVars());
+	    }
+	}
+	
 	
 	##############
 	### Filter ###

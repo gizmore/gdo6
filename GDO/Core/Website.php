@@ -5,12 +5,13 @@ use GDO\UI\GDT_Link;
 use GDO\Session\GDO_Session;
 use GDO\UI\GDT_HTML;
 use GDO\UI\GDT_Page;
+use GDO\UI\GDT_Container;
 
 /**
  * General Website utility.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 3.0.5
  * @see \GDO\UI\GDT_Page
  */
@@ -76,7 +77,7 @@ final class Website
 					}
 				}
 		}
-		self::topResponse()->add(GDT_Success::responseWith('msg_redirect', [GDT_Link::anchor($url), $time]));
+		self::topResponse()->addField(GDT_Success::with('msg_redirect', [GDT_Link::anchor($url), $time]));
 	}
 
 	private static function ajaxRedirect($url, $time)
@@ -248,12 +249,12 @@ final class Website
 	####################
 	### Top Response ###
 	####################
-	public static $TOP_RESPONSE;
+	public static $TOP_RESPONSE = null;
 	public static function topResponse()
 	{
-	    if (!self::$TOP_RESPONSE)
+	    if (self::$TOP_RESPONSE === null)
 	    {
-	        self::$TOP_RESPONSE = GDT_Response::make('topRespnse');
+	        self::$TOP_RESPONSE = GDT_Container::make('topRespnse');
 	        if (!Application::instance()->isInstall())
 	        {
     	        if ($message = GDO_Session::get('redirect_message'))
