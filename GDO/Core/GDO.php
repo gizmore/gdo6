@@ -108,8 +108,12 @@ abstract class GDO
     
     public function __wakeup()
     {
-//         self::$COUNT++;
+        self::$COUNT++;
         $this->recache = false;
+        if (GDO_GDT_DEBUG)
+        {
+            self::logDebug();
+        }
     }
     
     private static function logDebug()

@@ -107,7 +107,7 @@ class Cache
         {
             foreach (self::$RECACHING as $gdo)
             {
-                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->cache->klass, $gdo->getID());
+                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->table()->cache->klass, $gdo->getID());
             }
         }
 	}
