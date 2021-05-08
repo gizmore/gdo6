@@ -252,7 +252,7 @@ abstract class Method
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
 	public function error($key, array $args=null) { Website::topResponse()->addField(GDT_Error::responseWith($key, $args)); return GDT_Response::make(); }
 	public function message($key, array $args=null, $log=true) { Website::topResponse()->addField(GDT_Success::with($key, $args)); return GDT_Response::make(); }
-	public function templatePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
+	public function templatePHP($path, array $tVars=null) { return GDT_Template::templatePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
 
 	############
@@ -427,19 +427,16 @@ abstract class Method
 	        if ($transactional) $db->transactionBegin();
 	        
 	        # Init method
-	        $response = $this->init();
-	        if ($response && $response->isError())
+	        $response = GDT_Response::newWith();
+	        
+	        $this->init();
+	        
+	        if ($response->isError())
 	        {
 	            if ($transactional) $db->transactionEnd();
 	            return $response;
 	        }
 	        
-	        # Hook response
-	        if (!$response)
-	        {
-	            $response = GDT_Response::make();
-	        }
-
 	        # Exec 1.before - 2.execute - 3.after
 	        GDT_Hook::callHook('BeforeExecute', $this, $response);
 	        $response->add($this->beforeExecute());

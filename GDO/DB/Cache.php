@@ -40,7 +40,8 @@ class Cache
 	 * @var GDO[]
 	 */
 	public $all;       # All rows. @see GDO->allCached()
-    public $pkNames;   # Primary Key Column Names
+	public $allExpire; # Expiration time for allCached()
+	public $pkNames;   # Primary Key Column Names
     public $pkColumns; # Primary Key Columns
     public $tableName; # Cached transformed table name
     

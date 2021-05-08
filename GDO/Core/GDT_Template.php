@@ -19,7 +19,7 @@ use GDO\File\FileUtil;
  * - @TODO: Cache template files and use eval on them. maybe that's a tad faster than Filesystem.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 3.0.0
  */
 class GDT_Template extends GDT
@@ -152,10 +152,14 @@ class GDT_Template extends GDT
 		}
 	}
 	
+	public static function templatePHP($moduleName, $path, array $tVars=null)
+	{
+	    return self::make()->template($moduleName, $path, $tVars);
+	}
+	
 	public static function responsePHP($moduleName, $path, array $tVars=null)
 	{
-// 	    return GDT_Response::makeWith(self::make()->template($moduleName, $path, $tVars));
-	    return self::make()->template($moduleName, $path, $tVars);
+	    return GDT_Response::newWith(self::templatePHP($moduleName, $path, $tVars));
 	}
 	
 	/**

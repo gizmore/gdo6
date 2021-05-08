@@ -12,8 +12,8 @@ use GDO\UI\GDT_Page;
  * This module is part of the gdo6 core.
  * 
  * @author gizmore
- * @version 6.10
- * @since 5.03
+ * @version 6.10.3
+ * @since 5.3.0
  * 
  * @see GDT_PerfBar
  */

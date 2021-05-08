@@ -74,6 +74,17 @@ class GDT_Response extends GDT
 	    return self::$INSTANCE;
 	}
 	
+	/**
+	 * Make a new response. Has to be called for any execute within an execute.
+	 * @param GDT ...$fields
+	 * @return \GDO\Core\GDT_Response
+	 */
+	public static function newWith(GDT ...$fields)
+	{
+	    self::$INSTANCE = null;
+	    return self::makeWith(...$fields);
+	}
+	
 	##############
 	### Render ###
 	##############

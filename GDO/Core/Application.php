@@ -68,7 +68,10 @@ class Application
 	
 	public function __destruct()
 	{
-		Logger::flush();
+	    if (class_exists('GDO\\Core\\Logger', false))
+	    {
+    		Logger::flush();
+	    }
 	}
 	
 	public function isWindows() { return defined('PHP_WINDOWS_VERSION_MAJOR'); }

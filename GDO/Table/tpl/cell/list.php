@@ -31,7 +31,8 @@ echo $pagemenu;
   <h3><?=$field->renderTitle()?></h3>
 <?php endif; ?>
 <?php
-while ($gdo = $result->fetchObject()) :
+$dummy = $field->gdtTable->cache->getDummy();
+while ($gdo = $result->fetchInto($dummy)) :
 	echo $template->gdo($gdo)->renderList();
 endwhile;
 ?>

@@ -1215,8 +1215,7 @@ abstract class GDO
     
     public function uncacheAll()
     {
-        $cache = self::table()->cache;
-        $cache->all = null;
+        $this->cache->all = null;
         Cache::remove($this->cacheAllKey());
         return $this;
     }
@@ -1224,6 +1223,11 @@ abstract class GDO
     public function cacheAllKey()
     {
         return 'all_' . $this->gdoTableName();
+    }
+    
+    public function allCachedExpiration($expire=GDO_MEMCACHE_TTL)
+    {
+        return $this->cache->expiration = $expire;
     }
     
     /**
@@ -1430,11 +1434,7 @@ abstract class GDO
      */
     public static function gdoHashcodeS(array $gdoVars)
     {
-//         ksort($gdoVars); # Ensure order of vars stay the same.
-        return substr(
-            md5(str_repeat(GDO_SALT, 3).
-                json_encode($gdoVars).
-                str_repeat(GDO_SALT, 3)), 0, 16);
+        return substr(sha1(GDO_SALT.json_encode($gdoVars), 0, 16));
     }
     
     ##############

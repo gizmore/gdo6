@@ -252,7 +252,7 @@ class GDO_Module extends GDO
 	/**
 	 * @param string $file
 	 * @param array $tVars
-	 * @return GDT_Response
+	 * @return GDT_Template
 	 */
 	public function templatePHP($file, array $tVars=null)
 	{
@@ -260,7 +260,7 @@ class GDO_Module extends GDO
 		{
 			case 'json': return $tVars;
 			case 'html':
-			default: return GDT_Template::php($this->getName(), $file, $tVars);
+			default: return GDT_Template::make()->template($this->getName(), $file, $tVars);
 		}
 	}
 	
@@ -270,7 +270,7 @@ class GDO_Module extends GDO
 		{
 			case 'json': return GDT_Response::makeWith(GDT_JSON::make()->value($tVars));
 			case 'html':
-			default: return GDT_Template::responsePHP($this->getName(), $file, $tVars);
+			default: return GDT_Response::makeWith($this->templatePHP($file, $tVars));
 		}
 	}
 	

@@ -10,7 +10,7 @@ use GDO\DB\GDT_AutoInc;
  * @see GDT_Hook
  * @see GWS_Server
  * @author gizmore@wechall.net
- * @version 6.10.1
+ * @version 6.10.3
  * @since 6.5.0
  */
 final class GDO_Hook extends GDO

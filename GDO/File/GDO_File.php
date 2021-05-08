@@ -12,12 +12,18 @@ use GDO\Core\GDOException;
 use GDO\DB\GDT_UInt;
 use GDO\Core\Debug;
 use GDO\Core\Application;
+use GDO\User\GDO_User;
+use GDO\Net\Stream;
+use GDO\Core\Website;
 
 /**
  * File database storage.
+ * Images are converted to resize variants via cronjob.
  * 
+ * @example GDO_File::fromPath($path)->insert()->copy();
+ * @example GDO_File::find(1)->
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.1.0
  *
  * @see GDT_File
@@ -49,9 +55,14 @@ final class GDO_File extends GDO
 	public function isImageType() { return Strings::startsWith($this->getType(), 'image/'); }
 	public function getWidth() { return $this->getVar('file_width'); }
 	public function getHeight() { return $this->getVar('file_height'); }
+	public function getContents() {}
+	public function streamTo(GDO_User $user) { return Stream::serveTo($user, $this); }
 	
 	public function renderCell() { return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this]); }
 	public function renderCard() { return GDT_Template::php('File', 'card/file.php', ['gdo'=>$this]); }
+
+	public $variant = '';
+	
 	
 	public $path;
 	public function tempPath($path=null)
@@ -81,15 +92,27 @@ final class GDO_File extends GDO
 		return $this->getPath() . $variant;
 	}
 	
+	/**
+	 * Delete variant- and original file when deleted from database. 
+	 */
 	public function gdoAfterDelete()
 	{
+	    # Delete variants
 		Filewalker::traverse(self::filesDir(), "/^{$this->getID()}_/", [$this, 'deleteVariant']);
-		@unlink($this->getDestPath());
+		# delete original
+		$path = $this->getDestPath();
+		if (!@unlink($path))
+		{
+		    Website::error('err_delete_file', [$path]);
+		}
 	}
 	
 	public function deleteVariant($entry, $fullpath)
 	{
-		@unlink($fullpath);
+	    if (!@unlink($fullpath))
+	    {
+	        Website::error('err_delete_file', [$fullpath]);
+	    }
 	}
 	
 	public function toJSON()
@@ -99,7 +122,7 @@ final class GDO_File extends GDO
 			'name' => $this->getName(),
 			'type' => $this->getType(),
 			'size' => $this->getSize(),
-			'initial' => true
+			'initial' => true,
 		]);
 	}
 	

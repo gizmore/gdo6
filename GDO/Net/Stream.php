@@ -66,26 +66,26 @@ final class Stream
 	
 	/**
 	 * Serve a HTTP range request if desired.
-	 * @param GDO_File $gdoFile
+	 * @param GDO_File $file
 	 * @param string $variant
 	 */
-	public static function serveWithRange(GDO_File $gdoFile, $variant='')
+	public static function serveWithRange(GDO_File $file, $variant='')
 	{
-	    $size = $length = $gdoFile->getSize();
+	    $die = !Application::instance()->isUnitTests();
+	    $size = $length = $file->getSize();
 	    $start = 0;
 	    $end = $size - 1;
 
-	    $file = $gdoFile->getVariantPath($variant);
+	    $file = $file->getVariantPath($variant);
 	    $fp = fopen($file, 'rb');
 	    
-	    hdr('Content-type: ' . $gdoFile->getType());
+	    hdr('Content-type: ' . $file->getType());
 	    hdr('Accept-Ranges: 0-' . $size);
 
 	    if (isset($_SERVER['HTTP_RANGE']))
 	    {
             $c_start = $start;
 	        $c_end = $end;
-	        
 	        
 	        list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
 	        if (strpos($range, ',') !== false)
@@ -100,9 +100,9 @@ final class Stream
 	        }
 	        else
 	        {
-	            $range  = explode('-', $range);
+	            $range = explode('-', $range);
 	            $c_start = $range[0];
-	            $c_end   = (isset($range[1]) && is_numeric($range[1])) ? $range[1] : $size;
+	            $c_end = (isset($range[1]) && is_numeric($range[1])) ? $range[1] : $size;
 	        }
 	        $c_end = ($c_end > $end) ? $end : $c_end;
 	        if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size)
@@ -128,19 +128,27 @@ final class Stream
 	        {
 	            $buffer = $end - $p + 1;
 	        }
-	        
-	        $data = fread($fp, $buffer);
-	        
-	        if (!Application::instance()->isUnitTests())
+
+	        if (!$die)
 	        {
-    	        echo $data;
-    	        flush();
+	            fpassthru($fp);
 	        }
+	        
+// 	        $data = fread($fp, $buffer);
+// 	        if (!$die)
+// 	        {
+//     	        echo $data;
+//     	        flush();
+// 	        }
 	    }
 	    fclose($fp);
-	    if (!Application::instance()->isUnitTests())
+	    if (!$die)
 	    {
 	        die();
+	    }
+	    else
+	    {
+	        echo "Served ".$file->
 	    }
 	}
 	

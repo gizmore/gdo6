@@ -17,7 +17,7 @@ namespace GDO\Core;
  * The yielder was a bad ide and got removed in 6.10. hooks for navs and sections need to be called early.
  *
  * @author gizmore
- * @version 6.11.1
+ * @version 6.10.1
  * @since 3.0.0
  */
 final class GDT_Hook extends GDT
