@@ -179,6 +179,7 @@ return array(
 'err_upload_move' => 'Non è stato possibile spostare un file da %s a %s.',
 'err_404' => '404 - Pagina non trovata',
 'err_user_no_permission' => 'Nessuna autorizzazione: %s.',
+'err_curl' => 'Richiesta HTTP non riuscita(%s): %s',
     
 # File
 'is_file' => 'un File',

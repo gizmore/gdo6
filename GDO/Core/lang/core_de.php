@@ -179,6 +179,7 @@ return array(
 'err_upload_move' => 'Eine Datei konnte nicht von %s nach %s verschoben werden.',
 'err_404' => '404 - Seite nicht gefunden',
 'err_user_no_permission' => 'Der Benutzer benötigt die %s Berechtigung.',
+'err_curl' => 'HTTP Anfrage fehlgeschlagen(%s): %s',
     
 # File
 'is_file' => 'keine Datei',

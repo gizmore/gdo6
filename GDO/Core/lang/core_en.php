@@ -179,7 +179,7 @@ return array(
 'err_upload_move' => 'File could not be moved from %s to %s.',
 'err_404' => '404 - File not found',
 'err_user_no_permission' => 'The user needs the %s permission.',
-    
+'err_curl' => 'HTTP request error(%s): %s',
 # File
 'is_file' => 'a File',
 'is_folder' => 'a Folder',
