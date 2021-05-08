@@ -24,6 +24,7 @@ use GDO\DB\GDT_UInt;
  * Holds a set of method names for the steps
  * Autoconfigures GDO6 for when no config exists.
  * Holds fields for a configuration form.
+ * 
  * @author gizmore
  * @version 6.10.3
  * @since 6.0.0
@@ -131,6 +132,8 @@ class Config
 		if (!defined('GDO_SESS_TIME')) define('GDO_SESS_TIME', Time::ONE_DAY*2);
 		if (!defined('GDO_SESS_JS')) define('GDO_SESS_JS', true);
 		if (!defined('GDO_SESS_HTTPS')) define('GDO_SESS_HTTPS', false);
+		if (!defined('GDO_SESS_LOCK')) define('GDO_SESS_LOCK', GDO_DB_ENABLED);
+		
 		# Email
 		if (!defined('GDO_ENABLE_EMAIL')) define('GDO_ENABLE_EMAIL', false);
 		if (!defined('GDO_BOT_NAME')) define('GDO_BOT_NAME', GDO_SITENAME . ' support');
@@ -197,8 +200,9 @@ class Config
 			GDT_Hidden::make('sess_domain')->initialValue(GDO_SESS_DOMAIN),
 			GDT_UInt::make('sess_time')->initialValue(GDO_SESS_TIME)->required()->min(30),
 			GDT_Checkbox::make('sess_js')->initialValue(GDO_SESS_JS),
-			GDT_Checkbox::make('sess_https')->initialValue(GDO_SESS_HTTPS),
-			# Email
+		    GDT_Checkbox::make('sess_https')->initialValue(GDO_SESS_HTTPS),
+		    GDT_Checkbox::make('sess_lock')->initialValue(GDO_SESS_LOCK),
+		    # Email
 			GDT_Divider::make()->label('install_config_section_email'),
 		    GDT_Checkbox::make('enable_email')->initialValue(GDO_ENABLE_EMAIL),
 		    GDT_Realname::make('bot_name')->required()->initialValue(GDO_BOT_NAME)->label('bot_name'),
@@ -208,4 +212,5 @@ class Config
 			GDT_Checkbox::make('debug_email')->initialValue(GDO_DEBUG_EMAIL),
 		);
 	}
+	
 }

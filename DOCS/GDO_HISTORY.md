@@ -5,6 +5,8 @@ gdo6 Changelog and roadmap.
 
 ## 6.10.3
  
+ - New config GDO_SESS_LOCK to globally toggle session locking capabilities. Requires a database. Method has isLockingSession(). By default every Method returns true when a POST request ist made. 
+ 
  - Big performance and memory usage enhancement.
  
  - Now only 1 global GDT_Response exists. Nested views work by nulling the global instance on rendering, causing a new global instance to be created.

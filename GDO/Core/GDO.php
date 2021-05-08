@@ -1451,7 +1451,7 @@ abstract class GDO
      */
     public static function gdoHashcodeS(array $gdoVars)
     {
-        return substr(sha1(GDO_SALT.json_encode($gdoVars), 0, 16));
+        return substr(sha1(GDO_SALT.json_encode($gdoVars)), 0, 16);
     }
     
     ##############

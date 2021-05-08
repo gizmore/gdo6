@@ -83,7 +83,7 @@ try
         $method = $app->getMethod();
     }
 
-    if (GDO_DB_ENABLED && $session && $method->isLockingSession())
+    if (GDO_DB_ENABLED && GDO_SESS_LOCK && $method->isLockingSession())
     {
         $lock = 'sess_'.$session->getID();
         Database::instance()->lock($lock);
