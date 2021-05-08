@@ -5,9 +5,11 @@ use GDO\UI\GDT_Page;
 
 /**
  * Admin method decorator trait.
+ * 
  * @TODO: Add superuser pw check to admin methods.
  * @author gizmore
  * @version 6.10.3
+ * @since 6.0.0
  */
 trait MethodAdmin
 {
@@ -21,20 +23,17 @@ trait MethodAdmin
 	    $this->renderNavBar();
 	}
 	
-	public function renderNavBar($module=null)
+	public function renderNavBar()
 	{
-	    if (Application::instance()->isHTML())
-	    {
-	        GDT_Page::$INSTANCE->topTabs->addField(GDT_Template::responsePHP('Admin', 'navbar.php', ['moduleName' => $module]));
-	    }
+	    GDT_Page::$INSTANCE->topTabs->addField(
+	        GDT_Template::templatePHP('Admin', 'navbar.php',
+	            ['moduleName' => $this->getModuleName()]));
 	}
-
-	public function renderPermTabs($module=null)
+	
+	public function renderPermTabs()
 	{
-	    if (Application::instance()->isHTML())
-	    {
-	        GDT_Page::$INSTANCE->topTabs->addField(GDT_Template::responsePHP('Admin', 'perm_tabs.php'));
-	    }
+        GDT_Page::$INSTANCE->topTabs->addField(
+            GDT_Template::templatePHP('Admin', 'perm_tabs.php'));
 	}
 	
 }

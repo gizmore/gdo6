@@ -4,7 +4,6 @@ namespace GDO\Install\Method;
 use GDO\Form\GDT_Form;
 use GDO\Form\MethodForm;
 use GDO\Core\GDT_Template;
-use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Submit;
 
 /**
@@ -26,7 +25,7 @@ final class CopyHTAccess extends MethodForm
     public function formValidated(GDT_Form $form)
     {
         copy(GDO_PATH . '.htaccess.example', GDO_PATH . '.htaccess');
-        return parent::formValidated($form)->add($this->renderPage());
+        return parent::formValidated($form)->addField($this->renderPage());
     }
     
 }

@@ -22,7 +22,7 @@ use GDO\DB\GDT_Enum;
  * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.0.0
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
@@ -36,16 +36,17 @@ abstract class GDT
 	use WithName;
 	use WithIcon;
 	
-	# Same as $gdo but always set and always the table.
+// 	# Same as $gdo but always set and always the table.
 	/** @var $gdtTable GDO **/
 	public $gdtTable;
 	/** @var GDO **/
 	public $gdo; # current row / gdo
+	
 	public $name; # html id
-	public $var; # String representation
+	public $var; # String representation of current var
 	public $initial; # Initial var
-	public $unique; # DB
-	public $primary; # DB
+	public $unique = false; # DB
+	public $primary = false; # DB
 	public $readable = false; # can see
 	public $writable = false; # can change
 	public $editable = false; # user can change
@@ -64,6 +65,7 @@ abstract class GDT
 	 */
 	protected function __construct() {}
 	
+	public static $DEBUG = GDO_GDT_DEBUG;
 	public static $COUNT = 0; # Total GDT created
 
 	public function hasName() { return $this->name !== null; }
@@ -77,15 +79,27 @@ abstract class GDT
 	public static function make($name=null)
 	{
 	    self::$COUNT++;
+	    if (GDO_GDT_DEBUG)
+	    {
+	        self::logDebug();
+	    }
 		$obj = new static();
-// 		Logger::log('gdt', "{$obj->gdoClassName()}");
 		return $obj->name($name ? $name : $obj->defaultName());
 	}
 	
 	### stats
-	public function __wakeup()
+// 	public function __wakeup()
+// 	{
+// // 	    self::$COUNT++;
+// // 	    if (GDO_GDT_DEBUG)
+// // 	    {
+// // 	        self::logDebug();
+// // 	    }
+// 	}
+	
+	private static function logDebug()
 	{
-	    self::$COUNT++;
+	    Logger::log('gdt', sprintf('%d: %s', self::$COUNT, self::gdoClassNameS()));
 	}
 	
 	############
@@ -506,4 +520,9 @@ abstract class GDT
 	    ];
 	}
 
+}
+
+if (GDT::$DEBUG)
+{
+    Logger::log('gdt', '--- NEW RUN ---');
 }

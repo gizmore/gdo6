@@ -3,7 +3,6 @@ use GDO\User\GDO_User;
 /**
  * @var $user GDO_User
  */
-$user instanceof GDO_User;
 $id = $user->getID();
 
 # Beautify markup and typography

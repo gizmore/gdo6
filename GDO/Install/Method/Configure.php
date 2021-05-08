@@ -65,7 +65,7 @@ class Configure extends MethodForm
 		}
 		catch (GDOException $ex)
 		{
-			return $this->error('err_db_connect')->add($this->renderPage());
+			return $this->error('err_db_connect')->addField($this->renderPage());
 		}
 	}
 	

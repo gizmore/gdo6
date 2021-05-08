@@ -5,10 +5,11 @@ use GDO\UI\GDT_Panel;
 
 /**
  * A success message, the pedant to GDT_Error.
+ * Logs a message if desired.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.3
+ * @since 6.0.0
  * @see GDT_Error
  */
 class GDT_Success extends GDT_Panel

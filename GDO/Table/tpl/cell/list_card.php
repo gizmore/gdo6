@@ -20,7 +20,8 @@ $pages = $pagemenu ? $pagemenu->render() : '';
 	<li>
 <?php
 $template = $field->getItemTemplate();
-while ($gdo = $result->fetchObject())
+$dummy = $field->gdtTable->cache->getDummy();
+while ($gdo = $result->fetchInto($dummy))
 {
 	echo $template->gdo($gdo)->renderCard();
 }?>

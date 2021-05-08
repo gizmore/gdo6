@@ -38,18 +38,6 @@ class GDT_Response extends GDT
 	public function isError()
 	{
 	    return $this->code >= 400;
-// 		if ($this->code >= 400)
-// 		{
-// 			return true;
-// 		}
-// 		foreach ($this->fields as $gdt)
-// 		{
-// 			if ($gdt->hasError())
-// 			{
-// 				return true;
-// 			}
-// 		}
-// 		return false;
 	}
 	
 	###############
@@ -65,6 +53,11 @@ class GDT_Response extends GDT
 		return self::make()->addHTML($html);
 	}
 	
+	/**
+	 * 
+	 * @param string $name
+	 * @return self
+	 */
 	public static function make($name=null)
 	{
 	    if (self::$INSTANCE === null)
@@ -126,50 +119,41 @@ class GDT_Response extends GDT
 		];
 	}
 	
-	public function renderCLI()
-	{
-	    return $this->renderCLIFields();
-	}
-
-	private function renderCLIFields()
-	{
-	    $back = '';
-	    foreach ($this->fields as $field)
-	    {
-	        $back .= $field->renderCLI();
-	    }
-	    return trim($back);
-	}
-	
-	private function renderJSONFields()
-	{
-		$back = [];
-		foreach ($this->getFieldsRec() as $field)
-		{
-		    if ($field->name)
-		    {
-		        $json = $field->renderJSON();
-		        $back[$field->name] = $json;
-		    }
-		}
-		return $back;
-	}
-	
 	################
 	### Chaining ###
 	################
-	public function add(GDT $response=null)
+	public function addField(GDT $field=null)
 	{
-	    if (!($response instanceof GDT_Response))
+	    if ( (!$field) || ($field === $this) )
 	    {
-	        $this->addField($response);
+	        return $this;
+	    }
+	    if ($field instanceof GDT_Response)
+	    {
+	        $this->code($field->code);
+	        return $this->addFields($field->fields);
+	    }
+	    else
+	    {
+	        $this->_addField($field);
+// 	        if (isset($field->fields))
+// 	        {
+// 	            $this->addFields($field->fields);
+// 	        }
+    	    return $this;
+	    }
+	}
+	
+	public function addFields(array $fields=null)
+	{
+	    if ($fields)
+	    {
+	        foreach ($fields as $gdt)
+	        {
+	            $this->addField($gdt);
+	        }
 	    }
 	    return $this;
-// 	    if ($response && $response->code != 200)
-// 	    {
-// 	        self::$CODE = $this->code = $response->code;
-// 	    }
-// 		return $response ? $this->addFields($response->getFields()) : $this;
 	}
 	
 	public function addHTML($html)

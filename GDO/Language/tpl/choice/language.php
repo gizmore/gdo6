@@ -1,6 +1,6 @@
 <?php
 use GDO\Language\GDO_Language;
-$language instanceof GDO_Language;
+/** @var $language GDO_Language **/
 ?>
 <div>
 <?php if ($language) : ?>

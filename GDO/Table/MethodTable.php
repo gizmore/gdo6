@@ -13,7 +13,7 @@ use GDO\Core\GDO;
  * The basic API is identical for static memory results and queried data.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 5.0.0
  * @see ArrayResult
  * @see GDT_Table
@@ -30,6 +30,7 @@ abstract class MethodTable extends Method
      * @return GDO
      */
     public abstract function gdoTable();
+    public function gdoTableName() { return 'table'; }
     
     /**
      * Override this with returning an ArrayResult with data.
@@ -90,7 +91,7 @@ abstract class MethodTable extends Method
      */
     public function createCollection()
     {
-        $this->table = GDT_Table::make();
+        $this->table = GDT_Table::make($this->gdoTableName());
         return $this->table->gdtTable($this->gdoTable());
     }
     

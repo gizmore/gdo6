@@ -147,6 +147,7 @@ These modules add functionality to the website and are (mostly) own code.
  - [OpenTimes](https://github.com/gizmore/gdo6-opentimes)
  - [Poll](https://github.com/gizmore/gdo6-poll)
  - [Push](https://github.com/gizmore/gdo6-push)
+ - [Security](https://github.com/gizmore/gdo6-security)
  - [Shoutbox](https://github.com/gizmore/gdo6-shoutbox)
  - [SID](https://github.com/gizmore/gdo6-sid)
  - [Search]() (search all GDO tables on certain GDT. build a link out of ???)

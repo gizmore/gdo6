@@ -1,9 +1,11 @@
 <?php
 namespace GDO\DB;
+
 use GDO\Core\GDO;
 use GDO\Core\Logger;
 use GDO\Core\GDOException;
 use GDO\Util\Strings;
+
 /**
  * Query builder.
  * Part of the GDO DBA code.
@@ -16,8 +18,8 @@ use GDO\Util\Strings;
  * @see Database
  * 
  * @author gizmore
- * @version 6.07
- * @since 5.00
+ * @version 6.10.3
+ * @since 5.0.0
  */
 final class Query
 {

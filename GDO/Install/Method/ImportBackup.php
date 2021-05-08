@@ -34,7 +34,7 @@ final class ImportBackup extends MethodForm
 			return \GDO\Backup\Method\ImportBackup::make()->importBackup($form->getFormValue('backup_file'));
 		}
 		
-		return parent::formValidated($form)->add($this->renderPage());
+		return parent::formValidated($form)->addField($this->renderPage());
 	}
 	
 }

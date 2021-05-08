@@ -7,7 +7,7 @@ use GDO\UI\GDT_Panel;
  * An error is a panel that additionally logs the given message.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.0.0
  */
 class GDT_Error extends GDT_Panel

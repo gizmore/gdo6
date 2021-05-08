@@ -4,9 +4,10 @@ namespace GDO\Core;
 /**
  * Used by types that have collections of fields.
  * E.g.: GDT_Fields, GDT_Bar, GDT_Response, GDT_Form, GDT_Table->headers.
+ * Can invoke rendering on it's fields.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.0.0
  * 
  * @see GDT_Bar
@@ -33,7 +34,13 @@ trait WithFields
 	 * @var \GDO\Core\GDT[]
 	 */
 	public $fields = [];
+	
 	public function addField(GDT $field=null)
+	{
+	    return $this->_addField($field);
+	}
+	
+	protected function _addField(GDT $field=null)
 	{
 	    if ($field)
 	    {
@@ -159,6 +166,21 @@ trait WithFields
 	##############
 	### Render ###
 	##############
+	public function renderCLI()
+	{
+	    return $this->renderCLIFields();
+	}
+	
+	public function renderCLIFields()
+	{
+	    $back = '';
+	    foreach ($this->fields as $field)
+	    {
+	        $back .= $field->renderCLI();
+	    }
+	    return trim($back);
+	}
+	
 	public function renderCard()
 	{
 	    if ($this->fields)
@@ -172,14 +194,19 @@ trait WithFields
 	
 	public function renderJSON()
 	{
+	    return $this->renderJSONFields();
+	}
+	
+	public function renderJSONFields()
+	{
 		$json = [];
-		foreach ($this->getFieldsRec() as $gdoType)
+		foreach ($this->getFieldsRec() as $gdt)
 		{
 		    if ($this->gdo)
 		    {
-		        $gdoType->gdo($this->gdo);
+		        $gdt->gdo($this->gdo);
 		    }
-			if ($data = $gdoType->renderJSON())
+			if ($data = $gdt->renderJSON())
 			{
 			    if (is_array($data))
 			    {
@@ -188,11 +215,11 @@ trait WithFields
     			        $json[$k] = $v;
     			    }
 			    }
-			    elseif ($gdoType->isSerializable())
+			    elseif ($gdt->isSerializable())
 			    {
-			        if ($gdoType->name)
+			        if ($gdt->name)
 			        {
-			            $json[$gdoType->name] = $data;
+			            $json[$gdt->name] = $data;
 			        }
 			    }
 			}
@@ -205,7 +232,8 @@ trait WithFields
 	    $xml = '';
 	    if ($this->name)
 	    {
-    	    $xml = "<{$this->name}>\n";
+	        $var = html($this->getVar());
+    	    $xml = sprintf("<{$this->name} var=\"%s\">\n", $var);
             $xml .= $this->renderXMLFields();
     	    $xml .= "</{$this->name}>\n";
 	    }
@@ -252,7 +280,7 @@ trait WithFields
 		    }
 			if (@$_gdt->fields)
 			{
-				$this->_getFieldsRec($fields, $_gdt);
+			    $this->_getFieldsRec(@$_gdt->fields, $_gdt);
 			}
 		}
 	}

@@ -8,7 +8,7 @@ use GDO\Util\Common;
  * 
  * @author gizmore
  * @author spaceone
- * @version 6.10.2
+ * @version 6.10.3
  * @since 1.0.0
  */
 final class Logger
@@ -48,7 +48,7 @@ final class Logger
 	 */
 	public static function init($username=null, $logbits=self::_DEFAULT, $basedir='protected/logs')
 	{
-		self::$username = $username; # @TODO sanitize username as it will be a directory name.
+		self::$username = $username;
 		self::$logbits = $logbits;
 		self::$basedir = GDO_PATH . $basedir;
 	}
@@ -165,7 +165,8 @@ final class Logger
 	 */
 	private static function getFullPath($filename, $username=false)
 	{
-		$date = date('Ymd');
+	    $dt = new \DateTime('now', self::tz());
+	    $date = $dt->format('Ymd');
 		return is_string($username)
 			? sprintf('%s/memberlog/%s/%s_%s.txt', self::$basedir, $username, $date, $filename)
 			: sprintf('%s/%s_%s.txt', self::$basedir, $date, $filename);
@@ -179,7 +180,7 @@ final class Logger
 	private static function createLogDir($filename)
 	{
 		$dir = dirname($filename);
-		return is_dir($dir) ? true : (false !== @mkdir($dir, GDO_CHMOD, true));
+		return is_dir($dir) ? true : @mkdir($dir, GDO_CHMOD, true);
 	}
 
 	/**
@@ -190,7 +191,7 @@ final class Logger
 	{
 		foreach (self::$logs as $file => $msg)
 		{
-			if (true === ($e = self::writeLog($file, $msg)))
+			if ($e = self::writeLog($file, $msg))
 			{
 				unset(self::$logs[$file]);
 			}
@@ -212,15 +213,25 @@ final class Logger
 	public static function log($filename, $message, $logmode=0)
 	{
 		# log it?
-		if (true === self::isEnabled($logmode))
+		if (self::isEnabled($logmode))
 		{
-		    $time = date('H:i');
-			$ip = (false === isset($_SERVER['REMOTE_ADDR']) || self::isDisabled(self::IP))
-				? '' : $_SERVER['REMOTE_ADDR'];
-			$username = self::$username === false ? '' : ':'.self::$username;
+		    $dt = new \DateTime("now", self::tz());
+		    $time = $dt->format('H:i');
+			$ip = self::isDisabled(self::IP) ? '' : @$_SERVER['REMOTE_ADDR'];
+			$username = self::$username === false ? ':~guest~' : ':'.self::$username;
 
 			self::logB($filename, sprintf(self::$logformat, $time, $ip, $username, $message));
 		}
+	}
+	
+	private static function tz()
+	{
+	    static $tz;
+	    if ($tz === null)
+	    {
+	        $tz = new \DateTimeZone(def('GDO_ERROR_TIMEZONE', 'UTC'));
+	    }
+	    return $tz;
 	}
 
 	public static function rawLog($filename, $message, $logmode=0)
@@ -291,4 +302,5 @@ final class Logger
 			self::logDebug($message);
 		}
 	}
+	
 }

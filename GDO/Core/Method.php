@@ -9,6 +9,7 @@ use GDO\UI\WithTitle;
 use GDO\Session\GDO_Session;
 use GDO\Date\Time;
 use GDO\Language\Trans;
+use GDO\DB\Cache;
 
 /**
  * Abstract baseclass for all methods.
@@ -26,7 +27,7 @@ use GDO\Language\Trans;
  * @see MethodCronjob
  *
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 3.0.0
  */
 abstract class Method
@@ -38,6 +39,9 @@ abstract class Method
 	 * @return GDT_Response
 	 */
 	public abstract function execute();
+	
+	public function gdoCached() { return false; }
+	public function gdoCacheExpire() { return GDO_MEMCACHE_TTL; }
 	
 	/**
 	 * @return self
@@ -202,9 +206,12 @@ abstract class Method
 	        $value = $gdt->getValue();
 	        if (!$gdt->validate($value))
 	        {
-	            throw new GDOException($gdt->error);
+	            throw new GDOParameterException($gdt, $value);
 	        }
-	        $gdt->value($value); # copy to var again.
+	        else
+	        {
+	            $gdt->value($value); # copy to var again.
+	        }
 	        return $gdt;
 	    }
 	}
@@ -250,9 +257,11 @@ abstract class Method
 	public function getMethodName() { return $this->gdoShortName(); }
 	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6)-4); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
-	public function error($key, array $args=null) { Website::topResponse()->addField(GDT_Error::responseWith($key, $args)); return GDT_Response::make(); }
+	public function error($key, array $args=null) { Website::topResponse()->addField(GDT_Error::with($key, $args)); return GDT_Response::make(); }
 	public function message($key, array $args=null, $log=true) { Website::topResponse()->addField(GDT_Success::with($key, $args)); return GDT_Response::make(); }
+	
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::templatePHP($this->getModuleName(), $path, $tVars); }
+	public function responsePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
 
 	############
@@ -385,8 +394,8 @@ abstract class Method
 	public function transactional()
 	{
 		return
-		($this->isAlwaysTransactional()) ||
-		($this->isTransactional() && (count($_POST)>0) );
+		  ($this->isAlwaysTransactional()) ||
+		  ($this->isTransactional() && (count($_POST)>0) );
 	}
 	
 	/**
@@ -418,6 +427,15 @@ abstract class Method
 	
 	public function executeWithInit()
 	{
+	    if ($this->gdoCached())
+	    {
+	        $key = $this->getFileCacheKey();
+	        if ($cache = Cache::fileGet($key))
+	        {
+	            return $cache;
+	        }
+	    }
+	    
 	    $db = Database::instance();
 	    $transactional = $this->transactional();
 	   
@@ -439,18 +457,23 @@ abstract class Method
 	        
 	        # Exec 1.before - 2.execute - 3.after
 	        GDT_Hook::callHook('BeforeExecute', $this, $response);
-	        $response->add($this->beforeExecute());
+	        $response->addField($this->beforeExecute());
 
-	        $response->add($this->execute());
+	        $response->addField($this->execute());
 
 	        if (!$response->isError())
 	        {
-	            $response->add($this->afterExecute());
+	            $response->addField($this->afterExecute());
     	        GDT_Hook::callHook('AfterExecute', $this, $response);
 	        }
 	        
 	        # Wrap transaction end
 	        if ($transactional) $db->transactionEnd();
+	        
+	        if (isset($key))
+	        {
+	            Cache::fileSet($key, $response->render(), $this->gdoCacheExpire());
+	        }
 	        
 	        return $response;
 	    }
@@ -459,6 +482,25 @@ abstract class Method
 	        if ($transactional) $db->transactionRollback();
 	        throw $e;
 	    }
+	}
+	
+	public function getFileCacheKey()
+	{
+	    return
+	   	    $this->gdoClassName() . '_' . 
+	        GDO_User::current()->getID() . '_' .
+	        Application::instance()->getFormat() .
+	        $this->_getFileCacheKey();
+	}
+	
+	private function _getFileCacheKey()
+	{
+	    $key = '';
+	    foreach ($this->gdoParameterCache() as $gdt)
+	    {
+	        $key .= sprintf('_%s:%s', $gdt->name, $gdt->var);
+	    }
+	    return $key;
 	}
 	
 	####################

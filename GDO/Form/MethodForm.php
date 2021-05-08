@@ -12,7 +12,7 @@ use GDO\Core\Application;
  * Generic method that uses a GDT_Form.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 6.0.0
  */
 abstract class MethodForm extends Method
@@ -132,7 +132,7 @@ abstract class MethodForm extends Method
 					}
 					else
 					{
-						$response = $this->formInvalid($form)->add($this->renderPage());
+						$response = $this->formInvalid($form)->addField($this->renderPage());
 					}
 					break;
 				}

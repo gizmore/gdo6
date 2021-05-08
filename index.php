@@ -115,7 +115,7 @@ switch ($app->getFormat())
             {
                 $response->addField(GDT_JSON::make()->var($content));
             }
-            $response->add(Website::$TOP_RESPONSE);
+            $response->addField(Website::$TOP_RESPONSE);
             $content = Website::renderJSON($response->renderJSON());
         }
     	break;
@@ -127,7 +127,7 @@ switch ($app->getFormat())
         }
         else
         {
-            $content = $content . $response->render(); 
+            $content = $content . $response->renderHTML(); 
         }
         
         $content = GDT_Page::$INSTANCE->html($content)->render();

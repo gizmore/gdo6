@@ -53,7 +53,7 @@ class InstallAdmins extends MethodForm
 			GDO_UserPermission::grantPermission($user, GDO_Permission::create($permission, $level));
 		}
 		
-		return parent::formValidated($form)->add($this->renderPage());
+		return parent::formValidated($form)->addField($this->renderPage());
 	}
 	
 }

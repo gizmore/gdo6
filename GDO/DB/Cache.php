@@ -3,6 +3,7 @@ namespace GDO\DB;
 
 use GDO\Core\GDO;
 use GDO\Core\GDT_Hook;
+use GDO\File\FileUtil;
 
 /**
  * Cache is a global object cache, where each fetched object (with the same key) from the database results in the same instance.
@@ -36,16 +37,20 @@ class Cache
 	 */
 	private static $RECACHING = [];
 
-	/**
-	 * @var GDO[]
-	 */
-	public $all;       # All rows. @see GDO->allCached()
-	public $allExpire; # Expiration time for allCached()
 	public $pkNames;   # Primary Key Column Names
     public $pkColumns; # Primary Key Columns
     public $tableName; # Cached transformed table name
+
+	#################
+	### Memcached ###
+	#################
+    /**
+     * @var $all GDO[] All rows. @see GDO->allCached()
+     */
+    public $all;       # 
+    public $allExpire; # Expiration time for allCached()
     
-	/**
+    /**
 	 * @TODO no result should return null?
 	 * @param string $key
 	 * @return boolean
@@ -73,16 +78,18 @@ class Cache
 	private $table;
 	
 	/**
-	 * @todo re-use in GDT_Table iterations.
-	 * Zero alloc, one item dummy queue.
 	 * @var GDO
 	 */
 	private $dummy;
 	
+	/**
+	 * Full classname
+	 * @var string
+	 */
 	private $klass;
 	
 	/**
-	 * The cache
+	 * The single identity GDO cache
 	 * @var GDO[]
 	 */
 	public $cache = [];
@@ -100,24 +107,20 @@ class Cache
         {
             foreach (self::$RECACHING as $gdo)
             {
-                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->table()->gdoClassName(), $gdo->getID());
+                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->cache->klass, $gdo->getID());
             }
         }
 	}
 
+	public function getDummy()
+	{
+	    return $this->dummy ? $this->dummy : $this->newDummy();
+	}
+	
 	private function newDummy()
 	{
 		$this->dummy = new $this->klass();
 		return $this->dummy;
-	}
-	
-	public function getDummy()
-	{
-	    if (!$this->dummy)
-	    {
-	        $this->dummy = $this->newDummy();
-	    }
-	    return $this->dummy;
 	}
 	
 	/**
@@ -170,8 +173,8 @@ class Cache
 	
 	public function clearCache()
 	{
-	    $this->cache = [];
 	    $this->all = null;
+	    $this->cache = [];
 	}
 	
 	public function recache(GDO $object)
@@ -257,6 +260,49 @@ class Cache
 			$this->cache[$key]->setGDOVars($assoc)->setPersisted();
 		}
 		return $this->cache[$key];
+	}
+	
+	##################
+	### File cache ###
+	##################
+	/**
+	 * Put cached content on the file system.
+	 * @param string $key
+	 * @param string $content
+	 * @return boolean
+	 */
+	public static function fileSet($key, $content, $expire=GDO_MEMCACHE_TTL)
+	{
+	    $path = self::filePath($key);
+	    return @file_put_contents($path, $content);
+	}
+	
+	/**
+	 * Get cached content from the file system.
+	 * @param string $key
+	 * @return string
+	 */
+	public static function fileGet($key)
+	{
+	    $path = self::filePath($key);
+	    return @file_get_contents($path);
+	}
+	
+	public static function fileFlush($key=null)
+	{
+	    if ($key === null)
+	    {
+	        FileUtil::removeDir(GDO_PATH . 'temp/cache/');
+	    }
+	    else
+	    {
+	        return @unlink(self::filePath($key));
+	    }
+	}
+	
+	private static function filePath($key)
+	{
+	    return GDO_PATH . "temp/cache/{$key}";
 	}
 	
 }

@@ -31,11 +31,11 @@ final class DetectNode extends MethodForm
 	public function formValidated(GDT_Form $form)
 	{
 		$response = $this->detectNodeJS();
-		$response->add($this->detectAnnotate());
-		$response->add($this->detectUglify());
+		$response->addField($this->detectAnnotate());
+		$response->addField($this->detectUglify());
 		
 		$url = href('Admin', 'Configure', '&module=Javascript');
-		return $response->add(Website::redirect($url, 12));
+		return $response->addField(Website::redirect($url, 12));
 	}
 	
 	/**

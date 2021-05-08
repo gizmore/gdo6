@@ -4,12 +4,11 @@ namespace GDO\User;
 use GDO\DB\GDT_String;
 
 /**
- * Username field with optional ajax completion.
- * @TODO autocomplete not implemented here.
+ * Username field without completion.
+ * 
  * @see GDT_User
- * @deprecated in favor of GDT_User
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 5.0.0
  */
 class GDT_Username extends GDT_String
@@ -26,16 +25,6 @@ class GDT_Username extends GDT_String
 
 	public function defaultLabel() { return $this->label('username'); }
 	
-	##################
-	### Completion ###
-	##################
-	public $completion;
-	public function completion()
-	{
-		$this->completion = true;
-		return $this;
-	}
-	
 	##############
 	### Exists ###
 	##############
@@ -49,14 +38,9 @@ class GDT_Username extends GDT_String
 	##############
 	### Render ###
 	##############
-// 	public function render()
-// 	{
-// 	    return GDT_Template::php('User', 'form/username.php', ['field' => $this]);
-// 	}
-	
 	public function renderCell()
 	{
-		return $this->gdo->displayNameLabel();
+		return $this->displayVar();
 	}
 	
 	################

@@ -267,11 +267,6 @@ final class Website
 	    return self::$TOP_RESPONSE;
 	}
 	
-	public static function renderTopResponse()
-	{
-	    echo self::topResponse()->render();
-	}
-	
 	#####################
 	### JSON Response ###
 	#####################

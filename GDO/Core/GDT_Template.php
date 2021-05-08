@@ -152,6 +152,12 @@ class GDT_Template extends GDT
 		}
 	}
 	
+	/**
+	 * @param string $moduleName
+	 * @param string $path
+	 * @param array $tVars
+	 * @return self
+	 */
 	public static function templatePHP($moduleName, $path, array $tVars=null)
 	{
 	    return self::make()->template($moduleName, $path, $tVars);
@@ -159,7 +165,7 @@ class GDT_Template extends GDT
 	
 	public static function responsePHP($moduleName, $path, array $tVars=null)
 	{
-	    return GDT_Response::newWith(self::templatePHP($moduleName, $path, $tVars));
+	    return GDT_Response::makeWith(self::templatePHP($moduleName, $path, $tVars));
 	}
 	
 	/**

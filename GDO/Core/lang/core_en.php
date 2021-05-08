@@ -118,6 +118,7 @@ return array(
 'err_db' => "Database Error(%s): %s<br/>\n%s<br/>\n",
 'err_user' => 'This user is unknown.',
 'err_exception' => 'Exception: %s',
+'err_parameter_exception' => '%s: %s (%s)',
 'err_gdo_object_no_table' => '%s is a GDT_Object without a table.',
 'err_column' => 'Unknown GDT column: %s.',
 'err_token' => 'Your token is invalid.',

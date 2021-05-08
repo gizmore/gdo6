@@ -11,6 +11,10 @@ gdo6 Changelog and roadmap.
  
  - Cache can now have an expire time.
  
+ - New thrid cache for rendered responses on the filesystem.
+ 
+ - New GDO_ERROR_TIMEZONE option for the Logger.
+ 
 
 ## 6.10.2
 

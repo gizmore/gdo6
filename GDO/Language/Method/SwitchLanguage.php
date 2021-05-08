@@ -60,7 +60,7 @@ final class SwitchLanguage extends Method
 		if ($url = $this->gdoParameterVar('ref'))
 		{
 			$url = preg_replace("/_lang=[a-z]{2}/", "_lang=".$iso , $url);
-			$response->add(Website::redirect($url));
+			$response->addField(Website::redirect($url));
 		}
 
 		return $response;

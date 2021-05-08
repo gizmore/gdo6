@@ -89,7 +89,7 @@ if ($argc === 2)
     $modules = [
         'Core', 'Language', 'Country',
         'File', 'User', 'Table',
-        'Tests',
+        'Tests', 'Javascript', 'Mail',
     ];
     
     $modules = array_merge($modules, explode(',', $argv[1]));

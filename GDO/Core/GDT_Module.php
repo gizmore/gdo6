@@ -10,7 +10,7 @@ use GDO\DB\GDT_ObjectSelect;
  * PlugVar for auto tests is module Core.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.13
  * @since 6.02
  * 
  * @see GDO_Module
@@ -45,10 +45,10 @@ final class GDT_Module extends GDT_ObjectSelect
             
             foreach ($modules as $module)
             {
-                if ( ($module->isInstalled() && $this->installed) ||
-                    ((!$module->isInstalled()) && $this->uninstalled) )
+                if ( (($module->isInstalled()) && $this->installed) ||
+                     ((!$module->isInstalled()) && $this->uninstalled) )
                 {
-                    $this->choices[$module->getName()] = $module->displayName();
+                    $this->choices[$module->getLowerName()] = $module->displayName();
                 }
             }
         }

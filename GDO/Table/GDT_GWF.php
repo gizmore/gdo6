@@ -7,8 +7,8 @@ use GDO\Core\GDT;
  * Rendering wrapper for GDOs.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.02
+ * @version 6.10.3
+ * @since 6.2.0
  */
 final class GDT_GWF extends GDT
 {

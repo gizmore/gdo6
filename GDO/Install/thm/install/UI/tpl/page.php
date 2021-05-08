@@ -1,10 +1,9 @@
-<?php
-use GDO\Core\GDT_Template;
+<?phpuse GDO\UI\GDT_Page;use GDO\Core\GDT_Template;
 use GDO\UI\GDT_Divider;
 use GDO\Perf\GDT_PerfBar;
 use GDO\Mail\GDT_Email;
 use GDO\Core\Website;
-$page instanceof GDO\UI\GDT_Page;
+/** @var $page GDT_Page **/ 
 ?>
 <!DOCTYPE html>
 <html>

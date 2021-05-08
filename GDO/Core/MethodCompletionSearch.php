@@ -9,8 +9,8 @@ use GDO\DB\Query;
  * Override 3 methods for full featured quicksearch.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.03
+ * @version 6.10.3
+ * @since 6.0.3
  * 
  * @see GDT_Table
  */

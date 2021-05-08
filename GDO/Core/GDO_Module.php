@@ -21,7 +21,7 @@ use GDO\Table\GDT_Sort;
  * GDO base module class.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 1.0.0
  */
 class GDO_Module extends GDO
@@ -113,14 +113,17 @@ class GDO_Module extends GDO
 	############
 	/**
 	 * Translated module name.
-	 * {@inheritDoc}
-	 * @see \GDO\Core\GDO::displayName()
 	 */
 	public function displayName()
 	{
-		$name = $this->getName();
-		$key = 'module_' . strtolower($name);
+		$name = $this->getLowerName();
+		$key = "module_{$name}";
 		return Trans::hasKey($key) ? t($key) : $name;
+	}
+	
+	private function getLowerName()
+	{
+	    return strtolower($this->getName());
 	}
 	
 	public function displayModuleDescription() { return html($this->getModuleDescription()); }
@@ -185,7 +188,7 @@ class GDO_Module extends GDO
 	    {
 	        return self::$nameCache[static::class];
 	    }
-	    self::$nameCache[static::class] = $cache = substr(self::gdoShortNameS(), 7);
+	    self::$nameCache[static::class] = $cache = strtolower(substr(self::gdoShortNameS(), 7));
 	    return $cache;
 	}
 	
@@ -195,7 +198,7 @@ class GDO_Module extends GDO
 	public function getID() { return $this->getVar('module_id'); }
 	public function getName() { return $this->getVar('module_name'); }
 	public function getVersion() { return $this->getVar('module_version'); }
-	public function isEnabled() { return $this->getValue('module_enabled'); }
+	public function isEnabled() { return $this->getVar('module_enabled'); }
 	public function isInstalled() { return $this->isPersisted(); }
 	public function getSiteName() { return sitename(); }
 	public function env($key, $default=null) { return env("M_{$this->getName()}_{$key}", $default); }
@@ -241,26 +244,36 @@ class GDO_Module extends GDO
 	 * @param string $filename appendix filename
 	 * @return string the absolute path
 	 */
-	public function tempPath($filename='')
+	public function tempPath($path='')
 	{
-	    return GDO_PATH . 'temp/' . $this->getName() .'/' . $filename;
+	    return GDO_PATH . 'temp/' . $this->getName() .'/' . $path;
 	}
 	
 	#################
 	### Templates ###
 	#################
+	public function php($path, array $tVars=null)
+	{
+	    return GDT_Template::php($this->getName(), $path, $tVars);
+	}
+	
+	public function templateFile($file)
+	{
+	    return GDT_Template::file($this->getName(), $file);
+	}
+	
 	/**
 	 * @param string $file
 	 * @param array $tVars
 	 * @return GDT_Template
 	 */
-	public function templatePHP($file, array $tVars=null)
+	public function templatePHP($path, array $tVars=null)
 	{
 		switch (Application::instance()->getFormat())
 		{
-			case 'json': return $tVars;
+			case 'json': return $tVars; # @todo here is the spot to enable json for genereic templates.
 			case 'html':
-			default: return GDT_Template::make()->template($this->getName(), $file, $tVars);
+			default: return GDT_Template::make()->template($this->getName(), $path, $tVars);
 		}
 	}
 	
@@ -274,7 +287,6 @@ class GDO_Module extends GDO
 		}
 	}
 	
-	public function templateFile($file) { return GDT_Template::file($this->getName(), $file); }
 	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args); }
 	public function message($key, array $args=null) { return GDT_Success::responseWith($key, $args); }
 	
@@ -313,7 +325,7 @@ class GDO_Module extends GDO
 	 * Get module configuration hashed and cached.
 	 * @return GDT[]
 	 */
-	public function buildConfigCache()
+	public function &buildConfigCache()
 	{
 	    if ($this->configCache === null)
 	    {

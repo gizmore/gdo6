@@ -9,7 +9,7 @@ use GDO\Core\GDT_Hook;
  * A method that displays a table via a query.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 3.0.0
  * @see GDT_Table
  */

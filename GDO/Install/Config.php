@@ -25,7 +25,8 @@ use GDO\DB\GDT_UInt;
  * Autoconfigures GDO6 for when no config exists.
  * Holds fields for a configuration form.
  * @author gizmore
- * @since 6.0
+ * @version 6.10.3
+ * @since 6.0.0
  */
 class Config
 {
@@ -95,6 +96,7 @@ class Config
 		if (!defined('GDO_SEO_URLS')) define('GDO_SEO_URLS', false);
 		if (!defined('GDO_IPC')) define('GDO_IPC', 'none');
 		if (!defined('GDO_IPC_DEBUG')) define('GDO_IPC_DEBUG', false);
+		if (!defined('GDO_GDT_DEBUG')) define('GDO_GDT_DEBUG', false);
 		# HTTP
 		if (!defined('GDO_DOMAIN')) define('GDO_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
 		if (!defined('GDO_SERVER')) define('GDO_SERVER', self::detectServerSoftware());
@@ -108,6 +110,8 @@ class Config
 		if (!defined('GDO_ERROR_STACKTRACE')) define('GDO_ERROR_STACKTRACE', true);
 		if (!defined('GDO_ERROR_DIE')) define('GDO_ERROR_DIE', true);
 		if (!defined('GDO_ERROR_MAIL')) define('GDO_ERROR_MAIL', false);
+		if (!defined('GDO_ERROR_TIMEZONE')) define('GDO_ERROR_TIMEZONE', ini_get('date.timezone'));
+
 		# Database
 		if (!defined('GDO_SALT')) define('GDO_SALT', Random::randomKey(16));
 		if (!defined('GDO_DB_ENABLED')) define('GDO_DB_ENABLED', true);
@@ -154,8 +158,9 @@ class Config
 			GDT_String::make('module')->required()->initialValue(GDO_MODULE),
 			GDT_String::make('method')->required()->initialValue(GDO_METHOD),
 			GDT_Select::make('ipc')->choices(['db' => 'Database', '1' => 'IPC', '0' => 'none'])->initialValue(GDO_IPC),
-			GDT_Checkbox::make('ipc_debug')->initialValue(GDO_IPC_DEBUG),
-			# HTTP
+		    GDT_Checkbox::make('ipc_debug')->initialValue(GDO_IPC_DEBUG),
+		    GDT_Checkbox::make('gdt_debug')->initialValue(GDO_GDT_DEBUG),
+		    # HTTP
 			GDT_Divider::make()->label('install_config_section_http'),
 			GDT_String::make('domain')->required()->initialValue(GDO_DOMAIN),
 			GDT_Enum::make('server')->required()->enumValues('none', 'apache2.2', 'apache2.4', 'nginx', 'other')->initialValue(GDO_SERVER),

@@ -1,10 +1,12 @@
 <?php
 namespace GDO\File\Method;
 
+use GDO\Core\GDT_Secret;
 use GDO\Core\Method;
 use GDO\File\GDT_File;
 use GDO\File\GDO_File;
 use GDO\User\GDO_User;
+use GDO\DB\GDT_String;
 
 class Download extends Method
 {
@@ -12,6 +14,7 @@ class Download extends Method
     {
         return [
             GDT_File::make('id')->notNull(),
+            GDT_String::make('variant')->initial(''),
             GDT_Secret::make('token')->notNull(),
         ];
     }
@@ -26,9 +29,16 @@ class Download extends Method
     
     public function execute()
     {
+        $user = GDO_User::current();
         $file = $this->getFile();
+        $token = $this->gdoParameterVar('token');
+        if ($token !== $this->getToken($user, $file))
+        {
+            return $this->error('err_token');
+        }
         
-        if ($this->g)
+        $variant = $this->gdoParameterVar('variant');
+        GetFile::make()->executeWithId($file->getID(), $variant);
     }
         
     public function getToken(GDO_User $user, GDO_File $file)

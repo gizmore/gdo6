@@ -8,8 +8,8 @@ use GDO\Core\Application;
  * File utility to stream downloads in chunks.
  * 
  * @author gizmore
- * @since 3.00
- * @version 6.07
+ * @version 6.10.3
+ * @since 6.2.0
  */
 final class Stream
 {
@@ -76,8 +76,8 @@ final class Stream
 	    $start = 0;
 	    $end = $size - 1;
 
-	    $file = $file->getVariantPath($variant);
-	    $fp = fopen($file, 'rb');
+	    $path = $file->getVariantPath($variant);
+	    $fp = fopen($path, 'rb');
 	    
 	    hdr('Content-type: ' . $file->getType());
 	    hdr('Accept-Ranges: 0-' . $size);
@@ -129,26 +129,26 @@ final class Stream
 	            $buffer = $end - $p + 1;
 	        }
 
-	        if (!$die)
-	        {
-	            fpassthru($fp);
-	        }
-	        
-// 	        $data = fread($fp, $buffer);
-// 	        if (!$die)
+// 	        if ($die)
 // 	        {
-//     	        echo $data;
-//     	        flush();
+// 	            fpassthru($fp);
 // 	        }
+	        
+	        $data = fread($fp, $buffer);
+	        if ($die)
+	        {
+    	        echo $data;
+    	        flush();
+	        }
 	    }
 	    fclose($fp);
-	    if (!$die)
+	    if ($die)
 	    {
 	        die();
 	    }
 	    else
 	    {
-	        echo "Served ".$file->
+	        echo "Served ".$file->displayName();
 	    }
 	}
 	

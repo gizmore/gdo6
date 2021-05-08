@@ -28,7 +28,7 @@ use GDO\Language\Trans;
  * @see Query
  * 
  * @author gizmore@wechall.net
- * @version 6.10.1
+ * @version 6.10.3
  * @since 3.2.0
  * @license MIT
  */
@@ -51,10 +51,10 @@ abstract class GDO
     public abstract function gdoColumns();
     
     public function gdoCached() { return true; }
-    public function memCached() { return $this->gdoCached(); }
+    public function memCached() { return $this->gdoCached() && GDO_MEMCACHE; }
     public function cached() { return $this->gdoCached() || (GDO_MEMCACHE && $this->memCached()); }
     
-    public function gdoTableName() { return self::table()->cache->tableName; }
+    public function gdoTableName() { return $this->table()->cache->tableName; }
     public function gdoDependencies() { return null; }
     
     public function gdoEngine() { return self::INNODB; } # @see self::MYISAM
@@ -100,12 +100,21 @@ abstract class GDO
     public function __construct()
     {
         self::$COUNT++;
+        if (GDO_GDT_DEBUG)
+        {
+            self::logDebug();
+        }
     }
     
     public function __wakeup()
     {
-        self::$COUNT++;
+//         self::$COUNT++;
         $this->recache = false;
+    }
+    
+    private static function logDebug()
+    {
+        Logger::log('gdo', sprintf('%d: %s', self::$COUNT, self::gdoClassNameS()));
     }
     
     #################
