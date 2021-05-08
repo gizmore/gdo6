@@ -49,6 +49,7 @@ spl_autoload_register(function($name) {
 function sitename() { return t('sitename'); }
 function url($module, $method, $append='', $lang=true) { return urlSEO('index.php', $module, $method, $append, $lang); }
 function urlSEO($seoString, $module, $method, $append='', $lang=true) { return GDT_Url::absolute(hrefSEO($seoString, $module, $method, $append, $lang)); }
+function jxhref($module, $method, $append='', $lang=true) { return href($module, $method, $append.'&ajax=1&fmt=json', $lang); }
 function href($module, $method, $append='', $lang=true) { return hrefSEO('index.php', $module, $method, $append, $lang); }
 function hrefDefault() { return href(GDO_MODULE, GDO_METHOD); }
 function hrefSEO($seoString, $module, $method, $append='', $lang=true)
