@@ -78,6 +78,8 @@ class Application
 	
 	public function isUnitTests() { return false; }
 	
+	public function isCronjob() { return false; }
+	
 	/**
 	 * @return \GDO\Core\Method
 	 */

@@ -16,11 +16,16 @@ require 'protected/config.php';
 use GDO\DB\Database;
 use GDO\Core\Logger;
 use GDO\Core\Cronjob;
+
 Logger::init();
 Database::init();
+
 final class CronjobApplication extends Application
 {
     public function isCLI() { return true; }
+    public function isCronjob() { return true; }
+    
 }
+
 new CronjobApplication();
 Cronjob::run();

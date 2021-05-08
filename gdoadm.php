@@ -449,7 +449,7 @@ elseif ($argv[1] === 'config')
         echo t('msg_changed_config', [$gdt->displayLabel(), $module->getName(), $gdt->initial, $moduleVar->getVarValue()]);
         echo PHP_EOL;
         Cache::flush();
-        GDT_Hook::call('ModuleVarsChanged', $module);
+        GDT_Hook::callHook('ModuleVarsChanged', $module);
     }
 }
 

@@ -116,12 +116,12 @@ class GDO_Module extends GDO
 	 */
 	public function displayName()
 	{
-		$name = $this->getLowerName();
-		$key = "module_{$name}";
+		$name = $this->getName();
+		$key = strtolower("module_{$name}");
 		return Trans::hasKey($key) ? t($key) : $name;
 	}
 	
-	private function getLowerName()
+	public function getLowerName()
 	{
 	    return strtolower($this->getName());
 	}

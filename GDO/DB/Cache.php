@@ -4,6 +4,7 @@ namespace GDO\DB;
 use GDO\Core\GDO;
 use GDO\Core\GDT_Hook;
 use GDO\File\FileUtil;
+use GDO\Core\Module_Core;
 
 /**
  * Cache is a global object cache, where each fetched object (with the same key) from the database results in the same instance.
@@ -55,9 +56,9 @@ class Cache
 	 * @param string $key
 	 * @return boolean
 	 */
-	public static function get($key) { return GDO_MEMCACHE ? self::$MEMCACHED->get(GDO_MEMCACHE_PREFIX.$key) : false; }
-	public static function set($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->set(GDO_MEMCACHE_PREFIX.$key, $value, $expire); }
-	public static function remove($key) { if (GDO_MEMCACHE) self::$MEMCACHED->delete(GDO_MEMCACHE_PREFIX.$key); }
+    public static function get($key) { return GDO_MEMCACHE ? self::$MEMCACHED->get(MEMCACHEPREFIX.$key) : false; }
+	public static function set($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->set(MEMCACHEPREFIX.$key, $value, $expire); }
+	public static function remove($key) { if (GDO_MEMCACHE) self::$MEMCACHED->delete(MEMCACHEPREFIX.$key); }
 	public static function flush() { if (GDO_MEMCACHE) self::$MEMCACHED->flush(); }
 	public static function init()
 	{
@@ -202,7 +203,7 @@ class Cache
 		# Memcached
 		if (GDO_MEMCACHE && $back->memCached())
 		{
-		    self::$MEMCACHED->replace(GDO_MEMCACHE_PREFIX.$back->gkey(), $back, GDO_MEMCACHE_TTL);
+		    self::$MEMCACHED->replace(MEMCACHEPREFIX.$back->gkey(), $back, GDO_MEMCACHE_TTL);
 		}
 
 	    # Mark for recache
@@ -228,7 +229,7 @@ class Cache
 		if (GDO_MEMCACHE && $object->memCached())
 		{
     		$className = $object->gdoClassName();
-			self::$MEMCACHED->delete(GDO_MEMCACHE_PREFIX . $className . $id);
+    		self::$MEMCACHED->delete(MEMCACHEPREFIX . $className . $id);
 		}
 	}
 	
@@ -244,12 +245,12 @@ class Cache
 		if (!isset($this->cache[$key]))
 		{
 			$gkey = $this->dummy->gkey();
-			if (false === ($mcached = self::get(GDO_MEMCACHE_PREFIX.$gkey)))
+			if (false === ($mcached = self::get(MEMCACHEPREFIX.$gkey)))
 			{
 				$mcached = $this->dummy->setPersisted();
 				if (GDO_MEMCACHE)
 				{
-					self::$MEMCACHED->set(GDO_MEMCACHE_PREFIX.$gkey, $mcached, GDO_MEMCACHE_TTL);
+					self::$MEMCACHED->set(MEMCACHEPREFIX.$gkey, $mcached, GDO_MEMCACHE_TTL);
 				}
     			$this->newDummy();
 			}
@@ -312,3 +313,4 @@ if (!class_exists('Memcached', false))
 {
 	require 'Memcached.php';
 }
+define('MEMCACHEPREFIX', GDO_DOMAIN.Module_Core::$GDO_REVISION);

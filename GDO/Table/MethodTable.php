@@ -193,6 +193,11 @@ abstract class MethodTable extends Method
 	    return t($this->getTitleLangKey(), [$this->table->countItems()]);
 	}
 	
+	public function getDescription()
+	{
+	    return t($this->getDescriptionLangKey());
+	}
+	
 	protected function setupTitle(GDT_Table $table)
 	{
 	    $table->titleRaw($this->getTitle());

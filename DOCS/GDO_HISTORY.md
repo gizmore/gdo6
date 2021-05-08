@@ -11,9 +11,11 @@ gdo6 Changelog and roadmap.
  
  - Cache can now have an expire time.
  
- - New thrid cache for rendered responses on the filesystem.
+ - New thrid cache for rendered responses on the filesystem (soon).
  
  - New GDO_ERROR_TIMEZONE option for the Logger.
+ 
+ - GDO_MEMCACHE_PREFIX has been removed. The prefix is now version dependant.
  
 
 ## 6.10.2

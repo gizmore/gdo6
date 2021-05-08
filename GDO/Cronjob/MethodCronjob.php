@@ -9,14 +9,15 @@ use GDO\Core\Method;
  * @todo Introduce function runEvery() return a duration.
  * 
  * @author gizmore
- * @version 6.10.1
- * @since 5.0.0
+ * @version 6.10.3
+ * @since 6.1.0
  */
 abstract class MethodCronjob extends Method
 {
 	public abstract function run();
 
 	public function getPermission() { return 'cronjob'; }
+	
 	public function execute()
 	{
 		$this->start();

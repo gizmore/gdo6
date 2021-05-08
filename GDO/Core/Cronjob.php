@@ -21,7 +21,7 @@ final class Cronjob
 	 */
 	public static function run()
 	{
-		$modules = ModuleLoader::instance()->loadModules();
+		$modules = ModuleLoader::instance()->loadModulesCache();
 		foreach ($modules as $module)
 		{
 			if ($module->isEnabled())

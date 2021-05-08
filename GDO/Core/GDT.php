@@ -88,18 +88,22 @@ abstract class GDT
 	}
 	
 	### stats
-// 	public function __wakeup()
-// 	{
-// // 	    self::$COUNT++;
-// // 	    if (GDO_GDT_DEBUG)
-// // 	    {
-// // 	        self::logDebug();
-// // 	    }
-// 	}
+	public function __wakeup()
+	{
+	    self::$COUNT++;
+	    if (GDO_GDT_DEBUG)
+	    {
+	        self::logDebug();
+	    }
+	}
 	
 	private static function logDebug()
 	{
 	    Logger::log('gdt', sprintf('%d: %s', self::$COUNT, self::gdoClassNameS()));
+	    if (GDO_GDT_DEBUG > 2)
+	    {
+	        Logger::log('gdt', Debug::backtrace('Backtrace', false));
+	    }
 	}
 	
 	############
