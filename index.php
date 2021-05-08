@@ -43,7 +43,7 @@ Debug::enableExceptionHandler();
 Debug::setDieOnError(GDO_ERROR_DIE);
 Debug::setMailOnError(GDO_ERROR_MAIL);
 ModuleLoader::instance()->loadModulesCache();
-GDO_Session::instance();
+$session = GDO_Session::instance();
 if (GDO_User::current()->isUser())
 {
     # @TODO: username can be ambigious? check if guests and members can have the same name. if so make sure the guest prefix is a valid filename on all filesystems.
@@ -80,9 +80,9 @@ try
         $method = $app->getMethod();
     }
 
-    if (GDO_DB_ENABLED && $method->isLockingSession())
+    if (GDO_DB_ENABLED && $method->isLockingSession() && $session)
     {
-        Database::instance()->lock('sess_'.GDO_Session::instance()->getID());
+        Database::instance()->lock('sess_'.$session->getID());
     }
     
     $response = $method->exec();
@@ -129,7 +129,7 @@ switch ($app->getFormat())
 }
 
 # Save session
-if ($session = GDO_Session::instance())
+if ($session)
 {
     $session->commit();
 }
