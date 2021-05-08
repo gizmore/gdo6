@@ -4,13 +4,13 @@ use GDO\Util\Javascript;
 use GDO\Core\Module_Core;
 use GDO\UI\GDT_Page;
 use GDO\UI\GDT_Loading;
-use GDO\Language\GDO_Language;
 use GDO\Javascript\Module_Javascript;
+use GDO\Language\Trans;
 /** @var $page GDT_Page **/
 $page->loadSidebars();
 ?>
 <!DOCTYPE html>
-<html lang="<?=GDO_Language::current()->getISO()?>">
+<html lang="<?=Trans::$ISO?>">
   <head>
     <title><?=Website::displayTitle()?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -49,7 +49,7 @@ $page->loadSidebars();
 	
 	</div>
 	
-	<?=GDT_Loading::make('loading')->renderCell()?>
+	<?=GDT_Loading::make()->render()?>
 	
 	<?=Javascript::displayJavascripts(Module_Javascript::instance()->cfgMinifyJS() === 'concat')?>
   </body>

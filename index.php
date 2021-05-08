@@ -13,9 +13,9 @@ use GDO\Core\GDT_Error;
 use GDO\Core\Method\Page404;
 use GDO\Util\Strings;
 use GDO\DB\Cache;
-use GDO\Core\GDT_JSON;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Hook;
+use GDO\UI\GDT_HTML;
 
 require 'GDO6.php';
 
@@ -56,6 +56,7 @@ if (GDO_User::current()->isUser())
 define('GDO_CORE_STABLE', 1);
 try
 {
+    $lock = false;
 	$rqmethod = $_SERVER['REQUEST_METHOD'];
 	if (!in_array($rqmethod, ['GET', 'POST', 'HEAD', 'OPTIONS'], true))
 	{
@@ -82,9 +83,10 @@ try
         $method = $app->getMethod();
     }
 
-    if (GDO_DB_ENABLED && $method->isLockingSession() && $session)
+    if (GDO_DB_ENABLED && $session && $method->isLockingSession())
     {
-//         Database::instance()->lock('sess_'.$session->getID());
+        $lock = 'sess_'.$session->getID();
+        Database::instance()->lock($lock);
     }
     
     GDT_Hook::callHook('BeforeRequest', $method);
@@ -113,7 +115,7 @@ switch ($app->getFormat())
         {
             if ($content)
             {
-                $response->addField(GDT_JSON::make()->var($content));
+                $response->addField(GDT_HTML::make('content')->html($content));
             }
             $response->addField(Website::$TOP_RESPONSE);
             $content = Website::renderJSON($response->renderJSON());
@@ -121,20 +123,12 @@ switch ($app->getFormat())
     	break;
         
     case 'html':
-        if ($app->isAjax())
-        {
-            $content = $response->renderHTML();
-        }
-        else
-        {
-            $content = $content . $response->renderHTML(); 
-        }
-        
+        $content .= $response->renderHTML(); 
         $content = GDT_Page::$INSTANCE->html($content)->render();
         break;
         
-    case 'XML':
-        $content = $response->render();
+    case 'xml':
+        $content = $response->renderXML();
         break;
 }
 
@@ -149,4 +143,4 @@ Cache::recacheHooks();
 
 echo $content;
 
-die(0);
+Database::instance()->unlock($lock);

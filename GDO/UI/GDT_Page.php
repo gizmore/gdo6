@@ -57,25 +57,26 @@ final class GDT_Page extends GDT
     
     public function loadSidebars()
     {
+        $app = Application::instance();
+        
+        if ($app->isInstall() || $app->isCLI())
+        {
+            return false;
+        }
+            
         if (Module_Core::instance()->cfgLoadSidebars())
         {
             $this->topNav = GDT_Bar::make('topNav')->horizontal();
             $this->leftNav= GDT_Bar::make('leftNav')->vertical();
             $this->rightNav = GDT_Bar::make('rightNav')->vertical();
             $this->bottomNav = GDT_Bar::make('bottomNav')->horizontal();
-            $app = Application::instance();
-            if (!$app->isInstall() && !$app->isCLI())
+            foreach (ModuleLoader::instance()->getEnabledModules() as $module)
             {
-                foreach (ModuleLoader::instance()->getModules() as $module)
-                {
-                    if ($module->isEnabled())
-                    {
-                        $module->onInitSidebar();
-                    }
-                }
+                $module->onInitSidebar();
             }
             return true;
         }
+        
         return false;
     }
     
