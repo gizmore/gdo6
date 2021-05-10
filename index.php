@@ -143,4 +143,7 @@ Cache::recacheHooks();
 
 echo $content;
 
-Database::instance()->unlock($lock);
+if ($lock)
+{
+    Database::instance()->unlock($lock);
+}
