@@ -61,6 +61,8 @@ class GDT_Table extends GDT
 	use WithHeaders;
 	use WithActions;
 	use WithFields;
+	
+	public function defaultName() { 'table'; }
 
 	###########
 	### GDT ###
@@ -68,7 +70,7 @@ class GDT_Table extends GDT
 	protected function __construct()
 	{
 	    parent::__construct();
-	    $this->action = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
+	    $this->action = @$_SERVER['REQUEST_URI'];
 	    $this->makeHeaders();
 	}
 	

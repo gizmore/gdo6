@@ -17,7 +17,7 @@ namespace GDO\Core;
  * The yielder was a bad ide and got removed in 6.10. hooks for navs and sections need to be called early.
  *
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 3.0.0
  */
 final class GDT_Hook extends GDT
@@ -66,24 +66,48 @@ final class GDT_Hook extends GDT
 	#############
 	### Event ###
 	#############
+	public function hook($event, ...$args)
+	{
+	    $this->eventArgs = $args;
+	    return $this->event($event);
+	}
+	
 	public $event;
-	public function event($event=null) { $this->event = $event; return $this; }
+	public function event($event=null)
+	{
+	    $this->event = $event;
+	    return $this->name($event);
+	}
 	
 	public $eventArgs;
-	public function eventArgs(...$args) { $this->eventArgs = $args; return $this; }
+	public function eventArgs(...$args)
+	{
+	    $this->eventArgs = $args;
+	    return $this;
+	}
+	
+	public $ipc;
+	public function ipc($ipc=true)
+	{
+	    $this->ipc = $ipc;
+	    return $this;
+	}
 	
 	##############
 	### Render ###
 	##############
 	public function render()
 	{
-		$response = GDT_Response::make();
 		$args = $this->eventArgs ? array_merge([$response], $this->eventArgs) : [$response];
-		self::call($this->event, false, $args);
+		$response = GDT_Response::newWith();
+		self::call($this->event, $this->ipc, $args);
 		return $response;
 	}
 	
-	public function renderCell() { return $this->render()->html; }
+	public function renderCell()
+	{
+	    return $this->render()->renderHTML();
+	}
 	
 	##############
 	### Engine ###
@@ -156,7 +180,7 @@ final class GDT_Hook extends GDT
 			{
 				self::callIPCDB($event, $args);
 			}
-			elseif ($ipc = self::ipc())
+			elseif ($ipc = self::QUEUE())
 			{
 				self::callIPC($ipc, $event, $args);
 			}
@@ -166,15 +190,15 @@ final class GDT_Hook extends GDT
 	###########
 	### IPC ###
 	###########
-	private static $ipc = null;
-	public static function ipc()
+	private static $QUEUE = null;
+	public static function QUEUE()
 	{
-		if (!self::$ipc)
+		if (!self::$QUEUE)
 		{
-			$key = ftok(GDO_PATH.'temp/ipc.socket', 'G');
-			self::$ipc = msg_get_queue($key);
+			$key = ftok(GDO_PATH . 'temp/ipc.socket', 'G');
+			self::$QUEUE = msg_get_queue($key);
 		}
-		return self::$ipc;
+		return self::$QUEUE;
 	}
 	
 	/**
@@ -200,7 +224,6 @@ final class GDT_Hook extends GDT
 	private static function callIPC($ipc, $event, array $args)
 	{
 // 		Logger::logDebug("Called IPC event $event");
-		
 		$args = self::encodeIPCArgs($args);
 		
 		# Send to IPC
@@ -209,8 +232,8 @@ final class GDT_Hook extends GDT
 		if ( (!$result) || ($error) )
 		{
 			Logger::logError("IPC msg_send($event) failed with code $error");
-			msg_remove_queue(self::$ipc);
-			self::$ipc = null;
+			msg_remove_queue(self::$QUEUE);
+			self::$QUEUE = null;
 		}
 	}
 
