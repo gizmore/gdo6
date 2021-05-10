@@ -195,14 +195,14 @@ final class Website
 		return json_encode($json, JSON_PRETTY_PRINT); # pretty json
 	}
 	
-	public static function outputJSON($json)
-	{
-	    if (Application::instance()->isUnitTests())
-	    {
-	        return; # assume this method works in tests and dont output anything.
-	    }
-	    echo self::renderJSON($json);
-	}
+// 	public static function outputJSON($json)
+// 	{
+// 	    if (Application::instance()->isUnitTests())
+// 	    {
+// 	        return; # assume this method works in tests and dont output anything.
+// 	    }
+// 	    echo self::renderJSON($json);
+// 	}
 	
 	public static function outputStarted()
 	{

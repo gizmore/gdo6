@@ -4,11 +4,14 @@ namespace GDO\Core;
 use GDO\DB\GDT_Text;
 
 /**
- * Datatype that uses JSON encoding to store arbitrary data.
+ * Datatype that uses JSON encoding to store arbitrary data in a column.
+ * If you write a method to return json, use GDT_Array.
+ * 
+ * @see GDT_Array
  * 
  * @author gizmore
  * @see \GDO\User\GDO_Session
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.5.0
  */
 class GDT_JSON extends GDT_Text

@@ -1,10 +1,10 @@
 <?php
 namespace GDO\Core\Method;
 
+use GDO\Core\GDT_Array;
 use GDO\Core\MethodAjax;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT;
-use GDO\Core\Website;
 
 final class UserSettings extends MethodAjax
 {
@@ -25,7 +25,7 @@ final class UserSettings extends MethodAjax
             }
         }
         
-        Website::outputJSON($settings);
+        return GDT_Array::makeWith($settings);
     }
 
     private function gdtSetting(GDT $gdt)

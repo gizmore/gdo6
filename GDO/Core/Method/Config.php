@@ -3,8 +3,8 @@ namespace GDO\Core\Method;
 
 use GDO\Core\GDO_Module;
 use GDO\Core\ModuleLoader;
-use GDO\Core\Website;
 use GDO\Core\MethodAjax;
+use GDO\Core\GDT_Array;
 
 /**
  * API Request to get all module configs.
@@ -21,7 +21,7 @@ final class Config extends MethodAjax
 		{
 			$json[$module->getName()] = $this->getModuleConfig($module);
 		}
-		Website::outputJSON($json);
+		return GDT_Array::makeWith($json);
 	}
 	
 	private function getModuleConfig(GDO_Module $module)

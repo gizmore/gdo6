@@ -1,11 +1,11 @@
 <?php
 namespace GDO\Core\Method;
 
+use GDO\Core\GDT_Array;
 use GDO\Core\Method;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDO;
 use GDO\DB\GDT_Enum;
-use GDO\Core\Website;
 
 /**
  * Get enum values for all entities and GDT.
@@ -79,6 +79,6 @@ final class GetEnums extends Method
 			}
 		}
 		
-		Website::outputJSON($columns);
+		return GDT_Array::makeWith($columns);
 	}
 }

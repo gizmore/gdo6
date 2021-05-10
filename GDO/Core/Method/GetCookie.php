@@ -1,7 +1,7 @@
 <?php
 namespace GDO\Core\Method;
 
-use GDO\Core\Website;
+use GDO\Core\GDT_Array;
 use GDO\Core\Module_Core;
 use GDO\Core\MethodAjax;
 
@@ -10,7 +10,7 @@ final class GetCookie extends MethodAjax
 	public function execute()
 	{
 		$json =  Module_Core::instance()->gdoUserJSON();
-		Website::outputJSON($json);
+		return GDT_Array::makeWith($json);
 	}
 	
 }

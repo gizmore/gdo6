@@ -2,6 +2,7 @@
 namespace GDO\Country\Method;
 
 use GDO\Country\GDO_Country;
+use GDO\Core\GDT_Array;
 use GDO\Core\Website;
 use GDO\Core\MethodAjax;
 
@@ -24,7 +25,7 @@ final class AjaxList extends MethodAjax
             ];
         }, GDO_Country::table()->allCached());
         
-        Website::outputJSON(array_values($json));
+        return GDT_Array::makeWith(array_values($json));
     }
     
 }

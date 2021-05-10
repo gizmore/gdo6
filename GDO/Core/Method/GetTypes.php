@@ -1,9 +1,11 @@
 <?php
 namespace GDO\Core\Method;
+
+use GDO\Core\GDT_Array;
 use GDO\Core\Method;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDO;
-use GDO\Core\Website;
+
 /**
  * Get all types used in all tables.
  * Get the type class hierarchy.
@@ -65,6 +67,7 @@ final class GetTypes extends Method
 		}
 		
 		$json = ['fields' => $fields, 'types' => $types];
-		Website::outputJSON($json);
+		return GDT_Array::makeWith($json);
 	}
+	
 }

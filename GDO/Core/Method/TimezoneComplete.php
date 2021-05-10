@@ -1,9 +1,9 @@
 <?php
 namespace GDO\Core\Method;
 
+use GDO\Core\GDT_Array;
 use GDO\Core\MethodCompletion;
 use GDO\Date\GDT_Timezone;
-use GDO\Core\Website;
 
 final class TimezoneComplete extends MethodCompletion
 {
@@ -23,7 +23,7 @@ final class TimezoneComplete extends MethodCompletion
             }
         }
         
-        Website::outputJSON($json);
+        return GDT_Array::makeWith($json);
     }
     
 }
