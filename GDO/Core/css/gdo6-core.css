@@ -31,3 +31,4 @@ img.gdo-country { width: 24px; height: 17px; position: relative; top: 3px; borde
 
 /** Basic UI components **/
 div.gdt-hr { height: 1px; width: 100%; background: #eee; margin: 8px 2px; }
+.gdt_captcha > span > input[type=text] { vertical-align: top; }
