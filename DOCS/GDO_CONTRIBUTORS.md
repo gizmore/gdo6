@@ -11,4 +11,4 @@ chrysoberyl: [gdo6](https://github.com/gizmore/gdo6) - A little bit wording for 
 
 tehron: [gdo6](https://github.com/gizmore/gdo6) - Additions to the documentation. [pull request](https://github.com/gizmore/gdo6/pull/9) Improving Install Wizard. [pull_request](https://github.com/gizmore/gdo6/pull/12)
 
-flederohr: [gdo6](https://github.com/gizmore/gdo6) - Made gdo_update.sh use parallel threads via XARGS to speed up updates. [pull request](https://github.com/gizmore/gdo6/pull/6)
+flederohr: [gdo6](https://github.com/gizmore/gdo6) - Made gdo_update.sh use parallel threads via XARGS to speed up updates. [pull request](https://github.com/gizmore/gdo6/pull/6) - Helps with testing! 

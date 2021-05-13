@@ -36,7 +36,7 @@ return [
 'lang_hu' => 'Ungarisch',
 // 'lang_hy' => 'Armenian',
 // 'lang_is' => 'Icelandic',
-'lang_it' => 'Italiänisch',
+'lang_it' => 'Italienisch',
 'lang_ja' => 'Japanisch',
 'lang_ko' => 'Koreanisch',
 // 'lang_ku' => 'Kurdish',

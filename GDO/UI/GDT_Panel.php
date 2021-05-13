@@ -9,7 +9,7 @@ use GDO\Core\WithFields;
  * Simple content pane.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.0.0
  */
 class GDT_Panel extends GDT
@@ -18,6 +18,8 @@ class GDT_Panel extends GDT
 	use WithText;
 	use WithFields;
 	use WithPHPJQuery;
+	
+	public function isSerializable() { return true; }
 	
 	public function renderCell()
 	{
@@ -31,6 +33,15 @@ class GDT_Panel extends GDT
 	        $this->renderTitle(),
 	        $this->renderText(),
 	        $this->renderXMLFields());
+	}
+	
+	public function renderJSON()
+	{
+	    return [
+	        'title' => $this->renderTitle(),
+	        'text' => $this->renderText(),
+	        'fields' => $this->renderJSONFields(),
+	    ];
 	}
 
 }

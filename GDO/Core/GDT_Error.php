@@ -14,6 +14,8 @@ class GDT_Error extends GDT_Panel
 {
     public static $ERROR = 1;
     
+    public function isSerializable() { return true; }
+    
     public function defaultName() { return self::$ERROR === 1 ? 'error' : 'error_' . (++self::$ERROR); }
     
 	public function hasError() { return true; }

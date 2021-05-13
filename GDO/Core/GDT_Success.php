@@ -14,6 +14,8 @@ use GDO\UI\GDT_Panel;
  */
 class GDT_Success extends GDT_Panel
 {
+    public function isSerializable() { return true; }
+    
 	public static function responseWith($key, array $args=null, $code=200, $log=true)
 	{
 		return GDT_Response::makeWith(self::with($key, $args, $code, $log));
