@@ -31,7 +31,7 @@ use GDO\Util\Strings;
  * @see ./gdoadm.sh
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.10.0
  * 
  * @see gdo_update.sh - to update your gdo6 installation
@@ -255,6 +255,9 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
 	elseif ($mode === 2)
 	{
 	    $modules = ModuleLoader::instance()->loadModules(false, true, true);
+	    $modules = array_filter($modules, function(GDO_Module $module) {
+	        return $module->defaultEnabled();
+	    });
 	    $deps = array_map(function(GDO_Module $mod) {
 	        return $mod->getName(); }, $modules);
 	    
@@ -395,12 +398,21 @@ elseif ($argv[1] === 'wipe')
     }
     else
     {
-        $classes = $module->getClasses();
-        $classes = array_map(function($class) {
-            return Strings::rsubstrFrom($class, '\\');
-        }, $classes);
+        if ($classes = $module->getClasses())
+        {
+            $classes = array_map(function($class) {
+                return Strings::rsubstrFrom($class, '\\');
+            }, $classes);
+        }
+        else
+        {
+            $classes = [];
+        }
         printf("The %s module has been wiped from the database.\n", $module->getName());
-        printf("The following GDOs have been wiped: %s.\n", implode(', ', $classes));
+        if ($classes)
+        {
+            printf("The following GDOs have been wiped: %s.\n", implode(', ', $classes));
+        }
     }
 }
 
