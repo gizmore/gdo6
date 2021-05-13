@@ -15,7 +15,7 @@
    <?=$field->htmlDisabled()?>
    <?=$field->htmlFormName()?>
    value="<?=$field->displayVar()?>" />
-  <input type="hidden" name="nocompletion_<?=$field->name?>" value="1" />
+  <input type="hidden" id="nocompletion_<?=$field->name?>" name="nocompletion_<?=$field->name?>" value="1" />
   <input type="hidden" id="completion-<?=$field->name?>" value="<?=$field->displayVar()?>" />
   <?=$field->htmlError()?>
 </div>

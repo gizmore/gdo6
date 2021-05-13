@@ -11,8 +11,8 @@ use GDO\Form\GDT_Select;
  * It inits the choices with a call to $table->all()!
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.02
+ * @version 6.10.3
+ * @since 6.2.0
  */
 class GDT_ObjectSelect extends GDT_Select
 {
