@@ -7,8 +7,8 @@ use GDO\DB\GDT_String;
  * IP column and rendering.
  * Current IP is assigned at the very bottom.
  * @author gizmore
- * @since 6.00
- * @version 6.05
+ * @version 6.10.3
+ * @since 6.0.0
  */
 final class GDT_IP extends GDT_String
 {
@@ -18,10 +18,27 @@ final class GDT_IP extends GDT_String
 	public static $CURRENT = null; # for connections like websocket too!
 	public static function current() { return self::$CURRENT; }
 	
-	public static function isLocal( $ip=null)
+	/**
+	 * Get the IP netmask for a number of bits.
+	 * @example netmask(8) => 11111111 00000000 00000000 00000000 => 
+	 * @param int $bits
+	 * @return int
+	 */
+	public static function netmask($bits)
+	{
+	    return bindec(str_repeat('1', $bits) . str_repeat('0', 32 - $bits));
+	}
+	
+	public static function isLocal($ip=null)
 	{
 		$ip = $ip ? $ip : self::$CURRENT;
-		return ($ip === '::1') || (substr($ip, 0, 4) === '127.');
+		return
+		  ($ip === '::1') ||
+		  (substr($ip, 0, 4) === '127.') ||
+		  (substr($ip, 0, 8) === '192.168.') ||
+		  (substr($ip, 0, 8) === '169.254.') ||
+		  (substr($ip, 0, 3) === '10.') ||
+		  ((ip2long($ip) & self::netmask(12)) === bindec('10101100000100000000000000000000'));
 	}
 	
 	public function useCurrent($useCurrent=true)

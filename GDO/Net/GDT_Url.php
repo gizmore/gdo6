@@ -107,9 +107,24 @@ class GDT_Url extends GDT_String
 		}
 
 		# Check local
-		if ( (!$this->allowLocal) && ($value[0] === '/') )
+		if (!$this->allowLocal)
 		{
-			return $this->error('err_local_url_not_allowed', [html($value)]);
+		    # Check relative url
+		    if ($value[0] === '/')
+		    {
+		        return $this->errorLocal($value);
+		    }
+		    
+		    # Check by IP
+		    $ip = gethostbyname($url->getHost());
+		    if (GDT_IP::isLocal($ip))
+		    {
+		        return $this->errorLocal($value);
+		    }
+		    if ($ip === @$_SERVER['SERVER_ADDR'])
+		    {
+		        return $this->errorLocal($value);
+		    }
 		}
 		
 		if ( (!$this->allowExternal) && ($value[0] !== '/') )
@@ -143,6 +158,11 @@ class GDT_Url extends GDT_String
 		}
 		
 		return true;
+	}
+	
+	private function errorLocal($value)
+	{
+	    return $this->error('err_local_url_not_allowed');
 	}
 	
 	/**

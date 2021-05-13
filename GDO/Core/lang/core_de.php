@@ -175,6 +175,7 @@ return array(
 'err_invalid_gdt_var' => 'Ein GDT Datentyp, %s, hat einen ungültigen Wert: %s.',
 'err_unknown_user_setting' => 'Das Modul %s kennt keine Nutzereinstellung namens %s.',
 'err_nothing_happened' => 'Nichts hat sich geändert obwohl etwas geschehen sollte.',
+'err_local_url_not_allowed' => 'Lokale URL sind nicht erlaubt.',
 'err_external_url_not_allowed' => 'Externe URLs sind nicht erlaubt.',
 'err_upload_move' => 'Eine Datei konnte nicht von %s nach %s verschoben werden.',
 'err_404' => '404 - Seite nicht gefunden',
