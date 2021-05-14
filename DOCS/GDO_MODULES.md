@@ -118,6 +118,7 @@ These modules add functionality to the website and are (mostly) own code.
  - [Profile](https://github.com/gizmore/gdo6-profile)
  - [Recovery](https://github.com/gizmore/gdo6-recovery)
  - [Register](https://github.com/gizmore/gdo6-register)
+ - [Security](https://github.com/gizmore/gdo6-security)
  - [Session](https://github.com/gizmore/gdo6-session-cookie) (session via cookie payload)
  - [Session](https://github.com/gizmore/gdo6-session-db) (session via database)
  - [Sitemap](https://github.com/gizmore/gdo6-sitemap)

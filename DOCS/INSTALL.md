@@ -162,6 +162,7 @@ Copy this list and remove / add modules.
     ## git clone --recursive https://github.com/gizmore/gdo6-ranzgruppe Ranzgruppe
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
+    git clone --recursive https://github.com/gizmore/gdo6-security Security
     ###### EITHER session-db or session-cookie is required
     ###### git clone --recursive https://github.com/gizmore/gdo6-session-db Session
     ###### git clone --recursive https://github.com/gizmore/gdo6-session-cookie Session

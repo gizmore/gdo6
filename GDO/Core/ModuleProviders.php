@@ -11,7 +11,7 @@ namespace GDO\Core;
  * @TODO: make the installers use this providers to automatically install module dependencies.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.10.0
  */
 final class ModuleProviders
@@ -111,6 +111,7 @@ final class ModuleProviders
         'Ranzgruppe' => 'gdo6-ranzgruppe',
         'Recovery' => 'gdo6-recovery',
         'Register' => 'gdo6-register',
+        'Security' => 'gdo6-security',
         'Session' => ['gdo6-session-cookie', 'gdo-session-db'],
         'Shoutbox' => 'gdo6-shoutbox',
         'Sitemap' => 'gdo6-sitemap',
