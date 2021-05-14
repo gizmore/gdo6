@@ -15,6 +15,8 @@ use GDO\Core\GDT_Hook;
  */
 abstract class MethodQueryTable extends MethodTable
 {
+    public function useFetchInto() { return true; }
+    
 	################
 	### Abstract ###
 	################

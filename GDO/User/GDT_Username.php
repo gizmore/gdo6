@@ -5,6 +5,7 @@ use GDO\DB\GDT_String;
 
 /**
  * Username field without completion.
+ * Can validate on existing, not-existing and both allowed (null)
  * 
  * @see GDT_User
  * @author gizmore
@@ -29,9 +30,9 @@ class GDT_Username extends GDT_String
 	### Exists ###
 	##############
 	public $exists;
-	public function exists()
+	public function exists($exists=true)
 	{
-		$this->exists= true;
+		$this->exists = $exists;
 		return $this;
 	}
 	
@@ -54,7 +55,7 @@ class GDT_Username extends GDT_String
 		}
 		
 		# Check existance
-		if ($this->exists)
+		if ($this->exists === true)
 		{
 			if ($user = GDO_User::getByLogin($value))
 			{
@@ -65,6 +66,14 @@ class GDT_Username extends GDT_String
 				return $this->error('err_user');
 			}
 		}
+		elseif ($this->exists === false)
+		{
+		    if ($user = GDO_User::getByLogin($value))
+		    {
+		        return $this->error('err_username_taken');
+		    }
+		}
+		
 		return true;
 	}
 	

@@ -6,6 +6,8 @@ use GDO\Core\GDT_Template;
 /**
  * Add ordering helper to a GDT.
  * @author gizmore
+ * @version 6.10.3
+ * @since 6.1.0
  */
 trait WithOrder
 {
@@ -14,7 +16,7 @@ trait WithOrder
 		if ($this->orderable)
 		{
 			$name = $this->name;
-			$o = $table->headers->name; # . "[o]" . "[$name]";
+			$o = $table->headers->name;
 			$oo = $o . "[o]" . "[$name]";
 			
 			$url = @$_SERVER['REQUEST_URI'];
@@ -30,11 +32,11 @@ trait WithOrder
 			$url = str_replace("&$oo=0", '', $url);
 			$url = str_replace("&$oo=1", '', $url);
 			
-// 			# Clean url of paging
-// 			if ($pagemenu = $table->getPageMenu())
-// 			{
-// 				$url = preg_replace("#&f\\[{$pagemenu->name}\\]=\\d+#", '', $url);
-// 			}
+			# Clean url of paging
+			if ($pagemenu = $table->getPageMenu())
+			{
+				$url = preg_replace("#&{$o}\\[{$pagemenu->name}\\]=\\d+#", '', $url);
+			}
 			
 			# Arrow urls
 			$url_asc = $is_asc ? $url : $url . "&$oo=1";

@@ -5,12 +5,18 @@ use GDO\Core\GDT_Template;
 use GDO\Session\GDO_Session;
 use GDO\Util\Random;
 use GDO\Core\Application;
+use GDO\User\GDO_User;
 
 /**
- * GDT_Form CSRF protection
+ * GDT_Form CSRF protection.
+ * Can optionally fallback to a static token. @todo verify crypto.
+ * This is useful in fileCached() MethodForm's.
+ * 
+ * @see Cache
+ * @see MethodForm
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 1.0.0
  */
 class GDT_AntiCSRF extends GDT_Hidden
@@ -18,15 +24,8 @@ class GDT_AntiCSRF extends GDT_Hidden
     const KEYLEN = 6;
     const MAX_KEYS = 12;
     
-    public $name = 'xsrf';
-    public $editable = false;
-	public function name($name=null) { return $this; }
+	public function defaultName() { return 'xsrf'; }
 
-	protected function __construct()
-	{
-	    parent::__construct();
-	}
-	
 	###########
 	### GDT ###
 	###########
@@ -45,11 +44,43 @@ class GDT_AntiCSRF extends GDT_Hidden
 		return $this;
 	}
 	
+	#############
+	### Fixed ###
+	#############
+	public $fixed = false;
+	public function fixed($fixed=true)
+	{
+	    $this->fixed = $fixed;
+	    return $this;
+	}
+	
+	/**
+	 * Calculate a fixed static token for a user.
+	 * @TODO verify crypto
+	 * @return string
+	 */
+	public function fixedToken(GDO_User $user)
+	{
+	    $time = Application::$TIME;
+	    $time = $time - ($time % $this->csrfExpire);
+	    $time = date('YmdHis', $time);
+	    $hash = sprintf('%s_%s_%s_%s_%s',
+	        GDO_SALT, $user->displayNameLabel(),
+            $user->getVar('user_email'),
+	        $user->getVar('user_password'), $time);
+	    return substr(sha1($hash), 0, self::KEYLEN);
+	}
+	
 	#################
 	### Construct ###
 	#################
 	public function csrfToken()
 	{
+	    if ($this->fixed)
+	    {
+	        return $this->fixedToken(GDO_User::current());
+	    }
+	    
 	    $token = '';
 		if (GDO_Session::instance())
 		{
@@ -96,6 +127,15 @@ class GDT_AntiCSRF extends GDT_Hidden
 	    if (!GDO_Session::instance())
 		{
 			return $this->error('err_session_required');
+		}
+		
+		if ($this->fixed)
+		{
+		    if ($value === $this->fixedToken(GDO_User::current()))
+		    {
+		        return true;
+		    }
+		    return $this->error('err_csrf');
 		}
 
 		# Load tokens

@@ -58,7 +58,7 @@ final class GDO_User extends GDO
 			GDT_Enum::make('user_type')->enumValues(self::SYSTEM, self::GHOST, self::BOT, self::GUEST, self::MEMBER)->label('type')->notNull()->initial(self::GUEST),
 			GDT_Username::make('user_guest_name')->unique()->label('guestname'),
 			GDT_Realname::make('user_real_name'),
-			GDT_Email::make('user_email')->searchable(false),
+			GDT_Email::make('user_email')->searchable(false)->orderable(false),
 			GDT_Level::make('user_level'),
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits')->icon('money'),
 			GDT_Gender::make('user_gender'),

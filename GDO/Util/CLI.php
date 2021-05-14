@@ -4,6 +4,7 @@ namespace GDO\Util;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDOError;
 use GDO\Core\Method;
+use GDO\DB\GDT_Text;
 
 /**
  * CLI utilities.
@@ -100,10 +101,42 @@ final class CLI
      * Turn a line of text into method parameters.
      * @param string $line
      * @param Method $method
+     * @return string[]
      */
     private static function parseArgline($line, Method $method)
     {
+        $parameters = [];
         
+        while (Strings::startsWith($line, '--'))
+        {
+            $n = Strings::substrTo($line, ' ', $line);
+            $n = trim($n, '-');
+            $l = Strings::substrFrom($line, ' ', $line);
+            $a = Strings::substrTo($l, ' ', $l);
+            $gdt = $method->gdoParameter($n);
+            $parameters[$gdt->name] = $a;
+            $line = Strings::substrFrom($l, ' ', $l);
+        }
+        
+        foreach ($method->gdoParameterCache() as $gdt)
+        {
+            if ($gdt->name && $gdt->editable && $gdt->isPositional())
+            {
+                if ($gdt instanceof GDT_Text)
+                {
+                    $parameters[$gdt->name] = trim($line, '"');
+                    break;
+                }
+                else
+                {
+                    $args = Strings::args($line);
+                    $arg = $args[0];
+                    $parameters[$gdt->name] = trim($arg, '"');
+                    $line = mb_substr($line, 0, mb_strlen($arg) + 1);
+                }
+            }
+        }
+        return $parameters;
     }
 
 }

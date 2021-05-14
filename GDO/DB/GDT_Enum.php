@@ -130,7 +130,8 @@ class GDT_Enum extends GDT
 	public function filterQuery(Query $query, $rq=null)
 	{
 		$filter = $this->filterVar($rq);
-		if (!empty($filter))
+		$filter = array_filter($filter, function($f) { return !!$f; });
+		if ($filter)
 		{
 			$filter = array_map(['GDO\\Core\\GDO', 'escapeS'], $filter);
 			$condition = sprintf('%s IN ("%s")', $this->identifier(), implode('","', $filter));

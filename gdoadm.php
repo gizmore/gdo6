@@ -100,13 +100,17 @@ if (!defined('GDO_CONFIGURED'))
 	\GDO\Install\Config::configure();
 }
 
-# App is CLI
+# App is CLI and an installer
 final class InstallerApp extends Application
 {
-	public function isInstall() { return true; }
+    public function isCLI() { return true; }
+    public function isInstall() { return true; }
 }
 
 new InstallerApp(); # Create App
+Database::init();
+Cache::flush();
+Cache::fileFlush();
 Trans::$ISO = GDO_LANGUAGE;
 Logger::init(null, GDO_ERROR_LEVEL); # init without username
 Debug::init();
@@ -114,8 +118,6 @@ Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
 Debug::setDieOnError(GDO_ERROR_DIE);
 Debug::setMailOnError(GDO_ERROR_MAIL);
-Database::init();
-Cache::flush();
 ModuleLoader::instance()->loadModules(GDO_DB_ENABLED, true);
 
 define('GDO_CORE_STABLE', 1);
@@ -334,7 +336,8 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
     }
     
     Cache::flush();
-	
+    Cache::fileFlush();
+    
 	echo "Done.\n";
 }
 

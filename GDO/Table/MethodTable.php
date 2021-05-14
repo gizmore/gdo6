@@ -60,6 +60,12 @@ abstract class MethodTable extends Method
     public function fetchAs() {}
 
     /**
+     * Override this to toggle fetchInto speedup in table rendering to reduce GDO allocations.
+     * @return boolean
+     */
+    public function useFetchInto() { return false; }
+    
+    /**
      * Default IPP defaults to config in Module_Table.
      * @see Module_Table::getConfig()
      * @return string
@@ -228,6 +234,9 @@ abstract class MethodTable extends Method
 	    $table->searched($this->isSearched());
 	    $table->sorted($this->isSorted());
 	    $table->paginated($this->isPaginated(), null, $this->getIPP());
+
+	    # 1 speedup
+	    $table->fetchInto($this->useFetchInto());
 	}
 	
 	public function renderTable()

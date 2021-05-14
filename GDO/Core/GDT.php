@@ -36,7 +36,7 @@ abstract class GDT
 	use WithName;
 	use WithIcon;
 	
-// 	# Same as $gdo but always set and always the table.
+	# Same as $gdo but always set and always the table.
 	/** @var $gdtTable GDO **/
 	public $gdtTable;
 	/** @var GDO **/
@@ -79,7 +79,7 @@ abstract class GDT
 	public static function make($name=null)
 	{
 	    self::$COUNT++;
-	    if (GDO_GDT_DEBUG)
+	    if (self::$DEBUG)
 	    {
 	        self::logDebug();
 	    }
@@ -91,7 +91,7 @@ abstract class GDT
 	public function __wakeup()
 	{
 	    self::$COUNT++;
-	    if (GDO_GDT_DEBUG)
+	    if (self::$DEBUG)
 	    {
 	        self::logDebug();
 	    }
@@ -100,7 +100,7 @@ abstract class GDT
 	private static function logDebug()
 	{
 	    Logger::log('gdt', sprintf('%d: %s', self::$COUNT, self::gdoClassNameS()));
-	    if (GDO_GDT_DEBUG >= 2)
+	    if (self::$DEBUG >= 2)
 	    {
 	        Logger::log('gdt', Debug::backtrace('Backtrace', false));
 	    }
@@ -237,6 +237,16 @@ abstract class GDT
 	 * @return string
 	 */
 	public function htmlFormName() { return sprintf(" name=\"%s\"", $this->formName()); }
+	
+	/**
+	 * Check if this paramter is required.
+	 * In CLI this is a positional parameter.
+	 * @return boolean
+	 */
+	public function isPositional()
+	{
+	    return $this->notNull && ($this->initial === null);
+	}
 	
 	#################
 	### GDO Value ###
@@ -529,4 +539,5 @@ abstract class GDT
 if (GDT::$DEBUG)
 {
     Logger::log('gdt', '--- NEW RUN ---');
+    Logger::log('gdo', '--- NEW RUN ---');
 }

@@ -12,6 +12,10 @@ use GDO\DB\GDT_UInt;
 final class GDT_PageNum extends GDT_UInt
 {
     public $hidden = true;
+    public $orderable = false;
+    public $searchable = false;
+    public $filterable = false;
+    
     public $bytes = '2';
     public $initial = '1';
     

@@ -172,7 +172,7 @@ switch ($app->getFormat())
         break;
 }
 
-if ($method->fileCached() && (!$cacheLoad))
+if (isset($method) && $method->fileCached() && (!$cacheLoad))
 {
     $key = $method->fileCacheKey();
     Cache::fileSet($key, $cacheContent);

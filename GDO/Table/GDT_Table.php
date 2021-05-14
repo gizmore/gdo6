@@ -15,8 +15,6 @@ use GDO\UI\WithActions;
 use GDO\Core\WithFields;
 use GDO\Util\Classes;
 use GDO\Core\GDOException;
-use GDO\Core\Logger;
-use GDO\Core\Debug;
 
 /**
  * A filterable, searchable, orderable, paginatable, sortable collection of GDT[] in headers.
@@ -415,10 +413,10 @@ class GDT_Table extends GDT
 	 */
 	public function queryResult()
 	{
-	    if (!$this->query)
-	    {
-	        Logger::logDebug(Debug::backtrace('QU', false));
-	    }
+// 	    if (!$this->query)
+// 	    {
+// 	        Logger::logDebug(Debug::backtrace('QUERY_MISSING', false));
+// 	    }
 		return $this->query->exec();
 	}
 	
