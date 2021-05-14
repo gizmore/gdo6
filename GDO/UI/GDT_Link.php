@@ -33,10 +33,13 @@ class GDT_Link extends GDT_String
 	################
 	public function gdo(GDO $gdo=null)
 	{
-	    $method = "href_{$this->name}";
-	    if (method_exists($gdo, $method))
+	    if ($gdo)
 	    {
-	        $this->href(call_user_func([$gdo, $method]));
+    	    $method = "href_{$this->name}";
+    	    if (method_exists($gdo, $method))
+    	    {
+    	        $this->href(call_user_func([$gdo, $method]));
+    	    }
 	    }
 	    return parent::gdo($gdo);
 	}
