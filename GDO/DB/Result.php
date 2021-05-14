@@ -51,6 +51,11 @@ class Result
 		return mysqli_num_rows($this->result);
 	}
 	
+	public function affectedRows()
+	{
+	    return Database::instance()->affectedRows();
+	}
+	
 	#############
 	### Fetch ###
 	#############

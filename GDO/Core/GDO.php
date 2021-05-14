@@ -654,16 +654,25 @@ abstract class GDO
     /**
      * Delete multiple rows, but still one by one to trigger all events correctly.
      * @param string $condition
-     * @return \GDO\DB\Query
+     * @return int
      */
-    public function deleteWhere($condition)
+    public function deleteWhere($condition, $withHooks=true)
     {
         $deleted = 0;
-        $result = $this->table()->select()->where($condition)->exec();
-        while ($gdo = $result->fetchObject())
+        if ($withHooks)
         {
-            $deleted++;
-            $gdo->deleteB();
+            $result = $this->table()->select()->where($condition)->exec();
+            while ($gdo = $result->fetchObject())
+            {
+                $deleted++;
+                $gdo->deleteB();
+            }
+        }
+        else
+        {
+            $deleted = $this->query()->
+                delete($this->gdoTableIdentifier())->
+                where($condition)->exec()->numRows();
         }
         return $deleted;
     }
@@ -680,7 +689,6 @@ abstract class GDO
             $this->uncache();
         }
         return $this;
-        
     }
     
     public function replace($withHooks=true)
