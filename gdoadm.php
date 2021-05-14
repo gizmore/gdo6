@@ -30,6 +30,8 @@ use GDO\Util\Strings;
  * 
  * @see ./gdoadm.sh
  * 
+ * @TODO Make a new gdoadm.sh clone Foo to clone all required providers.
+ * 
  * @author gizmore
  * @version 6.10.3
  * @since 6.10.0
