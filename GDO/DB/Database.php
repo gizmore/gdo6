@@ -36,6 +36,7 @@ class Database
 	const PRIMARY_USING = 'USING HASH'; # default index algorithm for primary keys.
 	
 	# Perf connection
+	public $locks = 0;
 	public $reads = 0;
 	public $writes = 0;
 	public $commits = 0;
@@ -43,6 +44,7 @@ class Database
 	public $queryTime = 0;
 	
 	# Perf total
+	public static $LOCKS = 0;
 	public static $READS = 0;
 	public static $WRITES = 0;
 	public static $COMMITS = 0;
@@ -429,6 +431,8 @@ class Database
 	############
 	public function lock($lock, $timeout=30)
 	{
+	    $this->locks++;
+	    self::$LOCKS++;
 		$query = "SELECT GET_LOCK('{$lock}', {$timeout}) as L";
 		return $this->queryRead($query);
 	}

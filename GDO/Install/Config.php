@@ -106,6 +106,7 @@ class Config
 		# Files
 		if (!defined('GDO_CHMOD')) define('GDO_CHMOD', 0770);
 		# Logging
+		if (!defined('GDO_LOG_REQUEST')) define('GDO_LOG_REQUEST', false);
 		if (!defined('GDO_CONSOLE_VERBOSE')) define('GDO_CONSOLE_VERBOSE', false);
 		if (!defined('GDO_ERROR_LEVEL')) define('GDO_ERROR_LEVEL', Logger::_DEFAULT);
 		if (!defined('GDO_ERROR_STACKTRACE')) define('GDO_ERROR_STACKTRACE', true);
@@ -174,12 +175,14 @@ class Config
 			GDT_Enum::make('chmod')->enumValues((string)0700, (string)0770, (string)0777)->initialValue(GDO_CHMOD),
 			# Logging
 			GDT_Divider::make()->label('install_config_section_logging'),
+		    GDT_Checkbox::make('log_request')->initialValue(GDO_LOG_REQUEST),
 		    GDT_Checkbox::make('console_verbose')->initialValue(GDO_CONSOLE_VERBOSE),
-			GDT_Hidden::make('error_level')->initialValue(GDO_ERROR_LEVEL),
+		    GDT_Hidden::make('error_level')->initialValue(GDO_ERROR_LEVEL),
 			GDT_Checkbox::make('error_stacktrace')->initialValue(GDO_ERROR_STACKTRACE),
 			GDT_Checkbox::make('error_die')->initialValue(GDO_ERROR_DIE),
-			GDT_Checkbox::make('error_mail')->initialValue(GDO_ERROR_MAIL),
-			# Database
+		    GDT_Checkbox::make('error_mail')->initialValue(GDO_ERROR_MAIL),
+		    GDT_Checkbox::make('error_mail')->initialValue(GDO_ERROR_MAIL),
+		    # Database
 			GDT_Divider::make()->label('install_config_section_database'),
 			GDT_Hidden::make('salt')->initialValue(GDO_SALT),
 		    GDT_Checkbox::make('db_enabled')->initialValue(GDO_DB_ENABLED),

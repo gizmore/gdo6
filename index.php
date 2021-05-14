@@ -52,11 +52,15 @@ if (GDO_User::current()->isUser())
     }
 }
 
+if (GDO_LOG_REQUEST)
+{
+    Logger::logRequest();
+}
+
 # All fine!
 define('GDO_CORE_STABLE', 1);
 try
 {
-    $lock = false;
 	$rqmethod = $_SERVER['REQUEST_METHOD'];
 	if (!in_array($rqmethod, ['GET', 'POST', 'HEAD', 'OPTIONS'], true))
 	{
@@ -87,6 +91,7 @@ try
     {
         $lock = 'sess_'.$session->getID();
         Database::instance()->lock($lock);
+        GDO_Session::instance()->setLock($lock);
     }
     
     GDT_Hook::callHook('BeforeRequest', $method);
@@ -186,10 +191,5 @@ if ($session)
 
 # Fire recache IPC events.
 Cache::recacheHooks();
-
-if ($lock)
-{
-    Database::instance()->unlock($lock);
-}
 
 echo $content;

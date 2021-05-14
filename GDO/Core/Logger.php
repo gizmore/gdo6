@@ -1,8 +1,6 @@
 <?php
 namespace GDO\Core;
 
-use GDO\Util\Common;
-
 /**
  * The GDO Logger.
  * 
@@ -74,18 +72,12 @@ final class Logger
 	 */
 	private static function getRequest()
 	{
-		$post = self::isDisabled(self::HTTP_POST);
-		if (true === self::isDisabled(self::HTTP_GET) && true === $post)
+		$back = $_SERVER['REQUEST_METHOD'];
+		$back .= ' ';
+		$back .= $_SERVER['REQUEST_URI'];
+		if ($_SERVER['REQUEST_METHOD'] === $_POST)
 		{
-			return '';
-		}
-
-		$back = Common::getServer('REQUEST_METHOD', '').' ';
-		$back .= Common::getServer('REQUEST_URI', '');
-
-		if (false === $post && count($_REQUEST) > 0)
-		{
-			$back .= self::$POST_DELIMITER .'POSTDATA'.self::stripPassword($_REQUEST);
+			$back .= self::$POST_DELIMITER .'POSTDATA: '.self::stripPassword($_REQUEST);
 		}
 		return $back;
 	}
@@ -97,10 +89,7 @@ final class Logger
 	public static function &shortString(&$str, $length=256)
 	{
 		$str = substr($str, 0, $length);
-		while (false !== strpos($str, '<?'))
-		{
-			$str = str_replace('<?', '##', $str);
-		}
+		$str = str_replace('<?', '##', $str);
 		return $str;
 	}
 
@@ -303,4 +292,9 @@ final class Logger
 		}
 	}
 	
+}
+
+if (!defined('GDO_LOG_REQUEST'))
+{
+    define('GDO_LOG_REQUEST', 0);
 }

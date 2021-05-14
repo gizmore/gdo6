@@ -131,6 +131,15 @@ class GDT_Template extends GDT
 			ob_start();
 			self::$CALLS++;
 			$path = self::getPath($moduleName, $path);
+			if (GDO_GDT_DEBUG)
+			{
+			    $message = $path;
+			    if (GDO_GDT_DEBUG >= 2)
+			    {
+    			    $message = Debug::backtrace($message, false);
+			    }
+			    Logger::log('tpl', $message);
+			}
 			if ($tVars)
 			{
 				foreach ($tVars as $__key => $__value)
