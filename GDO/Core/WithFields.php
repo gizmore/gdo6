@@ -280,7 +280,7 @@ trait WithFields
 			if (@$_gdt->fields)
 			{
 			    $fields = array_merge($fields,
-    			    $this->_getFieldsRec(@$_gdt->fields, $_gdt)
+    			    $this->_getFieldsRec($_gdt)
 		        );
 			}
 		}
