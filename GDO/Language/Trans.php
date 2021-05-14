@@ -247,7 +247,7 @@ final class Trans
     		if (self::$FILE_CACHE)
     		{
     		    FileUtil::createDir(Cache::filePath());
-    		    Cache::fileSet($key, json_encode($trans, JSON_THROW_ON_ERROR|JSON_PRETTY_PRINT));
+    		    Cache::fileSet($key, json_encode($trans, JSON_PRETTY_PRINT));
     		}
 		}
 		

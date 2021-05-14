@@ -122,7 +122,7 @@ class GDT_Form extends GDT
 	
 	public function renderCLI()
 	{
-	    return $this->gdoHumanName() . ': ' . json_encode($this->renderJSON(), JSON_THROW_ON_ERROR|JSON_PRETTY_PRINT);
+	    return $this->gdoHumanName() . ': ' . json_encode($this->renderJSON(), JSON_PRETTY_PRINT);
 	}
 	
 	public function reset(GDO $gdo)
