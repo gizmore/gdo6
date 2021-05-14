@@ -284,6 +284,7 @@ trait WithFields
 		        );
 			}
 		}
+		return $fields;
 	}
 	
 }
