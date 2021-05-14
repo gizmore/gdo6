@@ -686,9 +686,12 @@ abstract class GDO
         }
         else
         {
-            $deleted = $this->query()->
+            if ($this->query()->
                 delete($this->gdoTableIdentifier())->
-                where($condition)->exec()->numRows();
+                where($condition)->exec())
+            {
+                $deleted = Database::instance()->affectedRows();
+            }
         }
         return $deleted;
     }
