@@ -1,4 +1,7 @@
-<?php /** @var $field \GDO\DB\GDT_Int **/ ?>
+<?php
+/** @var $f string **/
+/** @var $field \GDO\DB\GDT_Int **/
+?>
 <input
  name="<?=$f?>[f][<?= $field->filterField ? $field->filterField : $field->name; ?>]"
  type="text"

@@ -1,10 +1,15 @@
 <?php
 namespace GDO\DB;
 
-use GDO\Core\Application;
 use GDO\User\GDT_User;
 use GDO\User\GDO_User;
 
+/**
+ * Automatically updates the editor user on update queries.
+ * @author gizmore
+ * @version 6.10.3
+ * @since 6.0.0
+ */
 final class GDT_EditedBy extends GDT_User
 {
 	public $writable = false;
@@ -15,20 +20,10 @@ final class GDT_EditedBy extends GDT_User
 	
 	public function gdoBeforeUpdate(Query $query)
 	{
-	    if (!$this->var)
-	    {
-    		$userId = GDO_User::current()->getID();
-    		$userId = $userId > 0 ? $userId : 1;
-    		$query->set($this->identifier() . '=' . $userId);
-    		$this->gdo->setVar($this->name, $userId);
-	    }
+  		$userId = GDO_User::current()->getID();
+   		$userId = $userId > 0 ? $userId : 1;
+   		$query->set($this->identifier() . '=' . $userId);
+   		$this->gdo->setVar($this->name, $userId);
 	}
-	
-// 	public function blankData()
-// 	{
-// 	    $user = Application::instance()->isInstall() ? GDO_User::system() : GDO_User::current()->persistent();
-// 	    $id = $user->getID();
-// 	    return [$this->name => $id];
-// 	}
-	
+
 }

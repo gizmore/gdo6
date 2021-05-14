@@ -1,5 +1,6 @@
 <?php
 use GDO\DB\GDT_Enum;
+/** @var $f string **/
 /** @var $field GDT_Enum **/
 $val = $field->filterVar($f);
 $sel = ' selected="selected"';

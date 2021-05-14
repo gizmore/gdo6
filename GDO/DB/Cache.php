@@ -69,6 +69,10 @@ class Cache
 			self::$MEMCACHED = new \Memcached();
 			self::$MEMCACHED->addServer(GDO_MEMCACHE_HOST, GDO_MEMCACHE_PORT);
 		}
+		if (GDO_FILECACHE)
+		{
+		    FileUtil::createDir(self::filePath());
+		}
 	}
 	
 	#################
@@ -351,9 +355,9 @@ class Cache
 	 */
 	public static function filePath($key='')
 	{
-// 	    $iso = Trans::$ISO;
-// 	    $fmt = Application::instance()->getFormat();
-	    return GDO_PATH . "temp/cache/{$key}"; #_{$iso}.{$fmt}";
+	    $domain = GDO_DOMAIN;
+	    $version = Module_Core::$GDO_REVISION;
+	    return GDO_PATH . "temp/cache/{$domain}_{$version}/{$key}";
 	}
 	
 }
