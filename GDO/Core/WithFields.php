@@ -261,13 +261,12 @@ trait WithFields
 	 */
 	public function getFieldsRec()
 	{
-		$fields = [];
-		$this->_getFieldsRec($fields, $this);
-		return $fields;
+		return $this->_getFieldsRec($this);
 	}
 	
-	private function _getFieldsRec(array &$fields, GDT $gdt)
+	private function _getFieldsRec(GDT $gdt)
 	{
+	    $fields = [];
 		foreach ($gdt->fields as $_gdt)
 		{
 		    if ($_gdt->name)
@@ -280,7 +279,9 @@ trait WithFields
 		    }
 			if (@$_gdt->fields)
 			{
-			    $this->_getFieldsRec(@$_gdt->fields, $_gdt);
+			    $fields = array_merge($fields,
+    			    $this->_getFieldsRec(@$_gdt->fields, $_gdt)
+		        );
 			}
 		}
 	}
