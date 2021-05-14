@@ -17,15 +17,28 @@ $pages = $pagemenu ? $pagemenu->render() : '';
   <h3 class="gdt-headline"><?=$field->renderTitle()?></h3>
 <?php endif; ?>
   <ul>
-	<li>
 <?php
 $template = $field->getItemTemplate();
-$dummy = $field->gdtTable->cache->getDummy();
-while ($gdo = $result->fetchInto($dummy))
+if ($field->fetchInto)
 {
-	echo $template->gdo($gdo)->renderCard();
-}?>
-	</li>
+    $dummy = $result->table->cache->getDummy();
+    while ($gdo = $result->fetchInto($dummy))
+    {
+        echo "<li>\n";
+        echo $template->gdo($gdo)->renderCard();
+        echo "</li>\n";
+    }
+}
+else
+{
+    while ($gdo = $result->fetchObject())
+    {
+        echo "<li>\n";
+        echo $template->gdo($gdo)->renderCard();
+        echo "</li>\n";
+    }
+}
+?>
   </ul>
 </div>
 <?=$pages?>

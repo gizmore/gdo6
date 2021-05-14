@@ -140,7 +140,7 @@ class Result
 	{
 	    if ($gdoVars = $this->fetchAssoc())
 	    {
-	        return $gdo->setGDOVars($gdoVars);
+	        return $gdo->tempReset()->setGDOVars($gdoVars);
 	    }
 	}
 
