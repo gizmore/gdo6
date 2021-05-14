@@ -146,7 +146,6 @@ switch ($app->getFormat())
         }
         else
         {
-            $content ? 
         }
         break;
         
