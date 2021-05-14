@@ -438,3 +438,5 @@ final class GDO_User extends GDO
 	}
 	
 }
+
+GDO_User::setCurrent(GDO_User::ghost());
