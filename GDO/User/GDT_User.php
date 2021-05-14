@@ -18,7 +18,7 @@ use GDO\Util\Strings;
  * @TODO: rename fallbackCurrentUser()
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.0.0
  */
 class GDT_User extends GDT_Object
@@ -30,8 +30,8 @@ class GDT_User extends GDT_Object
 	    parent::__construct();
 		$this->orderField = 'user_name';
 		$this->table(GDO_User::table());
-		$this->withCompletion();
 		$this->icon('face');
+        $this->withCompletion();
 	}
 
 	public function withCompletion()
@@ -149,7 +149,7 @@ class GDT_User extends GDT_Object
 	    
 	    if (!parent::validate($value))
 	    {
-	        return false; # GDT_Object error
+	        return false; # $this->error('err_user');
 	    }
 	    
 	    if ($value === null)

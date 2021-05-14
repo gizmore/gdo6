@@ -162,7 +162,7 @@ final class GDO_User extends GDO
 	###############
 	public function displayName()
 	{
-		return $this->getName();
+		return $this->displayNameLabel();
 	}
 	
 	public function displayType()
@@ -311,7 +311,14 @@ final class GDO_User extends GDO
 	 * @param string $name
 	 * @return self
 	 */
-	public static function getByName($name) { return self::getBy('user_name', $name); }
+	public static function getByName($name)
+	{
+	    if ( ($user = self::getBy('user_name', $name)) ||
+	         ($user = self::getBy('user_guest_name', trim($name, self::GUEST_NAME_PREFIX))) )
+	    {
+	        return $user;
+	    }
+	}
 	
 	/**
 	 * @param string $login

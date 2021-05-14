@@ -89,6 +89,7 @@ class GDT_Message extends GDT_Text
         {
             return null;
         }
+        $html = html_entity_decode($html, ENT_HTML5);
         $html = preg_replace("#\r?\n#", ' ', $html);
         $html = preg_replace('#<a .*href="(.*)".*>(.*)</a>#i', ' $2($1) ', $html);
         $html = preg_replace('#</p>#i', "\n", $html);

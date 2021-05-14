@@ -257,7 +257,7 @@ abstract class Method
 	public function getMethodName() { return $this->gdoShortName(); }
 	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6)-4); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
-	public function error($key, array $args=null) { Website::topResponse()->addField(GDT_Error::with($key, $args)); return GDT_Response::make(); }
+	public function error($key, array $args=null, $code=405) { Website::topResponse()->addField(GDT_Error::with($key, $args, $code)); return GDT_Response::make()->code($code); }
 	public function message($key, array $args=null, $log=true) { Website::topResponse()->addField(GDT_Success::with($key, $args)); return GDT_Response::make(); }
 	
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::templatePHP($this->getModuleName(), $path, $tVars); }

@@ -4,12 +4,13 @@ namespace GDO\UI;
 use GDO\Core\GDT_Template;
 use GDO\DB\GDT_String;
 use GDO\Net\URL;
+use GDO\Core\GDO;
 
 /**
  * An anchor for menus or paragraphs.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.0.0
  */
 class GDT_Link extends GDT_String
@@ -25,6 +26,20 @@ class GDT_Link extends GDT_String
 	public $orderable = false;
 	public $filterable = false;
 	public $searchable = false;
+// 	public function isSerializable() { return false; }
+
+	################
+	### GDO href ###
+	################
+	public function gdo(GDO $gdo=null)
+	{
+	    $method = "href_{$this->name}";
+	    if (method_exists($gdo, $method))
+	    {
+	        $this->href(call_user_func([$gdo, $method]));
+	    }
+	    return parent::gdo($gdo);
+	}
 	
 	################
 	### Relation ###
@@ -71,6 +86,7 @@ class GDT_Link extends GDT_String
 	public function renderCard() { return $this->renderCell(); }
 	public function renderCell() { return GDT_Template::php('UI', 'cell/link.php', ['link' => $this]); }
 	public function renderJSON() { return trim($this->displayLabel() . " ( $this->href )"); }
+	public function renderFilter($f) {}
 	
 	###################
 	### Link target ###
