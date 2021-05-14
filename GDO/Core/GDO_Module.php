@@ -57,14 +57,6 @@ class GDO_Module extends GDO
 	 */
 	public function getDependencies() {}
 	
-// 	/**
-// 	 * @return string[]
-// 	 */
-// 	public function getBlockedModules() {}
-// 	private $blocked = false;
-// 	public function isBlocked() { return $this->blocked; }
-// 	public function setBlocked() { $this->blocked = true; }
-
 	/**
 	 * Skip these folders in unit tests using strpos.
 	 * 
@@ -293,7 +285,11 @@ class GDO_Module extends GDO
 	############
 	### Init ###
 	############
-	public function __wakeup() { $this->inited = false; self::$COUNT++; }
+	public function __wakeup()
+	{
+	    $this->inited = false;
+	    parent::__wakeup();
+	}
 
 	private $inited = false;
 	

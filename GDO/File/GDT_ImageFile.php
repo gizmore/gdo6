@@ -10,8 +10,8 @@ namespace GDO\File;
  * 
  * @license MIT
  * @author gizmore@wechall.net
- * @version 6.10
- * @since 6.00
+ * @version 6.10.3
+ * @since 6.1.0
  */
 final class GDT_ImageFile extends GDT_File
 {
@@ -19,10 +19,6 @@ final class GDT_ImageFile extends GDT_File
 	
 	public function defaultLabel() { return $this->label('image'); }
 	
-	protected function __construct()
-	{
-	    parent::__construct();
-	    $this->icon = 'image';
-	}
+	public $icon = 'image';
 	
 }

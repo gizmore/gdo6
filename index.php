@@ -127,6 +127,7 @@ finally
     ob_end_clean();
 }
 
+
 # Render Page
 switch ($app->getFormat())
 {
@@ -140,6 +141,7 @@ switch ($app->getFormat())
             }
             $response->addField(Website::$TOP_RESPONSE);
             $content = $response->renderJSON();
+            if ($session) $session->commit();
             $content = $cacheContent = Website::renderJSON($content);
         }
         break;
@@ -152,6 +154,7 @@ switch ($app->getFormat())
         {
             $content = $strayContent;
             $cacheContent = $response->renderHTML();
+            if ($session) $session->commit();
             $content .= $cacheContent;
             if (!$ajax)
             {
@@ -160,7 +163,7 @@ switch ($app->getFormat())
         }
         else
         {
-//             $cacheContent = $response->renderHTML();
+            if ($session) $session->commit();
             if (!$ajax)
             {
                 $content = GDT_Page::$INSTANCE->html($cacheContent)->render();
@@ -173,6 +176,7 @@ switch ($app->getFormat())
         if ($response)
         {
             $content = $cacheContent = $response->renderXML();
+            if ($session) $session->commit();
         }
         break;
 }
@@ -181,12 +185,6 @@ if (isset($method) && $method->fileCached() && (!$cacheLoad))
 {
     $key = $method->fileCacheKey();
     Cache::fileSet($key, $cacheContent);
-}
-
-# Save session
-if ($session)
-{
-    $session->commit();
 }
 
 # Fire recache IPC events.

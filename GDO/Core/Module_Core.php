@@ -34,7 +34,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.3-r1131';
+	public static $GDO_REVISION = '6.10.3-r1132';
 
 	##############
 	### Module ###
@@ -74,7 +74,7 @@ final class Module_Core extends GDO_Module
 	public function getConfig()
 	{
 		return [
-			GDT_User::make('system_user')->editable(false)->initial($this->env('system_user')),
+			GDT_User::make('system_user')->editable(false)->initial('1'),
 		    GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum', '0')),
 		    GDT_Checkbox::make('show_privacy')->initial($this->env('show_privacy', '0')),
 		    GDT_Checkbox::make('allow_guests')->initial($this->env('allow_guests', '1')),

@@ -12,8 +12,8 @@ use GDO\User\GDO_User;
  * (: sdoʌǝp ˙sɹɯ ɹoɟ ƃuıʞoo⅂
  * 
  * @author gizmore
- * @since 5.0
- * @version 6.09
+ * @version 6.10.3
+ * @since 5.0.0
  */
 final class GDT_CreatedBy extends GDT_User
 {

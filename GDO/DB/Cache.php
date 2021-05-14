@@ -59,8 +59,9 @@ class Cache
 	 * @return boolean
 	 */
     public static function get($key) { return GDO_MEMCACHE ? self::$MEMCACHED->get(MEMCACHEPREFIX.$key) : false; }
-	public static function set($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->set(MEMCACHEPREFIX.$key, $value, $expire); }
-	public static function remove($key) { if (GDO_MEMCACHE) self::$MEMCACHED->delete(MEMCACHEPREFIX.$key); }
+    public static function set($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->set(MEMCACHEPREFIX.$key, $value, $expire); }
+    public static function replace($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->replace(MEMCACHEPREFIX.$key, $value, $expire); }
+    public static function remove($key) { if (GDO_MEMCACHE) self::$MEMCACHED->delete(MEMCACHEPREFIX.$key); }
 	public static function flush() { if (GDO_MEMCACHE) self::$MEMCACHED->flush(); }
 	public static function init()
 	{
@@ -162,16 +163,16 @@ class Cache
 	 * @param array $assoc
 	 * @return GDO
 	 */
-	public function initCached(array $assoc)
+	public function initCached(array $assoc, $useCache=true)
 	{
 		$this->getDummy()->setGDOVars($assoc);
 		$key = $this->dummy->getID();
 		if (!isset($this->cache[$key]))
 		{
-			$this->cache[$key] = $this->dummy->setPersisted();
-			$this->newDummy();
+			$this->cache[$key] = (new $this->klass())->setGDOVars($assoc)->setPersisted();
+// 			$this->newDummy();
 		}
-		else
+		elseif ($useCache)
 		{
 			$this->cache[$key]->setGDOVars($assoc);
 		}
@@ -209,7 +210,7 @@ class Cache
 		# Memcached
 		if (GDO_MEMCACHE && $back->memCached())
 		{
-		    self::$MEMCACHED->replace(MEMCACHEPREFIX.$back->gkey(), $back, GDO_MEMCACHE_TTL);
+		    self::replace($back->gkey(), $back, GDO_MEMCACHE_TTL);
 		}
 
 	    # Mark for recache
@@ -234,8 +235,7 @@ class Cache
 
 		if (GDO_MEMCACHE && $object->memCached())
 		{
-    		$className = $object->gdoClassName();
-    		self::$MEMCACHED->delete(MEMCACHEPREFIX . $className . $id);
+    		self::remove($object->gkey());
 		}
 	}
 	
@@ -244,25 +244,25 @@ class Cache
 	 * @param array $assoc
 	 * @return GDO
 	 */
-	public function initGDOMemcached(array $assoc)
+	public function initGDOMemcached(array $assoc, $useCache=true)
 	{
 		$this->getDummy()->setGDOVars($assoc);
 		$key = $this->dummy->getID();
 		if (!isset($this->cache[$key]))
 		{
 			$gkey = $this->dummy->gkey();
-			if (false === ($mcached = self::get(MEMCACHEPREFIX.$gkey)))
+			if (false === ($mcached = self::get($gkey)))
 			{
-				$mcached = $this->dummy->setPersisted();
+				$mcached = $this->dummy->setGDOVars($assoc)->setPersisted();
 				if (GDO_MEMCACHE)
 				{
-					self::$MEMCACHED->set(MEMCACHEPREFIX.$gkey, $mcached, GDO_MEMCACHE_TTL);
+					self::set($gkey, $mcached, GDO_MEMCACHE_TTL);
 				}
     			$this->newDummy();
 			}
 			$this->cache[$key] = $mcached;
 		}
-		else
+		elseif ($useCache)
 		{
 			$this->cache[$key]->setGDOVars($assoc)->setPersisted();
 		}
@@ -362,14 +362,16 @@ class Cache
 	
 }
 
-
 # No memcached stub shim so it won't crash.
 if (!class_exists('Memcached', false))
 {
 	require 'Memcached.php';
 }
+
+# Dynamic poisonable prefix
 define('MEMCACHEPREFIX', GDO_DOMAIN.Module_Core::$GDO_REVISION);
 
+# Default filecache config
 if (!defined('GDO_FILECACHE'))
 {
     define('GDO_FILECACHE', env('GDO_FILECACHE', 1));

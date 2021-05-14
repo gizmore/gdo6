@@ -17,7 +17,6 @@ use GDO\Net\GDT_IP;
 use GDO\DB\GDT_UInt;
 use GDO\Date\GDT_Timezone;
 use GDO\Avatar\GDT_Avatar;
-use GDO\Session\GDO_Session;
 use GDO\DB\Cache;
 use GDO\Country\GDO_Country;
 use GDO\DB\GDT_Index;
@@ -262,13 +261,14 @@ final class GDO_User extends GDO
 	{
 	    if (!self::$SYSTEM)
 	    {
-	        if (!(self::$SYSTEM = self::findById('1')))
-	        {
-	            self::$SYSTEM = self::blank([
-	                'user_id' => '1',
-	                'user_type' => 'system',
-	            ])->replace();
-	        }
+	        self::$SYSTEM = self::findById('1');
+// 	        if (!(self::$SYSTEM = self::findById('1')))
+// 	        {
+// 	            self::$SYSTEM = self::blank([
+// 	                'user_id' => '1',
+// 	                'user_type' => 'system',
+// 	            ])->replace();
+// 	        }
 	    }
         return self::$SYSTEM;
 	}
@@ -278,21 +278,18 @@ final class GDO_User extends GDO
 	 * Not neccisarilly via session!
 	 * @return self
 	 */
-	public static function current() { self::$CURRENT = self::$CURRENT ? self::$CURRENT : GDO_Session::user(); return self::$CURRENT; }
+	public static function current() { return self::$CURRENT; }
 	
-	public static function setCurrent(GDO_User $user=null)
+	public static function setCurrent(GDO_User $user)
 	{
-	    $user = $user === null ? self::ghost() : $user;
 	    self::$CURRENT = $user;
-// 	    Trans::setISO($user->getLangISO()); # we keep current until we switch.
 	    return $user;
 	}
 
 	/**
 	 * @var GDO_User
 	 */
-	public static $CURRENT;
-	
+	private static $CURRENT;
 	
 	/**
 	 * @return GDO_User
@@ -357,16 +354,17 @@ final class GDO_User extends GDO
 	 */
 	public static function withPermission($permission)
 	{
-	    $key = "all-{$permission}-users";
-	    if (false === ($cache = Cache::get($key)))
-	    {
-	        $cache = GDO_UserPermission::table()->select('gdo_user.*')->
-    	        joinObject('perm_user_id')->joinObject('perm_perm_id')->
-    	        where("perm_name=".self::quoteS($permission))->
-    	        exec()->
-    	        fetchAllObjectsAs(self::table());
-	        Cache::set($key, $cache);
-	    }
+// 	    $key = "all-{$permission}-users";
+// 	    if (false === ($cache = Cache::get($key)))
+// 	    {
+	        $query = GDO_UserPermission::table()->select('gdo_user.*');
+	        $query->joinObject('perm_user_id')->joinObject('perm_perm_id');
+    	    $query->where("perm_name=".self::quoteS($permission));
+    	    $query->uncached();
+    	    $result = $query->exec();
+    	    $cache = $result->fetchAllObjectsAs(self::table());
+// 	        Cache::set($key, $cache);
+// 	    }
 	    return $cache;
 	}
 	

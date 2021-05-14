@@ -141,10 +141,18 @@ abstract class GDO
     /**
      * @var mixed[]
      */
-    public $temp = null;
+    public $temp;
     public function tempReset() { $this->temp = null; return $this; }
     public function tempGet($key) { return @$this->temp[$key]; }
-    public function tempSet($key, $value) { if (!isset($this->temp)) $this->temp = []; $this->temp[$key] = $value; return $this; }
+    public function tempSet($key, $value)
+    {
+        if (!isset($this->temp))
+        {
+            $this->temp = [];
+        }
+        $this->temp[$key] = $value;
+        return $this;
+    }
     public function tempUnset($key) { unset($this->temp[$key]); return $this; }
     public function tempHas($key) { return isset($this->temp[$key]); }
     
@@ -279,8 +287,7 @@ abstract class GDO
     public function setGDOVars(array $vars, $dirty=false)
     {
         $this->gdoVars = $vars;
-        $this->dirty = $dirty;
-        return $this;
+        return $this->dirty($dirty);
     }
     
     /**
@@ -597,6 +604,15 @@ abstract class GDO
         }
     }
     
+    public function findCached(...$ids)
+    {
+        if (!($gdo = $this->table()->cache->findCached(...$ids)))
+        {
+            $gdo = self::getById(...$ids);
+        }
+        return $gdo;
+    }
+    
     /**
      * @param string $where
      * @return string
@@ -806,7 +822,7 @@ abstract class GDO
             {
                 if ($var !== $this->gdoVars[$key])
                 {
-                    $query->set(sprintf("%s=%s", self::quoteIdentifierS($key), self::quoteS($var)));
+                    $query->set(sprintf("%s=%s", $key, self::quoteS($var)));
                     $this->markClean($key);
                     $worthy = true; # We got a change
                 }
@@ -1131,16 +1147,17 @@ abstract class GDO
     
     public function initCache() { $this->cache = new Cache($this); }
     
-    public function initCached(array $row)
+    public function initCached(array $row, $useCache=true)
     {
         return GDO_MEMCACHE && $this->memCached() ? 
-           $this->cache->initGDOMemcached($row) :
-           $this->cache->initCached($row);
+            $this->cache->initGDOMemcached($row, $useCache) :
+            $this->cache->initCached($row, $useCache);
     }
     
     public function gkey()
     {
-        return self::table()->cache->tableName . $this->getID();
+        $gkey = self::table()->cache->tableName . $this->getID();
+        return $gkey;
     }
     
     public function reload($id)

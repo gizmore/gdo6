@@ -81,7 +81,7 @@ trait WithObject
 			 		return $user;
 			 	}
 			}
-			if ($user = $this->table->getById(...explode(':', $var)))
+			if ($user = $this->table->findCached(...explode(':', $var)))
 			{
 				return $user;
 			}

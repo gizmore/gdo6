@@ -122,9 +122,13 @@ class Result
 	{
 		if ($gdoData = $this->fetchAssoc())
 		{
-			if ($this->useCache && $table->gdoCached())
+			if ($this->useCache && $table->cached())
 			{
 				return $table->initCached($gdoData);
+			}
+			elseif ($table->cached())
+			{
+			    return $table->initCached($gdoData, false);
 			}
 			else
 			{
