@@ -256,7 +256,7 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
 	{
 	    $modules = ModuleLoader::instance()->loadModules(false, true, true);
 	    $modules = array_filter($modules, function(GDO_Module $module) {
-	        return $module->defaultEnabled();
+	        return $module->isInstallable();
 	    });
 	    $deps = array_map(function(GDO_Module $mod) {
 	        return $mod->getName(); }, $modules);

@@ -1,6 +1,9 @@
 <?php
 namespace GDO\Install;
+
 use GDO\Core\GDO_Module;
+use GDO\DB\Cache;
+
 /**
  * Module that features the installer.
  * The entry point is in install/wizard.php
@@ -8,8 +11,8 @@ use GDO\Core\GDO_Module;
  * Provides the install theme to style the install wizard.
  * 
  * @author gizmore
- * @since 6.00
- * @version 6.05
+ * @version 6.10.3
+ * @since 6.0.0
  */
 class Module_Install extends GDO_Module
 {
@@ -18,4 +21,11 @@ class Module_Install extends GDO_Module
 	public function onLoadLanguage() { $this->loadLanguage('lang/install'); }
 	public function defaultEnabled() { return false; }
 	public function getTheme() { return 'install'; }
+	
+	public function onInit()
+	{
+	    Cache::flush();
+	    Cache::fileFlush();
+	}
+	
 }

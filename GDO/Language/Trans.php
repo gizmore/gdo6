@@ -4,6 +4,7 @@ namespace GDO\Language;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDOError;
 use GDO\File\FileUtil;
+use GDO\DB\Cache;
 
 /**
  * Very cheap i18n.
@@ -11,7 +12,7 @@ use GDO\File\FileUtil;
  * TODO: Check if ini file parsing and using would be faster than php include.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 1.0.0
  */
 final class Trans
@@ -20,6 +21,10 @@ final class Trans
      * @var string
      */
 	public static $ISO = 'en';
+	
+	public static $FILE_CACHE = GDO_FILECACHE;
+	
+	private static $HAS_LOADED_FILE_CACHE = false;
 
 	/**
 	 * Base pathes for translation data files.
@@ -84,6 +89,10 @@ final class Trans
 	 */
 	public static function numFiles()
 	{
+	    if (self::$HAS_LOADED_FILE_CACHE)
+	    {
+	        return 1;
+	    }
 		return count(self::$PATHS);
 	}
 
@@ -185,47 +194,63 @@ final class Trans
 	{
 		$trans = [];
 		$trans2 = [];
+		
+		# Try cache
+		$key = "gdo_trans_{$iso}.json";
+		if (self::$FILE_CACHE && Cache::fileHas($key))
+		{
+		    $content = Cache::fileGet($key);
+		    self::$CACHE[$iso] = json_decode($content, true);
+		    self::$HAS_LOADED_FILE_CACHE = true;
+		    return self::$CACHE[$iso];
+		}
+		
+		# Build lang map
 		if (self::$INITED)
 		{
-// 			if (false === ($loaded = Cache::get("gdo_trans_$iso")))
-// 			{
-				foreach (self::$PATHS as $path)
+			foreach (self::$PATHS as $path)
+			{
+			    $pathISO = "{$path}_{$iso}.php";
+				if (FileUtil::isFile($pathISO))
 				{
-				    $pathISO = "{$path}_{$iso}.php";
-					if (FileUtil::isFile($pathISO))
+				    try
+				    {
+						$trans2[] = include($pathISO);
+				    }
+				    catch (\Throwable $e)
+				    {
+				        self::$CACHE[$iso] = $trans;
+				        echo GDT_Error::responseException($e)->renderCell();
+				    }
+				}
+				else
+				{
+				    $pathEN= "{$path}_en.php";
+					try
 					{
-					    try
-					    {
-    						$trans2[] = include($pathISO);
-					    }
-					    catch (\Throwable $e)
-					    {
-					        self::$CACHE[$iso] = $trans;
-					        echo GDT_Error::responseException($e)->renderCell();
-					    }
+					    $trans2[] = include($pathEN);
 					}
-					else
+					catch (\Throwable $e)
 					{
-					    $pathEN= "{$path}_en.php";
-						try
-						{
-						    $trans2[] = include($pathEN);
-						}
-						catch (\Throwable $e)
-						{
-						    self::$CACHE[$iso] = $trans;
-						    echo GDT_Error::responseException($e)->renderCell();
-						    throw new GDOError('err_langfile_corrupt', [$pathEN]);
-						}
+					    self::$CACHE[$iso] = $trans;
+					    echo GDT_Error::responseException($e)->renderCell();
+					    throw new GDOError('err_langfile_corrupt', [$pathEN]);
 					}
 				}
-    			$trans = array_merge(...$trans2);
-				$loaded = $trans;
-//		 		Cache::set("gdo_trans_$iso", $loaded);
-// 			}
+			}
+			$trans = array_merge(...$trans2);
+			$loaded = $trans;
 			$trans = $loaded;
+    		self::$CACHE[$iso] = $trans;
+    		
+    		# Save cache
+    		if (self::$FILE_CACHE)
+    		{
+    		    FileUtil::createDir(Cache::filePath());
+    		    Cache::fileSet($key, json_encode($trans, JSON_THROW_ON_ERROR|JSON_PRETTY_PRINT));
+    		}
 		}
-		self::$CACHE[$iso] = $trans;
+		
 		return $trans;
 	}
 	

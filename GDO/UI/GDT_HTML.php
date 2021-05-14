@@ -2,6 +2,7 @@
 namespace GDO\UI;
 
 use GDO\Core\GDT;
+use GDO\Core\WithFields;
 
 /**
  * Very simple field that only has custom html content.
@@ -10,12 +11,13 @@ use GDO\Core\GDT;
  * 
  * @author gizmore
  * 
- * @version 6.10.1
+ * @version 6.10.3
  * @since 6.7.0
  */
 final class GDT_HTML extends GDT
 {
 	use WithHTML;
+	use WithFields;
 	
 	##############
 	### Render ###
@@ -30,6 +32,11 @@ final class GDT_HTML extends GDT
 	}
 	
 	public function renderCell()
+	{
+	    return $this->html;
+	}
+	
+	public function renderJSON()
 	{
 	    return $this->html;
 	}

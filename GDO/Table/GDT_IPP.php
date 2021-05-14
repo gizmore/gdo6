@@ -10,10 +10,8 @@ use GDO\DB\GDT_UInt;
  */
 final class GDT_IPP extends GDT_UInt
 {
-    public $searchable = false;
-    public $filterable = false;
-    public $orderable = false;
     public $hidden = true;
+    public function isSerializable() { return false; }
     
     public $bytes = 2;
     

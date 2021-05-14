@@ -119,7 +119,7 @@ abstract class GDO
     private static function logDebug()
     {
         Logger::log('gdo', sprintf('%d: %s', self::$COUNT, self::gdoClassNameS()));
-        if (GDO_GDT_DEBUG > 2)
+        if (GDO_GDT_DEBUG >= 2)
         {
             Logger::log('gdo', Debug::backtrace('Backtrace', false));
         }
@@ -1285,8 +1285,8 @@ abstract class GDO
             {
                 $all = $this->allWhere('true', $order, $asc);
                 Cache::set($key, $all);
-                $cache->all = $all;
             }
+            $cache->all = $all;
             return $all;
         }
     }

@@ -5,6 +5,7 @@ use GDO\Core\GDO;
 use GDO\Core\GDT_Hook;
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
+use GDO\Core\Application;
 
 /**
  * Cache is a global object cache, where each fetched object (with the same key) from the database results in the same instance.
@@ -34,6 +35,7 @@ class Cache
 	private static $MEMCACHED; # Memcached server
 	
 	/**
+	 * This holds the GDO that need a recache after the method has been executed.
 	 * @var GDO[]
 	 */
 	private static $RECACHING = [];
@@ -272,41 +274,90 @@ class Cache
 	 * @param string $content
 	 * @return boolean
 	 */
-	public static function fileSet($key, $content, $expire=GDO_MEMCACHE_TTL)
+	public static function fileSet($key, $content)
 	{
+	    if (!GDO_FILECACHE)
+	    {
+	        return false;
+	    }
 	    $path = self::filePath($key);
-	    return @file_put_contents($path, $content);
+	    return file_put_contents($path, $content);
+	}
+	
+	/**
+	 * Check if we have a recent cache for a key.
+	 * @param string $key
+	 * @param int $expire
+	 * @return boolean
+	 */
+	public static function fileHas($key, $expire=GDO_MEMCACHE_TTL)
+	{
+	    if (!GDO_FILECACHE)
+	    {
+	        return false;
+	    }
+	    $path = self::filePath($key);
+	    if (!file_exists($path))
+	    {
+	        return false;
+	    }
+	    $time = filemtime($path);
+	    if ( (Application::$TIME - $time) > $expire)
+	    {
+	        unlink($path);
+	        return false;
+	    }
+	    return true;
 	}
 	
 	/**
 	 * Get cached content from the file system.
 	 * @param string $key
-	 * @return string
+	 * @param int $expire
+	 * @return string|boolean
 	 */
-	public static function fileGet($key)
+	public static function fileGet($key, $expire=GDO_MEMCACHE_TTL)
 	{
+	    if (!self::fileHas($key, $expire))
+	    {
+	        return false;
+	    }
 	    $path = self::filePath($key);
-	    return @file_get_contents($path);
+	    return file_get_contents($path);
 	}
 	
+	/**
+	 * Flush the whole or part of the filecache.
+	 * @param string|null $key
+	 * @return boolean
+	 */
 	public static function fileFlush($key=null)
 	{
 	    if ($key === null)
 	    {
-	        FileUtil::removeDir(GDO_PATH . 'temp/cache/');
+	        FileUtil::removeDir(GDO_PATH.'temp/cache/');
+	        FileUtil::createDir(GDO_PATH.'temp/cache/');
 	    }
 	    else
 	    {
-	        return @unlink(self::filePath($key));
+	        return unlink(self::filePath($key));
 	    }
 	}
 	
-	private static function filePath($key)
+	/**
+	 * Get the path of a filecache entry.
+	 * @param string $key
+	 * @return string
+	 */
+	public static function filePath($key='')
 	{
-	    return GDO_PATH . "temp/cache/{$key}";
+// 	    $iso = Trans::$ISO;
+// 	    $fmt = Application::instance()->getFormat();
+	    return GDO_PATH . "temp/cache/{$key}"; #_{$iso}.{$fmt}";
 	}
 	
 }
+
 
 # No memcached stub shim so it won't crash.
 if (!class_exists('Memcached', false))
@@ -314,3 +365,8 @@ if (!class_exists('Memcached', false))
 	require 'Memcached.php';
 }
 define('MEMCACHEPREFIX', GDO_DOMAIN.Module_Core::$GDO_REVISION);
+
+if (!defined('GDO_FILECACHE'))
+{
+    define('GDO_FILECACHE', env('GDO_FILECACHE', 1));
+}

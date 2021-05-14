@@ -17,6 +17,7 @@ use GDO\Core\Debug;
 use GDO\Core\Logger;
 use GDO\User\GDO_User;
 use GDO\Install\Config;
+use GDO\Core\Website;
 
 Config::configure();
 
@@ -42,9 +43,8 @@ GDO_User::$CURRENT = GDO_User::ghost();
 GDT_Page::make();
 
 # Load only two basic modules from FS for installation process.
-$modCore = ModuleLoader::instance()->loadModuleFS('Core', 1);
-$modInstall = ModuleLoader::instance()->loadModuleFS('Install', 1);
-// ModuleLoader::instance()->loadModules(false, true);
+ModuleLoader::instance()->loadModuleFS('Core', 1);
+ModuleLoader::instance()->loadModuleFS('Install', 1);
 Trans::inited(true);
 
 define('GDO_CORE_STABLE', 1);
@@ -62,4 +62,9 @@ catch (Exception $e)
 }
 
 # Render Page
-echo GDT_Page::make()->html($response->render())->render();
+$top = '';
+if (Website::$TOP_RESPONSE)
+{
+    $top = Website::$TOP_RESPONSE->render();
+}
+echo GDT_Page::make()->html($top . $response->render())->render();

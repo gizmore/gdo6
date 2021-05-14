@@ -109,6 +109,16 @@ class GDT_Table extends GDT
 	    return $this;
 	}
 	
+	##################
+	### Fetch Into ###
+	##################
+	public $fetchInto = true;
+	public function fetchInto($fetchInto)
+	{
+	    $this->fetchInto = $fetchInto;
+	    return $this;
+	}
+	
 	####################### 
 	### Default headers ###
 	#######################
@@ -461,9 +471,10 @@ class GDT_Table extends GDT
 	
 	public function renderJSON()
 	{
-		return array_merge($this->configJSON(), [
+	    $json = array_merge($this->configJSON(), [
 		    'data'=>$this->renderJSONData(),
 		]);
+	    return [$this->name => $json];
 	}
 	
 	public function configJSON()
@@ -472,7 +483,7 @@ class GDT_Table extends GDT
 			'tableName' => $this->getResult()->table->gdoClassName(),
 			'pagemenu' => $this->pagemenu ? $this->getPageMenu()->configJSON() : null,
 		    'searchable' => $this->searchable,
-			'sortable' => $this->sortable,
+			'sorted' => $this->sorted,
 			'sortableURL' => $this->sortableURL,
 		    'filtered' => $this->filtered,
 		    'filterable' => $this->filterable,
@@ -490,19 +501,48 @@ class GDT_Table extends GDT
 		while ($gdo = $table->fetch($result))
 		{
 		    $dat = [];
-		    foreach ($gdo->gdoColumnsCache() as $gdt)
+		    foreach ($this->getHeaderFields() as $gdt)
 		    {
-		        if ($json = $gdt->gdo($gdo)->renderJSON())
+		        if ($gdt->name && $gdt->isSerializable())
 		        {
-		            foreach ($json as $k => $v)
-		            {
-    		            $dat[$k] = $v;
-		            }
+    		        if ($json = $gdt->gdo($gdo)->renderJSON())
+    		        {
+    		            if (is_array($json))
+    		            {
+        		            foreach ($json as $k => $v)
+        		            {
+            		            $dat[$k] = $v;
+        		            }
+    		            }
+    		            else
+    		            {
+    		                $dat[$gdt->name] = $json;
+    		            }
+    		        }
 		        }
 		    }
 			$data[] = $dat;
 		}
 		return $data;
+	}
+	
+	public function renderXML()
+	{
+	    $xml = "<data>\n";
+	    while ($gdo = $this->result->fetchObject())
+	    {
+            $xml .= "<row>\n";
+	        foreach ($this->getHeaderFields() as $gdt)
+	        {
+	            if ($gdt->name && $gdt->isSerializable())
+	            {
+    	            $xml .= $gdt->gdo($gdo)->renderXML();
+	            }
+	        }
+            $xml .= "</row>\n";
+	    }
+	    $xml .= "</data>\n";
+	    return $xml;
 	}
 	
 	################

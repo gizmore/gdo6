@@ -11,15 +11,12 @@ use GDO\DB\GDT_UInt;
  */
 final class GDT_PageNum extends GDT_UInt
 {
-    public $searchable = false;
-    public $filterable = false;
-    public $orderable = false;
     public $hidden = true;
-    
     public $bytes = '2';
+    public $initial = '1';
     
     public function defaultLabel() { return $this->label('page'); }
-    
-    public $initial = '1';
+
+    public function isSerializable() { return false; }
     
 }

@@ -37,6 +37,8 @@ $result = $field->getResult();
 	  </tr>
 	</thead>
 	<tbody>
+	
+	<?php if ($field->fetchInto) : ?>
 	<?php $dummy = $result->table->cache->getDummy(); ?>
 	<?php while ($gdo = $result->fetchInto($dummy)) : ?>
 	<tr data-gdo-id="<?=$gdo->getID()?>">
@@ -48,6 +50,19 @@ $result = $field->getResult();
 	  <?php endforeach; ?>
 	</tr>
 	<?php endwhile; ?>
+	<?php else : ?>
+	<?php while ($gdo = $result->fetchAs($field->fetchAs)) : ?>
+	<tr data-gdo-id="<?=$gdo->getID()?>">
+	  <?php foreach($headers as $gdt) :
+	  if (!$gdt->hidden) :
+	       $gdt->gdo($gdo); ?>
+		<td class="<?=$gdt->htmlClass()?>"><?=$gdt->renderCell()?></td>
+	  <?php endif; ?>
+	  <?php endforeach; ?>
+	</tr>
+	<?php endwhile; ?>
+	<?php endif; ?>
+	
 	</tbody>
 <?php if ($field->footer) : ?>
 	<tfoot><?=$field->footer?></tfoot>

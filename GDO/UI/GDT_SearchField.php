@@ -7,15 +7,13 @@ use GDO\DB\GDT_String;
  * A search field is a text with icon and default label.
  * Input type is set to search.
  * @author gizmore
- * @version 6.10
- * @since 6.02
+ * @version 6.10.3
+ * @since 6.2.0
  */
 class GDT_SearchField extends GDT_String
 {
     public $hidden = true;
-    public $orderable = false;
-    public $filterable = false;
-    public $searchable = false;
+    public function isSerializable() { return false; }
     
 	public function defaultLabel() { return $this->label('search'); }
 

@@ -9,8 +9,8 @@ use GDO\Core\GDT;
  * Used in, e.g. Admin_Modules overview, as its loaded from FS.
  * 
  * @author gizmore
- * @version 6.10
- * @since 5.00
+ * @version 6.10.3
+ * @since 5.0.0
  */
 final class ArrayResult extends Result
 {

@@ -145,50 +145,37 @@ final class ModuleLoader
 	
 	public function initModules()
 	{
-		# Block certain modules
+		# Register themes
 		foreach ($this->modules as $module)
 		{
-	        $module->onLoadLanguage();
-		    
 	        if ($theme = $module->getTheme())
 	        {
 	            GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
 		    }
-		    
-// 		    if (!$module->isBlocked())
-// 		    {
-//     			if ($blocked = $module->getBlockedModules())
-//     			{
-//     			    foreach ($blocked as $moduleName)
-//     			    {
-//     			        if ($blockedModule = $this->getModule($moduleName))
-//     			        {
-//     			            $blockedModule->setBlocked();
-//     			        }
-//     			    }
-//     			}
-// 		    }
 		}
 		
+		# Load language
+		foreach ($this->modules as $module)
+		{
+		    $module->onLoadLanguage();
+		}
 		Trans::inited(true);
-		
+
+		# Init modules
 		$app = Application::instance();
 		if ( (!$app->isInstall()) && (!$app->isCLI()) )
 		{
 			foreach ($this->modules as $module)
 			{
-// 			    if (!$module->isBlocked())
-// 			    {
-    				if ($module->isEnabled())
-    				{
-    					if (!$module->isInited())
-    					{
-    					    $module->onInit();
-    					    $module->onIncludeScripts();
-    						$module->initedModule();
-    					}
-    				}
-// 			    }
+				if ($module->isEnabled())
+				{
+					if (!$module->isInited())
+					{
+					    $module->onInit();
+					    $module->onIncludeScripts();
+						$module->initedModule();
+					}
+				}
 			}
 		}
 	}
@@ -287,7 +274,7 @@ final class ModuleLoader
 	
 	private function loadModulesFS($init=true)
 	{
-	    Trans::inited(false);
+// 	    Trans::inited(false);
 		Filewalker::traverse($this->path, null, false, array($this, '_loadModuleFS'), false, $init);
 		Trans::inited(true);
 	}

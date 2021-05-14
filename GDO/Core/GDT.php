@@ -100,7 +100,7 @@ abstract class GDT
 	private static function logDebug()
 	{
 	    Logger::log('gdt', sprintf('%d: %s', self::$COUNT, self::gdoClassNameS()));
-	    if (GDO_GDT_DEBUG > 2)
+	    if (GDO_GDT_DEBUG >= 2)
 	    {
 	        Logger::log('gdt', Debug::backtrace('Backtrace', false));
 	    }
@@ -339,7 +339,7 @@ abstract class GDT
 	public function render() { return Application::instance()->isCLI() ? $this->renderCLI() : $this->renderCell(); }
 	public function renderCLI() { return json_encode($this->renderJSON(), JSON_PRETTY_PRINT); }
 	public function renderPDF() { return $this->renderCard(); }
-	public function renderXML() { return $this->name ? sprintf('<%1$s var="%2$s"></%1$s>', $this->name, html($this->getVar())) : ''; }
+	public function renderXML() { return $this->name ? sprintf('<%1$s>%2$s</%1$s>'.PHP_EOL, $this->name, html($this->getVar())) : ''; }
 	public function renderJSON() { return $this->var; }
 	public function renderCell() { return $this->renderCellSpan($this->getVar()); }
 	public function renderCellSpan($var) { return sprintf('<span class="%s">%s</span>', $this->htmlClass(), html($var)); }

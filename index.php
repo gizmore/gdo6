@@ -91,7 +91,22 @@ try
     
     GDT_Hook::callHook('BeforeRequest', $method);
     
-    $response = $method->exec();
+    $cacheContent = '';
+    if ($method->fileCached())
+    {
+        $cacheContent = $cacheLoad = $method->fileCacheContent();
+    }
+   
+    if ($cacheContent)
+    {
+        $response = null;
+        $content = $cacheContent;
+        $method->setupSEO();
+    }
+    else
+    {
+        $response = $method->exec();
+    }
 
     GDT_Hook::callHook('AfterRequest', $method);
 }
@@ -103,7 +118,7 @@ catch (Throwable $e)
 }
 finally
 {
-    $content = ob_get_contents();
+    $strayContent = ob_get_contents();
     ob_end_clean();
 }
 
@@ -111,25 +126,56 @@ finally
 switch ($app->getFormat())
 {
     case 'json':
+        hdr('Content-Type: application/json');
         if ($response)
         {
-            if ($content)
+            if ($strayContent)
             {
-                $response->addField(GDT_HTML::make('content')->html($content));
+                $response->addField(GDT_HTML::make('content')->html($strayContent));
             }
             $response->addField(Website::$TOP_RESPONSE);
-            $content = Website::renderJSON($response->renderJSON());
+            $content = $response->renderJSON();
+            $content = $cacheContent = Website::renderJSON($content);
         }
-    	break;
+        break;
         
     case 'html':
-        $content .= $response->renderHTML(); 
-        $content = GDT_Page::$INSTANCE->html($content)->render();
+        
+        $ajax = Application::instance()->isAjax();
+        
+        if ($response)
+        {
+            $content = $strayContent;
+            $cacheContent = $response->renderHTML();
+            $content .= $cacheContent;
+            if (!$ajax)
+            {
+                $content = GDT_Page::$INSTANCE->html($content)->render();
+            }
+        }
+        else
+        {
+//             $cacheContent = $response->renderHTML();
+            if (!$ajax)
+            {
+                $content = GDT_Page::$INSTANCE->html($cacheContent)->render();
+            }
+        }
         break;
         
     case 'xml':
-        $content = $response->renderXML();
+        hdr('Content-Type: application/xml');
+        if ($response)
+        {
+            $content = $cacheContent = $response->renderXML();
+        }
         break;
+}
+
+if ($method->fileCached() && (!$cacheLoad))
+{
+    $key = $method->fileCacheKey();
+    Cache::fileSet($key, $cacheContent);
 }
 
 # Save session
@@ -141,9 +187,9 @@ if ($session)
 # Fire recache IPC events.
 Cache::recacheHooks();
 
-echo $content;
-
 if ($lock)
 {
     Database::instance()->unlock($lock);
 }
+
+echo $content;

@@ -34,7 +34,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.3-r1118';
+	public static $GDO_REVISION = '6.10.3-r1121';
 
 	##############
 	### Module ###
@@ -64,7 +64,8 @@ final class Module_Core extends GDO_Module
 	public function onInstall()
 	{
 	    FileUtil::createDir(GDO_PATH.'temp');
-		touch(GDO_PATH.'temp/ipc.socket');
+	    FileUtil::createDir(GDO_PATH.'temp/cache');
+	    touch(GDO_PATH.'temp/ipc.socket');
 	}
 	
 	##############

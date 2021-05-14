@@ -24,6 +24,8 @@ $table->addField(GDT_Template::make('module_name')->template('Install', 'cell/mo
 $table->addHeader(GDO_Module::table()->gdoColumn('module_priority'));
 $table->addHeader(GDT_ModuleFeature::make('module_features'));
 $table->addHeader(GDT_Cell::make('module_description')->method('displayModuleDescription'));
+// $table->fetchAs();
+$table->fetchInto(false);
 $install = GDT_Submit::make('btn_install');
 $skip = Config::linkStepGDT('5');
 $hiddenStep = GDT_Hidden::make('step')->var('4');

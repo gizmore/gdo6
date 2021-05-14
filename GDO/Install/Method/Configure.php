@@ -57,16 +57,19 @@ class Configure extends MethodForm
 	
 	public function onSubmit_test_config(GDT_Form $form)
 	{
-		$db = new Database(GDO_DB_HOST, GDO_DB_USER, GDO_DB_PASS, GDO_DB_NAME, false);
-		try
-		{
-			$db->getLink();
-			return $this->message('install_config_boxinfo_success', [Config::linkStep(4)]);
-		}
-		catch (GDOException $ex)
-		{
-			return $this->error('err_db_connect')->addField($this->renderPage());
-		}
+	    if (GDO_DB_ENABLED)
+	    {
+    		$db = new Database(GDO_DB_HOST, GDO_DB_USER, GDO_DB_PASS, GDO_DB_NAME, false);
+    		try
+    		{
+    			$db->getLink();
+    		}
+    		catch (GDOException $ex)
+    		{
+    			return $this->error('err_db_connect')->addField($this->renderPage());
+    		}
+	    }
+	    return $this->message('install_config_boxinfo_success', [Config::linkStep(4)]);
 	}
 	
 }

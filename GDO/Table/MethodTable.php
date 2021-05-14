@@ -22,6 +22,21 @@ use GDO\Core\GDO;
  */
 abstract class MethodTable extends Method
 {
+    public function gdoParameters()
+    {
+        return $this->table->headers->fields;
+    }
+    
+    public function gdoParameterVar($key)
+    {
+        $gdt = $this->gdoParameter($key);
+        if ($this->table->headers->hasField($key))
+        {
+            return $gdt->getRequestVar($this->table->headers->name, $gdt->var);
+        }
+        return parent::gdoParameterVar($key);
+    }
+    
     ################
     ### Abstract ###
     ################

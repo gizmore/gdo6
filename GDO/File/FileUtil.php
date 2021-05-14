@@ -10,7 +10,7 @@ use GDO\Util\Strings;
  * File system utilities.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 6.0.0
  */
 final class FileUtil
@@ -183,6 +183,14 @@ final class FileUtil
 	public static function mimetype($path)
 	{
 	    return mime_content_type($path);
+	}
+	
+	##############
+	### Sanity ###
+	##############
+	public static function saneFilename($filename)
+	{
+	    return str_replace(['/', '\\', '$', ':'], '#', $filename);
 	}
 	
 }

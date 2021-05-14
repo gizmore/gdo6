@@ -14,8 +14,9 @@ use GDO\Core\GDT_Response;
 
 /**
  * Install selected modules.
+ * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 3.0.0
  */
 final class InstallModules extends Method
@@ -27,6 +28,7 @@ final class InstallModules extends Method
 	
 	public function execute()
 	{
+	    Cache::fileFlush();
 		Database::init();
 		$loader = ModuleLoader::instance();
 		$loader->loadModules(false, true, true);

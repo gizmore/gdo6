@@ -10,6 +10,9 @@ use GDO\Session\GDO_Session;
 use GDO\Date\Time;
 use GDO\Language\Trans;
 use GDO\DB\Cache;
+use GDO\File\FileUtil;
+use GDO\File\Filewalker;
+use GDO\Util\Strings;
 
 /**
  * Abstract baseclass for all methods.
@@ -39,9 +42,6 @@ abstract class Method
 	 * @return GDT_Response
 	 */
 	public abstract function execute();
-	
-	public function gdoCached() { return false; }
-	public function gdoCacheExpire() { return GDO_MEMCACHE_TTL; }
 	
 	/**
 	 * @return self
@@ -410,35 +410,30 @@ abstract class Method
         
 	    if ( (!$response) || (!$response->isError()) )
 	    {
-	        # SEO
-	        Website::setTitle($this->getTitle());
-	        Website::addMeta(['keywords', $this->getKeywords(), 'name']);
-	        Website::addMeta(['description', $this->getDescription(), 'name']);
-	        
-	        # Store last URL in session
-	        $this->storeLastURL();
-	        
-	        # Store last activity in user
-	        $this->storeLastActivity();
+	        $this->setupSEO();
 	    }
 
 	    return $response;
 	}
 	
+	public function setupSEO()
+	{
+	    # SEO
+	    Website::setTitle($this->getTitle());
+	    Website::addMeta(['keywords', $this->getKeywords(), 'name']);
+	    Website::addMeta(['description', $this->getDescription(), 'name']);
+	    
+	    # Store last URL in session
+	    $this->storeLastURL();
+	    
+	    # Store last activity in user
+	    $this->storeLastActivity();
+	}
+	
 	public function executeWithInit()
 	{
-	    if ($this->gdoCached())
-	    {
-	        $key = $this->getFileCacheKey();
-	        if ($cache = Cache::fileGet($key))
-	        {
-	            return $cache;
-	        }
-	    }
-	    
 	    $db = Database::instance();
 	    $transactional = $this->transactional();
-	   
 	    try
 	    {
 	        # Wrap transaction start
@@ -470,11 +465,6 @@ abstract class Method
 	        # Wrap transaction end
 	        if ($transactional) $db->transactionEnd();
 	        
-	        if (isset($key))
-	        {
-	            Cache::fileSet($key, $response->render(), $this->gdoCacheExpire());
-	        }
-	        
 	        return $response;
 	    }
 	    catch (\Throwable $e)
@@ -482,25 +472,6 @@ abstract class Method
 	        if ($transactional) $db->transactionRollback();
 	        throw $e;
 	    }
-	}
-	
-	public function getFileCacheKey()
-	{
-	    return
-	   	    $this->gdoClassName() . '_' . 
-	        GDO_User::current()->getID() . '_' .
-	        Application::instance()->getFormat() .
-	        $this->_getFileCacheKey();
-	}
-	
-	private function _getFileCacheKey()
-	{
-	    $key = '';
-	    foreach ($this->gdoParameterCache() as $gdt)
-	    {
-	        $key .= sprintf('_%s:%s', $gdt->name, $gdt->var);
-	    }
-	    return $key;
 	}
 	
 	####################
@@ -532,6 +503,65 @@ abstract class Method
 	            $user->saveVar('user_last_activity', $lastActivity);
 	        }
 	    }
+	}
+	
+	##################
+	### File Cache ###
+	##################
+	public function fileCached() { return false; }
+	public function fileCacheExpire() { return GDO_MEMCACHE_TTL; }
+	
+	public function fileCacheKey()
+	{
+	    $params = $this->gdoParameterCache();
+	    $p = '';
+	    foreach ($params as $gdt)
+	    {
+	        if ($gdt->name)
+	        {
+	            if ($v = $this->gdoParameterVar($gdt->name))
+	            {
+	                $p .= '_' . $gdt->name . '_' . FileUtil::saneFilename($v);
+	            }
+	        }
+	    }
+	    
+	    $fmt = Application::instance()->getFormat();
+	    return sprintf('method_%s_%s_%s_%s.%s',
+	        $this->getModuleName(), $this->getMethodName(),
+	        Trans::$ISO, $p, $fmt);
+	}
+	
+	public function fileCacheKeyGroup()
+	{
+	    return sprintf('method_%s_%s_',
+	        $this->getModuleName(), $this->getMethodName());
+	}
+	
+	/**
+	 * Get the cached content for this method, iso, fmt
+	 * @return string|boolean
+	 */
+	public function fileCacheContent()
+	{
+	    if (!$this->hasUserPermission(GDO_User::current()))
+	    {
+	        return false;
+	    }
+	    $key = $this->fileCacheKey();
+	    $content = Cache::fileGet($key, $this->fileCacheExpire());
+	    return $content;
+	}
+	
+	public function fileUncache()
+	{
+	    $start = $this->fileCacheKeyGroup();
+	    Filewalker::traverse(Cache::filePath(), null, function($entry, $path) use ($start){
+	        if (Strings::startsWith($entry, $start))
+	        {
+	            unlink($path);
+	        }
+	    });
 	}
 	
 }
