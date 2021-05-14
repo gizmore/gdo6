@@ -144,6 +144,10 @@ switch ($app->getFormat())
             if ($session) $session->commit();
             $content = $cacheContent = Website::renderJSON($content);
         }
+        else
+        {
+            $content ? 
+        }
         break;
         
     case 'html':
