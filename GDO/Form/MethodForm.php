@@ -32,10 +32,15 @@ abstract class MethodForm extends Method
 	
 	public abstract function createForm(GDT_Form $form);
 	
+	public function gdoParameters()
+	{
+	    return $this->getForm()->getFields();
+	}
+	
 	############
 	### Shim ###
 	############
-	public function formParametersWithButton(array $params, $button)
+	public function formParametersWithButton(array $params, $button='submit')
 	{
 	    $params[$button] = 'submit';
 	    return $this->formParameters($params);
@@ -52,6 +57,12 @@ abstract class MethodForm extends Method
     	        $_REQUEST[$form][$key] = $var;
     	    }
 	    }
+	    return $this;
+	}
+	
+	public function requestParameters(array $params=null)
+	{
+	    $this->formParametersWithButton($params);
 	    return $this;
 	}
 	
@@ -189,10 +200,11 @@ abstract class MethodForm extends Method
 	 */
 	public function formInvalid(GDT_Form $form)
 	{
+	    $app = Application::instance();
 		$error = $this->error('err_form_invalid');
-		if (Application::instance()->isAjax() || Application::instance()->isCLI())
+		if ($app->isAjax() || $app->isCLI())
 		{
-			$error->addFields($form->getFields());
+			$error->addField($form);
 		}
 		return $error;
 	}
@@ -203,6 +215,14 @@ abstract class MethodForm extends Method
 	public function getTitleLangKey()
 	{
 	    return strtolower('ft_'.$this->getModuleName().'_'.$this->getMethodName());
+	}
+	
+	###########
+	### CLI ###
+	###########
+	public function renderCLIHelp()
+	{
+	    return $this->getForm()->renderCLIHelp($this);
 	}
 	
 }

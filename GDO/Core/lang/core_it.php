@@ -287,4 +287,8 @@ Cordiali saluti,<br/>
 'sorting' => 'Ordi.',
 'mtitle_core_welcome' => 'Benvenuto',
 'pagemenu_cli' => 'Pagina %s / %s',
+
+# v6.10.3 CLI
+'cli_usage' => 'Uso: %s - %s',
+'err_cli' => 'Errore! %s',
 );

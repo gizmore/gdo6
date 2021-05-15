@@ -5,6 +5,7 @@ use GDO\Core\GDO;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+use GDO\Core\Application;
 
 /**
  * You would expect this to be in GDT_Object,
@@ -71,8 +72,12 @@ trait WithObject
 	{
 		if ($var !== null)
 		{
+		    $noCompletion =
+		        Application::instance()->isCLI() ||
+		        @$_REQUEST['nocompletion_'.$this->name];
+		    
 			# Without javascript, convert the name input
-			if (@$_REQUEST['nocompletion_'.$this->name])
+			if ($noCompletion)
 			{
 			 	unset($_REQUEST['nocompletion_'.$this->name]);
 			 	if ($user = $this->findByName($var))

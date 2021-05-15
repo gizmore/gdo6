@@ -97,14 +97,6 @@ abstract class GDT
 	    }
 	}
 	
-// 	public function __sleep()
-// 	{
-// 	    $vars = get_object_vars($this);
-// 	    unset($vars['gdo']);
-// 	    unset($vars['gdtTable']);
-// 	    return array_keys($vars);
-// 	}
-	
 	private static function logDebug()
 	{
 	    Logger::log('gdt', sprintf('%d: %s', self::$COUNT, self::gdoClassNameS()));

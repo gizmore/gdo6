@@ -52,8 +52,12 @@ final class Send extends MethodForm
      * @param GDO_User $target
      * @return boolean
      */
-    public function validateAllowance(GDT_Form $form, GDT $field, GDO_User $target)
+    public function validateAllowance(GDT_Form $form, GDT $field, GDO_User $target=null)
     {
+        if (!$target)
+        {
+            return $field->error('err_user');
+        }
         if (!Module_Mail::instance()->userSettingValue($target, 'allow_email'))
         {
             return $field->error('err_user_does_not_want_mail');

@@ -292,4 +292,8 @@ Viele Grüße,<br/>
 'sorting' => 'Sort.',
 'mtitle_core_welcome' => 'Willkommen',
 'pagemenu_cli' => 'Seite %s / %s',
+
+# v6.10.3 CLI
+'cli_usage' => 'Nutze: %s - %s',
+'err_cli' => 'Fehler! %s',
 );

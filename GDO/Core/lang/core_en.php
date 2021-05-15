@@ -287,4 +287,8 @@ Kind Regards,<br/>
 'sorting' => 'Sorting',
 'mtitle_core_welcome' => 'Welcome',
 'pagemenu_cli' => 'Page %s of %s',
+    
+# v6.10.3 CLI
+'cli_usage' => 'Usage: %s - %s',
+'err_cli' => 'Error! %s',
 );

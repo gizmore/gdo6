@@ -148,15 +148,7 @@ final class Strings
 	public static function args($line)
 	{
 	    $pattern = <<<REGEX
-/
-(?:
-  " ((?:(?<=\\\\)"|[^"])*) "
-|
-  ' ((?:(?<=\\\\)'|[^'])*) '
-|
-  (\S+)
-)
-/x
+/(?:"((?:(?<=\\\\)"|[^"])*)"|'((?:(?<=\\\\)'|[^'])*)'|(\S+))/x
 REGEX;
 	    /** @var $matches string[] **/
 	    preg_match_all($pattern, $line, $matches, PREG_SET_ORDER);
@@ -178,7 +170,6 @@ REGEX;
 	            $args[] = str_replace(['\\"', '\\\\'], ['"', '\\'], $match[1]);
 	        }
 	    }
-	    
 	    return $args;
 	}
 	

@@ -1,13 +1,11 @@
 <?php
-//use GDO\Core\Method;
-
 /**
  * Execute gdo6 methods via CLI.
  * 
  * @see Method
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.0.1
  */
 
@@ -73,10 +71,7 @@ Database::init();
 
 $app->loader->loadModules(GDO_DB_ENABLED, !GDO_DB_ENABLED, true);
 
-if (module_enabled('Session'))
-{
-    GDO_Session::init();
-}
+GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
 
 #################
 ### Load User ###
@@ -100,8 +95,9 @@ $page = GDT_Page::make();
 /** @var $argv string[] **/
 
 # copy argv to stdin for the loop
-$stdin = fopen('php://stdin', 'w');
+// $stdin = fopen('php://stdin', 'w');
 
+$norepl = false;
 if ($argc > 1)
 {
     array_shift($argv);
@@ -112,12 +108,21 @@ if ($argc > 1)
 try
 {
     # repl
-    $stdin = fopen('php://stdin', 'r');
+    if (!$norepl)
+    {
+        $stdin = fopen('php://stdin', 'r');
+    }
     do
     {
         try
         {
+            # Reset vars
             $page->reset();
+            $_GET = $_POST = $_REQUEST = [];
+            $_REQUEST['fmt'] = 'cli';
+            GDT_Response::$CODE = 200;
+            
+            # Exec
             if ($response = CLI::execute($line))
             {
                 echo $response->renderCLI();
@@ -138,7 +143,7 @@ try
             die (GDT_Response::globalError() ? 1 : 0);
         }
     }
-    while ($line = fgets($stdin));
+    while ((!$norepl) && $line = fgets($stdin));
 }
 catch (\Throwable $ex)
 {

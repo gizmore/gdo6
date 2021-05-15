@@ -4,7 +4,8 @@ namespace GDO\Util;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDOError;
 use GDO\Core\Method;
-use GDO\DB\GDT_Text;
+use GDO\Core\GDT;
+use GDO\Core\GDT_Response;
 
 /**
  * CLI utilities.
@@ -77,24 +78,34 @@ final class CLI
         }
             
         # Parse 'module.method' part
-        $moduleName = Strings::substrTo($line, ' ', $line);
-        $methodName = Strings::substrFrom($line, '.');
-        $moduleName = Strings::substrTo($moduleName, '.', $moduleName);
-        $module = ModuleLoader::instance()->getModule($moduleName, true);
-        $method = $module->getMethodByName($methodName);
+        $mome = Strings::substrTo($line, ' ', $line);
+        $line = Strings::substrFrom($line, ' ', '');
+        $mo = Strings::substrTo($mome, '.');
+        $me = Strings::rsubstrFrom($mome, '.');
+        $module = ModuleLoader::instance()->getModule($mo, true);
+        $method = $module->getMethodByName($me);
         if (!$method)
         {
-            throw new GDOError('err_unnkown_method', [$methodName]);
+            throw new GDOError('err_module_method');
+        }
+        
+        if (strpos($mome, '..') === false)
+        {
+            return self::showHelp($method);
         }
 
         # Parse everything after
-        if ($argline = Strings::substrFrom($line, ' '))
-        {
-            self::parseArgline($argline);
-        }
+        $params = self::parseArgline($line, $method);
+        
+        $method->requestParameters($params);
         
         # Execute the method
         return $method->exec();
+    }
+    
+    private static function showHelp(Method $method)
+    {
+        return $method->renderCLIHelp();
     }
     
     /**
@@ -109,34 +120,58 @@ final class CLI
         
         while (Strings::startsWith($line, '--'))
         {
-            $n = Strings::substrTo($line, ' ', $line);
-            $n = trim($n, '-');
-            $l = Strings::substrFrom($line, ' ', $line);
-            $a = Strings::substrTo($l, ' ', $l);
-            $gdt = $method->gdoParameter($n);
-            $parameters[$gdt->name] = $a;
-            $line = Strings::substrFrom($l, ' ', $l);
+            $k = Strings::substrTo($line, '=', $line);
+            $k = trim($k, '-');
+            $v = Strings::substrFrom($line, '=', '');
+            $v = $v === '' ? null : $v;
+            $line = Strings::substrFrom($line, ' ', '');
+            $parameters[$k] = $v;
         }
+        
+        $i = 0;
+        $args = Strings::args($line);
         
         foreach ($method->gdoParameterCache() as $gdt)
         {
             if ($gdt->name && $gdt->editable && $gdt->isPositional())
             {
-                if ($gdt instanceof GDT_Text)
-                {
-                    $parameters[$gdt->name] = trim($line, '"');
-                    break;
-                }
-                else
-                {
-                    $args = Strings::args($line);
-                    $arg = $args[0];
-                    $parameters[$gdt->name] = trim($arg, '"');
-                    $line = mb_substr($line, 0, mb_strlen($arg) + 1);
-                }
+                $arg = $args[$i++];
+                $parameters[$gdt->name] = $arg;
             }
         }
         return $parameters;
     }
 
+    /**
+     * Render help line for gdt parameters.
+     * @param GDT[] $fields
+     * @return string
+     */
+    public static function renderCLIHelp(Method $method, array $fields)
+    {
+        $usage1 = [];
+        $usage2 = [];
+        foreach ($fields as $gdt)
+        {
+            if (!$gdt->isSerializable())
+            {
+                continue;
+            }
+            if ($gdt->isPositional())
+            {
+                $usage1[] = sprintf('<%s>', $gdt->name);
+            }
+            else
+            {
+                $usage2[] = sprintf('[--%s=<var>]', $gdt->name);
+            }
+        }
+        $usage = implode(' ', $usage2) . ' ' . implode(' ', $usage1);
+        $usage = trim($usage);
+        $mome = sprintf('%s..%s', 
+            $method->getModuleName(), $method->getMethodName());
+        return GDT_Response::makeWithHTML(t('cli_usage', [
+            trim(strtolower($mome).' '.$usage), $method->getDescription()]));
+    }
+    
 }

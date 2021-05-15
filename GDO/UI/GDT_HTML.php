@@ -40,5 +40,10 @@ final class GDT_HTML extends GDT
 	{
 	    return $this->html;
 	}
+	
+	public function renderCLI()
+	{
+	    return $this->html;
+	}
 
 }

@@ -4,11 +4,14 @@ namespace GDO\Form;
 use GDO\Core\GDO;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
+use GDO\Core\Method;
 use GDO\Core\WithFields;
 use GDO\UI\WithTitle;
 use GDO\UI\GDT_SearchField;
 use GDO\Core\Application;
 use GDO\UI\GDT_Container;
+use GDO\Core\GDT_Response;
+use GDO\Util\CLI;
 
 /**
  * A form.
@@ -122,7 +125,30 @@ class GDT_Form extends GDT
 	
 	public function renderCLI()
 	{
-	    return $this->gdoHumanName() . ': ' . json_encode($this->renderJSON(), JSON_PRETTY_PRINT);
+	    # render error
+	    if (GDT_Response::$CODE >= 400)
+        {
+            return $this->renderCLIError();
+	    }
+	}
+	
+	private function renderCLIError()
+	{
+	    $back = '';
+	    foreach ($this->fields as $gdt)
+	    {
+	        if ($gdt->error)
+	        {
+	            $back .= sprintf(' %s: %s.',
+	                $gdt->name, rtrim($gdt->error, '.'));
+	        }
+	    }
+	    return t('err_cli', [trim($back)]);
+	}
+	
+	public function renderCLIHelp(Method $method)
+	{
+	    return CLI::renderCLIHelp($method, $this->fields);
 	}
 	
 	public function reset(GDO $gdo)

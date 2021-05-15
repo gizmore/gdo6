@@ -13,6 +13,7 @@ use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Util\Strings;
+use GDO\Util\CLI;
 
 /**
  * Abstract baseclass for all methods.
@@ -442,7 +443,7 @@ abstract class Method
 	        # Init method
 	        $response = GDT_Response::newWith();
 	        
-	        $this->init();
+	        $response->addField($this->init());
 	        
 	        if ($response->isError())
 	        {
@@ -563,5 +564,13 @@ abstract class Method
 	        }
 	    });
 	}
-	
+
+	###########
+	### CLI ###
+	###########
+	public function renderCLIHelp()
+	{
+	    return CLI::renderCLIHelp($this, $this->gdoParameterCache());
+	}
+
 }
