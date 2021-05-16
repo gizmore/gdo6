@@ -21,7 +21,7 @@ trait WithLabel
 	public $labelRaw;
 
 	public function noLabel() { return $this->labelRaw(''); }
-	public function hasLabel() { return $this->label || $this->labelRaw; }
+	public function hasLabel() { return $this->label || ($this->labelRaw !== null); }
 	public function defaultLabel() { return $this->label($this->name); }
 	
 	/**

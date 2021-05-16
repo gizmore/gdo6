@@ -261,6 +261,11 @@ abstract class Method
 	public function error($key, array $args=null, $code=405) { Website::topResponse()->addField(GDT_Error::with($key, $args, $code)); return GDT_Response::make()->code($code); }
 	public function message($key, array $args=null, $log=true) { Website::topResponse()->addField(GDT_Success::with($key, $args)); return GDT_Response::make(); }
 	
+	/**
+	 * @param string $path
+	 * @param array $tVars
+	 * @return \GDO\Core\GDT_Template
+	 */
 	public function templatePHP($path, array $tVars=null) { return GDT_Template::templatePHP($this->getModuleName(), $path, $tVars); }
 	public function responsePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
 	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }

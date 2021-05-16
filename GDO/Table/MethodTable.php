@@ -204,24 +204,20 @@ abstract class MethodTable extends Method
 		return $this->renderTable();
 	}
 	
-	public function getTitleLangKey()
+	public function getTableTitleLangKey()
 	{
 	    return strtolower('list_'.$this->getModuleName().'_'.$this->getMethodName());
 	}
 	
-	public function getTitle()
+	public function getTableTitle()
 	{
-	    return t($this->getTitleLangKey(), [$this->table->countItems()]);
-	}
-	
-	public function getDescription()
-	{
-	    return t($this->getDescriptionLangKey());
+	    $key = $this->getTableTitleLangKey();
+	    return t($key, [$this->table->countItems()]);
 	}
 	
 	protected function setupTitle(GDT_Table $table)
 	{
-	    $table->titleRaw($this->getTitle());
+	    $table->titleRaw($this->getTableTitle());
 	}
 	
 	protected function setupCollection(GDT_Table $table)

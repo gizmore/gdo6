@@ -49,6 +49,7 @@ class GDO_Module extends GDO
 	    return [
 	        'Core', 'Country', 'Language', 'Date', 'Mail',
 	        'Table', 'User', 'Country', 'Javascript', 'UI',
+	        'Session',
 	    ];
 	}
 	

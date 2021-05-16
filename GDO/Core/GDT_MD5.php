@@ -16,6 +16,7 @@ final class GDT_MD5 extends GDT_Char
 	
 	public function renderCell()
 	{
-		return GDT_Template::php('Type', 'cell/md5', ['field'=>$this]);
+	    return sprintf('%s', 'MD5'); 
+// 		return GDT_Template::php('Core', 'cell/md5', ['field'=>$this]);
 	}
 }
