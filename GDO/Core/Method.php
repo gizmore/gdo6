@@ -261,6 +261,7 @@ abstract class Method
 	public function error($key, array $args=null, $code=405) { Website::topResponse()->addField(GDT_Error::with($key, $args, $code)); return GDT_Response::make()->code($code); }
 	public function message($key, array $args=null, $log=true) { Website::topResponse()->addField(GDT_Success::with($key, $args)); return GDT_Response::make(); }
 	
+	public function php($path, array $tVars=null) { return GDT_Template::php($this->getModuleName(), $path, $tVars); }
 	/**
 	 * @param string $path
 	 * @param array $tVars

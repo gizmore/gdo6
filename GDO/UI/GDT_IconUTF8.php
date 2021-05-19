@@ -68,6 +68,7 @@ final class GDT_IconUTF8
         'plus' => '+',
         'plus_one' => '+1',
         'quote' => '↶',
+        'remove' => '✕',
         'reply' => '☞',
         'schedule' => '☷',
         'search' => '🔍',

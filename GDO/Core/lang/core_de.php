@@ -181,6 +181,7 @@ return array(
 'err_404' => '404 - Seite nicht gefunden',
 'err_user_no_permission' => 'Der Benutzer benötigt die %s Berechtigung.',
 'err_curl' => 'HTTP Anfrage fehlgeschlagen(%s): %s',
+'err_you_no_mail' => 'Sie benötigen eine E-Mail dafür.',
     
 # File
 'is_file' => 'keine Datei',

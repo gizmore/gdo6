@@ -249,7 +249,7 @@ abstract class MethodTable extends Method
 	        $result->table = $fetchAs;
 	    }
 	    $this->setupTitle($table);
-	    return GDT_Response::makeWith($table);
+	    return $table;
 	}
 	
 	protected function calculateTable(GDT_Table $table)

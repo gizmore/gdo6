@@ -17,6 +17,8 @@ final class GDT_Menu extends GDT
 	use WithLabel;
 	use WithFields;
 	
+	public function defaultLabel() { return $this->noLabel(); }
+	
 	public function defaultName() { return 'menu'; }
 	
 	public function renderCell() { return GDT_Template::php('UI', 'cell/menu.php', ['field'=>$this]); }

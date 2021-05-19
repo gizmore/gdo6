@@ -19,6 +19,7 @@ final class GDT_AutoInc extends GDT_UInt
 	public $notNull = true;
 	public $writable = false;
 	public $editable = false;
+	public $searchable = false;
 	public $hidden = true;
 	public function defaultLabel() { return $this->label('id'); }
 	

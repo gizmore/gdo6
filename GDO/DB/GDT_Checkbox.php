@@ -21,6 +21,8 @@ class GDT_Checkbox extends GDT_Select
     const TRUE = '1';
     const FALSE = '0';
     
+    public $searchable = false;
+    
 	protected function __construct()
 	{
 	    parent::__construct();

@@ -20,5 +20,6 @@ final class GDT_Level extends GDT_UInt
 	public $var = '0';
 	public $initial = '0';
 	public $notNull = true;
+	public $searchable = false;
 	
 }

@@ -47,7 +47,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	#############
 	### Fixed ###
 	#############
-	public $fixed = true;
+	public $fixed = false;
 	public function complex() { return $this->fixed(false); }
 	public function fixed($fixed=true)
 	{

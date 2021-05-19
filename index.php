@@ -157,20 +157,20 @@ switch ($app->getFormat())
         {
             $content = $strayContent;
             $cacheContent = $response->renderHTML();
-            if ($session) $session->commit();
             $content .= $cacheContent;
             if (!$ajax)
             {
                 $content = GDT_Page::$INSTANCE->html($content)->render();
             }
+            if ($session) $session->commit();
         }
         else
         {
-            if ($session) $session->commit();
             if (!$ajax)
             {
                 $content = GDT_Page::$INSTANCE->html($cacheContent)->render();
             }
+            if ($session) $session->commit();
         }
         break;
         

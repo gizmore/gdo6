@@ -53,10 +53,10 @@ select { padding: 7px 3px; }
 /** Table **/
 .gdt-tblorder { display: inline-block; }
 .gdt-tblorder a.sel { color: gold; }
-.gdt-table th input, .gdt-table th select { display: block; }
+.gdt-table th input, .gdt-table th select { display: block; width: 100%; }
 .gdt-table th { vertical-align: bottom; }
-.gdt-table { overflow: auto; }
-.gdt-table { min-width: 100%; }
+.gdt-table { overflow: auto; min-width: 100%; }
+.gdt-table table { border-collapse: collapse; margin: 1px; }
 .gdt-table thead { background: #ccb; }
 .gdt-table tbody tr:nth-child(even) { background: #ddd; }
 .gdt-table tbody tr:nth-child(odd) { background: #eee; }
@@ -65,6 +65,7 @@ select { padding: 7px 3px; }
 .gdt-table td.gdt_country { text-align: center; }
 .gdt-table td { padding: 0px 2px; }
 .gdt-table th select { padding: 4px 2px; }
+.gdt-table > h3 { padding: 4px 8px; margin-top: 4px; background: #ddd; }
 
 /** Pagemenu **/
 .gdo-pagemenu ul { display: flex; margin: 0 4px; }
@@ -177,4 +178,8 @@ table img.gdo-country + span { display: none; }
 
 a {
 	text-decoration: underline;
+}
+
+.gdo-icon[title] {
+	cursor: pointer;
 }

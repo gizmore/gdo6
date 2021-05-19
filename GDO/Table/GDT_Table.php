@@ -72,6 +72,12 @@ class GDT_Table extends GDT
 	    $this->makeHeaders();
 	}
 	
+	public function gdo(GDO $gdo=null)
+	{
+	    $this->gdtTable = $gdo->table();
+	    return parent::gdo();
+	}
+	
 	#####################
 	### Header fields ###
 	#####################
@@ -366,7 +372,7 @@ class GDT_Table extends GDT
 	    foreach ($split as $searchTerm)
 	    {
     	    $where = [];
-    	    foreach ($this->getHeaderFields() as $gdt)
+    	    foreach ($this->gdtTable->gdoColumnsCache() as $gdt)
     	    {
     	        if ($gdt->searchable)
     	        {

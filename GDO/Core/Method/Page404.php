@@ -9,6 +9,8 @@ use GDO\Net\GDT_IP;
 use GDO\Core\Website;
 use GDO\Core\GDT_Response;
 use GDO\Util\Strings;
+use GDO\Net\GDT_Url;
+use GDO\UI\GDT_Link;
 
 /**
  * Render a 404 page.
@@ -17,7 +19,7 @@ use GDO\Util\Strings;
  * Send 404 mails optionally.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.10.0
  */
 final class Page404 extends MethodPage
@@ -66,8 +68,8 @@ final class Page404 extends MethodPage
             sitename(),
             GDT_IP::current(),
             GDO_User::current()->displayNameLabel(),
-            html($_SERVER['REQUEST_URI']),
-            html(Website::hrefBack()),
+            GDT_Link::make()->href(GDT_Url::absolute($_SERVER['REQUEST_URI']))->render(),
+            GDT_Link::make()->href(GDT_Url::absolute(Website::hrefBack()))->render(),
         ];
         return tusr($user, 'mail_body_404', $args);
     }

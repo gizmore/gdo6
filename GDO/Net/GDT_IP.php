@@ -12,6 +12,8 @@ use GDO\DB\GDT_String;
  */
 final class GDT_IP extends GDT_String
 {
+    public $searchable = false;
+    
 	###############
 	### IP Util ###
 	###############

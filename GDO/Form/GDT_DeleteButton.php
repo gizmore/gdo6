@@ -16,7 +16,8 @@ class GDT_DeleteButton extends GDT_Submit
 	public function name($name=null) { $this->name = $name ? $name : 'delete'; return $this->defaultLabel(); }
 	public function renderCell() { return GDT_Template::php('Form', 'form/delete.php', ['field'=>$this]); }
 	public function defaultLabel() { return $this->label('btn_delete'); }
-
+	public function defaultName() { return 'delete'; }
+	
 	############
 	### Text ###
 	############

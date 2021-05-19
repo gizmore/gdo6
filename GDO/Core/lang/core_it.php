@@ -181,6 +181,7 @@ return array(
 'err_404' => '404 - Pagina non trovata',
 'err_user_no_permission' => 'Nessuna autorizzazione: %s.',
 'err_curl' => 'Richiesta HTTP non riuscita(%s): %s',
+'err_you_no_mail' => 'Hai bisogno di un\'e-mail per questo.',
     
 # File
 'is_file' => 'un File',
