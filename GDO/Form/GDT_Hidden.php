@@ -20,5 +20,6 @@ class GDT_Hidden extends GDT_String
 	
 	public function renderForm() { return GDT_Template::php('Form', 'form/hidden.php', ['field' => $this]); }
 	public function renderCell() { return GDT_Template::php('Form', 'cell/hidden.php', ['field' => $this]); }
-
+	public function renderCLI() { return ''; }
+	
 }

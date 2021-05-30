@@ -9,7 +9,7 @@ use GDO\Core\GDT_Response;
 /**
  * Print your username.
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.4
  * @since 6.10.1
  */
 final class WhoAmI extends Method

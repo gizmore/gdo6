@@ -154,10 +154,12 @@ class GDT_Timestamp extends GDT
 	##############
 	### Render ###
 	##############
+	public function displayVar() { return Time::displayDate($this->getVar(), Time::FMT_LONG); }
 	public function renderCell() { return $this->renderCellSpan(Time::displayDate($this->getVar(), $this->format, '---')); }
 	public function renderForm() { return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]); }
 	public function renderAge() { return Time::displayAge($this->getVar()); }
-
+	public function renderCLI() { return $this->displayLabel() . ': ' . $this->displayVar(); }
+	
 	##############
 	### Config ###
 	##############

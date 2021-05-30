@@ -22,11 +22,22 @@ use GDO\User\GDO_User;
 use GDO\Language\Trans;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Error;
+use GDO\Core\Website;
 
 if (PHP_SAPI !== 'cli')
 {
     echo 'The console has to be used for this program.' . PHP_EOL;
     die(1);
+}
+
+
+function printUsage()
+{
+    printf("Usage: ./gdo module to show module methods.\n");
+    printf("Usage: ./gdo module.method to print help.\n");
+    printf("Usage: ./gdo module.method. to execute the submit button. (dot after method)\n");
+    printf("Usage: ./gdo module.method.button to execute a different button than submit.\n");
+    die(0);
 }
 
 require 'GDO6.php';
@@ -68,10 +79,10 @@ Debug::enableExceptionHandler();
 Debug::$MAX_ARG_LEN = 60;
 Cache::init();
 Database::init();
+GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
 
 $app->loader->loadModules(GDO_DB_ENABLED, !GDO_DB_ENABLED, true);
 
-GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
 
 #################
 ### Load User ###
@@ -94,15 +105,16 @@ $page = GDT_Page::make();
 /** @var $argc int **/
 /** @var $argv string[] **/
 
-# copy argv to stdin for the loop
-// $stdin = fopen('php://stdin', 'w');
-
 $norepl = false;
 if ($argc > 1)
 {
     array_shift($argv);
     $line = implode(' ', $argv);
     $norepl = true;
+}
+else
+{
+    printUsage();
 }
 
 try
@@ -125,7 +137,12 @@ try
             # Exec
             if ($response = CLI::execute($line))
             {
+                if (Website::$TOP_RESPONSE)
+                {
+                    echo Website::$TOP_RESPONSE->renderCLI();
+                }
                 echo $response->renderCLI();
+                
             }
             else
             {

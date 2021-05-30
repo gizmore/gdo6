@@ -118,7 +118,7 @@ return array(
 'err_db' => "Database Error(%s): %s<br/>\n%s<br/>\n",
 'err_user' => 'This user is unknown.',
 'err_exception' => 'Exception: %s',
-'err_parameter_exception' => '%s: %s (%s)',
+'err_parameter_exception' => '%s: %s',
 'err_gdo_object_no_table' => '%s is a GDT_Object without a table.',
 'err_column' => 'Unknown GDT column: %s.',
 'err_token' => 'Your token is invalid.',
@@ -137,6 +137,7 @@ return array(
 'err_file_not_found' => 'File not found: %s',
 'err_already_authenticated' => 'You are already authenticated.',
 'err_gdo_not_found' => 'Could not find %s with ID %s.',
+'err_no_data_yet' => 'There is no data available yet.',
 'err_string_pattern' => 'Your input did not pass the pattern validation test for this field.',
 'err_url_not_reachable' => 'Your entered URL is not reachable by this server.',
 'err_method_disabled' => 'This function is currently disabled.',
@@ -291,6 +292,7 @@ Kind Regards,<br/>
 'pagemenu_cli' => 'Page %s of %s',
     
 # v6.10.3 CLI
+'cli_methods' => 'Module %s offers these methods: %s.',
 'cli_usage' => 'Usage: %s - %s',
 'err_cli' => 'Error! %s',
 );

@@ -1,7 +1,9 @@
 <?php
 namespace GDO\Core;
 
-use GDO\UI\GDT_Panel;
+use GDO\UI\WithPHPJQuery;
+use GDO\UI\WithText;
+use GDO\UI\WithTitle;
 
 /**
  * An error is a panel that additionally logs the given message.
@@ -10,8 +12,12 @@ use GDO\UI\GDT_Panel;
  * @version 6.10.3
  * @since 6.0.0
  */
-class GDT_Error extends GDT_Panel
+class GDT_Error extends GDT
 {
+    use WithTitle;
+    use WithText;
+    use WithPHPJQuery;
+    
     public static $ERROR = 1;
     
     public function isSerializable() { return true; }

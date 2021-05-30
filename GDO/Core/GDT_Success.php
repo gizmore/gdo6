@@ -1,7 +1,9 @@
 <?php
 namespace GDO\Core;
 
-use GDO\UI\GDT_Panel;
+use GDO\UI\WithPHPJQuery;
+use GDO\UI\WithText;
+use GDO\UI\WithTitle;
 
 /**
  * A success message, the pedant to GDT_Error.
@@ -12,8 +14,12 @@ use GDO\UI\GDT_Panel;
  * @since 6.0.0
  * @see GDT_Error
  */
-class GDT_Success extends GDT_Panel
+class GDT_Success extends GDT
 {
+    use WithTitle;
+    use WithText;
+    use WithPHPJQuery;
+    
     public function isSerializable() { return true; }
     
 	public static function responseWith($key, array $args=null, $code=200, $log=true)

@@ -4,6 +4,7 @@ namespace GDO\Language;
 use GDO\Form\GDT_Select;
 use GDO\Core\GDT_Template;
 use GDO\Util\Strings;
+use GDO\Core\GDT;
 
 /**
  * Displays a language switcher.
@@ -16,6 +17,12 @@ use GDO\Util\Strings;
 final class GDT_LangSwitch extends GDT_Select
 {
     public function defaultName() { return '_lang'; }
+    
+    protected function __construct()
+    {
+        parent::__construct();
+        $this->choices(Module_Language::instance()->cfgSupported());
+    }
     
 	public function renderCell()
 	{

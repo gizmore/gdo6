@@ -16,4 +16,10 @@ return [
     'tu_h' => 'h',
     'tu_d' => 'd',
     'tu_y' => 'y',
+    
+    # Timezone
+    'ft_date_timezone' => 'Set your timezone',
+    'msg_timezone_changed' => 'Your timezone has been changed to %s.',
+    'cfg_tz_probe_js' => 'Probe timezone via Javascript?',
+    'cfg_tz_sidebar_select' => 'Show timezone select in sidebar?',
 ];

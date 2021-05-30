@@ -75,9 +75,7 @@ class GDT_String extends GDT
 	 */
 	public function var($var=null)
 	{
-	    $var = trim($var, "\r\n\t ");
-	    $this->var = $var === '' ? null : (string)$var;
-	    return $this;
+	    return parent::var(trim($var, "\r\n\t "));
 	}
 	
 	public function inputToVar($input)
@@ -121,7 +119,8 @@ class GDT_String extends GDT
 	##############
 	public function renderCell() { return html($this->getVar()); }
 	public function renderForm() { return GDT_Template::php('DB', 'form/string.php', ['field' => $this]); }
-
+	public function renderCLI() { return $this->displayLabel() . ': ' . $this->displayVar(); }
+	
 	################
 	### Validate ###
 	################

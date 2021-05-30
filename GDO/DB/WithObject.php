@@ -59,7 +59,7 @@ trait WithObject
 	{
 	    if ($id = $this->getVar())
 	    {
-    		return $this->toValue($id);
+    		return parent::getValue();
 	    }
 	}
 	

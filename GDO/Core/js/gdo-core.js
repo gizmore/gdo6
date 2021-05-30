@@ -34,14 +34,28 @@ window.GDO.toggleAll = function(toggler) {
 	});
 };
 
-window.GDO.error = function(response) {
+window.GDO.responseError = function(response) {
 	if (response.json && response.json.error) {
 		var message = response.json.error;
 	}
 	else if (response.error) {
 		var message = response.error;
 	}
-	alert(message);
+	
+	if (response.json && response.json.stack) {
+		message += "\n\n" + response.json.stack;
+	}
+	
+	window.GDO.error(message, "Ajax Error");
+};
+
+window.GDO.error = function(html, title) {
+	alert(title + "\n\n" + message);
+};
+
+window.GDO.exception = function(ex) {
+	console.error(ex);
+	return window.GDO.responseError({json:{error: ex.message, stack: ex.stack}});
 };
 
 window.GDO.openDialog = function(dialogId) {

@@ -130,6 +130,13 @@ class GDT_Form extends GDT
         {
             return $this->renderCLIError();
 	    }
+	    
+	    $back = '';
+	    foreach ($this->getFieldsRec() as $gdt)
+	    {
+	        $back .= $gdt->renderCLI();
+	    }
+	    return $back;
 	}
 	
 	private function renderCLIError()
@@ -148,7 +155,8 @@ class GDT_Form extends GDT
 	
 	public function renderCLIHelp(Method $method)
 	{
-	    return CLI::renderCLIHelp($method, $this->fields);
+	    return CLI::renderCLIHelp($method, array_merge(
+	        $method->gdoParameterCache(), $this->getFieldsRec()));
 	}
 	
 	public function reset(GDO $gdo)
@@ -279,7 +287,8 @@ class GDT_Form extends GDT
 
 	public function getFormVar($key)
 	{
-		return isset($this->fields[$key]) ? $this->fields[$key]->getVar() : null;
+	    $gdt = $this->getField($key);
+		return $gdt->getRequestVar($gdt->formVariable(), $gdt->var);
 	}
 	
 	public function getFormValue($key)

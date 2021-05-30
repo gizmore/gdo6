@@ -118,6 +118,7 @@ return array(
 'err_db' => "Datenbank Fehler(%s): %s<br/>\n%s<br/>\n",
 'err_user' => 'Dieser Benutzer ist unbekannt.',
 'err_exception' => 'Ausnahme: %s',
+'err_parameter_exception' => '%s: %s',
 'err_gdo_object_no_table' => '%s ist ein GDT_Object ohne Tabelle.',
 'err_column' => 'Unbekannte GDT Spalte: %s.',
 'err_token' => 'Ihr Token ist ungültig.',
@@ -136,6 +137,7 @@ return array(
 'err_file_not_found' => 'Datei nicht gefunden: %s',
 'err_already_authenticated' => 'Sie sind bereits angemeldet.',
 'err_gdo_not_found' => 'Konnte %s mit der ID %s nicht finden.',
+'err_no_data_yet' => 'Hier sind noch keine Daten vorhanden.',
 'err_string_pattern' => 'Ihre Eingabe passt nicht zur Eingabemaske.',
 'err_url_not_reachable' => 'Ihre eingegebene URL kann vom Server nicht erreicht werden.',
 'err_method_disabled' => 'Diese Funktion ist deaktiviert',
@@ -295,6 +297,7 @@ Viele Grüße,<br/>
 'pagemenu_cli' => 'Seite %s / %s',
 
 # v6.10.3 CLI
+'cli_methods' => 'Das %s Modul bietet folgende Funktionen: %s.',
 'cli_usage' => 'Nutze: %s - %s',
 'err_cli' => 'Fehler! %s',
 );

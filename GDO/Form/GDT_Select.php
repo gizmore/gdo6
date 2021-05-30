@@ -13,8 +13,7 @@ class GDT_Select extends GDT_ComboBox
 	public function getVar()
 	{
 // 		$this->fixEmptyMultiple();
-	    $var = null;
-		if (null === ($var = $this->getRequestVar($this->formVariable(), $this->var)))
+		if (null === ($var = parent::getVar()))
 		{
 			$var = $this->multiple ? '[]' : null;
 		}
@@ -34,11 +33,12 @@ class GDT_Select extends GDT_ComboBox
 	
 	public function getValue()
 	{
-		if (null === ($var = $this->getVar()))
+		if ($this->var === null)
 		{
 			return $this->multiple ? [] : $this->emptyValue;
 		}
-		return $this->toValue($var);
+		
+		return parent::getValue();
 	}
 
 	public function toVar($value)
@@ -74,7 +74,53 @@ class GDT_Select extends GDT_ComboBox
 	    {
 	        return $this->choices[$var];
 	    }
-	    return $var;
+	    else
+	    {
+	        $value = $this->toClosestChoiceValue($var);
+	        $var = $this->toVar($value);
+	        $this->var($var);
+// 	        $_REQUEST[$this->name] = $var;
+// 	        $_REQUEST[$this->formName()][$this->name] = $var;
+	        return $value;
+	    }
+	}
+	
+	private function toClosestChoiceValue($var)
+	{
+	    $candidatesZero = [];
+	    $candidatesMiddle = [];
+	    foreach ($this->choices as $vaar => $value)
+	    {
+	        $pos = stripos($vaar, $var);
+	        if ($pos === 0)
+	        {
+	            $candidatesZero[] = $value;
+	            $candidatesMiddle[] = $value;
+	        }
+	        elseif ($pos > 1)
+	        {
+	            $candidatesMiddle[] = $value;
+	        }
+	    }
+	    
+	    if (count($candidatesZero) === 1)
+	    {
+	        return $candidatesZero[0];
+	    }
+	    
+	    if (count($candidatesMiddle) === 1)
+	    {
+	        return $candidatesMiddle[0];
+	    }
+	    
+	    if (count($candidatesMiddle) > 1)
+	    {
+	        $candidates = array_map(function($value) {
+	            return $value;
+	        }, $candidatesMiddle);
+            $candidates = array_slice($candidates, 0, 10);
+	        $this->error('err_select_candidates', [implode('|', $candidates)]);
+	    }
 	}
 	
 	public function getGDOData()
@@ -152,6 +198,10 @@ class GDT_Select extends GDT_ComboBox
 	{
 		if ( ($value === null) || ($value === $this->emptyValue) )
 		{
+		    if ($this->getVar() && ($value !== $this->emptyValue))
+		    {
+		        return $this->errorInvalidChoice();
+		    }
 			return $this->notNull ? $this->errorNotNull() : true;
 		}
 		

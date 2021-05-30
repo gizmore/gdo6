@@ -54,11 +54,20 @@ class GDO_Module extends GDO
 	}
 	
 	/**
+	 * A list of required dependencies, except core modules.
+	 * Override this.
 	 * @return string[]
 	 */
 	public function getDependencies() {}
 	
-	/**
+    /**
+     * A list of optional modules that enhance this one.
+     * Override this.
+	 * @return string[]
+	 */
+	public function getFriendencies() {}
+	
+    /**
 	 * Skip these folders in unit tests using strpos.
 	 * 
 	 * @see Module_Tests
@@ -81,6 +90,15 @@ class GDO_Module extends GDO
 	    {
 	        return $coreDeps;
 	    }
+	}
+	
+	/**
+	 * Return a list of friend modules that enhance this one.
+	 * @return string[]
+	 */
+	public function friendencies()
+	{
+	    return $this->getFriendencies();
 	}
 	
 	/**
@@ -394,7 +412,7 @@ class GDO_Module extends GDO
 	{
 	    if ($gdt = $this->getConfigColumn($key))
 	    {
-	        return $gdt->toValue($gdt->var);
+	        return $gdt->getValue();
 	    }
 	}
 	
@@ -488,7 +506,7 @@ class GDO_Module extends GDO
 	public function userSettingValue(GDO_User $user, $key)
 	{
 	    $gdt = $this->userSetting($user, $key);
-	    return $gdt->toValue($gdt->var);
+	    return $gdt->getValue();
 	}
 	
 	public function saveSetting($key, $var)
@@ -648,6 +666,43 @@ class GDO_Module extends GDO
 	            return $method;
 	        }
 	    }
+	}
+	
+	public function getMethodNames($withPermission=true)
+	{
+	    $methods = $this->getMethods($withPermission);
+	    return array_map(function(Method $method) {
+	        return $method->gdoShortName();
+	    }, $methods);
+	}
+	
+	public function getMethods($withPermission=true)
+	{
+	    $methods = scandir($this->filePath('Method'));
+	    $methods = array_map(function($file) {
+	        return substr($file, 0, -4);
+	    }, $methods);
+	    $methods = array_filter($methods, function($file) {
+            return !!$file;
+        });
+        $methods = array_map(function($file) {
+            $className = "\\GDO\\{$this->getName()}\\Method\\{$file}";
+            return call_user_func([$className, 'make']);
+        }, $methods);
+        if ($withPermission)
+        {
+            $methods = array_filter($methods, function(Method $method) {
+                try
+                {
+                    return $method->hasUserPermission(GDO_User::current());
+                }
+                catch (\Throwable $ex)
+                {
+                    return false;
+                }
+            });
+        }
+        return $methods;
 	}
 	
 	##############

@@ -7,7 +7,7 @@ use GDO\Form\GDT_Select;
  * Timezone select.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.10.0
  */
 final class GDT_Timezone extends GDT_Select
@@ -32,7 +32,7 @@ final class GDT_Timezone extends GDT_Select
     
     public function initChoices()
     {
-        if (empty($this->choices))
+        if (!$this->choices)
         {
             $tz = array_values(timezone_identifiers_list());
             $this->choices = array_combine($tz, $tz);

@@ -45,6 +45,11 @@ class GDT_Container extends GDT
 	    }
 	}
 	
+	public function renderCLI()
+	{
+	    return $this->renderCLIFields();
+	}
+	
 	public function renderForm()
 	{
 	    if ($this->fields)

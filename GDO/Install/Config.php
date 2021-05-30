@@ -123,7 +123,7 @@ class Config
 		if (!defined('GDO_DB_NAME')) define('GDO_DB_NAME', '');
 		if (!defined('GDO_DB_DEBUG')) define('GDO_DB_DEBUG', false);
 		# Cache
-		if (!defined('GDO_FILECACHE')) define('GDO_FILECACHE', true);
+		if (!defined('GDO_FILECACHE')) define('GDO_FILECACHE', false);
 		if (!defined('GDO_MEMCACHE')) define('GDO_MEMCACHE', false);
 		if (!defined('GDO_MEMCACHE_HOST')) define('GDO_MEMCACHE_HOST', '127.0.0.1');
 		if (!defined('GDO_MEMCACHE_PORT')) define('GDO_MEMCACHE_PORT', 61221);

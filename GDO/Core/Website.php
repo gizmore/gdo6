@@ -21,13 +21,12 @@ final class Website
 	private static $_inline_css = '';
 	
 	/**
-	 * @deprecated
 	 * @param number $time
 	 * @return \GDO\Core\GDT_Response
 	 */
-	public static function redirectBack($time=0)
+	public static function redirectBack($time=0, $default=null)
 	{
-		return self::redirect(self::hrefBack(), $time);
+	    return self::redirect(self::hrefBack($default), $time);
 	}
 	
 	/**

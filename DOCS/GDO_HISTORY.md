@@ -2,6 +2,16 @@
 
 gdo6 Changelog and roadmap.
 
+## 6.10.4
+
+ - Better performance by only once, and lazily, converting GDT vars to values.
+ 
+ - Timezone detection via Javascript
+
+ - CLI is getting somewhere (but more on TODO)
+  
+ - JQuery error dialogs
+ 
 
 ## 6.10.3
  

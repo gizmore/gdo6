@@ -131,6 +131,12 @@ finally
 # Render Page
 switch ($app->getFormat())
 {
+    case 'cli':
+        $content = $strayContent;
+        $cacheContent = $response->renderCLI();
+        $content .= $cacheContent;
+        break;
+        
     case 'json':
         hdr('Content-Type: application/json');
         if ($response)

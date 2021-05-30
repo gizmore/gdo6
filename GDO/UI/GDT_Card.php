@@ -12,6 +12,7 @@ use GDO\Date\GDT_DateDisplay;
 use GDO\Core\WithFields;
 use GDO\DB\GDT_EditedBy;
 use GDO\DB\GDT_EditedAt;
+use GDO\Core\Application;
 
 /**
  * A card with title, subtitle, creator, date, content and actions.
@@ -71,9 +72,38 @@ final class GDT_Card extends GDT
 	##############
 	### Render ###
 	##############
-	public function render() { return $this->renderCell(); }
+	public function render()
+	{
+	    if (Application::instance()->isCLI())
+	    {
+	        return $this->renderCLI();
+	    }
+	    return $this->renderCell();
+	}
 	public function renderCard() { return $this->renderCell(); }
 	public function renderCell() { return GDT_Template::php('UI', 'cell/card.php', ['field' => $this]); }
+	
+	public function renderCLI()
+	{
+	    $back = [];
+	    if ($this->title)
+	    {
+    	    $back[] = $this->title->renderCLI();
+	    }
+	    if ($this->subtitle)
+	    {
+	        $back[] = $this->subtitle->renderCLI();
+	    }
+	    foreach ($this->getFieldsRec() as $gdt)
+	    {
+	        $back[] = $gdt->renderCLI();
+	    }
+	    if ($this->footer)
+	    {
+	        $back[] = $this->footer->renderCLI();
+	    }
+	    return implode(', ', $back);
+	}
 	
 	##############
 	### Helper ###

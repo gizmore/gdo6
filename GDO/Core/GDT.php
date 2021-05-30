@@ -44,6 +44,8 @@ abstract class GDT
 	
 	public $name; # html id
 	public $var; # String representation of current var
+	private $valueConverted = false;
+	public $value; # Object representation of current var
 	public $initial; # Initial var
 	public $unique = false; # DB
 	public $primary = false; # DB
@@ -55,6 +57,7 @@ abstract class GDT
 	public $orderable = false; # GDT_Table
 	public $filterable = false; # GDT_Table
 	public $searchable = false; # GDT_Table
+	public $positional = null; # CLI
 	
 	###############
 	### Factory ###
@@ -132,7 +135,7 @@ abstract class GDT
 	#############
 	public $error;
 	public function error($key, array $args=null) { return $this->rawError(t($key, $args)); }
-	public function rawError($html=null) { $this->error = $html; return false; }
+	public function rawError($html=null) { if (!$this->error) $this->error = $html; return false; }
 	public function hasError() { return is_string($this->error); }
 	public function htmlError() { return $this->error ? ('<div class="gdo-form-error">' . $this->error . '</div>') : ''; }
 	public function classError()
@@ -185,30 +188,69 @@ abstract class GDT
 	 * @param string $var
 	 * @return self
 	 */
-	public function var($var=null) { $this->var = $var === null ? null : (string)$var; return $this; }
+	public function var($var=null)
+	{
+	    if ($this->var !== $var)
+	    {
+    	    $this->var = $var === null ? null : (string)$var;
+    	    $this->value = null;
+    	    $this->valueConverted = false;
+	    }
+	    return $this;
+	}
 	
 	/**
 	 * Set the var via value. Converted vie toVar($value).
 	 * @param mixed $value
 	 * @return self
 	 */
-	public function value($value) { $this->var = $this->toVar($value); return $this; }
+	public function value($value)
+	{
+	    return $this->var($this->toVar($value));
+	}
 	
 	/**
 	 * Convert the value to var.
 	 * @param mixed $value
 	 * @return string
 	 */
-	public function toVar($value) { return ($value === null) || ($value === '') ? null : (string) $value; }
+	public function toVar($value)
+	{
+	    return ($value === null) || ($value === '') ?
+	       null : (string)$value;
+	}
 	
 	public function inputToVar($input) { return $input; }
 	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
 	public function hasVar() { return !!$this->getVar(); }
-	public function getVar() { return $this->getRequestVar($this->formVariable(), $this->var); }
+	public function getVar()
+	{
+	    return $this->var;
+	}
 	public function getParameterVar() { return $this->getRequestVar(null, $this->var); }
 	public function getParameterValue() { return $this->toValue($this->getParameterVar()); }
-	public function getValue() { return $this->toValue($this->getVar()); }
-	public function initial($var=null) { $this->initial = $this->var = $var === null ? null : (string)$var; return $this; }
+	public function getValue()
+	{
+	    if (!$this->valueConverted)
+	    {
+	        $this->value = $this->toValue($this->var);
+	        $this->valueConverted = true;
+	    }
+	    return $this->value;
+	}
+	
+	public function getInitialValue()
+	{
+	    return $this->toValue($this->initial);
+	}
+	
+	public function initial($var=null)
+	{
+	    $this->initial = $this->var = $var === null ? 
+	       null : (string)$var;
+	    $this->valueConverted = false;
+	    return $this;
+	}
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }
 	public function displayVar() { return html($this->getVar()); }
 	public function displayValue($var) { return html($var); }
@@ -216,7 +258,11 @@ abstract class GDT
 
 	public function getFields() {}
 	public function hasChanged() { return $this->initial !== $this->getVar(); }
-	public function getValidationValue() { return $this->getValue(); }
+	public function getValidationValue()
+	{
+	    $this->getRequestVar($this->formName(), $this->var, $this->name);
+	    return $this->getValue();
+	}
 	
 	public function isSerializable() { return false; }
 	public function isPrimary() { return false; }
@@ -245,7 +291,22 @@ abstract class GDT
 	 */
 	public function isPositional()
 	{
+	    if (is_bool($this->positional))
+	    {
+	        return $this->positional;
+	    }
 	    return $this->notNull && ($this->initial === null);
+	}
+	
+	/**
+	 * Force the positional state of a GDT for CLI args.
+	 * @param boolean $positional
+	 * @return self
+	 */
+	public function positional($positional=true)
+	{
+	    $this->positional = $positional;
+	    return $this;
 	}
 	
 	#################
@@ -288,6 +349,17 @@ abstract class GDT
 	 * @return string
 	 */
 	public function getRequestVar($firstLevel=null, $default=null, $name=null)
+	{
+	    $old = $this->var;
+	    $new = $this->_getRequestVar($firstLevel, $default, $name);
+	    if ($old !== $new)
+	    {
+	        $this->var($new);
+	    }
+	    return $new;
+	}
+	
+	private function _getRequestVar($firstLevel=null, $default=null, $name=null)
 	{
 		$name = $name === null ? $this->name : $name;
 		
@@ -372,6 +444,7 @@ abstract class GDT
 	################
 	public function notNull($notNull=true) { $this->notNull = $notNull; return $this; }
 	public function errorNotNull() { return $this->error('err_not_null'); }
+	public function errorNotFound() { return $this->error('err_not_found'); }
 	public function onValidated() {}
 	
 	/**

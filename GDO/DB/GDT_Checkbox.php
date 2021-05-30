@@ -11,8 +11,8 @@ use GDO\Core\GDT_Template;
  * @TODO what about real checkboxes? Not a single one wanted/needed?
  * 
  * @author gizmore
- * @version 6.10.2
- * @since 5.0
+ * @version 6.10.3
+ * @since 5.0.0
  */
 class GDT_Checkbox extends GDT_Select
 {
@@ -36,7 +36,7 @@ class GDT_Checkbox extends GDT_Select
 	
 	public function initChoices()
 	{
-		if ($this->choices === null)
+		if (!$this->choices)
 		{
 			$this->choices([
 				'0' => t('enum_no'),
@@ -108,7 +108,19 @@ class GDT_Checkbox extends GDT_Select
 	public function validate($value)
 	{
 		$this->initChoices();
-		return parent::validate($value);
+		if ($value === true)
+		{
+		    return true;
+		}
+		if ($value === false)
+		{
+		    return true;
+		}
+		if ($value === null)
+		{
+		    return parent::validate($value);
+		}
+		return $this->errorInvalidChoice();
 	}
 	
 	##############

@@ -16,8 +16,8 @@ use GDO\UI\WithImageSize;
  * File input and upload backend for flow.js
  * 
  * @author gizmore
- * @version 6.10
- * @since 4.02
+ * @version 6.10.3
+ * @since 4.2.0
  */
 class GDT_File extends GDT_Object
 {

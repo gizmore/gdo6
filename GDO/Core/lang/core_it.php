@@ -118,6 +118,7 @@ return array(
 'err_db' => 'Errore di bancadati(%s): %s<br/>\n%s<br/>\n',
 'err_user' => 'Questo utente é sconosciuto.',
 'err_exception' => 'Eccezione: %s',
+'err_parameter_exception' => '%s: %s',
 'err_gdo_object_no_table' => '%s é un ogetto GDT senza tabella.',
 'err_column' => 'Sconosciuta colonna GDT: %s.',
 'err_token' => 'Il suo token non é valido.',
@@ -136,6 +137,7 @@ return array(
 'err_file_not_found' => 'Non trovato il file: %s',
 'err_already_authenticated' => 'É gia registrato.',
 'err_gdo_not_found' => '%s non poteva essere trovato con la ID %s.',
+'err_no_data_yet' => 'Non ci sono ancora dati disponibili.',
 'err_string_pattern' => 'Il vostro inserimento non combacia con la maschera di Inserimento.',
 'err_url_not_reachable' => 'L´inserimento URL non é stato raggiunto dal Server.',
 'err_method_disabled' => 'Questa funzione é disattivata.',
@@ -290,6 +292,7 @@ Cordiali saluti,<br/>
 'pagemenu_cli' => 'Pagina %s / %s',
 
 # v6.10.3 CLI
+'cli_methods' => 'Il modulo %s offre le seguenti funzioni: %s.',
 'cli_usage' => 'Uso: %s - %s',
 'err_cli' => 'Errore! %s',
 );

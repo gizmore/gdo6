@@ -17,4 +17,9 @@ return [
     'tu_d' => 'd',
     'tu_y' => 'y',
     
+    # Timezone
+    'ft_date_timezone' => 'Setzen Ihrer Zeitzone',
+    'msg_timezone_changed' => 'Ihre Zeitzone ist nun %s.',
+    'cfg_tz_probe_js' => 'Zeitzone mit Javascript ermitteln?',
+    'cfg_tz_sidebar_select' => 'Zeitzohnenwahl in der Sidebar anzeigen?',
 ];

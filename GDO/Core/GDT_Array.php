@@ -12,7 +12,7 @@ namespace GDO\Core;
  */
 class GDT_Array extends GDT
 {
-    public static function makeWith(array &$data)
+    public static function makeWith(array $data)
     {
         return self::make()->data($data);
     }

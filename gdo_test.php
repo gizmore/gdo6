@@ -31,7 +31,7 @@ Debug::enableExceptionHandler();
 Cache::init();
 Cache::flush();
 Database::init();
-GDO_Session::init();
+GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
 
 final class TestApp extends Application
 {

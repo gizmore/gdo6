@@ -549,6 +549,30 @@ class GDT_Table extends GDT
 	    return $xml;
 	}
 	
+	public function renderCLI()
+	{
+	    $p = $this->getPageMenu();
+	    if ($p && $p->getPageCount() > 1)
+	    {
+    	    $items = [];
+    	    while ($gdo = $this->result->fetchObject())
+    	    {
+    	        $items[] = $gdo->renderCLI();
+    	    }
+    	    return t('cli_pages', [$this->renderTitle(), 
+    	        $p->getPage(), $p->getPageCount(), implode(', ', $items)]);
+	    }
+	    else
+	    {
+	        $items = [];
+	        while ($gdo = $this->result->fetchObject())
+	        {
+	            $items[] = $gdo->renderCLI();
+	        }
+	        return t('cli_page', [$this->renderTitle(), implode(', ', $items)]);
+	    }
+	}
+	
 	################
 	### Page for ###
 	################

@@ -164,6 +164,11 @@ abstract class GDO
         return html($this->gdoVars[$key]);
     }
     
+    public function renderCLI()
+    {
+        return $this->getID() . '-' . $this->displayName();
+    }
+    
     public function renderChoice()
     {
         return $this->displayName();
@@ -739,7 +744,7 @@ abstract class GDO
         if ($withHooks)
         {
             $this->afterCreate();
-//             $this->cache(); # not needed for new rows?
+            $this->cache(); # not needed for new rows?
         }
         return $this;
     }

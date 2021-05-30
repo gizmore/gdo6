@@ -35,6 +35,10 @@ class GDT_ObjectSelect extends GDT_Select
         {
             if ($this->notNull)
             {
+                if ($this->getVar())
+                {
+                    return $this->errorNotFound();
+                }
                 return $this->errorNotNull();
             }
             return true;
@@ -46,6 +50,12 @@ class GDT_ObjectSelect extends GDT_Select
         }
         
 		return true;
+	}
+	
+	public function errorNotFound()
+	{
+	    return $this->error('err_gdo_not_found', [
+	        $this->foreignTable()->gdoHumanName(), html($this->getVar())]);
 	}
 	
 	##############
@@ -126,7 +136,7 @@ class GDT_ObjectSelect extends GDT_Select
 		$back = [];
 		foreach (json_decode($var) as $id)
 		{
-			if ($object = $this->table->find($id, false))
+		    if ($object = $this->table->find($id, false))
 			{
 				$back[$id] = $object;
 			}

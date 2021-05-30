@@ -10,7 +10,7 @@ use GDO\UI\WithTitle;
  * Value is a @see URL.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.4
  * @since 5.0.0
  */
 class GDT_Url extends GDT_String
@@ -80,6 +80,12 @@ class GDT_Url extends GDT_String
 	    return $this;
 	}
 	
+	public function allSchemes()
+	{
+	    $this->schemes = null;
+	    return $this;
+	}
+	
 	public function noFollow($noFollow=true)
 	{
 	    $this->noFollow = $noFollow;
@@ -135,7 +141,7 @@ class GDT_Url extends GDT_String
 		# Check schemes (if external). internal are always prefixed with /
 		if ($this->allowExternal)
 		{
-    		if (count($this->schemes))
+    		if ($this->schemes && count($this->schemes))
     		{
         		if (!in_array($url->getScheme(), $this->schemes, true))
         		{

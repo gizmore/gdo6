@@ -44,6 +44,11 @@ class GDT_Username extends GDT_String
 		return $this->displayVar();
 	}
 	
+	public function renderCLI()
+	{
+	    return $this->gdo->displayName();
+	}
+	
 	################
 	### Validate ###
 	################

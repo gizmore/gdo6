@@ -4,8 +4,8 @@ namespace GDO\DB;
  * The auto inc column is unsigned and sets the primary key after insertions.
  *
  * @author gizmore
- * @version 6.10
- * @since 5.0
+ * @version 6.10.3
+ * @since 5.0.0
  * @see GDT_CreatedAt
  * @see GDT_CreatedBy
  * @see GDT_EditedAt
@@ -30,6 +30,11 @@ final class GDT_AutoInc extends GDT_UInt
 	public function isPrimary() { return true; } # Weird workaround for mysql primary key defs.
 	public function gdoColumnDefine() { return "{$this->identifier()} INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY"; }
 	public function validate($value) { return true; } # We simply do nothing in the almighty validate.
+	
+	##############
+	### Render ###
+	##############
+// 	public function renderCLI() { return $this->gdo->gdoHumanName() . '#' . getVar(); }
 	
 	##############
 	### Events ###

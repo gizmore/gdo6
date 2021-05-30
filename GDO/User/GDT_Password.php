@@ -36,7 +36,7 @@ class GDT_Password extends GDT_String
 	
 	public function getGDOData()
 	{
-		$pass = $this->toValue($this->var);
+		$pass = $this->getValue();
 		return [$this->name => $pass ? $pass->__toString() : null];
 	}
 	

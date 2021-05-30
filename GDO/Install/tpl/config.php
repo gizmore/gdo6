@@ -4,6 +4,7 @@ use GDO\Form\GDT_Form;
 use GDO\UI\GDT_Divider;
 use GDO\Form\GDT_Submit;
 use GDO\Util\Numeric;
+use GDO\Core\Module_Core;
 /**
  * @var $form GDT_Form
  */
@@ -12,9 +13,16 @@ echo '<';echo '?';echo "php\n";
 ###############################
 ### GDO6 Configuration File ###
 ###############################
-if (defined('GDO_CONFIGURED')) return;
+if (defined('GDO_CONFIGURED')) return; // double include
+
+/**
+ * Please work down each section carefully.
+ * Common pitfall is that there are 2 domains to set: GDO_DOMAIN and GDO_SESS_DOMAIN.
+ * GDO <?=Module_Core::$GDO_REVISION; ?>
+ **/
+
 <?php
-$tz = $form->getField('timezone')->var;
+// $tz = $form->getField('timezone')->var;
 $created = Time::getDate(microtime(true));
 $form->getField('sitecreated')->var($created);
 ?>
@@ -63,6 +71,7 @@ else
 	{
 		$value = $value ? 'true' : 'false';
 	}
+	
 	printf("define('GDO_%1\$s', env('GDO_%1\$s', %2\$s));\n", strtoupper($name), $value);
 }
 ?>

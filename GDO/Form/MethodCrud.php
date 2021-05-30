@@ -19,7 +19,7 @@ use GDO\Core\Website;
  * Abstract Create|Update|Delete for a GDO using MethodForm.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.3
  * @since 5.1.0
  */
 abstract class MethodCrud extends MethodForm
@@ -54,6 +54,15 @@ abstract class MethodCrud extends MethodForm
 	
 	public function crudName() { return 'id'; }
 	public function getCRUDID() { return Common::getRequestString($this->crudName()); }
+	
+	
+	public function gdoParameters()
+	{
+	    $p = [
+	        GDT_Object::make($this->crudName())->table($this->gdoTable()),
+	    ];
+	    return array_merge($p, parent::gdoParameters());
+	}
 	
 	/**
 	 * @var GDO

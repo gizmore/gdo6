@@ -23,6 +23,14 @@ final class GDT_Module extends GDT_ObjectSelect
         $this->table(GDO_Module::table());
     }
     
+    public function toVar($value)
+    {
+        if ($value)
+        {
+            return strtolower($value->getName());
+        }
+    }
+    
     ####################
     ### Un/Installed ###
     ####################

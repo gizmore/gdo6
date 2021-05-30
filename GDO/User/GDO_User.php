@@ -20,6 +20,7 @@ use GDO\Avatar\GDT_Avatar;
 use GDO\DB\Cache;
 use GDO\Country\GDO_Country;
 use GDO\DB\GDT_Index;
+use GDO\Session\GDO_Session;
 
 /**
  * The holy user object.
@@ -67,7 +68,7 @@ final class GDO_User extends GDO
 		    GDT_DeletedAt::make('user_deleted_at'),
 		    GDT_CreatedAt::make('user_last_activity')->label('last_activity'),
 			GDT_CreatedAt::make('user_register_time')->label('registered_at'),
-		    GDT_Timezone::make('user_timezone')->initial(GDO_TIMEZONE),
+		    GDT_Timezone::make('user_timezone')->initial('UTC')->notNull(),
 			GDT_IP::make('user_register_ip')->useCurrent(),
 		    # Indexes
 		    GDT_Index::make()->indexColumns('user_last_activity'),
@@ -89,7 +90,15 @@ final class GDO_User extends GDO
 	public function isBot() { return $this->isType(self::BOT); }
 	public function isGhost() { return $this->isType(self::GHOST); }
 	public function isAnon() { return $this->isGuest() && (!$this->getGuestName()); }
-	public function isGuest() { return $this->isType(self::GUEST); }
+	
+	public function isGuest($andAuthenticated=true)
+	{
+	    $a = $andAuthenticated;
+	    return $this->isType(self::GUEST) ? 
+	       ($a ? (!!$this->getGuestName()) : true) : # guest type checks for auth or true
+	       false; # non guest
+	}
+	
 	public function isMember() { return $this->isType(self::MEMBER); }
 	public function isType($type) { return $this->getType() === $type; }
 	
@@ -124,6 +133,7 @@ final class GDO_User extends GDO
 	public function getLanguage() { return GDO_Language::findById($this->getLangISO()); }
 	public function getCountryISO() { return $this->getVar('user_country'); }
 	public function getCountry() { $c = $this->getValue('user_country'); return $c ? $c : GDO_Country::unknownCountry(); }
+	public function hasTimezone() { return $this->getVar('user_timezone') !== 'UTC'; }
 	public function getTimezone() { return $this->getVar('user_timezone'); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
@@ -138,22 +148,17 @@ final class GDO_User extends GDO
 	### Timezone ###
 	################
 	/**
-	 * Timezone cache
-	 * @var \DateTimeZone
-	 */
-	private $tz = null;
-	
-	/**
 	 * Get the appropiate timezone object for this user.
 	 * @return \DateTimeZone
 	 */
 	public function getTimezoneObject()
 	{
-	    if ($this->tz === null)
+	    if (!($tz = $this->tempGet('timezone')))
 	    {
-	        $this->tz = new \DateTimeZone($this->getTimezone());
+	        $tz = new \DateTimeZone($this->getTimezone());
+	        $this->tempSet('timezone', $tz);
 	    }
-	    return $this->tz;
+	    return $tz;
 	}
 	
 	###############
@@ -212,7 +217,15 @@ final class GDO_User extends GDO
 		}
 		return $cache;
 	}
-	public function hasPermissionID($permissionId) { return $this->hasPermissionObject(GDO_Permission::getById($permissionId)); }
+	public function hasPermissionID($permissionId)
+	{
+	    if ($permissionId)
+	    {
+    	    $permission = GDO_Permission::findById($permissionId);
+    	    return $this->hasPermissionObject($permission);
+	    }
+	    return true;
+	}
 	public function hasPermissionObject(GDO_Permission $permission) { return $this->hasPermission($permission->getName()); }
 	public function hasPermission($permission) { return array_key_exists($permission, $this->loadPermissions()); }
 	public function isAdmin() { return $this->hasPermission('admin'); }
@@ -300,6 +313,7 @@ final class GDO_User extends GDO
 		{
 			$this->setVar('user_type', self::GUEST);
 			$this->insert();
+			GDO_Session::instance()->setVar('sess_user', $this->getID());
 		}
 		return $this;
 	}
@@ -354,6 +368,10 @@ final class GDO_User extends GDO
 	 */
 	public static function withPermission($permission)
 	{
+	    # @todo This triggers a bug when all admin users are reloaded they poison the cache with outdated data. 
+	    #       The reason is not very known, as even ->uncache() does not help.
+	    #       On uncache results, cache shall flow in the different direction.
+	    #       The loaded cache data shall be updated with current cache? not sure if that's the bug.
 // 	    $key = "all-{$permission}-users";
 // 	    if (false === ($cache = Cache::get($key)))
 // 	    {
@@ -439,4 +457,5 @@ final class GDO_User extends GDO
 	
 }
 
+# Initial valid state
 GDO_User::setCurrent(GDO_User::ghost());

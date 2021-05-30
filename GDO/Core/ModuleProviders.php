@@ -108,6 +108,7 @@ final class ModuleProviders
         'Push' => 'gdo6-push',
         'Python' => 'gdo6-python',
         'QRCode' => 'gdo6-qrcode',
+        'Quotes' => 'gdo6-quotes',
         'Ranzgruppe' => 'gdo6-ranzgruppe',
         'Recovery' => 'gdo6-recovery',
         'Register' => 'gdo6-register',

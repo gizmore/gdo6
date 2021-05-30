@@ -34,7 +34,14 @@ abstract class MethodForm extends Method
 	
 	public function gdoParameters()
 	{
-	    return $this->getForm()->getFields();
+	    return $this->getForm()->getFieldsRec();
+	}
+	
+	public function allParameters()
+	{
+	    return array_merge(
+	        $this->gdoParameterCache(),
+	        $this->getForm()->getFieldsRec());
 	}
 	
 	############
@@ -54,6 +61,7 @@ abstract class MethodForm extends Method
 	    {
     	    foreach ($params as $key => $var)
     	    {
+    	        $_REQUEST[$key] = $var;
     	        $_REQUEST[$form][$key] = $var;
     	    }
 	    }
@@ -160,8 +168,9 @@ abstract class MethodForm extends Method
 	{
 		if (!isset($this->form))
 		{
-			$this->form = GDT_Form::make($this->formName());
-			$this->form->titleRaw($this->getTitle());
+			$this->form = GDT_Form::make($this->formName())->
+			    titleRaw($this->getTitle())->
+			    action($this->methodHref());
 			$this->createForm($this->form);
 		}
 		return $this->form;
@@ -201,12 +210,14 @@ abstract class MethodForm extends Method
 	public function formInvalid(GDT_Form $form)
 	{
 	    $app = Application::instance();
-		$error = $this->error('err_form_invalid');
 		if ($app->isAjax() || $app->isCLI())
 		{
-			$error->addField($form);
+		    return $this->error('err_form_invalid')->addField($form);
 		}
-		return $error;
+		else
+		{
+		    return $this->error('err_form_invalid');
+		}
 	}
 	
 	###########
@@ -223,6 +234,11 @@ abstract class MethodForm extends Method
 	public function renderCLIHelp()
 	{
 	    return $this->getForm()->renderCLIHelp($this);
+	}
+	
+	public function getButtons()
+	{
+	    return $this->getForm()->actions()->getFieldsRec();
 	}
 	
 }

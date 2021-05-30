@@ -1,11 +1,15 @@
 <?php
 namespace GDO\Util;
 
+use GDO\Core\GDOParameterException;
+use GDO\Core\GDT_Error;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDOError;
 use GDO\Core\Method;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Response;
+use GDO\Core\GDO_Module;
+use GDO\Form\GDT_Submit;
 
 /**
  * CLI utilities.
@@ -14,7 +18,7 @@ use GDO\Core\GDT_Response;
  * @see Method
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 6.10.2
  */
 final class CLI
@@ -24,14 +28,14 @@ final class CLI
         return get_current_user();
     }
     
-    public static function autoFlush()
-    {
-        while (ob_get_level())
-        {
-            ob_end_clean();
-        }
-        ob_implicit_flush(true);
-    }
+//     public static function autoFlush()
+//     {
+//         while (ob_get_level())
+//         {
+//             ob_end_clean();
+//         }
+//         ob_implicit_flush(true);
+//     }
     
     /**
      * Simulate PHP $_SERVER vars.
@@ -79,33 +83,83 @@ final class CLI
             
         # Parse 'module.method' part
         $mome = Strings::substrTo($line, ' ', $line);
-        $line = Strings::substrFrom($line, ' ', '');
-        $mo = Strings::substrTo($mome, '.');
-        $me = Strings::rsubstrFrom($mome, '.');
-        $module = ModuleLoader::instance()->getModule($mo, true);
+        $lin = Strings::substrFrom($line, ' ', '');
+        
+        $matches = null;
+        if (preg_match('#^([a-z]+)\\.?([a-z]*)(\\.?)([a-z]*)$#iD', $mome, $matches))
+        {
+            $mo = $matches[1];
+            $me = @$matches[2];
+            $exec = $lin ? true : (!!@$matches[3]);
+            $button = @$matches[4] ? $matches[4] : 'submit';
+        }
+        else
+        {
+            throw new GDOError('err_module_method');
+        }
+        
+        if (!($module = ModuleLoader::instance()->getModule($mo, true)))
+        {
+            throw new GDOError('err_module_method');
+        }
+        
+        if (!$module->isEnabled())
+        {
+            return GDT_Error::responseWith('err_method_disabled');
+        }
+        
+        if (!$me)
+        {
+            return self::showMethods($module);
+        }
+        
         $method = $module->getMethodByName($me);
         if (!$method)
         {
             throw new GDOError('err_module_method');
         }
         
-        if (strpos($mome, '..') === false)
+        if (!$exec)
         {
             return self::showHelp($method);
         }
 
         # Parse everything after
-        $params = self::parseArgline($line, $method);
+        $params = self::parseArgline($lin, $method);
         
+        $params[$button] = $button;
         $method->requestParameters($params);
         
         # Execute the method
-        return $method->exec();
+        try
+        {
+            return $method->exec();
+        }
+        catch (GDOParameterException $ex)
+        {
+            return GDT_Response::makeWithHTML($ex->getMessage());
+        }
     }
     
     private static function showHelp(Method $method)
     {
         return $method->renderCLIHelp();
+    }
+    
+    private static function showMethods(GDO_Module $module)
+    {
+        $methods = $module->getMethods();
+        
+        $methods = array_filter($methods, function(Method $method) {
+            return (!$method->isAjax()) && $method->isCLI();
+        });
+        
+        $methods = array_map(function(Method $m) {
+            return $m->gdoShortName();
+        }, $methods);
+        
+        return GDT_Response::makeWithHTML(t('cli_methods', [
+            $module->displayName(), implode(', ', $methods)]));
     }
     
     /**
@@ -114,7 +168,7 @@ final class CLI
      * @param Method $method
      * @return string[]
      */
-    private static function parseArgline($line, Method $method)
+    public static function parseArgline($line, Method $method, $asValues=false)
     {
         $parameters = [];
         
@@ -123,6 +177,7 @@ final class CLI
             $k = Strings::substrTo($line, '=', $line);
             $k = trim($k, '-');
             $v = Strings::substrFrom($line, '=', '');
+            $v = Strings::substrTo($v, ' ', $v);
             $v = $v === '' ? null : $v;
             $line = Strings::substrFrom($line, ' ', '');
             $parameters[$k] = $v;
@@ -131,14 +186,33 @@ final class CLI
         $i = 0;
         $args = Strings::args($line);
         
-        foreach ($method->gdoParameterCache() as $gdt)
+        foreach ($method->allParameters() as $gdt)
         {
             if ($gdt->name && $gdt->editable && $gdt->isPositional())
             {
-                $arg = $args[$i++];
+                $arg = @$args[$i++];
+                $gdt->var($arg);
                 $parameters[$gdt->name] = $arg;
             }
         }
+        
+        if ($asValues)
+        {
+            $old = $parameters;
+            $parameters = [];
+            foreach ($method->allParameters() as $gdt)
+            {
+                if (isset($old[$gdt->name]))
+                {
+                    $parameters[$gdt->name] = $gdt->getValue();
+                }
+                else
+                {
+                    $parameters[$gdt->name] = $gdt->getInitialValue();
+                }
+            }
+        }
+        
         return $parameters;
     }
 
@@ -153,7 +227,8 @@ final class CLI
         $usage2 = [];
         foreach ($fields as $gdt)
         {
-            if (!$gdt->isSerializable())
+            if ( (!$gdt->isSerializable()) ||
+                 (!$gdt->editable) )
             {
                 continue;
             }
@@ -163,15 +238,35 @@ final class CLI
             }
             else
             {
-                $usage2[] = sprintf('[--%s=<var>]', $gdt->name);
+                $usage2[] = sprintf('[--%s=<%s>]', $gdt->name, $gdt->gdoShortName());
             }
         }
         $usage = implode(' ', $usage2) . ' ' . implode(' ', $usage1);
         $usage = trim($usage);
-        $mome = sprintf('%s..%s', 
-            $method->getModuleName(), $method->getMethodName());
+        $buttons = self::renderCLIHelpButtons($method);
+        $mome = sprintf('%s.%s.%s', 
+            $method->getModuleName(), $method->getMethodName(), $buttons);
         return GDT_Response::makeWithHTML(t('cli_usage', [
             trim(strtolower($mome).' '.$usage), $method->getDescription()]));
+    }
+    
+    private static function renderCLIHelpButtons(Method $method)
+    {
+        $impl = [];
+        $buttons = $method->getButtons();
+        foreach ($buttons as $gdt)
+        {
+            if (!($gdt instanceof GDT_Submit))
+            {
+                continue;
+            }
+            if ($gdt->name === 'submit')
+            {
+                continue;
+            }
+            $impl[] = $gdt->name;
+        }
+        return $impl ? '[' . implode('|', $impl) . ']' : '';
     }
     
 }

@@ -11,7 +11,7 @@ use GDO\User\GDO_User;
  * Using mysql date with milliseconds.
  *
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.3
  * @since 1.0.0
  * 
  * @see GDT_Date
@@ -44,8 +44,7 @@ final class Time
 	public static function getDate($time=null)
 	{
 	    $time = $time === null ? Application::$MICROTIME : (float)$time;
-	    $time = sprintf('%.03f', $time);
-	    $now = DateTime::createFromFormat('U.u', $time);
+	    $now = DateTime::createFromFormat('U.u', sprintf('%.03f', $time));
 	    return $now->format("Y-m-d H:i:s.v");
 	}
 	
@@ -138,6 +137,11 @@ final class Time
 		return abs($b->getTimestamp() - $a->getTimestamp());
 	}
 	
+	/**
+	 * Get the age of a date.
+	 * @param string $date
+	 * @return int
+	 */
 	public static function getAgo($date)
 	{
 		return Application::$TIME - self::getTimestamp($date);
@@ -375,4 +379,5 @@ final class Time
 	// 	}
 }
 	
+date_default_timezone_set('UTC');
 Time::$UTC = new \DateTimeZone('UTC');

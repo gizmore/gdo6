@@ -14,6 +14,7 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\Util\Strings;
 use GDO\Util\CLI;
+use GDO\Form\GDT_Submit;
 
 /**
  * Abstract baseclass for all methods.
@@ -56,6 +57,7 @@ abstract class Method
 	 * @return GDT_Response
 	 */
 	public function init() {}
+	public function isCLI() { return true; }
 	public function isAjax() { return false; }
 	public function isEnabled() { $m = $this->getModule(); return $m && $m->isEnabled(); }
 	public function isUserRequired() { return false; }
@@ -204,6 +206,7 @@ abstract class Method
     	        $gdt->var($initial); 
     	    }
     	    
+    	    $gdt->getRequestVar($gdt->formVariable(), $gdt->var);
 	        $value = $gdt->getValue();
 	        if (!$gdt->validate($value))
 	        {
@@ -234,7 +237,7 @@ abstract class Method
 	public function gdoParameterValue($key)
 	{
 		$gdt = $this->gdoParameter($key);
-		return $gdt->toValue($gdt->getVar());
+		return $gdt->getValue();
 	}
 	
 	public function methodVars(array $vars)
@@ -244,6 +247,14 @@ abstract class Method
 			$_REQUEST[$key] = $value;
 		}
 		return $this;
+	}
+	
+	/**
+	 * @return GDT[]
+	 */
+	public function allParameters()
+	{
+	    return $this->gdoParameterCache();
 	}
 	
 	##############
@@ -299,7 +310,7 @@ abstract class Method
 		$append = '';
 		foreach ($this->gdoParameterCache() as $gdt)
 		{
-			$append .= '&' . $gdt->name . '=' . urlencode($gdt->getVar());
+			$append .= '&' . $gdt->name . '=' . urlencode($gdt->getRequestVar());
 		}
 		return $this->href($append);
 	}
@@ -324,10 +335,23 @@ abstract class Method
 		{
 			return false;
 		}
-		if ( ($this->getUserType()) && ($this->getUserType() !== $user->getType()) )
+		
+		if ($mt = $this->getUserType())
 		{
-			return false;
+		    $ut = $user->getType();
+		    if (is_array($mt))
+		    {
+		        if (!in_array($ut, $mt))
+		        {
+		            return false;
+		        }
+		    }
+		    elseif ($ut !== $mt)
+		    {
+		        return false;
+		    }
 		}
+		
 		if ( ($permission = $this->getPermission()) && (!$user->hasPermission($permission)) )
 		{
 			return false;
@@ -375,9 +399,20 @@ abstract class Method
 			}
 		}
 		
-		if ( ($this->getUserType()) && ($this->getUserType() !== $user->getType()) )
+		if ($mt = $this->getUserType())
 		{
-			return GDT_Error::responseWith('err_user_type', [$this->getUserType()]);
+		    $ut = $user->getType();
+		    if (is_array($mt))
+		    {
+		        if (!in_array($ut, $mt))
+		        {
+		            return GDT_Error::responseWith('err_user_type', [implode(' / ', $this->getUserType())]);
+		        }
+		    }
+		    elseif ($ut !== $mt)
+		    {
+		        return GDT_Error::responseWith('err_user_type', [$this->getUserType()]);
+		    }
 		}
 		
 		if ( ($permission = $this->getPermission()) && (!$user->hasPermission($permission)) )
@@ -577,6 +612,14 @@ abstract class Method
 	public function renderCLIHelp()
 	{
 	    return CLI::renderCLIHelp($this, $this->gdoParameterCache());
+	}
+	
+	/**
+	 * @return GDT_Submit[]
+	 */
+	public function getButtons()
+	{
+	    return [];
 	}
 
 }

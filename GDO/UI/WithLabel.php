@@ -13,15 +13,23 @@ trait WithLabel
     /**
      * @param string $name
      * @return self
+     * @override
      */
     public function name($name=null) { $this->name = $name; return $this->defaultLabel(); }
+
     
     public $label;
 	public $labelArgs;
 	public $labelRaw;
 
-	public function noLabel() { return $this->labelRaw(''); }
-	public function hasLabel() { return $this->label || ($this->labelRaw !== null); }
+	public function noLabel()
+	{
+	    $this->label = $this->labelArgs = $this->labelRaw = null;
+	    return $this;
+	}
+	
+	public function hasLabel() { return $this->label || $this->labelRaw; }
+	
 	public function defaultLabel() { return $this->label($this->name); }
 	
 	/**
@@ -29,8 +37,20 @@ trait WithLabel
 	 * @param array $args
 	 * @return static
 	 */
-	public function label($key, array $args=null) { $this->labelRaw = null; $this->label = $key; $this->labelArgs = $args; return $this; }
-	public function labelRaw($label=null) { $this->labelRaw = $label; return $this; }
+	public function label($key, array $args=null)
+	{
+	    $this->labelRaw = null;
+	    $this->label = $key;
+	    $this->labelArgs = $args;
+	    return $this;
+	}
+	
+	public function labelRaw($label=null)
+	{
+	    $this->labelRaw = $label;
+	    $this->label = $this->labelArgs = null;
+	    return $this;
+	}
 	
 	public function displayLabel()
 	{
@@ -42,6 +62,7 @@ trait WithLabel
 		{
 			return t($this->label, $this->labelArgs);
 		}
+		return '';
 	}
 
 }
