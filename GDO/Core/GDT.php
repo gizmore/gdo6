@@ -58,6 +58,7 @@ abstract class GDT
 	public $filterable = false; # GDT_Table
 	public $searchable = false; # GDT_Table
 	public $positional = null; # CLI
+	public $focusable = true;
 	
 	###############
 	### Factory ###
@@ -605,6 +606,11 @@ abstract class GDT
 	    ];
 	}
 
+	public function focusable($focusable)
+	{
+	    $this->focusable = $focusable;
+	    return $this;
+	}
 }
 
 if (GDT::$DEBUG)

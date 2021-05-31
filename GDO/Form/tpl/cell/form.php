@@ -30,7 +30,7 @@ $firstEditableField = null;
     <div class="gdo-form-inner">
 <?php endif; ?>
 <?php foreach ($form->getFields() as $field) : ?>
-     <?php if ( ($field->editable) && ($field->initial === null) && (!$field instanceof GDT_File) ) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
+     <?php if ( ($field->editable) && ($field->getVar() === null) && ($field->focusable) && (!$field instanceof GDT_File) ) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
       <?= $field->gdo($form->gdo)->renderForm(); ?>
 <?php endforeach; ?>
 <?php if ($form->hasVisibleFields()) : ?>
