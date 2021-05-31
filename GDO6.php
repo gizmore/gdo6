@@ -50,18 +50,28 @@ function sitename() { return t('sitename'); }
 function url($module, $method, $append='', $lang=true) { return urlSEO('index.php', $module, $method, $append, $lang); }
 function urlSEO($seoString, $module, $method, $append='', $lang=true) { return GDT_Url::absolute(hrefSEO($seoString, $module, $method, $append, $lang)); }
 function jxhref($module, $method, $append='', $lang=true) { return href($module, $method, $append.'&ajax=1&fmt=json', $lang); }
-function href($module, $method, $append='', $lang=true) { return hrefSEO('index.php', $module, $method, $append, $lang); }
+function href($module, $method, $append='', $lang=true)
+{
+    return hrefSEO($_SERVER['SCRIPT_NAME'], $module, $method, $append, $lang);
+}
 function hrefDefault() { return href(GDO_MODULE, GDO_METHOD); }
 function hrefSEO($seoString, $module, $method, $append='', $lang=true)
 {
     if (defined('GDO_SEO_URLS') && GDO_SEO_URLS)
     {
-        $html = $seoString === 'index.php' ? '' : '.html'; # append .html?
-        $href = GDO_WEB_ROOT . urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}";
+        if ($seoString === '/index.php')
+        {
+            $html = $seoString === $_SERVER['SCRIPT_NAME'] ? '' : '.html'; # append .html?
+            $href = urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}";
+        }
+        else
+        {
+            $href = $_SERVER['SCRIPT_NAME'] . "?mo={$module}&me={$method}";
+        }
     }
     else
     {
-        $href = GDO_WEB_ROOT . "index.php?mo={$module}&me={$method}";
+        $href = $_SERVER['SCRIPT_NAME'] . "?mo={$module}&me={$method}";
     }
     
     if ($lang)

@@ -11,7 +11,7 @@ use GDO\Core\GDT;
  * @see \GDO\Register\Method\Form
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.4
  * @since 5.0.0
  */
 class GDT_Validator extends GDT
@@ -35,6 +35,8 @@ class GDT_Validator extends GDT
 	public function renderCell() { return ''; }
 	public function validatorField() { return GDT_Form::$VALIDATING_INSTANCE->fields[$this->validateField]; }
 	public function renderJSON() {}
+	public function renderCLI() {}
+	public function renderXML() {}
 	
 	/**
 	 * 

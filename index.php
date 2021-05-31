@@ -16,13 +16,15 @@ use GDO\DB\Cache;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_HTML;
+use GDO\Core\Module_Core;
 
 require 'GDO6.php';
 
 @include 'protected/config.php';
 if (!defined('GDO_CONFIGURED'))
 {
-    die("<!DOCTYPE html><html><body><h1>GDO6</h1><p>Please create a config.php, preferrably with <a href=\"install/wizard.php\">the install wizard.</a></p></body></html>\n");
+    require 'index_install.php';
+    die(0);
 }
 
 GDT_Page::make();
@@ -42,6 +44,12 @@ Debug::enableExceptionHandler();
 Debug::setDieOnError(GDO_ERROR_DIE);
 Debug::setMailOnError(GDO_ERROR_MAIL);
 ModuleLoader::instance()->loadModulesCache();
+if (!module_enabled('Core'))
+{
+    require 'index_install.php';
+    die(1);
+}
+
 $session = GDO_Session::instance();
 if (GDO_User::current()->isUser())
 {
@@ -132,11 +140,15 @@ finally
 switch ($app->getFormat())
 {
     case 'cli':
-        $content = $strayContent;
-        $cacheContent = $response->renderCLI();
-        $content .= $cacheContent;
+        if ($response)
+        {
+            hdr('Content-Type: application/text');
+            $content = $strayContent;
+            $cacheContent = $response->renderCLI();
+            $content .= $cacheContent;
+        }
+        if ($session) $session->commit();
         break;
-        
     case 'json':
         hdr('Content-Type: application/json');
         if ($response)
@@ -150,14 +162,17 @@ switch ($app->getFormat())
             if ($session) $session->commit();
             $content = $cacheContent = Website::renderJSON($content);
         }
-        else
-        {
-        }
+        if ($session) $session->commit();
         break;
         
     case 'html':
         
         $ajax = Application::instance()->isAjax();
+        
+        if (Module_Core::instance()->cfgLoadSidebars())
+        {
+            GDT_Page::$INSTANCE->loadSidebars();
+        }
         
         if ($response)
         {
@@ -185,8 +200,8 @@ switch ($app->getFormat())
         if ($response)
         {
             $content = $cacheContent = $response->renderXML();
-            if ($session) $session->commit();
         }
+        if ($session) $session->commit();
         break;
 }
 

@@ -26,7 +26,7 @@ use GDO\DB\GDT_UInt;
  * Holds fields for a configuration form.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  */
 class Config

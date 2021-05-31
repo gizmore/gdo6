@@ -87,7 +87,10 @@ class GDT_Form extends GDT
 	### Action ###
 	##############
 	public $action;
-	public function action($action=null) { $this->action = $action; return $this; }
+	public function action($action=null)
+	{
+	    $this->action = $action; return $this;
+	}
 	
 	##############
 	### Layout ###
@@ -210,11 +213,8 @@ class GDT_Form extends GDT
 				    echo "{$field->name}: {$field->error}\n";
 				}
 			}
-			else
-			{
-			    # Conversion again because some values might change their ID attribute (GDT_File)
-			    $field->var($field->toVar($value));
-			}
+		    # Conversion again because some values might change their ID attribute (GDT_File)
+// 		    $field->var($field->toVar($value));
 		}
 		# Recursive
 		if ($fields = $field->getFields())

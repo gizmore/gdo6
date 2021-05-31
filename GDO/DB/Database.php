@@ -12,10 +12,10 @@ use GDO\Core\Debug;
 /**
  * mySQLi abstraction.
  * 
- * @TODO support postgres?
+ * @TODO support postgres? This can be achieved via making module DB a separate module. Just need to move any GDT there, that does db creation code. Tricky for Maps/GDT_Position?
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 3.0.0
  * 
  * @see Query
@@ -118,7 +118,8 @@ class Database
 			finally
 			{
 				$timeTaken = microtime(true) - $t1;
-				$this->queryTime += $timeTaken; self::$QUERY_TIME += $timeTaken;
+				$this->queryTime += $timeTaken;
+				self::$QUERY_TIME += $timeTaken;
 			}
 		}
 		return $this->link;
@@ -207,7 +208,7 @@ class Database
 		if (!isset(self::$TABLES[$classname]))
 		{
 		    /** @var $gdo GDO **/
-			self::$TABLES[$classname] = $gdo = new $classname();
+		    self::$TABLES[$classname] = $gdo = new $classname();
 			$gdo->isTable = true;
 			
 			if ($gdo->gdoAbstract())
@@ -217,12 +218,8 @@ class Database
 			
 			self::$COLUMNS[$classname] = self::hashedColumns($gdo);
 
-			/** @var $gdo \GDO\Core\GDO **/
-// 			if ($initCache && ($gdo->gdoCached() || $gdo->memCached()))
-			{
-			    # Always init a cache item.
-				$gdo->initCache();
-			}
+		    # Always init a cache item.
+			$gdo->initCache();
 		}
 		return self::$TABLES[$classname];
 	}

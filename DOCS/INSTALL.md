@@ -102,6 +102,7 @@ Copy this list and remove / add modules.
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-irc-spider DogIRCSpider
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-shadowdogs DogShadowdogs
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-tick DogTick
+    ## git clone --recursive https://github.com/gizmore/gdo6-dog-website DogWebsite
     git clone --recursive https://github.com/gizmore/gdo6-download Download
     git clone --recursive https://github.com/gizmore/gdo6-dsgvo DSGVO
     git clone --recursive https://github.com/gizmore/gdo6-facebook Facebook
@@ -135,6 +136,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-logs Logs
     # git clone --recursive https://github.com/gizmore/gdo6-mail-gpg MailGPG
     # git clone --recursive https://github.com/gizmore/gdo6-maintenance Maintenance
+    # git clone --recursive https://github.com/gizmore/gdo6-math Math
     git clone --recursive https://github.com/gizmore/gdo6-maps Maps
     git clone --recursive https://github.com/gizmore/gdo6-markdown Markdown
     # git clone --recursive https://github.com/gizmore/gdo6-material Material

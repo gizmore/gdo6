@@ -32,10 +32,10 @@ abstract class MethodForm extends Method
 	
 	public abstract function createForm(GDT_Form $form);
 	
-	public function gdoParameters()
-	{
-	    return $this->getForm()->getFieldsRec();
-	}
+// 	public function gdoParameters()
+// 	{
+// 	    return $this->getForm()->getFieldsRec();
+// 	}
 	
 	public function allParameters()
 	{

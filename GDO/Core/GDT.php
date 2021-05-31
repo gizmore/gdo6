@@ -173,7 +173,7 @@ abstract class GDT
 	    {
 	        if ($gdo->isTable())
 	        {
-    	       return $this->var($this->initial);
+//     	       return $this->var($this->initial);
 	        }
 	        else
 	        {
@@ -223,10 +223,7 @@ abstract class GDT
 	public function inputToVar($input) { return $input; }
 	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
 	public function hasVar() { return !!$this->getVar(); }
-	public function getVar()
-	{
-	    return $this->var;
-	}
+	public function getVar() { return $this->var; }
 	public function getParameterVar() { return $this->getRequestVar(null, $this->var); }
 	public function getParameterValue() { return $this->toValue($this->getParameterVar()); }
 	public function getValue()
@@ -260,7 +257,7 @@ abstract class GDT
 	public function hasChanged() { return $this->initial !== $this->getVar(); }
 	public function getValidationValue()
 	{
-	    $this->getRequestVar($this->formName(), $this->var, $this->name);
+	    $this->getRequestVar($this->formName(), $this->var);
 	    return $this->getValue();
 	}
 	
@@ -352,6 +349,7 @@ abstract class GDT
 	{
 	    $old = $this->var;
 	    $new = $this->_getRequestVar($firstLevel, $default, $name);
+        $new = $this->toVar($this->toValue($new)); # fix bug!
 	    if ($old !== $new)
 	    {
 	        $this->var($new);

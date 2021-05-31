@@ -4,22 +4,32 @@ namespace GDO\Core;
 /**
  * This GDT holds a method and executes it directly before rendering.
  * @author gizmore
- * @version 6.10
- * @since 6.10
+ * @version 6.10.4
+ * @since 6.10.0
  */
 final class GDT_Method extends GDT
 {
+    public static function with(Method $method)
+    {
+        return self::make()->method($method);
+    }
+    
     public $method;
-    public function method(Method $method) { $this->method = $method; return $this; }
+    public function method(Method $method)
+    {
+        $this->method = $method;
+        return $this;
+    }
     
     public function renderCell()
     {
-        echo $this->method->execute()->renderCell();
+        return $this->execute()->renderCell();
     }
     
     public function execute()
     {
-        return  $this->method->execute();
+        $response = GDT_Response::newWith();
+        return $response->addField($this->method->execute());
     }
     
 }

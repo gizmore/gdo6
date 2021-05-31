@@ -20,20 +20,43 @@ class GDT_Success extends GDT
     use WithText;
     use WithPHPJQuery;
     
+    public static $MESSAGE = 1;
+    
     public function isSerializable() { return true; }
     
-	public static function responseWith($key, array $args=null, $code=200, $log=true)
+    public function defaultName() { return self::$MESSAGE === 1 ? 'message' : 'message_' . (++self::$ERROR); }
+    
+    public function code($code)
 	{
-		return GDT_Response::makeWith(self::with($key, $args, $code, $log));
+	    if ($code > 200)
+	    {
+	        GDT_Response::$CODE = $code;
+	        http_response_code($code);
+	    }
+	    return $this;
 	}
 	
 	public static function with($key, array $args=null, $code=200, $log=true)
 	{
-		if ($log)
+	    if ($log)
 		{
 			Logger::logMessage(tiso('en', $key, $args));
 		}
-		return self::make()->text($key, $args);
+		return self::make()->text($key, $args)->code($code);
+	}
+	
+	public static function withText($text, $code=200, $log=true)
+	{
+	    if ($log)
+	    {
+	        Logger::logMessage($text);
+	    }
+	    return self::make()->textRaw($text)->code($code);
+	}
+	
+	public static function responseWith($key, array $args=null, $code=200, $log=true)
+	{
+	    return GDT_Response::makeWith(self::with($key, $args, $code, $log));
 	}
 	
 	##############
@@ -47,6 +70,11 @@ class GDT_Success extends GDT
 	        return sprintf('%s - %s', $this->renderTitle(), $this->renderText());
 	    }
 	    return $this->renderText();
+	}
+
+	public function renderCLI()
+	{
+	    return $this->renderJSON();
 	}
 
 }

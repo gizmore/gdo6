@@ -33,6 +33,13 @@ In this example we turn of caching. maybe because its a relation table or the da
 
 # Implementation Details
 
+There are 3 types of cache in gdo.
+
+ - Process cache
+ - Memcached
+ - Filecache
+  
+
 ## GDO process cache
 
 The gdo process cache is clean on every request / a new process.
@@ -50,10 +57,18 @@ Internally, each GDO / Table is stored into this cache by a tablename_primarykey
 The same association is used in the memcached global cache. 
 
 
-## memcached global cache
+## Memcached global cache
 
 The GDO\DB\Cache also (optionally) stores entities in memcached to reduce database queries. Remember that on every request the GDO cache would be fresh.
 
 There is also an API to use the memcached directly.
 
 Many modules store various results this way, Often the whole content of a database table, if the expected maximum rowcount is low. An example would be the GDO_Country table.
+
+
+## Filecache
+
+New since 6.0.3 is the file cache.
+It uses the file system to cache the output of executing a method.
+Currently the filename consists of the method name and the gdoParamteres used to invoke it. Additionally the language code is added to it. 
+

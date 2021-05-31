@@ -11,7 +11,7 @@ use GDO\UI\GDT_Container;
  * General Website utility.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 3.0.5
  * @see \GDO\UI\GDT_Page
  */
@@ -85,9 +85,9 @@ final class Website
 		return sprintf('<script type="text/javascript">setTimeout(function(){ window.location.href="%s" }, %d);</script>', $url, $time*1000);
 	}
 	
+	public static function addBowerCSS($path) { self::addCSS("bower_components/$path"); }
 	public static function addInlineCSS($css) { self::$_inline_css .= $css; }
 	public static function addCSS($path) { self::addLink($path, 'text/css', 'stylesheet'); }
-	public static function addBowerCSS($path) { self::addCSS("bower_components/$path"); }
 	
 	/**
 	 * add an html <link>
@@ -194,15 +194,6 @@ final class Website
 		return json_encode($json, JSON_PRETTY_PRINT); # pretty json
 	}
 	
-// 	public static function outputJSON($json)
-// 	{
-// 	    if (Application::instance()->isUnitTests())
-// 	    {
-// 	        return; # assume this method works in tests and dont output anything.
-// 	    }
-// 	    echo self::renderJSON($json);
-// 	}
-	
 	public static function outputStarted()
 	{
 		return headers_sent() || ob_get_contents();
@@ -213,7 +204,7 @@ final class Website
 	#############
 	public static function error($key, array $args=null)
 	{
-	    self::topResponse()->addField(GDT_Error::with($key, $args));
+	    self::topResponse()->addField(GDT_Error::with($key, $args, 405));
 	}
 	
 	/**
@@ -226,22 +217,48 @@ final class Website
 	 */
 	public static function redirectMessage($key, array $args=null, $url=null, $time=0)
 	{
-		if (Application::instance()->isCLI())
-		{
-			echo t($key, $args) . "\n";
-			return;
-		}
-		
-	    $url = $url === null ? self::hrefBack() : $url;
-	    self::topResponse()->addField(GDT_Success::with($key, $args));
-	    if ( (!Application::instance()->isInstall()) || (Application::instance()->isCLI()) )
+	    return self::redirectMessageRaw(t($key, $args), $url, $time);
+	}
+	
+	public static function redirectMessageRaw($message, $url=null, $time=0)
+	{
+	    if (Application::instance()->isCLI())
 	    {
-    	    GDO_Session::set('redirect_message', t($key, $args));
-    	    return self::redirect($url, $time);
+	        echo "{$message}\n";
+	        return;
 	    }
-	    elseif (Application::instance()->isCLI())
+	    
+	    $url = $url === null ? self::hrefBack() : $url;
+	    
+	    self::topResponse()->addField(GDT_Success::withText($message));
+	    $app = Application::instance();
+	    if (!$app->isInstall())
 	    {
-	        echo t($key, $args);
+	        GDO_Session::set('redirect_message', $message);
+	        return self::redirect($url, $time);
+	    }
+	}
+	
+	public static function redirectError($key, array $args=null, $url=null, $time=0)
+	{
+	    return self::redirectErrorRaw(t($key, $args), $url, $time);
+	}
+	
+	public static function redirectErrorRaw($message, $url=null, $time=0)
+	{
+	    if (Application::instance()->isCLI())
+	    {
+	        echo "{$message}\n";
+	        return true;
+	    }
+	    
+	    $url = $url === null ? self::hrefBack() : $url;
+	    self::topResponse()->addField(GDT_Error::withText($message, 405));
+	    $app = Application::instance();
+	    if (!$app->isInstall())
+	    {
+	        GDO_Session::set('redirect_error', $message);
+	        return self::redirect($url, $time);
 	    }
 	}
 	
@@ -256,11 +273,16 @@ final class Website
 	        self::$TOP_RESPONSE = GDT_Container::make('topRespnse');
 	        if (!Application::instance()->isInstall())
 	        {
-    	        if ($message = GDO_Session::get('redirect_message'))
-    	        {
-    	            GDO_Session::remove('redirect_message');
-    	            self::$TOP_RESPONSE->addField(GDT_Success::make()->textRaw($message));
-    	        }
+	            if ($message = GDO_Session::get('redirect_message'))
+	            {
+	                GDO_Session::remove('redirect_message');
+	                self::$TOP_RESPONSE->addField(GDT_Success::make()->textRaw($message));
+	            }
+	            if ($message = GDO_Session::get('redirect_error'))
+	            {
+	                GDO_Session::remove('redirect_error');
+	                self::$TOP_RESPONSE->addField(GDT_Error::make()->textRaw($message));
+	            }
 	        }
 	    }
 	    return self::$TOP_RESPONSE;
@@ -319,9 +341,12 @@ final class Website
 	public static function displayTitle()
 	{
 	    $title = html(self::$TITLE);
-	    if (Module_Core::instance()->cfgSiteShortTitleAppend())
+	    if (module_enabled('Core'))
 	    {
-	        $title .= " [" . GDO_SITENAME . "]";
+    	    if (Module_Core::instance()->cfgSiteShortTitleAppend())
+    	    {
+    	        $title .= " [" . GDO_SITENAME . "]";
+    	    }
 	    }
 	    return $title;
 	}

@@ -300,4 +300,5 @@ Viele Grüße,<br/>
 'cli_methods' => 'Das %s Modul bietet folgende Funktionen: %s.',
 'cli_usage' => 'Nutze: %s - %s',
 'err_cli' => 'Fehler! %s',
+'cli_page' => '%s: %s.',
 );

@@ -15,6 +15,7 @@ use GDO\File\Filewalker;
 use GDO\Util\Strings;
 use GDO\Util\CLI;
 use GDO\Form\GDT_Submit;
+use GDO\Form\GDT_Form;
 
 /**
  * Abstract baseclass for all methods.
@@ -32,7 +33,7 @@ use GDO\Form\GDT_Submit;
  * @see MethodCronjob
  *
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 3.0.0
  */
 abstract class Method
@@ -70,6 +71,14 @@ abstract class Method
 	public function isLockingSession() { return $_SERVER['REQUEST_METHOD'] === 'POST'; } # @todo make use of session locking
 	public function getPermission() {}
 	public function hasPermission(GDO_User $user) { return true; }
+
+	/**
+	 * Override this.
+	 * Should this method save the current URL as last url?
+	 * @see Website->hrefBack()
+	 * @return boolean
+	 */
+	public function saveLastUrl() { return true; }
 	
 	/**
 	 * Restrict this method to user types.
@@ -90,14 +99,6 @@ abstract class Method
 	 * @return ?GDT_Response
 	 */
 	public function afterExecute() {}
-	
-	/**
-	 * Override this.
-	 * Should this method save the current URL as last url?
-	 * @see Website->hrefBack()
-	 * @return boolean
-	 */
-	public function saveLastUrl() { return true; }
 	
 	/**
 	 * Override this.
@@ -201,7 +202,7 @@ abstract class Method
 	    /** @var $gdt GDT **/
 	    if ($gdt = @$this->gdoParameterCache()[$key])
 	    {
-    	    if ($initial !== null)
+//     	    if ($initial !== null)
     	    {
     	        $gdt->var($initial); 
     	    }
@@ -310,7 +311,10 @@ abstract class Method
 		$append = '';
 		foreach ($this->gdoParameterCache() as $gdt)
 		{
-			$append .= '&' . $gdt->name . '=' . urlencode($gdt->getRequestVar());
+		    if ($gdt->name && ($var = $gdt->getVar()))
+		    {
+		        $append .= '&' . $gdt->name . '=' . urlencode($var);
+		    }
 		}
 		return $this->href($append);
 	}

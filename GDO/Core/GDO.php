@@ -11,6 +11,10 @@ use GDO\DB\GDT_String;
 use GDO\DB\GDT_Enum;
 use GDO\DB\GDT_Name;
 use GDO\Language\Trans;
+use GDO\DB\GDT_DeletedAt;
+use GDO\Date\Time;
+use GDO\DB\GDT_DeletedBy;
+use GDO\User\GDO_User;
 
 /**
  * - GDO -
@@ -20,7 +24,7 @@ use GDO\Language\Trans;
  * When a GDT column is used, the $gdoVars are copied into the GDT,
  * which make this framework tick fast with a low memory footprint.
  * It safes memory to only keep the GDTs once per Table.
- * Please note that almost all vars are considered string in GDO6. 
+ * Please note that all vars are considered string in GDO6, the db representation.
  * 
  * @see GDT
  * @see Cache
@@ -28,13 +32,15 @@ use GDO\Language\Trans;
  * @see Query
  * 
  * @author gizmore@wechall.net
- * @version 6.10.3
+ * @version 6.10.4
  * @since 3.2.0
  * @license MIT
  */
 abstract class GDO
 {
     use WithName;
+    
+    const TOKEN_LENGTH = 16; # length of gdoHashcode and GDT_Token
 
     const MYISAM = 'myisam'; # Faster writes
     const INNODB = 'innodb'; # Foreign keys
@@ -667,9 +673,65 @@ abstract class GDO
         return $query;
     }
     
-    public function delete()
+    ##############
+    ### Delete ###
+    ##############
+    /**
+     * Delete this entity.
+     * @param boolean $withHooks
+     * @return self
+     */
+    public function delete($withHooks=true)
     {
-        return $this->deleteB();
+        return $this->deleteB($withHooks);
+    }
+
+    /**
+     * Check if we are deleted.
+     * @return boolean
+     */
+    public function isDeleted()
+    {
+        if ($gdt = $this->gdoColumnOf(GDT_DeletedAt::class))
+        {
+            return $gdt->getVar() !== null;
+        }
+        if ($gdt = $this->gdoColumnOf(GDT_DeletedBy::class))
+        {
+            return $gdt->getVar() !== null;
+        }
+        return $this->isPersisted();
+    }
+    
+    /**
+     * Mark this GDO as deleted, or delete physically.
+     * @param boolean $withHooks
+     * @return self
+     */
+    public function markDeleted($withHooks=true)
+    {
+        if ($gdt = $this->gdoColumnOf(GDT_DeletedAt::class))
+        {
+            $this->setVar($gdt->name, Time::getDate());
+            $change = true;
+        }
+        if ($gdt = $this->gdoColumnOf(GDT_DeletedBy::class))
+        {
+            $this->setVar($gdt->name, GDO_User::current()->getID());
+            $change = true;
+        }
+        if ($change)
+        {
+            $this->save($withHooks);
+            if ($withHooks)
+            {
+                $this->afterDelete();
+            }
+        }
+        else
+        {
+            return $this->deleteB($withHooks);
+        }
     }
     
     /**
@@ -701,18 +763,33 @@ abstract class GDO
         return $deleted;
     }
     
-    private function deleteB()
+    private function deleteB($withHooks=true)
     {
         if ($this->persisted)
         {
             $query = $this->query()->delete($this->gdoTableIdentifier())->where($this->getPKWhere());
-            $this->beforeDelete($query);
+            if ($withHooks)
+            {
+                $this->beforeDelete($query);
+            }
             $query->exec();
-            $this->afterDelete();
             $this->persisted = false;
+            if ($withHooks)
+            {
+                $this->afterDelete();
+            }
             $this->uncache();
         }
         return $this;
+    }
+    
+    ###############
+    ### Replace ###
+    ###############
+    public function insert($withHooks=true)
+    {
+        $query = $this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars());
+        return $this->insertOrReplace($query, $withHooks);
     }
     
     public function replace($withHooks=true)
@@ -723,12 +800,6 @@ abstract class GDO
             return $this->insert();
         }
         $query = $this->query()->replace($this->gdoTableIdentifier())->values($this->gdoPrimaryKeyValues())->values($this->getDirtyVars());
-        return $this->insertOrReplace($query, $withHooks);
-    }
-    
-    public function insert($withHooks=true)
-    {
-        $query = $this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars());
         return $this->insertOrReplace($query, $withHooks);
     }
     
@@ -749,6 +820,9 @@ abstract class GDO
         return $this;
     }
     
+    ##############
+    ### Update ###
+    ##############
     /**
      * Build a generic update query for the whole table.
      * @return Query
@@ -776,34 +850,28 @@ abstract class GDO
         {
             return $this->insert();
         }
-//         if ($this->isDirty())
-//         {
-            if ($setClause = $this->getSetClause())
+        if ($setClause = $this->getSetClause())
+        {
+            $query = $this->updateQuery()->set($setClause);
+            
+            if ($withHooks)
             {
-                $query = $this->updateQuery()->set($setClause);
-                
-                if ($withHooks)
-                {
-                    $this->beforeUpdate($query);
-                }
-                
-                $query->exec();
-                $this->dirty = false;
-                
-                if ($withHooks)
-                {
-                    $this->recache(); # save is the only action where we recache!
-                }
-
-                if ($withHooks)
-                {
-                    $this->afterUpdate();
-                }
+                $this->beforeUpdate($query);
             }
-//         }
+            $query->exec();
+            $this->dirty = false;
+            if ($withHooks)
+            {
+                $this->recache(); # save is the only action where we recache!
+                $this->afterUpdate();
+            }
+        }
         return $this;
     }
     
+    ########################
+    ### Var manipulation ###
+    ########################
     public function increase($key, $by=1)
     {
         return $by === 0 ? $this : $this->saveVar($key, $this->getVar($key)+$by);
@@ -1484,7 +1552,7 @@ abstract class GDO
      */
     public static function gdoHashcodeS(array $gdoVars)
     {
-        return substr(sha1(GDO_SALT.json_encode($gdoVars)), 0, 16);
+        return substr(sha1(GDO_SALT.json_encode($gdoVars)), 0, self::TOKEN_LENGTH);
     }
     
     ##############
@@ -1522,11 +1590,6 @@ abstract class GDO
                 return $gdt->name;
             }
         }
-    }
-    
-    public function getDefaultOrderDir()
-    {
-        return true;
     }
     
     #######################

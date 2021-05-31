@@ -6,13 +6,14 @@ use GDO\DB\ArrayResult;
 use GDO\Util\Common;
 use GDO\Core\GDT;
 use GDO\Core\GDO;
+use GDO\Util\Strings;
 
 /**
  * - A trait for tables and list which adds an extra headers variable. This has to be a \GDO\Core\GDT_Fields.
  * - Implements @\GDO\Core\ArrayResult multisort for use in @\GDO\Table\MethodTable.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.5.0
  */
 trait WithHeaders
@@ -50,7 +51,7 @@ trait WithHeaders
 	 * @param ArrayResult $result
 	 * @return ArrayResult
 	 */
-	public function multisort(ArrayResult $result, $defaultOrder=null, $defaultOrderAsc=true)
+	public function multisort(ArrayResult $result, $defaultOrder=null)
 	{
 		# Get order from request
 	    if ($orders = Common::getRequestArray($this->headers->name))
@@ -60,8 +61,9 @@ trait WithHeaders
 	    
 	    if (empty($orders) && $defaultOrder)
 	    {
-	        $order = $defaultOrderAsc ? '1' : '0';
-	        $orders[$defaultOrder] = $order;
+	        $col = Strings::substrTo($defaultOrder, ' ', $defaultOrder);
+	        $order = stripos($defaultOrder, ' DESC') ? '0' : '1';
+	        $orders[$col] = $order;
 	        $_REQUEST[$this->headers->name]['o'] = $orders;
 	    }
 		

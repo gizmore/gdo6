@@ -38,7 +38,7 @@ final class InstallerApp extends Application
 new InstallerApp();
 
 # Current user is ghost
-GDO_User::$CURRENT = GDO_User::ghost();
+GDO_User::setCurrent(GDO_User::ghost());
 
 GDT_Page::make();
 

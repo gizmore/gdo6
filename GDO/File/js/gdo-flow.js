@@ -64,7 +64,7 @@ document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo
 			loadingPane.classList.add('done');
 		}
 		message = JSON.parse(message);
-		window.GDO.error(message);
+		window.GDO.error(message.json.error, 'Upload');
 	});
 	
 });

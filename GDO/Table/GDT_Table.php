@@ -169,12 +169,10 @@ class GDT_Table extends GDT
 	################
 	public $ordered;
 	public $orderDefault;
-	public $orderDefaultAsc;
-	public function ordered($ordered=true, $defaultOrder=null, $defaultAsc=true)
+	public function ordered($ordered=true, $defaultOrder=null)
 	{
 		$this->ordered = $ordered;
 		$this->orderDefault = $defaultOrder;
-		$this->orderDefaultAsc = $defaultAsc;
 		return $this;
 	}
 	
@@ -592,10 +590,11 @@ class GDT_Table extends GDT
 	    else
 	    {
 	        $q = $this->query->copy(); #->noJoins();
-	        foreach ($q->orderBy as $i => $column)
+	        foreach ($q->order as $i => $column)
 	        {
 	            $subq = $gdo->entityQuery()->from($gdo->gdoTableName()." AS sq{$i}")->selectOnly($column)->buildQuery();
-	            $cmpop = $q->orderDir[$i] ? '<' : '>';
+	            $order = stripos($column, 'DESC') ? '0' : '1';
+	            $cmpop =  $order ? '<' : '>';
 	            $q->where("{$column} {$cmpop} ( {$subq} )");
 	        }
 	        $q->selectOnly('COUNT(*)')->noOrder();

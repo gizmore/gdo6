@@ -6,7 +6,7 @@ namespace GDO\Core;
  * 
  * @author gizmore
  * @author spaceone
- * @version 6.10.3
+ * @version 6.10.4
  * @since 1.0.0
  */
 final class Logger
@@ -135,7 +135,6 @@ final class Logger
 	public static function logCritical($message)
 	{
 		self::log('critical', $message, self::GDO_CRITICAL);
-// 		self::log('critical_details', Debug::backtrace(print_r($_GET, true).PHP_EOL.self::stripPassword($_REQUEST).PHP_EOL.$message, false), self::GDO_CRITICAL); // TODO: formating
 	}
 	public static function logException(\Throwable $e)
 	{

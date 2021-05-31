@@ -11,12 +11,13 @@ use GDO\DB\Database;
 use GDO\Core\GDOException;
 use GDO\Core\Website;
 use GDO\File\GDT_Path;
+use GDO\Form\GDT_Hidden;
 
 /**
  * Create a GDO config with this form.
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.4
+ * @since 3.0.0
  */
 class Configure extends MethodForm
 {
@@ -24,7 +25,8 @@ class Configure extends MethodForm
     {
         return [
             GDT_Path::make('filename')->initial('config.php'),
-        ];
+            GDT_Hidden::make('step')->initial('3'),
+          ];
     }
     
     public function cfgConfigName() { return $this->gdoParameterVar('filename'); }

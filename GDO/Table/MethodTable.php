@@ -201,7 +201,8 @@ abstract class MethodTable extends Method
 	###############
 	public function execute()
 	{
-		return $this->renderTable();
+		return GDT_Response::makeWith(
+		    $this->renderTable());
 	}
 	
 	public function getTableTitleLangKey()
@@ -225,7 +226,7 @@ abstract class MethodTable extends Method
 	    $table->gdo($this->gdoTable());
 	    
 	    # 5 features
-	    $table->ordered($this->isOrdered(), $this->getDefaultOrder(), $this->getDefaultOrderDir());
+	    $table->ordered($this->isOrdered(), $this->getDefaultOrder());
 	    $table->filtered($this->isFiltered());
 	    $table->searched($this->isSearched());
 	    $table->sorted($this->isSorted());
@@ -268,7 +269,7 @@ abstract class MethodTable extends Method
 	    }
 	    if ($this->isOrdered())
 	    {
-	        $result = $table->multisort($result, $this->getDefaultOrder(), $this->getDefaultOrderDir());
+	        $result = $table->multisort($result, $this->getDefaultOrder());
 	    }
 	    if ($this->isPaginated())
 	    {

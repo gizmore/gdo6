@@ -295,4 +295,5 @@ Kind Regards,<br/>
 'cli_methods' => 'Module %s offers these methods: %s.',
 'cli_usage' => 'Usage: %s - %s',
 'err_cli' => 'Error! %s',
+'cli_page' => '%s: %s.',
 );

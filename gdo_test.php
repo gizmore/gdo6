@@ -96,8 +96,8 @@ if ($argc === 2)
     
     foreach ($modules as $moduleName)
     {
+        echo "Installing {$moduleName}\n";
         $module = ModuleLoader::instance()->getModule($moduleName);
-        echo "Installing {$module->getName()}\n";
         Installer::installModule($module);
         runTestSuite($module);
     }

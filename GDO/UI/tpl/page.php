@@ -7,7 +7,6 @@ use GDO\UI\GDT_Loading;
 use GDO\Javascript\Module_Javascript;
 use GDO\Language\Trans;
 /** @var $page GDT_Page **/
-$page->loadSidebars();
 ?>
 <!DOCTYPE html>
 <html lang="<?=Trans::$ISO?>">
@@ -50,7 +49,8 @@ $page->loadSidebars();
 	</div>
 	
 	<?=GDT_Loading::make()->render()?>
-	
-	<?=Javascript::displayJavascripts(Module_Javascript::instance()->cfgMinifyJS() === 'concat')?>
+
+	<?php $jsMode = module_enabled('Javascript') ? Module_Javascript::instance()->cfgMinifyJS() === 'concat' : false; ?>	
+	<?=Javascript::displayJavascripts($jsMode)?>
   </body>
 </html>

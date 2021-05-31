@@ -295,4 +295,5 @@ Cordiali saluti,<br/>
 'cli_methods' => 'Il modulo %s offre le seguenti funzioni: %s.',
 'cli_usage' => 'Uso: %s - %s',
 'err_cli' => 'Errore! %s',
+'cli_page' => '%s: %s.',
 );

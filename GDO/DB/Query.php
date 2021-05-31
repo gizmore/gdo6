@@ -110,8 +110,6 @@ final class Query
     		$clone->group = $this->group;
     		$clone->having = $this->having;
             $clone->order = $this->order;
-            $clone->orderBy = $this->orderBy;
-            $clone->orderDir = $this->orderDir;
             $clone->limit = $this->limit;
     		$clone->from = $this->from;
     		$clone->write = $this->write;
@@ -333,56 +331,31 @@ final class Query
 		return $this->set ? " SET {$this->set}" : "";
 	}
 
-	public function orderASC($column=null)
-	{
-		return $this->order($column);
-	}
-	
-	public function orderDESC($column=null)
-	{
-		return $this->order($column, false);
-	}
 	
 	public function noOrder()
 	{
 	    $this->order = null;
-	    $this->orderBy = [];
-	    $this->orderDir = [];
 	    return $this;
 	}
 	
 	/**
-	 * @var string[]
-	 */
-	public $orderBy = [];
-
-	/**
-	 * @var boolean[]
-	 */
-	public $orderDir = [];
-	
-	/**
 	 * Order clause.
 	 * @todo make it one var. 'foo ASC'
-	 * @param string $column
-	 * @param boolean $ascending
+	 * @param string $order
 	 * @return self
 	 */
-	public function order($column=null, $ascending=true)
+	public function order($order)
 	{
-		if ($column)
+		if ($order)
 		{
-		    $this->orderBy[] = $column;
-		    $this->orderDir[] = $ascending;
-			$order = $column . ($ascending ? ' ASC' : ' DESC');
-			if ($this->order)
-			{
-				$this->order .= ',' . $order;
-			}
-			else
-			{
-				$this->order = $order;
-			}
+		    if ($this->order === null)
+		    {
+		        $this->order = [$order];
+		    }
+		    else
+		    {
+		        $this->order[] = $order;
+		    }
 		}
 		return $this;
 	}
@@ -484,7 +457,7 @@ final class Query
 	
 	public function getOrderBy()
 	{
-		return $this->order ? " ORDER BY {$this->order}" : "";
+		return $this->order ? ' ORDER BY ' . implode(', ', $this->order) : '';
 	}
 	
 	public function raw($raw)

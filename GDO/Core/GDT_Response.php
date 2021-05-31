@@ -7,9 +7,10 @@ use GDO\UI\GDT_HTML;
  * The response class renders fields according to the request content-type.
  * You can control the content type with the &fmt=json|html|cli|xml GET parameter.
  * The &ajax=1 parameter will drop the gdo6 site around it so you can focus on the data.
+ * There is only one global Response used by the rendering, which can be stacked via GDT_Response::newWith().
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  */
 class GDT_Response extends GDT
@@ -136,10 +137,6 @@ class GDT_Response extends GDT
 	    else
 	    {
 	        $this->_addField($field);
-// 	        if (isset($field->fields))
-// 	        {
-// 	            $this->addFields($field->fields);
-// 	        }
     	    return $this;
 	    }
 	}
@@ -156,6 +153,10 @@ class GDT_Response extends GDT
 	    return $this;
 	}
 	
+	/**
+	 * @param string $html
+	 * @return self
+	 */
 	public function addHTML($html)
 	{
 		return $html ? $this->addField(GDT_HTML::withHTML($html)) : $this;

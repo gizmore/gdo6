@@ -62,8 +62,16 @@ class GDT_Select extends GDT_ComboBox
 
 	public function toValue($var)
 	{
+	    if ($var === null)
+	    {
+	        return null;
+	    }
 	    if ($this->multiple)
 	    {
+	        if (is_array($var))
+	        {
+	            return $var;
+	        }
 	        return json_decode($var);
 	    }
 	    if ($var === $this->emptyValue)

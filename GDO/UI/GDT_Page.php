@@ -6,7 +6,6 @@ use GDO\Core\GDT_Template;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Application;
 use GDO\Core\Website;
-use GDO\Core\Module_Core;
 
 /**
  * This widget renders the ui/page.php template. the index.php of your site.
@@ -42,15 +41,14 @@ final class GDT_Page extends GDT
         parent::__construct();
         self::$INSTANCE = $this;
         $this->reset();
-        $this->topTabs = GDT_Container::make('topTabs')->vertical();
     }
     
     public function reset()
     {
-        $this->topNav = null;
-        $this->leftNav = null;
-        $this->rightNav = null;
-        $this->bottomNav = null;
+        $this->topNav = GDT_Bar::make('topNav')->horizontal();
+        $this->leftNav = GDT_Bar::make('leftNav')->vertical();
+        $this->rightNav = GDT_Bar::make('rightNav')->vertical();
+        $this->bottomNav = GDT_Bar::make('bottomNav')->horizontal();
         $this->topTabs = GDT_Container::make('topTabs')->vertical();
         Website::$TOP_RESPONSE = null;
     }
@@ -64,20 +62,20 @@ final class GDT_Page extends GDT
             return false;
         }
             
-        if (Module_Core::instance()->cfgLoadSidebars())
-        {
-            $this->topNav = GDT_Bar::make('topNav')->horizontal();
-            $this->leftNav= GDT_Bar::make('leftNav')->vertical();
-            $this->rightNav = GDT_Bar::make('rightNav')->vertical();
-            $this->bottomNav = GDT_Bar::make('bottomNav')->horizontal();
-            foreach (ModuleLoader::instance()->getEnabledModules() as $module)
-            {
-                $module->onInitSidebar();
-            }
-            return true;
-        }
+//         $this->topTabs = GDT_Container::make('topTabs')->vertical();
         
-        return false;
+//         if (module_enabled('Core'))
+//         {
+//             if (Module_Core::instance()->cfgLoadSidebars())
+//             {
+                foreach (ModuleLoader::instance()->getEnabledModules() as $module)
+                {
+                    $module->onInitSidebar();
+                }
+                return true;
+//             }
+//         }
+//         return false;
     }
     
     public function renderCell()

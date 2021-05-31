@@ -13,6 +13,7 @@ Each of these modules are a project / website / gdo6 demo.
  - [Mettwitze](https://github.com/gizmore/gdo6-mettwitze) [Mettwitze is a BootstapTheme demo site](https://mettwitze.gizmore.org)
  - [Ranzgruppe](https://github.com/gizmore/gdo6-ranzgruppe) [Ranzgruppe](https://ranzgruppe.com)
  - [TBS](https://github.com/gizmore/gdo6-tbs)
+ - [DogWebsite](https://github.com/gizmore/gdo6-dog-website)
 
 
 ## Theme modules
@@ -107,6 +108,7 @@ These modules add functionality to the website and are (mostly) own code.
  - [Logs](https://github.com/gizmore/gdo6-logs)
  - [MailGPG](https://github.com/gizmore/gdo6-mail-gpg) (obviously uses gpg)
  - [Maintenance](https://github.com/gizmore/gdo6-maintenance) (TODO?)
+ - [Math](https://github.com/gizmore/gdo6-math) (TODO?)
  - [Memberlist](https://github.com/gizmore/gdo6-memberlist)
  - [News](https://github.com/gizmore/gdo6-news)
  - [OnlineUsers](https://github.com/gizmore/gdo6-online-users)

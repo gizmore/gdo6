@@ -7,7 +7,7 @@ namespace GDO\Core;
  * Can invoke rendering on it's fields.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  * 
  * @see GDT_Bar
@@ -221,6 +221,10 @@ trait WithFields
 			        {
 			            $json[$gdt->name] = $data;
 			        }
+// 			        else
+// 			        {
+// 			            $json[] = $data;
+// 			        }
 			    }
 			}
 		}
@@ -277,7 +281,7 @@ trait WithFields
 		    {
 		        $fields[] = $_gdt;
 		    }
-			if (@$_gdt->fields)
+			if (isset($_gdt->fields))
 			{
 			    $fields = array_merge($fields,
     			    $this->_getFieldsRec($_gdt)
