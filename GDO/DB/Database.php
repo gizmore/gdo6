@@ -133,11 +133,11 @@ class Database
 	#############
 	### Query ###
 	#############
-	public function queryRead($query)
+	public function queryRead($query, $buffered=true)
 	{
 		self::$READS++;
 		$this->reads++;
-		return $this->query($query);
+		return $this->query($query, $buffered);
 	}
 	
 	public function queryWrite($query)
@@ -147,10 +147,23 @@ class Database
 		return $this->query($query);
 	}
 	
-	private function query($query)
+	private function query($query, $buffered=true)
 	{
 		$t1 = microtime(true);
-		if (!($result = mysqli_query($this->getLink(), $query)))
+		
+		if ($buffered)
+		{
+		    $result = mysqli_query($this->getLink(), $query);
+		}
+		else 
+		{
+		    if (mysqli_real_query($this->getLink(), $query))
+		    {
+		        $result = mysqli_use_result($this->getLink());
+		    }
+		}
+		
+		if (!($result))
 		{
 			if ($this->link)
 			{

@@ -75,6 +75,23 @@ final class Query
 	public function cached($cached=true) { $this->cached = $cached; return $this; }
 	private $cached = true;
 
+	public $buffered = true;
+
+	/**
+	 * Mark this query's buffered mode.
+	 * @param boolean $buffered
+	 * @return self
+	 */
+	public function buffered($buffered)
+	{
+	    $this->buffered = !!$buffered;
+	    return $this;
+	}
+	public function unbuffered()
+	{
+	    return $this->buffered(false);
+	}
+	
 	#############
 	### Debug ###
 	#############
@@ -512,7 +529,7 @@ final class Query
 		}
 		else
 		{
-			return new Result($this->fetchTable, $db->queryRead($query), $this->cached);
+			return new Result($this->fetchTable, $db->queryRead($query, $this->buffered), $this->cached);
 		}
 	}
 	
