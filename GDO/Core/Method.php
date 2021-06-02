@@ -197,15 +197,16 @@ abstract class Method
 	 * @param string $key
 	 * @return GDT
 	 */
-	public function gdoParameter($key, $initial=null)
+	public function gdoParameter($key)
 	{
 	    /** @var $gdt GDT **/
 	    if ($gdt = @$this->gdoParameterCache()[$key])
 	    {
+	        $initial = $gdt->initial;
 //     	    if ($initial !== null)
-    	    {
+//     	    {
     	        $gdt->var($initial); 
-    	    }
+//     	    }
     	    
     	    $gdt->getRequestVar($gdt->formVariable(), $gdt->var);
 	        $value = $gdt->getValue();
@@ -613,6 +614,11 @@ abstract class Method
 	###########
 	### CLI ###
 	###########
+	public function getCLITrigger()
+	{
+	    return sprintf('%s.%s', $this->getModuleName(),  $this->getMethodName());
+	}
+	
 	public function renderCLIHelp()
 	{
 	    return CLI::renderCLIHelp($this, $this->gdoParameterCache());

@@ -21,7 +21,7 @@ final class CleanupGuests extends MethodCronjob
         $numDeleted = GDO_User::table()->deleteWhere($condition, false);
         if ($numDeleted > 0)
         {
-            $this->logNotice(sprintf('Deleted %d guest users'));
+            $this->logNotice(sprintf('Deleted %d guest users', $numDeleted));
         }
     }
     

@@ -244,8 +244,8 @@ final class CLI
         $usage = implode(' ', $usage2) . ' ' . implode(' ', $usage1);
         $usage = trim($usage);
         $buttons = self::renderCLIHelpButtons($method);
-        $mome = sprintf('%s.%s.%s', 
-            $method->getModuleName(), $method->getMethodName(), $buttons);
+        $mome = sprintf('%s.%s', 
+            $method->getCLITrigger(), $method->getMethodName(), $buttons);
         return GDT_Response::makeWithHTML(t('cli_usage', [
             trim(strtolower($mome).' '.$usage), $method->getDescription()]));
     }
