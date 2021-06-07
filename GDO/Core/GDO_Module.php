@@ -43,6 +43,7 @@ class GDO_Module extends GDO
 	
 	/**
 	 * All modules have at least these dependencies.
+	 * @TODO Would be nice to have no default dependencies, so a minimal install is possible.
 	 */
 	public function gdoDependencies()
 	{

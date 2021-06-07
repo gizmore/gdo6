@@ -12,7 +12,7 @@ use GDO\Core\Application;
  * but this is also mixed into GDT_ObjectSelect, hence it is a trait.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.4
  * @since 6.0.0
  * 
  * @see GDT_Object
@@ -48,20 +48,21 @@ trait WithObject
 	###################
 	public function getVar()
 	{
-		$var = $this->getRequestVar($this->formVariable(), $this->var);
-		return empty($var) ? null : $var;
+// 	    $var = $this->getRequestVar($this->formVariable(), $this->var);
+	    $var = $this->var;
+	    return empty($var) ? null : $var;
 	}
 
-	/**
-     * @return GDO
-	 */
-	public function getValue()
-	{
-	    if ($id = $this->getVar())
-	    {
-    		return parent::getValue();
-	    }
-	}
+// 	/**
+//      * @return GDO
+// 	 */
+// 	public function getValue()
+// 	{
+// 	    if ($id = $this->getVar())
+// 	    {
+//     		return parent::getValue();
+// 	    }
+// 	}
 	
 	public function toVar($value)
 	{
@@ -114,6 +115,9 @@ trait WithObject
 		return $this->gdo;
 	}
 	
+	##############
+	### Render ###
+	##############
 	public function displayVar()
 	{
 		if ($gdo = $this->getValue())
@@ -124,7 +128,7 @@ trait WithObject
 			}
 			else
 			{
-			    return $gdo->getID();
+			    return $gdo->displayName();
 			}
 		}
 	}
@@ -146,7 +150,6 @@ trait WithObject
 			{
 				return null ;
 			}
-			
 			return [$this->name => $object->getID()];
 		}
 		else

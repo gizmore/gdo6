@@ -126,8 +126,10 @@ class GDT_Table extends GDT
 	####################### 
 	### Default headers ###
 	#######################
-	public function setupHeaders($searched=false, $paginated=false, $ordered=false, $filtered=false, $sorted=false)
+	public function setupHeaders($searched=false, $paginated=false)
 	{
+	    # @todo what about ordered and sorted and filtered?
+
 	    if ($searched)
 	    {
 	        $this->addHeader(GDT_SearchField::make('search'));
@@ -135,9 +137,17 @@ class GDT_Table extends GDT
 	    
 	    if ($paginated)
 	    {
-	        $this->addHeader(GDT_PageNum::make('page'));
-	        $this->addHeader(GDT_IPP::make('ipp'));
+	        $o = $this->headers->name;
+	        $this->addHeader(GDT_PageNum::make('page')->table($this));
+	        $gdtIPP = GDT_IPP::make('ipp')->initial($this->getDefaultIPP());
+	        $this->addHeader($gdtIPP);
+	        $this->paginated(true, null, $gdtIPP->getRequestVar($o, $gdtIPP->var));
 	    }
+	}
+	
+	public function getDefaultIPP()
+	{
+	    return Module_Table::instance()->cfgItemsPerPage();
 	}
 	
 	######################
@@ -401,7 +411,7 @@ class GDT_Table extends GDT
 		{
 		    if ($this->countQuery)
 		    {
-		        $this->countItems = $this->countQuery->selectOnly('COUNT(*)')->noOrder()->noLimit()->exec()->fetchValue();
+		        $this->countItems = $this->countQuery->selectOnly('COUNT(*)')->noOrder()->noLimit()->first()->exec()->fetchValue();
 		    }
 		    else
 		    {

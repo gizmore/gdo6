@@ -87,7 +87,13 @@ function urlencodeSEO($str) { return trim(preg_replace('#[^\\.\\p{L}0-9]#', '_',
 
 function quote($value) { return GDO::quoteS($value); }
 function json_quote($s) { return str_replace("'", "&#39;", $s); }
-function html($html) { return str_replace(['&', '"', "'", '<', '>'], ['&amp;', '&quot;', '&#39;', '&lt;', '&gt;'], $html); }
+function html($html)
+{
+    return Application::instance()->isCLI() ?
+        $html :
+        str_replace(['&', '"', "'", '<', '>'],
+            ['&amp;', '&quot;', '&#39;', '&lt;', '&gt;'], $html);
+}
 function env($key, $default=null) { return Env::get($key, $default); }
 function def($key, $default=null) { return defined($key) ? constant($key) : $default; }
 function hdr($header, $replace=null)

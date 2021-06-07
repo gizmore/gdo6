@@ -7,7 +7,7 @@ use GDO\DB\GDT_UInt;
  * Items per page for headers.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.1.0
  */
 final class GDT_IPP extends GDT_UInt
@@ -24,6 +24,8 @@ final class GDT_IPP extends GDT_UInt
     {
         parent::__construct();
         $this->initial(Module_Table::instance()->cfgItemsPerPage());
+        $this->min = 1;
+        $this->max = 100;
     }
     
 }

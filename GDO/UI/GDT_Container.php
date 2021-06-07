@@ -10,7 +10,7 @@ use GDO\Core\WithFields;
  * No template is used yet.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.4
  * @since 6.7.1
  */
 class GDT_Container extends GDT

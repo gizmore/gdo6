@@ -119,4 +119,5 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 'bot_name' => 'Bot Name',
 'admin_mail' => 'Administrator Email',
 'error_mail' => 'Error Email',
+'msg_install_security' => 'Your gdo6 installation is now secured for the world wide web.',
 );

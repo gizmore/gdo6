@@ -23,4 +23,35 @@ final class GDT_PageNum extends GDT_UInt
 
     public function isSerializable() { return false; }
     
+    #############
+    ### Table ###
+    #############
+    public $table;
+    public function table(GDT_Table $table)
+    {
+        $this->table = $table;
+        return $this;
+    }
+
+    ###############
+    ### Example ###
+    ###############
+    public function gdoExampleVars()
+    {
+        $this->min = 1;
+        $this->max = $this->table->getPageMenu()->getPageCount();
+        return parent::gdoExampleVars();
+    }
+
+    ################
+    ### Validate ###
+    ################
+    public function validate($value)
+    {
+        $this->min = 1;
+        $this->max = $this->table->getPageMenu()->getPageCount();
+        return parent::validate($value);
+    }
+    
 }
+

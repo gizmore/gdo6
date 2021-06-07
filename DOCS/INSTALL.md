@@ -23,9 +23,11 @@ These modules are optional
 
 ### GDO6 Core
 
-For a "quick" install.
+First clone the gizmore/gdo6 repository to any location, preferrable to a location where you can http to.
+HTTP is not required, as gdo6 can also be used completely in CLI, or as a chatbot, but http is a fun protocol too.
 
-1. Install core:
+
+Install the gdo6 core:
 
         mkdir www && cd www
     
@@ -34,6 +36,18 @@ For a "quick" install.
 In case you forgot a recursive:
 
     git submodule update --init --recursive
+
+
+### Module Providers
+
+Maybe read [GDO_MODULES.md](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_MODULES.md) to look for modules you want for your installation.
+To add a module, simply clone the module repository to your gdo6/GDO/ folder.
+
+This can be done via CLI installer.
+
+    ./gdoadm.sh provide <Module>
+    
+For the www wizard, please read [GDO_INSTALL_A_MODULE.md](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_A_MODULE.md)
 
 
 ### GDO6 modules
@@ -182,6 +196,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-tests Tests
     git clone --recursive https://github.com/gizmore/gdo6-theme-switcher ThemeSwitcher
     git clone --recursive https://github.com/gizmore/gdo6-tinymce TinyMCE
+    git clone --recursive https://github.com/gizmore/gdo6-todo Todo
     # git clone --recursive https://github.com/gizmore/gdo6-usergroup Usergroup
     git clone --recursive https://github.com/gizmore/gdo6-vote Vote
     git clone --recursive https://github.com/gizmore/gdo6-website Website

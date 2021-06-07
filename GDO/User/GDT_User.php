@@ -18,7 +18,7 @@ use GDO\Util\Strings;
  * @TODO: rename fallbackCurrentUser()
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  */
 class GDT_User extends GDT_Object

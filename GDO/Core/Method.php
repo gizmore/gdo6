@@ -15,7 +15,7 @@ use GDO\File\Filewalker;
 use GDO\Util\Strings;
 use GDO\Util\CLI;
 use GDO\Form\GDT_Submit;
-use GDO\Form\GDT_Form;
+use GDO\User\PermissionException;
 
 /**
  * Abstract baseclass for all methods.
@@ -26,10 +26,10 @@ use GDO\Form\GDT_Form;
  * 
  * @todo Rename init() to onInit()
  * 
- * @see MethodTable
- * @see MethodQueryTable
  * @see MethodForm
  * @see MethodCrud
+ * @see MethodTable
+ * @see MethodQueryTable
  * @see MethodCronjob
  *
  * @author gizmore
@@ -68,7 +68,7 @@ abstract class Method
 	public function isTransactional() { return false; }
 	public function isAlwaysTransactional() { return false; }
 	public function isTrivial() { return true; }
-	public function isLockingSession() { return $_SERVER['REQUEST_METHOD'] === 'POST'; } # @todo make use of session locking
+	public function isLockingSession() { return $_SERVER['REQUEST_METHOD'] === 'POST'; }
 	public function getPermission() {}
 	public function hasPermission(GDO_User $user) { return true; }
 
@@ -197,16 +197,13 @@ abstract class Method
 	 * @param string $key
 	 * @return GDT
 	 */
-	public function gdoParameter($key)
+	public function gdoParameter($key, $throw=true)
 	{
 	    /** @var $gdt GDT **/
-	    if ($gdt = @$this->gdoParameterCache()[$key])
+	    if ($gdt = @$this->allParameters()[$key])
 	    {
 	        $initial = $gdt->initial;
-//     	    if ($initial !== null)
-//     	    {
-    	        $gdt->var($initial); 
-//     	    }
+   	        $gdt->var($initial); 
     	    
     	    $gdt->getRequestVar($gdt->formVariable(), $gdt->var);
 	        $value = $gdt->getValue();
@@ -220,6 +217,39 @@ abstract class Method
 	        }
 	        return $gdt;
 	    }
+	    elseif ($throw)
+	    {
+	        $this->errorParameter($key);
+	    }
+	}
+	
+	/**
+	 * Get a paramter by label. Useful for CLI.
+	 * @param string $label
+	 * @return GDT
+	 */
+	public function gdoParameterByLabel($label, $throw=true)
+	{
+	    foreach ($this->allParameters() as $gdt)
+	    {
+	        if (strcasecmp($gdt->displayLabel(), $label) === 0)
+	        {
+	            return $this->gdoParameter($gdt->name);
+	        }
+	    }
+	    if ($throw)
+	    {
+	        $this->errorParameter($label);
+	    }
+	}
+	
+	protected function errorParameter($label)
+	{
+	    throw new GDOError('err_unknown_parameter', [
+	        $this->getModuleName(),
+	        $this->getMethodName(),
+	        html($label),
+	    ]);
 	}
 	
 	/**
@@ -271,18 +301,64 @@ abstract class Method
 	public function getMethodName() { return $this->gdoShortName(); }
 	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6)-4); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
-	public function error($key, array $args=null, $code=405) { Website::topResponse()->addField(GDT_Error::with($key, $args, $code)); return GDT_Response::make()->code($code); }
-	public function message($key, array $args=null, $log=true) { Website::topResponse()->addField(GDT_Success::with($key, $args)); return GDT_Response::make(); }
 	
-	public function php($path, array $tVars=null) { return GDT_Template::php($this->getModuleName(), $path, $tVars); }
+	public function error($key, array $args=null, $code=405, $log=true)
+	{
+	    Website::topResponse()->addField(GDT_Error::with($key, $args, $code, $log));
+	    return GDT_Response::make()->code($code);
+	}
+	
+	public function errorRedirect($key, array $args=null, $code=405, $url=null, $time=null, $log=true)
+	{
+	    Website::redirectError($key, $args, $url, $time);
+	    return $this->error($key, $args, $code, $log);
+	}
+	
+	public function message($key, array $args=null, $log=true)
+	{
+	    Website::topResponse()->addField(GDT_Success::with($key, $args, 200, $log));
+	    return GDT_Response::make();
+	}
+	
+	public function messageRedirect($key, array $args=null, $url=null, $time=null, $log=true)
+	{
+	    Website::redirectMessage($key, $args, $url, $time);
+	    return GDT_Response::make();
+	}
+	
+	public function php($path, array $tVars=null)
+	{
+	    return GDT_Template::php($this->getModuleName(), $path, $tVars);
+	}
+	
 	/**
 	 * @param string $path
 	 * @param array $tVars
 	 * @return \GDO\Core\GDT_Template
 	 */
-	public function templatePHP($path, array $tVars=null) { return GDT_Template::templatePHP($this->getModuleName(), $path, $tVars); }
-	public function responsePHP($path, array $tVars=null) { return GDT_Template::responsePHP($this->getModuleName(), $path, $tVars); }
-	public function getRBX() { return implode(',', array_map('intval', array_keys(Common::getRequestArray('rbx', [Common::getGetString('id')=>'on'])))); }
+	public function templatePHP($path, array $tVars=null)
+	{
+	    return GDT_Template::templatePHP(
+	        $this->getModuleName(), $path, $tVars);
+	}
+	
+	public function responsePHP($path, array $tVars=null)
+	{
+	    return GDT_Template::responsePHP(
+	        $this->getModuleName(), $path, $tVars);
+	}
+	
+	/**
+	 * Get all selected checkboxes of a table column.
+	 * @todo get rid and move it to GDT_Checkbox. New option: allowToggleAll(true)
+	 * @deprecated
+	 * @return string
+	 */
+	public function getRBX()
+	{
+	    return implode(',', array_map('intval', 
+	        array_keys(Common::getRequestArray('rbx',
+	            [Common::getGetString('id')=>'on'])))); }
 
 	############
 	### Shim ###
@@ -411,7 +487,8 @@ abstract class Method
 		    {
 		        if (!in_array($ut, $mt))
 		        {
-		            return GDT_Error::responseWith('err_user_type', [implode(' / ', $this->getUserType())]);
+		            return GDT_Error::responseWith(
+		                'err_user_type', [implode(' / ', $this->getUserType())]);
 		        }
 		    }
 		    elseif ($ut !== $mt)
@@ -513,6 +590,11 @@ abstract class Method
 	        if ($transactional) $db->transactionEnd();
 	        
 	        return $response;
+	    }
+	    catch (PermissionException $e)
+	    {
+	        if ($transactional) $db->transactionRollback();
+	        return GDT_Response::makeWith(GDT_Error::make()->textRaw($e->getMessage()));
 	    }
 	    catch (\Throwable $e)
 	    {

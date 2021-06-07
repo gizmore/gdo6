@@ -11,15 +11,15 @@ use GDO\Core\GDT_Template;
  * @TODO what about real checkboxes? Not a single one wanted/needed?
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 5.0.0
  */
 class GDT_Checkbox extends GDT_Select
 {
-    # db var representation. Null is the third state.
-    const UNDETERMINED = '2';
+    # db var representation. '2' is the third state.
     const TRUE = '1';
     const FALSE = '0';
+    const UNDETERMINED = '2';
     
     public $searchable = false;
     
@@ -31,7 +31,6 @@ class GDT_Checkbox extends GDT_Select
 		$this->max = 1;
 		$this->ascii(); # This enables string search (not binary).
 		$this->caseS();
-		$this->notNull = true;
 	}
 	
 	public function initChoices()
@@ -61,7 +60,8 @@ class GDT_Checkbox extends GDT_Select
 	 */
 	public function gdoColumnDefine()
 	{
-		return "{$this->identifier()} TINYINT(1) UNSIGNED {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
+		return "{$this->identifier()} TINYINT(1) UNSIGNED ".
+		  "{$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 	
 	/**
@@ -73,7 +73,6 @@ class GDT_Checkbox extends GDT_Select
 	{
 	    return '';
 	}
-
 	
 	####################
 	### Undetermined ###
@@ -81,6 +80,7 @@ class GDT_Checkbox extends GDT_Select
 	public $undetermined = false;
 	public function undetermined($undetermined=true)
 	{
+	    $this->max = 2;
 		$this->undetermined = $undetermined;
 		return $this;
 	}
@@ -123,6 +123,16 @@ class GDT_Checkbox extends GDT_Select
 		return $this->errorInvalidChoice();
 	}
 	
+	protected function errorInvalidVar($var)
+	{
+	    return t('err_invalid_gdt_var', [$this->gdoHumanName(), html($var)]);
+	}
+	
+	public function gdoExampleVars()
+	{
+	    return '0|1';
+	}
+	
 	##############
 	### Render ###
 	##############
@@ -136,13 +146,9 @@ class GDT_Checkbox extends GDT_Select
 	    {
 	        case '0': return t('enum_no');
 	        case '1': return t('enum_yes');
+	        case '2': return t('enum_undetermined_yes_no');
 	        default: return $this->errorInvalidVar($var);
 	    }
-	}
-	
-	protected function errorInvalidVar($var)
-	{
-	    return t('err_invalid_gdt_var', [$this->gdoHumanName(), html($var)]);
 	}
 	
 	public function htmlClass()
@@ -164,7 +170,8 @@ class GDT_Checkbox extends GDT_Select
 	
 	public function renderFilter($f)
 	{
-		return GDT_Template::php('DB', 'filter/checkbox.php', ['field' => $this, 'f'=> $f]);
+	    $vars = ['field' => $this, 'f'=> $f];
+		return GDT_Template::php('DB', 'filter/checkbox.php', $vars);
 	}
 
 	####################

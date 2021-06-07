@@ -7,12 +7,13 @@ use GDO\Core\Method;
 use GDO\Util\Common;
 use GDO\File\GDT_File;
 use GDO\Core\Application;
+use GDO\Core\Website;
 
 /**
  * Generic method that uses a GDT_Form.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  */
 abstract class MethodForm extends Method
@@ -32,11 +33,6 @@ abstract class MethodForm extends Method
 	
 	public abstract function createForm(GDT_Form $form);
 	
-// 	public function gdoParameters()
-// 	{
-// 	    return $this->getForm()->getFieldsRec();
-// 	}
-	
 	public function allParameters()
 	{
 	    return array_merge(
@@ -47,9 +43,8 @@ abstract class MethodForm extends Method
 	############
 	### Shim ###
 	############
-	public function formParametersWithButton(array $params, $button='submit')
+	public function formParametersWithButton(array $params)
 	{
-	    $params[$button] = 'submit';
 	    return $this->formParameters($params);
 	}
 	
@@ -178,13 +173,13 @@ abstract class MethodForm extends Method
 	
 	public function resetForm()
 	{
-	    $form = $this->formName();
-	    unset($_GET[$form]);
-	    unset($_POST[$form]);
-		unset($_REQUEST[$form]);
-		unset($_GET['nojs']);
-		unset($_POST['nojs']);
-		unset($_REQUEST['nojs']);
+// 	    $form = $this->formName();
+// 	    unset($_GET[$form]);
+// 	    unset($_POST[$form]);
+// 		unset($_REQUEST[$form]);
+// 		unset($_GET['nojs']);
+// 		unset($_POST['nojs']);
+// 		unset($_REQUEST['nojs']);
 		unset($this->form);
 	}
 	
@@ -210,14 +205,43 @@ abstract class MethodForm extends Method
 	public function formInvalid(GDT_Form $form)
 	{
 	    $app = Application::instance();
-		if ($app->isAjax() || $app->isCLI())
+	    if ($app->isCLI())
+	    {
+// 		    $this->getForm()->error = true;
+		    return GDT_Response::make();
+	    }
+		if ($app->isAjax())
 		{
-		    return $this->error('err_form_invalid')->addField($form);
+		    return $this->error('err_form_invalid');
 		}
 		else
 		{
 		    return $this->error('err_form_invalid');
 		}
+	}
+	
+	/**
+	 * Output a success creation message.
+	 * Redirect via $redirect=href or $redirect=true.
+	 * 
+	 * @since 6.10.4
+	 * @param GDO $gdo
+	 * @param mixed $redirect
+	 * @return \GDO\Core\GDT_Response
+	 */
+	public function messageCreated(GDO $gdo, $redirect=false, $time=0)
+	{
+	    if ($redirect)
+	    {
+	        if ($redirect === true)
+	        {
+	            $redirect = null;
+	        }
+	        Website::redirectMessage('msg_crud_created', [
+	            $gdo->gdoHumanName(), $gdo->getID()], $redirect, $time);
+	    }
+	    return $this->message('msg_crud_created', [
+	        $gdo->gdoHumanName(), $gdo->getID()]);
 	}
 	
 	###########

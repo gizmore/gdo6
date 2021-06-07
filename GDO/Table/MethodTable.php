@@ -170,10 +170,10 @@ abstract class MethodTable extends Method
 	    }
 	}
 	
-	public function getDefaultOrderDir()
-	{
-	    return true;
-    }
+// 	public function getDefaultOrderDir()
+// 	{
+// 	    return true;
+//     }
 	
 	public function getIPP()
 	{
@@ -236,9 +236,9 @@ abstract class MethodTable extends Method
 	    $table->fetchInto($this->useFetchInto());
 	}
 	
-	public function renderTable()
+	public function initTable()
 	{
-        $table = $this->table;
+	    $table = $this->table;
 	    $this->setupCollection($table);
 	    $this->createTable($table);
 	    $this->table->addHeaders($this->gdoHeaders());
@@ -251,6 +251,11 @@ abstract class MethodTable extends Method
 	    }
 	    $this->setupTitle($table);
 	    return $table;
+	}
+	
+	public function renderTable()
+	{
+	    return $this->initTable();
 	}
 	
 	protected function calculateTable(GDT_Table $table)
@@ -277,6 +282,12 @@ abstract class MethodTable extends Method
 	        $result = $this->table->pagemenu->paginateResult($result, $this->getPage(), $this->getIPP());
 	    }
 	    $table->result($result);
+	}
+	
+	public function renderCLIHelp()
+	{
+	    $this->calculateTable($this->initTable());
+	    return parent::renderCLIHelp();
 	}
 	
 }

@@ -149,8 +149,9 @@ class Config
 	{
 		$themes = array_diff(GDT_Template::themeNames(), ['install']);
 		return array(
-			GDT_Hidden::make('configured')->var('1'),
-
+		    GDT_Hidden::make('configured')->var('1'),
+// 		    GDT_Hidden::make('secured')->var('1'),
+		    
 			# Site
 			GDT_Divider::make()->label('install_config_section_site'),
 			GDT_String::make('sitename')->initialValue(GDO_SITENAME)->max(16)->label('cfg_sitename'),

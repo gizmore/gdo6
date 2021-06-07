@@ -538,7 +538,6 @@ abstract class GDO
     
     /**
      * Get a copy of a GDT column.
-     * @deprecated avoid!
      * @param string $key
      * @return GDT
      */
@@ -568,8 +567,9 @@ abstract class GDO
     }
     
     /**
-     * Get a copy of all GDT columns except those listed.
-     * @deprecated avoid!
+     * Get a copy of all GDT columns except those listed. Slow.
+     * Used in MethodCRUD because some GDO have not correct fields in gdoColumns(). 
+     * 
      * @param string[] ...$except
      * @return GDT[]
      */

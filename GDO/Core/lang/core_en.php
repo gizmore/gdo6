@@ -184,6 +184,7 @@ return array(
 'err_user_no_permission' => 'The user needs the %s permission.',
 'err_curl' => 'HTTP request error(%s): %s',
 'err_you_no_mail' => 'Your account needs an email for this.',
+'err_unknown_parameter' => 'Unknown Paramerter for method %s/%s: %s',
     
 # File
 'is_file' => 'a File',
@@ -218,7 +219,7 @@ return array(
 # CRUD
 'ft_crud_create' => 'Create %s',
 'ft_crud_update' => 'Edit %s',
-'msg_crud_created' => 'Your %s has been created.',
+'msg_crud_created' => 'Your %s has been created. ID: %s.',
 'msg_crud_updated' => 'Your %s has been updated.',
 'msg_crud_deleted' => 'Your %s has been deleted.',
 
@@ -296,4 +297,9 @@ Kind Regards,<br/>
 'cli_usage' => 'Usage: %s - %s',
 'err_cli' => 'Error! %s',
 'cli_page' => '%s: %s.',
+'msg_new_user_created' => 'A new user has been created: %s',
+
+# v6.10.4 Fixes
+'search_term' => 'Search Term',
+'cli_pages' => '%s. Page %s/%s: %s',
 );

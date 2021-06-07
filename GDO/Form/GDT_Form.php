@@ -8,7 +8,6 @@ use GDO\Core\Method;
 use GDO\Core\WithFields;
 use GDO\UI\WithTitle;
 use GDO\UI\GDT_SearchField;
-use GDO\Core\Application;
 use GDO\UI\GDT_Container;
 use GDO\Core\GDT_Response;
 use GDO\Util\CLI;
@@ -22,7 +21,7 @@ use GDO\Util\CLI;
  * @todo remove ugly static behaviour
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.4
  * @since 3.0.0
  */
 class GDT_Form extends GDT
@@ -128,18 +127,11 @@ class GDT_Form extends GDT
 	
 	public function renderCLI()
 	{
-	    # render error
 	    if (GDT_Response::$CODE >= 400)
         {
             return $this->renderCLIError();
 	    }
-	    
-	    $back = '';
-	    foreach ($this->getFieldsRec() as $gdt)
-	    {
-	        $back .= $gdt->renderCLI();
-	    }
-	    return $back;
+	    return $this->renderCLIFields();
 	}
 	
 	private function renderCLIError()
@@ -190,6 +182,13 @@ class GDT_Form extends GDT
 	    self::$VALIDATING_INSTANCE = $this;
 		self::$VALIDATING_SUCCESS = true;
 		$this->validateFormField($this);
+		foreach ($this->getFieldsRec() as $gdt)
+		{
+		    if ($gdt->error)
+		    {
+		        self::$VALIDATING_SUCCESS = false;
+		    }
+		}
 		self::$CURRENT = null;
 		return self::$VALIDATING_SUCCESS;
 	}
@@ -203,18 +202,21 @@ class GDT_Form extends GDT
 			if (!$field->validate($value))
 			{
 				self::$VALIDATING_SUCCESS = false;
-				if (!$field->error)
+				if (!isset($field->error))
 				{
 					$field->error('err_field_invalid', [$field->displayLabel()]);
 				}
 				# I hate code that is not always necessary. 
-				if (Application::instance()->isUnitTests() || Application::instance()->isInstall())
-				{
-				    echo "{$field->name}: {$field->error}\n";
-				}
+// 				if (Application::instance()->isUnitTests() || Application::instance()->isInstall())
+// 				{
+// 				    echo "{$field->defaultName()}: {$field->error}\n";
+// 				}
 			}
-		    # Conversion again because some values might change their ID attribute (GDT_File)
-// 		    $field->var($field->toVar($value));
+			else
+			{
+    		    # Conversion again because some values might change their ID attribute (GDT_File)
+    		    $field->var($field->toVar($value));
+			}
 		}
 		# Recursive
 		if ($fields = $field->getFields())
@@ -287,13 +289,14 @@ class GDT_Form extends GDT
 
 	public function getFormVar($key)
 	{
-	    $gdt = $this->getField($key);
-		return $gdt->getRequestVar($gdt->formVariable(), $gdt->var);
+	    $gdt = @$this->fields[$key];
+	    return $gdt ? $gdt->var : null;
 	}
 	
 	public function getFormValue($key)
 	{
-		return isset($this->fields[$key]) ? $this->fields[$key]->getValue() : null;
+	    $gdt = @$this->fields[$key];
+	    return $gdt ? $gdt->getValue() : null;
 	}
 
 	##########################

@@ -14,8 +14,8 @@ use GDO\UI\WithPHPJQuery;
  * For the database an enum column will be created.
  * 
  * @author gizmore
- * @version 6.10
- * @since 5.00
+ * @version 6.10.4
+ * @since 5.0.0
  * 
  * @example GDT_Enum::make()->enumValues('one', 'two')->notNull()->initial('one')
  * 
@@ -35,6 +35,7 @@ class GDT_Enum extends GDT
 	public $readable = true;
 	public $editable = true;
 	public $writable = true;
+	public $focusable = true;
 	
 	public function isSerializable() { return true; }
 	
@@ -56,7 +57,17 @@ class GDT_Enum extends GDT
 	    return GDT_Template::php('DB', 'form/enum.php', ['field' => $this]);
 	
 	}
-	public function renderCell() { return $this->enumLabel($this->getVar()); }
+	public function renderCell()
+	{
+	    return $this->enumLabel($this->getVar());
+	}
+	
+	public function renderCLI()
+	{
+	    $back = $this->displayLabel();
+	    $cell = $this->renderCell();
+	    return $back ? "{$back}: {$cell}" : $cell;
+	}
 	
 	public function toValue($var)
 	{
@@ -68,16 +79,58 @@ class GDT_Enum extends GDT
 	    return $this->enumLabel($var);
 	}
 	
+	public function gdoExampleVars()
+	{
+	    $vars = array_slice($this->enumValues, 0, 3);
+	    $vars = array_map(function($enumValue) {
+	        return $this->displayValue($enumValue);
+	    }, $vars);
+	    if (count($this->enumValues) > 3)
+	    {
+	        $vars[] = $this->gdoHumanName() . '...';
+	    }
+	    return implode('|', $vars);
+	}
+	
 	############
 	### Enum ###
 	############
 	public $enumValues;
-	public function enumLabel($enumValue=null) { return $enumValue === null ? t($this->emptyLabel, $this->emptyLabelArgs) : t("enum_$enumValue"); }
-	public function enumValues(...$enumValues) { $this->enumValues = $enumValues; return $this; }
-	public function enumIndex() { return $this->enumIndexFor($this->getVar()); }
-	public function enumIndexFor($enumValue) { $index = array_search($enumValue, $this->enumValues, true); return $index === false ? 0 : $index + 1; }
-	public function enumForId($index) { return $index > 0 ? $this->enumValues[$index-1] : null; }
-	public function htmlSelected($enumValue) { return $this->getVar() === ((string)$enumValue) ? ' selected="selected"' : ''; }
+	public function enumLabel($enumValue=null)
+	{
+	    return $enumValue === null ? 
+	       t($this->emptyLabel, $this->emptyLabelArgs) :
+	       t("enum_$enumValue");
+	}
+	
+	public function enumValues(...$enumValues)
+	{
+	    $this->enumValues = $enumValues;
+	    return $this;
+	}
+	
+	public function enumIndex()
+	{
+	    return $this->enumIndexFor($this->getVar());
+	}
+	
+	public function enumIndexFor($enumValue)
+	{
+	    $index = array_search($enumValue, $this->enumValues, true);
+	    return $index === false ? 0 : $index + 1;
+	}
+	
+	public function enumForId($index)
+	{
+	    return $index > 0 ?
+	       $this->enumValues[$index-1] : null;
+	}
+	
+	public function htmlSelected($enumValue)
+	{
+	    return $this->getVar() === ((string)$enumValue) ?
+	       ' selected="selected"' : '';
+	}
 
 	#############
 	### Empty ###
@@ -107,7 +160,11 @@ class GDT_Enum extends GDT
 	/**
 	 * Render select filter header.
 	 */
-	public function renderFilter($f) { return GDT_Template::php('DB', 'filter/enum.php', ['field' => $this, 'f' => $f]); }
+	public function renderFilter($f)
+	{
+	    return GDT_Template::php('DB', 'filter/enum.php', [
+	        'field' => $this, 'f' => $f]);
+	}
 	
 	/**
 	 * Filter value is an array.
@@ -205,14 +262,14 @@ class GDT_Enum extends GDT
 	    }
 	    else
 	    {
-	        return array_merge(parent::configJSON(), array(
+	        return array_merge(parent::configJSON(), [
 	            'enumValues' => $this->enumValues,
 	            'enumLabels' => $this->generateEnumLabels(),
 	            'emptyValue' => $this->emptyValue,
 	            'emptyLabel' => $this->displayEmptyLabel(),
 	            'completionHref' => $this->completionHref,
 	            'display' => $this->renderCell(),
-	        ));
+	        ]);
 	    }
 	}
   

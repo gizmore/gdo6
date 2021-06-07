@@ -25,7 +25,7 @@ use GDO\Table\WithOrder;
  * Uses WithLabel, WithFormFields, WithDatabase and WithOrder.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.4
  * @since 6.0.0
  * 
  * @see GDT_UInt
@@ -56,6 +56,7 @@ class GDT_Int extends GDT
 	public $readable = true;
 	public $editable = true;
 	public $writable = true;
+	public $focusable = true;
 	
 	public function step($step) { $this->step = $step; return $this; }
 	public function bytes($bytes = 4) { $this->bytes = $bytes; return $this; }
@@ -124,6 +125,31 @@ class GDT_Int extends GDT
 	{
 	    return "4";
 	}
+	
+	public function gdoExampleVars()
+	{
+	    if ( ($this->min !== null) && ($this->max !== null) )
+	    {
+	        if ($this->min === $this->max)
+	        {
+	            return $this->min;
+	        }
+	        else
+	        {
+	            return $this->min . '-' . $this->max;
+	        }
+	    }
+	    if ($this->max !== null)
+	    {
+	        return '-∞-' . $this->max;
+	    }
+	    if ($this->min !== null)
+	    {
+	        return $this->min . '-∞';
+	    }
+	    return t('number');
+	}
+	
 	
 	##########
 	### DB ###

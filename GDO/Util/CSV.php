@@ -41,7 +41,7 @@ final class CSV
     {
         $fh = fopen($this->path, 'r');
         $first = $this->withHeader;
-        while ($row = fgetcsv($fh, null, $this->delimiter, $this->enclosure, "\""))
+        while ($row = fgetcsv($fh, null, $this->delimiter, $this->enclosure))
         {
             if ($first)
             {
@@ -52,6 +52,7 @@ final class CSV
                 $callable($row);
             }
         }
+        fclose($fh);
     }
     
     public function all()

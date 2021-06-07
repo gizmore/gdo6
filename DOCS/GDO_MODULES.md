@@ -130,6 +130,7 @@ These modules add functionality to the website and are (mostly) own code.
  - [TestMethods](https://github.com/gizmore/gdo6-test-methods)
  - [Tests](https://github.com/gizmore/gdo6-tests)
  - [ThemeSwitcher](https://github.com/gizmore/gdo6-theme-switcher)
+ - [Todo](https://github.com/gizmore/gdo6-todo)
  - [Vote](https://github.com/gizmore/gdo6-vote)
  - [Websocket](https://github.com/gizmore/gdo6-websocket) (uses ratchet)
  

@@ -10,7 +10,6 @@ use GDO\Language\Trans;
 use GDO\Install\Method\Configure;
 use GDO\Admin\Method\Install;
 use GDO\Core\GDO_ModuleVar;
-use GDO\Form\MethodForm;
 use GDO\User\GDO_User;
 use GDO\Util\BCrypt;
 use GDO\User\GDO_UserPermission;
@@ -24,6 +23,8 @@ use GDO\File\FileUtil;
 use GDO\Util\CLI;
 use GDO\Core\ModuleProviders;
 use GDO\Util\Strings;
+use GDO\Install\Module_Install;
+use GDO\Install\Method\InstallCronjob;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
@@ -33,7 +34,7 @@ use GDO\Util\Strings;
  * @TODO Make a new gdoadm.sh clone Foo to clone all required providers.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.10.0
  * 
  * @see gdo_update.sh - to update your gdo6 installation
@@ -60,19 +61,25 @@ function printUsage($code=1)
     global $argv;
     $exe = $argv[0];
     echo "Usage:\n";
-    echo "php $exe configure [<config.php>] - To generate a protected/config.php\n";
+    echo "\n--- Spawn ---\n";
+    echo "php $exe configure [<config.php>] - To generate a protected/config.php.\n";
+    echo "php $exe test [<config.php>] - To test your protected/config.php\n";
+    echo "php $exe admin <username> <password> [<email>] - to (re)set an admin account\n";
+    echo "php $exe cronjob - To print cronjob instructions\n";
+    echo "php $exe secure - To secure your installation after install.\n";
+    echo "\n--- Modules ---\n";
     echo "php $exe modules [<module>] - To show a list of modules or show module details\n";
-    echo "php $exe install <module>\n";
-    echo "php $exe install_all\n";
+    echo "php $exe provide <module> - To download all modules that are required to provide a module\n";
+    echo "php $exe install <module> - To install a module and it's dependencies\n";
+    echo "php $exe install_all - To install all modules inside the GDO/ folder and their dependencies\n";
     echo "php $exe wipe <module> - To uninstall modules\n";
     echo "php $exe wipeall - To erase the whole database\n";
-    echo "php $exe admin <username> <password> [<email>] - to (re)set an admin account\n";
+    echo "\n--- Module config ---\n";
     echo "php $exe config <module> - To show the config variables for a module\n";
     echo "php $exe config <module> <key> - To show the description for a module variable\n";
     echo "php $exe config <module> <key> <var> - To change the value of a module variable\n";
-    echo "php $exe call <module> <method> <json_get_params> <json_form_params>\n";
     echo PHP_EOL;
-    echo "Tip: you can have a 'cli-only' protected/config_cli.php";
+    echo "Tip: you can have a 'cli-only' protected/config_cli.php\n";
     die($code);
 }
 
@@ -369,7 +376,6 @@ elseif ($argv[1] === 'admin')
     GDO_UserPermission::grant($user, 'cronjob');
     $user->recache();
     echo t('msg_admin_created', [$argv[2]]) . "\n";
-    echo PHP_EOL;
 }
 
 elseif ($argv[1] === 'wipeall')
@@ -470,41 +476,129 @@ elseif ($argv[1] === 'config')
     }
 }
 
-elseif ($argv[1] === 'call')
+elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
 {
-    if ( ($argc !== 4) && ($argc !== 5) && ($argc !== 6) )
+    if ($argc !== 3)
     {
         printUsage();
     }
-    $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
-    $method = $module->getMethod($argv[3]);
     
-    if ($argc >= 5)
+    $loader = ModuleLoader::instance();
+    
+    $loader->loadModules(false, true, true);
+    
+    if (!($module = $loader->getModule($argv[2])))
     {
-        $getParams = json_decode($argv[4], true);
-        $method->requestParameters($getParams);
+        echo "Unknown module: {$argv[2]}!\n";
+        die(1);
     }
     
-    if ($argc === 6)
+    # Get all dependencies
+    $cd = 0;
+    $deps = [$module->getName()];
+    while ($cd != count($deps))
     {
-        $formParams = json_decode($argv[5], true);
-        if ($method instanceof MethodForm)
+        $cd = count($deps);
+        foreach ($deps as $dep)
         {
-            $method->formParameters($formParams);
+            if ($module = $loader->getModule($dep))
+            {
+                $moreDeps = $module->dependencies();
+                $deps = array_unique(array_merge($deps, $moreDeps));
+            }
         }
     }
     
-    if ($response = $method->execute())
+    # Sort by name
+    sort($deps);
+    
+    # Check missing in fs
+    $missing = [];
+    foreach ($deps as $dep)
     {
-        echo $response->renderCLI();
+        if (!$loader->getModule($dep))
+        {
+            $missing[] = $dep;
+        }
+    }
+    
+    if (count($missing))
+    {
+        echo "The following modules are not in your filesystem:\n";
+        echo implode(', ', $missing) . "\n";
+        echo "Shall i git clone those modules? (y/n) [y]: ";
+        $input = readline();
+        $input = trim(strtolower($input));
+        if ( ($input === 'y') || ($input === '') )
+        {
+            echo "Cloning " . count($missing) . " modules...\n";
+            foreach ($missing as $module)
+            {
+                $providers = ModuleProviders::$PROVIDERS[$module];
+                $n = 1;
+                if (is_array($providers))
+                {
+                    echo "The {$module} Module has more than 1 possible provider. Please choose: \n";
+                    $n = 0;
+                    foreach ($providers as $provider)
+                    {
+                        $n++;
+                        echo "{$n}: {$provider}\n";
+                    }
+                    echo "Please choose: [1-{$n}]: ";
+                    $n = (int)readline();
+                    if ( ($n < 1) || ($n > count($providers)) )
+                    {
+                        echo "Invalid choice!\nExit 1\n";
+                        die(1);
+                    }
+                }
+                
+                $url = ModuleProviders::getGitUrl($module, $n);
+                if ($argv[1] === 'provide_ssh')
+                {
+                    $url = str_replace('https://', 'ssh://git@', $url);
+                }
+                $cmd = "cd GDO && git clone --recursive {$url} {$module}";
+                echo $cmd . "\n";
+                $output = [];
+                $retval = 0;
+                exec($cmd, $output, $retval);
+                echo implode("\n", $output) . "\n";
+                echo "Return code: " . $retval . "\n";
+                if ($retval != 0)
+                {
+                    echo "Error upon clone. Exiting\n";
+                    die($retval);
+                }
+            }
+            echo "You should now have all dependencies cloned in your GDO/ folder.\n";
+            echo "You can now:\n./gdoadm.sh install {$argv[2]}\n";
+        }
     }
     else
     {
-        echo GDT_Response::$CODE;
+        echo "Your filesystem has all the required modules. You can: \n./gdoadm.sh install {$argv[2]}\n";
     }
-    
-    echo PHP_EOL;
 }
+
+elseif ($argv[1] === 'cronjob')
+{
+    $module = Module_Install::instance();
+    $method = InstallCronjob::make();
+    $result = $method->executeWithInit();
+    echo $result->renderCLI();
+}
+
+elseif ($argv[1] === 'secure')
+{
+    $module = Module_Install::instance();
+    $method = Security::make();
+    $_REQUEST['form'] = ['submit' => 'submit'];
+    $result = $method->executeWithInit();
+    echo $result->renderCLI();
+}
+
 else
 {
     echo "Unknown command {$argv[1]}\n\n";

@@ -5,7 +5,7 @@ namespace GDO\UI;
  * Add a label to a GDT.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.2.0
  */
 trait WithLabel

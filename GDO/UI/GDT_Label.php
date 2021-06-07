@@ -9,7 +9,7 @@ use GDO\Core\GDT_Template;
  * Currently only renders in JSON and Card.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.4
  * @since 6.0.0
  */
 class GDT_Label extends GDT

@@ -7,17 +7,39 @@ namespace GDO\Core;
  * Some modules have multiple providers, like gdo6-session-db and gdo6-session-cookie.
  * Both provide Module_Session.
  * 
- * @TODO: Explain how to generate provider list from the huge all-in-one-dev install.
+ * You can generate providers and dependenices with providers.php and provider_dependenciews.php
  * @TODO: make the installers use this providers to automatically install module dependencies.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.10.0
  */
 final class ModuleProviders
 {
     const GIT_PROVIDER = 'https://github.com/gizmore/';
- 
+
+    /**
+     * Get URL for a module.
+     * @param string $moduleName
+     * @param number $which
+     * @return string
+     */
+    public static function getGitUrl($moduleName, $which=1)
+    {
+        $git = self::GIT_PROVIDER;
+        $which = (int)$which;
+        $providers = self::$PROVIDERS[$moduleName];
+        if (is_array($providers))
+        {
+            if ( ($which < 1) || ($which > count($providers)) )
+            {
+                throw new GDOException("Invalid provider choice!");
+            }
+            return $git . $providers[$which-1];
+        }
+        return $git . $providers;
+    }
+    
     public static $PROVIDERS = [
         'Account' => 'gdo6-account',
         'ActivationAlert' => 'gdo6-activation-alert',
@@ -115,7 +137,7 @@ final class ModuleProviders
         'Recovery' => 'gdo6-recovery',
         'Register' => 'gdo6-register',
         'Security' => 'gdo6-security',
-        'Session' => ['gdo6-session-cookie', 'gdo-session-db'],
+        'Session' => ['gdo6-session-cookie', 'gdo6-session-db'],
         'Shoutbox' => 'gdo6-shoutbox',
         'Sitemap' => 'gdo6-sitemap',
         'Slaytags' => 'gdo6-slaytags',
@@ -125,6 +147,7 @@ final class ModuleProviders
         'Tests' => 'gdo6-tests',
         'ThemeSwitcher' => 'gdo6-theme-switcher',
         'TinyMCE' => 'gdo6-tinymce',
+        'Todo' => 'gdo6-todo',
         'Usergroup' => 'gdo6-usergroup',
         'Vote' => 'gdo6-vote',
         'Websocket' => 'gdo6-websocket',
@@ -134,5 +157,143 @@ final class ModuleProviders
         'ZIP' => 'gdo6-zip',
     ];
     
+    public static $DEPENDENCIES = [
+        'Account' => [],
+        'ActivationAlert' => [],
+        'Address' => [],
+        'Admin' => ['Login'],
+        'AmPHP' => [],
+        'Angular' => [],
+        'Audio' => ['File', 'Birthday'],
+        'Avatar' => ['File'],
+        'Backup' => ['ZIP'],
+        'BBCode' => [],
+        'Birthday' => ['Profile', 'Friends'],
+        'Blog' => [],
+        'Bootstrap' => ['JQuery', 'Moment'],
+        'Bootstrap3' => ['JQuery'],
+        'BootstrapTheme' => ['Bootstrap', 'FontAwesome', 'Moment'],
+        'Buzzerapp' => [],
+        'Captcha' => [],
+        'Category' => [],
+        'CKEditor' => ['JQuery'],
+        'Classic' => [],
+        'Comment' => ['Vote', 'File'],
+        'Contact' => ['Profile'],
+        'Core' => [],
+        'CORS' => [],
+        'Country' => [],
+        'CountryCoordinates' => [],
+        'Cronjob' => [],
+        'Currency' => [],
+        'Date' => [],
+        'Docs' => [],
+        'Dog' => [],
+        'DogAuth' => ['Dog'],
+        'DogGreetings' => ['Dog'],
+        'DogIRC' => ['DogAuth'],
+        'DogIRCAutologin' => ['DogAuth', 'DogIRC'],
+        'DogIRCSpider' => ['DogIRC'],
+        'DogShadowdogs' => ['DogAuth'],
+        'DogTick' => ['Dog', 'DogIRC'],
+        'DogWebsite' => ['Classic', 'Dog', 'DogAuth', 'Login', 'Register', 'Admin', 'DogIRC', 'DogTick', 'DogShadowdogs', 'DogIRCAutologin', 'DogIRCSpider', 'DogGreetings', 'News', 'PM', 'Quotes', 'Shoutbox', 'Forum', 'Links', 'Download', 'Math', 'Contact', 'Todo'],
+        'Download' => [],
+        'DSGVO' => [],
+        'Facebook' => [],
+        'Favicon' => [],
+        'File' => [],
+        'Follower' => [],
+        'FontAwesome' => [],
+        'FontRoboto' => [],
+        'FontTitillium' => [],
+        'Forum' => ['File'],
+        'Friends' => [],
+        'Gallery' => ['File'],
+        'Geo2Country' => ['CountryCoordinates', 'Material', 'News'],
+        'Guestbook' => ['Admin'],
+        'Helpdesk' => ['Comment'],
+        'HVSC' => ['SID', 'Sevenzip', 'Login', 'Register', 'Recovery', 'Admin'],
+        'ImportGWF3' => [],
+        'Instagram' => [],
+        'Install' => [],
+        'Invite' => [],
+        'IP2Country' => [],
+        'ITMB' => ['JQueryMobile', 'Contact', 'FontRoboto', 'News', 'Forum', 'PM', 'Login', 'Register', 'Admin', 'Account', 'Avatar', 'Perf', 'Address', 'ActivationAlert', 'Recovery', 'CKEditor', 'Mibbit'],
+        'Javascript' => [],
+        'JPGraph' => [],
+        'JQuery' => [],
+        'JQueryAutocomplete' => ['JQuery'],
+        'JQueryMobile' => ['JQuery'],
+        'JQueryUI' => ['JQuery'],
+        'Language' => [],
+        'Links' => ['Vote', 'Tag', 'Cronjob'],
+        'LinkUUp' => ['Account', 'Profile', 'Websocket', 'Comment', 'Login', 'Recovery', 'Register', 'Avatar', 'Gallery', 'Admin', 'Contact', 'JPGraph', 'Facebook', 'Instagram', 'OpenTimes', 'Friends', 'Address', 'Maps', 'QRCode', 'BootstrapTheme', 'JQueryAutocomplete', 'CORS', 'JPGraph'],
+        'LoadOnClick' => [],
+        'Login' => ['Captcha'],
+        'LoginAs' => ['Login'],
+        'Logs' => [],
+        'Mail' => [],
+        'MailGPG' => [],
+        'Maintenance' => [],
+        'Maps' => [],
+        'Markdown' => ['JQuery'],
+        'Material' => ['Angular'],
+        'Math' => [],
+        'Memberlist' => [],
+        'Memorized' => [],
+        'Mettwitze' => ['BootstrapTheme', 'Comment', 'Vote', 'Login', 'Register', 'Admin', 'Recovery', 'Account', 'Profile', 'Sitemap'],
+        'Mibbit' => [],
+        'Moment' => [],
+        'Nasdax' => [],
+        'News' => ['Comment', 'Category', 'Mail'],
+        'OnlineUsers' => [],
+        'OpenTimes' => [],
+        'Pagecounter' => [],
+        'Payment' => ['Address', 'TCPDF'],
+        'PaymentBank' => ['Payment'],
+        'PaymentCredits' => ['Payment'],
+        'PaymentPaypal' => ['Payment'],
+        'PaypalDonation' => [],
+        'Perf' => [],
+        'PHPInfo' => [],
+        'PhpMyAdmin' => [],
+        'PM' => ['Account'],
+        'Poll' => [],
+        'Prism' => [],
+        'Profile' => ['Friends'],
+        'Push' => [],
+        'Python' => [],
+        'QRCode' => [],
+        'Quotes' => ['Vote'],
+        'Ranzgruppe' => ['Account', 'Admin', 'Audio', 'Avatar', 'Backup', 'Captcha', 'Classic', 'Comment', 'Contact', 'Favicon', 'FontTitillium', 'Gallery', 'Guestbook', 'Invite', 'JQueryAutocomplete', 'Login', 'Memberlist', 'News', 'Perf', 'Profile', 'Recovery', 'Register', 'User', 'Vote'],
+        'Recovery' => ['Captcha'],
+        'Register' => ['Cronjob'],
+        'Security' => [],
+        'Session' => [],
+        'Sevenzip' => [],
+        'Shoutbox' => [],
+        'SID' => [],
+        'Sitemap' => [],
+        'Statistics' => [],
+        'Table' => [],
+        'Tag' => [],
+        'TBS' => ['Country', 'Language', 'Contact', 'Classic', 'Forum', 'News', 'Mibbit', 'OnlineUsers', 'Profile', 'PM', 'Login', 'Register', 'Recovery', 'Admin', 'Favicon', 'FontAwesome', 'Captcha', 'JQuery', 'JQueryAutocomplete', 'TBSBBMessage', 'LoadOnClick', 'Perf', 'Statistics', 'Python', 'Forum', 'LoginAs'],
+        'TBSBBMessage' => ['BBCode'],
+        'TCPDF' => [],
+        'TestMethods' => [],
+        'Tests' => [],
+        'ThemeSwitcher' => [],
+        'TinyMCE' => [],
+        'Todo' => [],
+        'UI' => [],
+        'User' => [],
+        'Usergroup' => [],
+        'Vote' => [],
+        'W3CValidator' => [],
+        'Website' => [],
+        'Websocket' => [],
+        'WeChall' => ['News', 'Forum', 'Download', 'Links', 'Shoutbox', 'Usergroup', 'Tag', 'Vote', 'PM', 'Mibbit', 'Classic', 'Login', 'Register', 'Admin'],
+        'ZIP' => [],
+    ];
 }
     

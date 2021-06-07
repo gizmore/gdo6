@@ -17,6 +17,11 @@ abstract class MethodQueryTable extends MethodTable
 {
     public function useFetchInto() { return true; }
     
+    public function gdoHeaders()
+    {
+        return $this->gdoTable()->gdoColumnsCache();
+    }
+    
 	################
 	### Abstract ###
 	################

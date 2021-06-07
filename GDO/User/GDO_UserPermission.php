@@ -78,7 +78,7 @@ final class GDO_UserPermission extends GDO
 	 * Grant via name.
 	 * @param GDO_User $user
 	 * @param string $permission
-	 * @return static
+	 * @return self
 	 */
 	public static function grant(GDO_User $user, $permission)
 	{

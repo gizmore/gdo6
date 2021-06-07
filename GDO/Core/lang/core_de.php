@@ -184,6 +184,7 @@ return array(
 'err_user_no_permission' => 'Der Benutzer benötigt die %s Berechtigung.',
 'err_curl' => 'HTTP Anfrage fehlgeschlagen(%s): %s',
 'err_you_no_mail' => 'Sie benötigen eine E-Mail dafür.',
+'err_unknown_parameter' => 'Unbekannter Paramerter für Methode %s/%s: %s',
     
 # File
 'is_file' => 'keine Datei',
@@ -218,7 +219,7 @@ return array(
 # CRUD
 'ft_crud_create' => '%s erstellen',
 'ft_crud_update' => '%s bearbeiten',
-'msg_crud_created' => '%s wurde erfolgreich erstellt.',
+'msg_crud_created' => '%s wurde erfolgreich erstellt. ID: %s.',
 'msg_crud_updated' => '%s wurde erfolgreich bearbeitet.',
 'msg_crud_deleted' => '%s wurde erfolgreich gelöscht.',
 
@@ -301,4 +302,8 @@ Viele Grüße,<br/>
 'cli_usage' => 'Nutze: %s - %s',
 'err_cli' => 'Fehler! %s',
 'cli_page' => '%s: %s.',
+'msg_new_user_created' => 'Ein neuer Benutzer wurde angelegt: %s',
+# v6.10.4 Fixes
+'search_term' => 'Suchbegriff',
+'cli_pages' => '%s. Seite %s/%s: %s',
 );

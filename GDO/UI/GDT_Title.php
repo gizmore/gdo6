@@ -12,8 +12,8 @@ use GDO\DB\GDT_String;
  * 
  * @author gizmore
  * 
- * @version 6.10
- * @since 6.02
+ * @version 6.10.4
+ * @since 6.2.0
  */
 class GDT_Title extends GDT_String
 {
@@ -33,6 +33,12 @@ class GDT_Title extends GDT_String
 	    $text = $this->renderTitle();
 	    $text = $this->titleEscaped ? html($text) : $text;
 	    return '<h3 class="gdt-title">' . $text . '</h3>'; 
+	}
+	
+	public function renderCLI()
+	{
+	    return $this->displayLabel() . ': ' .
+	       $this->renderTitle();
 	}
 	
 	public function var($var=null)

@@ -29,6 +29,7 @@ class GDT_Validator extends GDT
 		if (!call_user_func($this->validator, $form, $field, $field->getValue()))
 		{
 			GDT_Form::$VALIDATING_SUCCESS = false;
+			return false;
 		}
 		return true;
 	}

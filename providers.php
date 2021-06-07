@@ -9,8 +9,11 @@ use GDO\Util\Common;
 
 # Use gdo6 core
 include "GDO6.php";
+include "protected/config.php";
 
 global $mode;
+
+/** @var $argv string **/
 $mode = $argv[1];
 
 Filewalker::traverse("GDO", null, false, function($entry, $fullpath) {
@@ -29,3 +32,5 @@ Filewalker::traverse("GDO", null, false, function($entry, $fullpath) {
        }
    }
 },  0);
+
+

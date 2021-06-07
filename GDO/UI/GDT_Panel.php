@@ -26,6 +26,24 @@ class GDT_Panel extends GDT
 	    return GDT_Template::php('UI', 'cell/panel.php', ['field' => $this]);
 	}
 	
+	public function renderCLI()
+	{
+	    $back = '';
+	    if ($this->hasTitle())
+	    {
+	        $back .= $this->renderTitle() . '-';
+	    }
+	    if ($this->hasText())
+	    {
+	        $back .= $this->renderText() . '-';
+	    }
+	    if ($this->hasFields())
+	    {
+    	    $back .= $this->renderCLIFields();
+	    }
+	    return $back;
+	}
+	
 	public function renderXML()
 	{
 	    return sprintf("<%s title=\"%s\" text=\"%s\">\n%s\n</%1\$s>\n",

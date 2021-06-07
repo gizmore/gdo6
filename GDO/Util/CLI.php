@@ -18,7 +18,7 @@ use GDO\Form\GDT_Submit;
  * @see Method
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.10.2
  */
 final class CLI
@@ -28,14 +28,17 @@ final class CLI
         return get_current_user();
     }
     
-//     public static function autoFlush()
-//     {
-//         while (ob_get_level())
-//         {
-//             ob_end_clean();
-//         }
-//         ob_implicit_flush(true);
-//     }
+    /**
+     * Stop output buffering and start auto flush for CLI mode.
+     */
+    public static function autoFlush()
+    {
+        while (ob_get_level())
+        {
+            ob_end_flush();
+        }
+        ob_implicit_flush(true);
+    }
     
     /**
      * Simulate PHP $_SERVER vars.
@@ -57,7 +60,8 @@ final class CLI
         $_SERVER['PHP_SELF'] = '/index.php';
         $_SERVER['QUERY_STRING'] = 'mo=' . GDO_MODULE . '&me=' . GDO_METHOD;
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7'; # @TODO use output of locale command?
+        # @TODO use output of locale command?
+        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
     }
     
     public static function br2nl($s, $nl=PHP_EOL)
@@ -164,38 +168,58 @@ final class CLI
     
     /**
      * Turn a line of text into method parameters.
-     * @param string $line
-     * @param Method $method
+     * 
+     * @param string $line - input line.
+     * @param Method $method - method for parameter reference.
+     * @param boolean $asValues - convert args to values?
+     * 
      * @return string[]
      */
     public static function parseArgline($line, Method $method, $asValues=false)
     {
-        $parameters = [];
-        
-        while (Strings::startsWith($line, '--'))
-        {
-            $k = Strings::substrTo($line, '=', $line);
-            $k = trim($k, '-');
-            $v = Strings::substrFrom($line, '=', '');
-            $v = Strings::substrTo($v, ' ', $v);
-            $v = $v === '' ? null : $v;
-            $line = Strings::substrFrom($line, ' ', '');
-            $parameters[$k] = $v;
-        }
-        
         $i = 0;
         $args = Strings::args($line);
+        $parameters = [];
+
+        # Parse optionals --parameter=value
+        foreach ($args as $var)
+        {
+            if (Strings::startsWith($var, '--'))
+            {
+                $key = Strings::substrTo($var, '=', $var);
+                $key = ltrim($key, '-');
+                $var = Strings::substrFrom($var, '=', '');
+                if ($gdt = $method->gdoParameterByLabel($key))
+                {
+                    $value = $gdt->toValue($var);
+                    if ($gdt->validate($value))
+                    {
+                        $gdt->varval($var, $value);
+                    }
+                    $parameters[$gdt->name] = $var;
+                }
+                $i++;
+                continue;
+            }
+            break;
+        }
         
+        # Positional / required params
         foreach ($method->allParameters() as $gdt)
         {
             if ($gdt->name && $gdt->editable && $gdt->isPositional())
             {
-                $arg = @$args[$i++];
-                $gdt->var($arg);
-                $parameters[$gdt->name] = $arg;
+                $var = @$args[$i++];
+                $value = $gdt->toValue($var);
+                if ($gdt->validate($value))
+                {
+                    $gdt->varval($var, $value);
+                }
+                $parameters[$gdt->name] = $var;
             }
         }
         
+        # Convert to values
         if ($asValues)
         {
             $old = $parameters;
@@ -227,25 +251,25 @@ final class CLI
         $usage2 = [];
         foreach ($fields as $gdt)
         {
-            if ( (!$gdt->isSerializable()) ||
-                 (!$gdt->editable) )
+            if (!$gdt->editable)
             {
                 continue;
             }
             if ($gdt->isPositional())
             {
-                $usage1[] = sprintf('<%s>', $gdt->name);
+                $usage1[] = sprintf('<%s>', $gdt->gdoHumanName());
             }
             else
             {
-                $usage2[] = sprintf('[--%s=<%s>]', $gdt->name, $gdt->gdoShortName());
+                $usage2[] = sprintf('[--%s=<%s>]',
+                    $gdt->name, $gdt->gdoExampleVars());
             }
         }
         $usage = implode(' ', $usage2) . ' ' . implode(' ', $usage1);
         $usage = trim($usage);
         $buttons = self::renderCLIHelpButtons($method);
         $mome = sprintf('%s.%s', 
-            $method->getCLITrigger(), $method->getMethodName(), $buttons);
+            $method->getCLITrigger(), $buttons);
         return GDT_Response::makeWithHTML(t('cli_usage', [
             trim(strtolower($mome).' '.$usage), $method->getDescription()]));
     }

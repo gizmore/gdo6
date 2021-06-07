@@ -13,6 +13,8 @@ use GDO\Core\WithFields;
 use GDO\DB\GDT_EditedBy;
 use GDO\DB\GDT_EditedAt;
 use GDO\Core\Application;
+use GDO\Core\Website;
+use GDO\Core\GDT_Response;
 
 /**
  * A card with title, subtitle, creator, date, content and actions.
@@ -74,11 +76,19 @@ final class GDT_Card extends GDT
 	##############
 	public function render()
 	{
-	    if (Application::instance()->isCLI())
+	    $app = Application::instance();
+	    if ($app->isCLI())
 	    {
 	        return $this->renderCLI();
 	    }
-	    return $this->renderCell();
+// 	    elseif ($app->isHTML())
+	    {
+	        GDT_Response::$INSTANCE->addField($this);
+	    }
+// 	    else
+// 	    {
+// 	        return $this->renderCell();
+// 	    }
 	}
 	public function renderCard() { return $this->renderCell(); }
 	public function renderCell() { return GDT_Template::php('UI', 'cell/card.php', ['field' => $this]); }
@@ -86,6 +96,12 @@ final class GDT_Card extends GDT
 	public function renderCLI()
 	{
 	    $back = [];
+	    
+	    if ($this->gdo)
+	    {
+	        $back[] = t('id') . ': ' . $this->gdo->getID();
+	    }
+	    
 	    if ($this->title)
 	    {
     	    $back[] = $this->title->renderCLI();
@@ -142,7 +158,7 @@ final class GDT_Card extends GDT
     	    $date = $this->gdo->gdoColumnOf(GDT_CreatedAt::class);
 	    }
 	    
-	    $this->subtitle = GDT_Container::make();
+	    $this->subtitle = GDT_Container::make()->horizontal();
 	    
 	    if (module_enabled('Avatar')) # ugly bridge
 	    {

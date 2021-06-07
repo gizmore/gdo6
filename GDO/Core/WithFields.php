@@ -31,7 +31,7 @@ trait WithFields
 	### Fields ###
 	##############
 	/**
-	 * @var \GDO\Core\GDT[]
+	 * @var GDT[]
 	 */
 	public $fields = [];
 	
@@ -173,12 +173,12 @@ trait WithFields
 	
 	public function renderCLIFields()
 	{
-	    $back = '';
+	    $back = [];
 	    foreach ($this->fields as $field)
 	    {
-	        $back .= $field->renderCLI();
+	        $back[] = $field->renderCLI();
 	    }
-	    return trim($back);
+	    return implode(', ', $back);
 	}
 	
 	public function renderCard()

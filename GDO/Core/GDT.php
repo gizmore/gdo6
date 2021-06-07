@@ -22,7 +22,7 @@ use GDO\DB\GDT_Enum;
  * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
@@ -58,7 +58,7 @@ abstract class GDT
 	public $filterable = false; # GDT_Table
 	public $searchable = false; # GDT_Table
 	public $positional = null; # CLI
-	public $focusable = true;
+	public $focusable = false;
 	
 	###############
 	### Factory ###
@@ -135,8 +135,8 @@ abstract class GDT
 	### Error ###
 	#############
 	public $error;
-	public function error($key, array $args=null) { return $this->rawError(t($key, $args)); }
-	public function rawError($html=null) { if (!$this->error) $this->error = $html; return false; }
+	public function error($key, array $args=null, $code=405) { return $this->rawError(t($key, $args), $code); }
+	public function rawError($html=null, $code=405) { if (!$this->error) $this->error = $html; GDT_Response::$CODE = $code;  return false; }
 	public function hasError() { return is_string($this->error); }
 	public function htmlError() { return $this->error ? ('<div class="gdo-form-error">' . $this->error . '</div>') : ''; }
 	public function classError()
@@ -174,7 +174,7 @@ abstract class GDT
 	    {
 	        if ($gdo->isTable())
 	        {
-//     	       return $this->var($this->initial);
+    	       return $this->var($this->initial);
 	        }
 	        else
 	        {
@@ -201,13 +201,27 @@ abstract class GDT
 	}
 	
 	/**
-	 * Set the var via value. Converted vie toVar($value).
+	 * Set the var via value. Converted via toVar($value).
 	 * @param mixed $value
 	 * @return self
 	 */
 	public function value($value)
 	{
 	    return $this->var($this->toVar($value));
+	}
+	
+	/**
+	 * Set var and value in one step. Do not recompute value.
+	 * @param string $var
+	 * @param mixed $value
+	 * @return self
+	 */
+	public function varval($var, $value)
+	{
+	    $this->var = $var;
+	    $this->value = $value;
+	    $this->valueConverted = true;
+	    return $this;
 	}
 	
 	/**
@@ -258,7 +272,7 @@ abstract class GDT
 	public function hasChanged() { return $this->initial !== $this->getVar(); }
 	public function getValidationValue()
 	{
-	    $this->getRequestVar($this->formName(), $this->var);
+	    $this->getRequestVar($this->formVariable(), $this->var);
 	    return $this->getValue();
 	}
 	
@@ -268,13 +282,22 @@ abstract class GDT
 	###################
 	### Form Naming ###
 	###################
-	public function formVariable() { return GDT_Form::$CURRENT ? GDT_Form::$CURRENT->name : null; }
+	public function formVariable()
+	{
+	    return GDT_Form::$CURRENT ?
+	       GDT_Form::$CURRENT->name : null;
+	}
 
 	/**
 	 * Get the form name for postvars baselvl dictionary.
 	 * @return string
 	 */
-	public function formName() { return GDT_Form::$CURRENT ? sprintf('%s[%s]', $this->formVariable(), $this->name) : $this->name; }
+	public function formName()
+	{
+	    return GDT_Form::$CURRENT ?
+    	    sprintf('%s[%s]', $this->formVariable(), $this->name) :
+    	    $this->name;
+	}
 	
 	/**
 	 * Get the form name as html name attribute.
@@ -418,7 +441,7 @@ abstract class GDT
 	### Render ###
 	##############
 	public function render() { return Application::instance()->isCLI() ? $this->renderCLI() : $this->renderCell(); }
-	public function renderCLI() { return json_encode($this->renderJSON(), JSON_PRETTY_PRINT); }
+	public function renderCLI() { return $this->renderJSON(); }
 	public function renderPDF() { return $this->renderCard(); }
 	public function renderXML() { return $this->name ? sprintf('<%1$s>%2$s</%1$s>'.PHP_EOL, $this->name, html($this->getVar())) : ''; }
 	public function renderJSON() { return $this->var; }
@@ -487,6 +510,11 @@ abstract class GDT
 	public function plugVar()
 	{
 	    return null;
+	}
+	
+	public function gdoExampleVars()
+	{
+	    return $this->gdoHumanName();
 	}
 	
 	############

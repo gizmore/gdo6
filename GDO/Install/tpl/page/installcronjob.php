@@ -2,7 +2,7 @@
 use GDO\Install\Config;
 use GDO\UI\GDT_Panel;
 ?>
-<h2><?= t('install_title_4'); ?></h2>
+<h2><?= t('install_title_5'); ?></h2>
 <?php
 $email = GDO_ADMIN_EMAIL;
 $path = GDO_PATH . 'gdo_cronjob.sh > /dev/null';

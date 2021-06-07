@@ -51,6 +51,7 @@ class GDT_String extends GDT
 	public $readable = true;
 	public $editable = true;
 	public $writable = true;
+	public $focusable = true;
 	
 	public function utf8() { return $this->encoding(self::UTF8); }
 	public function ascii() { return $this->encoding(self::ASCII); }
