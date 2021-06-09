@@ -182,7 +182,7 @@ abstract class Method
 		if ($this->paramCache === null)
 		{
 		    $this->paramCache = [];
-		    if ($params = $this->gdoParameters())
+		    if ($params = $this->allParameters())
 		    {
 		        foreach ($params as $gdt)
     		    {
@@ -200,7 +200,7 @@ abstract class Method
 	public function gdoParameter($key, $throw=true)
 	{
 	    /** @var $gdt GDT **/
-	    if ($gdt = @$this->allParameters()[$key])
+	    if ($gdt = $this->allParameters()[$key])
 	    {
 	        $initial = $gdt->initial;
    	        $gdt->var($initial); 
@@ -286,7 +286,7 @@ abstract class Method
 	 */
 	public function allParameters()
 	{
-	    return $this->gdoParameterCache();
+	    return $this->gdoParameters();
 	}
 	
 	##############
@@ -388,7 +388,7 @@ abstract class Method
 		$append = '';
 		foreach ($this->gdoParameterCache() as $gdt)
 		{
-		    if ($gdt->name && ($var = $gdt->getVar()))
+		    if ($gdt->name && ($var = $gdt->getRequestVar()))
 		    {
 		        $append .= '&' . $gdt->name . '=' . urlencode($var);
 		    }
@@ -565,6 +565,7 @@ abstract class Method
 	        
 	        # Init method
 	        $response = GDT_Response::newWith();
+	        $response = GDT_Response::make();
 	        
 	        $response->addField($this->init());
 	        

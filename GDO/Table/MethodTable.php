@@ -22,9 +22,10 @@ use GDO\Core\GDO;
  */
 abstract class MethodTable extends Method
 {
-    public function gdoParameters()
+    public function allParameters()
     {
-        return $this->table->headers->fields;
+        return array_merge($this->gdoParameters(),
+            $this->table->headers->fields);
     }
     
     public function gdoParameterVar($key)

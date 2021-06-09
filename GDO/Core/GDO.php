@@ -58,6 +58,7 @@ abstract class GDO
     
     public function gdoCached() { return true; }
     public function memCached() { return $this->gdoCached() && GDO_MEMCACHE; }
+    public function sqlBuffered() {} # Override with true or false for force.
     public function cached() { return $this->gdoCached() || (GDO_MEMCACHE && $this->memCached()); }
     
     public function gdoTableName() { return $this->table()->cache->tableName; }

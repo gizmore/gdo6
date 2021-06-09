@@ -9,7 +9,7 @@ use GDO\Core\GDT;
  * Use fetchTable() to control the object type for fetching objects. 
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.4
  * @since 6.0.0
  * @see ArrayResult
  */
@@ -34,10 +34,16 @@ class Result
 	 */
 	public function __destruct()
 	{
-		if ($this->result)
-		{
-			mysqli_free_result($this->result);
-		}
+	    $this->free();
+	}
+	
+	public function free()
+	{
+	    if ($this->result)
+	    {
+	        mysqli_free_result($this->result);
+	        $this->result = null;
+	    }
 	}
 	
 	################

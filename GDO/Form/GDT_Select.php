@@ -4,6 +4,12 @@ namespace GDO\Form;
 use GDO\Core\GDO;
 use GDO\Core\GDT_Template;
 
+/**
+ * An html select.
+ * @author gizmore
+ * @version 6.10.4
+ * @since 6.0.0
+ */
 class GDT_Select extends GDT_ComboBox
 {
 	const SELECTED = ' selected="selected"';
@@ -12,7 +18,6 @@ class GDT_Select extends GDT_ComboBox
 	
 	public function getVar()
 	{
-// 		$this->fixEmptyMultiple();
 		if (null === ($var = parent::getVar()))
 		{
 			$var = $this->multiple ? '[]' : null;
@@ -37,7 +42,6 @@ class GDT_Select extends GDT_ComboBox
 		{
 			return $this->multiple ? [] : $this->emptyValue;
 		}
-		
 		return parent::getValue();
 	}
 
@@ -87,8 +91,6 @@ class GDT_Select extends GDT_ComboBox
 	        $value = $this->toClosestChoiceValue($var);
 	        $var = $this->toVar($value);
 	        $this->var($var);
-// 	        $_REQUEST[$this->name] = $var;
-// 	        $_REQUEST[$this->formName()][$this->name] = $var;
 	        return $value;
 	    }
 	}

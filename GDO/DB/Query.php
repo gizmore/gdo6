@@ -51,7 +51,7 @@ final class Query
 	private $from;
 	private $type;
 	private $set;
-	private $order;
+	public  $order;
 	public  $values;
 	private $limit;
 	private $raw;

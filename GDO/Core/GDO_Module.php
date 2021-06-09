@@ -21,7 +21,7 @@ use GDO\Table\GDT_Sort;
  * GDO base module class.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 1.0.0
  */
 class GDO_Module extends GDO
@@ -36,6 +36,7 @@ class GDO_Module extends GDO
 	
 	public function gdoCached() { return false; }
 	public function memCached() { return false; }
+	public function sqlBuffered() { return true; } # Override with true or false for force.
 	public function defaultEnabled() { return !$this->isSiteModule(); }
 	public function isCoreModule() { return false; }
 	public function isSiteModule() { return false; }

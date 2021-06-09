@@ -5,7 +5,6 @@ use GDO\UI\GDT_Page;
 use GDO\Util\Common;
 use GDO\Mail\Mail;
 use GDO\User\GDO_User;
-use GDO\Net\GDT_Url;
 
 /**
  * Debug backtrace and error handler.
@@ -313,7 +312,7 @@ final class Debug
 		
 		if ($url = @$_SERVER['REQUEST_URI'])
 		{
-		    $url = class_exists('GDT_Url') ? GDT_Url::absolute($url) : $url;
+		    $url = GDO_PROTOCOL . '://' . GDO_DOMAIN . GDO_WEB_ROOT . $url;
 		}
 		
 		$args = [

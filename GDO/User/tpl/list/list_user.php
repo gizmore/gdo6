@@ -8,7 +8,10 @@ use GDO\UI\GDT_Label;
 
 $list = GDT_ListItem::make('user-'.$user->getID());
 
-$list->avatar(GDT_Avatar::make()->user($user));
+if (module_enabled('Avatar'))
+{
+    $list->avatar(GDT_Avatar::make()->user($user));
+}
 $list->title(GDT_ProfileLink::make()->forUser($user)->withNickname());
 
 $list->subtitle(GDT_Label::make()->label('user_subtitle', [$user->displayRegisterAge(), $user->getLevel()]));

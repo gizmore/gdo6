@@ -184,7 +184,7 @@ return array(
 'err_user_no_permission' => 'Der Benutzer benötigt die %s Berechtigung.',
 'err_curl' => 'HTTP Anfrage fehlgeschlagen(%s): %s',
 'err_you_no_mail' => 'Sie benötigen eine E-Mail dafür.',
-'err_unknown_parameter' => 'Unbekannter Paramerter für Methode %s/%s: %s',
+'err_unknown_parameter' => 'Unbekannter Parameter für Methode %s/%s: %s',
     
 # File
 'is_file' => 'keine Datei',

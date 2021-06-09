@@ -184,7 +184,7 @@ return array(
 'err_user_no_permission' => 'The user needs the %s permission.',
 'err_curl' => 'HTTP request error(%s): %s',
 'err_you_no_mail' => 'Your account needs an email for this.',
-'err_unknown_parameter' => 'Unknown Paramerter for method %s/%s: %s',
+'err_unknown_parameter' => 'Unknown Parameter for method %s/%s: %s',
     
 # File
 'is_file' => 'a File',

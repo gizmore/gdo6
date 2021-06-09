@@ -29,7 +29,7 @@ use GDO\Session\GDO_Session;
  * @author gizmore
  * @link https://www.wechall.net
  * @link https://mettwitze.gizmore.org
- * @version 6.10.3
+ * @version 6.10.4
  * @since 1.0.0
  */
 final class GDO_User extends GDO
