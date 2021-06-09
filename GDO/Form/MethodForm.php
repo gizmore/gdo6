@@ -36,7 +36,7 @@ abstract class MethodForm extends Method
 	public function allParameters()
 	{
 	    return array_merge(
-	        $this->gdoParameterCache(),
+	        $this->gdoParameters(),
 	        $this->getForm()->getFieldsRec());
 	}
 	

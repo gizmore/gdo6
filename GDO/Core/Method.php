@@ -172,6 +172,7 @@ abstract class Method
 	 * @var GDT[]
 	 */
 	private $paramCache = null;
+	private $allParamCache = null;
 	
 	/**
 	 * Build and/or get the GET parameter cache.
@@ -193,6 +194,22 @@ abstract class Method
 		return $this->paramCache;
 	}
 	
+// 	public function &allParameterCache()
+// 	{
+// 	    if ($this->allParamCache === null)
+// 	    {
+// 	        $this->allParamCache = [];
+// 	        if ($params = $this->allParameters())
+// 	        {
+// 	            foreach ($params as $gdt)
+// 	            {
+// 	                $this->paramCache[$gdt->name] = $gdt;
+// 	            }
+// 	        }
+// 	    }
+// 	    return $this->paramCache;
+// 	}
+	
 	/**
 	 * @param string $key
 	 * @return GDT
@@ -200,7 +217,7 @@ abstract class Method
 	public function gdoParameter($key, $throw=true)
 	{
 	    /** @var $gdt GDT **/
-	    if ($gdt = $this->allParameters()[$key])
+	    if ($gdt = $this->gdoParameterCache()[$key])
 	    {
 	        $initial = $gdt->initial;
    	        $gdt->var($initial); 
@@ -230,7 +247,7 @@ abstract class Method
 	 */
 	public function gdoParameterByLabel($label, $throw=true)
 	{
-	    foreach ($this->allParameters() as $gdt)
+	    foreach ($this->gdoParameterCache() as $gdt)
 	    {
 	        if (strcasecmp($gdt->displayLabel(), $label) === 0)
 	        {

@@ -205,7 +205,7 @@ final class CLI
         }
         
         # Positional / required params
-        foreach ($method->allParameters() as $gdt)
+        foreach ($method->gdoParameterCache() as $gdt)
         {
             if ($gdt->name && $gdt->editable && $gdt->isPositional())
             {
@@ -224,7 +224,7 @@ final class CLI
         {
             $old = $parameters;
             $parameters = [];
-            foreach ($method->allParameters() as $gdt)
+            foreach ($method->gdoParameterCache() as $gdt)
             {
                 if (isset($old[$gdt->name]))
                 {
