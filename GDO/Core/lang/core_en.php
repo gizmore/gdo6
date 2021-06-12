@@ -295,7 +295,7 @@ Kind Regards,<br/>
 # v6.10.3 CLI
 'cli_methods' => 'Module %s offers these methods: %s.',
 'cli_usage' => 'Usage: %s - %s',
-'err_cli' => 'Error! %s',
+'err_cli' => 'Error: %s',
 'cli_page' => '%s: %s.',
 'msg_new_user_created' => 'A new user has been created: %s',
 

@@ -178,6 +178,7 @@ final class CLI
     public static function parseArgline($line, Method $method, $asValues=false)
     {
         $i = 0;
+        $success = true;
         $args = Strings::args($line);
         $parameters = [];
 
@@ -195,6 +196,10 @@ final class CLI
                     if ($gdt->validate($value))
                     {
                         $gdt->varval($var, $value);
+                    }
+                    else
+                    {
+                        $success = false;
                     }
                     $parameters[$gdt->name] = $var;
                 }
@@ -214,6 +219,10 @@ final class CLI
                 if ($gdt->validate($value))
                 {
                     $gdt->varval($var, $value);
+                }
+                else
+                {
+                    $success = false;
                 }
                 $parameters[$gdt->name] = $var;
             }
@@ -237,7 +246,7 @@ final class CLI
             }
         }
         
-        return $parameters;
+        return $success ? $parameters : false;
     }
 
     /**

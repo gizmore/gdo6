@@ -405,7 +405,7 @@ abstract class Method
 		$append = '';
 		foreach ($this->gdoParameterCache() as $gdt)
 		{
-		    if ($gdt->name && ($var = $gdt->getRequestVar()))
+		    if ($gdt->name && ($var = $gdt->getRequestVar(null, $gdt->initial)))
 		    {
 		        $append .= '&' . $gdt->name . '=' . urlencode($var);
 		    }

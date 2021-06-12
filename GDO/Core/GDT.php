@@ -193,7 +193,7 @@ abstract class GDT
 	{
 	    if ($this->var !== $var)
 	    {
-    	    $this->var = $var === null ? null : (string)$var;
+    	    $this->var = ($var === null) || ($var === '') ? null : (string)$var;
     	    $this->value = null;
     	    $this->valueConverted = false;
 	    }
