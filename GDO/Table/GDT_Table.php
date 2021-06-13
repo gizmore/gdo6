@@ -332,15 +332,16 @@ class GDT_Table extends GDT
 	                        {
 	                            if ($field->orderable)
 	                            {
+	                                $asc = $asc ? ' ASC' : ' DESC';
 	                                if ( (Classes::class_uses_trait($field, 'GDO\\DB\\WithObject')) &&
 	                                    ($field->orderFieldName() !== $field->name) )
 	                                {
 	                                    $query->joinObject($field->name, 'JOIN', "o{$o}");
-	                                    $query->order("o{$o}.".$field->orderFieldName(), !!$asc);
+	                                    $query->order("o{$o}." . $field->orderFieldName() . $asc);
 	                                }
 	                                else
 	                                {
-	                                    $query->order($field->orderFieldName(), !!$asc);
+	                                    $query->order($field->orderFieldName() . $asc);
 	                                }
 	                                $hasCustomOrder = true;
 	                            }
@@ -427,10 +428,6 @@ class GDT_Table extends GDT
 	 */
 	public function queryResult()
 	{
-// 	    if (!$this->query)
-// 	    {
-// 	        Logger::logDebug(Debug::backtrace('QUERY_MISSING', false));
-// 	    }
 		return $this->query->exec();
 	}
 	
@@ -484,7 +481,7 @@ class GDT_Table extends GDT
 	public function renderJSON()
 	{
 	    $json = array_merge($this->configJSON(), [
-		    'data'=>$this->renderJSONData(),
+		    'data' => $this->renderJSONData(),
 		]);
 	    return [$this->name => $json];
 	}
@@ -505,7 +502,7 @@ class GDT_Table extends GDT
 	    ]);
 	}
 	
-	private function renderJSONData()
+	protected function renderJSONData()
 	{
 		$data = [];
 		$result = $this->getResult();

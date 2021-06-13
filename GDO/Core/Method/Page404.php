@@ -19,11 +19,12 @@ use GDO\UI\GDT_Link;
  * Send 404 mails optionally.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.10.0
  */
 final class Page404 extends MethodPage
 {
+    public function isCLI() { return false; }
     public function saveLastUrl() { return false; }
     public function showInSitemap() { return false; }
     public function isTrivial() { return false; } # no auto test

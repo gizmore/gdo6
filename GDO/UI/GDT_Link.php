@@ -89,7 +89,7 @@ class GDT_Link extends GDT_String
 	public function renderCard() { return $this->renderCell(); }
 	public function renderCell() { return GDT_Template::php('UI', 'cell/link.php', ['link' => $this]); }
 	public function renderJSON() { return trim($this->displayLabel() . " ( $this->href )"); }
-	public function renderFilter($f) {}
+	public function renderFilter($f) { return GDT_String::make($this->name)->renderFilter($f); }
 	
 	###################
 	### Link target ###

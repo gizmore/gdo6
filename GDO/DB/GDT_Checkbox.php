@@ -27,8 +27,8 @@ class GDT_Checkbox extends GDT_Select
 	{
 	    parent::__construct();
 		$this->emptyValue = '2';
-		$this->min = 0;
-		$this->max = 1;
+// 		$this->min = 0;
+// 		$this->max = 1;
 		$this->ascii(); # This enables string search (not binary).
 		$this->caseS();
 	}
@@ -80,7 +80,7 @@ class GDT_Checkbox extends GDT_Select
 	public $undetermined = false;
 	public function undetermined($undetermined=true)
 	{
-	    $this->max = 2;
+// 	    $this->max = $undetermined ? 2 : 1;
 		$this->undetermined = $undetermined;
 		return $this;
 	}

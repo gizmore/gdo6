@@ -68,6 +68,7 @@ final class ModuleProviders
         'Currency' => 'gdo6-currency',
         'Dog' => 'gdo6-dog',
         'DogAuth' => 'gdo6-dog-auth',
+        'DogBlackjack' => 'gdo6-dog-blackjack',
         'DogGreetings' => 'gdo6-dog-greetings',
         'DogIRC' => 'gdo6-dog-irc',
         'DogIRCAutologin' => 'gdo6-dog-irc-autologin',

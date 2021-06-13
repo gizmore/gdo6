@@ -174,10 +174,11 @@ These modules add functionality to the website and are (mostly) own code.
 
 ## The Dog Chatbot
 
-These modules are part of the Dog chatbot. Most of those are not finished yet.
+These modules are part of the Dog chatbot.
 
  - [Dog](https://github.com/gizmore/gdo6-dog)
  - [DogAuth](https://github.com/gizmore/gdo6-dog-auth)
+ - [DogBlackjack](https://github.com/gizmore/gdo6-dog-blackjack)
  - [DogGreetings](https://github.com/gizmore/gdo6-dog-greetings)
  - [DogIRC](https://github.com/gizmore/gdo6-dog-irc)
  - [DogIRCAutologin](https://github.com/gizmore/gdo6-dog-irc-autologin)

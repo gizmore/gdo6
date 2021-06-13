@@ -33,15 +33,33 @@ final class SwitchLanguage extends Method
 	
 	public function getDescription()
 	{
-		return t($this->getDescriptionLangKey(), [$this->getLanguage()->displayName()]);
+	    if ($this->getLanguage(false))
+	    {
+	        return t($this->getDescriptionLangKey(), [$this->getLanguage()->displayName()]);
+	    }
+	    else
+	    {
+	        return t($this->getDescriptionLangKey().'2');
+	    }
 	}
 	
 	/**
 	 * @return \GDO\Language\GDO_Language
 	 */
-	protected function getLanguage()
+	protected function getLanguage($throw=true)
 	{
-		return $this->gdoParameterValue('lang');
+	    try
+	    {
+	        return $this->gdoParameterValue('lang');
+	    }
+	    catch (\Throwable $ex)
+	    {
+	        if ($throw)
+	        {
+	            throw $ex;
+	        }
+	        return null;
+	    }
 	}
 	
 	public function execute()

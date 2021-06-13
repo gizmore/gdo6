@@ -1103,7 +1103,14 @@ abstract class GDO
      */
     public function displayName()
     {
-        return $this->gdoHumanName() . "#" . $this->getID();
+        if ($gdt = $this->gdoColumnOf(GDT_Name::class))
+        {
+            return $gdt->render();
+        }
+        else
+        {
+            return $this->gdoHumanName() . "#" . $this->getID();
+        }
     }
     
     ##############
@@ -1443,7 +1450,7 @@ abstract class GDO
     {
         foreach ($this->gdoColumnsCache() as $gdoType)
         {
-            $gdoType->gdo($this)->gdoBeforeCreate($query);
+            $gdoType->gdoBeforeCreate($query);
         }
         $this->gdoBeforeCreate();
     }
@@ -1452,7 +1459,7 @@ abstract class GDO
     {
         foreach ($this->gdoColumnsCache() as $gdoType)
         {
-            $gdoType->gdo($this)->gdoBeforeRead($query);
+            $gdoType->gdoBeforeRead($query);
         }
         $this->gdoBeforeRead();
     }
@@ -1461,7 +1468,7 @@ abstract class GDO
     {
         foreach ($this->gdoColumnsCache() as $gdoType)
         {
-            $gdoType->gdo($this)->gdoBeforeUpdate($query);
+            $gdoType->gdoBeforeUpdate($query);
         }
         $this->gdoBeforeUpdate();
     }

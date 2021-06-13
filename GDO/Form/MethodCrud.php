@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Form;
 
-use GDO\Core\GDOError;
 use GDO\Core\GDO;
 use GDO\User\PermissionException;
 use GDO\User\GDO_User;
@@ -144,7 +143,7 @@ abstract class MethodCrud extends MethodForm
 	    {
 	        throw new PermissionException('err_permission_create');
 	    }
-	    $this->resetForm();
+// 	    $this->resetForm();
 	}
 	
 	##############
@@ -206,12 +205,12 @@ abstract class MethodCrud extends MethodForm
 		
 		if (!$this->gdo)
 		{
-		    $form->actions()->addField(GDT_Submit::make('create')->icon('create'));
+		    $form->actions()->addField(GDT_Submit::make('create')->label('btn_create')->icon('create'));
 		}
 
 		if ($this->gdo && $this->canUpdate($this->gdo))
 		{
-    		$form->actions()->addField(GDT_Submit::make('edit')->icon('edit'));
+    		$form->actions()->addField(GDT_Submit::make('edit')->label('btn_edit')->icon('edit'));
 		}
 
 		if ($this->gdo && $this->canDelete($this->gdo))
@@ -254,28 +253,28 @@ abstract class MethodCrud extends MethodForm
 
 	public function onSubmit_create(GDT_Form $form)
 	{
-	    if (!$this->canCreate($this->gdo))
-	    {
-	        throw new GDOError('err_permission_create');
-	    }
+// 	    if (!$this->canCreate($this->gdoTable()))
+// 	    {
+// 	        throw new GDOError('err_permission_create');
+// 	    }
 	    return $this->onCreate($form);
 	}
 	
 	public function onSubmit_edit(GDT_Form $form)
 	{
-	    if (!$this->canUpdate($this->gdo))
-	    {
-	        throw new GDOError('err_permission_update');
-	    }
+// 	    if (!$this->canUpdate($this->gdo))
+// 	    {
+// 	        throw new GDOError('err_permission_update');
+// 	    }
 	    return $this->onUpdate($form);
 	}
 	
 	public function onSubmit_delete(GDT_Form $form)
 	{
-		if (!$this->canDelete($this->gdo))
-		{
-			throw new GDOError('err_permission_delete');
-		}
+// 		if (!$this->canDelete($this->gdo))
+// 		{
+// 			throw new GDOError('err_permission_delete');
+// 		}
 		return $this->onDelete($form);
 	}
 	
@@ -289,10 +288,10 @@ abstract class MethodCrud extends MethodForm
 		$gdo = $table->blank($data); # object with files gdt
 		$this->beforeCreate($form, $gdo);
 		$gdo->insert();
-        return $this->afterCreate($form, $gdo);
         Website::redirectMessage('msg_crud_created',
             [$gdo->gdoHumanName(), $gdo->getID()],
             $this->href('&'.$this->crudName().'='.$gdo->getID()));
+        return $this->afterCreate($form, $gdo);
 	}
 	
 	public function onUpdate(GDT_Form $form)
@@ -325,7 +324,7 @@ abstract class MethodCrud extends MethodForm
 		}
 		
 		$this->gdo->table()->clearCache();
-		$this->message('msg_crud_deleted', [$this->gdo->gdoHumanName()]);
+		$this->messageRedirect('msg_crud_deleted', [$this->gdo->gdoHumanName()]);
 		return $this->afterDelete($form, $this->gdo);
 	}
 	

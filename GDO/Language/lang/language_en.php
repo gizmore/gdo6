@@ -3,7 +3,8 @@ return [
 'lbl_langswitch' => 'Language',
 'msg_language_set' => 'Your language has been set to %s.',
 'cfg_languages' => 'Supported languages',
-'mdescr_language_switchlanguage' => 'Change language to %s',
+'mdescr_language_switchlanguage' => 'Change your language to %s.',
+'mdescr_language_switchlanguage2' => 'Change your language.',
     
 'cfg_use_in_javascript' => 'Copy the translation data to JavaScript client?',
 'tt_cfg_use_in_javascript' => 'This will load the translation javascript file.',

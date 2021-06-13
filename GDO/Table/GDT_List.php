@@ -59,4 +59,20 @@ class GDT_List extends GDT_Table
 	    ]);
 	}
 	
+	public static $CURRENT;
+	public $data;
+	
+	protected function renderJSONData()
+	{
+	    self::$CURRENT = $this;
+	    $this->data = [];
+	    $result = $this->getResult();
+	    $table = $result->table;
+	    while ($gdo = $table->fetch($result))
+	    {
+	        $gdo->renderList();
+	    }
+	    return $this->data;
+	}
+	
 }

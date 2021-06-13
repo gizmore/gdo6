@@ -9,6 +9,8 @@ use GDO\DB\GDT_CreatedAt;
 use GDO\Avatar\GDT_Avatar;
 use GDO\Profile\GDT_ProfileLink;
 use GDO\Date\GDT_DateDisplay;
+use GDO\Core\Application;
+use GDO\Table\GDT_List;
 
 /**
  * A list item.
@@ -101,5 +103,46 @@ final class GDT_ListItem extends GDT
 	}
 	
 	public function renderCell() { return GDT_Template::php('UI', 'cell/list_item.php', ['gdt'=>$this]); }
+	
+	public function render()
+	{
+	    switch (Application::instance()->getFormat())
+	    {
+	        case 'json': 
+	            GDT_List::$CURRENT->data[] = $this->renderJSON();
+	            break;
+	        case 'xml':
+                GDT_List::$CURRENT->data[] = $this->renderJSON();
+                break;
+	        default:
+	            return $this->renderCell();
+	    }
+	}
+	
+	public function renderJSON()
+	{
+	    $data = [];
+	    if ($this->title)
+	    {
+	        $data['title'] = $this->title->renderCell();
+	    }
+	    if ($this->subtitle)
+	    {
+	        $data['subtitle'] = $this->subtitle->renderCell();
+	    }
+	    if ($this->content)
+	    {
+	        $data['content'] = $this->content->renderCell();
+	    }
+	    if ($this->right)
+	    {
+	        $data['right'] = $this->right->renderCell();
+	    }
+	    if ($this->subtext)
+	    {
+	        $data['subtext'] = $this->subtext->renderCell();
+	    }
+	    return $data;
+	}
 	
 }

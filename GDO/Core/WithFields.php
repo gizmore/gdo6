@@ -176,7 +176,13 @@ trait WithFields
 	    $back = [];
 	    foreach ($this->fields as $field)
 	    {
-	        $back[] = $field->renderCLI();
+	        if ($field->cli)
+	        {
+	            if ($text = $field->renderCLI())
+	            {
+	                $back[] = $text;
+	            }
+	        }
 	    }
 	    return implode(', ', $back);
 	}

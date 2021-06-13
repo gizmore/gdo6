@@ -7,6 +7,7 @@ use GDO\Date\GDT_Timezone;
 use GDO\Form\GDT_Submit;
 use GDO\User\GDO_User;
 use GDO\Core\Website;
+use GDO\Core\GDT_Response;
 
 /**
  * Change a user's timezone.
@@ -33,7 +34,7 @@ final class Timezone extends MethodForm
     {
         $user = GDO_User::current();
         $old = $user->getTimezone();
-        $new = $form->getFormVar('timezone');
+        $new = $form->getFormValue('timezone');
         if ($old !== $new)
         {
             $user->tempUnset('timezone');
@@ -43,8 +44,10 @@ final class Timezone extends MethodForm
         }
         else
         {
-            Website::redirectBack();
+            Website::redirectError('err_nothing_happened');
         }
+        
+        return GDT_Response::make();
     }
     
 }

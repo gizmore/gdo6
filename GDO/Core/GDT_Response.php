@@ -79,6 +79,16 @@ class GDT_Response extends GDT
 	    return self::makeWith(...$fields);
 	}
 	
+	/**
+	 * Create a new response with html
+	 * @param string $html
+	 * @return self
+	 */
+	public static function newWithHTML($html)
+	{
+	    return self::newWith()->addHTML($html);
+	}
+	
 	##############
 	### Render ###
 	##############

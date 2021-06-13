@@ -13,7 +13,7 @@ use GDO\Core\GDO;
  * The basic API is identical for static memory results and queried data.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 5.0.0
  * @see ArrayResult
  * @see GDT_Table
@@ -171,11 +171,6 @@ abstract class MethodTable extends Method
 	    }
 	}
 	
-// 	public function getDefaultOrderDir()
-// 	{
-// 	    return true;
-//     }
-	
 	public function getIPP()
 	{
 	    $o = $this->table->headers->name;
@@ -200,6 +195,11 @@ abstract class MethodTable extends Method
 	###############
 	### Execute ###
 	###############
+	public function beforeExecute()
+	{
+	    $this->table->result = null;
+	}
+	
 	public function execute()
 	{
 		return GDT_Response::makeWith(

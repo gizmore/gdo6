@@ -71,7 +71,7 @@ abstract class Method
 	public function isLockingSession() { return $_SERVER['REQUEST_METHOD'] === 'POST'; }
 	public function getPermission() {}
 	public function hasPermission(GDO_User $user) { return true; }
-
+	
 	/**
 	 * Override this.
 	 * Should this method save the current URL as last url?
@@ -194,22 +194,6 @@ abstract class Method
 		return $this->paramCache;
 	}
 	
-// 	public function &allParameterCache()
-// 	{
-// 	    if ($this->allParamCache === null)
-// 	    {
-// 	        $this->allParamCache = [];
-// 	        if ($params = $this->allParameters())
-// 	        {
-// 	            foreach ($params as $gdt)
-// 	            {
-// 	                $this->paramCache[$gdt->name] = $gdt;
-// 	            }
-// 	        }
-// 	    }
-// 	    return $this->paramCache;
-// 	}
-	
 	/**
 	 * @param string $key
 	 * @return GDT
@@ -219,14 +203,16 @@ abstract class Method
 	    /** @var $gdt GDT **/
 	    if ($gdt = $this->gdoParameterCache()[$key])
 	    {
-	        $initial = $gdt->initial;
-   	        $gdt->var($initial); 
-    	    
+	        $gdt->var($gdt->initial);
     	    $gdt->getRequestVar($gdt->formVariable(), $gdt->var);
 	        $value = $gdt->getValue();
 	        if (!$gdt->validate($value))
 	        {
-	            throw new GDOParameterException($gdt, $value);
+	            if ($throw)
+	            {
+	                throw new GDOParameterException($gdt, $value);
+	            }
+                return null;
 	        }
 	        else
 	        {
@@ -400,16 +386,16 @@ abstract class Method
 	#################
 	### Auto HREF ###
 	#################
-	public function methodHref()
+	public function methodHref($append='')
 	{
-		$append = '';
-		foreach ($this->gdoParameterCache() as $gdt)
-		{
-		    if ($gdt->name && ($var = $gdt->getRequestVar(null, $gdt->initial)))
-		    {
-		        $append .= '&' . $gdt->name . '=' . urlencode($var);
-		    }
-		}
+// 		$append = '';
+// 		foreach ($this->gdoParameterCache() as $gdt)
+// 		{
+// 		    if ($gdt->name && ($var = $gdt->getRequestVar(null, $gdt->var)))
+// 		    {
+// 		        $append .= '&' . $gdt->name . '=' . urlencode($var);
+// 		    }
+// 		}
 		return $this->href($append);
 	}
 	

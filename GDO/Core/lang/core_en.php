@@ -72,6 +72,10 @@ return array(
 'num' => 'Num',
 'filter' => 'Filter',
 'actions' => 'Actions',
+'deleted' => 'Deleted',
+'completed' => 'Completed',
+'timezone' => 'Timezone',
+'format' => 'Format',
     
 # Core GDO tables
 'gdo_permission' => 'Permission',
@@ -185,6 +189,7 @@ return array(
 'err_curl' => 'HTTP request error(%s): %s',
 'err_you_no_mail' => 'Your account needs an email for this.',
 'err_unknown_parameter' => 'Unknown Parameter for method %s/%s: %s',
+'err_select_candidates' => 'Possible matches: %s',
     
 # File
 'is_file' => 'a File',
@@ -229,7 +234,7 @@ return array(
 'sidenav_right_title' => 'Settings',
 	
 # Config
-'ipp' => 'Items per page (ipp)',
+'ipp' => 'IPP',
 'enum_no' => 'No',
 'enum_yes' => 'Yes',
 'cfg_ipp' => 'Items per page',

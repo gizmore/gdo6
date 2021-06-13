@@ -22,6 +22,7 @@ class GDT_Divider extends GDT
 	public function defaultLabel() { return $this->noLabel(); }
 	
 	public function renderJSON() {}
+	public function renderCLI() {}
 	public function renderCell() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
 	public function renderForm() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
 	public function renderCard()

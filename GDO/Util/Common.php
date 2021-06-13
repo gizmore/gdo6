@@ -29,11 +29,11 @@ final class Common
 	public static function getRequestString($var, $default=null) { return isset($_REQUEST[$var]) ? (string)$_REQUEST[$var] : $default; }
 	public static function getRequestArray($var, $default=[]) { return (isset($_REQUEST[$var]) && is_array($_REQUEST[$var])) ? $_REQUEST[$var] : $default; }
 	
-	public static function getForm($var, $default=null) { $vars = self::getRequestArray('form'); return isset($vars[$var]) ? $vars[$var] : $default; }
-	public static function getFormInt($var, $default=0) { return (int) self::getForm($var, $default); }
-	public static function getFormString($var, $default=null) { return (string)self::getForm($var, $default); }
-	public static function getFormFloat($var, $default=0) { return (int) self::getForm($var, $default); }
-	public static function getFormArray($var, $default=[]) { $f = self::getRequestArray('form', null); return is_array($f) ? $f : $default; }
+// 	public static function getForm($var, $default=null) { $vars = self::getRequestArray('form'); return isset($vars[$var]) ? $vars[$var] : $default; }
+// 	public static function getFormInt($var, $default=0) { return (int) self::getForm($var, $default); }
+// 	public static function getFormString($var, $default=null) { return (string)self::getForm($var, $default); }
+// 	public static function getFormFloat($var, $default=0) { return (int) self::getForm($var, $default); }
+// 	public static function getFormArray($var, $default=[]) { $f = self::getRequestArray('form', null); return is_array($f) ? $f : $default; }
 	
 	/**
 	 * Return the first match of capturing regex.

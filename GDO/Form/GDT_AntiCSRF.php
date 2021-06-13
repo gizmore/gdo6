@@ -24,6 +24,8 @@ class GDT_AntiCSRF extends GDT_Hidden
     const KEYLEN = 6;
     const MAX_KEYS = 12;
     
+    public $cli = false;
+    
 	public function defaultName() { return 'xsrf'; }
 
 	###########

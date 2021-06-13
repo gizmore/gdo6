@@ -111,6 +111,7 @@ Copy this list and remove / add modules.
     ## git clone --recursive https://github.com/gizmore/gdo6-docs Docs
     ## git clone --recursive https://github.com/gizmore/gdo6-dog Dog
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-auth DogAuth
+    ## git clone --recursive https://github.com/gizmore/gdo6-dog-blackjack DogBlackjack
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-irc DogIRC
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-irc-autologin DogIRCAutologin
     ## git clone --recursive https://github.com/gizmore/gdo6-dog-irc-spider DogIRCSpider

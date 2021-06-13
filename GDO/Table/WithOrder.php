@@ -17,7 +17,7 @@ trait WithOrder
 		{
 			$name = $this->name;
 			$o = $table->headers->name;
-			$oo = $o . "[o]" . "[$name]";
+			$oo = $o . "[o][{$name}]";
 			
 			$url = @$_SERVER['REQUEST_URI'];
 			

@@ -30,10 +30,12 @@ class GDT_Form extends GDT
 	public static $VALIDATING_SUCCESS; # ugly, but hey.
 	public static $CURRENT; # ugly, but hey.
 	
+	const DEFAULT_NAME = '_form';
+	
 	use WithTitle;
 	use WithFields;
 	
-	public function defaultName() { return 'form'; }
+	public function defaultName() { return self::DEFAULT_NAME; }
 	public function isSerializable() { return true; }
 	
 	protected function __construct()
@@ -131,7 +133,7 @@ class GDT_Form extends GDT
         {
             return $this->renderCLIError();
 	    }
-	    return $this->renderCLIFields();
+	    return trim($this->info . ' - ' . $this->renderCLIFields(), ' -');
 	}
 	
 	private function renderCLIError()
@@ -156,7 +158,8 @@ class GDT_Form extends GDT
 	
 	public function reset(GDO $gdo)
 	{
-	    $this->withFields(function(GDT $gdt) use ($gdo) { $gdt->gdo($gdt->gdo); });
+	    $this->withFields(function(GDT $gdt) use ($gdo) {
+	        $gdt->gdo($gdt->gdo); });
 	}
 	
 	public function hasVisibleFields()
@@ -289,14 +292,16 @@ class GDT_Form extends GDT
 
 	public function getFormVar($key)
 	{
-	    $gdt = @$this->fields[$key];
-	    return $gdt ? $gdt->var : null;
+	    $gdt = $this->fields[$key];
+	    return $gdt ?
+	       $gdt->getRequestVar($this->name, $gdt->var) :
+	       null;
 	}
 	
 	public function getFormValue($key)
 	{
-	    $gdt = @$this->fields[$key];
-	    return $gdt ? $gdt->getValue() : null;
+	    $gdt = $this->fields[$key];
+	    return $gdt->toValue($this->getFormVar($key));
 	}
 
 	##########################

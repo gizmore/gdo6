@@ -181,7 +181,16 @@ final class CLI
         $success = true;
         $args = Strings::args($line);
         $parameters = [];
-
+        
+        # Clear last request errors
+        foreach ($method->gdoParameterCache() as $gdt)
+        {
+            $gdt->error = null;
+//             $gdt->var($gdt->initial);
+            $_REQUEST[$gdt->name] = $gdt->var;
+            $_REQUEST[$gdt->formVariable()][$gdt->name] = $gdt->var;
+        }
+        
         # Parse optionals --parameter=value
         foreach ($args as $var)
         {
@@ -202,6 +211,8 @@ final class CLI
                         $success = false;
                     }
                     $parameters[$gdt->name] = $var;
+                    $_REQUEST[$gdt->name] = $var;
+                    $_REQUEST[$gdt->formVariable()][$gdt->name] = $var;
                 }
                 $i++;
                 continue;
@@ -225,6 +236,8 @@ final class CLI
                     $success = false;
                 }
                 $parameters[$gdt->name] = $var;
+                $_REQUEST[$gdt->name] = $var;
+                $_REQUEST[$gdt->formVariable()][$gdt->name] = $var;
             }
         }
         
@@ -266,12 +279,12 @@ final class CLI
             }
             if ($gdt->isPositional())
             {
-                $usage1[] = sprintf('<%s>', $gdt->gdoHumanName());
+                $usage1[] = sprintf('<%s>', $gdt->displayLabel());
             }
             else
             {
                 $usage2[] = sprintf('[--%s=<%s>]',
-                    $gdt->name, $gdt->gdoExampleVars());
+                    $gdt->displayLabel(), $gdt->gdoExampleVars());
             }
         }
         $usage = implode(' ', $usage2) . ' ' . implode(' ', $usage1);
@@ -279,7 +292,8 @@ final class CLI
         $buttons = self::renderCLIHelpButtons($method);
         $mome = sprintf('%s.%s', 
             $method->getCLITrigger(), $buttons);
-        return GDT_Response::makeWithHTML(t('cli_usage', [
+        
+        return GDT_Response::newWithHTML(t('cli_usage', [
             trim(strtolower($mome).' '.$usage), $method->getDescription()]));
     }
     

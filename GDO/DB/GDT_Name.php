@@ -24,4 +24,9 @@ class GDT_Name extends GDT_String
 	public $notNull = true;
 	public $unique = true;
 	
+	public function renderCLI()
+	{
+	    return $this->getVar();
+	}
+	
 }

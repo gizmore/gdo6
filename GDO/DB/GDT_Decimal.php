@@ -7,7 +7,7 @@ use GDO\Core\GDT_Template;
  * A fixed decimal, database driven field.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.4
  * @since 6.0.0
  * 
  * @see GDT_Float

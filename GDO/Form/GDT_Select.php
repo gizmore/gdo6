@@ -40,7 +40,7 @@ class GDT_Select extends GDT_ComboBox
 	{
 		if ($this->var === null)
 		{
-			return $this->multiple ? [] : $this->emptyValue;
+			return $this->multiple ? [] : null;
 		}
 		return parent::getValue();
 	}
@@ -248,7 +248,7 @@ class GDT_Select extends GDT_ComboBox
 	###############
 	### Choices ###
 	###############
-	public $emptyValue = '0';
+	public $emptyValue = '0'; # @todo rename to emptyVar
 	public function emptyValue($emptyValue='0')
 	{
 		$this->emptyValue = $emptyValue;

@@ -72,6 +72,10 @@ return array(
 'num' => 'Numero',
 'filter' => 'Filtro',
 'actions' => 'Azioni',
+'deleted' => 'Cancellato',
+'completed' => 'Fatto',
+'timezone' => 'Fuso orario',
+'format' => 'Formato',
     
 # Core GDO tables
 'gdo_permission' => 'Autorizzazione',
@@ -185,6 +189,7 @@ return array(
 'err_curl' => 'Richiesta HTTP non riuscita(%s): %s',
 'err_you_no_mail' => 'Hai bisogno di un\'e-mail per questo.',
 'err_unknown_parameter' => 'Parametro sconosciuto per il metodo %s/%s: %s',
+'err_select_candidates' => 'Hit corrispondenti: %s',
     
 # File
 'is_file' => 'un File',
@@ -229,7 +234,7 @@ return array(
 'sidenav_right_title' => 'Impostazioni',
 	
 # Config
-'ipp' => 'Iscrizioni per pagina',
+'ipp' => 'IPP',
 'enum_no' => 'No',
 'enum_yes' => 'Si',
 'cfg_ipp' => 'Voci per pagina',

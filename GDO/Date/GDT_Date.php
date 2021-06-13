@@ -34,14 +34,19 @@ class GDT_Date extends GDT_Timestamp
 	
 	public function toVar($value)
 	{
-		return substr(parent::toVar($value), 0, 10);
+	    if ($var = parent::toVar($value))
+	    {
+	        return substr($var, 0, 10);
+	    }
 	}
 	
 	public function htmlValue()
 	{
-	    $seconds = $this->getValue();
-	    $isodate = date('Y-m-d', $seconds);
-	    return sprintf(' value="%s"', $isodate);
+	    if ($seconds = $this->getValue())
+	    {
+    	    $isodate = date('Y-m-d', $seconds);
+    	    return sprintf(' value="%s"', $isodate);
+	    }
 	}
 	
 	public function displayValue($var)

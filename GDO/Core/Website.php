@@ -223,9 +223,12 @@ final class Website
 	public static function redirectMessageRaw($message, $url=null, $time=0)
 	{
 	    $app = Application::instance();
+	 
+	    self::topResponse()->addField(GDT_Success::withText($message));
+	  
 	    if ($app->isCLI())
 	    {
-	        echo "{$message}\n";
+// 	        echo "{$message}\n";
 	        if ($app->isUnitTests())
 	        {
 	            echo "Redirect => $url\n";
@@ -235,7 +238,6 @@ final class Website
 	    
 	    $url = $url === null ? self::hrefBack() : $url;
 	    
-	    self::topResponse()->addField(GDT_Success::withText($message));
 	    if (!$app->isInstall())
 	    {
 	        GDO_Session::set('redirect_message', $message);
@@ -250,6 +252,8 @@ final class Website
 	
 	public static function redirectErrorRaw($message, $url=null, $time=0)
 	{
+	    self::topResponse()->addField(GDT_Error::withText($message, 405));
+	    
 	    if (Application::instance()->isCLI())
 	    {
 	        echo "{$message}\n";
@@ -257,7 +261,6 @@ final class Website
 	    }
 	    
 	    $url = $url === null ? self::hrefBack() : $url;
-	    self::topResponse()->addField(GDT_Error::withText($message, 405));
 	    $app = Application::instance();
 	    if (!$app->isInstall())
 	    {

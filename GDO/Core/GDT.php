@@ -59,6 +59,7 @@ abstract class GDT
 	public $searchable = false; # GDT_Table
 	public $positional = null; # CLI
 	public $focusable = false;
+	public $cli = true;
 	
 	###############
 	### Factory ###
@@ -174,11 +175,11 @@ abstract class GDT
 	    {
 	        if ($gdo->isTable())
 	        {
-    	       return $this->var($this->initial);
+                return $this->var($this->initial);
 	        }
 	        else
 	        {
-    	       return $this->setGDOData($gdo);
+    	        return $this->setGDOData($gdo);
 	        }
 	    }
 	    return $this;
@@ -330,6 +331,17 @@ abstract class GDT
 	    return $this;
 	}
 	
+	public function cli($cli)
+	{
+	    $this->cli = $cli;
+	    return $this;
+	}
+	
+	public function displayCLILabel()
+	{
+	    return strtolower(str_replace(' ', '_', $this->displayLabel()));
+	}
+	
 	#################
 	### GDO Value ###
 	#################
@@ -381,7 +393,7 @@ abstract class GDT
 	    return $new;
 	}
 	
-	private function _getRequestVar($firstLevel=null, $default=null, $name=null)
+	public function _getRequestVar($firstLevel=null, $default=null, $name=null)
 	{
 		$name = $name === null ? $this->name : $name;
 		
@@ -548,20 +560,41 @@ abstract class GDT
 	public function orderDefaultAsc($defaultAsc=true) { $this->orderDefaultAsc = $defaultAsc; return $this; }
 	public function orderDefaultDesc($defaultDesc=true) { $this->orderDefaultAsc = !$defaultDesc; return $this; }
 
-	public function orderVar($rq=null) { return $this->getRequestVar("$rq[o]", $this->initial, $this->filterField ? $this->filterField : $this->name); }
+	public function orderVar($rq=null)
+	{
+	    return $this->getRequestVar("$rq[o]", $this->initial,
+	        $this->filterField ? $this->filterField : $this->name);
+	}
 	
 	##############
 	### Filter ###
 	##############
 	public $searchField;
-	public function searchable($searchable=true) { $this->searchable = $searchable; return  $this; }
+	public function searchable($searchable=true)
+	{
+	    $this->searchable = $searchable;
+	    return $this;
+	}
 	
-	public function filterable($filterable=true) { $this->filterable = $filterable; return  $this; }
+	public function filterable($filterable=true)
+	{
+	    $this->filterable = $filterable;
+	    return $this;
+	}
 	
 	public $filterField;
-	public function filterField($filterField) { $this->filterField = $filterField; return $this->searchable(); }
+	public function filterField($filterField)
+	{
+	    $this->filterField = $filterField;
+	    return $this->searchable();
+	}
 
-	public function filterVar($rq=null) { return $this->inputToVar($this->getRequestVar("{$rq}[f]", null, $this->filterField ? $this->filterField : $this->name)); }
+	public function filterVar($rq=null)
+	{
+	    return $this->inputToVar(
+	        $this->_getRequestVar("{$rq}[f]", null, 
+	           $this->filterField ? $this->filterField : $this->name));
+	}
 	
 	/**
 	 * Filter decorator function for database queries.

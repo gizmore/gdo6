@@ -111,7 +111,7 @@ class Cache
 	
 	public static function recacheHooks()
 	{
-        if (GDO_IPC || (GDO_IPC === 'db'))
+        if (GDO_IPC)
         {
             foreach (self::$RECACHING as $gdo)
             {
@@ -214,10 +214,13 @@ class Cache
 		}
 
 	    # Mark for recache
-	    if ($back->recache === false)
-	    {
-	        self::$RECACHING[] = $back->recaching();
-	    }
+		if ($back->gdoCached())
+		{
+		    if (!$back->recache)
+    	    {
+    	        self::$RECACHING[] = $back->recaching();
+    	    }
+		}
 		
 		return $back;
 	}
@@ -225,7 +228,7 @@ class Cache
 	public function uncache(GDO $object)
 	{
 	    # Mark for recache
-	    if ($object->recache === false)
+	    if ((!$object->recache) && $object->gdoCached())
 	    {
 	        self::$RECACHING[] = $object->recaching();
 	    }

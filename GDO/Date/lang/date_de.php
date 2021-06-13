@@ -22,4 +22,11 @@ return [
     'msg_timezone_changed' => 'Ihre Zeitzone ist nun %s.',
     'cfg_tz_probe_js' => 'Zeitzone mit Javascript ermitteln?',
     'cfg_tz_sidebar_select' => 'Zeitzohnenwahl in der Sidebar anzeigen?',
+
+    # Epoch
+    'mtitle_date_epoch' => 'Zeitstempel ausgeben',
+    'msg_time_unix' => 'Unix timestamp: %s',
+    'msg_time_java' => 'Java timestamp: %s',
+    'msg_time_micro' => 'Microtimestamp: %s',
+    
 ];

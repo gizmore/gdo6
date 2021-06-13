@@ -41,8 +41,17 @@ class GDT_Int extends GDT
 	
 	public function isSerializable() { return true; }
 
-	public function toValue($var) { return $var === null || trim($var, "\r\n\t ") === '' ? null : (int) $var; }
-	public function inputToVar($input) { return trim($input, "\r\n\t "); }
+	public function toValue($var)
+	{
+	    return $var === null || trim($var, "\r\n\t ") === '' ?
+	       null : (int) $var;
+	}
+	
+	public function inputToVar($input)
+	{
+	    $input = trim($input, "\r\n\t ");
+	    return $input === '' ? null : $input;
+	}
 	
 	public $min;
 	public $max;

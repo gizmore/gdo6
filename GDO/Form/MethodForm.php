@@ -29,7 +29,7 @@ abstract class MethodForm extends Method
 	
 	public function isUserRequired() { return true; }
 	
-	public function formName() { return 'form'; }
+	public function formName() { return GDT_Form::DEFAULT_NAME; }
 	
 	public abstract function createForm(GDT_Form $form);
 	
