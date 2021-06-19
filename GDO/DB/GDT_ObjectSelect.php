@@ -134,7 +134,13 @@ class GDT_ObjectSelect extends GDT_Select
 	public function getValueMulti($var)
 	{
 		$back = [];
-		foreach (json_decode($var) as $id)
+		
+		if (!is_array($var))
+		{
+		    $var = json_decode($var);
+		}
+		
+		foreach ($var as $id)
 		{
 		    if ($object = $this->table->find($id, false))
 			{

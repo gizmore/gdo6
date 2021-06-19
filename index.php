@@ -169,11 +169,6 @@ switch ($app->getFormat())
         
         $ajax = Application::instance()->isAjax();
         
-        if (Module_Core::instance()->cfgLoadSidebars())
-        {
-            GDT_Page::$INSTANCE->loadSidebars();
-        }
-        
         if ($response)
         {
             $content = $strayContent;

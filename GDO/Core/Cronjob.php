@@ -4,6 +4,7 @@ namespace GDO\Core;
 use GDO\Install\Installer;
 use GDO\DB\Database;
 use GDO\Cronjob\MethodCronjob;
+use GDO\User\GDO_User;
 
 
 /**
@@ -21,6 +22,7 @@ final class Cronjob
 	 */
 	public static function run()
 	{
+	    GDO_User::setCurrent(GDO_User::system());
 		$modules = ModuleLoader::instance()->loadModulesCache();
 		foreach ($modules as $module)
 		{

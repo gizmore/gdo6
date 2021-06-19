@@ -82,12 +82,12 @@ final class GDT_Card extends GDT
 	        return $this->renderCLI();
 	    }
 // 	    elseif ($app->isHTML())
-	    {
-	        GDT_Response::$INSTANCE->addField($this);
-	    }
+// 	    {
+// 	        GDT_Response::$INSTANCE->addField($this);
+// 	    }
 // 	    else
 // 	    {
-// 	        return $this->renderCell();
+	        return $this->renderCell();
 // 	    }
 	}
 	public function renderCard() { return $this->renderCell(); }

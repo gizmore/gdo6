@@ -105,6 +105,7 @@ return array(
 # Sorting
 'order_by' => 'Sortierung',
 'order_dir' => 'Richtung',
+'list_order' => 'Sortierung: %s, %s',
 'asc' => 'Aufsteigend',
 'desc' => 'Absteigend',
 'lbl_search_criteria' => 'Kriterien: %s',

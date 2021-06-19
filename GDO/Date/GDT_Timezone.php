@@ -39,5 +39,10 @@ final class GDT_Timezone extends GDT_Select
         }
         return $this;
     }
+    
+    public function plugVar()
+    {
+        return 'Europe/Berlin';
+    }
 
 }

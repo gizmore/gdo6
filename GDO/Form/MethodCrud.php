@@ -324,7 +324,7 @@ abstract class MethodCrud extends MethodForm
 		}
 		
 		$this->gdo->table()->clearCache();
-		$this->messageRedirect('msg_crud_deleted', [$this->gdo->gdoHumanName()]);
+		$this->messageRedirect('msg_crud_deleted', [$this->gdo->gdoHumanName()], $this->hrefList());
 		return $this->afterDelete($form, $this->gdo);
 	}
 	

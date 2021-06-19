@@ -226,6 +226,13 @@ abstract class Method
 	    }
 	}
 	
+	public function setGDOParamter($key, $var)
+	{
+	    $gdt = $this->gdoParameterCache()[$key];
+	    $gdt->initial($var);
+	    return $this;
+	}
+	
 	/**
 	 * Get a paramter by label. Useful for CLI.
 	 * @param string $label
@@ -278,7 +285,7 @@ abstract class Method
 	public function gdoParameterValue($key)
 	{
 		$gdt = $this->gdoParameter($key);
-		return $gdt->getValue();
+		return $gdt->toValue($gdt->getRequestVar(null, $gdt->var));
 	}
 	
 	public function methodVars(array $vars)

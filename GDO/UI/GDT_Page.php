@@ -5,6 +5,7 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Application;
+use GDO\Core\Module_Core;
 use GDO\Core\Website;
 
 /**
@@ -80,6 +81,10 @@ final class GDT_Page extends GDT
     
     public function renderCell()
     {
+        if (Module_Core::instance()->cfgLoadSidebars())
+        {
+            GDT_Page::$INSTANCE->loadSidebars();
+        }
         return GDT_Template::php('UI', 'page.php', ['page' => $this]);
     }
 

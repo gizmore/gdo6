@@ -4,7 +4,6 @@ namespace GDO\Language;
 use GDO\Form\GDT_Select;
 use GDO\Core\GDT_Template;
 use GDO\Util\Strings;
-use GDO\Core\GDT;
 
 /**
  * Displays a language switcher.

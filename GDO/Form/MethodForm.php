@@ -164,8 +164,7 @@ abstract class MethodForm extends Method
 		if (!isset($this->form))
 		{
 			$this->form = GDT_Form::make($this->formName())->
-			    titleRaw($this->getTitle())->
-			    action($this->methodHref());
+			    titleRaw($this->getTitle());
 			$this->createForm($this->form);
 		}
 		return $this->form;

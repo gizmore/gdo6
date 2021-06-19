@@ -103,10 +103,11 @@ return array(
 'btn_sort' => 'Ordina',
     
 # Sorting
-'order_by' => 'Order by',
-'order_dir' => 'Direction',
-'asc' => 'Ascending',
-'desc' => 'Descending',
+'order_by' => 'Ordina per',
+'order_dir' => 'Direzione',
+'list_order' => 'Ordina per: %s, %s',
+'asc' => 'Ascendente',
+'desc' => 'Discendente',
 'lbl_search_criteria' => 'Ricerca: %s',
     
 # Generic Messages
