@@ -20,17 +20,17 @@ final class GDT_EditedAt extends GDT_DateTime
 	
 	public function gdoBeforeUpdate(Query $query)
 	{
-	    if (!$this->var)
-	    {
+// 	    if (!$this->var)
+// 	    {
     		$now = Time::getDate();
     		$query->set($this->identifier() . "=" . quote($now));
     		$this->gdo->setVar($this->name, $now);
-	    }
+// 	    }
 	}
 
-// 	public function blankData()
-// 	{
-// 	    return [$this->name => Time::getDate()];
-// 	}
+	public function blankData()
+	{
+	    return [$this->name => Time::getDate()];
+	}
 
 }

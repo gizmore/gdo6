@@ -235,7 +235,13 @@ abstract class Method
 	{
 	    foreach ($this->gdoParameterCache() as $gdt)
 	    {
-	        if (strcasecmp($gdt->displayLabel(), $label) === 0)
+	        $lbl = $gdt->displayLabel();
+	        if (strcasecmp($lbl, $label) === 0)
+	        {
+	            return $this->gdoParameter($gdt->name);
+	        }
+	        $lbl = $gdt->displayCLILabel();
+	        if (strcasecmp($lbl, $label) === 0)
 	        {
 	            return $this->gdoParameter($gdt->name);
 	        }

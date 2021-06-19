@@ -103,10 +103,12 @@ abstract class GDO
     #################
     ### Construct ###
     #################
+//     public $obj_id;
     public static $COUNT = 0;
     public function __construct()
     {
         self::$COUNT++;
+//         $this->obj_id = spl_object_hash($this);
         if (GDO_GDT_DEBUG)
         {
             self::logDebug();
@@ -116,6 +118,7 @@ abstract class GDO
     public function __wakeup()
     {
         self::$COUNT++;
+//         $this->obj_id = spl_object_hash($this);
         $this->recache = false;
         if (GDO_GDT_DEBUG)
         {
