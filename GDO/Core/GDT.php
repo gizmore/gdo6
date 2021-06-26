@@ -464,6 +464,7 @@ abstract class GDT
 	public function renderForm() { return $this->render(); }
 	public function renderFilter($f) {}
 	public function renderHeader() {}
+	public function renderSidebar() { return $this->renderCell(); }
 	public function renderChoice($choice) { return is_object($choice) ? $choice->renderChoice() : $choice; }
 	
 	public $labelArgs;

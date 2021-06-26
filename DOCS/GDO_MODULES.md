@@ -21,6 +21,7 @@ Each of these modules are a project / website / gdo6 demo.
 These modules provide a theme. Some site come with their own.
 
  - [BootstrapTheme](https://github.com/gizmore/gdo6-bootstrap-theme) (Bootstrap4) (quite ok)
+ - [Bootstrap5Theme](https://github.com/gizmore/gdo6-bootstrap5-theme) (Bootstrap5) (todo)
  - [Classic]() (is part of the core)
  - [Ionic]() (wanted?)
  - [JQueryMobile](https://github.com/gizmore/gdo6-jquery-mobile) (suprisingly ok to use)
@@ -46,6 +47,7 @@ These modules wrap another library or software. GDO6/GDT integration provided.
  - [Angular](https://github.com/gizmore/gdo6-angular)
  - [Bootstrap3](https://github.com/gizmore/gdo6-bootstrap3)
  - [Bootstrap4](https://github.com/gizmore/gdo6-bootstrap)
+ - [Bootstrap5](https://github.com/gizmore/gdo6-bootstrap5)
  - [Captcha](https://github.com/gizmore/gdo6-recaptcha2) (Google recaptcha)
  - [Docs](https://github.com/gizmore/gdo6-docs) (uses [PHPDocs](https://phpdoc.org/) to (generate)[] documentation)
  - [Favicon](https://github.com/gizmore/gdo6-favicon)

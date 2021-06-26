@@ -1471,7 +1471,7 @@ abstract class GDO
     {
         foreach ($this->gdoColumnsCache() as $gdoType)
         {
-            $gdoType->gdoBeforeUpdate($query);
+            $gdoType->gdo($this)->gdoBeforeUpdate($query);
         }
         $this->gdoBeforeUpdate();
     }
