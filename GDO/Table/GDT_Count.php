@@ -1,15 +1,15 @@
 <?php
 namespace GDO\Table;
-use GDO\Core\GDT;
-use GDO\UI\WithLabel;
+
+use GDO\DB\GDT_UInt;
 
 /**
  * Simple row number counter++
  * @author gizmore
  */
-class GDT_Count extends GDT
+class GDT_Count extends GDT_UInt
 {
-	use WithLabel;
+// 	use WithLabel;
 	
 	public $virtual = true;
 	
@@ -21,6 +21,11 @@ class GDT_Count extends GDT
 	public function renderCell()
 	{
 		return $this->num++;
+	}
+	
+	public function renderJSON()
+	{
+	    return $this->renderCell();
 	}
 
 }

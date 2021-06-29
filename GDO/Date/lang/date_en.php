@@ -11,6 +11,7 @@ return [
     'df_short' => 'm/d/Y h:i A',
     'df_long' => 'm/d/Y h:i:s A',
     'df_local' => 'Y-m-d\\TH:i:s', # do not change
+    'df_minute' => 'Y-m-d H:i',
     'tu_s' => 's',
     'tu_m' => 'm',
     'tu_h' => 'h',

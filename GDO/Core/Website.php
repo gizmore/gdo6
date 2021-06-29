@@ -19,6 +19,7 @@ final class Website
 {
 	private static $_links = []; # TODO: Uppercase static members.
 	private static $_inline_css = '';
+	private static $_redirected = false;
 	
 	/**
 	 * @param number $time
@@ -64,16 +65,17 @@ final class Website
 				{
 					return GDT_Response::makeWith(GDT_HTML::withHTML(self::ajaxRedirect($url, $time)));
 				}
-				else
+				elseif (!self::$_redirected)
 				{
 					if ($time > 0)
 					{
-					    hdr("Refresh:$time;url=$url");
+					    hdr("Refresh:$time; url=$url");
 					}
 					else
 					{
 						hdr('Location: ' . $url);
 					}
+					self::$_redirected = true;
 				}
 		}
 		self::topResponse()->addField(GDT_Success::with('msg_redirect', [GDT_Link::anchor($url), $time]));

@@ -16,6 +16,9 @@ class GDT_Label extends GDT
 {
 	use WithLabel;
 	
+	public function isSerializable() { return true; }
+	
+	
 	public function renderCell()
 	{
 		return GDT_Template::php('UI', 'cell/label.php', ['field'=>$this]);

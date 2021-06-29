@@ -26,6 +26,8 @@ class GDT_Link extends GDT_String
 	public $orderable = false;
 	public $filterable = false;
 	public $searchable = false;
+	public $groupable = false;
+	
 // 	public function isSerializable() { return false; }
 
 	################

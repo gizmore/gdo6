@@ -24,6 +24,7 @@ class GDT_Button extends GDT_Label
 	use WithAnchorRelation;
 	
 	public $writable = true;
+	public $groupable = false;
 	
 	public $primaryButton = true;
 	public function primary() { $this->primaryButton = true; return $this; }
@@ -39,6 +40,11 @@ class GDT_Button extends GDT_Label
     	    $this->writable(call_user_func($this->checkEnabled, $this));
 	    }
 		return GDT_Template::php('UI', 'cell/button.php', ['field'=>$this, 'href'=>$this->gdoHREF()]);
+	}
+	
+	public function renderJSON()
+	{
+	    return sprintf('<a href="%s">%s</a>', $this->gdoHREF(), $this->htmlIcon());
 	}
 
 	#############

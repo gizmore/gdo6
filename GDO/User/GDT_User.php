@@ -188,11 +188,16 @@ class GDT_User extends GDT_Object
 	##############
 	public function renderCell()
 	{
-		if ($user = $this->getUser())
-		{
-			return $user->displayNameLabel();
-		}
-		return t('unknown');
+	    if ($user = $this->getUser())
+	    {
+	        return $user->displayNameLabel();
+	    }
+	    return t('unknown');
+	}
+	
+	public function renderJSON()
+	{
+	    return $this->renderCell();
 	}
 	
 	##############
