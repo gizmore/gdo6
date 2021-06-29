@@ -58,6 +58,7 @@ abstract class GDT
 	public $filterable = false; # GDT_Table
 	public $searchable = false; # GDT_Table
 	public $positional = null; # CLI
+	public $groupable = true;
 	public $focusable = false;
 	public $cli = true;
 	
@@ -665,12 +666,19 @@ abstract class GDT
 	        'orderable' => $this->orderable,
 	        'filterable' => $this->filterable,
 	        'searchable' => $this->searchable,
+	        'groupable' => $this->groupable,
 	    ];
 	}
 
 	public function focusable($focusable)
 	{
 	    $this->focusable = $focusable;
+	    return $this;
+	}
+	
+	public function groupable($groupable)
+	{
+	    $this->groupable = $groupable;
 	    return $this;
 	}
 }

@@ -40,6 +40,8 @@ abstract class Method
 {
 	use WithName;
 	use WithTitle;
+	
+	public static $CURRENT = null;
 
 	/**
 	 * @return GDT_Response
@@ -401,14 +403,6 @@ abstract class Method
 	#################
 	public function methodHref($append='')
 	{
-// 		$append = '';
-// 		foreach ($this->gdoParameterCache() as $gdt)
-// 		{
-// 		    if ($gdt->name && ($var = $gdt->getRequestVar(null, $gdt->var)))
-// 		    {
-// 		        $append .= '&' . $gdt->name . '=' . urlencode($var);
-// 		    }
-// 		}
 		return $this->href($append);
 	}
 	
@@ -576,6 +570,8 @@ abstract class Method
 	    $transactional = $this->transactional();
 	    try
 	    {
+	        self::$CURRENT = $this;
+	        
 	        # Wrap transaction start
 	        if ($transactional) $db->transactionBegin();
 	        
@@ -617,6 +613,10 @@ abstract class Method
 	    {
 	        if ($transactional) $db->transactionRollback();
 	        throw $e;
+	    }
+	    finally
+	    {
+// 	        self::$CURRENT = null;
 	    }
 	}
 	

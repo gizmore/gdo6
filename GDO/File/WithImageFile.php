@@ -20,9 +20,9 @@ trait WithImageFile
 	### Scaled ###
 	##############
 	public $scaledVersions = [];
-	public function scaledVersion($name, $width, $height)
+	public function scaledVersion($name, $width, $height, $format=null)
 	{
-		$this->scaledVersions[$name] = [$width, $height];
+		$this->scaledVersions[$name] = [$width, $height, $format];
 		return $this;
 	}
 	
@@ -88,9 +88,9 @@ trait WithImageFile
 	{
 		foreach ($this->scaledVersions as $name => $dim)
 		{
-			list($w, $h) = $dim;
+			list($w, $h, $format) = $dim;
 			$file = $this->createFileToScale($original, $name);
-			ImageResize::resize($file, $w, $h);
+			ImageResize::resize($file, $w, $h, $format);
 		}
 	}
 	

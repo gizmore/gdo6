@@ -168,6 +168,11 @@ class GDT_Checkbox extends GDT_Select
 	    return $this->displayValue($this->getVar());
 	}
 	
+	public function renderJSON()
+	{
+	    return $this->displayValue($this->getVar());
+	}
+	
 	public function renderFilter($f)
 	{
 	    $vars = ['field' => $this, 'f'=> $f];

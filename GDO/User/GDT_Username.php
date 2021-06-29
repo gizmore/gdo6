@@ -41,7 +41,12 @@ class GDT_Username extends GDT_String
 	##############
 	public function renderCell()
 	{
-		return $this->displayVar();
+	    return $this->displayVar();
+	}
+	
+	public function renderJSON()
+	{
+	    return $this->renderCLI();
 	}
 	
 	public function renderCLI()

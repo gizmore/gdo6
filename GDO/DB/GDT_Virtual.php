@@ -28,6 +28,8 @@ class GDT_Virtual extends GDT
         $this->virtual = true;
     }
     
+    public function isSerializable() { return true; }
+    
     #############
     ### Query ###
     #############
@@ -89,6 +91,7 @@ class GDT_Virtual extends GDT
 
     public function render() { return $this->proxy()->render(); }
     public function renderCell() { return $this->proxy()->renderCell(); }
+    public function renderJSON() { return $this->proxy()->renderJSON(); }
     public function renderCard() { return $this->proxy()->renderCard(); }
     public function renderForm() { return $this->proxy()->renderForm(); }
     public function renderHeader() { return $this->proxy()->renderHeader(); }

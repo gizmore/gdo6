@@ -491,6 +491,7 @@ class GDT_Table extends GDT
 	    return array_merge(parent::configJSON(), [
 			'tableName' => $this->getResult()->table->gdoClassName(),
 			'pagemenu' => $this->pagemenu ? $this->getPageMenu()->configJSON() : null,
+	        'total' => $this->getResult()->numRows(),
 		    'searchable' => $this->searchable,
 			'sorted' => $this->sorted,
 			'sortableURL' => $this->sortableURL,
@@ -514,8 +515,9 @@ class GDT_Table extends GDT
 		    {
 		        if ($gdt->name && $gdt->isSerializable())
 		        {
-    		        if ($json = $gdt->gdo($gdo)->renderJSON())
+//     		        if ($json = $gdt->gdo($gdo)->renderJSON())
     		        {
+    		            $json = $gdt->gdo($gdo)->renderJSON();
     		            if (is_array($json))
     		            {
         		            foreach ($json as $k => $v)

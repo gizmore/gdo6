@@ -16,10 +16,16 @@ class GDT_Error extends GDT_Success
     
     public function isSerializable() { return true; }
     
-    public function defaultName() { return self::$ERROR === 1 ? 'error' : 'error_' . (++self::$ERROR); }
-    
 	public function hasError() { return true; }
 
+    public function defaultName()
+    {
+        $back = 'error';
+        $n = ++self::$ERROR;
+        $back = $n === 1 ? $back : "{$back}_$n";
+        return $back;
+    }
+    
 	public static function responseException(\Throwable $e)
 	{
 		Logger::logException($e);

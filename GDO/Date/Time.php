@@ -27,6 +27,7 @@ final class Time
 	const ONE_MONTH = 2592000;
 	const ONE_YEAR = 31536000;
 	
+	const FMT_MINUTE = 'minute';
 	const FMT_SHORT = 'short';
 	const FMT_LONG = 'long';
 	const FMT_DAY = 'day';

@@ -20,11 +20,17 @@ class GDT_Success extends GDT
     use WithText;
     use WithPHPJQuery;
     
-    public static $MESSAGE = 1;
+    public static $MESSAGE = 0;
     
     public function isSerializable() { return true; }
     
-    public function defaultName() { return self::$MESSAGE === 1 ? 'message' : 'message_' . (++self::$ERROR); }
+    public function defaultName()
+    {
+        $back = 'message';
+        $n = ++self::$MESSAGE;
+        $back = $n === 1 ? $back : "{$back}_$n";
+        return $back;
+    }
     
     public function code($code)
 	{
