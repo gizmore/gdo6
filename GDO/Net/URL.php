@@ -57,7 +57,7 @@ final class URL
 	
 	public function getTLD()
 	{
-	    return Common::regex('/([^.]\\.[^.])$/ui', $this->getHost());
+	    return Common::regex('/([^.]+\\.[^.]+)$/ui', $this->getHost());
 	}
 
 }
