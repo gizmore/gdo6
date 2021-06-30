@@ -7,5 +7,6 @@ class GDT_EditButton extends GDT_Button
     public function defaultLabel() { return $this->label('btn_edit'); }
     
 	public $icon = 'edit';
+	public $editable = false;
 	
 }
