@@ -8,7 +8,7 @@ Modules can have a Test/ folder that is automatically used when invoking
 
 The gdo_test.sh will create a files_test/ folder and load config from protected/config_test.php. The production files are not overwritten.
 There are not much tests yet, and some are in modules like "Mettwitze" which are my own sites.
-I started to write tests in quite late process of gdo6, and now i sometimes add a test when a problem occurs. 
+I started to write tests in quite late process of gdo6, and now i sometimes add a test when a problem occurs, usually in a high level module. 
 
 
 ## Testing sequence

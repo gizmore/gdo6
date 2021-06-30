@@ -5,9 +5,10 @@ use GDO\DB\GDT_UInt;
 
 /**
  * Display int as human readable filesize.
+ * 
  * @author gizmore
- * @version 6.05
- * @since 6.01
+ * @version 6.10.4
+ * @since 6.1.0
  */
 final class GDT_Filesize extends GDT_UInt
 {
@@ -17,7 +18,6 @@ final class GDT_Filesize extends GDT_UInt
 	{
 		return FileUtil::humanFilesize($this->getValue());
 	}
-
 	
 	public function toValue($var)
 	{

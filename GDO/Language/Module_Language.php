@@ -22,7 +22,7 @@ use GDO\UI\GDT_Page;
  * - Provide GDO_Language table
  *
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 2.0.0
  */
 final class Module_Language extends GDO_Module
@@ -144,5 +144,5 @@ final class Module_Language extends GDO_Module
             }
         }
     }
-    
+
 }

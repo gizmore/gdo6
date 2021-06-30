@@ -312,4 +312,6 @@ Viele Grüße,<br/>
 # v6.10.4 Fixes
 'search_term' => 'Suchbegriff',
 'cli_pages' => '%s. Seite %s/%s: %s',
+'cfg_load_sidebars' => 'Load Sidebar Elements?',
+'tt_cfg_load_sidebars' => 'Disable can give a slight performance use, if you use a very custom sidebar / page / theme.',
 );

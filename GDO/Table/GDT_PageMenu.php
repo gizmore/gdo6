@@ -156,10 +156,10 @@ class GDT_PageMenu extends GDT
 	{
 	    return [
 	        'href' => $this->href,
-	        'items' => $this->numItems,
-	        'ipp' => $this->ipp,
-	        'page' => $this->getPage(),
-	        'pages' => $this->getPageCount(),
+	        'items' => (int)$this->numItems,
+	        'ipp' => (int)$this->ipp,
+	        'page' => (int)$this->getPage(),
+	        'pages' => (int)$this->getPageCount(),
 	    ];
 	}
 	

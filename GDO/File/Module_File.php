@@ -5,15 +5,19 @@ use GDO\Core\GDO_Module;
 
 /**
  * File related stuff is coverd by Module_File.
+ * All files are stored in a single gdo_file table.
+ * Other modules or GDO point to these files in that table.
  * 
  * @author gizmore@wechall.net
- * @version 6.10
- * @since 6.02
+ * @version 6.10.4
+ * @since 6.2.0
  */
 final class Module_File extends GDO_Module
 {
 	public $module_priority = 10;
 
+	public function isCoreModule() { return true; }
+	
 	public function getClasses()
 	{
 		return [
@@ -37,4 +41,5 @@ final class Module_File extends GDO_Module
 		$this->addBowerJavascript("flow.js/dist/flow.js");
 		$this->addJavascript('js/gdo-flow.js');
 	}
+	
 }

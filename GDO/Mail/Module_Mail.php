@@ -28,11 +28,13 @@ final class Module_Mail extends GDO_Module
     public function getConfig()
     {
         return [
+            GDT_Checkbox::make('allow_email')->initial('1'),
             GDT_Checkbox::make('show_in_sidebar')->initial('1'),
         ];
     }
     
     public function cfgSidebar() { return $this->getConfigValue('show_in_sidebar'); }
+    public function cfgAllowEmail() { return $this->getConfigValue('allow_email'); }
     
     public function getUserSettings()
     {
@@ -46,9 +48,12 @@ final class Module_Mail extends GDO_Module
     {
         if ($this->cfgSidebar())
         {
-            GDT_Page::$INSTANCE->rightNav->addField(
-                GDT_Link::make('ft_mail_send')->href(
-                    href('Mail', 'Send')));
+            if ($this->cfgAllowEmail())
+            {
+                GDT_Page::$INSTANCE->rightNav->addField(
+                    GDT_Link::make('ft_mail_send')->href(
+                        href('Mail', 'Send')));
+            }
         }
     }
     

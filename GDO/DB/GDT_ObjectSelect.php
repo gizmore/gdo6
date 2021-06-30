@@ -30,7 +30,7 @@ class GDT_ObjectSelect extends GDT_Select
 	
 	public function validate($value)
 	{
-// 		$this->initChoices();
+		$this->initChoices();
         if ($value === null)
         {
             if ($this->notNull)
@@ -79,6 +79,11 @@ class GDT_ObjectSelect extends GDT_Select
 			return $obj->renderCell();
 		}
 		return $this->getValue();
+	}
+	
+	public function renderJSON()
+	{
+	    return $this->renderCell();
 	}
 	
 	public function renderFilter($f)

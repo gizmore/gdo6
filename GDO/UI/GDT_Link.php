@@ -10,7 +10,7 @@ use GDO\Core\GDO;
  * An anchor for menus or paragraphs.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  */
 class GDT_Link extends GDT_String
@@ -18,7 +18,6 @@ class GDT_Link extends GDT_String
 	use WithIcon;
 	use WithLabel;
 	use WithHREF;
-	use WithHTML;
 	use WithPHPJQuery;
 	use WithAnchorRelation;
 
@@ -28,8 +27,6 @@ class GDT_Link extends GDT_String
 	public $searchable = false;
 	public $groupable = false;
 	
-// 	public function isSerializable() { return false; }
-
 	################
 	### GDO href ###
 	################
@@ -67,7 +64,7 @@ class GDT_Link extends GDT_String
 	
 	/**
 	 * Output a link / anchor.
-	 * @deprecated not the default GDT behaviour. Yet ok?
+	 * @deprecated not the default GDT behaviour. Yet ok? NO!
 	 * @param string $href
 	 * @param string $label
 	 * @return string
@@ -96,7 +93,7 @@ class GDT_Link extends GDT_String
 	###################
 	### Link target ###
 	###################
-	private $target;
+	public $target;
 	public function target($target) { $this->target = $target; return $this; }
 	public function targetBlank() { return $this->target('_blank'); }
 	public function htmlTarget() { return $this->target === null ? '' : " target=\"{$this->target}\""; }

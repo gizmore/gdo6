@@ -35,6 +35,7 @@ These modules are providing an encoder for [GDT_Message](https://github.com/gizm
 
  - [BBCode](https://github.com/gizmore/gdo6-bbcode) (todo)
  - [CKEditor](https://github.com/gizmore/gdo6-ckeditor) (maybe still buggy. no like ck much. file upload might work)
+ - [DevExtreme](https://github.com/gizmore/gdo6-dev-extreme) (todo))
  - [Markdown](https://github.com/gizmore/gdo6-markdown) (todo)
  - [TinyMCE](https://github.com/gizmore/gdo6-tinymce) (should be ok)
  
@@ -49,6 +50,7 @@ These modules wrap another library or software. GDO6/GDT integration provided.
  - [Bootstrap4](https://github.com/gizmore/gdo6-bootstrap)
  - [Bootstrap5](https://github.com/gizmore/gdo6-bootstrap5)
  - [Captcha](https://github.com/gizmore/gdo6-recaptcha2) (Google recaptcha)
+ - [DevExtreme](https://github.com/gizmore/gdo6-dev-extreme)
  - [Docs](https://github.com/gizmore/gdo6-docs) (uses [PHPDocs](https://phpdoc.org/) to (generate)[] documentation)
  - [Favicon](https://github.com/gizmore/gdo6-favicon)
  - [Facebook](https://github.com/gizmore/gdo6-facebook) (Authentication and graph library)

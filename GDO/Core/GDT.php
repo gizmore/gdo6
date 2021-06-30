@@ -183,6 +183,10 @@ abstract class GDT
     	        return $this->setGDOData($gdo);
 	        }
 	    }
+// 	    else
+// 	    {
+// 	        return $this->var($this->initial);
+// 	    }
 	    return $this;
 	}
 	
@@ -196,7 +200,7 @@ abstract class GDT
 	    if ($this->var !== $var)
 	    {
     	    $this->var = ($var === null) || ($var === '') ? null : (string)$var;
-    	    $this->value = null;
+//     	    $this->value = null;
     	    $this->valueConverted = false;
 	    }
 	    return $this;
@@ -384,10 +388,10 @@ abstract class GDT
 	 */
 	public function getRequestVar($firstLevel=null, $default=null, $name=null)
 	{
-	    $old = $this->var;
+// 	    $old = $this->var;
 	    $new = $this->_getRequestVar($firstLevel, $default, $name);
         $new = $this->toVar($this->toValue($new)); # fix bug!
-	    if ($old !== $new)
+// 	    if ($old !== $new)
 	    {
 	        $this->var($new);
 	    }

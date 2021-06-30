@@ -304,7 +304,10 @@ Cordiali saluti,<br/>
 'err_cli' => 'Errore! %s',
 'cli_page' => '%s: %s.',
 'msg_new_user_created' => 'È stato creato un nuovo utente: %s',
+    
 # v6.10.4 Fixes
 'search_term' => 'ricerca',
 'cli_pages' => '%s. Pagina %s/%s: %s',
+'cfg_load_sidebars' => 'Load Sidebar Elements?',
+'cfg_tt_load_sidebars' => 'Disable can give a slight performance use, if you use a very custom sidebar / page / theme.',
 );

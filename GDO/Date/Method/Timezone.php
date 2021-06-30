@@ -11,10 +11,12 @@ use GDO\Core\GDT_Response;
 
 /**
  * Change a user's timezone.
+ * 
  * @author gizmore
  */
 final class Timezone extends MethodForm
 {
+    public function isTransactional() { return false; }
     public function isUserRequired() { return false; }
     
     public function formName() { return 'tzform'; }
@@ -32,19 +34,34 @@ final class Timezone extends MethodForm
 
     public function formValidated(GDT_Form $form)
     {
+        $this->setTimezone($form->getFormValue('timezone'), false);
+    }
+    
+    public function setTimezone($timezone, $redirect=true)
+    {
         $user = GDO_User::current();
         $old = $user->getTimezone();
-        $new = $form->getFormValue('timezone');
+        $new = $timezone;
         if ($old !== $new)
         {
             $user->tempUnset('timezone');
-            $user->persistent()->saveVar('user_timezone', $new);
-            Website::redirectMessage('msg_timezone_changed', [$new],
-                Website::hrefBack());
+            $user->setVar('user_timezone', $new);
+            if ($user->isUser())
+            {
+                $user->save();
+            }
+            if ($redirect)
+            {
+                Website::redirectMessage('msg_timezone_changed', [$new],
+                    Website::hrefBack());
+            }
         }
         else
         {
-            Website::redirectError('err_nothing_happened');
+            if ($redirect)
+            {
+                Website::redirectError('err_nothing_happened');
+            }
         }
         
         return GDT_Response::make();

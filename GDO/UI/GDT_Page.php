@@ -13,15 +13,16 @@ use GDO\Core\Website;
  * It holds all the bars and section hooks to render. calls them early and renders them later.
  * Another section is Website::topResponse()
  * 
+ * @see UI/tpl/page.php - Override this template for your custom theme / menu / sidebars.
+ * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.10.3
  */
 final class GDT_Page extends GDT
 {
     public static $INSTANCE;
     
-    use WithHTML;
     use WithTitle;
     
     # The 4 nav areas-
@@ -46,10 +47,13 @@ final class GDT_Page extends GDT
     
     public function reset()
     {
-        $this->topNav = GDT_Bar::make('topNav')->horizontal();
-        $this->leftNav = GDT_Bar::make('leftNav')->vertical();
-        $this->rightNav = GDT_Bar::make('rightNav')->vertical();
-        $this->bottomNav = GDT_Bar::make('bottomNav')->horizontal();
+//         if (Module_Core::instance()->cfgLoadSidebars())
+        {
+            $this->topNav = GDT_Bar::make('topNav')->horizontal();
+            $this->leftNav = GDT_Bar::make('leftNav')->vertical();
+            $this->rightNav = GDT_Bar::make('rightNav')->vertical();
+            $this->bottomNav = GDT_Bar::make('bottomNav')->horizontal();
+        }
         $this->topTabs = GDT_Container::make('topTabs')->vertical();
         Website::$TOP_RESPONSE = null;
     }
@@ -63,29 +67,29 @@ final class GDT_Page extends GDT
             return false;
         }
             
-//         $this->topTabs = GDT_Container::make('topTabs')->vertical();
+        foreach (ModuleLoader::instance()->getEnabledModules() as $module)
+        {
+            $module->onInitSidebar();
+        }
         
-//         if (module_enabled('Core'))
-//         {
-//             if (Module_Core::instance()->cfgLoadSidebars())
-//             {
-                foreach (ModuleLoader::instance()->getEnabledModules() as $module)
-                {
-                    $module->onInitSidebar();
-                }
-                return true;
-//             }
-//         }
-//         return false;
+        return true;
     }
     
     public function renderCell()
     {
+//         $this->reset();
         if (Module_Core::instance()->cfgLoadSidebars())
         {
             GDT_Page::$INSTANCE->loadSidebars();
         }
         return GDT_Template::php('UI', 'page.php', ['page' => $this]);
+    }
+    
+    public $html;
+    public function html($html)
+    {
+        $this->html = $html;
+        return $this;
     }
 
 }

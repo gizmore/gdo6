@@ -59,7 +59,7 @@ abstract class Method
 	/**
 	 * @return GDT_Response
 	 */
-	public function init() {}
+	public function init() {} # @todo rename to onInit()
 	public function isCLI() { return true; }
 	public function isAjax() { return false; }
 	public function isEnabled() { $m = $this->getModule(); return $m && $m->isEnabled(); }

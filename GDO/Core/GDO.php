@@ -1453,7 +1453,7 @@ abstract class GDO
     {
         foreach ($this->gdoColumnsCache() as $gdoType)
         {
-            $gdoType->gdoBeforeCreate($query);
+            $gdoType->gdo($this)->gdoBeforeCreate($query);
         }
         $this->gdoBeforeCreate();
     }

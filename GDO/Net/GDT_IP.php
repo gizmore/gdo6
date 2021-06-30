@@ -7,7 +7,7 @@ use GDO\DB\GDT_String;
  * IP column and rendering.
  * Current IP is assigned at the very bottom.
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  */
 final class GDT_IP extends GDT_String
@@ -62,7 +62,7 @@ final class GDT_IP extends GDT_String
 	public $max = 45;
 	public $encoding = self::ASCII;
 	public $caseSensitive = true;
-	public $pattern = "/^[.:0-9a-f]{3,45}$/";
+	public $pattern = "/^[.:0-9A-F]{3,45}$/";
 	public $writable = false;
 	public $editable = false;
 	public $icon = 'url';

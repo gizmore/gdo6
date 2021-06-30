@@ -172,13 +172,6 @@ abstract class MethodForm extends Method
 	
 	public function resetForm()
 	{
-// 	    $form = $this->formName();
-// 	    unset($_GET[$form]);
-// 	    unset($_POST[$form]);
-// 		unset($_REQUEST[$form]);
-// 		unset($_GET['nojs']);
-// 		unset($_POST['nojs']);
-// 		unset($_REQUEST['nojs']);
 		unset($this->form);
 	}
 	
@@ -206,8 +199,7 @@ abstract class MethodForm extends Method
 	    $app = Application::instance();
 	    if ($app->isCLI())
 	    {
-// 		    $this->getForm()->error = true;
-		    return GDT_Response::make();
+		    return GDT_Response::make()->code(405);
 	    }
 		if ($app->isAjax())
 		{

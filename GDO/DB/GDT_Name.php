@@ -24,9 +24,26 @@ class GDT_Name extends GDT_String
 	public $notNull = true;
 	public $unique = true;
 	
+	##############
+	### Render ###
+	##############
+	public function renderCell()
+	{
+	    if ($this->gdo)
+	    {
+	        return $this->gdo->displayName();
+	    }
+	    return $this->displayVar();
+	}
+	
 	public function renderCLI()
 	{
-	    return $this->getVar();
+	    return $this->renderCell();
+	}
+	
+	public function renderJSON()
+	{
+	    return $this->renderCell();
 	}
 	
 }

@@ -491,7 +491,7 @@ class GDT_Table extends GDT
 	    return array_merge(parent::configJSON(), [
 			'tableName' => $this->getResult()->table->gdoClassName(),
 			'pagemenu' => $this->pagemenu ? $this->getPageMenu()->configJSON() : null,
-	        'total' => $this->getResult()->numRows(),
+	        'total' => (int) ($this->pagemenu ? $this->pagemenu->numItems : $this->getResult()->numRows()),
 		    'searchable' => $this->searchable,
 			'sorted' => $this->sorted,
 			'sortableURL' => $this->sortableURL,

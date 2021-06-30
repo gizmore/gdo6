@@ -16,7 +16,6 @@ use GDO\DB\Cache;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_HTML;
-use GDO\Core\Module_Core;
 
 require 'GDO6.php';
 
@@ -159,10 +158,16 @@ switch ($app->getFormat())
             }
             $response->addField(Website::$TOP_RESPONSE);
             $content = $response->renderJSON();
-            if ($session) $session->commit();
+            if ($session)
+            {
+                $session->commit();
+            }
             $content = $cacheContent = Website::renderJSON($content);
         }
-        if ($session) $session->commit();
+        elseif ($session)
+        {
+            $session->commit();
+        }
         break;
         
     case 'html':

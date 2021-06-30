@@ -34,7 +34,7 @@ class GDT_File extends GDT_Object
 	    parent::__construct();
 		$this->table(GDO_File::table());
 		$this->icon('file');
-// 		$this->defaultSize()
+// 		$this->defaultSize();
 	}
 	
 	############
@@ -307,7 +307,6 @@ class GDT_File extends GDT_Object
 		
 		if ( ($this->gdo) && ($this->gdo->isPersisted()) ) # GDO possibly has a file
 		{
-			
 			if ($this->gdo instanceof GDO_Module)
 			{
 				if ($id == $this->gdo->getConfigVar($this->name))
@@ -430,7 +429,10 @@ class GDT_File extends GDT_Object
 	
 	private function denyFlowFile($key, $file, $reason)
 	{
-		return @file_put_contents($this->getChunkDir($key).'/denied', $reason);
+	    $this->cleanup();
+	    $dir = $this->getChunkDir($key);
+	    @mkdir($dir, GDO_CHMOD, true);
+		return @file_put_contents($dir.'/denied', $reason);
 	}
 	
 	private function deniedFlowFile($key, $file)
@@ -520,6 +522,7 @@ class GDT_File extends GDT_Object
 	
 	private function onFlowError($error, ...$args)
 	{
+	    $this->cleanup();
 		return GDT_Error::responseWith($error, $args, 413);
 	}
 	
