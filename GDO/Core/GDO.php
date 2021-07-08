@@ -590,6 +590,24 @@ abstract class GDO
         return $columns;
     }
     
+    /**
+     * Get a copy of multiple gdt.
+     * @param string[] ...$names
+     * @return GDT[]
+     */
+    public function gdoColumnsCopy(...$names)
+    {
+        $columns = array();
+        foreach (array_keys($this->gdoColumnsCache()) as $key)
+        {
+            if (in_array($key, $names, true))
+            {
+                $columns[$key] = $this->gdoColumnCopy($key);
+            }
+        }
+        return $columns;
+    }
+    
     ##########
     ### DB ###
     ##########

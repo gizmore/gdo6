@@ -19,7 +19,7 @@ use GDO\DB\GDT_Text;
  * @see \GDO\CKEditor\Module_CKEditor
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.4
  * @since 4.0.0
  */
 class GDT_Message extends GDT_Text
@@ -69,6 +69,7 @@ class GDT_Message extends GDT_Text
     ### Decoder ###
     ###############
     public static $DECODER = [self::class, 'DECODE'];
+    public static $EDITOR_NAME = 'GDT';
     public static function DECODE($s)
     {
         return '<div class="gdt-message ck-content">' . self::getPurifier()->purify($s) . '</div>';
@@ -168,7 +169,8 @@ class GDT_Message extends GDT_Text
         return
         "{$this->name}_input {$this->gdoColumnDefineB()},\n".
         "{$this->name}_output {$this->gdoColumnDefineB()},\n".
-        "{$this->name}_text {$this->gdoColumnDefineB()}\n";
+        "{$this->name}_text {$this->gdoColumnDefineB()},\n".
+        "{$this->name}_editor VARCHAR(16) CHARSET ascii COLLATE ascii_bin\n";
     }
     
     ######################

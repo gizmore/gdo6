@@ -86,18 +86,35 @@ $modules = $app->loader->loadModules(false, true);
 
 if ($argc === 2)
 {
-    $modules = [
-        'Core', 'Language', 'Country',
-        'File', 'User', 'Table',
-        'Tests', 'Javascript', 'Mail',
-    ];
-    
-    $modules = array_merge($modules, explode(',', $argv[1]));
-    
-    foreach ($modules as $moduleName)
+    $count = 0;
+    $modules = explode(',', $argv[1]);
+    while ($count != count($modules))
     {
-        echo "Installing {$moduleName}\n";
-        $module = ModuleLoader::instance()->getModule($moduleName);
+        $count = count($modules);
+        
+        foreach ($modules as $moduleName)
+        {
+            $module = ModuleLoader::instance()->getModule($moduleName);
+            $more = Installer::getDependencyModules($moduleName);
+            $more = array_map(function($m){
+                return $m->getName();
+            }, $more);
+            $modules = array_merge($modules, $more);
+            $modules[] = $module->getName();
+        }
+        $modules = array_unique($modules);
+    }
+    $modules = array_map(function($m){
+        return ModuleLoader::instance()->getModule($m);
+    }, $modules);
+        
+    usort($modules, function(GDO_Module $m1, GDO_Module $m2) {
+        return $m1->module_priority - $m2->module_priority;
+    });
+
+    foreach ($modules as $module)
+    {
+        echo "Installing {$module->getName()}\n";
         Installer::installModule($module);
         runTestSuite($module);
     }

@@ -619,9 +619,48 @@ abstract class GDT
 
 	/**
 	 * Build a search condition.
+	 * Int and String both rely on this default implementation.
 	 * @param string $searchTerm
 	 */
-	public function searchCondition($searchTerm, $fkTable=null) {}
+	public function searchCondition($searchTerm, $fkTable=null)
+	{
+	    $nameI = GDO::escapeIdentifierS($this->searchField ? $this->searchField : $this->name);
+	    $searchTerm = GDO::escapeSearchS($searchTerm);
+	    if (!$fkTable)
+	    {
+	        $fkTable = $this->gdtTable ? $this->gdtTable->gdoTableName() : null;
+	    }
+	    if (!$fkTable)
+	    {
+	        $fkTable = $this->gdo ? $this->gdo->gdoTableName() : null;
+	    }
+	    if ($fkTable)
+	    {
+	        $fkTable .= '.';
+	    }
+	    switch ($searchTerm[0])
+	    {
+	        case '~':
+	        default:
+	            $op = ($searchTerm[0] === '~' && $searchTerm[1] === '!') ? 'NOT LIKE' : 'LIKE';
+	            return sprintf('%s%s %s \'%%%s%%\'',
+	                $fkTable, $nameI, $op, $searchTerm);
+	        case '=': $op = '='; break;
+	        case '!': $op = '!='; break;
+	        case '>':
+	            $op = '>';
+	            if ($searchTerm[1] === '=') $op .= '=';
+// 	            if ($searchTerm[1] === '<') $op = '<';
+	            break;
+	        case '<':
+	            $op = '<';
+	            if ($searchTerm[1] === '=') $op .= '=';
+	            break;
+	    }
+	    $searchTerm = ltrim($searchTerm, '!=<>');
+	    return sprintf('%s%s %s \'%s\'',
+	        $fkTable, $nameI, $op, $searchTerm);
+	}
 	
 	/**
 	 * Filter for entities.

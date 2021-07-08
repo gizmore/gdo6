@@ -27,8 +27,9 @@ abstract class MethodCrud extends MethodForm
     # modes
 	const ERROR = 0;
 	const CREATED = 1;
-	const EDITED = 2;
-	const DELETED = 3;
+	const READ = 2;
+	const EDITED = 3;
+	const DELETED = 4;
 	
 	/**
 	 * The gdo to edit
@@ -60,6 +61,11 @@ abstract class MethodCrud extends MethodForm
 	public function isUserRequired() { return true; }
 	public function isCaptchaRequired() { return !GDO_User::current()->isMember(); }
 	public function showInSitemap() { return false; }
+	
+	public function canRead(GDO $gdo)
+	{
+	    return true;
+	}
 	
 	public function canCreate(GDO $table)
 	{
@@ -134,10 +140,22 @@ abstract class MethodCrud extends MethodForm
 	    {
 	        $this->gdo = $table->find($id);
 	        $this->crudMode = self::EDITED;
-	        if (!$this->canUpdate($this->gdo))
+	        if (!$this->canRead($this->gdo))
 	        {
-	            throw new PermissionException('err_permission_update');
+	            throw new PermissionException('err_permission_read');
 	        }
+	        elseif (!$this->canUpdate($this->gdo))
+	        {
+	            $this->crudMode = self::READ;
+	        }
+	        else
+	        {
+	            $this->crudMode = self::EDITED;
+	        }
+// 	        if (!$this->canUpdate($this->gdo))
+// 	        {
+// 	            throw new PermissionException('err_permission_update');
+// 	        }
 	    }
 	    elseif (!$this->canCreate($table))
 	    {
@@ -166,6 +184,8 @@ abstract class MethodCrud extends MethodForm
 	{
 		if ($gdt->editable)
 		{
+	        $gdt->writable = $this->crudMode !== self::READ;
+
 			if ( ($gdt instanceof GDT_Object) ||
 				 ($gdt instanceof GDT_ObjectSelect) )
 			{

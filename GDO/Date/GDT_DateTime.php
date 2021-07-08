@@ -6,7 +6,7 @@ use GDO\Core\GDT_Template;
 /**
  * 
  * @author gizmore
- * @version 6.0.3
+ * @version 6.10.4
  */
 class GDT_DateTime extends GDT_Timestamp
 {
@@ -31,6 +31,5 @@ class GDT_DateTime extends GDT_Timestamp
 	{
 	    return Time::displayDate($var);
 	}
-	
 	
 }

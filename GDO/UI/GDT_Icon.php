@@ -9,8 +9,8 @@ use GDO\Core\GDT;
  * @see WithIcon
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.4
+ * @since 6.0.0
  */
 class GDT_Icon extends GDT
 {
@@ -18,14 +18,16 @@ class GDT_Icon extends GDT
 	use WithPHPJQuery;
 
 	/**
-	 * When an icon provider is loaded, it changes this var.
+	 * When an icon provider is loaded, it changes the $iconProvider.
 	 * @var callable
 	 */
-	public static $iconProvider = ['GDO\UI\GDT_IconUTF8', 'iconS'];
+	public static $iconProvider = [GDT_IconUTF8::class, 'iconS'];
 	
-	public function renderCell()
-	{
-		return $this->htmlIcon();
-	}
+	##############
+	### Render ###
+	##############
+	public function renderCell() { return $this->htmlIcon(); }
+	public function renderCLI() { return $this->icon; }
+	public function renderJSON() {}
 	
 }

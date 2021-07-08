@@ -5,6 +5,8 @@ use GDO\DB\GDT_Char;
 
 /**
  * GUID Datatype and generator.
+ * Optionally set an automatic initial guid.
+ * 
  * @author gizmore
  * @version 6.10.4
  * @since 6.10.4
@@ -23,18 +25,33 @@ final class GDT_GUID extends GDT_Char
     ###########
     ### GDT ###
     ###########
+    public function defaultLabel() { return $this->label('guid'); }
+    
     protected function __construct()
     {
         parent::__construct();
         $this->length(self::LENGTH);
         $this->ascii();
         $this->caseI();
-        $this->notNull();
+//         $this->notNull();
+//         $this->initial(self::create());
     }
     
     public function blankData()
     {
-        return [$this->name => self::create()];
+        if ($this->initialGUID)
+        {
+            return [$this->name => self::create()];
+        }
     }
     
+    #################
+    ### Auto init ###
+    #################
+    public $initialGUID = false;
+    public function initialGUID($initialGUID=true)
+    {
+        $this->initialGUID = $initialGUID;
+        return $this;
+    }
 }

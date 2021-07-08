@@ -80,7 +80,7 @@ class GDT_Checkbox extends GDT_Select
 	public $undetermined = false;
 	public function undetermined($undetermined=true)
 	{
-// 	    $this->max = $undetermined ? 2 : 1;
+	    $this->max = $undetermined ? 2 : 1;
 		$this->undetermined = $undetermined;
 		return $this;
 	}

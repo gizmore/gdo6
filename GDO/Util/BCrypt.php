@@ -28,7 +28,7 @@ final class BCrypt
 	###############
 	### Members ###
 	###############
-	private $hash;
+	public $hash;
 	
 	public function __construct($hash)
 	{

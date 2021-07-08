@@ -212,24 +212,29 @@ class GDT_Int extends GDT
 	    $filter = $this->filterVar($rq);
 	    if ($filter != '')
 	    {
-			$nam = $this->identifier();
-			
-			# Prepare min-max-range condition
-	        list($min, $max) = self::getMinMaxFromFilterVar($filter);
-	        $cond = [];
-	        if ($min !== null)
+	        if ($condition = $this->searchQuery($query, $filter, true))
 	        {
-	            $cond[] = "$nam >= $min";
-	        }
-	        if ($max !== null)
-	        {
-	            $cond[] = "$nam <= $max";
+	            $this->filterQueryCondition($query, $condition);
 	        }
 	        
-	        if (count($cond)) # empty can happen on the folowing input: '-'
-	        {
-    			$this->filterQueryCondition($query, implode(' AND ', $cond));
-	        }
+// 			$nam = $this->identifier();
+			
+// 			# Prepare min-max-range condition
+// 	        list($min, $max) = self::getMinMaxFromFilterVar($filter);
+// 	        $cond = [];
+// 	        if ($min !== null)
+// 	        {
+// 	            $cond[] = "$nam >= $min";
+// 	        }
+// 	        if ($max !== null)
+// 	        {
+// 	            $cond[] = "$nam <= $max";
+// 	        }
+	        
+// 	        if (count($cond)) # empty can happen on the folowing input: '-'
+// 	        {
+//     			$this->filterQueryCondition($query, implode(' AND ', $cond));
+// 	        }
 	    }
 	}
 	
@@ -240,74 +245,74 @@ class GDT_Int extends GDT
 	 * @param string $filter
 	 * @return int[] min and max
 	 */
-	public static function getMinMaxFromFilterVar($filter)
-	{
-	    # split by '-'
-	    # mark negative max ('--') with -n
-	    $filter = str_replace(' ', '', $filter);
-	    $filter = str_replace('--', '-n', $filter);
-	    $parts = explode('-', $filter);
+// 	public static function getMinMaxFromFilterVar($filter)
+// 	{
+// 	    # split by '-'
+// 	    # mark negative max ('--') with -n
+// 	    $filter = str_replace(' ', '', $filter);
+// 	    $filter = str_replace('--', '-n', $filter);
+// 	    $parts = explode('-', $filter);
 
-	    $i = 0;
-        $min = null; $max = null;
-        $neg_min = 1; $neg_max = 1;
+// 	    $i = 0;
+//         $min = null; $max = null;
+//         $neg_min = 1; $neg_max = 1;
 
-        if ($parts[$i] === '')
-        {
-            $i++;
-            $neg_min = -1; # starts with a minus
-        }
+//         if ($parts[$i] === '')
+//         {
+//             $i++;
+//             $neg_min = -1; # starts with a minus
+//         }
         
-        if (count($parts) === $i)
-        {
-            return [null, null]; # bad input
-        }
+//         if (count($parts) === $i)
+//         {
+//             return [null, null]; # bad input
+//         }
         
-        if (is_numeric($parts[$i]))
-        {
-            $min = $parts[$i++];
-        }
-        else
-        {
-            return [null, null]; # bad input
-        }
+//         if (is_numeric($parts[$i]))
+//         {
+//             $min = $parts[$i++];
+//         }
+//         else
+//         {
+//             return [null, null]; # bad input
+//         }
 
-        if (count($parts) === $i)
-        {
-            $min *= $neg_min;
-            return [$min, $min]; # only one number
-        }
+//         if (count($parts) === $i)
+//         {
+//             $min *= $neg_min;
+//             return [$min, $min]; # only one number
+//         }
         
-        if ($parts[$i] === '')
-        {
-            $i++;
-        }
+//         if ($parts[$i] === '')
+//         {
+//             $i++;
+//         }
         
-        if (count($parts) === $i)
-        {
-            return [$min * $neg_min, PHP_INT_MAX]; # no max but finished with a sign
-        }
+//         if (count($parts) === $i)
+//         {
+//             return [$min * $neg_min, PHP_INT_MAX]; # no max but finished with a sign
+//         }
         
-        if ($parts[$i][0] === 'n')
-        {
-            $neg_max = -1; # '--'
-            $parts[$i] = ltrim($parts[$i], 'n');
-        }
+//         if ($parts[$i][0] === 'n')
+//         {
+//             $neg_max = -1; # '--'
+//             $parts[$i] = ltrim($parts[$i], 'n');
+//         }
         
-        if (is_numeric($parts[$i]))
-        {
-            $max = $parts[$i++];
-        }
+//         if (is_numeric($parts[$i]))
+//         {
+//             $max = $parts[$i++];
+//         }
 
-        if (count($parts) === $i)
-        {
-            $min *= $neg_min;
-            $max *= $neg_max;
-            return $min <= $max ? [$min, $max] : [$max, $min];
-        }
+//         if (count($parts) === $i)
+//         {
+//             $min *= $neg_min;
+//             $max *= $neg_max;
+//             return $min <= $max ? [$min, $max] : [$max, $min];
+//         }
         
-	    return [null, null]; # some non numeric input left
-	}
+// 	    return [null, null]; # some non numeric input left
+// 	}
 	
 	public function filterGDO(GDO $gdo, $filtervalue)
 	{
@@ -336,18 +341,6 @@ class GDT_Int extends GDT
 	{
 	    $haystack = (string) $this->getVar();
 	    return strpos($haystack, $searchTerm) !== false;
-	}
-	
-	/**
-	 * Build a search condition.
-	 * @param string $searchTerm
-	 */
-	public function searchCondition($searchTerm, $fkTable=null)
-	{
-	    $nameI = GDO::escapeIdentifierS($this->searchField ? $this->searchField : $this->name);
-	    $searchTerm = GDO::escapeSearchS($searchTerm);
-	    return sprintf('%s.%s LIKE \'%%%s%%\'',
-	        $fkTable ? $fkTable : $this->gdtTable->gdoTableName() , $nameI, $searchTerm);
 	}
 	
 	##############

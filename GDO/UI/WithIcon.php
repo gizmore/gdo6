@@ -16,7 +16,7 @@ namespace GDO\UI;
  * @see GDT_IconUTF8 - for the minimal icon provider.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.4
  * @since 6.1.0
  */
 trait WithIcon
@@ -62,8 +62,8 @@ trait WithIcon
 	public $iconSize;
 	public function iconSize($size) { $this->iconSize = $size; return $this; }
 
-	public $color;
-	public function color($color) { $this->color = $color; return $this; }
+	public $iconColor;
+	public function iconColor($color) { $this->iconColor = $color; return $this; }
 	
 	public function tooltip($text, $textArgs=null)
 	{
@@ -81,7 +81,8 @@ trait WithIcon
 	{
 	    $text = $this->iconText ? html(t($this->iconText, $this->iconTextArgs)) : '';
 		return $this->icon ?
-			self::iconS($this->icon, $text, $this->iconSize, $this->color) :
-			self::rawIconS($this->rawIcon, $text, $this->iconSize, $this->color);
+			self::iconS($this->icon, $text, $this->iconSize, $this->iconColor) :
+			self::rawIconS($this->rawIcon, $text, $this->iconSize, $this->iconColor);
 	}
+	
 }

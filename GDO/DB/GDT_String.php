@@ -226,15 +226,6 @@ class GDT_String extends GDT
 		return GDT_Template::php('DB', 'filter/string.php', ['field' => $this, 'f' => $f]);
 	}
 	
-    public function searchCondition($searchTerm, $fkTable=null)
-    {
-        $collate = $this->caseSensitive ? (' '.$this->gdoCollateDefine(false)) : '';
-        $condition = sprintf('%s%s%s LIKE \'%%%s%%\'', 
-            $fkTable ? ($fkTable.'.') : ($this->gdo ? ($this->gdo->gdoTableName().'.') : ''),
-                $this->searchField ? $this->searchField : $this->name, $collate, GDO::escapeSearchS($searchTerm));
-        return $condition;
-    }
-	
     public function filterQuery(Query $query, $rq=null)
 	{
 		if ($filter = $this->filterVar($rq))

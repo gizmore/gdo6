@@ -273,7 +273,7 @@ class GDT_Select extends GDT_ComboBox
 	{
 		$this->emptyValue = $emptyValue;
 		$this->emptyLabel = $emptyLabel;
-		return $this->initial($emptyValue);
+		return $this; #->initial($emptyValue);
 	}
 	
 	public function htmlSelected($value)

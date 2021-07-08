@@ -2,6 +2,7 @@
 <div class="gdt-container<?=$field->classError()?>">
   <?=$field->htmlIcon()?>
   <label <?=$field->htmlForID()?>><?=$field->displayLabel()?></label>
+  <div class="wysiwyg">
   <textarea
    <?=$field->htmlID()?>
    class="<?=$field->classEditor()?>"
@@ -10,4 +11,5 @@
    <?=$field->htmlRequired()?>
    <?=$field->htmlDisabled()?>><?=html($field->getVar())?></textarea>
   <?=$field->htmlError()?>
+  </div>
 </div>

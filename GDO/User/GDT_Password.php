@@ -47,7 +47,7 @@ class GDT_Password extends GDT_String
 	
 	public function validate($value)
 	{
-		if ($value === null)
+		if ($value === null || (!$value->hash))
 		{
 			return $this->notNull ? $this->errorNotNull() : true;
 		}

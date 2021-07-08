@@ -40,7 +40,8 @@ class GDT_Timestamp extends GDT
 	#############
 	public function toValue($var)
 	{
-		return $var === null ? null : Time::getTimestamp($var);
+		return ($var === null || $var === '') ?
+		  null : Time::getTimestamp($var);
 	}
 	
 	public function toVar($value)
@@ -61,11 +62,6 @@ class GDT_Timestamp extends GDT
 		return $this->initialValue($time);
 	}
 	
-	public function inputToVar($input)
-	{
-	    return $input;
-	}
-
 	#####################
 	### Starting view ###
 	#####################
@@ -159,7 +155,16 @@ class GDT_Timestamp extends GDT
 	public function renderForm() { return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]); }
 	public function renderAge() { return Time::displayAge($this->getVar()); }
 	public function renderCLI() { return $this->displayLabel() . ': ' . $this->displayVar(); }
-	public function renderJSON() { return $this->displayVar(); }
+	public function renderJSON() { return $this->getValue() * 1000; }
+	
+	public function inputToVar($input)
+	{
+	    if (is_numeric($input))
+	    {
+	        return Time::getDate($input/1000);
+	    }
+	    return $input;
+	}
 	
 	##############
 	### Config ###

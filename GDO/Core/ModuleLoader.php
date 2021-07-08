@@ -14,7 +14,7 @@ use GDO\Table\Sort;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 3.0.0
  */
 final class ModuleLoader
@@ -146,18 +146,17 @@ final class ModuleLoader
 	public function initModules()
 	{
 		# Register themes
-		foreach ($this->modules as $module)
-		{
-	        if ($theme = $module->getTheme())
-	        {
-	            GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
-		    }
-		}
-		
 		# Load language
 		foreach ($this->modules as $module)
 		{
-		    $module->onLoadLanguage();
+		    if ($module->isEnabled())
+		    {
+		        $module->onLoadLanguage();
+		        if ($theme = $module->getTheme())
+		        {
+		            GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+		        }
+		    }
 		}
 		Trans::inited(true);
 
@@ -172,10 +171,19 @@ final class ModuleLoader
 					if (!$module->isInited())
 					{
 					    $module->onInit();
-					    $module->onIncludeScripts();
-						$module->initedModule();
 					}
 				}
+			}
+			foreach ($this->modules as $module)
+			{
+			    if ($module->isEnabled())
+			    {
+			        if (!$module->isInited())
+    			    {
+					    $module->onIncludeScripts();
+						$module->initedModule();
+    			    }
+			    }
 			}
 		}
 	}
