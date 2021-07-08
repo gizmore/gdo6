@@ -23,6 +23,7 @@ These modules provide a theme. Some site come with their own.
  - [BootstrapTheme](https://github.com/gizmore/gdo6-bootstrap-theme) (Bootstrap4) (quite ok)
  - [Bootstrap5Theme](https://github.com/gizmore/gdo6-bootstrap5-theme) (Bootstrap5) (todo)
  - [Classic]() (is part of the core)
+ - [DevExtreme](https://github.com/gizmore/gdo6-dev-extreme) (DevExtreme) (Based on Bootstrap4)
  - [Ionic]() (wanted?)
  - [JQueryMobile](https://github.com/gizmore/gdo6-jquery-mobile) (suprisingly ok to use)
  - [JQueryUI](https://github.com/gizmore/gdo6-jquery-ui) (todo)
@@ -35,7 +36,7 @@ These modules are providing an encoder for [GDT_Message](https://github.com/gizm
 
  - [BBCode](https://github.com/gizmore/gdo6-bbcode) (todo)
  - [CKEditor](https://github.com/gizmore/gdo6-ckeditor) (maybe still buggy. no like ck much. file upload might work)
- - [DevExtreme](https://github.com/gizmore/gdo6-dev-extreme) (todo))
+ - [DevExtreme](https://github.com/gizmore/gdo6-dev-extreme) (not very powerful but ok)
  - [Markdown](https://github.com/gizmore/gdo6-markdown) (todo)
  - [TinyMCE](https://github.com/gizmore/gdo6-tinymce) (should be ok)
  
@@ -72,6 +73,7 @@ These modules wrap another library or software. GDO6/GDT integration provided.
  - [QRCode](https://github.com/gizmore/gdo6-qrcode)
  - [Sevenzip](https://github.com/gizmore/gdo6-sevenzip)
  - [TCPDF](https://github.com/gizmore/gdo6-tcpdf)
+ - [ThreeJS](https://github.com/gizmore/gdo6-three-js)
  - [TinyMCE](https://github.com/gizmore/gdo6-tinymce)
  - [ZIP](https://github.com/gizmore/gdo6-zip)
 
@@ -87,6 +89,7 @@ These modules add functionality to the website and are (mostly) own code.
  - [Audio](https://github.com/gizmore/gdo6-audio)
  - [Avatar](https://github.com/gizmore/gdo6-avatar)
  - [Backup](https://github.com/gizmore/gdo6-backup)
+ - [BasicAuth](https://github.com/gizmore/gdo6-basic-auth)
  - [Birthday](https://github.com/gizmore/gdo6-birthday)
  - [Captcha](https://github.com/gizmore/gdo6-captcha) (uses [PHPCaptcha](http://google.com?q=PHPCaptcha))
  - [Category](https://github.com/gizmore/gdo6-category)

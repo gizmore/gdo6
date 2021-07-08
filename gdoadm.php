@@ -1,5 +1,5 @@
 <?php
-namespace gdo6;
+namespace GDO;
 
 use GDO\Core\Application;
 use GDO\Core\Debug;
@@ -363,7 +363,7 @@ elseif ($argv[1] === 'admin')
             'user_type' => GDO_User::MEMBER,
             'user_email' => $argc === 5 ? $argv[4] : null,
         ])->insert();
-        GDT_Hook::callWithIPC('UserActivated', $user);
+        GDT_Hook::callWithIPC('UserActivated', $user, null);
     }
     $user->saveVar('user_password', BCrypt::create($argv[3])->__toString());
     if ($argc === 5)

@@ -54,7 +54,7 @@ final class AddUser extends MethodForm
 			GDO_UserPermission::grantPermission($user, $permission);
 		}
 
-		GDT_Hook::callWithIPC('UserActivated', $user);
+		GDT_Hook::callWithIPC('UserActivated', $user, null);
 		
 		return $this->message('msg_form_saved');
 	}
