@@ -1,2 +1,16 @@
 git commit all repos
 /D/ProjektGDO/gdo6
+[master 1852d10] ThemeSwitcher
+ 7 files changed, 13 insertions(+), 6 deletions(-)
+ create mode 100644 gdo6-theme-switcher,
+/D/ProjektGDO/gdo6/GDO/Account
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+/D/ProjektGDO/gdo6/GDO/ActivationAlert
+[master 30bf691] ThemeSwitcher
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+/D/ProjektGDO/gdo6/GDO/Address
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
