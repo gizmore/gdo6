@@ -112,7 +112,7 @@ class Config
 		if (!defined('GDO_ERROR_STACKTRACE')) define('GDO_ERROR_STACKTRACE', true);
 		if (!defined('GDO_ERROR_DIE')) define('GDO_ERROR_DIE', true);
 		if (!defined('GDO_ERROR_MAIL')) define('GDO_ERROR_MAIL', false);
-		if (!defined('GDO_ERROR_TIMEZONE')) define('GDO_ERROR_TIMEZONE', ini_get('date.timezone'));
+		if (!defined('GDO_ERROR_TIMEZONE')) define('GDO_ERROR_TIMEZONE', 'UTC');
 
 		# Database
 		if (!defined('GDO_SALT')) define('GDO_SALT', Random::randomKey(16));
