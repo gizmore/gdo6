@@ -21,6 +21,7 @@ use GDO\DB\Cache;
 use GDO\Country\GDO_Country;
 use GDO\DB\GDT_Index;
 use GDO\Session\GDO_Session;
+use GDO\Core\GDO_Module;
 
 /**
  * The holy user object.
