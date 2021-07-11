@@ -318,7 +318,7 @@ final class CLI
     
 }
 
-if (!defined('GDO_DOMAIN'))
-{
-    define('GDO_DOMAIN', 'gdo6.localhost');
-}
+# Required gdo constants :(
+if (!defined('GDO_DOMAIN')) define('GDO_DOMAIN', 'gdo6.localhost');
+if (!defined('GDO_MODULE')) define('GDO_MODULE', 'Core');
+if (!defined('GDO_METHOD')) define('GDO_METHOD', 'Welcome');
