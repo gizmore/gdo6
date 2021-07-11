@@ -232,7 +232,8 @@ final class ModuleLoader
 		# Loaded one?
 		if ($loaded)
 		{
-		    if (!Application::instance()->isInstall())
+		    if ( (!Application::instance()->isInstall()) ||
+		         ($this->loadedDB) )
 		    {
     			$this->initModuleVars();
 		    }
