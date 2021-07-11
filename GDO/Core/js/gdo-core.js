@@ -64,8 +64,19 @@ window.GDO.openDialog = function(dialogId) {
 		console.error('Cannot find dialog with id ' + dialogId)
 	}
 	dlg.showModal();
-}
+};
 
 window.GDO.href = function(module, method, append) {
 	return GDO_WEB_ROOT + 'index.php?mo=' + module + '&me=' + method + append;
-}
+};
+
+/**
+ * Inherit this class for GDO plugins.
+ */
+window.GDO.Plugin = function(config) {
+	for (var i in config) {
+		if (this[i] !== undefined) {
+			this[i] = config[i];
+		}
+	}
+};

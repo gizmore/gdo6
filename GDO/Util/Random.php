@@ -90,6 +90,11 @@ final class Random
 	################
 	### Insecure ### but faster
 	################
+	public static function srand($seed)
+	{
+	    srand();
+	}
+	
 	/**
 	 * Get an insecure random number.
 	 * @param int $min

@@ -155,6 +155,7 @@ final class ModuleProviders
         'Todo' => 'gdo6-todo',
         'Usergroup' => 'gdo6-usergroup',
         'Vote' => 'gdo6-vote',
+        'Website' => 'gdo6-website',
         'Websocket' => 'gdo6-websocket',
         'WeChall' => 'gdo6-wechall',
         'Whois' => 'gdo6-whois',

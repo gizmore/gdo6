@@ -12,6 +12,14 @@ use GDO\Form\GDT_Submit;
 
 /**
  * Auto-detect nodejs_path, uglifyjs_path and ng_annotate_path.
+ * 
+ * To install:
+ * 
+ * $ aptitude install nodejs
+ * 
+ * $ npm -g install ng-annotate-patched
+ * $ npm -g install uglify-js
+ * 
  * @author gizmore
  */
 final class DetectNode extends MethodForm

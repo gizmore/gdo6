@@ -31,7 +31,13 @@ $response = GDT_Response::make();
 
 Database::init();
 new ModuleLoader(GDO_PATH . 'GDO/');
-GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
+$noSession = true;
+if (@class_exists('\\GDO\\Session\\GDO_Session', true))
+{
+    $noSession = false;
+    GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
+}
+
 $app = new Application();
 
 # Bootstrap
@@ -49,7 +55,10 @@ if (!module_enabled('Core'))
     die(1);
 }
 
-$session = GDO_Session::instance();
+if (!$noSession)
+{
+    $session = GDO_Session::instance();
+}
 if (GDO_User::current()->isUser())
 {
     if ($name = GDO_User::current()->getUserName())
@@ -98,7 +107,10 @@ try
     {
         $lock = 'sess_'.$session->getID();
         Database::instance()->lock($lock);
-        GDO_Session::instance()->setLock($lock);
+        if (!$noSession)
+        {
+            GDO_Session::instance()->setLock($lock);
+        }
     }
     
     GDT_Hook::callHook('BeforeRequest', $method);

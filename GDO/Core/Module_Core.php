@@ -34,7 +34,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.4-r1177';
+	public static $GDO_REVISION = '6.10.4-r1181';
 
 	##############
 	### Module ###
@@ -143,8 +143,9 @@ final class Module_Core extends GDO_Module
 window.GDO_PROTOCOL = '%s';
 window.GDO_DOMAIN = '%s';
 window.GDO_WEB_ROOT = '%s';
-window.GDO_LANGUAGE = '%s';",
-			GDO_PROTOCOL, GDO_DOMAIN, GDO_WEB_ROOT, Trans::$ISO);
+window.GDO_LANGUAGE = '%s';
+window.GDO_REVISION = '%s';",
+			GDO_PROTOCOL, GDO_DOMAIN, GDO_WEB_ROOT, Trans::$ISO, $this->nocacheVersion());
 	}
 	
 	public function gdoUserJS()

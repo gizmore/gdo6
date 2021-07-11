@@ -117,12 +117,15 @@ class Application
 	public function hasTheme($theme) { return isset($this->themes[$theme]); }
 	public function initThemes()
 	{
-	    if (GDO_Session::get('theme_name'))
+	    if (!$this->isInstall())
 	    {
-	        $this->themes = GDO_Session::get('theme_chain');
+    	    if (GDO_Session::get('theme_name'))
+    	    {
+    	        $this->themes = GDO_Session::get('theme_chain');
+    	    }
+    	    $this->themes = explode(',', $this->themes);
+    	    $this->themes = array_combine($this->themes, $this->themes);
 	    }
-	    $this->themes = explode(',', $this->themes);
-	    $this->themes = array_combine($this->themes, $this->themes);
 	    return $this;
 	}
 

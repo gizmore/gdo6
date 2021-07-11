@@ -313,12 +313,15 @@ final class ModuleLoader
 				if ($module = self::instanciate($moduleData, true))
 				{
 					$this->modules[$lowerName] = $module;
-				    $module->buildConfigCache();
-				    $module->buildSettingsCache();
 				    $module->onLoadLanguage();
-				    if ($theme = $module->getTheme())
+				    if (!Application::instance()->isInstall())
 				    {
-				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+    				    $module->buildConfigCache();
+    				    $module->buildSettingsCache();
+    				    if ($theme = $module->getTheme())
+    				    {
+    				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+    				    }
 				    }
 				}
 			}
