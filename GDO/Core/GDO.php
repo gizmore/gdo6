@@ -1044,6 +1044,7 @@ abstract class GDO
     
     /**
      * Raw initial string data.
+     * @todo throw error on unknown initial vars.
      * @param array $initial data to copy
      * @return array the new blank data1
      */
