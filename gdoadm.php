@@ -487,15 +487,17 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
     
     $loader->loadModules(false, true, true);
     
-    if (!($module = $loader->getModule($argv[2])))
-    {
-        echo "Unknown module: {$argv[2]}!\n";
-        die(1);
-    }
+//     if (!($module = $loader->getModule($argv[2])))
+//     {
+//         echo "Unknown module: {$argv[2]}!\n";
+//         die(1);
+//     }
+
+//     $deps = ModuleProviders::$DEPENDENCIES[$argv[2]];
     
     # Get all dependencies
     $cd = 0;
-    $deps = [$module->getName()];
+    $deps = [$argv[2]];
     while ($cd != count($deps))
     {
         $cd = count($deps);
@@ -504,6 +506,14 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
             if ($module = $loader->getModule($dep))
             {
                 $moreDeps = $module->dependencies();
+            }
+            else
+            {
+                $moreDeps = ModuleProviders::$DEPENDENCIES[$dep];
+            }
+            
+            if ($moreDeps)
+            {
                 $deps = array_unique(array_merge($deps, $moreDeps));
             }
         }
