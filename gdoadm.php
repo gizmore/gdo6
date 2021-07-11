@@ -138,7 +138,7 @@ if ($argv[1] === 'configure')
 		$argv[2] = 'config.php'; # default config filename
 	}
 	
-    $response = Configure::make()->requestParameters(['filename' => $argv[2]])->formParametersWithButton([], 'save_config')->execute();
+	$response = Configure::make()->requestParameters(['filename' => $argv[2]])->formParameters(['save_config'])->execute();
     if ($response->isError())
     {
         echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
@@ -400,8 +400,8 @@ elseif ($argv[1] === 'wipe')
     
     $response = Install::make()->
         requestParameters(['module' => $module->getName()])->
-        formParametersWithButton([], 'uninstall')->
-        executeWithInit();
+            formParameters(['uninstall'])->
+            executeWithInit();
     
     if ($response->isError())
     {

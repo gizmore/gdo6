@@ -43,11 +43,6 @@ abstract class MethodForm extends Method
 	############
 	### Shim ###
 	############
-	public function formParametersWithButton(array $params)
-	{
-	    return $this->formParameters($params);
-	}
-	
 	public function formParameters(array $params=null)
 	{
 	    $form = $this->formName();
@@ -65,7 +60,7 @@ abstract class MethodForm extends Method
 	
 	public function requestParameters(array $params=null)
 	{
-	    $this->formParametersWithButton($params);
+	    $this->formParameters($params);
 	    return $this;
 	}
 	
