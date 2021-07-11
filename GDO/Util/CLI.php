@@ -317,3 +317,8 @@ final class CLI
     }
     
 }
+
+if (!defined('GDO_DOMAIN'))
+{
+    define('GDO_DOMAIN', 'gdo6.localhost');
+}
