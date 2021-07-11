@@ -232,11 +232,11 @@ final class ModuleLoader
 		# Loaded one?
 		if ($loaded)
 		{
-		    if ( (!Application::instance()->isInstall()) ||
-		         ($this->loadedDB) )
-		    {
+// 		    if ( (!Application::instance()->isInstall()) ||
+// 		         ($this->loadedDB) )
+// 		    {
     			$this->initModuleVars();
-		    }
+// 		    }
 
 			$this->modules = $this->sortModules([
 			    'module_priority' => true, 'module_name' => true]);
