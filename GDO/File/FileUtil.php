@@ -10,7 +10,7 @@ use GDO\Util\Strings;
  * File system utilities.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.0.0
  */
 final class FileUtil
@@ -191,6 +191,74 @@ final class FileUtil
 	public static function saneFilename($filename)
 	{
 	    return str_replace(['/', '\\', '$', ':'], '#', $filename);
+	}
+	
+	################
+	### LastLine ###
+	################
+	/**
+	 * Get the last line of a file.
+	 * @param string $filename
+	 * @throws \Throwable
+	 * @return string
+	 */
+	public static function lastLine($filename)
+	{
+	    try
+	    {
+    	    $fh = fopen($filename, "r");
+            return self::_lastLine($fh);
+	    }
+	    catch (\Throwable $ex)
+	    {
+	        throw $ex;
+	    }
+	    finally
+	    {
+	        if ($fh)
+	        {
+	            @fclose($fh);
+	        }
+	    }
+	}
+	
+	/**
+	 * Get the last line from a filehandle.
+	 * Destroys seek.
+	 * @param resource $fh
+	 * @return string
+	 */
+	public static function _lastLine($fh)
+	{
+	    $line = '';
+
+	    $cursor = -1;
+	    fseek($fh, $cursor, SEEK_END);
+	    $char = fgetc($fh);
+	    
+	    /**
+	     * Trim trailing newline chars of the file
+	     */
+	    while ($char === "\n" || $char === "\r")
+	    {
+	        fseek($fh, $cursor--, SEEK_END);
+	        $char = fgetc($fh);
+	    }
+	    
+	    /**
+	     * Read until the start of file or first newline char
+	     */
+	    while ($char !== false && $char !== "\n" && $char !== "\r")
+	    {
+	        /**
+	         * Prepend the new char
+	         */
+	        $line = $char . $line;
+	        fseek($fh, $cursor--, SEEK_END);
+	        $char = fgetc($fh);
+	    }
+	    
+	    return $line;
 	}
 	
 }

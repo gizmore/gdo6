@@ -1,4 +1,9 @@
-/** gizmore util **/
+/**
+ * gizmore string utility.
+ * Some code here is taken from http://phpjs.orgode.
+ * @version 6.10.4
+ **/
+
 String.prototype.ltrim = function(chars) { chars = chars || "\\s"; return this.replace(new RegExp("^[" + chars + "]+", "g"), ""); };
 String.prototype.rtrim = function(chars) { chars = chars || "\\s"; return this.replace(new RegExp("[" + chars + "]+$", "g"), ""); };
 String.prototype.trim = function(chars) { return this.rtrim(chars).ltrim(chars); };
@@ -7,9 +12,10 @@ String.prototype.endsWith = function(s) { return this.match(new RegExp(s+'$', 'i
 String.prototype.contains = function(s) { return this.match(new RegExp(s, 'i')) !== null; };
 String.prototype.substrFrom = function(s, d) { var i = this.indexOf(s); return i === -1 ? d : this.substr(i+s.length); };
 String.prototype.rsubstrFrom = function(s, d) { var i = this.lastIndexOf(s); return i === -1 ? d : this.substr(i+s.length); };
-String.prototype.substrUntil = function(s, d) { var i = this.indexOf(s); return i === -1 ? d : this.substring(0, i); };
-String.prototype.rsubstrUntil = function(s, d) { var i = this.lastIndexOf(s); return i === -1 ? d : this.substring(0, i); };
-//String.prototype.nibbleUntil = function(s) { var r = this.substrUntil(s); this.replace(this.substrFrom(s)); return r; };
+String.prototype.substrTo = function(s, d) { var i = this.indexOf(s); return i === -1 ? d : this.substring(0, i); };
+String.prototype.rsubstrTo = function(s, d) { var i = this.lastIndexOf(s); return i === -1 ? d : this.substring(0, i); };
+String.prototype.nibbleTo = function(s) { var r = this.substrTo(s); this.replace(this.substrFrom(s)); return r; };
+
 // -----------------------------------------------------------------------------
 
 function clamp(num, min, max) {
@@ -100,7 +106,7 @@ function sprintf ()
 	};
 
 	// doFormat()
-	var doFormat = function (substring, valueIndex, flags, minWidth, _, precision, type) {
+	var doFormat = function(substring, valueIndex, flags, minWidth, _, precision, type) {
 		var number;
 		var prefix;
 		var method;
@@ -218,14 +224,12 @@ function sprintf ()
 }
 
 
-function vsprintf (format, args)
-{
+function vsprintf(format, args) {
 	return sprintf.apply(this, [format].concat(args));
 }
 
 
-function in_array(needle, haystack, argStrict)
-{
+function in_array(needle, haystack, argStrict) {
 	if (!!argStrict) {
 		for (var key in haystack) {
 			if (haystack[key] === needle) {
@@ -240,16 +244,14 @@ function in_array(needle, haystack, argStrict)
 	return false;
 }
 
-function array_values (input)
-{
-	if (input && typeof input === 'object' && input.change_key_case)
-	{
+function array_values(input) {
+
+	if (input && typeof input === 'object' && input.change_key_case) {
 		return input.values();
 	}
 	
 	var tmp_arr = [];
-	for (var key in input)
-	{
+	for (var key in input) {
 		tmp_arr[tmp_arr.length] = input[key];
 	}
 	return tmp_arr;
@@ -285,21 +287,24 @@ function explode(delimiter, string, limit) {
 
 	if (typeof limit === 'undefined') return s;
 
-	if (limit === 0) limit = 1;
+	if (limit === 0) {
+		limit = 1;
+	}
 
 	// Positive limit
 	if (limit > 0) {
 		if (limit >= s.length) {
-			return s
+			return s;
 		}
 		return s.slice(0, limit - 1).concat([s.slice(limit - 1).join(delimiter)]);
 	}
 
 	// Negative limit
 	if (-limit >= s.length) {
-		return []
-	  }
-
-	  s.splice(s.length + limit)
-	  return s
+		return [];
 	}
+	
+	s.splice(s.length + limit)
+
+	return s;
+}

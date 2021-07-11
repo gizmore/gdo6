@@ -11,11 +11,12 @@ use GDO\User\GDO_User;
  * Using mysql date with milliseconds.
  *
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 1.0.0
  * 
  * @see GDT_Date
  * @see GDT_DateTime
+ * @see GDT_Duration
  */
 final class Time
 {
@@ -59,12 +60,20 @@ final class Time
 	    return $date === null ? Application::$MICROTIME : strtotime($date);
 	}
 	
-	public static function getUserInputTimestamp($date)
+	public static function parseDate($date, $format='parse')
 	{
-	    if ($date === null)
+	    return self::parseDateIso(Trans::$ISO, $date, $format);
+	}
+	
+	public static function parseDateIso($iso, $date, $format='parse')
+	{
+	    # Null
+	    if (!$date)
 	    {
 	        return Application::$MICROTIME;
 	    }
+	    
+	    # Adjust
 	    if (strlen($date) === 10)
 	    {
 	        $date .= ' 00:00:00.000';
@@ -73,12 +82,11 @@ final class Time
 	    {
 	        $date .= '.000';
 	    }
-	    
-	    $t = t('df_parse');
-	    $to = GDO_User::current()->getTimezoneObject();
-	    
-	    $d = DateTime::createFromFormat($t, $date, $to);
 
+	    # Parse
+	    $t = tiso($iso, 'df_' . $format);
+	    $to = GDO_User::current()->getTimezoneObject();
+	    $d = DateTime::createFromFormat($t, $date, $to);
 	    return $d->getTimestamp();
 	}
 	
@@ -121,20 +129,10 @@ final class Time
 	###########
 	### Age ###
 	###########
-// 	/**
-// 	 * Compute an age, in years, from a date compared to current date.
-// 	 * @param $birthdate
-// 	 * @return int -1 on error
-// 	 */
-// 	public static function getAge($birthdate)
-// 	{
-// 		return self::getDiff($birthdate);
-// 	}
-	
 	public static function getDiff($date)
 	{
 		$a = new DateTime($date);
-		$b = new DateTime(self::getDate(Application::$TIME));
+		$b = new DateTime(self::getDate(Application::$MICROTIME));
 		return abs($b->getTimestamp() - $a->getTimestamp());
 	}
 	
@@ -145,7 +143,7 @@ final class Time
 	 */
 	public static function getAgo($date)
 	{
-		return Application::$TIME - self::getTimestamp($date);
+		return Application::$MICROTIME - self::getTimestamp($date);
 	}
 	
 	public static function displayAge($date)

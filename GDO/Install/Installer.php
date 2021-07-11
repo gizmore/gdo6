@@ -50,7 +50,8 @@ class Installer
 
 		$module->onInstall();
 		
-		Cache::remove('gdo_modules');
+		Cache::flush();
+		Cache::fileFlush();
 	}
 	
 	public static function installModuleClasses(GDO_Module $module, $reinstall=false)

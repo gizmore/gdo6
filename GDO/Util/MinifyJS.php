@@ -157,15 +157,15 @@ final class MinifyJS
 					# Build command
 					$annotate = $this->annotate;
 					$uglifyjs = $this->uglify;
-					$nodejs = $this->nodejs;
+// 					$nodejs = $this->nodejs;
 					# TODO: remove console.log calls+
 					if (Process::isWindows())
 					{
-					    $command = "$annotate -ar $src | $uglifyjs --compress --mangle -o $dest";
+					    $command = "$annotate -ar $src | $uglifyjs --no-annotations --compress pure_funcs=console.log --mangle -o $dest";
 					}
 					else
 					{
-    					$command = "$nodejs $annotate -ar $src | $nodejs $uglifyjs --compress --mangle -o $dest";
+    					$command = "$annotate -ar $src | $uglifyjs --no-annotations --compress pure_funcs=console.log --mangle -o $dest";
 					}
 					$return = 0;
 					$output = array();
