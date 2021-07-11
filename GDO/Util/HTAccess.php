@@ -14,6 +14,12 @@ final class HTAccess
   Deny from all
 </IfModule>
 EOF;
+		# Create if not exist.
+		if (!is_dir($path))
+		{
+		    @mkdir($path, GDO_CHMOD, true);
+		}
+		    
 		if ( (!is_dir($path)) || (!is_readable($path)) )
 		{
 		    throw new GDOError('err_no_dir');
