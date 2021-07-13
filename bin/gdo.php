@@ -42,8 +42,6 @@ function printUsage()
 
 require 'GDO6.php';
 
-CLI::autoFlush();
-
 if (FileUtil::isFile('protected/config_cli.php'))
 {
     require 'protected/config_cli.php';
@@ -52,6 +50,8 @@ else
 {
     require 'protected/config.php';
 }
+
+CLI::autoFlush();
 
 Logger::init('system', GDO_ERROR_LEVEL);
 
