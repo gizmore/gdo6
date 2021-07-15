@@ -200,7 +200,6 @@ abstract class GDT
 	    if ($this->var !== $var)
 	    {
     	    $this->var = ($var === null) || ($var === '') ? null : (string)$var;
-//     	    $this->value = null;
     	    $this->valueConverted = false;
 	    }
 	    return $this;
@@ -241,7 +240,7 @@ abstract class GDT
 	       null : (string)$value;
 	}
 	
-	public function inputToVar($input) { return $input; }
+	public function inputToVar($input) { return trim($input, "\r\n\t "); }
 	public function toValue($var) { return ($var === null) || ($var === '') ? null : (string) $var; }
 	public function hasVar() { return !!$this->getVar(); }
 	public function getVar() { return $this->var; }
@@ -388,13 +387,9 @@ abstract class GDT
 	 */
 	public function getRequestVar($firstLevel=null, $default=null, $name=null)
 	{
-// 	    $old = $this->var;
 	    $new = $this->_getRequestVar($firstLevel, $default, $name);
         $new = $this->toVar($this->toValue($new)); # fix bug!
-// 	    if ($old !== $new)
-	    {
-	        $this->var($new);
-	    }
+	    $this->var($new);
 	    return $new;
 	}
 	

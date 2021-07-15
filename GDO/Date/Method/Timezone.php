@@ -44,7 +44,6 @@ final class Timezone extends MethodForm
         $new = $timezone;
         if ($old !== $new)
         {
-            $user->tempUnset('timezone');
             $user->setVar('user_timezone', $new);
             if ($user->isUser())
             {
@@ -52,8 +51,7 @@ final class Timezone extends MethodForm
             }
             if ($redirect)
             {
-                Website::redirectMessage('msg_timezone_changed', [$new],
-                    Website::hrefBack());
+                Website::redirectMessage('msg_timezone_changed', [$new]);
             }
         }
         else

@@ -88,6 +88,17 @@ if ($argc === 2)
 {
     $count = 0;
     $modules = explode(',', $argv[1]);
+    
+    if ($app->loader->loadModuleFS('Tests', false))
+    {
+        $modules[] = 'Tests';
+    }
+    else
+    {
+        echo "You don't have module gdo6-tests installed, which is probably required to create test users.\n";
+        flush();
+    }
+    
     while ($count != count($modules))
     {
         $count = count($modules);

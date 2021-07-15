@@ -4,11 +4,12 @@ namespace GDO\Date;
 use GDO\Language\Trans;
 use DateTime;
 use GDO\Core\Application;
-use GDO\User\GDO_User;
+use GDO\Core\GDOError;
 
 /**
  * Time helper class.
  * Using mysql date with milliseconds.
+ * For GDT, the value is the timestamp and the var is the date in mysql format.
  *
  * @author gizmore
  * @version 6.10.4
@@ -20,6 +21,7 @@ use GDO\User\GDO_User;
  */
 final class Time
 {
+    # durations in seconds
 	const ONE_SECOND = 1;
 	const ONE_MINUTE = 60;
 	const ONE_HOUR = 3600;
@@ -28,26 +30,67 @@ final class Time
 	const ONE_MONTH = 2592000;
 	const ONE_YEAR = 31536000;
 	
+	# known display formats
 	const FMT_MINUTE = 'minute';
 	const FMT_SHORT = 'short';
 	const FMT_LONG = 'long';
 	const FMT_DAY = 'day';
+	const FMT_MS = 'ms';
+	
+	################
+	### Timezone ###
+	################
+	public static $UTC;
+	public static $TIMEZONE = 'UTC'; # default timezone
+	private static $TIMEZONE_OBJECTS = [];
+	public static function getTimezoneObject($timezone=null)
+	{
+	    $timezone = $timezone ? $timezone : self::$TIMEZONE;
+	    if (!isset(self::$TIMEZONE_OBJECTS[$timezone]))
+	    {
+	        $tz = new \DateTimeZone($timezone);
+	        self::$TIMEZONE_OBJECTS[$timezone] = $tz;
+	        return $tz;
+	    }
+	    return self::$TIMEZONE_OBJECTS[$timezone];
+	}
+	
+	public static function setTimezone($timezone)
+	{
+	    self::$TIMEZONE = $timezone;
+// 	    date_default_timezone_set($timezone); # Default timezone is always UTC
+	}
 	
 	###############
 	### Convert ###
 	###############
-	public static $UTC;
+// 	const PARSE_DAY = 'Y-m-d';
+// 	const PARSE_SEC = 'Y-m-d H:i:s';
+// 	const PARSE_MIL = 'Y-m-d H:i:s.v';
 	
 	/**
 	 * Get a mysql date from a timestamp, like YYYY-mm-dd HH:ii:ss.vvv.
 	 * @example $date = Time::getDate();
 	 * @return string
 	 */
-	public static function getDate($time=null)
+	public static function getDate($time=0)
 	{
-	    $time = $time === null ? Application::$MICROTIME : (float)$time;
-	    $now = DateTime::createFromFormat('U.u', sprintf('%.03f', $time));
-	    return $now->format("Y-m-d H:i:s.v");
+	    if ($dt = self::getDateTime($time))
+	    {
+	        $date = $dt->format("Y-m-d H:i:s.v");
+	        return $date;
+	    }
+	}
+	
+	/**
+	 * Get a datetime object from a timestamp.
+	 * @param int $time
+	 * @return \DateTime
+	 */
+	public static function getDateTime($time=0)
+	{
+	    $time = $time <= 0 ? Application::$MICROTIME : (float)$time;
+	    return DateTime::createFromFormat('U.u', sprintf('%.03f', $time), self::$UTC);
 	}
 	
 	public static function getDateWithoutTime($time=null)
@@ -55,24 +98,43 @@ final class Time
 		return substr(self::getDate($time), 0, 10);
 	}
 	
+	/**
+	 * Get the timestamp for a database date (UTC).
+	 * @param string $date
+	 * @return float microtime (ms)
+	 */
 	public static function getTimestamp($date=null)
 	{
-	    return $date === null ? Application::$MICROTIME : strtotime($date);
+	    $ts = $date ? self::parseDate($date, 'UTC', 'db') : Application::$MICROTIME;
+	    return $ts;
 	}
 	
-	public static function parseDate($date, $format='parse')
+	/**
+	 * Convert DateTime input from a user.
+	 * This is usually in the users language format and timezone
+	 * @param string $date
+	 * @param string $timezone
+	 * @param string $format
+	 * @return int Timestamp
+	 */
+	public static function parseDate($date, $timezone=null, $format='parse')
 	{
-	    return self::parseDateIso(Trans::$ISO, $date, $format);
+	    $timestamp = self::parseDateIso(Trans::$ISO, $date, $timezone, $format);
+	    return $timestamp;
 	}
 	
-	public static function parseDateIso($iso, $date, $format='parse')
+	/**
+	 * Convert a user date input to a timestamp.
+	 * @TODO parseDateIso is broken a bit, because strlen($date) might differ across languages.
+	 * 
+	 * @param string $iso
+	 * @param string $date
+	 * @param string $timezone
+	 * @param string $format
+	 * @return int Timestamp
+	 */
+	public static function parseDateIso($iso, $date, $timezone=null, $format='parse')
 	{
-	    # Null
-	    if (!$date)
-	    {
-	        return Application::$MICROTIME;
-	    }
-	    
 	    # Adjust
 	    if (strlen($date) === 10)
 	    {
@@ -84,10 +146,22 @@ final class Time
 	    }
 
 	    # Parse
-	    $t = tiso($iso, 'df_' . $format);
-	    $to = GDO_User::current()->getTimezoneObject();
-	    $d = DateTime::createFromFormat($t, $date, $to);
-	    return $d->getTimestamp();
+	    if ($format === 'db')
+	    {
+	        $format = 'Y-m-d H:i:s.v';
+	    }
+	    else
+	    {
+	        $format = tiso($iso, 'df_' . $format);
+	    }
+	    $timezone = $timezone ? $timezone : self::$TIMEZONE;
+	    $timezone = self::getTimezoneObject($timezone);
+	    if (!($d = DateTime::createFromFormat($format, $date, $timezone)))
+	    {
+	        throw new GDOError('err_invalid_date', [html($date), $format]);
+	    }
+	    $timestamp = $d->format('U.v');
+	    return (float)$timestamp;
 	}
 	
 	###############
@@ -100,30 +174,59 @@ final class Time
 	 * @param $default_return
 	 * @return string
 	 */
-	public static function displayTimestamp($timestamp=null, $format='short', $default_return='---')
+	public static function displayTimestamp($timestamp, $format='short', $default_return='---', $timezone=null)
 	{
-		return self::displayDateISO(Trans::$ISO, $timestamp, $format, $default_return);
+	    return self::displayTimestampISO(Trans::$ISO, $timestamp, $format, $default_return, $timezone);
 	}
 	
-	public static function displayTimestampISO($iso, $timestamp=null, $format='short', $default_return='---')
+	public static function displayTimestampISO($iso, $timestamp, $format='short', $default_return='---', $timezone=null)
 	{
-	    return self::displayDateISO($iso, $timestamp, $format, $default_return);
+	    if ($timestamp <= 0)
+	    {
+	        return $default_return;
+	    }
+	    $dt = DateTime::createFromFormat('U.v', sprintf('%.03f', $timestamp), self::$UTC);
+	    return self::displayDateTimeISO($iso, $dt, $format, $default_return, $timezone);
 	}
 	
-	public static function displayDate($date=null, $format='short', $default_return='---')
+	public static function displayDate($date=null, $format='short', $default_return='---', $timezone=null)
 	{
-	    return self::displayDateISO(Trans::$ISO, $date, $format, $default_return);
+	    return self::displayDateISO(Trans::$ISO, $date, $format, $default_return, $timezone);
 	}
 	
-	public static function displayDateISO($iso, $date=null, $format='short', $default_return='---')
+	/**
+	 * Display a database date.
+	 * @param string $iso
+	 * @param string $date a date from the database in utc
+	 * @param string $format display format
+	 * @param string $default_return default return for null
+	 * @param string $timezone
+	 * @return string
+	 */
+	public static function displayDateISO($iso, $date=null, $format='short', $default_return='---', $timezone=null)
 	{
 	    if ($date === null)
 	    {
 	        return $default_return;
 	    }
-	    $datetime = new \DateTime($date, self::$UTC); # we get in UTC
-	    $datetime->setTimezone(GDO_User::current()->getTimezoneObject()); # and convert to user timezone
-	    return $datetime->format(t("df_$format")); # output 
+	    $timestamp = self::getTimestamp($date);
+	    return self::displayTimestampISO($iso, $timestamp, $format, $default_return, $timezone);
+	}
+	
+	/**
+	 * Actual display of a \DateTime.
+	 * 
+	 * @param string $iso
+	 * @param DateTime $datetime
+	 * @param string $format
+	 * @return string
+	 */
+	private static function displayDateTimeISO($iso, DateTime $datetime, $format='short', $default_return='---', $timezone=null)
+	{
+	    $timezone = $timezone ? $timezone : self::$TIMEZONE;
+        $datetime->setTimezone(self::getTimezoneObject($timezone));
+	    $format = tiso($iso, "df_$format");
+	    return $datetime->format($format);
 	}
 	
 	###########
@@ -250,15 +353,13 @@ final class Time
 	 * Convert a human duration to seconds.
 	 * Input may be like 3d5h8i 7s.
 	 * Also possible is 1 month 3 days or 1year2sec.
-	 * Note that 'i' is used for minutes and 'm' for months.
 	 * No unit means default unit, which is seconds.
 	 * Supported units are:
 	 * s, sec, second, seconds,
-	 * i, min, minute, minutes,
+	 * m, min, minute, minutes,
 	 * h, hour, hours,
 	 * d, day, days,
 	 * w, week, weeks,
-	 * m, month, months,
 	 * y, year, years.
 	 * @param $duration string is the duration in human format.
 	 * @return int duration as seconds
@@ -268,22 +369,21 @@ final class Time
 		if (is_int($duration)) { return $duration; }
 		if (!is_string($duration)) { return 0; }
 		if (is_numeric($duration)) { return (int)$duration; }
-		$duration = trim(strtolower($duration));
+		$duration = trim(mb_strtolower($duration));
 		if (!preg_match('/^(?:(?:[0-9 ]+[sihdwmy]*)+)$/', $duration)) { return 0; }
 		
-		$multis = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 86400, 'y' => 31536000);
+		$multis = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 86400, 'w' => 86400*7, 'y' => 31536000);
 		$replace = array(
 			'seconds' => 's', 'second' => 's', 'sec' => 's',
 			'minutes' => 'm', 'minute' => 'm', 'min' => 'm',
-			'hours' => 'h', 'hour' => 'h',
-			'days' => 'd', 'day' => 'd',
-// 			'weeks' => 'w', 'week' => 'w',
-// 			'months' => 'm', 'month' => 'm', 'mon' => 'm',
+		    'hours' => 'h', 'hour' => 'h',
+		    'days' => 'd', 'day' => 'd',
+		    'weeks' => 'w', 'week' => 'w',
 			'years' => 'y', 'year' => 'y',
 		);
 		
 		$negative = 1;
-		$duration = strtolower(trim($duration));
+		$duration = mb_strtolower(trim($duration));
 		if ($duration[0] == '-')
 		{
 			$negative = -1;
@@ -298,17 +398,17 @@ final class Time
 		{
 			if ($d = trim($d))
 			{
-				$unit = substr($d, -1);
+				$unit = mb_substr($d, -1);
 				if (is_numeric($unit))
 				{
-					$unit = 's';
+				    $back += $unit;
+				    continue;
 				}
 				else
 				{
-					$d = substr($d, 0, -1);
+				    $d = mb_substr($d, 0, -1);
 				}
-				$d = intval($d);
-				
+				$d = floatval($d);
 				$back += $multis[$unit] * $d;
 			}
 		}
@@ -379,4 +479,4 @@ final class Time
 }
 	
 date_default_timezone_set('UTC');
-Time::$UTC = new \DateTimeZone('UTC');
+Time::$UTC = Time::getTimezoneObject('UTC');

@@ -1,21 +1,26 @@
 <?php
+namespace GDO\Date\lang;
 return [
     'ago' => '%s ago',
     'duration' => 'Duration',
     'err_min_date' => 'This date has to be after %s.',
     'err_max_date' => 'This date has to be before %s.',
-
+    'err_invalid_date' => 'Invalid Time: %s does not match the format of %s. Please make sure to setup your language and timezone.',
+    
     # Dateformats
-    'df_parse' => 'm/d/Y H:i:s',
-    'df_day' => 'm/d/Y',
-    'df_short' => 'm/d/Y h:i A',
-    'df_long' => 'm/d/Y h:i:s A',
+    'df_db' => 'Y-m-d H:i:s.v', # do not change
     'df_local' => 'Y-m-d\\TH:i:s', # do not change
+    'df_parse' => 'm/d/Y H:i:s.v',
+    'df_ms' => 'm/d/Y H:i:s.v',
+    'df_long' => 'm/d/Y h:i:s A',
+    'df_short' => 'm/d/Y h:i A',
     'df_minute' => 'Y-m-d H:i',
+    'df_day' => 'm/d/Y',
     'tu_s' => 's',
     'tu_m' => 'm',
     'tu_h' => 'h',
     'tu_d' => 'd',
+    'tu_w' => 'w',
     'tu_y' => 'y',
     
     # Timezone

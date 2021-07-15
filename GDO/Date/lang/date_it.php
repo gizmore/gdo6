@@ -1,21 +1,27 @@
 <?php
+namespace GDO\Date\lang;
 return [
     'ago' => '%s fa',
     'duration' => 'Durata',
     'err_min_date' => 'Questa data non deve essere %s.',
     'err_max_date' => 'Questa data deve essere prima del %s.',
+    'err_invalid_date' => 'Invalid Time: %s does not match the format of %s. Please make sure to setup your language and timezone.',
 
     # Dateformats
-    'df_parse' => 'd.m.Y H:i:s',
-    'df_day' => 'd.m.Y',
-    'df_short' => 'd.m.Y H:i',
-    'df_long' => 'd.m.Y H:i:s',
+    'df_db' => 'Y-m-d H:i:s.v', # do not change
     'df_local' => 'Y-m-d\\TH:i:s', # do not change
+    'df_parse' => 'd.m.Y H:i:s.v',
+    'df_ms' => 'd.m.Y H:i:s.v',
+    'df_long' => 'd.m.Y H:i:s',
+    'df_short' => 'd.m.Y H:i',
     'df_minute' => 'd.m.Y H:i',
+    'df_day' => 'd.m.Y',
     'tu_s' => 's',
     'tu_m' => 'm',
     'tu_h' => 'h',
     'tu_d' => 'd',
+    'tu_w' => 'w',
+    'tu_y' => 'y',
     
     # Timezone
     'ft_date_timezone' => 'Imposta il tuo fuso orario',

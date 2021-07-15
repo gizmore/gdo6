@@ -196,7 +196,7 @@ class GDT_Int extends GDT
 	
 	public function renderCell()
 	{
-		return $this->getVar();
+		return GDT_Float::displayS($this->getVar(), 0);
 	}
 	
 	##############

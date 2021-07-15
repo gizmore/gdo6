@@ -233,6 +233,8 @@ class Database
 
 		    # Always init a cache item.
 			$gdo->initCache();
+			
+			$gdo->setInited();
 		}
 		return self::$TABLES[$classname];
 	}

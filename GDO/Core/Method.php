@@ -710,6 +710,19 @@ abstract class Method
 	    });
 	}
 
+	/**
+	 * Get the temp path for a method. Like temp/Module/Method/
+	 * @param string $path - append
+	 * @return string
+	 */
+	public function tempPath($path='')
+	{
+	    $module = $this->getModule();
+	    $tempDir = $module->tempPath($this->gdoShortName());
+	    $tempDir .= '/';
+	    return $tempDir . $path;
+	}
+	
 	###########
 	### CLI ###
 	###########

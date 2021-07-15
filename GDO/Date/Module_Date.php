@@ -26,6 +26,7 @@ final class Module_Date extends GDO_Module
     ##############
     ### Config ###
     ##############
+    
     public $timezone = GDO_TIMEZONE;
     public function getConfig()
     {
@@ -45,6 +46,7 @@ final class Module_Date extends GDO_Module
         $user = GDO_User::current();
         $this->timezone =  $user->hasTimezone() ?
             $user->getTimezone() : $this->timezone;
+        Time::setTimezone($this->timezone);
     }
     
     public function onIncludeScripts()

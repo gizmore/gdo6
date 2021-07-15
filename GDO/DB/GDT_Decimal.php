@@ -32,6 +32,11 @@ class GDT_Decimal extends GDT_Int
 		return "{$this->identifier()} DECIMAL($digits){$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 	
+	public function renderCell()
+	{
+	    return GDT_Float::displayS($this->getVar(), 0);
+	}
+	
 	public function renderForm()
 	{
 		return GDT_Template::php('DB', 'form/decimal.php', ['field'=>$this]);
@@ -44,7 +49,8 @@ class GDT_Decimal extends GDT_Int
 	
 	public function toVar($value)
 	{
-	    return $value === null ? null : sprintf("%.0{$this->digitsAfter}f", $value);
+	    $var = $value === null ? null : sprintf("%.0{$this->digitsAfter}f", $value);
+	    return $var;
 	}
 	
 	public function configJSON()
@@ -58,6 +64,11 @@ class GDT_Decimal extends GDT_Int
 	public function plugVar()
 	{
 	    return "3.14";
+	}
+	
+	public function inputToVar($input)
+	{
+	    return GDT_Float::inputToVarS($input);
 	}
 	
 }

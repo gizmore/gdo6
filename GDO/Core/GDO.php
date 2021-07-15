@@ -140,10 +140,14 @@ abstract class GDO
     #################
     private $persisted = false;
     public function isPersisted() { return $this->persisted; }
-    public function setPersisted($persisted = true) { $this->persisted = $persisted; return $this; }
+    public function setPersisted($persisted=true) { $this->persisted = $persisted; return $this; }
     
     public $isTable = false;
     public function isTable() { return $this->isTable; }
+    
+    private $inited = false;
+    public function isInited() { return $this->inited; }
+    public function setInited($inited=true) { $this->inited = $inited; return $this; }
     
     ########################
     ### Custom temp vars ###
@@ -695,6 +699,20 @@ abstract class GDO
         return $query;
     }
     
+    ################
+    ### Validate ###
+    ################
+    public function isValid()
+    {
+        $invalid = 0;
+        foreach ($this->gdoColumnsCache() as $gdt)
+        {
+            $gdt = $this->gdoColumn($gdt->name); # assign me as gdo to gdt
+            $invalid += $gdt->validate($gdt->getValue()) ? 0 : 1;
+        }
+        return $invalid === 0;
+    }
+    
     ##############
     ### Delete ###
     ##############
@@ -1057,7 +1075,9 @@ abstract class GDO
             # init gdt with initial var.
             if (isset($initial[$column->name]))
             {
-                $column->var($initial[$column->name]);
+                $var = $initial[$column->name];
+                $column->var($var);
+//                 $column->var($column->inputToVar($var));
             }
             else
             {
@@ -1120,19 +1140,32 @@ abstract class GDO
     
     /**
      * Display a translated table name with ID.
+     * Or the first GDT_Name column.
+     * 
      * @see Trans
+     * @see WithName
+     * @see GDT_Name
      * @return string
      */
     public function displayName()
     {
-        if ($gdt = $this->gdoColumnOf(GDT_Name::class))
+        # 1st check if we are the table
+        if ($this->isTable)
         {
-            return $gdt->render();
+            return $this->gdoHumanName();
         }
-        else
+        
+        # 2nd attempt GDT_Name column
+        if ($this->table()->isInited())
         {
-            return $this->gdoHumanName() . "#" . $this->getID();
+            if ($gdt = $this->gdoColumnOf(GDT_Name::class))
+            {
+                return $this->display($gdt->name);
+            }
         }
+
+        # fallback to Name#Id
+        return $this->gdoHumanName() . "#" . $this->getID();
     }
     
     ##############

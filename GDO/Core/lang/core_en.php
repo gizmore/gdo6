@@ -310,4 +310,6 @@ Kind Regards,<br/>
 'cli_pages' => '%s. Page %s/%s: %s',
 'cfg_load_sidebars' => 'Load Sidebar Elements?',
 'cfg_tt_load_sidebars' => 'Disable can give a slight performance boost, if you use a custom / static / sidebar / page / theme / layout.',
+'thousands_seperator' => ',',
+'decimal_point' => '.',
 );

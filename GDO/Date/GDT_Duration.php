@@ -7,15 +7,18 @@ use GDO\DB\GDT_String;
 /**
  * Duration field int in seconds.
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.4
+ * @since 6.0.0
  */
 class GDT_Duration extends GDT_String
 {
 	public function defaultLabel() { return $this->label('duration'); }
+	
+	public $pattern = '/^(?:[0-9 ]+[smhdwy]? *)+$/iD';
 
 	protected function __construct()
 	{
+	    parent::__construct();
 		$this->icon('time');
 		$this->ascii();
 		$this->max(16);

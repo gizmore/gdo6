@@ -154,12 +154,7 @@ final class GDO_User extends GDO
 	 */
 	public function getTimezoneObject()
 	{
-	    if (!($tz = $this->tempGet('timezone')))
-	    {
-	        $tz = new \DateTimeZone($this->getTimezone());
-	        $this->tempSet('timezone', $tz);
-	    }
-	    return $tz;
+	    return Time::getTimezoneObject($this->getTimezone());
 	}
 	
 	###############

@@ -15,7 +15,8 @@ use GDO\Core\Application;
  * The value type is an integer/timestamp.
  *  
  * @author gizmore
- * @version 6.07
+ * @version 6.10.4
+ * @since 6.0.7
  */
 class GDT_Timestamp extends GDT
 {
@@ -23,6 +24,7 @@ class GDT_Timestamp extends GDT
 	use WithFormFields;
 	use WithDatabase;
 	use WithOrder;
+	use WithTimezone;
 	
 	public $icon = 'time';
 
@@ -40,13 +42,12 @@ class GDT_Timestamp extends GDT
 	#############
 	public function toValue($var)
 	{
-		return ($var === null || $var === '') ?
-		  null : Time::getTimestamp($var);
+		return empty($var) ? null : Time::getTimestamp($var);
 	}
 	
 	public function toVar($value)
 	{
-		return $value === null ? null : Time::getDate($value);
+		return $value === null ? null : Time::displayTimestamp($value, 'db', null, 'UTC');
 	}
 	
 	public function getVar()
@@ -118,7 +119,21 @@ class GDT_Timestamp extends GDT
 		$this->maxDate = $maxDate;
 		return $this;
 	}
+	public function maxNow()
+	{
+	    return $this->maxDate(Time::getDate());
+	}
 
+	##############
+	### Millis ###
+	##############
+	public $millis = true;
+	public function millis($millis)
+	{
+	    $this->millis = $millis;
+	    return $this;
+	}
+	
 	################
 	### Validate ###
 	################
@@ -130,11 +145,11 @@ class GDT_Timestamp extends GDT
 		}
 		if ( ($this->minDate !== null) && ($value < Time::getTimestamp($this->minDate)) )
 		{
-			return $this->error('err_min_date', [Time::displayDate($this->minDate, 'short')]);
+		    return $this->error('err_min_date', [Time::displayDate($this->minDate, $this->getDateFormat())]);
 		}
 		if ( ($this->maxDate !== null) && ($value > Time::getTimestamp($this->maxDate)) )
 		{
-			return $this->error('err_max_date', [Time::displayDate($this->maxDate, 'short')]);
+			return $this->error('err_max_date', [Time::displayDate($this->maxDate, $this->getDateFormat())]);
 		}
 		return parent::validate($value);
 	}
@@ -157,13 +172,21 @@ class GDT_Timestamp extends GDT
 	public function renderCLI() { return $this->displayLabel() . ': ' . $this->displayVar(); }
 	public function renderJSON() { return $this->getValue() * 1000; }
 	
+	/**
+	 * Convert user input to db var date.
+	 * If input is numeric it is a timestamp in ms.
+	 */
 	public function inputToVar($input)
 	{
-	    if (is_numeric($input))
+	    if (!is_numeric($input))
 	    {
-	        return Time::getDate($input/1000);
+	        $input = Time::parseDate($input);
 	    }
-	    return $input;
+	    else
+	    {
+	        $input /= 1000.0;
+	    }
+	    return Time::getDate($input);
 	}
 	
 	##############
@@ -173,10 +196,20 @@ class GDT_Timestamp extends GDT
 	{
 		return array_merge(parent::configJSON(), [
 			'dateStartView' => $this->dateStartView,
-			'format' => $this->format,
+			'format' => $this->getDateFormat(),
 			'minDate' => $this->minDate,
 			'maxDate' => $this->maxDate,
+		    'millis' => $this->millis,
 		]);
+	}
+	
+	public function getDateFormat()
+	{
+	    if (!$this->format)
+	    {
+	        return $this->millis ? 'ms' : 'long';
+	    }
+	    return $this->format;
 	}
 	
 }

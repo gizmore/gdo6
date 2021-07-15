@@ -54,4 +54,9 @@ class GDT_Date extends GDT_Timestamp
 	    return Time::displayDate($var, 'day');
 	}
 
+	public function getDateFormat()
+	{
+	    return 'day';
+	}
+
 }

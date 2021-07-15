@@ -95,7 +95,7 @@ final class CLI
             $mo = $matches[1];
             $me = @$matches[2];
             $exec = $lin ? true : (!!@$matches[3]);
-            $button = @$matches[4] ? $matches[4] : 'submit';
+            $button = @$matches[4] ? $matches[4] : null;
         }
         else
         {
@@ -128,10 +128,23 @@ final class CLI
             return self::showHelp($method);
         }
 
+        if (!$button)
+        {
+            if ($buttons = $method->getButtons())
+            {
+                $button = array_keys($buttons)[0];
+            }
+            
+        }
+        
         # Parse everything after
         $params = self::parseArgline($lin, $method);
         
-        $params[$button] = $button;
+        if ($button)
+        {
+            $params[$button] = $button;
+        }
+        
         $method->requestParameters($params);
         
         # Execute the method
@@ -201,7 +214,7 @@ final class CLI
                 $var = Strings::substrFrom($var, '=', '');
                 if ($gdt = $method->gdoParameterByLabel($key))
                 {
-                    $value = $gdt->toValue($var);
+                    $value = $gdt->toValue($gdt->inputToVar($var));
                     if ($gdt->validate($value))
                     {
                         $gdt->varval($var, $value);

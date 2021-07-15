@@ -12,7 +12,7 @@ use GDO\DB\Cache;
  * TODO: Check if ini file parsing and using would be faster than php include.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 1.0.0
  */
 final class Trans

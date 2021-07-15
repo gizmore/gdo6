@@ -310,4 +310,6 @@ Cordiali saluti,<br/>
 'cli_pages' => '%s. Pagina %s/%s: %s',
 'cfg_load_sidebars' => 'Load Sidebar Elements?',
 'cfg_tt_load_sidebars' => 'Disable can give a slight performance use, if you use a very custom sidebar / page / theme.',
+'thousands_seperator' => '.',
+'decimal_point' => ',',
 );
