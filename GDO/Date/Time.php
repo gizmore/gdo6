@@ -148,7 +148,7 @@ final class Time
 	    # Parse
 	    if ($format === 'db')
 	    {
-	        $format = 'Y-m-d H:i:s.v';
+	        $format = 'Y-m-d H:i:s.u';
 	    }
 	    else
 	    {
