@@ -238,19 +238,20 @@ final class CLI
         {
             if ($gdt->name && $gdt->editable && $gdt->isPositional())
             {
-                $var = @$args[$i++];
+                $var = $gdt->inputToVar(@$args[$i]);
                 $value = $gdt->toValue($var);
                 if ($gdt->validate($value))
                 {
-                    $gdt->varval($var, $value);
+                    $gdt->varval(@$args[$i], $value);
                 }
                 else
                 {
                     $success = false;
                 }
-                $parameters[$gdt->name] = $var;
-                $_REQUEST[$gdt->name] = $var;
+                $parameters[$gdt->name] = @$args[$i];
+                $_REQUEST[$gdt->name] = @$args[$i];
                 $_REQUEST[$gdt->formVariable()][$gdt->name] = $var;
+                $i++;
             }
         }
         

@@ -212,4 +212,9 @@ class GDT_Timestamp extends GDT
 	    return $this->format;
 	}
 	
+	public function getDate()
+	{
+	    return Time::getDate($this->getValue());
+	}
+	
 }

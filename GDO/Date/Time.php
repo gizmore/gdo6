@@ -73,13 +73,18 @@ final class Time
 	 * @example $date = Time::getDate();
 	 * @return string
 	 */
-	public static function getDate($time=0)
+	public static function getDate($time=0, $format='Y-m-d H:i:s.v')
 	{
 	    if ($dt = self::getDateTime($time))
 	    {
-	        $date = $dt->format("Y-m-d H:i:s.v");
+	        $date = $dt->format($format);
 	        return $date;
 	    }
+	}
+	
+	public static function getDateDay($time=0)
+	{
+	    return self::getDate($time, 'Y-m-d');
 	}
 	
 	/**
