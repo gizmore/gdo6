@@ -87,7 +87,12 @@ final class Time
 	    return self::getDate($time, 'Y-m-d');
 	}
 	
-	/**
+	public static function getDateSec($time=0)
+	{
+	    return self::getDate($time, 'Y-m-d H:i:s');
+	}
+	
+/**
 	 * Get a datetime object from a timestamp.
 	 * @param int $time
 	 * @return \DateTime

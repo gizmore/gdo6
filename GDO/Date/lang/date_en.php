@@ -16,6 +16,7 @@ return [
     'df_short' => 'm/d/Y h:i A',
     'df_minute' => 'Y-m-d H:i',
     'df_day' => 'm/d/Y',
+    'df_sec' => 'm/d/Y H:i:s',
     'tu_s' => 's',
     'tu_m' => 'm',
     'tu_h' => 'h',
