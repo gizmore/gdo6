@@ -47,7 +47,14 @@ final class URL
 	
 	public function getHost()
 	{
-		return $this->parts['host'];
+	    if (isset($this->parts['host']))
+	    {
+	        return $this->parts['host'];
+	    }
+	    if (isset($this->parts['path']))
+	    {
+	        return $this->parts['path'];
+	    }
 	}
 	
 	public function getPort()
