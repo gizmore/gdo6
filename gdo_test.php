@@ -77,7 +77,7 @@ $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
 
 echo "Dropping Test Database: ".GDO_DB_NAME.".\n";
 echo "If this hangs, something is locking the db.\n";
-Database::instance()->queryWrite("DROP DATABASE " . GDO_DB_NAME);
+Database::instance()->queryWrite("DROP DATABASE IF EXISTS " . GDO_DB_NAME);
 Database::instance()->queryWrite("CREATE DATABASE " . GDO_DB_NAME);
 Database::instance()->useDatabase(GDO_DB_NAME);
 
