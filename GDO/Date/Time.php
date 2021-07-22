@@ -128,6 +128,11 @@ final class Time
 	    return $timestamp;
 	}
 	
+	public static function parseDateDB($date, $timezone=null, $format='parse')
+	{
+	    return self::parseDate($date, 'UTC', 'db');
+	}
+	
 	/**
 	 * Convert a user date input to a timestamp.
 	 * @TODO parseDateIso is broken a bit, because strlen($date) might differ across languages.

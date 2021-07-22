@@ -22,6 +22,7 @@ install/*
 GDO/*
 # ...except core modules
 !GDO/Classic/
+!GDO/CLI/
 !GDO/Core/
 !GDO/Country/
 !GDO/Cronjob/

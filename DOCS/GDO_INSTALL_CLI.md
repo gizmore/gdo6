@@ -6,8 +6,8 @@ To install gdo6 via the web interface follow [GDO_INSTALL_WWW.md].
 
 ## Prerequisites
 
-It is recommended to have npm, yarn and bower installed.
-Bower support and dependency will be dropped.
+It is recommended to have nodejs, npm, yarn and bower installed.
+Bower support and dependency will be dropped sooner or later.
 
     npm -g install yarn
     npm -g install bower
@@ -30,7 +30,7 @@ Please configure your system by creating a config at the protected/ folder.
 
 ## PATH
 
-You can add gdo6/bin/ to your PATH environment, so you can do stuff like this.
+You can add gdo6/bin/ to your PATH environment, so you can do fancy stuff like this.
     
     gdo core.impressum. # prints method Core/Impressum to the CLI
     gdo register.form --tos=1 gizmore gizmore@gizmore.org password password # Register at your gdo6 installation via CLI
@@ -68,4 +68,3 @@ Of course you want an admin account for your installation.
 
     ./gdoadm.sh admin username password <email>
         
-    
