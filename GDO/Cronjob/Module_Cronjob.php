@@ -8,7 +8,7 @@ use GDO\Core\GDO_Module;
  * 
  * @todo add a helper for run frequencies for cronjob methods.
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.4
  * @since 6.1.0
  */
 class Module_Cronjob extends GDO_Module
@@ -17,6 +17,13 @@ class Module_Cronjob extends GDO_Module
 	### Module ###
 	##############
     public function isCoreModule() { return true; }
+    
+    public function getClasses()
+    {
+        return [
+            GDO_Cronjob::class,
+        ];
+    }
     
 	public function onLoadLanguage()
 	{
