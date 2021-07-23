@@ -60,7 +60,7 @@ final class Cronjob
 		{
 		    $job = GDO_Cronjob::blank([
 		        'cron_method' => get_class($method),
-		    ]);
+		    ])->insert();
 			$db = Database::instance();
 			$db->transactionBegin();
 			$method->execute();
