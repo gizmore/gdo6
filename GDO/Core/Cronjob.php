@@ -3,15 +3,18 @@ namespace GDO\Core;
 
 use GDO\Install\Installer;
 use GDO\DB\Database;
+use GDO\Date\Time;
 use GDO\Cronjob\MethodCronjob;
 use GDO\User\GDO_User;
+use GDO\Cronjob\GDO_Cronjob;
 
 
 /**
  * Convinience cronjob launcher.
+ * @TODO move to module Cronjob
  * 
  * @author gizmore
- * @version 6.05
+ * @version 6.10.4
  * @see MethodCronjob
  */
 final class Cronjob
@@ -55,9 +58,16 @@ final class Cronjob
 	{
 		try
 		{
+		    $job = GDO_Cronjob::blank([
+		        'cron_method' => get_class($method),
+		    ]);
 			$db = Database::instance();
 			$db->transactionBegin();
 			$method->execute();
+			$job->saveVars([
+			    'cron_finished' => Time::getDate(),
+			    'cron_success' => '1',
+			]);
 			$db->transactionEnd();
 		}
 		catch (\Exception $ex)
@@ -66,4 +76,5 @@ final class Cronjob
 			throw $ex;
 		}
 	}
+	
 }

@@ -16,7 +16,6 @@ use GDO\Core\WithFields;
  */
 class GDT_Dialog extends GDT
 {
-    use WithHTML;
     use WithTitle;
     use WithFields;
     use WithPHPJQuery;
