@@ -147,7 +147,7 @@ class Config
 	
 	public static function fields()
 	{
-		$themes = array_diff(GDT_Template::themeNames(), ['install']);
+		$themes = GDT_Template::themeNames();
 		return array(
 		    GDT_Hidden::make('configured')->var('1'),
 // 		    GDT_Hidden::make('secured')->var('1'),

@@ -200,8 +200,8 @@ final class CLI
         {
             $gdt->error = null;
 //             $gdt->var($gdt->initial);
-            $_REQUEST[$gdt->name] = $gdt->var;
-            $_REQUEST[$gdt->formVariable()][$gdt->name] = $gdt->var;
+//             $_REQUEST[$gdt->name] = $gdt->var;
+//             $_REQUEST[$gdt->formVariable()][$gdt->name] = $gdt->var;
         }
         
         # Parse optionals --parameter=value
@@ -212,6 +212,8 @@ final class CLI
                 $key = Strings::substrTo($var, '=', $var);
                 $key = ltrim($key, '-');
                 $var = Strings::substrFrom($var, '=', '');
+                $_REQUEST[$gdt->name] = $var;
+                $_REQUEST[$gdt->formVariable()][$gdt->name] = $var;
                 if ($gdt = $method->gdoParameterByLabel($key))
                 {
                     $value = $gdt->toValue($gdt->inputToVar($var));

@@ -25,6 +25,7 @@ use GDO\Core\ModuleProviders;
 use GDO\Util\Strings;
 use GDO\Install\Module_Install;
 use GDO\Install\Method\InstallCronjob;
+use GDO\UI\GDT_Page;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
@@ -133,21 +134,23 @@ define('GDO_CORE_STABLE', 1);
 
 if ($argv[1] === 'configure')
 {
+    # @TODO write a repl configurator.
 	if ($argc === 2)
 	{
 		$argv[2] = 'config.php'; # default config filename
 	}
 	
-	$response = Configure::make()->requestParameters(['filename' => $argv[2]])->formParameters(['save_config'])->execute();
+	$response = Configure::make()->requestParameters(['filename' => $argv[2]])->formParameters(['save_config' => 1])->executeWithInit();
     if ($response->isError())
     {
         echo json_encode($response->renderJSON(), JSON_PRETTY_PRINT);
     }
-    
-    Security::make()->protectFolders();
-	
-	echo "You should now edit this file by hand.\n";
-	echo "Afterwards execute {$argv[0]} test config.\n";
+    else
+    {
+        Security::make()->protectFolders();
+    	echo "You should now edit this file by hand.\n";
+    	echo "Afterwards execute {$argv[0]} test config.\n";
+    }
 }
 
 elseif ($argv[1] === 'test')

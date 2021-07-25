@@ -122,7 +122,7 @@ final class FileUtil
 	 */
 	public static function humanFilesize($bytes, $factor='1024', $digits='2')
 	{
-		$txt = t('_filesize');
+		$txt = self::getTextArray();
 		$i = 0;
 		$rem = '0';
 		while (bccomp($bytes, $factor) >= 0)
@@ -136,6 +136,23 @@ final class FileUtil
 		: sprintf("%.0{$digits}f%s", ($bytes+$rem/$factor), $txt[$i]);
 	}
 	
+	private static function getTextArray()
+	{
+	    $txt = t('_filesize');
+	    if (!is_array($txt))
+	    {
+	        $txt = [
+	            'B',
+	            'KB',
+	            'MB',
+	            'GB',
+	            'TB',
+	            'PB',
+	        ];
+	    }
+	    return $txt;
+	}
+	
 	/**
 	 * Converts a human filesize to bytes as integer.
 	 * @example humanToBytes("12kb"); # => 12288
@@ -144,7 +161,7 @@ final class FileUtil
 	 */
 	public static function humanToBytes($s)
 	{
-	    $txt = t('_filesize');
+	    $txt = self::getTextArray();
 	    foreach ($txt as $pow => $b)
 	    {
 	        if ($pow > 0)

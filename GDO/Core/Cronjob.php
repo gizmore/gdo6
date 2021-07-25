@@ -72,7 +72,10 @@ final class Cronjob
 		}
 		catch (\Exception $ex)
 		{
-			$db->transactionRollback();
+		    if (isset($db))
+		    {
+		        $db->transactionRollback();
+		    }
 			throw $ex;
 		}
 	}

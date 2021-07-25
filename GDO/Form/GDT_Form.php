@@ -114,16 +114,33 @@ class GDT_Form extends GDT
 	public function renderJSON()
 	{
 	    $json = [];
+	    
+	    $errors = [];
+	    
 	    foreach ($this->getFieldsRec() as $gdt)
 	    {
-	        if ($gdt->isSerializable())
+	        if ($gdt->error)
 	        {
-	            if ($gdt->name)
-	            {
-	                $json[$gdt->name] = $gdt->renderJSON();
-	            }
+	            $errors[] = $gdt->displayLabel() . ': ' . $gdt->error;
 	        }
+// 	        if ($gdt->isSerializable())
+// 	        {
+// 	            if ($gdt->name)
+// 	            {
+// 	                $json[$gdt->name] = [
+// 	                    'var' => $gdt->var,
+// 	                    'display' => $gdt->renderJSON(),
+// 	                    'error' => $gdt->error,
+// 	                ];
+// 	            }
+// 	        }
 	    }
+	    
+	    if ($errors)
+	    {
+	        $json['error'] = t('err_form', [implode(' ', $errors)]);
+	    }
+	    
 	    return $json;
 	}
 	

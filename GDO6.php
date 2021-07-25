@@ -33,13 +33,15 @@ global $GDT_LOADED;
 $GDT_LOADED = 0; # perf
 
 spl_autoload_register(function($name) {
-    $name = str_replace('\\', '/', $name) . '.php';
-    if (file_exists($name))
+    if ( ($name[0]==='G') && ($name[3] === '\\') )
     {
-        require $name;
-        # perf
-        global $GDT_LOADED;
-        $GDT_LOADED++;
+        $name = str_replace('\\', '/', $name) . '.php';
+        {
+            require $name;
+            # perf
+            global $GDT_LOADED;
+            $GDT_LOADED++;
+        }
     }
 });
 	

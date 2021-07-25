@@ -134,6 +134,16 @@ class GDT_Timestamp extends GDT
 	    return $this;
 	}
 	
+	###########
+	### Now ###
+	###########
+	public $defaultNow = false;
+	public function defaultNow($defaultNow=true)
+	{
+	    $this->defaultNow = $defaultNow;
+	    return $this->initial(Time::getDate());
+	}
+	
 	################
 	### Validate ###
 	################

@@ -318,14 +318,14 @@ final class ModuleLoader
 				{
 					$this->modules[$lowerName] = $module;
 				    $module->onLoadLanguage();
+				    if ($theme = $module->getTheme())
+				    {
+				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+				    }
 				    if (!Application::instance()->isInstall())
 				    {
     				    $module->buildConfigCache();
     				    $module->buildSettingsCache();
-    				    if ($theme = $module->getTheme())
-    				    {
-    				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
-    				    }
 				    }
 				}
 			}

@@ -126,6 +126,7 @@ class GDT_Response extends GDT
 	{
 		return [
 			'code' => $this->code,
+		    'top' => Website::renderTopResponse(),
 			'json' => $this->renderJSONFields(),
 		];
 	}

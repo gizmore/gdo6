@@ -245,6 +245,10 @@ abstract class Method
 	    foreach ($this->gdoParameterCache() as $gdt)
 	    {
 	        $lbl = $gdt->displayLabel();
+	        if  ($gdt->name === $label)
+	        {
+	            return $this->gdoParameter($gdt->name);
+	        }
 	        if (strcasecmp($lbl, $label) === 0)
 	        {
 	            return $this->gdoParameter($gdt->name);
@@ -719,6 +723,7 @@ abstract class Method
 	{
 	    $module = $this->getModule();
 	    $tempDir = $module->tempPath($this->gdoShortName());
+	    @mkdir($tempDir, GDO_CHMOD, true);
 	    $tempDir .= '/';
 	    return $tempDir . $path;
 	}

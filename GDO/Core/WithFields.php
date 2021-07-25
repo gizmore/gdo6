@@ -214,24 +214,14 @@ trait WithFields
 		    }
 			if ($data = $gdt->renderJSON())
 			{
-			    if (is_array($data))
-			    {
-    			    foreach ($data as $k => $v)
-    			    {
-    			        $json[$k] = $v;
-    			    }
-			    }
-			    elseif ($gdt->isSerializable())
-			    {
-			        if ($gdt->name)
-			        {
-			            $json[$gdt->name] = $data;
-			        }
-// 			        else
-// 			        {
-// 			            $json[] = $data;
-// 			        }
-			    }
+		        $json[$gdt->name] = [
+		            'var' => $gdt->var,
+		            'display' => $data,
+		        ];
+		        if ($gdt->error)
+		        {
+		            $json[$gdt->name]['error'] = $gdt->error;
+		        }
 			}
 		}
 		return $json;

@@ -10,6 +10,8 @@ use GDO\DB\GDT_String;
 
 class Download extends Method
 {
+    public function isTrivial() { return false; }
+    
     public function gdoParameters()
     {
         return [

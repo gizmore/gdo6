@@ -304,12 +304,15 @@ final class GDO_User extends GDO
 	 */
 	public function persistent()
 	{
-		if ($this->isGhost())
-		{
-			$this->setVar('user_type', self::GUEST);
-			$this->insert();
-			GDO_Session::instance()->setVar('sess_user', $this->getID());
-		}
+	    if ($session = GDO_Session::instance())
+	    {
+    		if ($this->isGhost())
+    		{
+    			$this->setVar('user_type', self::GUEST);
+    			$this->insert();
+    			$session->setVar('sess_user', $this->getID());
+    		}
+	    }
 		return $this;
 	}
 	
