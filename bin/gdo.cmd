@@ -1,1 +1,1 @@
-start "" "git-bash.exe" -c "gdo %*"
+start "" "git-bash.exe" -c 'gdo %*'

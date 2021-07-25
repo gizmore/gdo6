@@ -86,7 +86,7 @@ final class CLI
         }
             
         # Parse 'module.method' part
-        $mome = Strings::substrTo($line, ' ', $line);
+        $mome = trim(Strings::substrTo($line, ' ', $line), '"');
         $lin = Strings::substrFrom($line, ' ', '');
         
         $matches = null;
@@ -139,6 +139,7 @@ final class CLI
         
         # Parse everything after
         $params = self::parseArgline($lin, $method);
+//         Logger::log('cli', 'PARAMS: ' . json_encode($params));
         
         if ($button)
         {
@@ -299,8 +300,8 @@ final class CLI
             }
             else
             {
-                $usage2[] = sprintf('[--%s=<%s>]',
-                    $gdt->displayLabel(), $gdt->gdoExampleVars());
+                $usage2[] = sprintf('[--%s=<%s>(%s)]',
+                    $gdt->displayLabel(), $gdt->gdoExampleVars(), $gdt->getVar());
             }
         }
         $usage = implode(' ', $usage2) . ' ' . implode(' ', $usage1);

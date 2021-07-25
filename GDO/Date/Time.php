@@ -58,7 +58,7 @@ final class Time
 	public static function setTimezone($timezone)
 	{
 	    self::$TIMEZONE = $timezone;
-// 	    date_default_timezone_set($timezone); # Default timezone is always UTC
+	    Module_Date::instance()->timezone = $timezone;
 	}
 	
 	###############
@@ -151,11 +151,16 @@ final class Time
 	public static function parseDateIso($iso, $date, $timezone=null, $format='parse')
 	{
 	    # Adjust
-	    if (strlen($date) === 10)
+	    $len = strlen($date);
+	    if ($len === 10)
 	    {
 	        $date .= ' 00:00:00.000';
 	    }
-	    elseif (strlen($date) === 18)
+	    elseif ($len === 16)
+	    {
+	        $date .= ':00.000';
+	    }
+	    elseif (strlen($date) === 19)
 	    {
 	        $date .= '.000';
 	    }
@@ -282,6 +287,18 @@ final class Time
 	public static function displayAgeTSISO($timestamp, $iso)
 	{
 	    return self::humanDurationISO($iso, Application::$TIME - $timestamp);
+	}
+	
+	#################
+	### From Week ###
+	#################
+	public static function weekTimestamp($year, $week)
+	{
+	    $week_start = new DateTime();
+	    $week_start->setISODate(intval($year, 10), intval($week, 10));
+	    $week_start = $week_start->format('U');
+	    $week_start -= ($week_start%Time::ONE_WEEK);
+	    return $week_start;
 	}
 	
 	################

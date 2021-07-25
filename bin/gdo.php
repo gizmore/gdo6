@@ -105,10 +105,13 @@ $page = GDT_Page::make();
 /** @var $argc int **/
 /** @var $argv string[] **/
 
+Logger::log('cli', json_encode($argv));
+
 $norepl = false;
 if ($argc > 1)
 {
     array_shift($argv);
+    $argv = array_map('quote', $argv);
     $line = implode(' ', $argv);
     $norepl = true;
 }
@@ -139,7 +142,7 @@ try
             {
                 if (Website::$TOP_RESPONSE)
                 {
-                    echo Website::$TOP_RESPONSE->renderCLI();
+                    echo Website::$TOP_RESPONSE->renderCLI() . "\n";
                 }
                 echo $response->renderCLI();
                 
