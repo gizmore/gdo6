@@ -164,7 +164,16 @@ final class Website
 	 */
 	public static function displayMeta()
 	{
-		$back = '';
+	    if (Application::instance()->getMethod()->isSEOIndexed())
+	    {
+    	    self::$_meta[] = ['robots', 'index, follow', 'name'];
+	        
+	    }
+	    else
+	    {
+    	    self::$_meta[] = ['robots', 'noindex', 'name'];
+	    }
+	    $back = '';
 // 		$mode = array('name', 'http-equiv');
 		foreach (self::$_meta as $meta)
 		{
