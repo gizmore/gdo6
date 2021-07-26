@@ -283,7 +283,7 @@ final class Time
 	
 	public static function displayAgeTS($timestamp)
 	{
-	    $timestamp = abs(Application::$TIME - (int)$timestamp);
+	    $timestamp = Application::$TIME - (int)$timestamp;
 	    return self::humanDuration($timestamp);
 	}
 	
