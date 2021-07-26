@@ -190,13 +190,15 @@ class GDT_Timestamp extends GDT
 	{
 	    if (!is_numeric($input))
 	    {
+	        $input = str_replace('T', ' ', $input);
+	        $input = str_replace('Z', '', $input);
 	        $input = Time::parseDate($input);
 	    }
 	    else
 	    {
 	        $input /= 1000.0;
 	    }
-	    return Time::getDate($input);
+	    return $input ? Time::getDate($input) : null;
 	}
 	
 	##############

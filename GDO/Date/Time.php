@@ -151,6 +151,11 @@ final class Time
 	public static function parseDateIso($iso, $date, $timezone=null, $format='parse')
 	{
 	    # Adjust
+	    if (!$date)
+	    {
+	        return null;
+	    }
+	    
 	    $len = strlen($date);
 	    if ($len === 10)
 	    {
@@ -266,7 +271,9 @@ final class Time
 	 */
 	public static function getAgo($date)
 	{
-		return Application::$MICROTIME - self::getTimestamp($date);
+	    return $date ?
+	       Application::$MICROTIME - self::getTimestamp($date) : 
+	       null;
 	}
 	
 	public static function displayAge($date)
@@ -276,7 +283,8 @@ final class Time
 	
 	public static function displayAgeTS($timestamp)
 	{
-	    return self::humanDuration(Application::$TIME - $timestamp);
+	    $timestamp = abs(Application::$TIME - (int)$timestamp);
+	    return self::humanDuration($timestamp);
 	}
 	
 	public static function displayAgeISO($date, $iso)
