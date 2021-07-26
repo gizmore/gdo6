@@ -160,13 +160,13 @@ final class Time
 	    {
 	        $date .= ':00.000';
 	    }
-	    elseif (strlen($date) === 19)
+	    elseif ($len === 19)
 	    {
 	        $date .= '.000';
 	    }
 
 	    # Parse
-	    if ($format === 'db')
+	    if ( ($date[4] === '-') || ($format === 'db') )
 	    {
 	        $format = 'Y-m-d H:i:s.u';
 	    }

@@ -42,10 +42,10 @@ class GDT_Float extends GDT_Int
 	    return t('decimal_point');
 	}
 	
-	public static function displayS($var, $decimals=5)
+	public static function displayS($var, $decimals=5, $dot=null, $comma=null)
 	{
-	    $dot = self::decimalPoint();
-	    $comma = self::thousandSeperator();
+	    $dot = $dot !== null ? $dot : self::decimalPoint();
+	    $comma = $comma != null ? $comma : self::thousandSeperator();
 	    $display = number_format($var, $decimals, $dot, $comma);
 	    return $display;
 	}
