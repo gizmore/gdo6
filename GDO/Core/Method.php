@@ -63,6 +63,7 @@ abstract class Method
 	public function isCLI() { return true; }
 	public function isAjax() { return false; }
 	public function isEnabled() { $m = $this->getModule(); return $m && $m->isEnabled(); }
+	public function showSidebar() { return true; }
 	public function isSEOIndexed() { return true; }
 	public function isUserRequired() { return false; }
 	public function isGuestAllowed() { return true; }

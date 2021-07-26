@@ -214,10 +214,7 @@ trait WithFields
 		    }
 			if ($data = $gdt->renderJSON())
 			{
-		        $json[$gdt->name] = [
-		            'var' => $gdt->var,
-		            'display' => $data,
-		        ];
+		        $json[$gdt->name] = $data;
 		        if ($gdt->error)
 		        {
 		            $json[$gdt->name]['error'] = $gdt->error;
