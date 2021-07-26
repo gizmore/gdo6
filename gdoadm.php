@@ -403,7 +403,7 @@ elseif ($argv[1] === 'wipe')
     
     $response = Install::make()->
         requestParameters(['module' => $module->getName()])->
-            formParameters(['uninstall'])->
+            formParameters(['uninstall' => '1'])->
             executeWithInit();
     
     if ($response->isError())

@@ -873,6 +873,14 @@ abstract class GDO
     }
     
     /**
+     * @return Query
+     */
+    public function deleteQuery()
+    {
+        return $this->query()->delete($this->gdoTableName());
+    }
+    
+    /**
      * Build an entity update query.
      * @return Query
      */
