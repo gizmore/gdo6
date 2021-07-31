@@ -12,7 +12,7 @@ namespace GDO\Core;
  */
 class GDT_Error extends GDT_Success
 {
-    public static $ERROR = 1;
+    public static $ERROR = 0;
     
     public function isSerializable() { return true; }
     

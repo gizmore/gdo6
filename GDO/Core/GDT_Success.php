@@ -62,7 +62,7 @@ class GDT_Success extends GDT
 	
 	public static function responseWith($key, array $args=null, $code=200, $log=true)
 	{
-	    return GDT_Response::makeWith(self::with($key, $args, $code, $log));
+	    return GDT_Response::makeWith(self::with($key, $args, $code, $log))->code($code);
 	}
 	
 	##############
