@@ -4,6 +4,7 @@ namespace GDO\Date\Test;
 use GDO\Tests\TestCase;
 use GDO\Date\Time;
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertTrue;
 
 /**
  * Test date and time.
@@ -17,7 +18,7 @@ final class DateTest extends TestCase
     {
         $timezone = new \DateTimeZone('Europe/Berlin');
         $dt = \DateTime::createFromFormat('m/d/Y H:i:s.u', '01/05/2020 22:01:25.000', $timezone);
-        assert(!!$dt, 'Test if PHP datetime parsing is ok');
+        assertTrue(!!$dt, 'Test if PHP datetime parsing is ok');
     }
     
     public function testParseDBDate()
@@ -79,6 +80,13 @@ final class DateTest extends TestCase
         assertEquals('1618094423.123', sprintf('%.03f', $time), 'Test if US ms date can be parsed');
     }
 
-    
+    public function testDisplayDate()
+    {
+        $this->lang('de');
+        $this->timezone('Europe/Berlin');
+        $dbdate = '2021-11-09 08:00:59.123';
+        $result = Time::displayDate($dbdate);
+        assertEquals('09.11.2021 09:00', $result);
+    }
     
 }

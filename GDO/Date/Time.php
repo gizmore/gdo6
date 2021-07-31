@@ -64,9 +64,6 @@ final class Time
 	###############
 	### Convert ###
 	###############
-// 	const PARSE_DAY = 'Y-m-d';
-// 	const PARSE_SEC = 'Y-m-d H:i:s';
-// 	const PARSE_MIL = 'Y-m-d H:i:s.v';
 	
 	/**
 	 * Get a mysql date from a timestamp, like YYYY-mm-dd HH:ii:ss.vvv.
@@ -210,7 +207,7 @@ final class Time
 	    {
 	        return $default_return;
 	    }
-	    $dt = DateTime::createFromFormat('U.v', sprintf('%.03f', $timestamp), self::$UTC);
+	    $dt = DateTime::createFromFormat('U.u', sprintf('%.06f', $timestamp), self::$UTC);
 	    return self::displayDateTimeISO($iso, $dt, $format, $default_return, $timezone);
 	}
 	
