@@ -249,16 +249,16 @@ abstract class Method
 	        $lbl = $gdt->displayLabel();
 	        if  ($gdt->name === $label)
 	        {
-	            return $this->gdoParameter($gdt->name);
+	            return $gdt;
 	        }
 	        if (strcasecmp($lbl, $label) === 0)
 	        {
-	            return $this->gdoParameter($gdt->name);
+	            return $gdt;
 	        }
 	        $lbl = $gdt->displayCLILabel();
 	        if (strcasecmp($lbl, $label) === 0)
 	        {
-	            return $this->gdoParameter($gdt->name);
+	            return $gdt;
 	        }
 	    }
 	    if ($throw)

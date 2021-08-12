@@ -39,20 +39,22 @@ final class CSV
     
     public function eachLine($callable)
     {
-        $fh = fopen($this->path, 'r');
-        $first = $this->withHeader;
-        while ($row = fgetcsv($fh, null, $this->delimiter, $this->enclosure))
+        if ($fh = @fopen($this->path, 'r'))
         {
-            if ($first)
+            $first = $this->withHeader;
+            while ($row = fgetcsv($fh, null, $this->delimiter, $this->enclosure))
             {
-                $first = false;
+                if ($first)
+                {
+                    $first = false;
+                }
+                else
+                {
+                    $callable($row);
+                }
             }
-            else
-            {
-                $callable($row);
-            }
+            fclose($fh);
         }
-        fclose($fh);
     }
     
     public function all()
