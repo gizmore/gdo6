@@ -28,8 +28,7 @@ class GDT_Float extends GDT_Int
 	
 	public static function inputToVarS($input)
 	{
-	    $dot = self::decimalPoint();
-	    return str_replace($dot, '.', $input);
+	    return str_replace(',', '.', $input);
 	}
 	
 	public static function thousandSeperator()

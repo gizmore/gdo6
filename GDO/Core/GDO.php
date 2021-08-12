@@ -709,6 +709,11 @@ abstract class GDO
         {
             $gdt = $this->gdoColumn($gdt->name); # assign me as gdo to gdt
             $invalid += $gdt->validate($gdt->getValue()) ? 0 : 1;
+//             $error = $gdt->error;
+//             if ($error)
+//             {
+//                 echo $gdt->name;
+//             }
         }
         return $invalid === 0;
     }
