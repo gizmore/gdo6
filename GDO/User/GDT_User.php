@@ -24,7 +24,7 @@ use GDO\Util\Strings;
 class GDT_User extends GDT_Object
 {
 	public function defaultLabel() { return $this->label('user'); }
-	
+
 	protected function __construct()
 	{
 	    parent::__construct();
@@ -38,7 +38,7 @@ class GDT_User extends GDT_Object
 	{
 		return $this->completionHref(href('User', 'Completion'));
 	}
-	
+
 	#############
 	### Ghost ###
 	#############
@@ -48,7 +48,7 @@ class GDT_User extends GDT_Object
 		$this->ghost = $ghost;
 		return $this;
 	}
-	
+
 	###############
 	### Current ###
 	###############
@@ -58,7 +58,7 @@ class GDT_User extends GDT_Object
 	    $this->fallbackCurrentUser = $fallbackCurrentUser;
 	    return $this;
 	}
-	
+
 	############
 	### Type ###
 	############
@@ -68,7 +68,7 @@ class GDT_User extends GDT_Object
 	    $this->withType = $withType;
 	    return $this;
 	}
-	
+
 	############
 	### Perm ###
 	############
@@ -78,7 +78,7 @@ class GDT_User extends GDT_Object
 	    $this->withPermission = $withPermission;
 	    return $this;
 	}
-	
+
 	#############
 	### Value ###
 	#############
@@ -87,7 +87,7 @@ class GDT_User extends GDT_Object
 	 * @return GDO_User
 	 */
 	public function getUser() { return $this->getValue(); }
-	
+
 	/**
 	 * @return GDO_User
 	 */
@@ -106,7 +106,7 @@ class GDT_User extends GDT_Object
 			return GDO_User::ghost();
 		}
 	}
-	
+
 	public function displayVar()
 	{
 		if ($gdo = $this->getUser())
@@ -114,7 +114,7 @@ class GDT_User extends GDT_Object
 			return $gdo->displayNameLabel();
 		}
 	}
-	
+
 	public function findByName($name)
 	{
 		if (Strings::startsWith($name, GDO_User::GHOST_NAME_PREFIX))
@@ -134,7 +134,7 @@ class GDT_User extends GDT_Object
 			return GDO_User::getByName($name);
 		}
 	}
-	
+
 	################
 	### Validate ###
 	################
@@ -146,17 +146,17 @@ class GDT_User extends GDT_Object
 	{
 	    /** @var $user GDO_User **/
 	    $user = $value;
-	    
+
 	    if (!parent::validate($value))
 	    {
 	        return false; # $this->error('err_user');
 	    }
-	    
+
 	    if ($value === null)
 	    {
 	        return true; # Null check passed already
 	    }
-	    
+
 	    if ($this->withType)
 	    {
 	        if ($user->getType() !== $this->withType)
@@ -165,7 +165,7 @@ class GDT_User extends GDT_Object
 	            return $this->error('err_user_type', [$typelabel]);
 	        }
 	    }
-	    
+
 	    if ($this->withPermission)
 	    {
 	        if (!$user->hasPermission($this->withPermission))
@@ -174,15 +174,15 @@ class GDT_User extends GDT_Object
 	            return $this->error('err_user_no_permission', [$permlabel]);
 	        }
 	    }
-	    
+
 	    return true;
 	}
-	
+
 	public function plugVar()
 	{
 	    return '2'; # gizmore in unit tests.
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -194,12 +194,12 @@ class GDT_User extends GDT_Object
 	    }
 	    return t('unknown');
 	}
-	
+
 	public function renderJSON()
 	{
 	    return $this->renderCell();
 	}
-	
+
 	##############
 	### Filter ###
 	##############
@@ -209,7 +209,7 @@ class GDT_User extends GDT_Object
 		$this->noFilter = $noFilter;
 		return $this;
 	}
-	
+
 	public function filterQuery(Query $query, $rq=null)
 	{
 		if (!$this->noFilter)
@@ -223,5 +223,5 @@ class GDT_User extends GDT_Object
 			}
 		}
 	}
-	
+
 }

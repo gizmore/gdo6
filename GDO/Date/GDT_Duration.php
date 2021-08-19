@@ -13,7 +13,7 @@ use GDO\DB\GDT_String;
 class GDT_Duration extends GDT_String
 {
 	public function defaultLabel() { return $this->label('duration'); }
-	
+
 	public $pattern = '/^(?:[0-9 ]+[smhdwy]? *)+$/iD';
 
 	protected function __construct()
@@ -28,20 +28,20 @@ class GDT_Duration extends GDT_String
 	{
 	    return $var === null ? null : Time::humanToSeconds($var);
 	}
-	
+
 	public function toVar($value)
 	{
 	    return $value === null ? null : Time::humanDuration($value);
 	}
-	
+
 	public function renderCell()
 	{
 		return $this->renderCellSpan($this->getVar());
 	}
-	
+
 	public function renderForm()
 	{
 		return GDT_Template::php('Date', 'form/duration.php', ['field' => $this]);
 	}
-	
+
 }

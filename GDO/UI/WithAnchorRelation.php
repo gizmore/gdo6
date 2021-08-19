@@ -3,7 +3,7 @@ namespace GDO\UI;
 
 /**
  * Adds anchor relation to a GDT.
- * 
+ *
  * @see GDT_Link
  * @see GDT_Button
  * @see GDT_IconButton
@@ -25,5 +25,5 @@ trait WithAnchorRelation
 		$this->relation = $relation ? trim($this->relation . " $relation") : $this->relation;
 		return $this;
 	}
-	
+
 }

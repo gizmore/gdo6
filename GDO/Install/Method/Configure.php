@@ -28,14 +28,14 @@ class Configure extends MethodForm
             GDT_Hidden::make('step')->initial('3'),
           ];
     }
-    
+
     public function cfgConfigName() { return $this->gdoParameterVar('filename'); }
-    
+
 	public function configPath()
 	{
 		return GDO_PATH . 'protected/' . $this->cfgConfigName();
 	}
-	
+
 	public function createForm(GDT_Form $form)
 	{
 		foreach (Config::fields() as $gdt)
@@ -56,7 +56,7 @@ class Configure extends MethodForm
 		file_put_contents($this->configPath(), $content);
 		return Website::redirectMessage('msg_config_written', [html($this->cfgConfigName())], Config::hrefStep(3));
 	}
-	
+
 	public function onSubmit_test_config(GDT_Form $form)
 	{
 	    if (GDO_DB_ENABLED)
@@ -73,5 +73,5 @@ class Configure extends MethodForm
 	    }
 	    return $this->message('install_config_boxinfo_success', [Config::linkStep(4)]);
 	}
-	
+
 }

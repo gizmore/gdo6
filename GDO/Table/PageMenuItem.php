@@ -9,27 +9,27 @@ final class PageMenuItem
 	public $page;
 	public $href;
 	public $selected;
-	
+
 	public function __construct($page, $href, $selected=false)
 	{
 		$this->page = $page;
 		$this->href = $href;
 		$this->selected = $selected;
 	}
-	
+
 	public static function dotted()
 	{
 		return new self('…', 'javascript:;', false);
 	}
-	
+
 	public function htmlClass()
 	{
 		return $this->selected ? ' page-selected' : '';
 	}
-	
+
 	public function isSelected()
 	{
 		return $this->selected;
 	}
-	
+
 }

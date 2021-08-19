@@ -13,15 +13,15 @@ use GDO\DB\GDT_UInt;
 final class GDT_Filesize extends GDT_UInt
 {
 	public function defaultLabel() { return $this->label('filesize'); }
-	
+
 	public function renderCell()
 	{
 		return FileUtil::humanFilesize($this->getValue());
 	}
-	
+
 	public function toValue($var)
 	{
 	    return (int) FileUtil::humanToBytes($var);
 	}
-	
+
 }

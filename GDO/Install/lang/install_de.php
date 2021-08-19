@@ -4,7 +4,7 @@ return array(
 'install_title_1' => 'Willkommen',
 'install_text_1' => 'Willkommen zu GDO6. Bitte fahren Sie hier fort: %s',
 'install_text_2' => 'Falls Sie eine Datenbank verwenden wollen führen Sie bitte folgende MySQL Befehle als root aus.',
-    
+
 # System Test
 'install_title_2' => 'System–Test',
 'install_title_2_tests' => 'Wichtige Vorraussetzungen',
@@ -48,7 +48,7 @@ return array(
 'install_config_boxinfo_success' => 'Dieses System sieht gut aus. Sie können hier fortfahren: %s',
 'save_config' => 'Speichern',
 'test_config' => 'Testen',
-    
+
 # Modules
 'install_title_4' => 'GDO6 Module',
 'install_modules_info_text' => 'Hier wählen Sie die Module zum Installieren.',
@@ -95,7 +95,7 @@ cd www/gdo6<br/>
 Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 </code>
 ',
-	
+
 'install_title_8' => 'Backup einspielen',
 'ft_install_importbackup' => 'Backup einspielen',
 
@@ -114,7 +114,7 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 'msg_set_config' => 'Die Konfiguration für %s im Modul %s ist zur Zeit auf %s gesetzt. Vorschlagswerte: %s',
 'msg_changed_config' => 'Die Konfiguration für %s im Modul %s wurde von %s auf %s gesetzt.',
 'msg_installing_modules' => 'Es werden die folgenden Module installiert: %s.',
-    
+
 # 6.10
 'bot_mail' => 'Bot Email',
 'bot_name' => 'Bot Name',

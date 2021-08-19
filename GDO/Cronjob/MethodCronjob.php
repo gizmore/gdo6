@@ -6,7 +6,7 @@ use GDO\Core\Method;
 
 /**
  * Baseclass method for a cronjob.
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.1.0
@@ -16,14 +16,14 @@ abstract class MethodCronjob extends Method
 	public abstract function run();
 
 	public function getPermission() { return 'cronjob'; }
-	
+
 	public function execute()
 	{
 		$this->start();
 		$this->run();
 		$this->end();
 	}
-	
+
 	public function runEvery()
 	{
 	    return 1;

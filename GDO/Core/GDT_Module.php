@@ -8,11 +8,11 @@ use GDO\DB\GDT_ObjectSelect;
  * Features installed and uninstalled choices.
  * Loads module via module loader.
  * PlugVar for auto tests is module Core.
- * 
+ *
  * @author gizmore
  * @version 6.10.13
  * @since 6.02
- * 
+ *
  * @see GDO_Module
  */
 final class GDT_Module extends GDT_ObjectSelect
@@ -22,7 +22,7 @@ final class GDT_Module extends GDT_ObjectSelect
         parent::__construct();
         $this->table(GDO_Module::table());
     }
-    
+
     public function toVar($value)
     {
         if ($value)
@@ -30,16 +30,16 @@ final class GDT_Module extends GDT_ObjectSelect
             return strtolower($value->getName());
         }
     }
-    
+
     ####################
     ### Un/Installed ###
     ####################
     public $installed = true;
     public function installed($installed=true) { $this->installed = $installed; return $this; }
-    
+
     public $uninstalled = false;
     public function uninstalled($uninstalled=true) { $this->uninstalled = $uninstalled; return $this; }
-    
+
     ###############
     ### Choices ###
     ###############
@@ -48,9 +48,9 @@ final class GDT_Module extends GDT_ObjectSelect
         if (!$this->choices)
         {
             $this->choices = [];
-            
+
             $modules = ModuleLoader::instance()->loadModules($this->installed, $this->uninstalled);
-            
+
             foreach ($modules as $module)
             {
                 if ( (($module->isInstalled()) && $this->installed) ||
@@ -61,7 +61,7 @@ final class GDT_Module extends GDT_ObjectSelect
             }
         }
     }
-    
+
     #################
     ### Var/Value ###
     #################
@@ -69,12 +69,12 @@ final class GDT_Module extends GDT_ObjectSelect
     {
         return 'Core';
     }
-    
+
     public function getValueSingle($moduleName)
     {
         return ModuleLoader::instance()->getModule($moduleName);
     }
-    
+
     public function getValueMulti($var)
     {
         $loader = ModuleLoader::instance();
@@ -88,5 +88,5 @@ final class GDT_Module extends GDT_ObjectSelect
         }
         return $back;
     }
-    
+
 }

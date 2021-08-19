@@ -22,8 +22,8 @@ final class TimezoneComplete extends MethodCompletion
                 ];
             }
         }
-        
+
         return GDT_Array::makeWith($json);
     }
-    
+
 }

@@ -29,16 +29,16 @@ class GDT_Enum extends GDT
 	use WithFormFields;
 	use WithCompletion;
 	use WithPHPJQuery;
-	
+
 	public $orderable = true;
 	public $filterable = true;
 	public $readable = true;
 	public $editable = true;
 	public $writable = true;
 	public $focusable = true;
-	
+
 	public function isSerializable() { return true; }
-	
+
 	############
 	### Base ###
 	############
@@ -47,7 +47,7 @@ class GDT_Enum extends GDT
 		$values = implode(',', array_map(array('GDO\Core\GDO', 'quoteS'), $this->enumValues));
 		return "{$this->identifier()} ENUM ($values) CHARSET ascii COLLATE ascii_bin {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
-	
+
 	public function renderForm()
 	{
 	    if ($this->completionHref)
@@ -55,30 +55,30 @@ class GDT_Enum extends GDT
 	        return GDT_Template::php('DB', 'form/object_completion.php', ['field' => $this]);
 	    }
 	    return GDT_Template::php('DB', 'form/enum.php', ['field' => $this]);
-	
+
 	}
 	public function renderCell()
 	{
 	    return $this->enumLabel($this->getVar());
 	}
-	
+
 	public function renderCLI()
 	{
 	    $back = $this->displayLabel();
 	    $cell = $this->renderCell();
 	    return $back ? "{$back}: {$cell}" : $cell;
 	}
-	
+
 	public function toValue($var)
 	{
 		return $var === $this->emptyValue ? null : $var;
 	}
-	
+
 	public function displayValue($var)
 	{
 	    return $this->enumLabel($var);
 	}
-	
+
 	public function gdoExampleVars()
 	{
 	    $vars = array_slice($this->enumValues, 0, 3);
@@ -104,7 +104,7 @@ class GDT_Enum extends GDT
 	    }
 	    return implode('|', $vars);
 	}
-	
+
 	############
 	### Enum ###
 	############
@@ -115,30 +115,30 @@ class GDT_Enum extends GDT
 	       t($this->emptyLabel, $this->emptyLabelArgs) :
 	       t("enum_$enumValue");
 	}
-	
+
 	public function enumValues(...$enumValues)
 	{
 	    $this->enumValues = $enumValues;
 	    return $this;
 	}
-	
+
 	public function enumIndex()
 	{
 	    return $this->enumIndexFor($this->getVar());
 	}
-	
+
 	public function enumIndexFor($enumValue)
 	{
 	    $index = array_search($enumValue, $this->enumValues, true);
 	    return $index === false ? 0 : $index + 1;
 	}
-	
+
 	public function enumForId($index)
 	{
 	    return $index > 0 ?
 	       $this->enumValues[$index-1] : null;
 	}
-	
+
 	public function htmlSelected($enumValue)
 	{
 	    return $this->getVar() === ((string)$enumValue) ?
@@ -166,7 +166,7 @@ class GDT_Enum extends GDT
 	{
 		return t($this->emptyLabel, $this->emptyLabelArgs);
 	}
-	
+
 	##############
 	### Filter ###
 	##############
@@ -178,7 +178,7 @@ class GDT_Enum extends GDT
 	    return GDT_Template::php('DB', 'filter/enum.php', [
 	        'field' => $this, 'f' => $f]);
 	}
-	
+
 	/**
 	 * Filter value is an array.
 	 */
@@ -193,7 +193,7 @@ class GDT_Enum extends GDT
 		}
 		return [];
 	}
-	
+
 	/**
 	 * Add where clause to query on filter.
 	 */
@@ -211,7 +211,7 @@ class GDT_Enum extends GDT
     		}
 		}
 	}
-	
+
 	################
 	### Validate ###
 	################
@@ -229,7 +229,7 @@ class GDT_Enum extends GDT
 			return true;
 		}
 	}
-	
+
 	##############
 	### Config ###
 	##############
@@ -247,7 +247,7 @@ class GDT_Enum extends GDT
 	    }
 	    return $this->enumLabels;
 	}
-	
+
 	public function configJSON()
 	{
 	    if ($this->completionHref)
@@ -288,5 +288,5 @@ class GDT_Enum extends GDT
 	        ]);
 	    }
 	}
-  
+
 }

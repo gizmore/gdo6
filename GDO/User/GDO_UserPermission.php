@@ -17,7 +17,7 @@ use GDO\Core\GDT_Hook;
 final class GDO_UserPermission extends GDO
 {
 	public function gdoCached() { return false; }
-	
+
 	public function gdoColumns()
 	{
 		return array(
@@ -28,13 +28,13 @@ final class GDO_UserPermission extends GDO
 		    GDT_Index::make('perm_user_id_index')->hash()->indexColumns('perm_user_id'),
 		);
 	}
-	
+
 	/**
 	 * @return GDO_User
 	 */
 	public function getUser() { return $this->getValue('perm_user_id'); }
 	public function getUserID() { return $this->getVar('perm_user_id'); }
-	
+
 	/**
 	 * @return GDO_Permission
 	 */
@@ -55,7 +55,7 @@ final class GDO_UserPermission extends GDO
             where("perm_user_id={$user->getID()}")->
             exec()->fetchAllArray2dPair();
 	}
-	
+
 	/**
 	 * Grant via permission object.
 	 * @param GDO_User $user
@@ -73,7 +73,7 @@ final class GDO_UserPermission extends GDO
     		GDT_Hook::callHook('UserPermissionGranted', $user, $permission);
 	    }
 	}
-	
+
 	/**
 	 * Grant via name.
 	 * @param GDO_User $user
@@ -84,15 +84,15 @@ final class GDO_UserPermission extends GDO
 	{
 		return self::grantPermission($user, GDO_Permission::getByName($permission));
 	}
-	
+
 	public static function revokePermission(GDO_User $user, GDO_Permission $permission)
 	{
 		return self::table()->deleteWhere("perm_user_id={$user->getID()} AND perm_perm_id={$permission->getID()}");
 	}
-	
+
 	public static function revoke(GDO_User $user, $permission)
 	{
 		return self::revokePermission($user, GDO_Permission::getByName($permission));
 	}
-	
+
 }

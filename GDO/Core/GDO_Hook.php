@@ -16,9 +16,9 @@ use GDO\DB\GDT_AutoInc;
 final class GDO_Hook extends GDO
 {
 	public function gdoEngine() { return GDO::MYISAM; }
-	
+
 	public function gdoCached() { return false; }
-	
+
 	public function gdoColumns()
 	{
 		return [
@@ -26,5 +26,5 @@ final class GDO_Hook extends GDO
 			GDT_JSON::make('hook_message')->notNull()->max(2048),
 		];
 	}
-	
+
 }

@@ -9,5 +9,5 @@ class Module_PHPInfo extends GDO_Module
 	{
 		return href('PHPInfo', 'PHPInfo');
 	}
-	
+
 }

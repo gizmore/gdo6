@@ -10,4 +10,3 @@ class="gdo-language"
 	alt="<?= $language->displayName(); ?>"
 	title="<?= $language->displayName(); ?>"
 	src="<?=html($href)?>" />
-	

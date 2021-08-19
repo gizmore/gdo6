@@ -12,12 +12,12 @@ final class ClearTest extends TestCase
     public function testFileUtilToClearFiles()
     {
         $path = GDO_File::filesDir();
-        
+
         FileUtil::removeDir($path);
         assertDirectoryDoesNotExist($path, 'Test if files/ folder can be deleted.');
 
         FileUtil::createDir($path);
         assertDirectoryExists($path, 'Test if files/ folder can be re-created.');
     }
-    
+
 }

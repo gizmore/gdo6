@@ -15,9 +15,9 @@ use GDO\Util\Strings;
 /**
  * CLI utilities.
  * Can turn cmdlines into Method parameters.
- * 
+ *
  * @see Method
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.10.2
@@ -28,7 +28,7 @@ final class CLI
     {
         return get_current_user();
     }
-    
+
     /**
      * Stop output buffering and start auto flush for CLI mode.
      */
@@ -40,7 +40,7 @@ final class CLI
         }
         ob_implicit_flush(true);
     }
-    
+
     /**
      * Simulate PHP $_SERVER vars.
      */
@@ -64,12 +64,12 @@ final class CLI
         # @TODO use output of locale command?
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
     }
-    
+
     public static function br2nl($s, $nl=PHP_EOL)
     {
         return preg_replace('#< *br */? *>#is', $nl, $s);
     }
-    
+
     public static function htmlToCLI($html)
     {
         $html = preg_replace('/<a .*href="([^"]+)".*>([^<]+)<\\/a>/ius', "$1 ($2)", $html);
@@ -78,18 +78,18 @@ final class CLI
         $html = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
         return $html;
     }
-    
+
     public static function execute($line)
     {
         if (!($line = trim($line, "\r\n\t ")))
         {
             throw new GDOError('err_need_input');
         }
-            
+
         # Parse 'module.method' part
         $mome = trim(Strings::substrTo($line, ' ', $line), '"');
         $lin = Strings::substrFrom($line, ' ', '');
-        
+
         $matches = null;
         if (preg_match('#^([a-z]+)\\.?([a-z]*)(\\.?)([a-z]*)$#iD', $mome, $matches))
         {
@@ -102,28 +102,28 @@ final class CLI
         {
             throw new GDOError('err_module_method');
         }
-        
+
         if (!($module = ModuleLoader::instance()->getModule($mo, true)))
         {
             throw new GDOError('err_module_method');
         }
-        
+
         if (!$module->isEnabled())
         {
             return GDT_Error::responseWith('err_method_disabled');
         }
-        
+
         if (!$me)
         {
             return self::showMethods($module);
         }
-        
+
         $method = $module->getMethodByName($me);
         if (!$method)
         {
             throw new GDOError('err_module_method');
         }
-        
+
         if (!$exec)
         {
             return self::showHelp($method);
@@ -135,20 +135,20 @@ final class CLI
             {
                 $button = array_keys($buttons)[0];
             }
-            
+
         }
-        
+
         # Parse everything after
         $params = self::parseArgline($lin, $method);
 //         Logger::log('cli', 'PARAMS: ' . json_encode($params));
-        
+
         if ($button)
         {
             $params[$button] = $button;
         }
-        
+
         $method->requestParameters($params);
-        
+
         # Execute the method
         try
         {
@@ -159,35 +159,35 @@ final class CLI
             return GDT_Response::makeWithHTML($ex->getMessage());
         }
     }
-    
+
     private static function showHelp(Method $method)
     {
         return $method->renderCLIHelp();
     }
-    
+
     private static function showMethods(GDO_Module $module)
     {
         $methods = $module->getMethods();
-        
+
         $methods = array_filter($methods, function(Method $method) {
             return (!$method->isAjax()) && $method->isCLI();
         });
-        
+
         $methods = array_map(function(Method $m) {
             return $m->gdoShortName();
         }, $methods);
-        
+
         return GDT_Response::makeWithHTML(t('cli_methods', [
             $module->displayName(), implode(', ', $methods)]));
     }
-    
+
     /**
      * Turn a line of text into method parameters.
-     * 
+     *
      * @param string $line - input line.
      * @param Method $method - method for parameter reference.
      * @param boolean $asValues - convert args to values?
-     * 
+     *
      * @return string[]
      */
     public static function parseArgline($line, Method $method, $asValues=false)
@@ -196,7 +196,7 @@ final class CLI
         $success = true;
         $args = Strings::args($line);
         $parameters = [];
-        
+
         # Clear last request errors
         foreach ($method->gdoParameterCache() as $gdt)
         {
@@ -207,7 +207,7 @@ final class CLI
 //             $_REQUEST[$gdt->name] = $var;
 //             $_REQUEST[$gdt->formVariable()][$gdt->name] = $var;
         }
-        
+
         # Parse optionals --parameter=value
         foreach ($args as $var)
         {
@@ -236,7 +236,7 @@ final class CLI
             }
             break;
         }
-        
+
         # Positional / required params
         foreach ($method->gdoParameterCache() as $gdt)
         {
@@ -258,7 +258,7 @@ final class CLI
                 $i++;
             }
         }
-        
+
         # Convert to values
         if ($asValues)
         {
@@ -276,7 +276,7 @@ final class CLI
                 }
             }
         }
-        
+
         return $success ? $parameters : [];
     }
 
@@ -308,13 +308,13 @@ final class CLI
         $usage = implode(' ', $usage2) . ' ' . implode(' ', $usage1);
         $usage = trim($usage);
         $buttons = self::renderCLIHelpButtons($method);
-        $mome = sprintf('%s.%s', 
+        $mome = sprintf('%s.%s',
             $method->getCLITrigger(), $buttons);
-        
+
         return GDT_Response::newWithHTML(t('cli_usage', [
             trim(strtolower($mome).' '.$usage), $method->getDescription()]));
     }
-    
+
     private static function renderCLIHelpButtons(Method $method)
     {
         $impl = [];
@@ -333,7 +333,7 @@ final class CLI
         }
         return $impl ? '[' . implode('|', $impl) . ']' : '';
     }
-    
+
 }
 
 # Required gdo constants :(

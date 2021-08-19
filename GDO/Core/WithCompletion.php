@@ -17,10 +17,10 @@ trait WithCompletion
 		$this->completionHref = $completionHref;
 		return $this;
 	}
-	
+
 	public function htmlAutocompleteOff()
 	{
 	    return sprintf('autocomplete="harrambe_%s"', Random::mrandomKey(rand(2,6)));
 	}
-	
+
 }

@@ -11,32 +11,32 @@ use GDO\UI\GDT_HTML;
 
 /**
  * Development aid for testing cronjobs.
- * 
+ *
  * @author gizmore
  */
 class Cronjob extends MethodForm
 {
 	use MethodAdmin;
-	
+
 	public function isTransactional() { return false; }
 	public function getPermission() { return 'admin'; }
-	
+
 	public function createForm(GDT_Form $form)
 	{
 		$form->actions()->addField(GDT_Submit::make()->label('btn_run_cronjob'));
 		$form->addField(GDT_AntiCSRF::make());
 	}
-	
+
 	public function formValidated(GDT_Form $form)
 	{
 		try
 		{
 			ob_start();
-			
+
 			echo "<pre>";
 			\GDO\Core\Cronjob::run();
 			echo "</pre>\n<br/>";
-			
+
 			return $this->renderPage()->addField(
 			    GDT_HTML::withHTML(ob_get_contents()));
 		}
@@ -50,5 +50,5 @@ class Cronjob extends MethodForm
 			ob_end_clean();
 		}
 	}
-	
+
 }

@@ -8,7 +8,7 @@ use GDO\File\GDT_Filesize;
 
 /**
  * A file table for directory index.
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.10.5
@@ -24,5 +24,5 @@ final class GDO_DirectoryIndex extends GDO
             GDT_Filesize::make('file_size'),
         ];
     }
-    
+
 }

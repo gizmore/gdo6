@@ -16,7 +16,7 @@ use GDO\UI\GDT_Link;
  * Set HTTP Status to 403.
  * Disable saving of last url.
  * Send 403 mails optionally.
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.10.6
@@ -27,7 +27,7 @@ final class Page403 extends MethodPage
     public function saveLastUrl() { return false; }
     public function showInSitemap() { return false; }
     public function isTrivial() { return false; } # no auto test
-    
+
     public function beforeExecute()
     {
         GDT_Response::$CODE = 403;
@@ -37,12 +37,12 @@ final class Page403 extends MethodPage
             $this->send403Mails();
         }
     }
-    
+
     public function getTitle()
     {
         return t('err_403');
     }
-    
+
     public function send403Mails()
     {
         foreach (GDO_User::admins() as $user)
@@ -50,7 +50,7 @@ final class Page403 extends MethodPage
             $this->send403Mail($user);
         }
     }
-    
+
     public function send403Mail(GDO_User $user)
     {
         $mail = Mail::botMail();
@@ -58,7 +58,7 @@ final class Page403 extends MethodPage
         $mail->setBody($this->send403MailBody($user));
         $mail->sendToUser($user);
     }
-    
+
     private function send403MailBody(GDO_User $user)
     {
         $args = [
@@ -71,5 +71,5 @@ final class Page403 extends MethodPage
         ];
         return tusr($user, 'mail_body_403', $args);
     }
-    
+
 }

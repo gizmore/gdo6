@@ -14,5 +14,5 @@ final class Perf extends Method
     {
         return GDT_PerfBar::make()->render();
     }
-    
+
 }

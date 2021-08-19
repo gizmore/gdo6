@@ -6,7 +6,7 @@
 # HTTP
 .htaccess
 .htpasswd
- 
+
 # Generated folders
 files/
 files_test/

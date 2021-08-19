@@ -52,7 +52,7 @@ return array(
 'username' => 'Nome Utente',
 'guestname' => 'Nome dell\'ospite',
 'user_real_name' => 'Nome reale',
-'version' => 'Versione',	
+'version' => 'Versione',
 'not_specified' => 'nessuna indicazione',
 'no_match' => 'nessun risultato',
 'view' => 'Visualizzare',
@@ -77,10 +77,10 @@ return array(
 'completed' => 'Fatto',
 'timezone' => 'Fuso orario',
 'format' => 'Formato',
-    
+
 # Core GDO tables
 'gdo_permission' => 'Autorizzazione',
-    
+
 # Generic Buttons
 'btn_back' => 'Indietro',
 'btn_set' => 'Posare',
@@ -102,7 +102,7 @@ return array(
 'btn_overview' => 'Sommario',
 'btn_search' => 'Ricerca',
 'btn_sort' => 'Ordina',
-    
+
 # Sorting
 'order_by' => 'Ordina per',
 'order_dir' => 'Direzione',
@@ -110,7 +110,7 @@ return array(
 'asc' => 'Ascendente',
 'desc' => 'Discendente',
 'lbl_search_criteria' => 'Ricerca: %s',
-    
+
 # Generic Messages
 'msg_form_saved' => 'I vostri dati sono stati memmorizzati com successo.',
 'msg_upgrading' => 'Installare modulo %s versione %s.',
@@ -119,7 +119,7 @@ return array(
 # Generic Confirms
 'confirm_delete' => 'Volete cancellare davvero?',
 'iconfirm' => 'sono sicuro',
-    
+
 # Generic Errors
 'err_db' => 'Errore di bancadati(%s): %s<br/>\n%s<br/>\n',
 'err_user' => 'Questo utente é sconosciuto.',
@@ -192,7 +192,7 @@ return array(
 'err_you_no_mail' => 'Hai bisogno di un\'e-mail per questo.',
 'err_unknown_parameter' => 'Parametro sconosciuto per il metodo %s/%s: %s',
 'err_select_candidates' => 'Hit corrispondenti: %s',
-    
+
 # File
 'is_file' => 'un File',
 'is_folder' => 'una Cartella',
@@ -202,7 +202,7 @@ return array(
 'perm_admin' => 'Administratore',
 'perm_cronjob' => 'Cronjob',
 'perm_staff' => 'Dippendente',
-	
+
 # User types
 'enum_bot' => 'Bot',
 'enum_ghost' => 'Fantasma',
@@ -213,11 +213,11 @@ return array(
 # Checkbox
 'enum_undetermined_yes_no' => 'Sconosciuto',
 'enum_unknown' => 'Sconosciuto',
-	
+
 # Files
 'image' => 'Imagine',
 'icon' => 'Icona',
-	
+
 # Gender
 'enum_male' => 'Maschile',
 'enum_female' => 'Femminile',
@@ -234,13 +234,13 @@ return array(
 'gdo_sidebar_version' => 'gdo %s',
 'sidenav_left_title' => 'Applicazione',
 'sidenav_right_title' => 'Impostazioni',
-	
+
 # Config
 'ipp' => 'IPP',
 'enum_no' => 'No',
 'enum_yes' => 'Si',
 'cfg_ipp' => 'Voci per pagina',
-	
+
 # Welcome
 'core_welcome_box_info' => 'Benvenuti su %s. Siete registrati come %s.',
 'link_impressum' => 'Area legale',
@@ -248,7 +248,7 @@ return array(
 #
 'quote_by' => 'Citato di %s',
 'quote_at' => 'il %s',
-	
+
 # Filter
 'int_filter' => 'Num',
 'string_filter' => 'Testo',
@@ -256,14 +256,14 @@ return array(
 'sel_all' => 'Tutti',
 'sel_checked' => 'Attivo',
 'sel_unchecked' => 'Inattivo',
-	
+
 # Method description
 'mdescr_core_impressum' => 'Site impressum',
 'mdescr_core_privacy' => 'Privacy information',
 
 'li_creation_title' => '%s il %s (%s)',
 'edited_info' => 'Zuletzt bearbeitet von %s am %s',
-    
+
 # Config
 'cfg_system_user' => 'System Benutzer',
 'cfg_show_impressum' => 'Impressum im Footer anzeigen?',
@@ -305,7 +305,7 @@ Cordiali saluti,<br/>
 'err_cli' => 'Errore! %s',
 'cli_page' => '%s: %s.',
 'msg_new_user_created' => 'È stato creato un nuovo utente: %s',
-    
+
 # v6.10.4 Fixes
 'search_term' => 'ricerca',
 'cli_pages' => '%s. Pagina %s/%s: %s',
@@ -313,7 +313,7 @@ Cordiali saluti,<br/>
 'cfg_tt_load_sidebars' => 'Disable can give a slight performance use, if you use a very custom sidebar / page / theme.',
 'thousands_seperator' => '.',
 'decimal_point' => ',',
-    
+
 # v6.10.5 Fixes
 'min' => 'Min',
 'max' => 'Max',

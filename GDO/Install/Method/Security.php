@@ -22,12 +22,12 @@ final class Security extends MethodForm
 		ModuleLoader::instance()->loadModulesA();
 		return parent::execute();
 	}
-	
+
 	public function renderPage()
 	{
 		return $this->templatePHP('page/security.php', ['form'=>$this->getForm()]);
 	}
-	
+
 	public function createForm(GDT_Form $form)
 	{
 		$form->actions()->addField(GDT_Submit::make()->label('protect_folders'));
@@ -37,14 +37,14 @@ final class Security extends MethodForm
 	{
 	    return $this->onProtect();
 	}
-	
+
 	public function onProtect()
 	{
 	    $this->protectFolders();
 	    $this->protectDotfiles();
 	    return $this->messageRedirect('msg_install_security', null, hrefDefault());
 	}
-	
+
 	public function protectFolders()
 	{
 		HTAccess::protectFolder(GDO_PATH.'temp');
@@ -52,10 +52,10 @@ final class Security extends MethodForm
 		HTAccess::protectFolder(GDO_PATH.'protected');
 		HTAccess::protectFolder(GDO_PATH.'install');
 	}
-	
+
 	public function protectDotfiles()
 	{
 	    # TODO: Create an .htaccess rule for .git files
 	}
-	
+
 }

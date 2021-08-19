@@ -1,6 +1,6 @@
 <?php
 return array(
-	
+
 'gdo_user' => 'User',
 'gdo_session' => 'Session',
 'gender' => 'Gender',
@@ -12,19 +12,19 @@ return array(
 
 'user_name' => 'Username',
 'user_real_name' => 'Real Name',
-	
+
 'tt_password' => 'Your password should be at least 9 chars and not be included in dictionaries.',
 
 'lvlpopup_item_level' => 'Access level: %s',
 'lvlpopup_your_level' => 'Your level: %s',
 'lvlpopup_ok' => 'Your userlevel is compliant with the requirements.',
 'lvlpopup_too_low' => 'You are not allowed to access this item.',
-	
+
 'link_user_add_user' => 'Create a new user',
 
 'mdescr_user_adduser' => 'Create a new user',
 'mdescr_user_admin' => 'Administrate users',
-    
+
 'user_subtitle' => 'Member since %s. Level: %s',
-	
+
 );

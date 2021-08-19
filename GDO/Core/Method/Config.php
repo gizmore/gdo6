@@ -23,7 +23,7 @@ final class Config extends MethodAjax
 		}
 		return GDT_Array::makeWith($json);
 	}
-	
+
 	private function getModuleConfig(GDO_Module $module)
 	{
 		$json = [];

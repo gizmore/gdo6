@@ -13,11 +13,11 @@ use GDO\Net\GDT_Url;
  * Switch language to user's choice.
  * Overrides HTTP_ACCEPT_LANGUAGE and user_lang for language detection in Module_Language.
  * Stores your choice in your session.
- * 
+ *
  * @author gizmore
  * @version 6.10.1
  * @since 6.9.0
- * 
+ *
  * @see Module_Language
  * @see GDO_Session
  */
@@ -30,7 +30,7 @@ final class SwitchLanguage extends Method
 			GDT_Url::make('ref')->allowExternal(false)->allowLocal(),
 		];
 	}
-	
+
 	public function getDescription()
 	{
 	    if ($this->getLanguage(false))
@@ -42,7 +42,7 @@ final class SwitchLanguage extends Method
 	        return t($this->getDescriptionLangKey().'2');
 	    }
 	}
-	
+
 	/**
 	 * @return \GDO\Language\GDO_Language
 	 */
@@ -61,7 +61,7 @@ final class SwitchLanguage extends Method
 	        return null;
 	    }
 	}
-	
+
 	public function execute()
 	{
 		# Set new ISO language
@@ -70,10 +70,10 @@ final class SwitchLanguage extends Method
 		$_REQUEST['_lang'] = $iso;
 		GDO_Session::set('gdo-language', $iso);
 		Trans::setISO($iso);
-		
+
 		# Build response
 		$response = GDT_Success::responseWith('msg_language_set', [$this->getLanguage()->displayName()]);
-		
+
 		# Redirect if 'ref' is set
 		if ($url = $this->gdoParameterVar('ref'))
 		{
@@ -83,5 +83,5 @@ final class SwitchLanguage extends Method
 
 		return $response;
 	}
-	
+
 }

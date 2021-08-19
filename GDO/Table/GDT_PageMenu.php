@@ -22,39 +22,39 @@ class GDT_PageMenu extends GDT
 {
 	use WithHREF;
 	use WithLabel;
-	
+
 	public $orderable = false;
 	public $searchable = false;
 	public $filterable = false;
-	
+
 	public $numItems = 0;
 	public function items($numItems)
 	{
 		$this->numItems = $numItems;
 		return $this;
 	}
-	
+
 	public $ipp = 10;
 	public function ipp($ipp)
 	{
 	    $this->ipp = $ipp;
 	    return $this;
 	}
-	
+
 	public $page = 1;
 	public function page($page)
 	{
 		$this->page = $page;
 		return $this;
 	}
-	
+
 	public $shown = 5;
 	public function shown($shown)
 	{
 	    $this->shown = $shown;
 	    return $this;
 	}
-	
+
 	/**
 	 * @var GDT_Fields
 	 */
@@ -64,7 +64,7 @@ class GDT_PageMenu extends GDT
 	    $this->headers = $headers;
 	    return $this;
 	}
-	
+
 	/**
 	 * Set num items via query.
 	 * @optional
@@ -76,23 +76,23 @@ class GDT_PageMenu extends GDT
 		$this->numItems = $query->copy()->selectOnly('COUNT(*)')->exec()->fetchValue();
 		return $this;
 	}
-	
+
 	public function getPageCount()
 	{
 		return self::getPageCountS($this->numItems, $this->ipp);
 	}
-	
+
 	public static function getPageCountS($numItems, $ipp)
 	{
 		return max(array(intval((($numItems-1) / $ipp)+1), 1));
 	}
-	
+
 	public function filterQuery(Query $query, $rq=null)
 	{
 		$query->limit($this->ipp, $this->getFrom());
 		return $this;
 	}
-	
+
 	/**
 	 * @return int
 	 */
@@ -100,33 +100,33 @@ class GDT_PageMenu extends GDT
 	{
 		return (int) Math::clamp($this->page, 1, $this->getPageCount());
 	}
-	
+
 	public function getFrom()
 	{
 		return self::getFromS($this->getPage(), $this->ipp);
 	}
-	
+
 	public static function getFromS($page, $ipp)
 	{
 		return ($page - 1) * $ipp;
 	}
-	
+
 	public function indexToPage($index)
 	{
 		return self::indexToPageS($index, $this->ipp);
 	}
-	
+
 	public static function indexToPageS($index, $ipp)
 	{
 		return intval($index / $ipp) + 1;
 	}
-	
+
 	public function paginateResult(ArrayResult $result, $page, $ipp)
 	{
 	    $data = array_slice($result->getData(), self::getFromS($page, $ipp), $ipp);
 	    return $result->data($data);
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -139,7 +139,7 @@ class GDT_PageMenu extends GDT
 			case 'html': default: return $this->renderHTML();
 		}
 	}
-	
+
 	public function renderHTML()
 	{
 		if ($this->getPageCount() > 1)
@@ -151,7 +151,7 @@ class GDT_PageMenu extends GDT
 			return GDT_Template::php('Table', 'cell/pagemenu.php', $tVars);
 		}
 	}
-	
+
 	public function renderJSON()
 	{
 	    return [
@@ -162,12 +162,12 @@ class GDT_PageMenu extends GDT
 	        'pages' => (int)$this->getPageCount(),
 	    ];
 	}
-	
+
 	public function configJSON()
 	{
 	    return array_merge($this->renderJSON(), parent::configJSON());
 	}
-	
+
 	#############
 	### Items ###
 	#############
@@ -190,7 +190,7 @@ class GDT_PageMenu extends GDT
 				$pages[] = new PageMenuItem($page, $this->replaceHREF($page));
 			}
 		}
-		
+
 		if (($curr - $this->shown) > 1)
 		{
 			array_unshift($pages, PageMenuItem::dotted());
@@ -202,10 +202,10 @@ class GDT_PageMenu extends GDT
 			$pages[] = PageMenuItem::dotted();
 			$pages[] = new PageMenuItem($nPages, $this->replaceHREF($nPages));
 		}
-		
+
 		return $pages;
 	}
-	
+
 	private function replaceHREF($page)
 	{
 	    $o = $this->headers->name;
@@ -219,7 +219,7 @@ class GDT_PageMenu extends GDT
 	        return $this->href . '&'.$o.'[' . $this->name . ']='. $page;
 	    }
 	}
-	
+
 	/**
 	 * Get anchor relation for a page. Either next, prev or nofollow.
 	 * @see GDT_Link

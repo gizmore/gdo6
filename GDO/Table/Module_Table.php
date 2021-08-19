@@ -21,9 +21,9 @@ use GDO\Core\Application;
 final class Module_Table extends GDO_Module
 {
 	public $module_priority = 10;
-	
+
 	public function isCoreModule() { return true; }
-	
+
 	##############
 	### Config ###
 	##############
@@ -44,5 +44,5 @@ final class Module_Table extends GDO_Module
 	       $this->cfgItemsPerPageCLI() :
 	       $this->cfgItemsPerPageHTTP();
 	}
-	
+
 }

@@ -11,7 +11,7 @@ final class InstallCountries
 	{
 		$module = Module_Country::instance();
 		$path = $module->filePath('data/countries.csv');
-		
+
 		if ($fh = fopen($path, 'r'))
 		{
 			# Build csv index names from header row
@@ -35,7 +35,7 @@ final class InstallCountries
 				    }
 				}
 			}
-			
+
 			fclose($fh);
 		}
 	}

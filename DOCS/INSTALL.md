@@ -30,7 +30,7 @@ HTTP is not required, as gdo6 can also be used completely in CLI, or as a chatbo
 Install the gdo6 core:
 
         mkdir www && cd www
-    
+
         git clone --recursive https://github.com/gizmore/gdo6
 
 In case you forgot a recursive:
@@ -46,7 +46,7 @@ To add a module, simply clone the module repository to your gdo6/GDO/ folder.
 This can be done via CLI installer.
 
     ./gdoadm.sh provide <Module>
-    
+
 For the www wizard, please read [GDO_INSTALL_A_MODULE.md](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_A_MODULE.md)
 
 
@@ -211,7 +211,7 @@ Copy this list and remove / add modules.
     ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
     git clone --recursive https://github.com/gizmore/gdo6-zip ZIP
 
-### After cloning    
+### After cloning
 
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
 

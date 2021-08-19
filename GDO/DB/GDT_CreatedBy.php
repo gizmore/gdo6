@@ -8,9 +8,9 @@ use GDO\User\GDO_User;
 /**
  * The "CeatedBy" column is filled with current user upon creation.
  * In case the installer or maybe cli is running, the system user is used.
- * 
+ *
  * (: sdoʌǝp ˙sɹɯ ɹoɟ ƃuıʞoo⅂
- * 
+ *
  * @author gizmore
  * @version 6.10.3
  * @since 5.0.0
@@ -20,15 +20,15 @@ final class GDT_CreatedBy extends GDT_User
 	public $writable = false; # no visible in form? / no editing allowed?
 	public $editable = false; # no editing allowed (disabled, nochange/ignore)
 // 	public $hidden = true;
-	
+
 	public function defaultLabel() { return $this->label('created_by'); }
-	
+
 	protected function __construct()
 	{
 		parent::__construct();
 		$this->withCompletion();
 	}
-	
+
 	/**
 	 * Initial data.
 	 * Force persistance on current user.
@@ -48,7 +48,7 @@ final class GDT_CreatedBy extends GDT_User
 	    }
 	    return [$this->name => $user->getID()];
 	}
-	
+
 	public function getValue()
 	{
 		$value = parent::getValue();

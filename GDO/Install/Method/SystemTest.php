@@ -33,7 +33,7 @@ final class SystemTest extends Method
 		);
 		return $this->templatePHP('page/systemtest.php', $tVars);
 	}
-	
+
 	private function testPHPVersion()
 	{
 		$version = floatval(PHP_MAJOR_VERSION. '.' . PHP_MINOR_VERSION);
@@ -43,5 +43,5 @@ final class SystemTest extends Method
 	private function testBower()
 	{
 	}
-	
+
 }

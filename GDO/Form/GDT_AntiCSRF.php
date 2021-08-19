@@ -23,9 +23,9 @@ class GDT_AntiCSRF extends GDT_Hidden
 {
     const KEYLEN = 6;
     const MAX_KEYS = 12;
-    
+
     public $cli = false;
-    
+
 	public function defaultName() { return 'xsrf'; }
 
 	###########
@@ -35,7 +35,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	{
 	    # Override GDT_Hidden with null data.
 	}
-	
+
 	##############
 	### Expire ###
 	##############
@@ -45,7 +45,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 		$this->csrfExpire = $csrfExpire;
 		return $this;
 	}
-	
+
 	#############
 	### Fixed ###
 	#############
@@ -56,7 +56,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	    $this->fixed = $fixed;
 	    return $this;
 	}
-	
+
 	/**
 	 * Calculate a fixed static token for a user.
 	 * @TODO verify crypto
@@ -75,7 +75,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	        $user->getVar('user_password'), $time);
 	    return substr(sha1($hash), 0, self::KEYLEN);
 	}
-	
+
 	#################
 	### Construct ###
 	#################
@@ -85,7 +85,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	    {
 	        return self::fixedToken();
 	    }
-	    
+
 	    $token = '';
 		if (GDO_Session::instance())
 		{
@@ -96,7 +96,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 		}
 		return $token;
 	}
-	
+
 	###################
 	### Load / Save ###
 	###################
@@ -106,7 +106,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	    $csrf = json_decode($csrf, true);
 	    return $csrf ? $csrf : [];
 	}
-	
+
 	private function saveCSRFTokens(array $csrf)
 	{
 	    $count = count($csrf);
@@ -116,7 +116,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	    }
 	    GDO_Session::set('csrfs', json_encode($csrf));
 	}
-	
+
 	################
 	### Validate ###
 	################
@@ -133,13 +133,13 @@ class GDT_AntiCSRF extends GDT_Hidden
 	    {
 	        return true;
 	    }
-	    
+
 	    # No session, no token
 	    if (!GDO_Session::instance())
 		{
 			return $this->error('err_session_required');
 		}
-		
+
 		if ($this->fixed)
 		{
 		    if ($value === self::fixedToken())
@@ -151,7 +151,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 
 		# Load tokens
 		$csrf = $this->loadCSRFTokens();
-		
+
 		# Remove expired
 		foreach ($csrf as $token => $time)
 		{
@@ -160,7 +160,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 		        unset($csrf[$token]);
 		    }
 		}
-		
+
 		# Token not there
 		if (!isset($csrf[$value]))
 		{
@@ -170,7 +170,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 		# Remove used token
 		unset($csrf[$value]);
 		$this->saveCSRFTokens($csrf);
-		
+
 		# All fine
 		return true;
 	}
@@ -182,10 +182,10 @@ class GDT_AntiCSRF extends GDT_Hidden
 	{
 		return GDT_Template::php('Form', 'form/csrf.php', ['field'=>$this]);
 	}
-	
+
 	public function jsonFormValue()
 	{
 		return $this->csrfToken();
 	}
-	
+
 }

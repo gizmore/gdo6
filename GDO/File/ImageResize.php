@@ -5,12 +5,12 @@ use GDO\Core\GDOError;
 
 /**
  * Utility that resizes images.
- * 
+ *
  * @see http://salman-w.blogspot.de/2009/04/crop-to-fit-image-using-aspphp.html
  * @see https://stackoverflow.com/questions/7489742/php-read-exif-data-and-adjust-orientation
- * 
+ *
  * @TODO Use imagemagick and a system/exec call. PHP needs too much mem.
- * 
+ *
  * @author gizmore
  * @version 6.10.1
  * @since 3.0.0
@@ -30,17 +30,17 @@ final class ImageResize
 			$source_width = $source_height;
 			$source_height = $t;
 		}
-		
+
 		// No change keep file
-		if ( ($source_width == $toWidth) && 
+		if ( ($source_width == $toWidth) &&
 			 ($source_height == $toHeight) &&
 			 ($file->getType() == $toFormat) )
 		{
 			return true;
 		}
-		
+
 		$source = self::getGDImage($file);
-		
+
 		// Rotate image if desired
 		$source2 = null;
 		switch ($rotation)
@@ -54,7 +54,7 @@ final class ImageResize
 			imagedestroy($source);
 			$source = $source2;
 		}
-		
+
 		// Crop and resize
 		if ( ($source_width != $toWidth) ||
 			 ($source_height != $toHeight) )
@@ -62,7 +62,7 @@ final class ImageResize
 			// Calc aspect ratio
 			$source_aspect_ratio = $source_width / $source_height;
 			$desired_aspect_ratio = $toWidth / $toHeight;
-			
+
 			if ($source_aspect_ratio > $desired_aspect_ratio)
 			{
 				$temp_height = $toHeight;
@@ -73,7 +73,7 @@ final class ImageResize
 				$temp_width = $toWidth;
 				$temp_height = (int) ($toWidth / $source_aspect_ratio);
 			}
-			
+
 			/*
 			 * Resize the image into a temporary GD image
 			 */
@@ -86,9 +86,9 @@ final class ImageResize
 				$temp_width, $temp_height,
 				$source_width, $source_height
 				);
-			
+
 			imagedestroy($source);
-			
+
 			/*
 			 * Copy cropped region from temporary image into the desired GD image
 			 */
@@ -108,7 +108,7 @@ final class ImageResize
 		{
 			$desired_gdim = $source;
 		}
-		
+
 		// Detect format change
 		$file->setVar('file_type', $toFormat);
 		switch ($toFormat)
@@ -122,7 +122,7 @@ final class ImageResize
 		imagedestroy($desired_gdim);
 		return true;
 	}
-	
+
 	private static function orientation(GDO_File $file)
 	{
 		if (!function_exists('exif_read_data'))
@@ -140,7 +140,7 @@ final class ImageResize
 		}
 		return 0;
 	}
-	
+
 	public static function getGDImage(GDO_File $file)
 	{
 		switch ($file->getType())
@@ -153,11 +153,11 @@ final class ImageResize
 		}
 		return $source;
 	}
-	
+
 	public static function derotate(GDO_File $file)
 	{
 		$rotation = self::orientation($file);
-		
+
 		switch ($rotation)
 		{
 			case 8: $rotate = 90; break;
@@ -165,13 +165,13 @@ final class ImageResize
 			case 3: $rotate = 180; break;
 			default: return $file;
 		}
-		
+
 		$image = self::getGDImage($file);
-		
+
 		$image2 = imagerotate($image, $rotate, 0);
-		
+
 		imagedestroy($image);
-		
+
 		switch ($file->getType())
 		{
 // 			case "image/bmp": imagewbmp($desired_gdim, $file->path); break;
@@ -180,9 +180,9 @@ final class ImageResize
 			case "image/png": imagepng($image2, $file->path); break;
 			default: throw new GDOError('err_image_format_not_supported', [$file->getType()]);
 		}
-		
+
 		imagedestroy($image2);
-		
+
 		return $file;
 	}
 }

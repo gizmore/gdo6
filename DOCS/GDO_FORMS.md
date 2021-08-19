@@ -13,7 +13,7 @@ The code looks like that:
         GDT_Submit::make(),
     ]);
     echo $form->render();
-    
+
 MethodForm also calls validation on the fields and checks if a submit button was pressed.
 Here is an example on how to use MethodForm.
 
@@ -28,12 +28,12 @@ Here is an example on how to use MethodForm.
                 GDT_Submit::make(),
             ]);
         }
-    
+
         public function formValidated(GDT_Form $form) # default submit button pressed
         {
             $user = $form->getFormValue('username'); # GDO_User object
             return $this->message('hello_user', [$form->getFormVar('username')]);
         }
-    } 
-    
+    }
+
 This method is a complete example how to make simple forms.

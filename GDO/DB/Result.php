@@ -21,14 +21,14 @@ class Result
 	public $table;
 	private $result;
 	private $useCache;
-	
+
 	public function __construct(GDO $table, $result, $useCache)
 	{
 		$this->table = $table;
 		$this->result = $result;
 		$this->useCache = $useCache;
 	}
-	
+
 	/**
 	 * Shouldn't it be as safe and as fast to just rely on their destructors?
 	 */
@@ -36,7 +36,7 @@ class Result
 	{
 	    $this->free();
 	}
-	
+
 	public function free()
 	{
 	    if ($this->result)
@@ -45,7 +45,7 @@ class Result
 	        $this->result = null;
 	    }
 	}
-	
+
 	################
 	### Num rows ###
 	################
@@ -56,12 +56,12 @@ class Result
 	{
 		return mysqli_num_rows($this->result);
 	}
-	
+
 	public function affectedRows()
 	{
 	    return Database::instance()->affectedRows();
 	}
-	
+
 	#############
 	### Fetch ###
 	#############
@@ -77,12 +77,12 @@ class Result
 			return $row[0];
 		}
 	}
-	
+
 	public function fetchRow()
 	{
 		return mysqli_fetch_row($this->result);
 	}
-	
+
 	public function fetchAllRows()
 	{
 		$allRows = [];
@@ -92,8 +92,8 @@ class Result
 		}
 		return $allRows;
 	}
-	
-	
+
+
 	/**
 	 * @return string[]
 	 */
@@ -101,7 +101,7 @@ class Result
 	{
 		return mysqli_fetch_assoc($this->result);
 	}
-	
+
 	public function fetchAllAssoc()
 	{
 		$data = [];
@@ -111,7 +111,7 @@ class Result
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * @return GDO
 	 */
@@ -119,7 +119,7 @@ class Result
 	{
 		return $this->fetchAs($this->table);
 	}
-	
+
 	/**
 	 * @param GDO $table
 	 * @return GDO
@@ -145,7 +145,7 @@ class Result
 			}
 		}
 	}
-	
+
 	public function fetchInto(GDO $gdo)
 	{
 	    if ($gdoVars = $this->fetchAssoc())
@@ -161,7 +161,7 @@ class Result
 	{
 		return $this->fetchAllObjectsAs($this->table, $json);
 	}
-	
+
 	/**
 	 * @return GDO[]
 	 */
@@ -188,7 +188,7 @@ class Result
 		}
 		return $array2d;
 	}
-	
+
 	public function &fetchAllArray2dObject(GDO $table=null, $json=false)
 	{
 		$table = $table ? $table : $this->table;
@@ -199,7 +199,7 @@ class Result
 		}
 		return $array2d;
 	}
-	
+
 	public function fetchAllArrayAssoc2dObject(GDO $table=null)
 	{
 		$table = $table ? $table : $this->table;
@@ -212,7 +212,7 @@ class Result
 		}
 		return $array2d;
 	}
-	
+
 	/**
 	 * Fetch all, but only a single column as simple array.
 	 * @return string[]
@@ -226,12 +226,12 @@ class Result
 		}
 		return $values;
 	}
-	
+
 	public function fetchColumn()
 	{
 	    return $this->fetchAllValues();
 	}
-	
+
 	############
 	### JSON ###
 	############

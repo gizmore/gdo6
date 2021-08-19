@@ -23,7 +23,7 @@ return [
     'tu_d' => 'd',
     'tu_w' => 'w',
     'tu_y' => 'y',
-    
+
     # Timezone
     'ft_date_timezone' => 'Setzen Ihrer Zeitzone',
     'msg_timezone_changed' => 'Ihre Zeitzone ist nun %s.',
@@ -35,5 +35,5 @@ return [
     'msg_time_unix' => 'Unix timestamp: %s',
     'msg_time_java' => 'Java timestamp: %s',
     'msg_time_micro' => 'Microtimestamp: %s',
-    
+
 ];

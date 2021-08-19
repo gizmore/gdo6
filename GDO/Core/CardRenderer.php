@@ -16,7 +16,7 @@ use GDO\DB\GDT_CreatedAt;
  * First String field is title.
  * Creator subtitle is auto generated.
  * Rest fields are automatically put into the card.
- * 
+ *
  * @author gizmore
  * @version 6.10
  * @since 6.10
@@ -27,24 +27,24 @@ final class CardRenderer
     {
         return self::build($gdo, ...$action)->render();
     }
-    
+
     public static function build(GDO $gdo, $withCreateHeader=false, $withEditedfooter=false, ...$action)
     {
         $card = GDT_Card::make('card-'.$gdo->getID())->gdo($gdo);
-        
+
         $used = [];
-        
+
         if ($autoIncColumn = $gdo->gdoColumnOf(GDT_AutoInc::class))
         {
             $used[] = $autoIncColumn;
         }
-        
+
         if ($titleColumn = $gdo->gdoColumnOf(GDT_String::class))
         {
             $card->title($titleColumn);
             $used[] = $titleColumn;
         }
-        
+
         if ($creatorColumn = $gdo->gdoColumnOf(GDT_CreatedBy::class))
         {
             $card->creatorHeader();
@@ -55,7 +55,7 @@ final class CardRenderer
             }
 //             $user = $creatorColumn->getUser();
         }
-        
+
         if ($withEditedfooter)
         {
             if ($gdo->gdoColumnOf(GDT_EditedBy::class))
@@ -66,12 +66,12 @@ final class CardRenderer
                 }
             }
         }
-        
+
         $used[] = GDT_DeletedBy::class;
         $used[] = GDT_DeletedAt::class;
         $used[] = GDT_EditedBy::class;
         $used[] = GDT_EditedAt::class;
-        
+
         foreach ($gdo->gdoColumnsCache() as $gdt)
         {
             if (!in_array($gdt, $used, true))
@@ -79,10 +79,10 @@ final class CardRenderer
                 $card->addField($gdt->gdo($gdo));
             }
         }
-        
+
         $card->actions()->addFields($action);
-        
+
         return $card;
     }
-    
+
 }

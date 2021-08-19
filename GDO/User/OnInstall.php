@@ -11,12 +11,12 @@ final class OnInstall
 	        'staff' => 500,
 	        'admin' => 1000,
 	    );
-	    
+
 	    foreach ($permissions as $perm => $level)
 	    {
 	        GDO_Permission::create($perm, $level);
 	    }
-	    
+
 		if (!($user = GDO_User::getByName('system')))
 		{
 			$user = GDO_User::blank(array(

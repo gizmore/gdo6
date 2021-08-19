@@ -19,5 +19,5 @@ class GDT_UInt extends GDT_Int
     public $min = 0;
     public $unsigned = true;
     public $orderDefaultAsc = false;
-	
+
 }

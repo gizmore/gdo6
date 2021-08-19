@@ -19,7 +19,7 @@ EOF;
 		{
 		    @mkdir($path, GDO_CHMOD, true);
 		}
-		    
+
 		if ( (!is_dir($path)) || (!is_readable($path)) )
 		{
 		    throw new GDOError('err_no_dir');

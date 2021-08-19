@@ -16,7 +16,7 @@ final class GDT_Join extends GDT
 	public $primary = false;
 	public $virtual = false;
 	public $searchable = true;
-	
+
 	############
 	### Join ###
 	############
@@ -31,20 +31,20 @@ final class GDT_Join extends GDT
 		$this->join = "{$type} JOIN {$table->gdoTableIdentifier()} AS {$as} ON {$on}";
 		return $this;
 	}
-	
+
 	public function joinRaw($join, $type='LEFT')
 	{
 	    $this->table = null;
 	    $this->join = "{$type} JOIN $join";
 	    return $this;
 	}
-	
+
 	###################
 	### Render stub ###
 	###################
 	public function renderForm() {}
 	public function renderCell() {}
-	
+
 	public function searchQuery(Query $query, $searchTerm, $first)
 	{
 	    if ($this->table)
@@ -60,5 +60,5 @@ final class GDT_Join extends GDT
 	        return implode(' OR ', $conditions);
 	    }
 	}
-	
+
 }

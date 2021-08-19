@@ -6,7 +6,7 @@ use GDO\DB\GDT_ObjectSelect;
 final class GDT_Language extends GDT_ObjectSelect
 {
 	public function defaultLabel() { return $this->label('language'); }
-	
+
 	protected function __construct()
 	{
 	    parent::__construct();
@@ -14,7 +14,7 @@ final class GDT_Language extends GDT_ObjectSelect
 		$this->min = $this->max = 2;
 		$this->icon('language');
 	}
-	
+
 	public $withName = false;
 	public function withName($withName=true) { $this->withName = $withName; return $this; }
 
@@ -27,18 +27,18 @@ final class GDT_Language extends GDT_ObjectSelect
 		$this->all = $all;
 		return $this;
 	}
-	
+
 	public function initChoices()
 	{
 		return $this->choices ? $this : $this->choices($this->languageChoices());
 	}
-	
+
 	private function languageChoices()
 	{
 		$languages = GDO_Language::table();
 		return $this->all ? $languages->all() : $languages->allSupported();
 	}
-	
+
 	##################
 	### Completion ###
 	##################

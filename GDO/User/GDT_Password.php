@@ -13,7 +13,7 @@ use GDO\DB\GDT_String;
 class GDT_Password extends GDT_String
 {
     public function isSerializable() { return false; }
-    
+
     protected function __construct()
 	{
         parent::__construct();
@@ -28,23 +28,23 @@ class GDT_Password extends GDT_String
 	}
 
 	public function defaultLabel() { return $this->label('password'); }
-	
+
 	public function toValue($var)
 	{
 		return $var === null ? null : new BCrypt($var);
 	}
-	
+
 	public function getGDOData()
 	{
 		$pass = $this->getValue();
 		return [$this->name => $pass ? $pass->__toString() : null];
 	}
-	
+
 	public function renderForm()
 	{
 		return GDT_Template::php('User', 'form/password.php', ['field'=>$this]);
 	}
-	
+
 	public function validate($value)
 	{
 		if ($value === null || (!$value->hash))
@@ -57,7 +57,7 @@ class GDT_Password extends GDT_String
 		}
 		return true;
 	}
-	
+
 	public function renderJSON()
 	{
 	}

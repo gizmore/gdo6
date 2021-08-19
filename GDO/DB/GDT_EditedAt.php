@@ -15,9 +15,9 @@ final class GDT_EditedAt extends GDT_DateTime
 	public $editable = false;
 	public $hidden = true;
 	public $orderDefaultAsc = false;
-	
+
 	public function defaultLabel() { return $this->label('edited_at'); }
-	
+
 	public function gdoBeforeUpdate(Query $query)
 	{
 // 	    if (!$this->var)

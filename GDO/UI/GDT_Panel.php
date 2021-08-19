@@ -18,14 +18,14 @@ class GDT_Panel extends GDT
 	use WithText;
 	use WithFields;
 	use WithPHPJQuery;
-	
+
 	public function isSerializable() { return true; }
-	
+
 	public function renderCell()
 	{
 	    return GDT_Template::php('UI', 'cell/panel.php', ['field' => $this]);
 	}
-	
+
 	public function renderCLI()
 	{
 	    $back = '';
@@ -43,7 +43,7 @@ class GDT_Panel extends GDT
 	    }
 	    return $back;
 	}
-	
+
 	public function renderXML()
 	{
 	    return sprintf("<%s title=\"%s\" text=\"%s\">\n%s\n</%1\$s>\n",
@@ -52,7 +52,7 @@ class GDT_Panel extends GDT
 	        $this->renderText(),
 	        $this->renderXMLFields());
 	}
-	
+
 	public function renderJSON()
 	{
 	    return [

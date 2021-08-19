@@ -17,29 +17,29 @@ final class Module_File extends GDO_Module
 	public $module_priority = 10;
 
 	public function isCoreModule() { return true; }
-	
+
 	public function getClasses()
 	{
 		return [
 			GDO_File::class,
 		];
 	}
-	
+
 	public function onLoadLanguage() { return $this->loadLanguage('lang/file'); }
-	
+
 	public function getConfig()
 	{
 	    return [
 	        GDT_Filesize::make('upload_max_size')->initial('16777216'),
 	    ];
 	}
-	
+
 	public function cfgUploadMaxSize() { return $this->getConfigValue('upload_max_size'); }
-	
+
 	public function onIncludeScripts()
 	{
 		$this->addBowerJS("flow.js/dist/flow.js");
 		$this->addJS('js/gdo-flow.js');
 	}
-	
+
 }

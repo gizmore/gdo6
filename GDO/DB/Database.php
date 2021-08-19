@@ -28,13 +28,13 @@ class Database
 	 */
 	public static function instance() { return self::$INSTANCE; }
 	public static $INSTANCE;
-	
+
 	# Connection
 	private $link, $host, $user, $pass, $db, $debug;
-	
+
 	# Const
 	const PRIMARY_USING = 'USING HASH'; # default index algorithm for primary keys.
-	
+
 	# Perf connection
 	public $locks = 0;
 	public $reads = 0;
@@ -42,7 +42,7 @@ class Database
 	public $commits = 0;
 	public $queries = 0;
 	public $queryTime = 0;
-	
+
 	# Perf total
 	public static $LOCKS = 0;
 	public static $READS = 0;
@@ -50,7 +50,7 @@ class Database
 	public static $COMMITS = 0;
 	public static $QUERIES = 0;
 	public static $QUERY_TIME = 0;
-	
+
 	/**
 	 * Available GDO
 	 * @var GDO[]
@@ -62,7 +62,7 @@ class Database
 	 * @var GDT[]
 	 */
 	private static $COLUMNS = [];
-	
+
 	public static function init()
 	{
 		Cache::init();
@@ -72,7 +72,7 @@ class Database
 		        GDO_DB_HOST, GDO_DB_USER, GDO_DB_PASS, GDO_DB_NAME, GDO_DB_DEBUG);
 		}
 	}
-	
+
 	public function __construct($host, $user, $pass, $db, $debug=false)
 	{
 		self::$INSTANCE = $this;
@@ -82,12 +82,12 @@ class Database
 		$this->pass = $pass;
 		$this->db = $db;
 	}
-	
+
 	public function __destruct()
 	{
 		$this->closeLink();
 	}
-	
+
 	public function closeLink()
 	{
 		if ($this->link)
@@ -96,7 +96,7 @@ class Database
 			$this->link = null;
 		}
 	}
-	
+
 	public function getLink()
 	{
 		if (!$this->link)
@@ -124,12 +124,12 @@ class Database
 		}
 		return $this->link;
 	}
-	
+
 	public function connect()
 	{
 		return mysqli_connect($this->host, $this->user, $this->pass, $this->db);
 	}
-	
+
 	#############
 	### Query ###
 	#############
@@ -139,18 +139,18 @@ class Database
 		$this->reads++;
 		return $this->query($query, $buffered);
 	}
-	
+
 	public function queryWrite($query)
 	{
 		self::$WRITES++;
 		$this->writes++;
 		return $this->query($query);
 	}
-	
+
 	private function query($query, $buffered=true)
 	{
 		$t1 = microtime(true);
-		
+
 		if ($buffered)
 		{
 		    $result = mysqli_query($this->getLink(), $query);
@@ -162,7 +162,7 @@ class Database
 		        $result = mysqli_use_result($this->getLink());
 		    }
 		}
-		
+
 		if (!($result))
 		{
 			if ($this->link)
@@ -197,17 +197,17 @@ class Database
 		}
 		return $result;
 	}
-	
+
 	public function insertId()
 	{
 		return mysqli_insert_id($this->getLink());
 	}
-	
+
 	public function affectedRows()
 	{
 		return mysqli_affected_rows($this->getLink());
 	}
-	
+
 	###################
 	### Table cache ###
 	###################
@@ -223,22 +223,22 @@ class Database
 		    /** @var $gdo GDO **/
 		    self::$TABLES[$classname] = $gdo = new $classname();
 			$gdo->isTable = true;
-			
+
 			if ($gdo->gdoAbstract())
 			{
 				return null;
 			}
-			
+
 			self::$COLUMNS[$classname] = self::hashedColumns($gdo);
 
 		    # Always init a cache item.
 			$gdo->initCache();
-			
+
 			$gdo->setInited();
 		}
 		return self::$TABLES[$classname];
 	}
-	
+
 	/**
 	 * Extract name from gdo columns for hashmap.
 	 * @param GDT[] $gdoColumns
@@ -253,7 +253,7 @@ class Database
 		}
 		return $columns;
 	}
-	
+
 	/**
 	 * @param string $classname
 	 * @return GDT[]
@@ -267,7 +267,7 @@ class Database
 		}
 		return self::$COLUMNS[$classname];
 	}
-	
+
 	####################
 	### Table create ###
 	####################
@@ -280,7 +280,7 @@ class Database
 	{
 		$columns = [];
 		$primary = [];
-		
+
 		foreach ($gdo->gdoColumnsCache() as $column)
 		{
 			if ($define = $column->gdoColumnDefine())
@@ -292,7 +292,7 @@ class Database
 				$primary[] = $column->identifier();
 			}
 		}
-		
+
 		if (count($primary))
 		{
 			$primary = implode(',', $primary);
@@ -306,9 +306,9 @@ class Database
 				$columns[] = "UNIQUE({$column->identifier()})";
 			}
 		}
-		
+
 		$columnsCode = implode(",\n", $columns);
-		
+
 		try
 		{
 		    $this->disableForeignKeyCheck();
@@ -324,16 +324,16 @@ class Database
 		{
 		    $this->enableForeignKeyCheck();
 		}
-		
+
 // 		@TODO Implement auto alter table... very tricky!
 // 		if ($reinstall)
 // 		{
 // 			$this->alterTable($gdo);
 // 		}
-		
+
 		return true;
 	}
-	
+
 	# @TODO Implement auto alter table... very tricky!
 // 	/**
 // 	 * Simply alter all columns again.
@@ -374,21 +374,21 @@ class Database
 // // 				$this->queryWrite($query);
 // // 			}
 // // 		}
-		
+
 // 	}
-	
+
 	public function dropTable(GDO $gdo)
 	{
 	    $tableName = $gdo->gdoTableIdentifier();
 		return $this->queryWrite("DROP TABLE IF EXISTS {$tableName}");
 	}
-	
+
 	public function truncateTable(GDO $gdo)
 	{
 	    $tableName = $gdo->gdoTableIdentifier();
 	    return $this->queryWrite("TRUNCATE TABLE {$tableName}");
 	}
-	
+
 	###################
 	### DB Creation ###
 	###################
@@ -396,17 +396,17 @@ class Database
 	{
 		return $this->queryWrite("CREATE DATABASE $databaseName");
 	}
-	
+
 	public function dropDatabase($databaseName)
 	{
 		return $this->queryWrite("DROP DATABASE $databaseName");
 	}
-	
+
 	public function useDatabase($databaseName)
 	{
 	    $this->queryWrite("USE $databaseName");
 	}
-	
+
 	###################
 	### Transaction ###
 	###################
@@ -414,30 +414,30 @@ class Database
 	{
 		return mysqli_begin_transaction($this->getLink());
 	}
-	
+
 	public function transactionEnd()
 	{
 	    # Perf
 		$this->commits++;
 		self::$COMMITS++;
-		
+
 		# Exec and perf
 		$t1 = microtime(true);
 		$result = mysqli_commit($this->getLink());
 		$t2 = microtime(true);
 		$tt = $t2 - $t1;
-		
+
 		# Perf
 		$this->queryTime += $tt;
 		self::$QUERY_TIME += $tt;
 		return $result;
 	}
-	
+
 	public function transactionRollback()
 	{
 		return mysqli_rollback($this->getLink());
 	}
-	
+
 	############
 	### Lock ###
 	############
@@ -448,13 +448,13 @@ class Database
 		$query = "SELECT GET_LOCK('{$lock}', {$timeout}) as L";
 		return $this->queryRead($query);
 	}
-	
+
 	public function unlock($lock)
 	{
 		$query = "SELECT RELEASE_LOCK('{$lock}') as L";
 		return $this->queryRead($query);
 	}
-	
+
 	###############
 	### FKCheck ###
 	###############
@@ -467,7 +467,7 @@ class Database
 	{
 		return $this->enableForeignKeyCheck("0");
 	}
-	
+
 	##############
 	### Import ###
 	##############
@@ -483,10 +483,10 @@ class Database
 	            # skip comments
 	            continue;
 	        }
-	        
+
 	        # Append to command
 	        $command .= $line;
-	        
+
 	        # Finished command
 	        if (Strings::endsWith(trim($line), ';'))
 	        {
@@ -495,5 +495,5 @@ class Database
 	        }
 	    }
 	}
-	
+
 }

@@ -1,6 +1,6 @@
 <?php
 if (!function_exists('getallheaders')) {
-    
+
     /**
      * Get all HTTP header key/values as an associative array for the current request.
      *
@@ -9,13 +9,13 @@ if (!function_exists('getallheaders')) {
     function getallheaders()
     {
         $headers = array();
-        
+
         $copy_server = array(
             'CONTENT_TYPE'   => 'Content-Type',
             'CONTENT_LENGTH' => 'Content-Length',
             'CONTENT_MD5'    => 'Content-Md5',
         );
-        
+
         foreach ($_SERVER as $key => $value) {
             if (substr($key, 0, 5) === 'HTTP_') {
                 $key = substr($key, 5);
@@ -27,7 +27,7 @@ if (!function_exists('getallheaders')) {
                 $headers[$copy_server[$key]] = $value;
             }
         }
-        
+
         if (!isset($headers['Authorization'])) {
             if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
                 $headers['Authorization'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
@@ -38,8 +38,8 @@ if (!function_exists('getallheaders')) {
                 $headers['Authorization'] = $_SERVER['PHP_AUTH_DIGEST'];
             }
         }
-        
+
         return $headers;
     }
-    
+
 }

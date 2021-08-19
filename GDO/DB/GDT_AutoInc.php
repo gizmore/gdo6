@@ -22,7 +22,7 @@ final class GDT_AutoInc extends GDT_UInt
 	public $searchable = false;
 	public $hidden = true;
 	public function defaultLabel() { return $this->label('id'); }
-	
+
 	##############
 	### Column ###
 	##############
@@ -30,12 +30,12 @@ final class GDT_AutoInc extends GDT_UInt
 	public function isPrimary() { return true; } # Weird workaround for mysql primary key defs.
 	public function gdoColumnDefine() { return "{$this->identifier()} INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY"; }
 	public function validate($value) { return true; } # We simply do nothing in the almighty validate.
-	
+
 	##############
 	### Render ###
 	##############
 // 	public function renderCLI() { return $this->gdo->gdoHumanName() . '#' . getVar(); }
-	
+
 	##############
 	### Events ###
 	##############
@@ -46,11 +46,11 @@ final class GDT_AutoInc extends GDT_UInt
 			$this->gdo->setVar($this->name, $id, false);
 		}
 	}
-	
+
 	public function blankData()
 	{
 		# prevent old values to be used.
 	    return [$this->name => null];
 	}
-	
+
 }

@@ -6,7 +6,7 @@ use GDO\Core\GDT;
 /**
  * A simple paragraph.
  * Should render well everywhere as a paragraph might be important text.
- * 
+ *
  * @author gizmore
  * @version 6.10.2
  * @since 6.0.0

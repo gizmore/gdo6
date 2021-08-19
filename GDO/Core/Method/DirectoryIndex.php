@@ -13,12 +13,12 @@ final class DirectoryIndex extends MethodTable
     public function isFiltered() { return false; }
     public function isSearched() { return false; }
     public function isPaginated() { return false; }
-    
+
     public function isAllowed()
     {
         return Module_Core::instance()->cfgDirectoryIndex();
     }
-    
+
     public function execute()
     {
         if (!$this->isAllowed())
@@ -27,18 +27,18 @@ final class DirectoryIndex extends MethodTable
         }
         return parent::execute();
     }
-    
+
     public function gdoTable()
     {
         return GDO_DirectoryIndex::table();
     }
-    
+
     public function getTableTitle()
     {
         $key = $this->getTableTitleLangKey();
         return t($key, [$this->table->countItems() - 1]);
     }
-    
+
     public function getResult()
     {
         $data = [];
@@ -54,7 +54,7 @@ final class DirectoryIndex extends MethodTable
         }
         return new ArrayResult($data, $this->gdoTable());
     }
-    
+
     private function entry($path, $filename)
     {
         if (is_dir($path))

@@ -24,7 +24,7 @@ final class Env
             }
         }
     }
-    
+
     /**
      * Get an ENV var.
      * @param string $key
@@ -36,7 +36,7 @@ final class Env
         $key = strtoupper($key);
         return isset($_ENV[$key]) ? $_ENV[$key] : $default;
     }
-    
+
 }
 
 Env::init();

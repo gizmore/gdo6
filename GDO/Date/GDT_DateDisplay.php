@@ -12,12 +12,12 @@ use GDO\Core\GDT_Template;
 final class GDT_DateDisplay extends GDT
 {
     use WithPHPJQuery;
-    
+
     public $showDateAfterSeconds = 172800; # 2 days
-    
+
     public $dateformat = 'short';
     public function dateformat($dateformat) { $this->dateformat = $dateformat; return $this; }
-    
+
     public function renderCell()
     {
         $date = $this->getVar();

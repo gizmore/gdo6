@@ -46,7 +46,7 @@ final class GDO_File extends GDO
 			GDT_Duration::make('file_duration'),
 		];
 	}
-	
+
 	public function getName() { return $this->getVar('file_name'); }
 	public function displayName() { return html($this->getName()); }
 	public function getSize() { return $this->getVar('file_size'); }
@@ -57,27 +57,27 @@ final class GDO_File extends GDO
 	public function getHeight() { return $this->getVar('file_height'); }
 	public function getContents() {}
 	public function streamTo(GDO_User $user) { return Stream::serveTo($user, $this); }
-	
+
 	public function renderCell() { return GDT_Template::php('File', 'cell/file.php', ['gdo'=>$this]); }
 	public function renderCard() { return GDT_Template::php('File', 'card/file.php', ['gdo'=>$this]); }
 
 	public $variant = '';
-	
-	
+
+
 	public $path;
 	public function tempPath($path=null)
 	{
 		$this->path = $path;
 		return $this;
 	}
-	
+
 	private $href;
 	public function tempHref($href=null)
 	{
 		$this->href = $href;
 		return $this;
 	}
-	
+
 	public function getHref() { return $this->href; }
 	public function getPath() { return $this->path ? $this->path : $this->getDestPath(); }
 	public function getDestPath() { return self::filesDir() . $this->getID(); }
@@ -91,7 +91,7 @@ final class GDO_File extends GDO
 		}
 		return $this->getPath() . $variant;
 	}
-	
+
 	/**
 	 * Delete variant- and original file when deleted from database. 
 	 */
@@ -106,7 +106,7 @@ final class GDO_File extends GDO
 		    Website::error('err_delete_file', [$path]);
 		}
 	}
-	
+
 	public function deleteVariant($entry, $fullpath)
 	{
 	    if (!@unlink($fullpath))
@@ -114,7 +114,7 @@ final class GDO_File extends GDO
 	        Website::error('err_delete_file', [$fullpath]);
 	    }
 	}
-	
+
 	public function toJSON()
 	{
 		return array_merge(parent::toJSON(), [
@@ -125,7 +125,7 @@ final class GDO_File extends GDO
 			'initial' => true,
 		]);
 	}
-	
+
 	###############
 	### Factory ###
 	###############
@@ -140,7 +140,7 @@ final class GDO_File extends GDO
 	        return GDO_PATH . 'files/';
 	    }
 	}
-	
+
 	/**
 	 * @param array $values
 	 * @return self
@@ -152,7 +152,7 @@ final class GDO_File extends GDO
 			'file_size' => $values['size'],
 			'file_type' => $values['type']
 		])->tempPath($values['tmp_name']);
-		
+
 		if ($file->isImageType())
 		{
 			list($width, $height) = getimagesize($file->getPath());
@@ -163,7 +163,7 @@ final class GDO_File extends GDO
 		}
 		return $file;
 	}
-	
+
 	/**
 	 * @param string $contents
 	 * @return self
@@ -178,7 +178,7 @@ final class GDO_File extends GDO
 		file_put_contents($tempPath, $content);
 		return self::fromPath($name, $tempPath);
 	}
-	
+
 	/**
 	 * @param string $name
 	 * @param string $path
@@ -199,7 +199,7 @@ final class GDO_File extends GDO
 		];
 		return self::fromForm($values)->tempPath($path);
 	}
-	
+
 	############
 	### Copy ###
 	############
@@ -221,5 +221,5 @@ final class GDO_File extends GDO
 		$this->path = null;
 		return $this;
 	}
-	
+
 }

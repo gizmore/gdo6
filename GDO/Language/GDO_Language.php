@@ -17,7 +17,7 @@ use GDO\Core\GDT_Template;
 final class GDO_Language extends GDO
 {
 	public static function iso() { return Trans::$ISO; }
-	
+
 	/**
 	 * Wrap a callback in a temporary changed ISO. Esthetics.
 	 * @param string $iso
@@ -41,14 +41,14 @@ final class GDO_Language extends GDO
     		Trans::setISO($old);
 	    }
 	}
-	
+
 	public function gdoColumns()
 	{
 		return [
 		    GDT_Char::make('lang_iso')->primary()->ascii()->length(2),
 		];
 	}
-	
+
 	public function getID() { return $this->getISO(); }
 	public function getISO() { return $this->getVar('lang_iso'); }
 	public function displayName() { return t('lang_'.$this->getISO()); }
@@ -61,7 +61,7 @@ final class GDO_Language extends GDO
 	{
 		return GDT_Template::php('Language', 'choice/language.php', ['language'=>$this]);
 	}
-	
+
 	/**
 	 * Get a language by ISO or return a stub object with name "Unknown".
 	 * @param string $iso
@@ -75,7 +75,7 @@ final class GDO_Language extends GDO
 		}
 		return $language;
 	}
-	
+
 	/**
 	 * @return self
 	 */
@@ -83,7 +83,7 @@ final class GDO_Language extends GDO
 	{
 		return self::getByISOOrUnknown(Trans::$ISO);
 	}
-	
+
 	/**
 	 * @return self[]
 	 */
@@ -91,5 +91,5 @@ final class GDO_Language extends GDO
 	{
 		return Module_Language::instance()->cfgSupported();
 	}
-	
+
 }

@@ -24,7 +24,7 @@ final class UserSettings extends MethodAjax
                 }
             }
         }
-        
+
         return GDT_Array::makeWith($settings);
     }
 
@@ -34,8 +34,8 @@ final class UserSettings extends MethodAjax
             'name' => $gdt->name,
             'var' => $gdt->var,
             'type' => get_class($gdt),
-            'config' => $gdt->configJSON(), 
+            'config' => $gdt->configJSON(),
         ];
     }
-    
+
 }

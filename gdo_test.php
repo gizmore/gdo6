@@ -90,7 +90,7 @@ if ($argc === 2)
 {
     $count = 0;
     $modules = explode(',', $argv[1]);
-    
+
     if ($app->loader->loadModuleFS('Tests', false))
     {
         $modules[] = 'Tests';
@@ -100,11 +100,11 @@ if ($argc === 2)
         echo "You don't have module gdo6-tests installed, which is probably required to create test users.\n";
         flush();
     }
-    
+
     while ($count != count($modules))
     {
         $count = count($modules);
-        
+
         foreach ($modules as $moduleName)
         {
             $module = ModuleLoader::instance()->getModule($moduleName);
@@ -120,7 +120,7 @@ if ($argc === 2)
     $modules = array_map(function($m){
         return ModuleLoader::instance()->getModule($m);
     }, $modules);
-        
+
     usort($modules, function(GDO_Module $m1, GDO_Module $m2) {
         return $m1->module_priority - $m2->module_priority;
     });
@@ -142,7 +142,7 @@ foreach ($modules as $module)
         echo "Installing {$module->getName()}\n";
         Installer::installModule($module);
     }
-    
+
     $testDir = $module->filePath('Test');
     if (FileUtil::isDir($testDir))
     {

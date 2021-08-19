@@ -37,7 +37,7 @@ $result = $field->getResult();
 	  </tr>
 	</thead>
 	<tbody>
-	
+
 	<?php if ($field->fetchInto) : ?>
 	<?php $dummy = $result->table->cache->getDummy(); ?>
 	<?php while ($gdo = $result->fetchInto($dummy)) : ?>
@@ -62,7 +62,7 @@ $result = $field->getResult();
 	</tr>
 	<?php endwhile; ?>
 	<?php endif; ?>
-	
+
 	</tbody>
 <?php if ($field->footer) : ?>
 	<tfoot><?=$field->footer?></tfoot>

@@ -29,7 +29,7 @@ trait WithIcon
 		$style = self::iconStyle($size, $color);
 		return call_user_func(GDT_Icon::$iconProvider, $icon, $iconText, $style);
 	}
-	
+
 	public static function rawIconS($icon, $iconText=null, $size=null, $color=null)
 	{
 		if ($icon)
@@ -38,24 +38,24 @@ trait WithIcon
 			return sprintf('<i class="gdo-icon" title="%s"%s>%s</i>', html($iconText), $style, $icon);
 		}
 	}
-	
+
 	private static function iconStyle($size, $color)
 	{
 		$size = $size === null ? '' : "font-size:{$size}px;";
 		$color = $color === null ? '' : "color:$color;";
 		return ($color || $size) ? "style=\"$color$size\"" : '';
 	}
-	
+
 	############
 	### Icon ###
 	############
 	public $icon;
 	public function icon($icon) { $this->icon = $icon; return $this; }
-	
+
 	public $iconText;
 	public $iconTextArgs;
 	public function iconText($text, $textArgs) { $this->iconText = $text; $this->iconTextArgs = $textArgs; return $this; }
-	
+
 	public $rawIcon;
 	public function rawIcon($rawIcon) { $this->rawIcon = $rawIcon; return $this; }
 
@@ -64,7 +64,7 @@ trait WithIcon
 
 	public $iconColor;
 	public function iconColor($color) { $this->iconColor = $color; return $this; }
-	
+
 	public function tooltip($text, $textArgs=null)
 	{
 	    if (!$this->icon)
@@ -73,7 +73,7 @@ trait WithIcon
 	    }
 	    return $this->iconText($text, $textArgs);
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -84,5 +84,5 @@ trait WithIcon
 			self::iconS($this->icon, $text, $this->iconSize, $this->iconColor) :
 			self::rawIconS($this->rawIcon, $text, $this->iconSize, $this->iconColor);
 	}
-	
+
 }

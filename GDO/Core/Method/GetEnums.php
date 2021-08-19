@@ -14,11 +14,11 @@ use GDO\DB\GDT_Enum;
 final class GetEnums extends Method
 {
 	public function isAjax() { return true; }
-	
+
 	public function execute()
 	{
 		$columns = [];
-		
+
 		# Add non abstract module tables
 		foreach (ModuleLoader::instance()->getEnabledModules() as $module)
 		{
@@ -44,7 +44,7 @@ final class GetEnums extends Method
 					}
 				}
 			}
-			
+
 			if ($config = $module->getConfigCache())
 			{
 				foreach ($config as $gdoType)
@@ -55,7 +55,7 @@ final class GetEnums extends Method
 					}
 				}
 			}
-		
+
 			if ($config = $module->getUserConfig())
 			{
 				foreach ($config as $gdoType)
@@ -78,7 +78,7 @@ final class GetEnums extends Method
 				}
 			}
 		}
-		
+
 		return GDT_Array::makeWith($columns);
 	}
 }

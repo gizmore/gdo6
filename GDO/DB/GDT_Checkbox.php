@@ -20,9 +20,9 @@ class GDT_Checkbox extends GDT_Select
     const TRUE = '1';
     const FALSE = '0';
     const UNDETERMINED = '2';
-    
+
     public $searchable = false;
-    
+
 	protected function __construct()
 	{
 	    parent::__construct();
@@ -32,7 +32,7 @@ class GDT_Checkbox extends GDT_Select
 		$this->ascii(); # This enables string search (not binary).
 		$this->caseS();
 	}
-	
+
 	public function initChoices()
 	{
 		if (!$this->choices)
@@ -49,7 +49,7 @@ class GDT_Checkbox extends GDT_Select
 		}
 		return $this;
 	}
-	
+
 	################
 	### Database ###
 	################
@@ -63,7 +63,7 @@ class GDT_Checkbox extends GDT_Select
 		return "{$this->identifier()} TINYINT(1) UNSIGNED ".
 		  "{$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
-	
+
 	/**
 	 * Return no collation for a tinyint.
 	 * {@inheritDoc}
@@ -73,7 +73,7 @@ class GDT_Checkbox extends GDT_Select
 	{
 	    return '';
 	}
-	
+
 	####################
 	### Undetermined ###
 	####################
@@ -84,7 +84,7 @@ class GDT_Checkbox extends GDT_Select
 		$this->undetermined = $undetermined;
 		return $this;
 	}
-	
+
 	###################
 	### Var / Value ###
 	###################
@@ -94,14 +94,14 @@ class GDT_Checkbox extends GDT_Select
 		elseif ($value === false) { return '0'; }
 		else { return null; }
 	}
-	
+
 	public function toValue($var)
 	{
 		if ($var === '0') { return false; }
 		elseif ($var === '1') { return true; }
 		else { return null; }
 	}
-	
+
 	################
 	### Validate ###
 	################
@@ -122,17 +122,17 @@ class GDT_Checkbox extends GDT_Select
 		}
 		return $this->errorInvalidChoice();
 	}
-	
+
 	protected function errorInvalidVar($var)
 	{
 	    return t('err_invalid_gdt_var', [$this->gdoHumanName(), html($var)]);
 	}
-	
+
 	public function gdoExampleVars()
 	{
 	    return '0|1';
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -150,29 +150,29 @@ class GDT_Checkbox extends GDT_Select
 	        default: return $this->errorInvalidVar($var);
 	    }
 	}
-	
+
 	public function htmlClass()
 	{
 		return parent::htmlClass() . " gdt-checkbox-{$this->getVar()}";
 	}
-	
+
 	public function renderForm()
 	{
 		$this->initChoices();
 		$this->initThumbIcon();
 		return parent::renderForm();
 	}
-	
+
 	public function renderCell()
 	{
 	    return $this->displayValue($this->getVar());
 	}
-	
+
 	public function renderJSON()
 	{
 	    return $this->displayValue($this->getVar());
 	}
-	
+
 	public function renderFilter($f)
 	{
 	    $vars = ['field' => $this, 'f'=> $f];

@@ -5,11 +5,11 @@ return [
 'cfg_languages' => 'Unterstützte Sprachen',
 'mdescr_language_switchlanguage' => 'Sprache auf %s wechseln',
 'mdescr_language_switchlanguage2' => 'Wechseln Sie Ihre Sprache.',
-    
+
 'cfg_use_in_javascript' => 'Kopiere Übersetzungen zum Javascript Client?',
 'tt_cfg_use_in_javascript' => 'Dies lädt die Übersetzungsdateien in den WebBrowser, auf die Client Seite.',
 'cfg_langswitch_left' => 'Sprachumschalter in Sidebar anzeigen?',
-    
+
 // 'lang_af' => 'Afrikaans',
 'lang_ar' => 'Arabisch',
 // 'lang_az' => 'Azerbaijani',

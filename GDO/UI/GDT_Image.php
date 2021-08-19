@@ -14,7 +14,7 @@ use GDO\File\GDO_File;
 final class GDT_Image extends GDT
 {
 	use WithPHPJQuery;
-	
+
 	############
 	### Vars ###
 	############
@@ -24,7 +24,7 @@ final class GDT_Image extends GDT
 		$this->src = $src;
 		return $this;
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -32,7 +32,7 @@ final class GDT_Image extends GDT
 	{
 		return GDT_Template::php('UI', 'cell/image.php', ['field' => $this]);
 	}
-	
+
 	###############
 	### Factory ###
 	###############

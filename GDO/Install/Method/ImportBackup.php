@@ -18,7 +18,7 @@ final class ImportBackup extends MethodForm
 	{
 		return GDT_Template::responsePHP('Install', 'page/importbackup.php', ['form' => $this->getForm()]);
 	}
-	
+
 	public function createForm(GDT_Form $form)
 	{
 		$form->addFields(array(
@@ -26,15 +26,15 @@ final class ImportBackup extends MethodForm
 		));
 		$form->actions()->addField(GDT_Submit::make());
 	}
-	
+
 	public function formValidated(GDT_Form $form)
 	{
 		if (module_enabled('Backup'))
 		{
 			return \GDO\Backup\Method\ImportBackup::make()->importBackup($form->getFormValue('backup_file'));
 		}
-		
+
 		return parent::formValidated($form)->addField($this->renderPage());
 	}
-	
+
 }

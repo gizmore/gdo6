@@ -9,7 +9,7 @@ A GDT knows about rendering in different contexts, how to create db table code, 
 
 The most basic GDT are GDT_Int, GDT_String, GDT_Enum and GDT_Decimal.
 But there are dozens of GDT available like GDT_Object, GDT_Email, GDT_File, GDT_JSON, GDT_Checkbox, GDT_AutoInc, GDT_JOIN, etc... And you don't need to write a single validator ever! (Maybe with the exception of custom GDT_Validator fields.
-GDT_Object, which inherits from GDT_UInt, creates a nice foreign key constraint which you can control with the ->cascade*() methods; cascade(), cascadeNull() and cascadeRestrict(), but 
+GDT_Object, which inherits from GDT_UInt, creates a nice foreign key constraint which you can control with the ->cascade*() methods; cascade(), cascadeNull() and cascadeRestrict(), but
 the defaults are very likely to be perfect.
 In official GDO6 modules GDT classes are prefixed with "GDT_".
 

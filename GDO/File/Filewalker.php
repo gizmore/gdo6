@@ -9,7 +9,7 @@ namespace GDO\File;
 final class Filewalker
 {
 	public static function filewalker_stub($entry, $fullpath, $args=null) {}
-	
+
 	public static function traverse($path, $pattern=null, $callback_file=false, $callback_dir=false, $recursive=100, $args=null)
 	{
 		if (is_array($path))
@@ -20,15 +20,15 @@ final class Filewalker
 			}
 			return;
 		}
-		
+
 		$path = rtrim($path, '/\\');
-		
+
 		# Readable?
 		if (!($dir = @dir($path)))
 		{
 			return false;
 		}
-		
+
 		$dirstack = [];
 		$filestack = [];
 		while ($entry = $dir->read())
@@ -38,7 +38,7 @@ final class Filewalker
 			{
 				continue;
 			}
-			
+
 			if (is_dir($fullpath))
 			{
 				$dirstack[] = array($entry, $fullpath);
@@ -56,7 +56,7 @@ final class Filewalker
 			}
 		}
 		$dir->close();
-		
+
 		usort($filestack, function($a, $b) {
 			if (is_numeric($a[0]) && is_numeric($b[0]))
 			{
@@ -64,7 +64,7 @@ final class Filewalker
 			}
 			return strcasecmp($a[0], $b[0]);
 		});
-		
+
 		if (!is_bool($callback_file))
 		{
     		foreach ($filestack as $file)
@@ -72,7 +72,7 @@ final class Filewalker
     			call_user_func($callback_file, $file[0], $file[1], $args);
     		}
 		}
-		
+
 		usort($dirstack, function($a, $b){ return strcasecmp($a[0], $b[0]); });
 
 	    if (!is_bool($callback_dir))
@@ -82,7 +82,7 @@ final class Filewalker
     			call_user_func($callback_dir, $d[0], $d[1], $args);
 		    }
 	    }
-			
+
         if ($recursive)
 		{
             foreach ($dirstack as $d)
@@ -91,5 +91,5 @@ final class Filewalker
             }
 		}
 	}
-	
+
 }

@@ -13,7 +13,7 @@ final class GDT_ThemeSwitcher extends GDT_Select
         }
         return $this;
     }
-    
+
     private function  generateChoices()
     {
     }

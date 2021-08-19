@@ -10,4 +10,3 @@ To make use of the Javascript minifer in module core, install the following npm 
 
     npm install -g ng-annotate
     npm install -g uglyfijs
-    

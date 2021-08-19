@@ -15,12 +15,12 @@ use GDO\UI\GDT_Page;
 
 /**
  * Internationalization Module.
- * 
+ *
  * - Detect language by cookie or http_accept_language
  * - Provide lang switcher via cookie
  * - Provide language select
  * - Provide GDO_Language table
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 2.0.0
@@ -28,7 +28,7 @@ use GDO\UI\GDT_Page;
 final class Module_Language extends GDO_Module
 {
 	public $module_priority = 2;
-	
+
 	public function isCoreModule() { return true; }
 	public function getClasses() { return [GDO_Language::class]; }
 	public function onInstall() { LanguageData::onInstall(); }
@@ -45,10 +45,10 @@ final class Module_Language extends GDO_Module
 		    GDT_Checkbox::make('use_in_javascript')->initial('1'),
 		];
 	}
-	
+
 	public function cfgSwitchLeft() { return $this->getConfigValue('langswitch_left'); }
 	public function cfgJavascript() { return $this->getConfigValue('use_in_javascript'); }
-	
+
 	/**
 	 * Get the supported  languages, GDO_LANGUAGE first.
 	 * @return GDO_Language[]
@@ -62,7 +62,7 @@ final class Module_Language extends GDO_Module
 		}
 		return $supported;
 	}
-	
+
 	############
 	### Init ###
 	############
@@ -75,7 +75,7 @@ final class Module_Language extends GDO_Module
 	        Website::addMeta(['language', $iso, 'name']);
 	    }
 	}
-	
+
 	public function onInitSidebar()
 	{
 		if ($this->cfgSwitchLeft())
@@ -85,7 +85,7 @@ final class Module_Language extends GDO_Module
 		    $navbar->addField(GDT_Divider::make());
 		}
 	}
-	
+
 	public function onIncludeScripts()
 	{
 	    # If enabled include js trans data and translation engine.
@@ -96,12 +96,12 @@ final class Module_Language extends GDO_Module
     			'%sindex.php?mo=Language&me=GetTransData&iso=%s&_ajax=1&_fmt=html&%s',
     			GDO_WEB_ROOT, Trans::$ISO, $this->nocacheVersion());
     		Javascript::addJS($href);
-    
+
     		# Add cheap translation engine.
     		$this->addJS('js/gdo-trans.js');
 	    }
 	}
-	
+
 	#################
 	### Detection ###
 	#################
@@ -121,7 +121,7 @@ final class Module_Language extends GDO_Module
 		}
 		return $iso ? $iso : GDO_LANGUAGE;
 	}
-	
+
 	public function detectAcceptLanguage()
 	{
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
@@ -145,5 +145,5 @@ final class Module_Language extends GDO_Module
 			}
 		}
 	}
-	
+
 }

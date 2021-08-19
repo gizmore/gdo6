@@ -13,7 +13,7 @@ div.gdo-body { padding: 64px 0px 0px; min-height: 100%; }
 .gdo-body .gdt-bar-row { border-bottom: 1px solid #fff; }
 
 .gdt-container.flx.flx-row.flx-collapse > * { margin-right: 8px; }
- 
+
 /** Sidebar **/
 #gdo-left-bar .gdt-divider, #gdo-right-bar .gdt-divider { background: #333; height: 1px; width: 100%; margin-top: 6px; }
 

@@ -1,7 +1,7 @@
 "use strict";
 
 window.GDO.Date = {
-		
+
 	probe: function() {
 		try {
 			var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;

@@ -15,13 +15,13 @@ final class Numeric
 	#######################
 	private static $inCharset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-";
 	private static $outCharset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-";
-	
+
 	public static function baseConvert($number, $inBase, $outBase)
 	{
 		// backward compatibility
 		return self::baseConvertChar(self::baseConvertInt($number, $inBase), $outBase);
 	}
-	
+
 	/**
 	 * Convert a string into number with outputBase
 	 * Charset is in self::$inCharset
@@ -32,11 +32,11 @@ final class Numeric
 		{
 			return "Error number is not string: $number";
 		}
-		
+
 		$len = strlen($number);
 		$value = "0";
 		$powy = 0;
-		
+
 		for ($i = 0; $i < $len; $i++)
 		{
 			$char = $number[$len - $i - 1];
@@ -51,7 +51,7 @@ final class Numeric
 		}
 		return $value;
 	}
-	
+
 	/**
 	 * Convert an number into string
 	 * Charset is in self::$outCharset
@@ -67,10 +67,10 @@ final class Numeric
 			$back = self::decToDigit($outNumber, self::$outCharset).$back;
 			$value = bcdiv($value, "$outBase");
 		}
-		
+
 		return $back;
 	}
-	
+
 	/**
 	 * @return int
 	 */
@@ -78,12 +78,12 @@ final class Numeric
 	{
 		return strpos("$charset", "$char");
 	}
-	
+
 	private static function decToDigit($dec, $charset)
 	{
 		return $charset[((int)$dec)];
 	}
-	
+
 	public static function setInputCharset($charset)
 	{
 		if (!is_string($charset) || strlen($charset) < 2)
@@ -92,15 +92,15 @@ final class Numeric
 			exit(1);
 			return;
 		}
-		
+
 		self::$inCharset = $charset;
 	}
-	
+
 	public static function getInputCharset()
 	{
 		return self::$inCharset;
 	}
-	
+
 	public static function setOutputCharset($charset)
 	{
 		if (!is_string($charset) || strlen($charset) < 2)
@@ -111,18 +111,18 @@ final class Numeric
 		}
 		self::$outCharset = $charset;
 	}
-	
+
 	public static function getOutputCharset()
 	{
 		return self::$outCharset;
 	}
-	
+
 	public static function setDefaultCharsets()
 	{
 		self::$inCharset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-";
 		self::$outCharset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-";
 	}
-	
+
 	#####################
 	### Factorization ###
 	#####################
@@ -148,7 +148,7 @@ final class Numeric
 		}
 		return $back;
 	}
-	
+
 	#################
 	### Digit sum ###
 	#################

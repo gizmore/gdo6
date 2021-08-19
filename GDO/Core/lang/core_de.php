@@ -77,10 +77,10 @@ return array(
 'completed' => 'Erledigt',
 'timezone' => 'Zeitzone',
 'format' => 'Format',
-    
+
 # Core GDO tables
 'gdo_permission' => 'Berechtigung',
-    
+
 # Generic Buttons
 'btn_back' => 'Zurück',
 'btn_set' => 'Setzen',
@@ -102,7 +102,7 @@ return array(
 'btn_overview' => 'Übersicht',
 'btn_search' => 'Suchen',
 'btn_sort' => 'Sortieren',
-    
+
 # Sorting
 'order_by' => 'Reihenfolge',
 'order_dir' => 'Richtung',
@@ -110,7 +110,7 @@ return array(
 'asc' => 'Aufsteigend',
 'desc' => 'Absteigend',
 'lbl_search_criteria' => 'Kriterien: %s',
-    
+
 # Generic Messages
 'msg_form_saved' => 'Ihre Daten wurden erfolgreich gespeichert.',
 'msg_upgrading' => 'Installiere Modul %s Version %s.',
@@ -119,7 +119,7 @@ return array(
 # Generic Confirms
 'confirm_delete' => 'Möchten Sie das wirklich löschen?',
 'iconfirm' => 'Ich bin sicher',
-    
+
 # Generic Errors
 'err_db' => "Datenbank Fehler(%s): %s<br/>\n%s<br/>\n",
 'err_user' => 'Dieser Benutzer ist unbekannt.',
@@ -192,17 +192,17 @@ return array(
 'err_you_no_mail' => 'Sie benötigen eine E-Mail dafür.',
 'err_unknown_parameter' => 'Unbekannter Parameter für Methode %s/%s: %s',
 'err_select_candidates' => 'Passende Treffer: %s',
-    
+
 # File
 'is_file' => 'keine Datei',
 'is_folder' => 'kein Ordner',
-    
+
 # Permissions
 'sel_no_permissions' => 'Keine Berechtigung nötig',
 'perm_admin' => 'Administrator',
 'perm_cronjob' => 'Cronjob',
 'perm_staff' => 'Mitarbeiter',
-	
+
 # User types
 'enum_bot' => 'Bot',
 'enum_ghost' => 'Geist',
@@ -213,11 +213,11 @@ return array(
 # Checkbox
 'enum_undetermined_yes_no' => 'unbekannt',
 'enum_unknown' => 'Unbekannt',
-	
+
 # Files
 'image' => 'Bild',
 'icon' => 'Icon',
-	
+
 # Gender
 'enum_male' => 'männlich',
 'enum_female' => 'weiblich',
@@ -234,13 +234,13 @@ return array(
 'gdo_sidebar_version' => 'gdo %s',
 'sidenav_left_title' => 'Anwendung',
 'sidenav_right_title' => 'Einstellungen',
-	
+
 # Config
 'ipp' => 'IPP',
 'enum_no' => 'Nein',
 'enum_yes' => 'Ja',
 'cfg_ipp' => 'Einträge pro Seite',
-	
+
 # Welcome
 'core_welcome_box_info' => 'Willkommen auf %s. Sie sind angemeldet als %s.',
 'link_impressum' => 'Impressum',
@@ -263,14 +263,14 @@ return array(
 
 'li_creation_title' => '%s am %s (%s)',
 'edited_info' => 'Zuletzt bearbeitet von %s am %s',
-    
+
 # Config
 'cfg_system_user' => 'System Benutzer',
 'cfg_show_impressum' => 'Impressum im Footer anzeigen?',
 'cfg_show_privacy' => 'Datenschutz im Footer anzeigen?',
 'cfg_asset_revision' => 'Asset Cache Version',
 'link_privacy' => 'Datenschutz',
-    
+
 # v6.10
 'page_of' => 'Seite %s von %s',
 'cfg_spr' => 'Autocomplete Vorschläge pro Anfrage',

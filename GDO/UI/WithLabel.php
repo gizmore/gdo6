@@ -17,7 +17,7 @@ trait WithLabel
      */
     public function name($name=null) { $this->name = $name; return $this->defaultLabel(); }
 
-    
+
     public $label;
 	public $labelArgs;
 	public $labelRaw;
@@ -27,11 +27,11 @@ trait WithLabel
 	    $this->label = $this->labelArgs = $this->labelRaw = null;
 	    return $this;
 	}
-	
+
 	public function hasLabel() { return $this->label || $this->labelRaw; }
-	
+
 	public function defaultLabel() { return $this->label($this->name); }
-	
+
 	/**
 	 * @param string $key
 	 * @param array $args
@@ -44,14 +44,14 @@ trait WithLabel
 	    $this->labelArgs = $args;
 	    return $this;
 	}
-	
+
 	public function labelRaw($label=null)
 	{
 	    $this->labelRaw = $label;
 	    $this->label = $this->labelArgs = null;
 	    return $this;
 	}
-	
+
 	public function displayLabel()
 	{
 		if ($this->labelRaw)

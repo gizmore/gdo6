@@ -15,7 +15,7 @@ if ($field->headers)
 {
     # The list search criteria form.
     $frm = GDT_Form::make($field->headers->name)->slim()->methodGET();
-    
+
     # Searchable input
     if ($field->searched)
     {
@@ -32,7 +32,7 @@ if ($field->headers)
             $frm->addField(GDT_SearchField::make('search'));
         }
     }
-    
+
     # Orderable select
     if ($field->ordered)
     {
@@ -47,14 +47,14 @@ if ($field->headers)
                 }
             }
         }
-        
+
         if (count($orderable))
         {
             $select = GDT_Select::make('order_by')->icon('arrow_up');
             $select->choices($orderable);
             $select->initial($field->orderDefault);
             $frm->addField($select);
-            
+
             $ascdesc = GDT_Select::make('order_dir');
             $ascdesc->choices['ASC'] = t('asc');
             $ascdesc->choices['DESC'] = t('desc');
@@ -62,12 +62,12 @@ if ($field->headers)
             $frm->addField($ascdesc);
         }
     }
-    
+
     if ($field->filtered)
     {
         # Not supported yet
     }
-    
+
     # Show quicksearch form in accordeon
     if (count($frm->fields))
     {

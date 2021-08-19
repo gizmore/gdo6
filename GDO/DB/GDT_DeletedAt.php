@@ -11,6 +11,6 @@ final class GDT_DeletedAt extends GDT_DateTime
 	public $writable = false;
 	public $editable = false;
 	public $hidden = true;
-	
+
 	public function defaultLabel() { return $this->label('deleted_at'); }
 }

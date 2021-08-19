@@ -11,12 +11,12 @@ final class GDT_EmailFormat extends GDT_Enum
 {
 	const TEXT = 'text';
 	const HTML = 'html';
-	
+
 	protected function __construct()
 	{
 		$this->enumValues(self::TEXT, self::HTML);
 	}
 
 	public function defaultLabel() { return $this->label('email_fmt'); }
-	
+
 }

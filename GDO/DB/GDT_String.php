@@ -31,20 +31,20 @@ class GDT_String extends GDT
 	use WithOrder;
 	use WithDatabase;
 	use WithPHPJQuery;
-	
+
 	const UTF8 = 1;
 	const ASCII = 2;
 	const BINARY = 3;
-	
+
 	public $pattern;
 	public $encoding = self::UTF8;
 	public $caseSensitive = false;
-	
+
 	public $min = 0;
 	public $max = 255;
-	
+
 	public $_inputType = 'text'; # HTML input[type]
-	
+
 	public $orderable = true;
 	public $filterable = true;
 	public $searchable = true;
@@ -52,25 +52,25 @@ class GDT_String extends GDT
 	public $editable = true;
 	public $writable = true;
 	public $focusable = true;
-	
+
 	public function utf8() { return $this->encoding(self::UTF8); }
 	public function ascii() { return $this->encoding(self::ASCII); }
 	public function binary() { return $this->encoding(self::BINARY); }
 	public function isBinary() { return $this->encoding === self::BINARY; }
-	
+
 	public function encoding($encoding) { $this->encoding = $encoding; return $this; }
-	
+
 	public function pattern($pattern) { $this->pattern = $pattern; return $this; }
 	public function htmlPattern() { return $this->pattern ? " pattern=\"{$this->htmlPatternValue()}\"" : ''; }
 	public function htmlPatternValue() { return trim(rtrim($this->pattern, 'iuDs'), $this->pattern[0].'^$'); }
 	public function caseI($caseInsensitive=true) { return $this->caseS(!$caseInsensitive); }
 	public function caseS($caseSensitive=true) { $this->caseSensitive = $caseSensitive; return $this; }
-	
+
 	public function min($min) { $this->min = $min; return $this; }
 	public function max($max) { $this->max = $max; return $this; }
-	
+
 	public function isSerializable() { return true; }
-	
+
 	/**
 	 * Strings trim and convert empty string to null.
 	 */
@@ -78,13 +78,13 @@ class GDT_String extends GDT
 	{
 	    return parent::var(trim($var, "\r\n\t "));
 	}
-	
+
 	public function inputToVar($input)
 	{
 	    $input = trim($input, "\r\n\t ");
 	    return $input === '' ? null : $input;
 	}
-	
+
 	######################
 	### Table creation ###
 	######################
@@ -94,7 +94,7 @@ class GDT_String extends GDT
 		$collate = $this->gdoCollateDefine($this->caseSensitive);
 		return "{$this->identifier()} VARCHAR({$this->max}) CHARSET $charset $collate{$this->gdoNullDefine()}";
 	}
-	
+
 	public function gdoCharsetDefine()
 	{
 		switch ($this->encoding)
@@ -104,7 +104,7 @@ class GDT_String extends GDT
 			case self::BINARY: return 'binary';
 		}
 	}
-	
+
 	public function gdoCollateDefine($caseSensitive)
 	{
 		if ($this->isBinary())
@@ -114,14 +114,14 @@ class GDT_String extends GDT
 		$append = $caseSensitive ? '_bin' : '_general_ci';
 		return 'COLLATE ' . $this->gdoCharsetDefine() . $append;
 	}
-	
+
 	##############
 	### Render ###
 	##############
 	public function renderCell() { return html($this->getVar()); }
 	public function renderForm() { return GDT_Template::php('DB', 'form/string.php', ['field' => $this]); }
 	public function renderCLI() { return $this->displayLabel() . ': ' . $this->displayVar(); }
-	
+
 	################
 	### Validate ###
 	################
@@ -152,7 +152,7 @@ class GDT_String extends GDT
 			return true;
 		}
 	}
-	
+
 	/**
 	 * A quite tricky feature is the unique validation.
 	 * 
@@ -181,12 +181,12 @@ class GDT_String extends GDT
 		}
 		return true;
 	}
-	
+
 	private function patternError()
 	{
 		return $this->error('err_string_pattern');
 	}
-	
+
 	private function strlenError()
 	{
 	    # We have both limits set. So a between error.
@@ -194,13 +194,13 @@ class GDT_String extends GDT
 		{
 			return $this->error('err_strlen_between', [$this->min, $this->max]);
 		}
-		
+
 		# we only have max
 		elseif ($this->max !== null)
 		{
 			return $this->error('err_strlen_too_large', [$this->max]);
 		}
-		
+
 		# or we only have a min
 		elseif ($this->min !== null)
 		{
@@ -217,7 +217,7 @@ class GDT_String extends GDT
 	{
 	    return "TestSTR'\"<script>alert(1)</script>";
 	}
-	
+
 	##############
 	### filter ###
 	##############
@@ -225,7 +225,7 @@ class GDT_String extends GDT
 	{
 		return GDT_Template::php('DB', 'filter/string.php', ['field' => $this, 'f' => $f]);
 	}
-	
+
     public function filterQuery(Query $query, $rq=null)
 	{
 		if ($filter = $this->filterVar($rq))
@@ -233,20 +233,20 @@ class GDT_String extends GDT
 		    $this->applyQueryFilter($query, $filter);
 		}
 	}
-	
+
 	private function applyQueryFilter(Query $query, $searchValue)
 	{
 	    $condition = $this->searchCondition($searchValue);
 	    $this->filterQueryCondition($query, $condition);
 	}
-	
+
 	public function filterGDO(GDO $gdo, $filtervalue)
 	{
 	    $pattern = chr(1).preg_quote($filtervalue, chr(1)).chr(1);
 		if ($this->caseSensitive) { $pattern .= 'i'; } # Switch to case-i if necessary
 		return preg_match($pattern, $gdo->getVar($this->name));
 	}
-	
+
 	##############
 	### Search ###
 	##############
@@ -254,7 +254,7 @@ class GDT_String extends GDT
 	{
 	    return $this->searchCondition($searchTerm);
 	}
-	
+
 	public function searchGDO($searchTerm)
 	{
 	    if ($this->caseSensitive)
@@ -266,7 +266,7 @@ class GDT_String extends GDT
 	        return stripos($this->getVar(), $searchTerm) !== false;
 	    }
 	}
-	
+
 	##############
 	### Config ###
 	##############

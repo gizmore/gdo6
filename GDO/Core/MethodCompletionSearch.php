@@ -7,11 +7,11 @@ use GDO\DB\Query;
 /**
  * Generic autocompletion code.
  * Override 3 methods for full featured quicksearch.
- * 
+ *
  * @author gizmore
  * @version 6.10.3
  * @since 6.0.3
- * 
+ *
  * @see GDT_Table
  */
 abstract class MethodCompletionSearch extends MethodCompletion
@@ -23,23 +23,23 @@ abstract class MethodCompletionSearch extends MethodCompletion
      * @return GDO
      */
     public abstract function gdoTable();
-    
+
     /**
      * @return GDT[]
      */
     public abstract function gdoHeaderColumns();
-    
+
     /**
      * @param GDO $gdo
      * @return array
      */
     public abstract function renderJSON(GDO $gdo);
-    
+
     /**
      * @return Query
      */
     public function getQuery() { return $this->gdoTable()->select()->limit($this->getMaxSuggestions()); }
-    
+
 	############
 	### Exec ###
 	############
@@ -58,5 +58,5 @@ abstract class MethodCompletionSearch extends MethodCompletion
 	    }
 	    return GDT_Array::makeWith($response);
 	}
-	
+
 }

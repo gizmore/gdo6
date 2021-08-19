@@ -5,7 +5,7 @@ use GDO\UI\WithImageSize;
 
 /**
  * Add this trait for image related file stuff.
- * 
+ *
  * @author gizmore, kalle
  * @version 6.10
  * @since 6.07
@@ -13,9 +13,9 @@ use GDO\UI\WithImageSize;
 trait WithImageFile
 {
     use WithImageSize;
-    
+
 	public function isImageFile() { return true; }
-	
+
 	##############
 	### Scaled ###
 	##############
@@ -25,13 +25,13 @@ trait WithImageFile
 		$this->scaledVersions[$name] = [$width, $height, $format];
 		return $this;
 	}
-	
+
 	###############
 	### Variant ###
 	###############
 	public $variant;
 	public function variant($variant) { $this->variant = $variant; return $this; }
-	
+
 	############
 	### HREF ###
 	############
@@ -44,7 +44,7 @@ trait WithImageFile
 	    }
 	    return $href;
 	}
-	
+
 	#################
 	### Flow test ###
 	#################
@@ -60,12 +60,12 @@ trait WithImageFile
 		}
 		return false;
 	}
-	
+
 	private function onFlowTestImageDimension($key, $file)
 	{
 		return false;
 	}
-	
+
 	###############
 	### Convert ###
 	###############
@@ -74,7 +74,7 @@ trait WithImageFile
 	protected function beforeCopy(GDO_File $file)
 	{
 		ImageResize::derotate($file);
-		
+
 		$this->createScaledVersions($file);
 
 // 		if ($this->resize)
@@ -83,7 +83,7 @@ trait WithImageFile
 // 			ImageResize::resize($file, $this->resizeWidth, $this->resizeHeight, $this->convert);
 // 		}
 	}
-	
+
 	public function createScaledVersions(GDO_File $original)
 	{
 		foreach ($this->scaledVersions as $name => $dim)
@@ -93,7 +93,7 @@ trait WithImageFile
 			ImageResize::resize($file, $w, $h, $format);
 		}
 	}
-	
+
 	public function createFileToScale(GDO_File $original, $name)
 	{
 		$src = $original->getPath();
@@ -109,7 +109,7 @@ trait WithImageFile
 			return $file;
 		}
 	}
-	
+
 	##################
 	### Validation ###
 	##################
@@ -121,7 +121,7 @@ trait WithImageFile
 		}
 		return false;
 	}
-	
+
 	protected function validateImageFile(GDO_File $file)
 	{
 		list($width, $height) = getimagesize($file->getPath());
@@ -143,5 +143,5 @@ trait WithImageFile
 		}
 		return true;
 	}
-	
+
 }

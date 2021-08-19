@@ -25,29 +25,29 @@ use GDO\File\FileUtil;
 class GDT_Template extends GDT
 {
 	use WithLabel;
-	
+
 	public static $THEMES = [];
 	public static function themeNames() { return array_keys(self::$THEMES); }
 	public static function registerTheme($theme, $path) { self::$THEMES[$theme] = $path; }
-	
+
 	############
 	### Base ###
 	############
 	public function defaultLabel() { return $this->noLabel(); }
-	
+
 	public function htmlClass()
 	{
 		$class = parent::htmlClass();
 		$class .= "-{$this->templateModule}-".Strings::rsubstrFrom(Strings::substrTo($this->templatePath, '.'), '/');
 		return $class;
 	}
-	
+
 	public function render() { return $this->renderTemplate(); }
 	public function renderCell() { return $this->renderTemplate(); }
 	public function renderForm() { return $this->renderTemplate(); }
 	public function renderJSON() { return $this->renderTemplate(); }
 	public function renderCLI() { return strip_tags($this->renderTemplate()); }
-	
+
 	public function renderFilter($f) { return $this->renderTemplate($f); }
 	public function renderTemplate($f=null)
 	{
@@ -68,7 +68,7 @@ class GDT_Template extends GDT
 		$this->templateVars = $tVars;
 		return $this;
 	}
-	
+
 	##############
 	### Header ###
 	##############
@@ -93,12 +93,12 @@ class GDT_Template extends GDT
 		$tVars = $this->templateVarsHead ? array_merge($this->templateVarsHead, $tVars) : $tVars;
 		return self::php($this->templateModuleHead, $this->templatePathHead, $tVars);
 	}
-	
+
 	##############
 	### Engine ###
 	##############
 	public static $CALLS = 0; # Performance counter
-	
+
 	/**
 	 * Include a template for a user.
 	 * Sets/Wraps locale ISO for the template call.
@@ -116,7 +116,7 @@ class GDT_Template extends GDT
 		Trans::$ISO = $old;
 		return $result;
 	}
-	
+
 	/**
 	 * Include a template.
 	 * @param string $moduleName
@@ -160,7 +160,7 @@ class GDT_Template extends GDT
 			ob_end_clean();
 		}
 	}
-	
+
 	/**
 	 * @param string $moduleName
 	 * @param string $path
@@ -171,12 +171,12 @@ class GDT_Template extends GDT
 	{
 	    return self::make()->template($moduleName, $path, $tVars);
 	}
-	
+
 	public static function responsePHP($moduleName, $path, array $tVars=null)
 	{
 	    return GDT_Response::makeWith(self::templatePHP($moduleName, $path, $tVars));
 	}
-	
+
 	/**
 	 * Include a static file.
 	 * @param string $moduleName
@@ -208,11 +208,11 @@ class GDT_Template extends GDT
 	    }
 	    return self::$PATHES[$key];
 	}
-	
+
 	private static function getPathB($moduleName, $path)
 	{
 	    $isos = array_unique(['', '_'.Trans::$ISO, '_'.GDO_LANGUAGE, '_en']);
-		
+
 		$path12 = Strings::rsubstrTo($path, '.', $path);
 		$path13 = Strings::rsubstrFrom($path, '.', '');
 
@@ -232,7 +232,7 @@ class GDT_Template extends GDT
     			}
 			}
 		}
-		
+
 		foreach ($isos as $iso)
 		{
 			$path1 = $path12 . $iso . '.' . $path13;
@@ -246,5 +246,5 @@ class GDT_Template extends GDT
 		// Try module file on module templates.
 		return GDO_PATH . "GDO/$moduleName/tpl/$path";
 	}
-	
+
 }

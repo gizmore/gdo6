@@ -17,14 +17,14 @@ use GDO\Core\GDT_Template;
 class GDT_ComboBox extends GDT_String
 {
 	use WithCompletion;
-	
+
 	public $choices = [];
 	public function choices(array $choices)
 	{
 		$this->choices = $choices;
 		return $this;
 	}
-	
+
 	public function configJSON()
 	{
 	    return array_merge(parent::configJSON(), array(
@@ -37,10 +37,10 @@ class GDT_ComboBox extends GDT_String
 	        'combobox' => 1,
 	    ));
 	}
-	
+
 	public function renderForm()
 	{
 	    return GDT_Template::php('Form', 'form/combobox.php', ['field' => $this]);
 	}
-	
+
 }

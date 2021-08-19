@@ -11,5 +11,5 @@ final class GetTranslationData extends MethodAjax
 	{
 		return GDT_Response::makeWith(GDT_JSON::make()->value(Trans::getCache(Trans::$ISO)));
 	}
-	
+
 }

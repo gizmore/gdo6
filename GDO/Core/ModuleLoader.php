@@ -24,7 +24,7 @@ final class ModuleLoader
 	 */
 	public static function instance() { return self::$instance; }
 	private static $instance;
-	
+
 	/**
 	 * Base modules path, the modules folder.
 	 * @var string
@@ -35,7 +35,7 @@ final class ModuleLoader
 		$this->path = $path;
 		self::$instance = $this;
 	}
-	
+
 	#############
 	### Cache ###
 	#############
@@ -43,7 +43,7 @@ final class ModuleLoader
 	 * @var GDO_Module[]
 	 */
 	private $modules = [];
-	
+
 	/**
 	 * Get all loaded modules.
 	 * @return GDO_Module[]
@@ -52,12 +52,12 @@ final class ModuleLoader
 	{
 		return $this->modules;
 	}
-	
+
 	/**
 	 * @var GDO_Module[]
 	 */
 	public static $ENABLED_MODULES = null;
-	
+
 	/**
 	 * Get all enabled and loaded modules.
 	 * @return GDO_Module[]
@@ -73,7 +73,7 @@ final class ModuleLoader
 	    }
 	    return self::$ENABLED_MODULES;
 	}
-	
+
 	/**
 	 * Get all enabled and loaded modules.
 	 * @return GDO_Module[]
@@ -84,7 +84,7 @@ final class ModuleLoader
 			return $module->isInstallable();
 		});
 	}
-	
+
     /**
 	 * @param string $moduleName
 	 * @return GDO_Module
@@ -98,7 +98,7 @@ final class ModuleLoader
 	    }
 	    return $fs ? $this->loadModuleFS($moduleName) : false;
 	}
-	
+
 	/**
 	 * Get a module by ID.
 	 * @return GDO_Module
@@ -114,7 +114,7 @@ final class ModuleLoader
 			}
 		}
 	}
-	
+
 	#################
 	### Cacheload ###
 	#################
@@ -136,13 +136,13 @@ final class ModuleLoader
 		}
 		return $this->modules;
 	}
-	
+
 	private function initFromCache(array $cache)
 	{
 		$this->modules = $cache;
 		$this->initModules();
 	}
-	
+
 	public function initModules()
 	{
 		# Register themes
@@ -187,19 +187,19 @@ final class ModuleLoader
 			}
 		}
 	}
-	
+
 	##################
 	### Massloader ###
 	##################
 	private $loadedDB = false;
 	private $loadedFS = false;
-	
+
 	public function loadModulesA()
 	{
 		$hasdb = !!GDO_DB_ENABLED;
 		return $this->loadModules($hasdb, !$hasdb);
 	}
-	
+
 	/**
 	 * @param $loadDB
 	 * @param $loadFS
@@ -213,7 +213,7 @@ final class ModuleLoader
 		    $this->loadedFS = false;
 			$this->modules = [];
 		}
-		
+
 		# Load maybe 0, 1 or 2 sources
 		$loaded = false;
 		if ($loadDB && (!$this->loadedDB) )
@@ -221,14 +221,14 @@ final class ModuleLoader
 			$this->loadedDB = $this->loadModulesDB() !== false;
 			$loaded = true;
 		}
-		
+
 		if ($loadFS && (!$this->loadedFS) )
 		{
 		    $init = !$loadDB;
 			$this->loadModulesFS($init);
 			$loaded = $this->loadedFS = true;
 		}
-		
+
 		# Loaded one?
 		if ($loaded)
 		{
@@ -240,12 +240,12 @@ final class ModuleLoader
 
 			$this->modules = $this->sortModules([
 			    'module_priority' => true, 'module_name' => true]);
-			
+
 			$this->initModules();
 		}
 		return $this->modules;
 	}
-	
+
 	private function loadModulesDB()
 	{
 	    if (!GDO_DB_ENABLED)
@@ -283,14 +283,14 @@ final class ModuleLoader
 			return false;
 		}
 	}
-	
+
 	private function loadModulesFS($init=true)
 	{
 // 	    Trans::inited(false);
 		Filewalker::traverse($this->path, null, false, array($this, '_loadModuleFS'), false, $init);
 		Trans::inited(true);
 	}
-	
+
 	public function _loadModuleFS($entry, $path, $init)
 	{
 		if (FileUtil::isFile("$path/Module_$entry.php"))
@@ -298,7 +298,7 @@ final class ModuleLoader
 			$this->loadModuleFS($entry, $init);
 		}
 	}
-	
+
 	/**
 	 * Load a module from filesystem if it is not loaded yet.
 	 * @param string $name
@@ -340,7 +340,7 @@ final class ModuleLoader
 		}
 		return $this->modules[$lowerName];
 	}
-	
+
 	/**
 	 * Instanciate a module from gdoVars/loaded data.
 	 * @param array $moduleData
@@ -362,7 +362,7 @@ final class ModuleLoader
     		return $instance;
 		}
 	}
-	
+
 	############
 	### Vars ###
 	############
@@ -375,7 +375,7 @@ final class ModuleLoader
 	    {
 	        $module->buildConfigCache();
 	    }
-	    
+
 		# Query all module vars
 		try
 		{
@@ -409,17 +409,17 @@ final class ModuleLoader
 		{
 		    Logger::logException($e);
 		}
-		
+
 		foreach ($this->modules as $module)
 		{
     		$module->buildSettingsCache();
 		}
 	}
-	
+
 	public function sortModules(array $orders)
 	{
 	    Sort::sortArray($this->modules, GDO_Module::table(), $orders);
 	    return $this->modules;
 	}
-	
+
 }

@@ -15,7 +15,7 @@ final class Color
 			return new self(hexdec($matches[1]), hexdec($matches[2]), hexdec($matches[3]));
 		}
 	}
-	
+
 	public static function fromHSV($h, $s, $v)
 	{
 		list($r, $g, $b) = self::hsvToRGB($h, $s, $v);
@@ -48,7 +48,7 @@ final class Color
 		}
 		return [$r, $g, $b];
 	}
-	
+
 	private $r, $g, $b;
 	public function __construct($r, $g, $b)
 	{
@@ -56,9 +56,9 @@ final class Color
 	}
 
 	public function asRGB() { return [$this->r, $this->g, $this->b]; }
-	
+
 	public function asHex() { return sprintf('#%02x%02x%02x', $this->r, $this->g, $this->b); }
-	
+
 	public function asHSV()
 	{
 		$h = $s = $v = 0;
@@ -77,7 +77,7 @@ final class Color
 		$s = round($s);
 		return [$h, $s, $v];
 	}
-	
+
 	public function complementary()
 	{
 //	 	if ( ($this->r == 0) && ($this->g == 0) && ($this->b == 0) )
@@ -87,7 +87,7 @@ final class Color
 		list($h, $s, $v) = $this->asHSV();
 		return self::fromHSV($this->hueShift($h, 180), $s, $v);
 	}
-	
+
 	private function min3($a,$b,$c) { return ($a<$b)?(($a<$c)?$a:$c):(($b<$c)?$b:$c); }
 	private function max3($a,$b,$c) { return ($a>$b)?(($a>$c)?$a:$c):(($b>$c)?$b:$c); }
 	private function hueShift($h,$s) { $h += $s; while ($h>=360.0) $h-=360.0; while ($h<0.0) $h+=360.0; return $h; }

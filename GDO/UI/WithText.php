@@ -18,7 +18,7 @@ trait WithText
 		$this->textRaw = $text;
 		return $this;
 	}
-	
+
 	# I18n
 	private $textKey = null;
 	private $textArgs = null;

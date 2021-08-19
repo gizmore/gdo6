@@ -18,7 +18,7 @@ use GDO\DB\GDT_UInt;
 final class GDO_Permission extends GDO
 {
     public function gdoCached() { return false; }
-    
+
 	public function gdoColumns()
 	{
 		return [
@@ -29,11 +29,11 @@ final class GDO_Permission extends GDO
 		        subquery("SELECT COUNT(*) FROM gdo_userpermission WHERE perm_perm_id = perm_id"),
 		];
 	}
-	
+
 	public static function getByName($name) { return self::getBy('perm_name', $name); }
-	
+
 	public static function getOrCreateByName($name, $level='0') { return self::create($name, $level); }
-	
+
 	public static function create($name, $level='0')
 	{
 		if (!($perm = self::getByName($name)))
@@ -50,13 +50,13 @@ final class GDO_Permission extends GDO
 		}
 		return $perm;
 	}
-	
+
 	##############
 	### Getter ###
 	##############
 	public function getName() { return $this->getVar('perm_name'); }
 	public function getLevel() { return $this->getVar('perm_level'); }
-	
+
 	###############
 	### Display ###
 	###############
@@ -69,10 +69,10 @@ final class GDO_Permission extends GDO
 	public function display_perm_edit() { return GDT_EditButton::make()->href($this->hrefEdit()); }
 	public function display_user_count() { return $this->getVar('user_count'); }
 	public function renderChoice() { return sprintf('%s–%s', $this->getID(), $this->displayName()); }
-	
+
 	############
 	### HREF ###
 	############
 	public function href_btn_edit() { return href('Admin', 'ViewPermission', '&permission='.$this->getID()); }
-	
+
 }

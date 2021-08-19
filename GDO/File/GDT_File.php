@@ -23,12 +23,12 @@ class GDT_File extends GDT_Object
 {
 	use WithHREF;
 	use WithImageSize;
-	
+
 	public $multiple = false;
-	
+
 	public function defaultLabel() { return $this->label('file'); }
 	public function isImageFile() { return false; }
-	
+
 	protected function __construct()
 	{
 	    parent::__construct();
@@ -36,7 +36,7 @@ class GDT_File extends GDT_Object
 		$this->icon('file');
 // 		$this->defaultSize();
 	}
-	
+
 	############
 	### Mime ###
 	############
@@ -46,7 +46,7 @@ class GDT_File extends GDT_Object
 		$this->mimes = array_merge($this->mimes, $mime);
 		return $this;
 	}
-	
+
 	############
 	### Size ###
 	############
@@ -56,19 +56,19 @@ class GDT_File extends GDT_Object
 		$this->minsize = $minsize;
 		return $this;
 	}
-	
+
 	public $maxsize = 1024 * 4096; # 4MB
 	public function maxsize($maxsize)
 	{
 		$this->maxsize = $maxsize;
 		return $this;
 	}
-	
+
 	public function defaultSize()
 	{
 	    return $this->maxsize(Module_File::instance()->cfgUploadMaxSize());
 	}
-	
+
 	###############
 	### Preview ###
 	###############
@@ -78,11 +78,11 @@ class GDT_File extends GDT_Object
 		$this->preview = $preview;
 		return $this;
 	}
-	
+
 	public $previewHREF;
 	public function previewHREF($previewHREF=null) { $this->previewHREF = $previewHREF; return $this->preview($previewHREF!==null); }
 	public function displayPreviewHref(GDO_File $file) { return $this->previewHREF . $file->getID(); }
-	
+
 	##################
 	### File count ###
 	##################
@@ -93,13 +93,13 @@ class GDT_File extends GDT_Object
 		$this->minfiles = $minfiles;
 		return $minfiles  > 0 ? $this->notNull() : $this;
 	}
-	
+
 	public function maxfiles($maxfiles)
 	{
 		$this->maxfiles = $maxfiles;
 		return $this;
 	}
-	
+
 	############
 	### Size ###
 	############
@@ -126,7 +126,7 @@ class GDT_File extends GDT_Object
 	public function minHeight($minHeight) { $this->minHeight = $minHeight; return $this; }
 	public $maxHeight;
 	public function maxHeight($maxHeight) { $this->maxHeight = $maxHeight; return $this; }
-	
+
 	##############
 	### Action ###
 	##############
@@ -136,7 +136,7 @@ class GDT_File extends GDT_Object
 		$this->action = $action.'&_ajax=1&_fmt=json&flowField='.$this->name;
 		return $this;
 	}
-	
+
 	public function getAction()
 	{
 		if (!$this->action)
@@ -145,10 +145,10 @@ class GDT_File extends GDT_Object
 		}
 		return $this->action;
 	}
-	
+
 	public $withFileInfo = true;
 	public function withFileInfo($withFileInfo=true) { $this->withFileInfo = $withFileInfo; return $this; }
-	
+
 	##############
 	### Render ###
 	##############
@@ -156,12 +156,12 @@ class GDT_File extends GDT_Object
 	{
 		return GDT_Template::php('File', 'form/file.php', ['field'=>$this]);
 	}
-	
+
 	public function renderCell()
 	{
 		return GDT_Template::php('File', 'cell/file.php', ['field' => $this, 'gdo' => $this->getValue()]);
 	}
-	
+
 	public function configJSON()
 	{
 		return [
@@ -175,12 +175,12 @@ class GDT_File extends GDT_Object
 			'selectedFiles' => $this->initJSONFiles(),
 		];
 	}
-	
+
 	public function renderCard()
 	{
 	    return GDT_Template::php('File', 'card/filecard.php', ['field' => $this]);
 	}
-	
+
 	public function initJSONFiles()
 	{
 		$json = [];
@@ -193,7 +193,7 @@ class GDT_File extends GDT_Object
 		}
 		return $json;
 	}
-	
+
 	#############
 	### Value ###
 	#############
@@ -220,12 +220,12 @@ class GDT_File extends GDT_Object
 			return GDO_File::getById($var);
 		}
 	}
-	
+
 	public function getVar()
 	{
 		return $this->toVar($this->getValue());
 	}
-	
+
 	/**
 	 * Get all initial files for this file gdt.
 	 * @return \GDO\File\GDO_File[]
@@ -234,7 +234,7 @@ class GDT_File extends GDT_Object
 	{
 		return Arrays::arrayed($this->getInitialFile());
 	}
-	
+
 	public function getInitialFile()
 	{
 	    $var = $this->getRequestVar($this->formVariable(), $this->var);
@@ -243,13 +243,13 @@ class GDT_File extends GDT_Object
 			return GDO_File::getById($var);
 		}
 	}
-	
+
 	public function setGDOData(GDO $gdo=null)
 	{
 		$this->var = $gdo->getVar($this->name);
 		return $this;
 	}
-	
+
 	public function getGDOData()
 	{
 		if ($file = $this->getValue())
@@ -258,7 +258,7 @@ class GDT_File extends GDT_Object
 		}
 		return [$this->name => null];
 	}
-	
+
 	/**
 	 * @return GDO_File
 	 */
@@ -275,7 +275,7 @@ class GDT_File extends GDT_Object
 			return $old;
 		}
 	}
-	
+
 	/**
 	 * @return GDO_File
 	 */
@@ -284,7 +284,7 @@ class GDT_File extends GDT_Object
 		$files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->files));
 		return array_pop($files);
 	}
-	
+
 	##############
 	### Delete ###
 	##############
@@ -294,17 +294,17 @@ class GDT_File extends GDT_Object
 	    $this->noDelete = $noDelete;
 	    return $this;
 	}
-	
+
 	public function notNull($notNull=true)
 	{
 	    $this->noDelete = $notNull;
 	    return parent::notNull($notNull);
 	}
-	
+
 	public function onDeleteFiles(array $ids)
 	{
 		$id = array_shift($ids); # only first id
-		
+
 		if ( ($this->gdo) && ($this->gdo->isPersisted()) ) # GDO possibly has a file
 		{
 			if ($this->gdo instanceof GDO_Module)
@@ -314,7 +314,7 @@ class GDT_File extends GDT_Object
 					$this->gdo->removeConfigVar($this->name);
 				}
 			}
-			
+
 			if ($id == $this->gdo->getVar($this->name)) # It is the requested file to delete.
 			{
 				$this->gdo->saveVar($this->name, null); # Unrelate
@@ -327,7 +327,7 @@ class GDT_File extends GDT_Object
 			$file->delete();
 		}
 	}
-	
+
 	################
 	### Validate ###
 	################
@@ -339,7 +339,7 @@ class GDT_File extends GDT_Object
 	        /** @var $files \GDO\File\GDO_File[] **/
 	        $files = Arrays::arrayed($value);
 	        $this->files = [];
-	        
+
 	        if ( ($this->notNull) && (empty($files)) )
 	        {
 	            $valid = $this->error('err_upload_min_files', [1]);
@@ -395,7 +395,7 @@ class GDT_File extends GDT_Object
 	        $this->cleanup();
 	    }
 	}
-	
+
 	protected function validateFile(GDO_File $file)
 	{
 		if ( ($this->minsize !== null) && ($file->getSize() < $this->minsize) )
@@ -408,11 +408,11 @@ class GDT_File extends GDT_Object
 		}
 		return true;
 	}
-	
+
 	protected function beforeCopy(GDO_File $file)
 	{
 	}
-	
+
 	###################
 	### Flow upload ###
 	###################
@@ -420,13 +420,13 @@ class GDT_File extends GDT_Object
 	{
 		return GDO_PATH.'temp/flow/'.GDO_Session::instance()->getID().'/'.$key;
 	}
-	
+
 	private function getChunkDir($key)
 	{
 		$chunkFilename = str_replace('/', '', $_REQUEST['flowFilename']);
 		return $this->getTempDir($key).'/'.$chunkFilename;
 	}
-	
+
 	private function denyFlowFile($key, $file, $reason)
 	{
 	    $this->cleanup();
@@ -434,13 +434,13 @@ class GDT_File extends GDT_Object
 	    @mkdir($dir, GDO_CHMOD, true);
 		return @file_put_contents($dir.'/denied', $reason);
 	}
-	
+
 	private function deniedFlowFile($key, $file)
 	{
 		$file = $this->getChunkDir($key).'/denied';
 		return FileUtil::isFile($file) ? file_get_contents($file) : false;
 	}
-	
+
 	private function getFile($key)
 	{
 		if ($files = $this->getFiles($key))
@@ -448,7 +448,7 @@ class GDT_File extends GDT_Object
 			return array_shift($files);
 		}
 	}
-	
+
 	protected function getFiles($key)
 	{
 		$files = array();
@@ -482,7 +482,7 @@ class GDT_File extends GDT_Object
 		}
 		return $files;
 	}
-	
+
 	/**
 	 * @param string $dir
 	 * @return GDO_File
@@ -500,18 +500,18 @@ class GDT_File extends GDT_Object
 		    ]);
 		}
 	}
-	
+
 	public function onValidated()
 	{
 		$this->cleanup();
 	}
-	
+
 	public function cleanup()
 	{
 		$this->files = null;
 		FileUtil::removeDir($this->getTempDir($this->name));
 	}
-	
+
 	############
 	### Flow ###
 	############
@@ -519,37 +519,37 @@ class GDT_File extends GDT_Object
 	{
 		return $this->onFlowUploadFile($this->name, $_FILES[$this->name]);
 	}
-	
+
 	private function onFlowError($error, ...$args)
 	{
 	    $this->cleanup();
 		return GDT_Error::responseWith($error, $args, 413);
 	}
-	
+
 	private function onFlowUploadFile($key, $file)
 	{
 		$chunkDir = $this->getChunkDir($key);
-		
+
 		if (!FileUtil::createDir($chunkDir))
 		{
 			return $this->onFlowError('err_create_dir', $chunkDir);
 		}
-		
+
 		if (false !== ($error = $this->deniedFlowFile($key, $file)))
 		{
 			return $this->onFlowError("err_upload_denied", $error);
 		}
-		
+
 		if (!$this->onFlowCheckSizeBeforeCopy($key, $file))
 		{
 			return $this->onFlowError("err_file_too_large", $this->maxsize);
 		}
-		
+
 		if (!$this->onFlowCopyChunk($key, $file))
 		{
 			return $this->onFlowError("err_copy_chunk_failed");
 		}
-		
+
 		if ($_REQUEST['flowChunkNumber'] === $_REQUEST['flowTotalChunks'])
 		{
 			if ($error = $this->onFlowFinishFile($key, $file))
@@ -559,7 +559,7 @@ class GDT_File extends GDT_Object
 		}
 		return GDT_Success::responseWith('msg_uploaded');
 	}
-	
+
 	private function onFlowCopyChunk($key, $file)
 	{
 		$chunkDir = $this->getChunkDir($key);
@@ -567,19 +567,19 @@ class GDT_File extends GDT_Object
 		$chunkFile = $chunkDir . '/' . $chunkNumber;
 		return @copy($file['tmp_name'], $chunkFile);
 	}
-	
+
 	private function onFlowCheckSizeBeforeCopy($key, $file)
 	{
 		$chunkDir = $this->getChunkDir($key);
 		$already = FileUtil::dirsize($chunkDir);
 		$additive = filesize($file['tmp_name']);
-		
+
 		$substract = @filesize($chunkDir.'/0');
 		$substract += @filesize($chunkDir.'/temp');
 		$substract += @filesize($chunkDir.'/name');
 		$substract += @filesize($chunkDir.'/mime');
 		$substract += @filesize($chunkDir.'/denied');
-		
+
 		$sumSize = $already + $additive - $substract;
 
 		if ($this->maxsize && ($sumSize > $this->maxsize))
@@ -590,49 +590,49 @@ class GDT_File extends GDT_Object
 
 		return true;
 	}
-	
+
 	private function onFlowFinishFile($key, $file)
 	{
 		$chunkDir = $this->getChunkDir($key);
-		 
+
 		# Clean old 0 file
 		$finalFile = $chunkDir.'/0';
 		@unlink($finalFile);
-		
+
 		# Merge chunks to single temp file
 		$finalFile = $chunkDir.'/temp';
 		Filewalker::traverse($chunkDir, null, array($this, 'onMergeFile'), false, true, array($finalFile));
-		
+
 		# Write user chosen name to a file for later
 		$nameFile = $chunkDir.'/name';
 		@file_put_contents($nameFile, $file['name']);
-		
+
 		# Write mime type for later use
 		$mimeFile = $chunkDir.'/mime';
 		@file_put_contents($mimeFile, mime_content_type($chunkDir.'/temp'));
-		
+
 		# Run finishing tests to deny.
 		if (false !== ($error = $this->onFlowFinishTests($key, $file)))
 		{
 			$this->denyFlowFile($key, $file, $error);
 			return $error;
 		}
-		
+
 		# Move single temp to chunk 0
 		if (!@rename($finalFile, $chunkDir.'/0'))
 		{
 			return "Cannot move temp file.";
 		}
-		
+
 		return false; # no error
 	}
-	
+
 	public function onMergeFile($entry, $fullpath, $args)
 	{
 		list($finalFile) = $args;
 		@file_put_contents($finalFile, file_get_contents($fullpath), FILE_APPEND);
 	}
-	
+
 	protected function onFlowFinishTests($key, $file)
 	{
 		if (false !== ($error = $this->onFlowTestChecksum($key, $file)))
@@ -645,12 +645,12 @@ class GDT_File extends GDT_Object
 		}
 		return false;
 	}
-	
+
 	private function onFlowTestChecksum($key, $file)
 	{
 		return false;
 	}
-	
+
 	private function onFlowTestMime($key, $file)
 	{
 		if (!($mime = @file_get_contents($this->getChunkDir($key).'/mime')))
@@ -663,5 +663,5 @@ class GDT_File extends GDT_Object
 		}
 		return false;
 	}
-	
+
 }

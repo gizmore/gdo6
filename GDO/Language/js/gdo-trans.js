@@ -1,8 +1,8 @@
 "use strict";
 function GDO_Trans() {
-	
+
 	this.CACHE = {};
-	
+
 	this.t = function(key) {
 		key = this.CACHE[key] ? this.CACHE[key] : key;
 		var args = Array.prototype.slice.call(arguments);

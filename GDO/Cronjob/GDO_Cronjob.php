@@ -25,5 +25,5 @@ final class GDO_Cronjob extends GDO
             GDT_Checkbox::make('cron_success')->notNull()->initial('0'),
         ];
     }
-    
+
 }

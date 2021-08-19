@@ -20,14 +20,14 @@ class GDT_List extends GDT_Table
 {
 	const MODE_CARD = 1;
 	const MODE_LIST = 2;
-	
+
 	private $listMode = self::MODE_LIST;
 	public function listMode($mode)
 	{
 		$this->listMode = $mode;
 		return $this;
 	}
-	
+
 	################
 	### Template ###
 	################
@@ -37,12 +37,12 @@ class GDT_List extends GDT_Table
 		$this->itemTemplate = $gdoType;
 		return $this;
 	}
-	
+
 	public function getItemTemplate()
 	{
 		return $this->itemTemplate ? $this->itemTemplate : GDT_GWF::make();
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -51,17 +51,17 @@ class GDT_List extends GDT_Table
 		$template = $this->listMode === self::MODE_CARD ? 'cell/list_card.php' : 'cell/list.php';
 		return GDT_Template::php('Table', $template, ['field'=>$this]);
 	}
-	
+
 	public function configJSON()
 	{
 	    return array_merge(parent::configJSON(), [
 	        'listMode' => $this->listMode,
 	    ]);
 	}
-	
+
 	public static $CURRENT;
 	public $data;
-	
+
 	protected function renderJSONData()
 	{
 	    self::$CURRENT = $this;
@@ -74,5 +74,5 @@ class GDT_List extends GDT_Table
 	    }
 	    return $this->data;
 	}
-	
+
 }

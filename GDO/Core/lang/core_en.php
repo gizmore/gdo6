@@ -77,10 +77,10 @@ return array(
 'completed' => 'Completed',
 'timezone' => 'Timezone',
 'format' => 'Format',
-    
+
 # Core GDO tables
 'gdo_permission' => 'Permission',
-    
+
 # Generic Buttons
 'btn_back' => 'Back',
 'btn_set' => 'Set',
@@ -102,7 +102,7 @@ return array(
 'btn_overview' => 'Overview',
 'btn_search' => 'Search',
 'btn_sort' => 'Sort',
-    
+
 # Sorting
 'order_by' => 'Order by',
 'order_dir' => 'Direction',
@@ -110,16 +110,16 @@ return array(
 'asc' => 'Ascending',
 'desc' => 'Descending',
 'lbl_search_criteria' => 'Criteria: %s',
-    
+
 # Generic Messages
 'msg_form_saved' => 'Your data has been safed successfully.',
 'msg_upgrading' => 'Upgrading Module %s to version %s.',
 'msg_redirect' => 'You will be redirected to <i>%s</i> in %s seconds.',
 
-# Generic Confirms	
+# Generic Confirms
 'confirm_delete' => 'Do you really want to delete this?',
 'iconfirm' => 'I am sure',
-	
+
 # Generic Errors
 'err_db' => "Database Error(%s): %s<br/>\n%s<br/>\n",
 'err_user' => 'This user is unknown.',
@@ -192,11 +192,11 @@ return array(
 'err_you_no_mail' => 'Your account needs an email for this.',
 'err_unknown_parameter' => 'Unknown Parameter for method %s/%s: %s',
 'err_select_candidates' => 'Possible matches: %s',
-    
+
 # File
 'is_file' => 'a File',
 'is_folder' => 'a Folder',
-    
+
 # Permissions
 'sel_no_permissions' => 'No permission required',
 'perm_admin' => 'Administrator',
@@ -209,7 +209,7 @@ return array(
 'enum_guest' => 'Guest',
 'enum_system' => 'System',
 'enum_member' => 'Member',
-	
+
 # Checkbox
 'enum_undetermined_yes_no' => 'unknown',
 'enum_unknown' => 'unknown',
@@ -217,7 +217,7 @@ return array(
 # Files
 'image' => 'Image',
 'icon' => 'Icon',
-	
+
 # Gender
 'enum_male' => 'male',
 'enum_female' => 'female',
@@ -234,13 +234,13 @@ return array(
 'gdo_sidebar_version' => 'gdo %s',
 'sidenav_left_title' => 'Application',
 'sidenav_right_title' => 'Settings',
-	
+
 # Config
 'ipp' => 'IPP',
 'enum_no' => 'No',
 'enum_yes' => 'Yes',
 'cfg_ipp' => 'Items per page',
-	
+
 # Welcome
 'core_welcome_box_info' => 'Welcome to %s. You are authenticated as %s.',
 'link_impressum' => 'Imprint',
@@ -248,7 +248,7 @@ return array(
 #
 'quote_by' => 'Quote by %s',
 'quote_at' => 'at %s',
-	
+
 # Filter
 'int_filter' => 'Num',
 'string_filter' => 'Text',
@@ -260,7 +260,7 @@ return array(
 # Method description
 'mdescr_core_impressum' => 'Site impressum',
 'mdescr_core_privacy' => 'Privacy information',
-    
+
 'li_creation_title' => '%s at %s (%s)',
 'edited_info' => 'Last edited by %s at %s',
 
@@ -292,13 +292,13 @@ Referrer: %s<br/>
 <br/>
 Kind Regards,<br/>
 %2$s system',
-    
+
 # v6.10.1
 'msg_sort_success' => 'The items have been re-arranged.',
 'sorting' => 'Sorting',
 'mtitle_core_welcome' => 'Welcome',
 'pagemenu_cli' => 'Page %s of %s',
-    
+
 # v6.10.3 CLI
 'cli_methods' => 'Module %s offers these methods: %s.',
 'cli_usage' => 'Usage: %s - %s',
@@ -313,7 +313,7 @@ Kind Regards,<br/>
 'cfg_tt_load_sidebars' => 'Disable can give a slight performance boost, if you use a custom / static / sidebar / page / theme / layout.',
 'thousands_seperator' => ',',
 'decimal_point' => '.',
-    
+
 # v6.10.5 Fixes
 'min' => 'Min',
 'max' => 'Max',

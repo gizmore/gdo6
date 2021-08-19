@@ -21,11 +21,11 @@ final class CopyHTAccess extends MethodForm
     {
         $form->actions()->addField(GDT_Submit::make()->label('copy_htaccess'));
     }
-    
+
     public function formValidated(GDT_Form $form)
     {
         copy(GDO_PATH . '.htaccess.example', GDO_PATH . '.htaccess');
         return parent::formValidated($form)->addField($this->renderPage());
     }
-    
+
 }

@@ -19,6 +19,6 @@
    min="<?= $field->min; ?>"
    max="<?= $field->max; ?>"
    step="<?= $field->step; ?>"
-   value="<?= $field->getHigh(); ?>" />   
+   value="<?= $field->getHigh(); ?>" />
   <?= $field->htmlError(); ?>
 </div>

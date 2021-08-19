@@ -26,7 +26,7 @@ trait WithFields
 	{
 		return self::make()->addFields($fields);
 	}
-	
+
 	##############
 	### Fields ###
 	##############
@@ -34,12 +34,12 @@ trait WithFields
 	 * @var GDT[]
 	 */
 	public $fields = [];
-	
+
 	public function addField(GDT $field=null)
 	{
 	    return $this->_addField($field);
 	}
-	
+
 	protected function _addField(GDT $field=null)
 	{
 	    if ($field)
@@ -55,7 +55,7 @@ trait WithFields
 	    }
         return $this;
 	}
-	
+
 	public function addFields(array $fields=null)
 	{
 		if ($fields)
@@ -67,7 +67,7 @@ trait WithFields
 		}
 		return $this;
 	}
-	
+
 	public function addFieldAfter(GDT $field, $after)
 	{
 	    $newFields = [];
@@ -88,20 +88,20 @@ trait WithFields
 	    $this->fields = $newFields;
 	    return $this;
 	}
-	
+
 	public function addFieldFirst(GDT $field)
 	{
 	    $newFields = $field->name ? [$field->name => $field] : [$field];
 	    $this->fields = array_merge($newFields, $this->fields);
 	    return $this;
 	}
-	
+
 	public function clearFields()
 	{
 	    $this->fields = [];
 	    return $this;
 	}
-	
+
 	/**
 	 * Return all fields in this collection.
 	 * @return \GDO\Core\GDT[]
@@ -109,7 +109,7 @@ trait WithFields
 	public function &getFields() { return $this->fields; }
 
 	public function fieldCount() { return $this->fields ? count($this->fields) : 0; }
-	
+
 	public function searchableFieldCount()
 	{
 	    $count = 0;
@@ -122,7 +122,7 @@ trait WithFields
 	    }
 	    return $count;
 	}
-	
+
 	public function orderableFieldCount()
 	{
 	    $count = 0;
@@ -135,7 +135,7 @@ trait WithFields
 	    }
 	    return $count;
 	}
-	
+
     /**
 	 * Return a field by name.
 	 * @param string $name
@@ -162,7 +162,7 @@ trait WithFields
 			}
 		}
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -170,7 +170,7 @@ trait WithFields
 	{
 	    return $this->renderCLIFields();
 	}
-	
+
 	public function renderCLIFields()
 	{
 	    $back = [];
@@ -186,7 +186,7 @@ trait WithFields
 	    }
 	    return implode(', ', $back);
 	}
-	
+
 	public function renderCard()
 	{
 	    if ($this->fields)
@@ -197,12 +197,12 @@ trait WithFields
     	    }
 	    }
 	}
-	
+
 	public function renderJSON()
 	{
 	    return $this->renderJSONFields();
 	}
-	
+
 	public function renderJSONFields()
 	{
 		$json = [];
@@ -223,7 +223,7 @@ trait WithFields
 		}
 		return $json;
 	}
-	
+
 	public function renderXML()
 	{
 	    $xml = '';
@@ -236,7 +236,7 @@ trait WithFields
 	    }
 	    return $xml;
 	}
-	
+
 	public function renderXMLFields()
 	{
 	    $xml = '';
@@ -260,7 +260,7 @@ trait WithFields
 	{
 		return $this->_getFieldsRec($this);
 	}
-	
+
 	private function _getFieldsRec(GDT $gdt)
 	{
 	    $fields = [];
@@ -283,5 +283,5 @@ trait WithFields
 		}
 		return $fields;
 	}
-	
+
 }

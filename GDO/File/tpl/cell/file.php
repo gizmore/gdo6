@@ -8,7 +8,7 @@ use GDO\UI\GDT_Icon; ?>
 <img
  style="display: block; max-width: 100%; <?php #$field->styleSize()?>"
  src="<?= ($field->previewHREF . $gdo->getID()) ?>" />
- 
+
 <?php else : ?>
   <?= GDT_Icon::iconS('file'); ?>
 <?php endif; ?>

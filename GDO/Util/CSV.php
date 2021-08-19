@@ -13,30 +13,30 @@ final class CSV
     private $delimiter = ',';
     private $enclosure = '"';
     private $withHeader = true;
-    
+
     public function __construct($path)
     {
         $this->path = $path;
     }
-    
+
     public function delimiter($delimiter)
     {
         $this->delimiter = $delimiter;
         return $this;
     }
-    
+
     public function enclosure($enclosure)
     {
         $this->enclosure = $enclosure;
         return $this;
     }
-    
+
     public function withHeader($withHeader=true)
     {
         $this->$withHeader = $withHeader;
         return $this;
     }
-    
+
     public function eachLine($callable)
     {
         if ($fh = @fopen($this->path, 'r'))
@@ -56,7 +56,7 @@ final class CSV
             fclose($fh);
         }
     }
-    
+
     public function all()
     {
         $all = [];
@@ -75,5 +75,5 @@ final class CSV
         }
         return $all;
     }
-    
+
 }

@@ -18,17 +18,17 @@ final class ArrayResult extends Result
      * @var GDO[]
      */
     private $data;
-    
+
     /**
 	 * @var GDO[]
 	 */
 	private $fullData;
-	
+
 	/**
 	 * @var int
 	 */
 	private $index;
-	
+
 	public function __construct(array &$data, GDO $table)
 	{
 		$this->data = &$data;
@@ -36,29 +36,29 @@ final class ArrayResult extends Result
 		$this->table = $table;
 		$this->reset();
 	}
-	
+
 	public function data(array &$data)
 	{
 	    $this->data = &$data;
 	    return $this;
 	}
-	
+
 	public function fullData(array &$fullData)
 	{
 	    $this->fullData = &$fullData;
 	    return $this;
 	}
-	
+
 	public function &getData()
 	{
 	    return $this->data;
 	}
-	
+
 	public function &getFullData()
 	{
 	    return $this->fullData;
 	}
-	
+
 	#############
 	### Table ###
 	#############
@@ -86,8 +86,8 @@ final class ArrayResult extends Result
 	        return $gdo->setGDOVars($o->getGDOVars());
 	    }
 	}
-	
-	
+
+
 	##############
 	### Filter ###
 	##############
@@ -157,5 +157,5 @@ final class ArrayResult extends Result
 	    $this->data = $data;
 	    return $this;
 	}
-	
+
 }

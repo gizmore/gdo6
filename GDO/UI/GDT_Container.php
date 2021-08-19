@@ -8,7 +8,7 @@ use GDO\Core\WithFields;
  * Simple collection of GDTs.
  * The render functions call the render function on all fields.
  * No template is used yet.
- * 
+ *
  * @author gizmore
  * @version 6.10.4
  * @since 6.7.1
@@ -18,7 +18,7 @@ class GDT_Container extends GDT
     use WithFlex;
 	use WithFields;
 	use WithPHPJQuery;
-	
+
 	public function defaultName() { return 'cont'; }
 
 	private function setupHTML()
@@ -33,7 +33,7 @@ class GDT_Container extends GDT
 	        }
 	    }
 	}
-	
+
 	public function renderCell()
 	{
 	    if ($this->fields)
@@ -48,12 +48,12 @@ class GDT_Container extends GDT
     		return $back;
 	    }
 	}
-	
+
 	public function renderCLI()
 	{
 	    return $this->renderCLIFields();
 	}
-	
+
 	public function renderForm()
 	{
 	    if ($this->fields)
@@ -68,7 +68,7 @@ class GDT_Container extends GDT
     	    return $back;
 	    }
 	}
-	
+
 	public function renderCard()
 	{
 	    if ($this->fields)
@@ -83,5 +83,5 @@ class GDT_Container extends GDT
     	    return $back;
 	    }
 	}
-	
+
 }

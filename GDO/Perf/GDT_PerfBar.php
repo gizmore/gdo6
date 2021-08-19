@@ -14,7 +14,7 @@ use GDO\Mail\Mail;
 
 /**
  * Performance statistics panel.
- * 
+ *
  * @author gizmore
  * @version 6.10
  * @since 6.00
@@ -39,13 +39,13 @@ final class GDT_PerfBar extends GDT_Panel
 			'dbTime' => round(Database::$QUERY_TIME, 4),
 			'phpTime' => round($phpTime, 4),
 			'totalTime' => round($totalTime, 4),
-			
+
 			'memory_php' => $memphp,
 			'memory_real' => $memreal,
 			'memory_max' => max($memphp, $memreal), # Bug in PHP?
-			
+
 			'phpClasses' => count(get_declared_classes()),
-			
+
 			'gdoFiles' => $GDT_LOADED,
 		    'gdoCount' => GDO::$COUNT,
 		    'gdtCount' => GDT::$COUNT,
@@ -56,7 +56,7 @@ final class GDT_PerfBar extends GDT_Panel
 // 		    'gdoHookNames' => GDT_Hook::$CALL_NAMES,
 			'gdoIPC' => GDT_Hook::$IPC_CALLS,
 			'gdoMails' => Mail::$SENT,
-		    
+
 		);
 	}
 

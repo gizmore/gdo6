@@ -12,5 +12,5 @@ final class GetCookie extends MethodAjax
 		$json =  Module_Core::instance()->gdoUserJSON();
 		return GDT_Array::makeWith($json);
 	}
-	
+
 }

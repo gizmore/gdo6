@@ -12,16 +12,16 @@ use GDO\Session\GDO_Session;
 
 /**
  * Change a user's timezone.
- * 
+ *
  * @author gizmore
  */
 final class Timezone extends MethodForm
 {
     public function isTransactional() { return false; }
     public function isUserRequired() { return false; }
-    
+
     public function formName() { return 'tzform'; }
-    
+
     public function createForm(GDT_Form $form)
     {
         $tz = GDO_User::current()->getTimezone();
@@ -38,7 +38,7 @@ final class Timezone extends MethodForm
     {
         $this->setTimezone($form->getFormValue('timezone'), false);
     }
-    
+
     public function setTimezone($timezone, $redirect=true)
     {
         $user = GDO_User::current();
@@ -74,8 +74,8 @@ final class Timezone extends MethodForm
                 Website::redirectError('err_nothing_happened');
             }
         }
-        
+
         return GDT_Response::make();
     }
-    
+
 }

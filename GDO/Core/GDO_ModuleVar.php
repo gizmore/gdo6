@@ -14,7 +14,7 @@ use GDO\DB\GDT_String;
 final class GDO_ModuleVar extends GDO
 {
 	public function gdoCached() { return false; }
-	
+
 	###########
 	### GDO ###
 	###########
@@ -28,7 +28,7 @@ final class GDO_ModuleVar extends GDO
 	}
 	public function getVarName() { return $this->getVar('mv_name'); }
 	public function getVarValue() { return $this->getVar('mv_value'); }
-	
+
 	public static function createModuleVar(GDO_Module $module, GDT $gdt)
 	{
 	    $var = $gdt->getVar();
@@ -45,10 +45,10 @@ final class GDO_ModuleVar extends GDO
     			'mv_value' => $var,
     		])->replace();
 		}
-		
+
 		return $moduleVar;
 	}
-	
+
 	public static function removeModuleVar(GDO_Module $module, $varname)
 	{
 		$varname = GDO::escapeS($varname);
@@ -59,5 +59,5 @@ final class GDO_ModuleVar extends GDO
 		    'mv_value' => null,
 		]);
 	}
-	
+
 }

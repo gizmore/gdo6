@@ -4,7 +4,7 @@ namespace GDO\Core\Event;
 final class Events
 {
     private static $EVENTS = [];
-    
+
     private static function &getSubscribers($eventName)
     {
         if (!isset(self::$EVENTS[$eventName]))
@@ -13,7 +13,7 @@ final class Events
         }
         return self::$EVENTS[$eventName];
     }
-    
+
     public static function subscribe($eventName, $callable)
     {
         $subscribers = self::getSubscribers($eventName);

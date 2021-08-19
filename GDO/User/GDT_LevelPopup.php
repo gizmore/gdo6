@@ -15,7 +15,7 @@ final class GDT_LevelPopup extends GDT_IconButton
 		$this->level = $level;
 		return $this;
 	}
-	
+
 	public function renderCell()
 	{
 		return GDT_Template::php('User', 'cell/levelpopup.php', ['field'=>$this]);

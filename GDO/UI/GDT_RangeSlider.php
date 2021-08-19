@@ -13,12 +13,12 @@ use GDO\Core\GDT_Template;
 final class GDT_RangeSlider extends GDT_Slider
 {
 	public function renderForm() { return GDT_Template::php('UI', 'form/range_slider.php', ['field' => $this]); }
-	
+
 	###########
 	### GDO ###
 	###########
 	public function getGDOData() { return [$this->name => $this->getLow(), $this->highName => $this->getHigh()]; }
-	
+
 	###############
 	### Options ###
 	###############
@@ -28,7 +28,7 @@ final class GDT_RangeSlider extends GDT_Slider
 	public function minRange($minRange) { $this->minRange = $minRange; return $this; }
 	public $maxRange = -1;
 	public function maxRange($maxRange) { $this->maxRange = $maxRange; return $this; }
-	
+
 	###################
 	### Var / Value ###
 	###################
@@ -56,7 +56,7 @@ final class GDT_RangeSlider extends GDT_Slider
 			}
 		}
 	}
-	
+
 	################
 	### Validate ###
 	################

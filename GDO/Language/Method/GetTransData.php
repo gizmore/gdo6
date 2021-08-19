@@ -23,5 +23,5 @@ final class GetTransData extends MethodAjax
 	        die($code);
 	    }
 	}
-	
+
 }

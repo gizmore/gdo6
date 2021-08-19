@@ -11,7 +11,7 @@ use GDO\User\GDO_User;
 /**
  * Inherit from this table when using GDT_Files and provide your table to it.
  * Override gdoFileObjectTable() and return your GDO that shall have the files.
- * 
+ *
  * @author gizmore@wechall.net
  *
  */
@@ -40,7 +40,7 @@ class GDO_FileTable extends GDO
 			GDT_CreatedAt::make('files_created'),
 		);
 	}
-	
+
 	##############
 	### Getter ###
 	##############
@@ -53,7 +53,7 @@ class GDO_FileTable extends GDO
 	 */
 	public function getCreator() { return $this->getValue('files_creator'); }
 	public function getCreatorID() { return $this->getVar('files_creator'); }
-	
+
 	###########
 	### ACL ###
 	###########

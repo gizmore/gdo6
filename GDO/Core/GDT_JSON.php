@@ -19,10 +19,10 @@ class GDT_JSON extends GDT_Text
 	public $caseSensitive = true;
 
 	public function defaultName() { return 'data'; }
-    
+
 	public static function encode($data) { return json_encode($data, JSON_PRETTY_PRINT); }
 	public static function decode($string) { return json_decode($string); }
-	
+
 	public function toVar($value) { return $value === null ? null : self::encode($value); }
 	public function toValue($var) { return $var === null ? null : self::decode($var); }
 

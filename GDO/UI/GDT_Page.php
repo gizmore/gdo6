@@ -22,9 +22,9 @@ use GDO\Core\Website;
 final class GDT_Page extends GDT
 {
     public static $INSTANCE;
-    
+
     use WithTitle;
-    
+
     # The 4 nav areas-
     public $topNav;
     public $leftNav;
@@ -32,9 +32,9 @@ final class GDT_Page extends GDT
     public $bottomNav;
 
     public $topTabs; # Admin or module tabs.
-    
+
     public function defaultName() { return 'page'; }
-    
+
     /**
      * Call nav hooks early
      */
@@ -44,7 +44,7 @@ final class GDT_Page extends GDT
         self::$INSTANCE = $this;
         $this->reset();
     }
-    
+
     public function reset()
     {
 //         if (Module_Core::instance()->cfgLoadSidebars())
@@ -57,24 +57,24 @@ final class GDT_Page extends GDT
         $this->topTabs = GDT_Container::make('topTabs')->vertical();
         Website::$TOP_RESPONSE = null;
     }
-    
+
     public function loadSidebars()
     {
         $app = Application::instance();
-        
+
         if ($app->isInstall() || $app->isCLI())
         {
             return false;
         }
-            
+
         foreach (ModuleLoader::instance()->getEnabledModules() as $module)
         {
             $module->onInitSidebar();
         }
-        
+
         return true;
     }
-    
+
     public function renderCell()
     {
         if (Module_Core::instance()->cfgLoadSidebars())
@@ -83,7 +83,7 @@ final class GDT_Page extends GDT
         }
         return GDT_Template::php('UI', 'page.php', ['page' => $this]);
     }
-    
+
     public $html;
     public function html($html)
     {

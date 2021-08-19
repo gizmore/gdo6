@@ -20,7 +20,7 @@ trait WithTitle
 	    $this->titleArgs = $args;
 	    return $this;
 	}
-	
+
 	public $titleRaw;
 	public function titleRaw($title)
 	{
@@ -36,7 +36,7 @@ trait WithTitle
 	    $this->titleEscaped = $escaped;
 	    return $this;
 	}
-	
+
 	##############
 	### Render ###
 	##############

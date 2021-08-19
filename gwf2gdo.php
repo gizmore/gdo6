@@ -10,7 +10,7 @@ Filewalker::traverse('protected/', '/config.*\\.php/', function($entry, $path){
 
     $contents = file_get_contents($path);
     $contents = str_replace('GWF_', 'GDO_', $contents, $count);
-    
+
     if ($count)
     {
         file_put_contents($path, $contents);

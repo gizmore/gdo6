@@ -24,7 +24,7 @@ final class CronjobApplication extends Application
 {
     public function isCLI() { return true; }
     public function isCronjob() { return true; }
-    
+
 }
 
 new CronjobApplication();

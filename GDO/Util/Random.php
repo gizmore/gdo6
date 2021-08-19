@@ -17,7 +17,7 @@ final class Random
 {
 	const TOKEN_LEN = 16;
 	const RAND_MAX = 4294967295;
-	
+
 	const NUMERIC = '0123456789';
 	const ALPHAUP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	const ALPHALOW = 'abcdefghijklmnopqrstuvwxyz';
@@ -26,7 +26,7 @@ final class Random
 	const ALPHANUMLOW = 'abcdefghijklmnopqrstuvwxyz0123456789';
 	const ALPHANUMUPLOW = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 	const ALPHANUMUPLOWSPECIAL = '!"\'_.,%&/()=<>;:#+-*~@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-	
+
 	/**
 	 * Get a single random item from an array.
 	 * This is not cryptographically safe.
@@ -55,8 +55,8 @@ final class Random
 		}
 		return $key;
 	}
-	
-	
+
+
 	/**
 	 * Secure and evenly distributed random generator.
 	 * 
@@ -74,19 +74,19 @@ final class Random
 		{
 			$BUFFER = openssl_random_pseudo_bytes(1024);
 		}
-		
+
 		# Take 4 bytes and unpack to a signed int
 		$n = unpack('L', substr($BUFFER, 0, 4));
 		# thx to dloser we convert to unsigned on 32 bit arch
 		$n = PHP_INT_SIZE === 4 ? $n[1] + 2147483648 : $n[1];
-		
+
 		# Eat from random buffer
 		$BUFFER = substr($BUFFER, 4);
-		
+
 		# Evenly distributed
 		return (int) ( $min + ($max-$min) * ($n/(self::RAND_MAX+1.0)) );
 	}
-	
+
 	################
 	### Insecure ### but faster
 	################
@@ -94,7 +94,7 @@ final class Random
 	{
 	    srand();
 	}
-	
+
 	/**
 	 * Get an insecure random number.
 	 * @param int $min
@@ -105,7 +105,7 @@ final class Random
 	{
 	    return rand($min, $max);
 	}
-	
+
 	/**
 	 * Get an insecure random key.
 	 * @param int $len

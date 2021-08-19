@@ -32,28 +32,28 @@ class InstallAdmins extends MethodForm
 		));
 		$form->actions()->addField(GDT_Submit::make());
 	}
-	
+
 	public function renderPage()
 	{
 		return GDT_Template::responsePHP('Install', 'page/installadmins.php', ['form' => $this->getForm()]);
 	}
-	
+
 	public function formValidated(GDT_Form $form)
 	{
 		$password = $form->getField('user_password');
 		$password->var(BCrypt::create($password->getVar())->__toString());
-		
+
 		$user = GDO_User::blank($form->getFormData())->setVars(array(
 			'user_type' => GDO_User::MEMBER,
 		))->insert();
-		
+
 		$permissions = ['admin' => 1000, 'staff' => 500, 'cronjob' => 500];
 		foreach ($permissions as $permission => $level)
 		{
 			GDO_UserPermission::grantPermission($user, GDO_Permission::create($permission, $level));
 		}
-		
+
 		return parent::formValidated($form)->addField($this->renderPage());
 	}
-	
+
 }

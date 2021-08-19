@@ -41,7 +41,7 @@ elseif ($field instanceof GDT_Submit)
 else
 {
     $name = $field->name;
-    
+
 	$value = $field->getValue();
 	if (is_string($value))
 	{
@@ -71,7 +71,7 @@ else
 	{
 		$value = $value ? 'true' : 'false';
 	}
-	
+
 	printf("define('GDO_%1\$s', env('GDO_%1\$s', %2\$s));\n", strtoupper($name), $value);
 }
 ?>

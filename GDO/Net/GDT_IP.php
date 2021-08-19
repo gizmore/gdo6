@@ -13,16 +13,16 @@ use GDO\DB\GDT_String;
 final class GDT_IP extends GDT_String
 {
     public $searchable = false;
-    
+
 	###############
 	### IP Util ###
 	###############
 	public static $CURRENT = null; # for connections like websocket too!
 	public static function current() { return self::$CURRENT; }
-	
+
 	/**
 	 * Get the IP netmask for a number of bits.
-	 * @example netmask(8) => 11111111 00000000 00000000 00000000 => 
+	 * @example netmask(8) => 11111111 00000000 00000000 00000000 =>
 	 * @param int $bits
 	 * @return int
 	 */
@@ -30,7 +30,7 @@ final class GDT_IP extends GDT_String
 	{
 	    return bindec(str_repeat('1', $bits) . str_repeat('0', 32 - $bits));
 	}
-	
+
 	public static function isLocal($ip=null)
 	{
 		$ip = $ip ? $ip : self::$CURRENT;
@@ -42,7 +42,7 @@ final class GDT_IP extends GDT_String
 		  (substr($ip, 0, 3) === '10.') ||
 		  ((ip2long($ip) & self::netmask(12)) === bindec('10101100000100000000000000000000'));
 	}
-	
+
 	public function useCurrent($useCurrent=true)
 	{
 	    if (!$useCurrent)
@@ -66,9 +66,9 @@ final class GDT_IP extends GDT_String
 	public $writable = false;
 	public $editable = false;
 	public $icon = 'url';
-	
+
 	public function defaultLabel() { return $this->label('ip'); }
-	
+
 	/**
 	 * Uppercase IPv6 to speed up DB lookups.
 	 * {@inheritDoc}

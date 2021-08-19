@@ -18,9 +18,9 @@ use GDO\Core\GDT_Array;
 class Completion extends MethodAjax
 {
 	public static $MAXCOUNT = 20;
-	
+
 	public function isGuestAllowed() { return Module_Core::instance()->cfgAllowGuests(); }
-	
+
 	public function execute()
 	{
 		$q = GDO::escapeS(Common::getRequestString('query'));
@@ -28,7 +28,7 @@ class Completion extends MethodAjax
 		$query = GDO_User::table()->select()->where($condition)->limit(self::$MAXCOUNT)->uncached();
 		$result = $query->exec();
 		$response = [];
-		
+
 		/** @var $user GDO_User **/
 		while ($user = $result->fetchObject())
 		{
@@ -42,7 +42,7 @@ class Completion extends MethodAjax
 			    'display' => $user->renderChoice(),
 			);
 		}
-	
+
 		return GDT_Array::make()->data($response);
 	}
 }

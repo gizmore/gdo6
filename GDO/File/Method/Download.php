@@ -11,7 +11,7 @@ use GDO\DB\GDT_String;
 class Download extends Method
 {
     public function isTrivial() { return false; }
-    
+
     public function gdoParameters()
     {
         return [
@@ -20,7 +20,7 @@ class Download extends Method
             GDT_Secret::make('token')->notNull(),
         ];
     }
-    
+
     /**
      * @return GDO_File
      */
@@ -28,7 +28,7 @@ class Download extends Method
     {
         return $this->gdoParameterValue('id');
     }
-    
+
     public function execute()
     {
         $user = GDO_User::current();
@@ -38,16 +38,16 @@ class Download extends Method
         {
             return $this->error('err_token');
         }
-        
+
         $variant = $this->gdoParameterVar('variant');
         GetFile::make()->executeWithId($file->getID(), $variant);
     }
-        
+
     public function getToken(GDO_User $user, GDO_File $file)
     {
         return substr(sha1($user->gdoHashcode() . GDO_SALT . $file->gdoHashcode()), 0, 16);
     }
 
-    
-    
+
+
 }

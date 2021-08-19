@@ -54,5 +54,5 @@ $field->addClass('gdt-card');
 <?php endif; ?>
   </div>
 <?php endif; ?>
-  
+
 </div>

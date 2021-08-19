@@ -2,5 +2,5 @@
 namespace GDO\CLI\lang;
 
 return [
-    
+
 ];

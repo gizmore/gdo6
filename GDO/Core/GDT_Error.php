@@ -13,9 +13,9 @@ namespace GDO\Core;
 class GDT_Error extends GDT_Success
 {
     public static $ERROR = 0;
-    
+
     public function isSerializable() { return true; }
-    
+
 	public function hasError() { return true; }
 
     public function defaultName()
@@ -25,14 +25,14 @@ class GDT_Error extends GDT_Success
         $back = $n === 1 ? $back : "{$back}_$n";
         return $back;
     }
-    
+
 	public static function responseException(\Throwable $e)
 	{
 		Logger::logException($e);
 		$html = Debug::backtraceException($e, Application::instance()->isHTML(), $e->getMessage());
 		return self::responseWith('err_exception', [$html], 500, false);
 	}
-	
+
 	##############
 	### Render ###
 	##############

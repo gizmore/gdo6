@@ -32,5 +32,5 @@ final class GDO_UserSetting extends GDO
 		    GDT_Index::make('uset_user_index')->indexColumns('uset_user')->hash(),
 		);
 	}
-	
+
 }

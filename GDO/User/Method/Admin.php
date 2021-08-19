@@ -10,14 +10,14 @@ use GDO\UI\GDT_Link;
 final class Admin extends Method
 {
 	use MethodAdmin;
-	
+
 	public function execute()
 	{
 		# Admin menu
 		$menu = GDT_Bar::make()->horizontal();
 		$menu->addField(GDT_Link::make('link_user_add_user')->href(href('User', 'AddUser')));
 		$response = GDT_Response::makeWith($menu);
-		
+
 		# Tabs first
 		return $response;
 	}

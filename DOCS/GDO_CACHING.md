@@ -38,7 +38,7 @@ There are 3 types of cache in gdo.
  - Process cache
  - Memcached
  - Filecache
-  
+
 
 ## GDO process cache
 
@@ -54,7 +54,7 @@ This really eases the way of coding, mostly in CLI applications, where you might
 
 Internally, each GDO / Table is stored into this cache by a tablename_primarykey association.
 
-The same association is used in the memcached global cache. 
+The same association is used in the memcached global cache.
 
 
 ## Memcached global cache
@@ -70,5 +70,5 @@ Many modules store various results this way, Often the whole content of a databa
 
 New since 6.0.3 is the file cache.
 It uses the file system to cache the output of executing a method.
-Currently the filename consists of the method name and the gdoParamteres used to invoke it. Additionally the language code is added to it. 
+Currently the filename consists of the method name and the gdoParamteres used to invoke it. Additionally the language code is added to it.
 

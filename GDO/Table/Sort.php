@@ -6,7 +6,7 @@ use GDO\DB\ArrayResult;
 
 /**
  * Utility class to sort GDOs.
- * 
+ *
  * @author gizmore
  * @version 6.10
  * @since 6.10
@@ -23,7 +23,7 @@ final class Sort
         $result = new ArrayResult($array, $table);
         self::sortResult($result, $orders);
     }
-    
+
     /**
      * Sort a result set, stable, by multiple columns.
      * @param ArrayResult $result
@@ -35,7 +35,7 @@ final class Sort
         $table = GDT_Table::make('sort_table');
         $table->addHeaders($result->table->gdoColumnsCache());
         $table->headers->name = '_mosort_';
-        
+
         # Plug orders into request vars
         $o = $table->headers->name;
         $_REQUEST[$o] = ['o' => []];
@@ -43,7 +43,7 @@ final class Sort
         {
             $_REQUEST[$o]['o'][$column] = $asc ? '1' : '0';
         }
-        
+
         # sort the result
         $table->multisort($result);
 
@@ -51,5 +51,5 @@ final class Sort
         unset($_REQUEST[$o]);
         GDT_Table::$ORDER_NAME--;
     }
-    
+
 }

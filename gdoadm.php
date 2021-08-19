@@ -28,13 +28,13 @@ use GDO\Install\Method\InstallCronjob;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
- * 
+ *
  * @see ./gdoadm.sh
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.10.0
- * 
+ *
  * @see gdo_update.sh - to update your gdo6 installation
  * @see gdo_reset.sh - to reset your installation to factory defaults. Own files are not deleted
  * @see gdo_test.sh for unit testing
@@ -50,7 +50,7 @@ use GDO\Install\Method\InstallCronjob;
 
 /**
  * Show usage of the gdoadm.sh shell command.
- * 
+ *
  * @example gdoadm.sh install MailGPG
  * @see gdo.php mail.send gizmore 'Subject' 'Body text'
  */
@@ -137,7 +137,7 @@ if ($argv[1] === 'configure')
 	{
 		$argv[2] = 'config.php'; # default config filename
 	}
-	
+
 	$response = Configure::make()->requestParameters(['filename' => $argv[2]])->formParameters(['save_config' => 1])->executeWithInit();
     if ($response->isError())
     {
@@ -158,7 +158,7 @@ elseif ($argv[1] === 'test')
 		Database::init();
 	}
 	echo \GDO\Install\Method\SystemTest::make()->execute()->renderCLI();
-	
+
 	echo "Your configuration seems solid.\n";
 	echo "You can now try to php {$argv[0]} install <module>.\n";
 	echo "A list of official modules is shown via php {$argv[0]} modules.\n";
@@ -191,7 +191,7 @@ elseif ($argv[1] === 'modules')
         if (!$module)
         {
             echo "Module not found.\n";
-            
+
             $providers = @ModuleProviders::$PROVIDERS[$moduleName];
             if (!$providers)
             {
@@ -229,7 +229,7 @@ elseif ($argv[1] === 'modules')
     {
         printUsage();
     }
-    
+
 }
 
 elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
@@ -250,9 +250,9 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
             printUsage();
         }
     }
-			
+
 	$git = \GDO\Core\ModuleProviders::GIT_PROVIDER;
-	
+
 	if ($mode === 1)
 	{
         $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
@@ -272,11 +272,11 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
 	    });
 	    $deps = array_map(function(GDO_Module $mod) {
 	        return $mod->getName(); }, $modules);
-	    
+	
 	    $cnt = count($deps);
 	    echo "Installing all {$cnt} modules.\n";
 	}
-    
+
     $cnt = 0;
 	$allResolved = true; # All required modules provided?
     while ($cnt !== count($deps))
@@ -285,7 +285,7 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
         foreach ($deps as $dep)
         {
             $depmod = ModuleLoader::instance()->getModule($dep);
-			
+
 			if (!$depmod)
 			{
 				if ($allResolved === true)
@@ -311,14 +311,14 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
 				{
 					printf("%20s: cd GDO; git clone --recursive {$git}{$providers} {$dep}; cd ..\n", $dep);
 				}
-				
+
 				continue;
 			}
-            
+
             $deps = array_unique(array_merge($depmod->dependencies(), $deps));
         }
     }
-	
+
 	if (!$allResolved)
 	{
 		echo "Some required modules are not provided by your current GDO/ folder.\n";
@@ -326,7 +326,7 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
 		echo "Repeat the process until all dependencies are resolved.\n";
 		die(2);
     }
-	
+
     $deps2 = [];
     foreach ($deps as $moduleName)
     {
@@ -334,9 +334,9 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
         $deps2[$moduleName] = $mod->module_priority;
     }
     asort($deps2);
-    
+
     echo t('msg_installing_modules', [implode(', ', array_keys($deps2))]) . "\n";
-    
+
 	$loader = ModuleLoader::instance();
     foreach (array_keys($deps2) as $depmod)
     {
@@ -344,10 +344,10 @@ elseif (($argv[1] === 'install') || ($argv[1] === 'install_all') )
 		echo "Installing module {$depmod}.\n";
 		Installer::installModule($module);
     }
-    
+
     Cache::flush();
     Cache::fileFlush();
-    
+
 	echo "Done.\n";
 }
 
@@ -396,14 +396,14 @@ elseif ($argv[1] === 'wipe')
     {
         printUsage();
     }
-    
+
     $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
-    
+
     $response = Install::make()->
         requestParameters(['module' => $module->getName()])->
             formParameters(['uninstall' => '1'])->
             executeWithInit();
-    
+
     if ($response->isError())
     {
         echo $response->renderCLI();
@@ -465,7 +465,7 @@ elseif ($argv[1] === 'config')
         echo PHP_EOL;
         die(0);
     }
-    
+
     $var = $argv[4];
     if ($argc === 5)
     {
@@ -490,11 +490,11 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
     {
         printUsage();
     }
-    
+
     $loader = ModuleLoader::instance();
-    
+
     $loader->loadModules(false, true, true);
-    
+
 //     if (!($module = $loader->getModule($argv[2])))
 //     {
 //         echo "Unknown module: {$argv[2]}!\n";
@@ -502,7 +502,7 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
 //     }
 
 //     $deps = ModuleProviders::$DEPENDENCIES[$argv[2]];
-    
+
     # Get all dependencies
     $cd = 0;
     $deps = [$argv[2]];
@@ -519,7 +519,7 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
             {
                 $moreDeps = @ModuleProviders::$DEPENDENCIES[$dep];
             }
-            
+
             if ($moreDeps)
             {
                 $deps = array_unique(array_merge($deps, $moreDeps));
@@ -530,10 +530,10 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
             }
         }
     }
-    
+
     # Sort by name
     sort($deps);
-    
+
     # Check missing in fs
     $missing = [];
     foreach ($deps as $dep)
@@ -543,7 +543,7 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
             $missing[] = $dep;
         }
     }
-    
+
     if (count($missing))
     {
         echo "The following modules are not in your filesystem:\n";
@@ -575,7 +575,7 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
                         die(1);
                     }
                 }
-                
+
                 $url = ModuleProviders::getGitUrl($module, $n);
                 if ($argv[1] === 'provide_ssh')
                 {
@@ -628,7 +628,7 @@ elseif ($argv[1] === 'update')
     {
         Installer::installModule($module);
     }
-    echo "Update complete.\n"; 
+    echo "Update complete.\n";
 }
 
 else

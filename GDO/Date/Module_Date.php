@@ -12,7 +12,7 @@ use GDO\Date\Method\Timezone;
  * - timezone javascript detection. default: on
  * - sidebar timezone select in left panel. default: on
  * - Keeps timezone after user logout.
- * 
+ *
  * @author gizmore
  * @version 6.10.4
  * @since 6.10.1
@@ -22,11 +22,11 @@ final class Module_Date extends GDO_Module
     public $module_priority = 8;
     public function isCoreModule() { return true; }
     public function onLoadLanguage() { return $this->loadLanguage('lang/date'); }
-    
+
     ##############
     ### Config ###
     ##############
-    
+
     public $timezone = GDO_TIMEZONE;
     public function getConfig()
     {
@@ -37,7 +37,7 @@ final class Module_Date extends GDO_Module
     }
     public function cfgProbeJS() { return $this->getConfigVar('tz_probe_js'); }
     public function cfgSidebarSelect() { return $this->getConfigVar('tz_sidebar_select'); }
- 
+
     ############
     ### Init ###
     ############
@@ -48,7 +48,7 @@ final class Module_Date extends GDO_Module
             $user->getTimezone() : $this->timezone;
         Time::setTimezone($this->timezone);
     }
-    
+
     public function onIncludeScripts()
     {
         if ($this->cfgProbeJS())
@@ -59,7 +59,7 @@ final class Module_Date extends GDO_Module
             }
         }
     }
-    
+
     public function onInitSidebar()
     {
         if ($this->cfgSidebarSelect())
@@ -71,7 +71,7 @@ final class Module_Date extends GDO_Module
             }
         }
     }
-    
+
     #############
     ### Hooks ###
     #############
@@ -79,5 +79,5 @@ final class Module_Date extends GDO_Module
     {
         Timezone::make()->setTimezone($this->timezone, false);
     }
-    
+
 }

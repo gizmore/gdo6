@@ -3,9 +3,9 @@ namespace GDO\Core;
 
 /**
  * An array.
- * 
+ *
  * @see GDT_JSON
- * 
+ *
  * @author gizmore
  * @version 6.10.3
  * @since 6.10.0
@@ -16,9 +16,9 @@ class GDT_Array extends GDT
     {
         return self::make()->data($data);
     }
-    
+
     public function defaultName() { return 'data'; }
-    
+
     public $data;
     public function data(array &$data)
     {

@@ -37,7 +37,7 @@ final class GDO_Country extends GDO
 	public function getISO3() { return $this->getVar('c_iso3'); }
 	public function displayName() { return t('country_'.strtolower($this->getISO())); }
 	public function displayEnglishName() { return ten('country_'.strtolower($this->getISO())); }
-	
+
 	/**
 	 * Get a country by ID or return a stub object with name "Unknown".
 	 * @param int $id
@@ -51,12 +51,12 @@ final class GDO_Country extends GDO
 		}
 		return $country;
 	}
-	
+
 	public static function unknownCountry()
 	{
 		return self::blank(['c_iso'=>'zz']);
 	}
-	
+
 	###########
 	### All ###
 	###########
@@ -68,12 +68,12 @@ final class GDO_Country extends GDO
 	    $all = parent::allCached($oder, $asc);
 	    return $this->allSorted($all);
 	}
-	
+
 	public function &all($oder=null, $asc=true)
 	{
 	    return $this->allSorted(parent::all($oder, $asc));
 	}
-	
+
 	private function &allSorted(array &$all)
 	{
 	    uasort($all, function(GDO_Country $a, GDO_Country $b){
@@ -83,7 +83,7 @@ final class GDO_Country extends GDO
 	    });
         return $all;
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -101,5 +101,5 @@ final class GDO_Country extends GDO
 	{
 		return GDT_Template::php('Country', 'cell/country.php', ['field' => GDT_Country::make()->gdo($this)->initial($this->getID()), 'choice' => true]);
 	}
-	
+
 }

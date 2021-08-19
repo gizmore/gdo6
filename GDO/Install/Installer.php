@@ -28,11 +28,11 @@ class Installer
 			self::installModule($module);
 		}
 	}
-	
+
 	public static function installModule(GDO_Module $module, $reinstall=false)
 	{
 		self::installModuleClasses($module, $reinstall);
-		
+
 		if (!$module->isPersisted())
 		{
 			GDO_Module::table()->deleteWhere('module_name = '.$module->quoted('module_name'));
@@ -40,20 +40,20 @@ class Installer
 			$module->insert();
 			self::upgradeTo($module, '6.00');
 		}
-		
+
 		while ($module->getVersion() != $module->module_version)
 		{
 			self::upgrade($module);
 		}
-		
+
 		self::installMethods($module);
 
 		$module->onInstall();
-		
+
 		Cache::flush();
 		Cache::fileFlush();
 	}
-	
+
 	public static function installModuleClasses(GDO_Module $module, $reinstall=false)
 	{
 		if ($classes = $module->getClasses())
@@ -72,7 +72,7 @@ class Installer
 			}
 		}
 	}
-	
+
 	public static function installModuleClass(GDO $gdo, $reinstall=false)
 	{
 		if ($gdo->gdoIsTable())
@@ -80,7 +80,7 @@ class Installer
 			$gdo->createTable($reinstall);
 		}
 	}
-	
+
 	public static function dropModule(GDO_Module $module)
 	{
 		$db = Database::instance();
@@ -120,13 +120,13 @@ class Installer
 			}
 		}
 	}
-	
+
 	public static function upgrade(GDO_Module $module)
 	{
 		$version = self::increaseVersion($module);
 		self::upgradeTo($module, $version);
 	}
-		
+
 	public static function upgradeTo(GDO_Module $module, $version)
 	{
 		$upgradeFile = $module->filePath("upgrade/$version.php");
@@ -135,19 +135,19 @@ class Installer
 			include($upgradeFile);
 		}
 	}
-	
+
 	public static function increaseVersion(GDO_Module $module)
 	{
 		$v = sprintf('%.02f', (floatval($module->getVersion()) + 0.01));
 		$module->saveVar('module_version', $v);
 		return $v;
 	}
-	
+
 	public static function installMethods(GDO_Module $module)
 	{
 		self::loopMethods($module, array(__CLASS__, 'installMethod'));
 	}
-	
+
 	public static function loopMethods(GDO_Module $module, $callback)
 	{
 		$dir = $module->filePath('Method');
@@ -156,7 +156,7 @@ class Installer
 			Filewalker::traverse($dir, null, $callback, false, false, $module);
 		}
 	}
-	
+
 	/**
 	 * Helper to get the method for a method loop.
 	 * @param GDO_Module $module
@@ -174,7 +174,7 @@ class Installer
 		}
 		return $module->getMethod($entry);
 	}
-	
+
 	public static function installMethod($entry, $path, GDO_Module $module)
 	{
 		$method = self::loopMethod($module, $path);
@@ -203,7 +203,7 @@ class Installer
 	        foreach ($deps as $dep)
 	        {
 	            $depmod = ModuleLoader::instance()->getModule($dep);
-	            
+
 	            if (!$depmod)
 	            {
 	                if ($allResolved === true)
@@ -230,19 +230,19 @@ class Installer
 	                {
 	                    return sprintf("%20s: cd GDO; git clone --recursive {$git}{$providers} {$dep}; cd ..\n", $dep);
 	                }
-	                
+
 	                continue;
 	            }
-	            
+
 	            $deps = array_unique(array_merge($depmod->dependencies(), $deps));
 	        }
 	    }
 
 	    $deps[] = $module->getName();
-	    
+
 	    return array_map(function($dep) { 
 	        return ModuleLoader::instance()->getModule($dep);
 	    }, $deps);
 	}
-	
+
 }

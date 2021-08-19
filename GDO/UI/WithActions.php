@@ -3,7 +3,7 @@ namespace GDO\UI;
 
 /**
  * Adds an action bar to this gdo type.
- * 
+ *
  * @author gizmore
  * @since 6.05
  * @version 6.10
@@ -27,7 +27,7 @@ trait WithActions
 		}
 		return $this->actions;
 	}
-	
+
 	public function getActions()
 	{
 		return $this->actions;
@@ -37,5 +37,5 @@ trait WithActions
 	{
 		return $this->actions && (!empty($this->actions));
 	}
-	
+
 }

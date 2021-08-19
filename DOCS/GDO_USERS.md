@@ -3,7 +3,7 @@
 GDO6 loves guests. In fact, everyone is a guest sometimes, and sometimes you also serve guests to make friends.
 Because of that, guest is a special user type you can achieve if you register as a guest with a nickname.
 Many modules allow guests to participate in creating the web if they only have a cookie and a nickname.
-Else, the user system in GDO6 is quite hierarchic and we also have auth providers via twitter and facebook. 
+Else, the user system in GDO6 is quite hierarchic and we also have auth providers via twitter and facebook.
 Methods can restrict access by user_type, permission, user_level and of course arbritary functions.
 
 ## Modules that add sign up methods
@@ -23,7 +23,7 @@ There are the following 5 user types:
 - system (user_id:1, used when no user is available)
 - bot (identified bot, currently unused)
 
-Guests and Members qualify as authenticated if logged in / authenticated. 
+Guests and Members qualify as authenticated if logged in / authenticated.
 Remember, a guest has chosen a guestname by Register::Guest
 
 

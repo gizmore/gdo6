@@ -19,11 +19,11 @@ class GDT_Success extends GDT
     use WithTitle;
     use WithText;
     use WithPHPJQuery;
-    
+
     public static $MESSAGE = 0;
-    
+
     public function isSerializable() { return true; }
-    
+
     public function defaultName()
     {
         $back = 'message';
@@ -31,7 +31,7 @@ class GDT_Success extends GDT
         $back = $n === 1 ? $back : "{$back}_$n";
         return $back;
     }
-    
+
     public function code($code)
 	{
 	    if ($code > 200)
@@ -41,7 +41,7 @@ class GDT_Success extends GDT
 	    }
 	    return $this;
 	}
-	
+
 	public static function with($key, array $args=null, $code=200, $log=true)
 	{
 	    if ($log)
@@ -50,7 +50,7 @@ class GDT_Success extends GDT
 		}
 		return self::make()->text($key, $args)->code($code);
 	}
-	
+
 	public static function withText($text, $code=200, $log=true)
 	{
 	    if ($log)
@@ -59,12 +59,12 @@ class GDT_Success extends GDT
 	    }
 	    return self::make()->textRaw($text)->code($code);
 	}
-	
+
 	public static function responseWith($key, array $args=null, $code=200, $log=true)
 	{
 	    return GDT_Response::makeWith(self::with($key, $args, $code, $log))->code($code);
 	}
-	
+
 	##############
 	### Render ###
 	##############

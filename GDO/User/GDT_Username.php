@@ -15,17 +15,17 @@ use GDO\DB\GDT_String;
 class GDT_Username extends GDT_String
 {
 	const LENGTH = 32;
-	
+
 	public $min = 2;
 	public $max = 64;
-	
+
 	public $icon = 'face';
-	
+
 	# Allow - _ LETTERS DIGITS
 	public $pattern = "/^[\\p{L}0-9][-_\\p{L}0-9]{1,31}$/iuD";
 
 	public function defaultLabel() { return $this->label('username'); }
-	
+
 	##############
 	### Exists ###
 	##############
@@ -35,7 +35,7 @@ class GDT_Username extends GDT_String
 		$this->exists = $exists;
 		return $this;
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -43,17 +43,17 @@ class GDT_Username extends GDT_String
 	{
 	    return $this->displayVar();
 	}
-	
+
 	public function renderJSON()
 	{
 	    return $this->renderCLI();
 	}
-	
+
 	public function renderCLI()
 	{
 	    return $this->gdo->displayName();
 	}
-	
+
 	################
 	### Validate ###
 	################
@@ -63,7 +63,7 @@ class GDT_Username extends GDT_String
 		{
 			return false;
 		}
-		
+
 		# Check existance
 		if ($this->exists === true)
 		{
@@ -83,13 +83,13 @@ class GDT_Username extends GDT_String
 		        return $this->error('err_username_taken');
 		    }
 		}
-		
+
 		return true;
 	}
-	
+
 	public function plugVar()
 	{
 	    return 'Lazer'; # new created user in unit tests.
 	}
-	
+
 }

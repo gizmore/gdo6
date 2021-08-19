@@ -34,7 +34,7 @@ final class HTTP
 		{
 			return false;
 		}
-		
+
 		if (@$url[0] === '/')
 		{
 			$url = GDO_PROTOCOL . '://' . GDO_DOMAIN . $url;
@@ -44,34 +44,34 @@ final class HTTP
 		{
 			return false;
 		}
-		
+
 		if (self::$DEBUG)
 		{
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
 		}
-		
+
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
-		
+
 		# Set the user agent - might help, doesn't hurt
 		curl_setopt($ch, CURLOPT_USERAGENT, self::USERAGENT);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
- 
+
 		# Enable cookie engine with not saving the cookies to disk
 		curl_setopt($ch, CURLOPT_COOKIEFILE, "");
-		
+
 		# Try to follow redirects
 		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
 		curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		
+
 		# Timeout
   		curl_setopt($ch, CURLOPT_TIMEOUT, self::$TIMEOUT);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, self::$TIMEOUT_CONNECT);
- 
+
 		/* don't download the page, just the header (much faster in this case) */
 		curl_setopt($ch, CURLOPT_NOBODY, true);
 		curl_setopt($ch, CURLOPT_HEADER, true);
- 
+
 		# Handle HTTPS links
 		if (false === ($parts = parse_url($url)))
 		{
@@ -83,11 +83,11 @@ final class HTTP
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); # Should be 1!
 			curl_setopt($ch, CURLOPT_SSLVERSION, 1);
 		}
- 
+
 		$response = curl_exec($ch);
 
 		curl_close($ch);
-		
+
 		# Get the status code from HTTP headers
 		$matches = [];
 		if(preg_match('/HTTP\/[12](?:\.\d+)?\s+(\d+)/', $response, $matches))
@@ -98,7 +98,7 @@ final class HTTP
   		{
   			return false;
   		}
- 
+
   		# See if code indicates success
   		return (($code>=200) && ($code<400)) || $code === 403 || $code === 401;	
 	}
@@ -118,27 +118,27 @@ final class HTTP
 			" " => "%20",
 		);
 		$url = str_replace(array_keys($replace), array_values($replace), $url);
-		
+
 		$ch = curl_init();
-		
+
 		if (self::$DEBUG)
 		{
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
 		}
-		
+
 		if ( (!empty($httpHeaders)) && (is_array($httpHeaders)) )
 		{
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeaders);
 		}
-		
-		
+
+
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
-		
+
 		# Try to follow redirects
 		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
 		curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		
+
 		# Cookie stuff
 		if ($cookie !== false)
 		{
@@ -146,23 +146,23 @@ final class HTTP
 		}
 		# Enable cookie engine with not saving the cookies to disk
 		curl_setopt($ch, CURLOPT_COOKIEFILE, GDO_PATH."temp/test.cookie");
-		
-		
+
+
 		curl_setopt($ch, CURLOPT_USERAGENT, self::USERAGENT);
-		
+
   		curl_setopt($ch, CURLOPT_TIMEOUT, self::$TIMEOUT);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, self::$TIMEOUT_CONNECT);
-		
+
  		curl_setopt($ch, CURLOPT_URL, $url);
- 		
+
 // 		$returnHeader = true;
  		if (is_bool($returnHeader))
  		{
  			curl_setopt($ch, CURLOPT_HEADER, $returnHeader);
  		}
- 		
+
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		
+
 		# Handle HTTPS links
 		if(Strings::startsWith($url, 'https://'))
 		{
@@ -170,17 +170,17 @@ final class HTTP
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); # should be 1!
 			curl_setopt($ch, CURLOPT_SSLVERSION, 1);
 		}
-		
+
 		if (!($received = curl_exec($ch)))
 		{
 			echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
 		}
-		
+
 		curl_close($ch);
-		
+
 		return $received;
 	}
-	
+
 	/**
 	 * Send a post request to an URL.
 	 * @param string $url
@@ -201,9 +201,9 @@ final class HTTP
 		{
 			return false;
 		}
-		
+
 		$ch = curl_init();
-		
+
 		if (self::$DEBUG)
 		{
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
@@ -214,16 +214,16 @@ final class HTTP
 		{
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeaders);
 		}
-		
+
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
-		
+
 		# Cookie stuff
 		if ($cookie !== false) {
 			curl_setopt($ch, CURLOPT_COOKIE, $cookie);
 		}
 		# Enable cookie engine with not saving the cookies to disk
 		curl_setopt($ch, CURLOPT_COOKIEFILE, GDO_PATH."temp/test.cookie");
-		
+
 		curl_setopt($ch, CURLOPT_URL, $url);
  		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 		if($parts['scheme']=='https')
@@ -237,7 +237,7 @@ final class HTTP
 		}
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, self::USERAGENT);
-		
+
 		if (is_array($postdata))
 		{
 			$data = [];
@@ -255,7 +255,7 @@ final class HTTP
 		curl_close($ch);
 		return $received;		
 	}
-	
+
 	/**
 	 * Disable caching for the current page.
 	 * Could be split apart from this file.

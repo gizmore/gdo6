@@ -18,7 +18,7 @@ final class Completion extends MethodCompletion
     public function execute()
     {
         $countries = GDO_Country::table()->allCached();
-        
+
         $q = mb_strtolower($this->getSearchTerm());
         $max = $this->getMaxSuggestions();
         $result = [];
@@ -47,7 +47,7 @@ final class Completion extends MethodCompletion
                 break;
             }
         }
-        
+
         $json = [];
         $json = array_map(function(GDO_Country $country) {
             return [
@@ -56,8 +56,8 @@ final class Completion extends MethodCompletion
                 'display' => $country->renderChoice(),
             ];
         }, $result);
-        
+
         return GDT_Response::makeWith(GDT_Array::make()->data($json));
     }
-    
+
 }

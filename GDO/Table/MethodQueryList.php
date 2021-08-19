@@ -12,18 +12,18 @@ namespace GDO\Table;
 abstract class MethodQueryList extends MethodQueryTable
 {
     public function isFiltered() { return false; }
-    
+
     public function gdoHeaders() { return []; }
-    
+
     public function listName() { return 'list'; }
-	
+
 	public function gdoListMode() { return GDT_List::MODE_LIST; }
-	
+
 	public function createCollection()
 	{
 	    return GDT_List::make($this->listName())->
 	       gdtTable($this->gdoTable())->
 	       listMode($this->gdoListMode());
 	}
-	
+
 }

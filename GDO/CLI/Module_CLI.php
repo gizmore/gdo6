@@ -16,5 +16,5 @@ final class Module_CLI extends GDO_Module
     {
         return $this->loadLanguage('lang/cli');
     }
-    
+
 }

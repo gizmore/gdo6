@@ -9,7 +9,7 @@ use GDO\DB\GDT_Checkbox;
 
 /**
  * Configure Javascript options and binaries.
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.10.1
@@ -17,7 +17,7 @@ use GDO\DB\GDT_Checkbox;
 final class Module_Javascript extends GDO_Module
 {
     public $module_priority = 10;
-    
+
     public function isCoreModule() { return true; }
     public function onLoadLanguage() { return $this->loadLanguage('lang/js'); }
 
@@ -38,5 +38,5 @@ final class Module_Javascript extends GDO_Module
     public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
     public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
     public function jsMinAppend() { return $this->cfgMinifyJS() === 'no' ? '' : '.min'; }
-    
+
 }

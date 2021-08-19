@@ -12,7 +12,7 @@ This module variant stores user sessions in the database.
     git clone --recursive https://github.com/gizmore/gdo6-session-db Session
     cd gdo6
     php gdoadm.php install Session
-    
+
 ## gdo6-session-cookie
 
 This module (ab)uses cookies to store a users session.

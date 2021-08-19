@@ -22,5 +22,5 @@ final class CountryTest extends TestCase
         $after = Database::$QUERIES;
         assertEquals($before, $after, "Make sure countries use allCached() properly.");
     }
-    
+
 }

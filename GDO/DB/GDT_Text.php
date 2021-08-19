@@ -13,28 +13,28 @@ namespace GDO\DB;
 class GDT_Text extends GDT_String
 {
 	public function defaultLabel() { return $this->label('message'); }
-	
+
 	public $max = 65535;
-	
+
 	public function gdoColumnDefine()
 	{
 		return "{$this->identifier()} {$this->gdoColumnDefineB()}";
 	}
-	
+
 	protected function gdoColumnDefineB()
 	{
 	    $collate = $this->gdoCollateDefine($this->caseSensitive);
 	    return "TEXT({$this->max}) CHARSET {$this->gdoCharsetDefine()} {$collate}{$this->gdoNullDefine()}";
 	}
-	
+
 	public function validate($value)
 	{
 		return parent::validate($value) ? $this->validateNonNumeric($value) : false;
 	}
-	
+
 	public function validateNonNumeric($value)
 	{
 		return is_numeric($value) ? $this->error('err_text_only_numeric') : true;
 	}
-	
+
 }

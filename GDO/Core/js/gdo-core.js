@@ -70,11 +70,11 @@ window.GDO.responseError = function(response) {
 	else if (response.error) {
 		var message = response.error;
 	}
-	
+
 	if (response.json && response.json.stack) {
 		message += "\n\n" + response.json.stack;
 	}
-	
+
 	window.GDO.error(message, "Ajax Error");
 };
 

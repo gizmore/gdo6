@@ -17,5 +17,5 @@ abstract class MethodAjax extends Method
 	public function saveLastUrl() { return false; }
 	public function showInSitemap() { return false; }
 	public function isLockingSession() { return false; }
-	
+
 }

@@ -15,7 +15,7 @@ final class Arrays
 		}
 		return $value === null ? [] : [$value];
 	}
-	
+
 	/**
 	 * Fixed explode with no elements on empty string.
 	 * @param string $string
@@ -26,7 +26,7 @@ final class Arrays
 	{
 		return empty($string) ? array() : explode($delimiter, $string);
 	}
-	
+
 	/**
 	 * Recursive implode. Code taken from php.net.
 	 * Original code by: kromped@yahoo.com
@@ -42,7 +42,7 @@ final class Arrays
 		}
 		return implode($glue, $retVal);
 	}
-	
+
 	/**
 	 * Reverse an array but keep keys.
 	 * @param array $array
@@ -56,7 +56,7 @@ final class Arrays
 		$rk = array_reverse($k);
 		return array_combine($rk, $rv);
 	}
-	
+
 	/**
 	 * Return comma seperated and a final "and" like foo, bar and boo.
 	 * @param array $array
@@ -73,5 +73,5 @@ final class Arrays
 				return implode(', ', $array) . ' ' . t('and') . ' ' . $last;
 		}
 	}
-	
+
 }

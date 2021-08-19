@@ -12,7 +12,7 @@ use GDO\Cronjob\GDO_Cronjob;
 /**
  * Convinience cronjob launcher.
  * @TODO move to module Cronjob
- * 
+ *
  * @author gizmore
  * @version 6.10.4
  * @see MethodCronjob
@@ -56,7 +56,7 @@ final class Cronjob
 		    }
 		}
 	}
-	
+
 	private static function shouldRun(MethodCronjob $method)
 	{
 	    $gdo = GDO_Cronjob::table();
@@ -94,5 +94,5 @@ final class Cronjob
 			throw $ex;
 		}
 	}
-	
+
 }

@@ -16,7 +16,7 @@ final class InstallCronjob extends Method
 		ModuleLoader::instance()->loadModules($hasdb, !$hasdb);
 		return $this->renderPage();
 	}
-	
+
 	public function renderPage()
 	{
 		return $this->templatePHP('page/installcronjob.php');

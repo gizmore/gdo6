@@ -4,7 +4,7 @@ namespace GDO\Core;
 trait WithInstance
 {
 	private static $INSTANCE;
-	
+
 	/**
 	 * @return self
 	 */
@@ -16,5 +16,5 @@ trait WithInstance
 		}
 		return self::$INSTANCE;
 	}
-	
+
 }

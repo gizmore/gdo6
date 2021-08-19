@@ -14,7 +14,7 @@ use GDO\Core\GDO;
 final class GetTypes extends Method
 {
 	public function isAjax() { return true; }
-	
+
 	public function execute()
 	{
 		$tables = [];
@@ -38,7 +38,7 @@ final class GetTypes extends Method
 				}
 			}
 		}
-		
+
 		# Sum table fields
 		$fields = [];
 		foreach ($tables as $table)
@@ -55,7 +55,7 @@ final class GetTypes extends Method
 			    }
 			}
 		}
-		
+
 		# Build type hiararchy
 		$types = [];
 		foreach (get_declared_classes() as $class)
@@ -65,9 +65,9 @@ final class GetTypes extends Method
 				$types[$class] = array_values(class_parents($class));
 			}
 		}
-		
+
 		$json = ['fields' => $fields, 'types' => $types];
 		return GDT_Array::makeWith($json);
 	}
-	
+
 }

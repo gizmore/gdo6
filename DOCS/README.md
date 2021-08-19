@@ -8,7 +8,7 @@ In this folder you find various documentation files.
  - [INSTALL](INSTALL.md)
  - [GDO_PACKAGE_MANAGEMENT](GDO_PACKAGE_MANAGEMENT.md)
 
- 
+
 ## Documentation
 
  - [GDO_AND_GDT](GDO_AND_GDT.md)
@@ -23,7 +23,7 @@ In this folder you find various documentation files.
  - [IDEAS](IDEAS.md)
  - [PHILOSOPHY](PHILOSOPHY.md)
 
- 
+
 ## Demos
 
  - https://mettwitze.gizmore.org (Bootstrap Theme)

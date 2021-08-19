@@ -6,9 +6,9 @@ namespace GDO\Core;
  * Installer can spit out repo urls for modules.
  * Some modules have multiple providers, like gdo6-session-db and gdo6-session-cookie.
  * Both provide Module_Session.
- * 
+ *
  * You can generate providers and dependenices with providers.php and provider_dependenciews.php
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.10.0
@@ -38,7 +38,7 @@ final class ModuleProviders
         }
         return $git . $providers;
     }
-    
+
     public static $PROVIDERS = [
     	'Account' => 'gdo6-account',
     	'ActivationAlert' => 'gdo6-activation-alert',
@@ -186,7 +186,7 @@ final class ModuleProviders
     	'Wombat' => 'gdo6-wombat',
     	'ZIP' => 'gdo6-zip',
     ];
-    
+
     public static $DEPENDENCIES = [
     	'Account' => [],
     	'ActivationAlert' => [],
@@ -349,4 +349,3 @@ ditor', 'Mibbit'],
     	'ZIP' => [],
     ];
 }
-    

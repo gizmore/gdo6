@@ -31,25 +31,25 @@ Please configure your system by creating a config at the protected/ folder.
 ## PATH
 
 You can add gdo6/bin/ to your PATH environment, so you can do fancy stuff like this.
-    
+
     gdo core.impressum. # prints method Core/Impressum to the CLI
     gdo register.form --tos=1 gizmore gizmore@gizmore.org password password # Register at your gdo6 installation via CLI
-    
-    
+
+
 ## Cronjob
 
 It is recommended to install cronjobs at your system running gdo6.
-Cronjobs, for example, clean guest users and sessions or send mails on PM/Forum activity etc. 
+Cronjobs, for example, clean guest users and sessions or send mails on PM/Forum activity etc.
 
     ./gdoadm.sh cronjob # Print cronjob instructions. Apply them to your system.
-   
-    
+
+
 ## Security
 
 You want some folders to be inaccessible from the outside. Like the install wizard or your protected/ folder, files/ folder, temp/ folder etc.
 
     ./gdoadm.sh secure
-    
+
 
 ## Build your site
 
@@ -60,11 +60,10 @@ Here is an example on how to create the TBS website.
     ./gdoadm.sh install TBS
     ./gdo_yarn.sh
     ./gdo_bower.sh
-    
-    
+
+
 ## Admin account
 
 Of course you want an admin account for your installation.
 
     ./gdoadm.sh admin username password <email>
-        

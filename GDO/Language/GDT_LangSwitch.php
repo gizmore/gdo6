@@ -16,18 +16,18 @@ use GDO\Util\Strings;
 final class GDT_LangSwitch extends GDT_Select
 {
     public function defaultName() { return '_lang'; }
-    
+
     protected function __construct()
     {
         parent::__construct();
         $this->choices(Module_Language::instance()->cfgSupported());
     }
-    
+
 	public function renderCell()
 	{
 		return GDT_Template::php('Language', 'cell/langswitch.php',['field'=>$this]);
 	}
-	
+
 	public function hrefLangSwitch(GDO_Language $language)
 	{
 	    $iso = $language->getISO();
@@ -42,5 +42,5 @@ final class GDT_LangSwitch extends GDT_Select
 	    $u = Strings::substrTo($u, '?', $u);
 	    return $u . '?' . $q;
 	}
-	
+
 }

@@ -16,12 +16,12 @@ use GDO\Core\GDT_Hook;
 abstract class MethodQueryTable extends MethodTable
 {
     public function useFetchInto() { return true; }
-    
+
     public function gdoHeaders()
     {
         return $this->gdoTable()->gdoColumnsCache();
     }
-    
+
 	################
 	### Abstract ###
 	################
@@ -34,7 +34,7 @@ abstract class MethodQueryTable extends MethodTable
 	{
 	    throw new GDOException("Shuld not return result for queried methods!");
 	}
-    
+
 	/**
 	 * Override this function to return a query for your table.
 	 * Defaults to select all from your GDO table.
@@ -44,7 +44,7 @@ abstract class MethodQueryTable extends MethodTable
 	{
 	    return $this->gdoTable()->select();
 	}
-	
+
 	/**
 	 * Return a query to count items for pagination.
 	 * Usually you can leave this to gdo6, letting it transform your query above.
@@ -60,7 +60,7 @@ abstract class MethodQueryTable extends MethodTable
 	### Exec ###
 	############
 	protected function beforeCalculateTable(GDT_Table $table) {}
-	
+
 	/**
 	 * Calculate the GDT_Table object for queried tables.
 	 * {@inheritDoc}

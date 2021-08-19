@@ -17,19 +17,19 @@ final class GDT_Hostname extends GDT_String
 	###############
 	public static function resolve( $hostname) { return gethostbyname($hostname); }
 	public function getIP() { return self::resolve($this->getVar()); }
-	
+
 	##################
 	### GDT_String ###
 	##################
 	public $min = 1;
 	public $max = 128;
-	
+
 	#################
 	### Reachable ###
 	#################
 	public $reachable;
 	public function reachable($reachable=true) { $this->reachable = $reachable; return $this; }
-	
+
 	################
 	### Validate ###
 	################
@@ -45,7 +45,7 @@ final class GDT_Hostname extends GDT_String
 		}
 		return false;
 	}
-	
+
 	public function validateReachable($value)
 	{
 		return self::resolve($value) ? true : $this->error('err_unknown_host');

@@ -16,7 +16,7 @@ use GDO\DB\GDT_UInt;
 class GDT_Sort extends GDT_UInt
 {
     public function defaultLabel() { return $this->label('sorting'); }
-    
+
 	protected function __construct()
 	{
 	    parent::__construct();
@@ -26,7 +26,7 @@ class GDT_Sort extends GDT_UInt
 		$this->notNull();
 		$this->initial('0');
 	}
-	
+
 	public function gdoAfterCreate()
 	{
 	    # @TODO use count(*) for sorting?

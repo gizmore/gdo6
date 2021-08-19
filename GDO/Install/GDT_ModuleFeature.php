@@ -11,7 +11,7 @@ final class GDT_ModuleFeature extends GDT
 	{
 		return $this->gdo;
 	}
-	
+
 	public function renderCell()
 	{
 		$features = '';
@@ -21,5 +21,5 @@ final class GDT_ModuleFeature extends GDT
 		}
 		return $features;
 	}
-	
+
 }

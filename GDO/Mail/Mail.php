@@ -29,7 +29,7 @@ final class Mail
 	public static $SENT = 0; # perf
 	public static $DEBUG = GDO_DEBUG_EMAIL;
 	public static $ENABLE = GDO_ENABLE_EMAIL;
-	
+
 	const HEADER_NEWLINE = "\n";
 	const GPG_PASSPHRASE = ''; #GDO_EMAIL_GPG_SIG_PASS;
 	const GPG_FINGERPRINT = ''; #GDO_EMAIL_GPG_SIG;
@@ -66,16 +66,16 @@ final class Mail
 	public function setResendCheck($bool) { $this->resendCheck = $bool; }
 	public function addAttachment($title, $data, $mime='application/octet-stream', $encrypted=true) { $this->attachments[$title] = array($data, $mime, $encrypted); }
 	public function removeAttachment($title) { unset($this->attachments[$title]); }
-	
+
 	private function escapeHeader($h) { return str_replace("\r", '', str_replace("\n", '', $h)); }
-	
+
 	public function addAttachmentFile($title, $filename)
 	{
 		$mime = mime_content_type($filename);
 		$data = file_get_contents($filename);
 		return $this->addAttachment($title, $data, $mime);
 	}
-	
+
 	/**
 	 * @return self
 	 */
@@ -86,7 +86,7 @@ final class Mail
 		$mail->setSenderName(GDO_BOT_NAME);
 		return $mail;
 	}
-	
+
 	private function getUTF8Reply()
 	{
 		if ($this->reply === '')
@@ -95,7 +95,7 @@ final class Mail
 		}
 		return $this->getUTF8($this->reply, $this->replyName);
 	}
-	
+
 	private function getUTF8Return()
 	{
 		if ($this->reply === '')
@@ -104,26 +104,26 @@ final class Mail
 		}
 		return $this->getUTF8($this->return, $this->returnName);
 	}
-	
+
 	private function getUTF8($email, $name)
 	{
 		return $name === '' ? $email : '"'.$this->getUTF8Encoded($name)."\" <{$email}>";
 	}
-	
+
 	private function getUTF8Sender()
 	{
 		return $this->getUTF8($this->sender, $this->senderName);
 	}
-	
+
 	private function getUTF8Receiver()
 	{
 		return $this->getUTF8($this->receiver, $this->receiverName);
 	}
 
 	private function getUTF8Subject() { return $this->getUTF8Encoded($this->subject); }
-	
+
 	private function getUTF8Encoded($string) { return '=?UTF-8?B?'.base64_encode($string).'?='; }
-	
+
 	public static function sendMailS($sender, $receiver, $subject, $body, $html=false, $resendCheck=false)
 	{
 		$mail = new self();
@@ -143,7 +143,7 @@ final class Mail
 		$to = defined('GDO_ERROR_EMAIL') ? GDO_ERROR_EMAIL : GDO_ADMIN_EMAIL;
 		return self::sendMailS(GDO_BOT_EMAIL, $to, GDO_SITENAME.": ".$subject, Debug::getDebugText($body), false, true);
 	}
-	
+
 	public function nestedHTMLBody()
 	{
 		if (self::$DEBUG || (!class_exists('GDO\Core\GDT_Template')))
@@ -176,9 +176,9 @@ final class Mail
 		{
 			$this->setReceiver($mail);
 			$this->setReceiverName($user->displayNameLabel());
-			
+
 			$this->setupGPG($user);
-	
+
 			if ($user->wantsTextMail())
 			{
 				return $this->sendAsText();
@@ -203,12 +203,12 @@ final class Mail
 	public function send($cc, $bcc, $message, $html=true)
 	{
 		self::$SENT++;
-		
+
 		if (count($this->attachments) > 0)
 		{
 			return $this->sendWithAttachments($cc, $bcc);
 		}
-		
+
 		$headers = '';
 		$to = $this->getUTF8Receiver();
 		$from = $this->getUTF8Sender();
@@ -234,7 +234,7 @@ final class Mail
     	    return mail($to, $subject, $encrypted, $headers);
 		}
 	}
-	
+
 	private function sendWithAttachments($cc, $bcc)
 	{
 		$to = $this->getUTF8Receiver();
@@ -251,30 +251,30 @@ final class Mail
 			.'From: '.$from.self::HEADER_NEWLINE
 			.'Reply-To: '.$this->getUTF8Reply().self::HEADER_NEWLINE
 			.'Return-Path: '.$this->getUTF8Return();
-		
+
 		$message  = "--$bound_mix\n";
 		$message .= "Content-Type: multipart/alternative; boundary=\"$bound_alt\"\n";
 		$message .= "\n";
-		
+
 		$message .= "--$bound_alt\n";
 		$message .= "Content-Type: text/plain; charset=utf-8\n";
 		$message .= "Content-Transfer-Encoding: 8bit\n";
 		$message .= "\n";
-		
+
 		$message .= $this->encrypt($this->nestedTextBody());
 		$message .= "\n\n";
-		
+
 		$message .= "--$bound_alt\n";
 		$message .= "Content-Type: text/html; charset=utf-8\n";
 		$message .= "Content-Transfer-Encoding: 8bit\n";
 		$message .= "\n";
-		
+
 		$message .= $this->encrypt($this->nestedHTMLBody());
 		$message .= "\n\n";
-		
+
 		$message .= "--$bound_alt--\n";
 		$message .= "\n";
-		
+
 		foreach ($this->attachments as $filename => $attachdata)
 		{
 			list($attach, $mime, $encrypted) = $attachdata;
@@ -291,9 +291,9 @@ final class Mail
 				$message .= chunk_split(base64_encode($attach));
 			}
 		}
-		
+
 		$message .= "--$bound_mix--\n\n";
-		
+
 		if (self::$DEBUG)
 		{
 			printf('<h1>Local EMail:</h1><div>%s<br/>%s</div>', htmlspecialchars($this->subject), $message);
@@ -304,7 +304,7 @@ final class Mail
             return mail($to, $subject, $message, $headers);
 		}
 	}
-	
+
 	public function setupGPG(GDO_User $user)
 	{
 		if ($this->allowGPG)
@@ -388,5 +388,5 @@ final class Mail
 
 		return $back;
 	}
-	
+
 }

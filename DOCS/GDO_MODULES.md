@@ -40,7 +40,7 @@ These modules are providing an encoder for [GDT_Message](https://github.com/gizm
  - [DevExtreme](https://github.com/gizmore/gdo6-dev-extreme) (not very powerful but ok)
  - [Markdown](https://github.com/gizmore/gdo6-markdown) (smilieys are missing. File upload is missing)
  - [TinyMCE](https://github.com/gizmore/gdo6-tinymce) (should be ok)
- 
+
 
 ## Wrapper modules
 
@@ -143,8 +143,8 @@ These modules add functionality to the website and are (mostly) own code.
  - [Todo](https://github.com/gizmore/gdo6-todo)
  - [Vote](https://github.com/gizmore/gdo6-vote)
  - [Websocket](https://github.com/gizmore/gdo6-websocket) (uses ratchet)
- 
- 
+
+
 ## TODO Ideas
 
  - [BBCode](https://github.com/gizmore/gdo6-bbcode)

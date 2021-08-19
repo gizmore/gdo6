@@ -15,11 +15,11 @@ use GDO\Core\GDT_Response;
 final class WhoAmI extends Method
 {
     public function showInSitemap() { return false; }
-    
+
     public function execute()
     {
         return GDT_Response::makeWith(
             GDT_Username::make()->gdo(GDO_User::current()));
     }
-    
+
 }

@@ -126,7 +126,7 @@ function enableInstalled() {
 		var module = modules[i];
 		console.log(module);
 	}
-	
+
 }
 
 enableInstalled();

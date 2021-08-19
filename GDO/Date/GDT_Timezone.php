@@ -5,7 +5,7 @@ use GDO\Form\GDT_Select;
 
 /**
  * Timezone select.
- * 
+ *
  * @author gizmore
  * @version 6.10.3
  * @since 6.10.0
@@ -13,10 +13,10 @@ use GDO\Form\GDT_Select;
 final class GDT_Timezone extends GDT_Select
 {
     public $max = 64;
-    
+
     public function defaultName() { return 'timezone'; }
     public function defaultLabel() { return $this->label('timezone'); }
-    
+
     protected function __construct()
     {
         parent::__construct();
@@ -29,7 +29,7 @@ final class GDT_Timezone extends GDT_Select
         $this->completionHref(href('Core', 'TimezoneComplete'));
         $this->searchable(false);
     }
-    
+
     public function initChoices()
     {
         if (!$this->choices)
@@ -39,7 +39,7 @@ final class GDT_Timezone extends GDT_Select
         }
         return $this;
     }
-    
+
     public function plugVar()
     {
         return 'Europe/Berlin';

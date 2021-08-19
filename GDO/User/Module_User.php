@@ -14,7 +14,7 @@ use GDO\Session\GDO_Session;
 final class Module_User extends GDO_Module
 {
 	public $module_priority = 3; # start very early
-	
+
 	public function isCoreModule() { return true; }
 	public function onInstall() { OnInstall::onInstall(); }
 	public function onLoadLanguage() { $this->loadLanguage('lang/user'); }
@@ -33,5 +33,5 @@ final class Module_User extends GDO_Module
 	    }
 	    return $classes;
 	}
-	
+
 }

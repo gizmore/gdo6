@@ -249,7 +249,7 @@ function array_values(input) {
 	if (input && typeof input === 'object' && input.change_key_case) {
 		return input.values();
 	}
-	
+
 	var tmp_arr = [];
 	for (var key in input) {
 		tmp_arr[tmp_arr.length] = input[key];
@@ -303,7 +303,7 @@ function explode(delimiter, string, limit) {
 	if (-limit >= s.length) {
 		return [];
 	}
-	
+
 	s.splice(s.length + limit)
 
 	return s;

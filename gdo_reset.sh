@@ -11,5 +11,5 @@ fi;
 
 echo "Resetting all repositories with git reset --hard."
 
-find . -iname ".git" -type d -exec sh -c "cd $CORE && cd {} && cd .. && 
+find . -iname ".git" -type d -exec sh -c "cd $CORE && cd {} && cd .. &&
 pwd && LANG=en_GB LC_ALL=en_GB git reset --hard" \;

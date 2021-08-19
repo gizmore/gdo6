@@ -2,5 +2,5 @@
 namespace GDO\UI;
 trait WithTemplate
 {
-	
+
 }

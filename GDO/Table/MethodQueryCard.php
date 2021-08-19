@@ -12,7 +12,7 @@ abstract class MethodQueryCard extends Method
 	 * @return GDO
 	 */
 	public abstract function gdoTable();
-	
+
 	/**
 	 * @return GDT[]
 	 */
@@ -20,7 +20,7 @@ abstract class MethodQueryCard extends Method
 	{
 		return [GDT_AutoInc::make('id')];
 	}
-	
+
 	/**
 	 * @return \GDO\Core\GDO
 	 */
@@ -28,12 +28,12 @@ abstract class MethodQueryCard extends Method
 	{
 		return $this->gdoTable()->find(Common::getGetString('id'));
 	}
-	
+
 	public function execute()
 	{
 		return $this->renderCard();
 	}
-	
+
 	public function renderCard()
 	{
 		if ($object = $this->getQueryCard())

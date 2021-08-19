@@ -5,11 +5,11 @@ return [
     'cfg_languages' => 'Langues supportées',
     'mdescr_language_switchlanguage' => 'Modifier votre langue vers %s.',
     'mdescr_language_switchlanguage2' => 'Modifier votre langue.',
-    
+
     'cfg_use_in_javascript' => 'Copier les données de traduction vers le client Javascript?',
     'tt_cfg_use_in_javascript' => 'Cela chargera le fichier javascript de traduction.',
     'cfg_langswitch_left' => 'Afficher le sélecteur de langue?',
-    
+
     // 'lang_af' => 'Afrikaans',
     'lang_ar' => 'Arabe',
     // 'lang_az' => 'Azéri',
@@ -75,7 +75,7 @@ return [
     'lang_tw' => 'Chinois',
     'lang_zh' => 'Mandarin',
     // 'lang_zu' => 'Zoulou',
-    
+
 // 'lang_xb' => 'Bot',
 // 'lang_xf' => 'Fanmglish',
 ];

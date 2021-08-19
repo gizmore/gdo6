@@ -15,18 +15,18 @@ abstract class MethodCard extends Method
      * @return GDO
      */
     public abstract function gdoTable();
-    
+
     public function idName() { return 'id'; }
 
     public function getID() { return Common::getRequestString($this->idName()); }
-    
+
     public function gdoParameters()
     {
         return [
             GDT_Object::make($this->idName())->table($this->gdoTable())->notNull(),
         ];
     }
-    
+
     /**
      * @return GDO
      */
@@ -34,7 +34,7 @@ abstract class MethodCard extends Method
     {
         return $this->gdoTable()->find($this->getID());
     }
-    
+
     public function execute()
     {
         $gdo = $this->getObject();
@@ -44,7 +44,7 @@ abstract class MethodCard extends Method
         }
         return GDT_ResponseCard::newWith()->gdo($gdo);
     }
-    
+
     public function getTitle()
     {
         if ($gdo = $this->getObject())
@@ -53,5 +53,5 @@ abstract class MethodCard extends Method
         }
         return parent::getTitle();
     }
-    
+
 }

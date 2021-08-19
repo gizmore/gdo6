@@ -16,7 +16,7 @@ use GDO\Mail\Mail;
 
 /**
  * Send a mail to a user that allows it.
- * 
+ *
  * @TODO implement
  * @author gizmore
  *
@@ -43,10 +43,10 @@ final class Send extends MethodForm
             $form->actions()->addField(GDT_Submit::make()->disabled());
         }
     }
-    
+
     /**
      * Validate if the user allows sending them an email.
-     * 
+     *
      * @param GDT_Form $form
      * @param GDT $field
      * @param GDO_User $target
@@ -72,7 +72,7 @@ final class Send extends MethodForm
         }
         return true;
     }
-    
+
     public function formValidated(GDT_Form $form)
     {
         $from = GDO_User::current();
@@ -87,7 +87,7 @@ final class Send extends MethodForm
         $mail->setReceiverName($to->displayNameLabel());
         $mail->setSubject(t('mail_send_arbr_subj',
             [sitename(), $title, $from->displayNameLabel()]));
-        
+
         $bodyArgs = [
             $to->displayNameLabel(),
             $from->displayNameLabel(),
@@ -96,10 +96,10 @@ final class Send extends MethodForm
             $form->getFormValue('message'),
         ];
         $mail->setBody(t('mail_send_arbr_body', $bodyArgs));
-        
+
         $mail->sendToUser($to);
-        
+
         return $this->message('msg_arbr_mail_sent', [$to->displayNameLabel()]);
     }
-    
+
 }

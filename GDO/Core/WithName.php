@@ -20,5 +20,5 @@ trait WithName
 	public function gdoShortName() { $r = new \ReflectionClass($this); return $r->getShortName(); }
 	public static function gdoClassNameS() { return static::class; }
 	public static function gdoShortNameS() { $r = new \ReflectionClass(static::class); return $r->getShortName(); }
-	
+
 }

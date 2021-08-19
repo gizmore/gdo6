@@ -16,9 +16,9 @@ final class GDT_EditedBy extends GDT_User
 	public $writable = false;
 	public $editable = false;
 	public $hidden = true;
-	
+
 	public function defaultLabel() { return $this->label('edited_by'); }
-	
+
 	public function gdoBeforeUpdate(Query $query)
 	{
   		$userId = GDO_User::current()->getID();

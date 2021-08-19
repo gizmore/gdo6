@@ -7,5 +7,5 @@ class GDT_Dashboard extends GDT_Panel
 	{
 		$this->addClass('gdt-dashboard');
 	}
-	
+
 }

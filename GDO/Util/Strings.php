@@ -23,7 +23,7 @@ final class Strings
 	{
 	    return strpos($s, $with) === 0; 
 	}
-	
+
 	/**
 	 * Check if a string ends with another string.
 	 * @param string $s
@@ -38,7 +38,7 @@ final class Strings
 		}
 		return true;
 	}
-	
+
 	#########################
 	### Substring to/from ###
 	#########################
@@ -57,7 +57,7 @@ final class Strings
 		}
 		return $default;
 	}
-	
+
 	public static function substrFrom($s, $from, $default=null)
 	{
 		if (false !== ($index = strpos($s, $from)))
@@ -66,7 +66,7 @@ final class Strings
 		}
 		return $default;
 	}
-	
+
 
 	public static function rsubstrTo($s, $to, $default=null)
 	{
@@ -76,7 +76,7 @@ final class Strings
 		}
 		return $default;
 	}
-	
+
 	public static function rsubstrFrom($s, $from, $default=null)
 	{
 		if (false !== ($index = strrpos($s, $from)))
@@ -85,7 +85,7 @@ final class Strings
 		}
 		return $default;
 	}
-	
+
 	#######################
 	### HTML safe nl2br ###
 	#######################
@@ -135,7 +135,7 @@ final class Strings
 	    }
 	    return $back;
 	}
-	
+
 	###################
 	### Args parser ###
 	###################
@@ -152,7 +152,7 @@ final class Strings
 REGEX;
 	    /** @var $matches string[] **/
 	    preg_match_all($pattern, $line, $matches, PREG_SET_ORDER);
-	    
+
 	    # Choose right match
 	    $args = [];
 	    foreach ($matches as $match)
@@ -172,5 +172,5 @@ REGEX;
 	    }
 	    return $args;
 	}
-	
+
 }

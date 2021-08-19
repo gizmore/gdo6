@@ -40,7 +40,7 @@ usort($modules, function(GDO_Module $m1, GDO_Module $m2) {
 foreach ($modules as $module)
 {
     $deps = $module->getDependencies();
-    
+
     if ($deps)
     {
         $deps = '[\'' . implode("', '", $deps) . '\']';
@@ -49,6 +49,6 @@ foreach ($modules as $module)
     {
         $deps = '[]';
     }
-    
+
     echo "'" . $module->getName() . "' => " . $deps . ",\n";
 }

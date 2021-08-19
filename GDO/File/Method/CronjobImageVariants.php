@@ -16,7 +16,7 @@ use GDO\Cronjob\MethodCronjob;
  * This cronjob creates missing image variants for GDT_Files.
  * This might be useful when you change the variants for a GDT_Files.
  * Up to date variants are created on every cronjob call.
- * 
+ *
  * @author gizmore@wechall.net
  *
  */
@@ -26,7 +26,7 @@ final class CronjobImageVariants extends MethodCronjob
 	private $numVariantFiles = 0;
 	private $numConverted = 0;
 	private $numErased = 0;
-	
+
 	public function run()
 	{
 		foreach (ModuleLoader::instance()->getModules() as $module)
@@ -37,25 +37,25 @@ final class CronjobImageVariants extends MethodCronjob
     			$this->createImageVariantsForModuleConfig($module);
 		    }
 		}
-		
+
 		$this->logStatistics();
 	}
-	
+
 	private function logStatistics()
 	{
 		$this->logNotice("There are {$this->numFiles} used files in the database in {$this->numVariantFiles} variants.");
-		
+
 		if ($this->numConverted)
 		{
 			$this->logNotice("I just created {$this->numConverted} new variant files.");
 		}
-		
+
 		if ($this->numErased)
 		{
 			$this->logError("I had to delete {$this->numErased} files.");
 		}
 	}
-	
+
 	private function createImageVariantsForModuleClasses(GDO_Module $module)
 	{
 		if ($classes = $module->getClasses())
@@ -75,7 +75,7 @@ final class CronjobImageVariants extends MethodCronjob
 			}
 		}
 	}
-	
+
 	private function createImageVariantsForModuleConfig(GDO_Module $module)
 	{
 		if ($config = $module->getConfigCache())
@@ -92,10 +92,10 @@ final class CronjobImageVariants extends MethodCronjob
 			}
 		}
 	}
-	
+
 	private function createImageVariantsFor(GDO $table, GDT_File $gdt)
 	{
-		# It's a single file inside a gdo. 
+		# It's a single file inside a gdo.
 		if ($gdt instanceof GDT_ImageFile)
 		{
 			$this->createImageVariantsForGDO($table, $gdt);
@@ -106,7 +106,7 @@ final class CronjobImageVariants extends MethodCronjob
 			$this->createImageVariantsForFiles($table, $gdt);
 		}
 	}
-	
+
 	private function createImageVariantsForGDO(GDO $table, GDT_File $gdt)
 	{
 		# select all gdo's as file
@@ -114,14 +114,14 @@ final class CronjobImageVariants extends MethodCronjob
 			where($gdt->identifier() . ' IS NOT NULL')-> # where gdt_file is not null
 			joinObject($gdt->name)-> # join the gdt_file
 			fetchTable(GDO_File::table()); # and fetch as file.
-		
+
 		$result = $query->exec();
 		while ($file = $result->fetchObject())
 		{
 			$this->createImageVariantsForFile($file, $gdt);
 		}
 	}
-	
+
 	private function createImageVariantsForFiles(GDO $table, GDT_ImageFiles $gdt)
 	{
 		# Select all files from this gdt filetable.
@@ -132,7 +132,7 @@ final class CronjobImageVariants extends MethodCronjob
 			$this->createImageVariantsForFile($file, $gdt);
 		}
 	}
-	
+
 	private function createImageVariantsForFile(GDO_File $file, GDT_File $gdt)
 	{
 		$this->numFiles++;
@@ -143,14 +143,14 @@ final class CronjobImageVariants extends MethodCronjob
 			# XXX: UGLY TEMP HACK!
 			$file->tempPath($file->getDestPath()); # UGLY!
 			# Patched the temp path to real path for image resizer
-			
+
 			if (!FileUtil::isFile($file->getVariantPath($name)))
 			{
 				$this->createImageVariantForFile($file, $gdt, $name, $dim[0], $dim[1]);
 			}
 		}
 	}
-	
+
 	/**
 	 * @param GDO_File $file
 	 * @param GDT_ImageFile $gdt

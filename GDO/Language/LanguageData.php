@@ -26,7 +26,7 @@ final class LanguageData
 			}
 		}
 	}
-	
+
 	public static function getLanguages()
 	{
 		# English Name | Native Name | iso-639-3 | iso-639-1

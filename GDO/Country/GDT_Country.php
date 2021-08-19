@@ -18,31 +18,31 @@ final class GDT_Country extends GDT_ObjectSelect
 		$this->icon('flag');
 		$this->withCompletion();
 	}
-	
+
 	public function withCompletion()
 	{
 		return $this->completionHref(href('Country', 'Completion'));
 	}
-	
+
 	public function defaultLabel() { return $this->label('country'); }
-	
+
 	public function configJSON()
 	{
 	    return array_merge(parent::configJSON(), array(
 			'completionHref' => $this->completionHref,
 		));
 	}
-	
+
 	public function renderCell()
 	{
 		return GDT_Template::php('Country', 'cell/country.php', ['field'=>$this]);
 	}
-	
+
 	public $withName = true;
 	public function withName($withName=true)
 	{
 		$this->withName = $withName;
 		return $this;
 	}
-	
+
 }

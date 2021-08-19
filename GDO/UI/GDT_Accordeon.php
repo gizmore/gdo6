@@ -6,7 +6,7 @@ use GDO\Core\GDT_Template;
 
 /**
  * A panel that collapses onclick.
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.10.0
@@ -22,7 +22,7 @@ final class GDT_Accordeon extends GDT_Panel
     {
         return '<label></label>' . $this->renderCell();
     }
-    
+
     ##############
     ### Opened ###
     ##############
@@ -32,12 +32,12 @@ final class GDT_Accordeon extends GDT_Panel
         $this->opened = $opened;
         return $this;
     }
-    
+
     public function closed($closed=true)
     {
     	return $this->opened(!$closed);
     }
-    
+
     /**
      * @var GDT[]
      */

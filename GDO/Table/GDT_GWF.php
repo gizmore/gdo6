@@ -16,5 +16,5 @@ final class GDT_GWF extends GDT
 	public function renderCell() { return $this->gdo->renderCell(); }
 // 	public function renderChoice() { return $this->gdo->renderChoice(); }
 	public function renderList() { return $this->gdo->renderList(); }
-	
+
 }

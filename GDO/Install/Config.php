@@ -52,7 +52,7 @@ class Config
 			'Security',
 		);
 	}
-	
+
 	#############################
 	### Config File Generator ###
 	#############################
@@ -62,7 +62,7 @@ class Config
 	    {
 	        return 'none';
 	    }
-	    
+
 		$software = $_SERVER['SERVER_SOFTWARE'];
 		if (stripos($software, 'Apache') !== false)
 		{
@@ -79,11 +79,11 @@ class Config
 		if (stripos($software, 'nginx') !== false)
 		{
 			return 'nginx';
-			
+
 		}
 		return 'other';
 	}
-	
+
 	public static function configure()
 	{
 		# Site
@@ -135,7 +135,7 @@ class Config
 		if (!defined('GDO_SESS_JS')) define('GDO_SESS_JS', true);
 		if (!defined('GDO_SESS_HTTPS')) define('GDO_SESS_HTTPS', false);
 		if (!defined('GDO_SESS_LOCK')) define('GDO_SESS_LOCK', GDO_DB_ENABLED);
-		
+
 		# Email
 		if (!defined('GDO_ENABLE_EMAIL')) define('GDO_ENABLE_EMAIL', false);
 		if (!defined('GDO_BOT_NAME')) define('GDO_BOT_NAME', GDO_SITENAME . ' support');
@@ -144,14 +144,14 @@ class Config
 		if (!defined('GDO_ERROR_EMAIL')) define('GDO_ERROR_EMAIL', 'administrator@'.GDO_DOMAIN);
 		if (!defined('GDO_DEBUG_EMAIL')) define('GDO_DEBUG_EMAIL', true);
 	}
-	
+
 	public static function fields()
 	{
 		$themes = GDT_Template::themeNames();
 		return array(
 		    GDT_Hidden::make('configured')->var('1'),
 // 		    GDT_Hidden::make('secured')->var('1'),
-		    
+
 			# Site
 			GDT_Divider::make()->label('install_config_section_site'),
 			GDT_String::make('sitename')->initialValue(GDO_SITENAME)->max(16)->label('cfg_sitename'),
@@ -218,5 +218,5 @@ class Config
 			GDT_Checkbox::make('debug_email')->initialValue(GDO_DEBUG_EMAIL),
 		);
 	}
-	
+
 }

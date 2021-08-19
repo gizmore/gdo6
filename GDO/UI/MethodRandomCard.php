@@ -13,7 +13,7 @@ abstract class MethodRandomCard extends MethodCard
     public function gdoParameters()
     {
     }
-    
+
     public function getObject()
     {
         $table = $this->gdoTable();
@@ -31,5 +31,5 @@ abstract class MethodRandomCard extends MethodCard
         $max = Random::mrand(1, $max);
         return $table->findWhere($id . ' >= ' . $max);
     }
-    
+
 }

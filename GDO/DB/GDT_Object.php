@@ -8,7 +8,7 @@ class GDT_Object extends GDT_UInt
 {
 	use WithObject;
 	use WithCompletion;
-	
+
 	##############
 	### Render ###
 	##############
@@ -20,7 +20,7 @@ class GDT_Object extends GDT_UInt
 		}
 		return $this->getVar();
 	}
-	
+
 	 public function renderChoice($choice=null)
 	 {
 	     /** @var $obj GDO **/
@@ -29,7 +29,7 @@ class GDT_Object extends GDT_UInt
 			 return $obj->renderChoice();
 		 }
 	 }
-	
+
 	public function renderForm()
 	{
 		if ($this->completionHref)
@@ -41,7 +41,7 @@ class GDT_Object extends GDT_UInt
 			return GDT_Template::php('DB', 'form/object.php', ['field'=>$this]);
 		}
 	}
-	
+
 	##############
 	### Config ###
 	##############
@@ -55,7 +55,7 @@ class GDT_Object extends GDT_UInt
 	            'display' => json_quote($gdo->renderChoice()),
 	        ];
 	    }
-	    else 
+	    else
 	    {
 	        $selected = [
 	            'id' => null,
@@ -69,5 +69,5 @@ class GDT_Object extends GDT_UInt
 	        'completionHref' => $this->completionHref,
 	    ]);
 	}
-	
+
 }

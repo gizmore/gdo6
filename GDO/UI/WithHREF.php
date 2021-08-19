@@ -29,9 +29,9 @@ trait WithHREF
 	public function replacedHREF($key, $value, $href=null)
 	{
 	    $href = $href === null ? $this->href : $href;
-	    
+
 	    $new = "&{$key}=" . urlencode($value);
-	    
+
 	    if (strpos($href, "&$key=") !== false)
 	    {
 	        $key = preg_quote($key);

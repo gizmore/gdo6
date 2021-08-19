@@ -11,9 +11,9 @@ class GDT_Badge extends GDT
 {
 	use WithLabel;
 	use WithPHPJQuery;
-	
+
 	public $badge;
 	public function badge($badge) { $this->badge = $badge; return $this; }
-	
+
 	public function renderCell() { return GDT_Template::php('UI', 'cell/badge.php', ['field' => $this]); }
 }

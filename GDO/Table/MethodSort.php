@@ -20,14 +20,14 @@ abstract class MethodSort extends Method
 	 * @return GDO
 	 */
 	public abstract function gdoSortObjects();
-	
+
 	/**
 	 * Override this method with a permission check for a GDO.
 	 * @param GDO $gdo
 	 * @return boolean
 	 */
 	public function canSort(GDO $gdo) { return true; }
-	
+
 	public function gdoParameters()
 	{
 	    $table = $this->gdoSortObjects();
@@ -36,7 +36,7 @@ abstract class MethodSort extends Method
 	        GDT_Object::make('b')->notNull()->table($table),
 	    ];
 	}
-	
+
 	############
 	### Exec ###
 	############
@@ -53,7 +53,7 @@ abstract class MethodSort extends Method
 	 * @see Method::isAjax()
 	 */
 	public function isAjax() { return true; }
-	
+
 	/**
 	 * Find the sort column name and swap item sorting.
 	 * {@inheritDoc}
@@ -67,26 +67,26 @@ abstract class MethodSort extends Method
 		{
 			return $this->error('err_table_not_sortable', [$table->gdoHumanName()]);
 		}
-		
+
 		# Existance check
 		$a = $this->gdoParameterValue('a');
 		$b = $this->gdoParameterValue('b');
-		
+
 		# Permission check
 		if ( (!$this->canSort($a)) || (!$this->canSort($b)) )
 		{
 		    return $this->error('err_table_not_sortable', [$table->gdoHumanName()]);
 		}
-		
+
 		$sortA = $a->getVar($name);
 		$sortB = $b->getVar($name);
-		
+
 		$a->saveVar($name, $sortB);
 		$b->saveVar($name, $sortA);
-		
+
 		return $this->message('msg_sort_success');
 	}
-	
+
 	/**
 	 * Determine the sort column.
 	 * @param GDO $table
@@ -96,7 +96,7 @@ abstract class MethodSort extends Method
 	{
 	    return $table->gdoColumnOf(GDT_Sort::class);
 	}
-	
+
 	/**
 	 * Get the name of the table's sort column.
 	 * @param GDO $table
@@ -109,5 +109,5 @@ abstract class MethodSort extends Method
 	        return $gdt->name;
 	    }
 	}
-	
+
 }

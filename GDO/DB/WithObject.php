@@ -36,13 +36,13 @@ trait WithObject
 	 * @return GDO
 	 */
 	public function foreignTable() { return $this->table; }
-	
+
 	###################
 	### Composition ### @TODO unused, implement composite CRUD forms?
 	###################
 	public $composition = false;
 	public function composition($composition=true) { $this->composition = $composition; return $this; }
-	
+
 	###################
 	### Var / Value ###
 	###################
@@ -63,12 +63,12 @@ trait WithObject
 //     		return parent::getValue();
 // 	    }
 // 	}
-	
+
 	public function toVar($value)
 	{
 		return $value !== null ? $value->getID() : null;
 	}
-	
+
 	public function toValue($var)
 	{
 		if ($var !== null)
@@ -76,7 +76,7 @@ trait WithObject
 		    $noCompletion =
 		        Application::instance()->isCLI() ||
 		        @$_REQUEST['nocompletion_'.$this->name];
-		    
+
 			# Without javascript, convert the name input
 			if ($noCompletion)
 			{
@@ -93,7 +93,7 @@ trait WithObject
 			}
 		}
 	}
-	
+
 	/**
 	 * Override this with a real byName method.
 	 * @param string $name
@@ -106,7 +106,7 @@ trait WithObject
 			return $this->table->getBy($column->name, $name);
 		}
 	}
-	
+
 	/**
 	 * @return GDO
 	 */
@@ -114,7 +114,7 @@ trait WithObject
 	{
 		return $this->gdo;
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -132,7 +132,7 @@ trait WithObject
 			}
 		}
 	}
-	
+
 // 	/**
 // 	 * @return \GDO\Core\GDO
 // 	 */
@@ -140,7 +140,7 @@ trait WithObject
 // 	{
 // 		return $this->getValue();
 // 	}
-	
+
 	public function getGDOData()
 	{
 		if ($object = $this->getValue())
@@ -159,7 +159,7 @@ trait WithObject
 		    return [$this->name => null]; # bug in import tbs forum
 		}
 	}
-	
+
 	################
 	### Validate ###
 	################
@@ -182,7 +182,7 @@ trait WithObject
 			return true;
 		}
 	}
-	
+
 	public function plugVar()
 	{
 	    $first = $this->table->select()->first()->exec()->fetchObject();
@@ -197,11 +197,11 @@ trait WithObject
         }
         return $first;
 	}
-	
+
 	###############
 	### Cascade ###
 	###############
-	
+
 	/**
 	 * Cascade mode for foreign keys.
 	 * Default is SET NULL, so nothing gets lost easily.
@@ -219,19 +219,19 @@ trait WithObject
 		$this->cascade = 'CASCADE';
 		return $this;
 	}
-	
+
 	public function cascadeNull()
 	{
 		$this->cascade = 'SET NULL';
 		return $this;
 	}
-	
+
 	public function cascadeRestrict()
 	{
 		$this->cascade = 'RESTRICT';
 		return $this;
 	}
-	
+
 	/**
 	 * If object columns are not null, they cascade upon deletion.
 	 */
@@ -240,7 +240,7 @@ trait WithObject
 		$this->notNull = $notNull;
 		return $this->cascade();
 	}
-	
+
 	/**
 	 * If object columns are primary, they cascade upon deletion.
 	 */
@@ -249,7 +249,7 @@ trait WithObject
 		$this->primary = $primary;
 		return $this->notNull();
 	}
-	
+
 	########################
 	### Custom ON clause ###
 	########################
@@ -298,7 +298,7 @@ trait WithObject
 	{
 		return GDT_Template::php('DB', 'filter/object.php', ['field' => $this, 'f' => $f]);
 	}
-	
+
 	/**
 	 * Proxy filter to the pk filterColumn if specified. else filter like parent.??
 	 * @TODO check
@@ -318,7 +318,7 @@ trait WithObject
 		    return parent::filterQuery($query, $rq);
 		}
 	}
-	
+
 	##############
 	### Search ###
 	##############
@@ -334,7 +334,7 @@ trait WithObject
 	{
         $table = $this->foreignTable();
 	    $nameT = GDO::escapeIdentifierS('t_' . $this->name);
-	    
+
 	    if ($first) // first time joined this table?
 	    {
 	        $name = GDO::escapeIdentifierS($this->name);
@@ -343,7 +343,7 @@ trait WithObject
 	        $myT = $this->gdtTable->gdoTableName();
 	        $query->join("LEFT JOIN {$table->gdoTableName()} {$nameT} ON {$myT}.{$name} = {$nameT}.{$fkI}");
 	    }
-	    
+
 	    $where = [];
 	    foreach ($table->gdoColumnsCache() as $gdt)
 	    {
@@ -357,5 +357,5 @@ trait WithObject
 	    }
 	    return implode(' OR ', $where);
 	}
-	
+
 }

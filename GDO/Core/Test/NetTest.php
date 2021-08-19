@@ -17,5 +17,5 @@ final class NetTest extends TestCase
         assertTrue(GDT_IP::isLocal('172.31.0.1'), 'Test if IPv4 172.31.x.x local IP is detected');
         assertFalse(GDT_IP::isLocal('192.167.0.1'), 'Test if IPv4 192.167. remote IP is detected');
     }
-    
+
 }

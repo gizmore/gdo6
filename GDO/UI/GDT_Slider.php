@@ -17,7 +17,7 @@ class GDT_Slider extends GDT
 	use WithIcon;
 	use WithLabel;
 	use WithFormFields;
-	
+
 	##############
 	### Render ###
 	##############
@@ -37,7 +37,7 @@ class GDT_Slider extends GDT
 	### Validate ###
 	################
 	public function getGDOData() { return [$this->name => $this->var]; }
-	
+
 	public function validate($value)
 	{
 		if (parent::validate($value))
@@ -59,5 +59,5 @@ class GDT_Slider extends GDT
 			return true;
 		}
 	}
-	
+
 }

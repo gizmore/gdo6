@@ -1,9 +1,9 @@
 <?php
 /**
  * Execute gdo6 methods via CLI.
- * 
+ *
  * @see Method
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 6.0.1
@@ -140,7 +140,7 @@ try
             $_GET = $_POST = $_REQUEST = [];
             $_REQUEST['fmt'] = 'cli';
             GDT_Response::$CODE = 200;
-            
+
             # Exec
             if ($response = CLI::execute($line))
             {
@@ -149,7 +149,7 @@ try
                     echo Website::$TOP_RESPONSE->renderCLI() . "\n";
                 }
                 echo $response->renderCLI();
-                
+
             }
             else
             {
@@ -161,7 +161,7 @@ try
             echo GDT_Error::responseException($ex)->render();
         }
         echo PHP_EOL;
-        
+
         if (isset($norepl))
         {
             die (GDT_Response::globalError() ? 1 : 0);

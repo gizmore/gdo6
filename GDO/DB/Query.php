@@ -29,19 +29,19 @@ final class Query
 	const REPLACE = "REPLACE INTO";
 	const UPDATE = "UPDATE";
 	const DELETE = "DELETE FROM";
-	
+
 	/**
 	 * The table to manipulate.
 	 * @var GDO
 	 */
 	public $table;
-	
+
 	/**
 	 * The fetch object gdo table.
 	 * @var GDO
 	 */
 	public $fetchTable;
-	
+
 	# query parts
 	private $columns;
 	private $where;
@@ -55,15 +55,15 @@ final class Query
 	public  $values;
 	private $limit;
 	private $raw;
-	
+
 	private $write = false; # Is it a write query?
-	
+
 	public function __construct(GDO $table)
 	{
 		$this->table = $table;
 		$this->fetchTable = $table;
 	}
-	
+
 	#############
 	### Cache ###
 	#############
@@ -91,7 +91,7 @@ final class Query
 	{
 	    return $this->buffered(false);
 	}
-	
+
 	#############
 	### Debug ###
 	#############
@@ -101,7 +101,7 @@ final class Query
 	 */
 	public function debug($debug=true) { $this->debug = $debug; return $this; }
 	private $debug = false;
-	
+
 	#############
 	### Clone ###
 	#############
@@ -135,7 +135,7 @@ final class Query
     		return $clone;
 		}
 	}
-	
+
 	/**
 	 * Specify which GDO class is used for fetching.
 	 * @TODO Rename function
@@ -147,28 +147,28 @@ final class Query
 		$this->fetchTable = $fetchTable;
 		return $this;
 	}
-	
+
 	public function update($tableName)
 	{
 		$this->type = self::UPDATE;
 		$this->write = true;
 		return $this->from($tableName);
 	}
-	
+
 	public function insert($tableName)
 	{
 		$this->type = self::INSERT;
 		$this->write = true;
 		return $this->from($tableName);
 	}
-	
+
 	public function replace($tableName)
 	{
 		$this->type = self::REPLACE;
 		$this->write = true;
 		return $this->from($tableName);
 	}
-	
+
 	/**
 	 * @param string $condition
 	 * @param string $op
@@ -179,17 +179,17 @@ final class Query
 		$this->where = $this->where ? $this->where . " $op ($condition)" : "($condition)";
 		return $this;
 	}
-	
+
 	public function orWhere($condition)
 	{
 		return $this->where($condition, "OR");
 	}
-	
+
 	public function getWhere()
 	{
 		return $this->where ? " WHERE {$this->where}" : "";
 	}
-	
+
 	/**
 	 * @param string $condition
 	 * @param string $op
@@ -207,13 +207,13 @@ final class Query
 		}
 		return $this;
 	}
-	
+
 	public function getHaving()
 	{
 		return $this->having ? " HAVING {$this->having}" : "";
 	}
-	
-		
+
+
 	/**
 	 * @param string $tableName
 	 * @return self
@@ -223,17 +223,17 @@ final class Query
 		$this->from = $this->from ? $this->from . ", $tableName" : $tableName;
 		return $this;
 	}
-	
+
 	public function fromSelf()
 	{
 		return $this->from($this->table->gdoTableIdentifier());
 	}
-	
+
 	public function getFrom()
 	{
 		return $this->from ? " {$this->from}" : "";
 	}
-	
+
 	/**
 	 * Build a select.
 	 * @param string $columns
@@ -249,7 +249,7 @@ final class Query
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Select a field as first column in query.
 	 * Useful to build count queries out of filtered tables etc.
@@ -265,7 +265,7 @@ final class Query
 	    }
 	    return $this;
 	}
-	
+
 	/**
 	 * Build a select but reset columns.
 	 * @param string $columns
@@ -276,7 +276,7 @@ final class Query
 	    $this->columns = null;
 	    return $this->select($columns);
 	}
-	
+
 	/**
 	 * @param int $count
 	 * @param int $start
@@ -287,13 +287,13 @@ final class Query
 		$this->limit = " LIMIT $start, $count";
 		return $this;
 	}
-	
+
 	public function noLimit()
 	{
 	    $this->limit = null;
 	    return $this;
 	}
-	
+
 	/**
 	 * Limit results to one.
 	 * @return self
@@ -302,29 +302,29 @@ final class Query
 	{
 		return $this->limit(1);
 	}
-		
+
 	public function getLimit()
 	{
 		return $this->limit ? $this->limit : '';
 	}
-	
+
 	public function getSelect()
 	{
 		return $this->write ? '' : ($this->getSelectColumns() . " FROM");
 	}
-	
+
 	private function getSelectColumns()
 	{
 		return $this->columns ? $this->columns : ' *';
 	}
-	
+
 	public function delete($tableName)
 	{
 		$this->type = self::DELETE;
 		$this->write = true;
 		return $this->from($tableName);
 	}
-	
+
 	/**
 	 * Build part of the SET clause.
 	 * @param string $set
@@ -342,19 +342,19 @@ final class Query
 		}
 		return $this;
 	}
-	
+
 	public function getSet()
 	{
 		return $this->set ? " SET {$this->set}" : "";
 	}
 
-	
+
 	public function noOrder()
 	{
 	    $this->order = null;
 	    return $this;
 	}
-	
+
 	/**
 	 * Order clause.
 	 * @TODO make it one var. 'foo ASC'
@@ -376,7 +376,7 @@ final class Query
 		}
 		return $this;
 	}
-	
+
 	public function join($join)
 	{
 		if ($this->join)
@@ -389,7 +389,7 @@ final class Query
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Automatically build a join based on a GDT_Object column of this queries GDO table.
 	 * @param string $key the GDO
@@ -403,7 +403,7 @@ final class Query
 		{
 			throw new GDOException(t('err_column', [html($key)]));
 		}
-		
+
 		if ($gdoType instanceof GDT_Join)
 		{
 			$join = $gdoType->join;
@@ -415,29 +415,29 @@ final class Query
 			$ftbl = $tableAlias ? $tableAlias : $table->gdoTableIdentifier();
 			$atbl = $this->table->gdoTableIdentifier();
 			$tableAlias = $tableAlias ? " AS {$tableAlias}" : '';
-			
+
 			$join = "{$join} {$table->gdoTableIdentifier()}{$tableAlias} ON {$ftbl}.{$table->gdoPrimaryKeyColumn()->identifier()}=$atbl.{$gdoType->identifier()}";
 		}
 		else
 		{
 			throw new GDOException(t('err_join_object', [html($key), html($this->table->displayName())]));
 		}
-		
+
 		return $this->join($join);
 	}
-	
+
 	public function group($group)
 	{
 		$this->group = $this->group ? "{$this->group},{$group}" : $group;
 		return $this;
 	}
-	
+
 	public function values(array $values)
 	{
 	    $this->values = $this->values ? array_merge($this->values, $values) : $values;
 		return $this;
 	}
-	
+
 	public function getValues()
 	{
 		if (!$this->values)
@@ -455,28 +455,28 @@ final class Query
 		$values = implode(',', $values);
 		return " ($fields) VALUES ($values)";
 	}
-	
+
 	public function getJoin()
 	{
 		return $this->join ? " {$this->join}" : "";
 	}
-	
+
 	public function noJoins()
 	{
 	    $this->join = null;
 	    return $this;
 	}
-	
+
 	public function getGroup()
 	{
 		return $this->group ? " GROUP BY $this->group" : "";
 	}
-	
+
 	public function getOrderBy()
 	{
 		return $this->order ? ' ORDER BY ' . implode(', ', $this->order) : '';
 	}
-	
+
 	public function raw($raw)
 	{
 	    $this->write = !Strings::startsWith($raw, 'SELECT');
@@ -504,7 +504,7 @@ final class Query
     	    $this->getOrderBy() .
     	    $this->getLimit();
 	}
-	
+
 	/**
 	 * Execute a query.
 	 * Returns boolean on writes and a Result on reads.
@@ -522,7 +522,7 @@ final class Query
 			echo "{$query}\n";
 			Logger::rawLog('query', $query);
 		}
-		
+
 		if ($this->write)
 		{
 			return $db->queryWrite($query);
@@ -532,5 +532,5 @@ final class Query
 			return new Result($this->fetchTable, $db->queryRead($query, $this->buffered), $this->cached);
 		}
 	}
-	
+
 }

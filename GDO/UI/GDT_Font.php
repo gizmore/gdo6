@@ -15,27 +15,27 @@ use GDO\Util\Strings;
 class GDT_Font extends GDT_Select
 {
     public $icon = 'font';
-    
+
 	public function defaultLabel() { return $this->label('font'); }
-	
+
 	public function __construct()
 	{
 	    parent::__construct();
 	    $this->choices($this->fontChoices());
 	}
-	
+
 	public function renderForm()
 	{
 		$this->choices = $this->fontChoices();
 		return parent::renderForm();
 	}
-	
+
 	public function validate($value)
 	{
 		$this->choices = $this->fontChoices();
 		return parent::validate($value);
 	}
-	
+
 	public function fontChoices()
 	{
 		static $choices;

@@ -39,14 +39,14 @@ final class GDO_User extends GDO
     const REAL_NAME_POSTFIX = '`';
     const GUEST_NAME_PREFIX = '~';
 	const GHOST_NAME_PREFIX = '~~';
-			
+
     ### User types
 	const BOT = 'bot';
 	const SYSTEM = 'system';
 	const GHOST = 'ghost';
 	const GUEST = 'guest';
 	const MEMBER = 'member';
-	
+
 	###########
 	### GDO ###
 	###########
@@ -75,22 +75,22 @@ final class GDO_User extends GDO
 		    GDT_Index::make()->indexColumns('user_type'),
 		];
 	}
-	
+
 	##############
 	### Getter ###
 	##############
 	public function getID() { return $this->getVar('user_id'); }
 	public function getType() { return $this->getVar('user_type'); }
-	
+
 	public function getName() { return $this->getVar('user_name'); }
 	public function getUserName() { return ($name = $this->getGuestName()) ? $name : $this->getName(); }
 	public function getRealName() { return $this->getVar('user_real_name'); }
 	public function getGuestName() { return $this->getVar('user_guest_name'); }
-	
+
 	public function isBot() { return $this->isType(self::BOT); }
 	public function isGhost() { return $this->isType(self::GHOST); }
 	public function isAnon() { return $this->isGuest() && (!$this->getGuestName()); }
-	
+
 	public function isGuest($andAuthenticated=true)
 	{
 	    $a = $andAuthenticated;
@@ -98,10 +98,10 @@ final class GDO_User extends GDO
 	       ($a ? (!!$this->getGuestName()) : true) : # guest type checks for auth or true
 	       false; # non guest
 	}
-	
+
 	public function isMember() { return $this->isType(self::MEMBER); }
 	public function isType($type) { return $this->getType() === $type; }
-	
+
 	/**
 	 * Check if it is a legit user.
 	 * Either a guest with name or a member.
@@ -119,15 +119,15 @@ final class GDO_User extends GDO
 	            return false;
 	    }
 	}
-	
+
 	public function getCredits() { return $this->getVar('user_credits'); }
 	public function isAuthenticated() { return $this->isUser(); }
-	
+
 	public function hasMail() { return !!$this->getMail(); }
 	public function getMail() { return $this->getVar('user_email'); }
 	public function getMailFormat() { return $this->getVar('user_email_fmt'); }
 	public function wantsTextMail() { return $this->getVar('user_email_fmt') === GDT_EmailFormat::TEXT; }
-	
+
 	public function getGender() { return $this->getVar('user_gender'); }
 	public function getLangISO() { $iso = $this->getVar('user_language'); return $iso ? $iso : GDO_LANGUAGE; }
 	public function getLanguage() { return GDO_Language::findById($this->getLangISO()); }
@@ -137,13 +137,13 @@ final class GDO_User extends GDO
 	public function getTimezone() { return $this->hasTimezone() ? $this->getVar('user_timezone') : GDO_Session::get('timezone', GDO_TIMEZONE); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
-	
+
 	public function getRegisterDate() { return $this->getVar('user_register_time'); }
 	public function displayRegisterAge() { return Time::displayAge($this->getRegisterDate()); }
 	public function displayRegisterDate() { return Time::displayDate($this->getRegisterDate()); }
 	public function getRegisterIP() { return $this->getVar('user_register_ip'); }
 	public function isDeleted() { return $this->getVar('user_deleted_at') !== null; }
-	
+
 	################
 	### Timezone ###
 	################
@@ -155,7 +155,7 @@ final class GDO_User extends GDO
 	{
 	    return Time::getTimezoneObject($this->getTimezone());
 	}
-	
+
 	###############
 	### Display ###
 	###############
@@ -163,12 +163,12 @@ final class GDO_User extends GDO
 	{
 		return $this->displayNameLabel();
 	}
-	
+
 	public function displayType()
 	{
 		return t('enum_' . $this->getType());
 	}
-	
+
 	public function displayNameLabel()
 	{
 		if ($realName = $this->getRealName())
@@ -192,13 +192,13 @@ final class GDO_User extends GDO
 			return '~~' . t('ghost') . '~~';
 		}
 	}
-	
+
 	#############
 	### HREFs ###
 	#############
 	public function href_edit_admin() { return href('Admin', 'UserEdit', "&user={$this->getID()}"); }
 	public function href_perm_revoke() { return href('Admin', 'PermissionRevoke', "&user={$this->getID()}&perm=".$this->getVar('perm_perm_id')); }
-	
+
 	#############
 	### Perms ###
 	#############
@@ -230,14 +230,14 @@ final class GDO_User extends GDO
 	    $this->tempUnset('gdo_permission');
 	    return $this->recache();
 	}
-	
+
 	public function getLevel()
 	{
 	    $level = $this->getVar('user_level');
 	    $permLevel = $this->getPermissionLevel();
 	    return (int)max([$level, $permLevel]);
 	}
-	
+
 	public function getPermissionLevel()
 	{
 	    $max = 0;
@@ -250,7 +250,7 @@ final class GDO_User extends GDO
 	    }
 	    return $max;
 	}
-	
+
 	##############
 	### Static ###
 	##############
@@ -262,7 +262,7 @@ final class GDO_User extends GDO
 	{
 	    return self::blank(['user_id' => '0', 'user_type' => 'ghost']);
 	}
-	
+
 	private static $SYSTEM;
 	public function isSystem() { return $this->getID() === '1'; }
 	public static function system()
@@ -280,14 +280,14 @@ final class GDO_User extends GDO
 	    }
         return self::$SYSTEM;
 	}
-	
+
 	/**
 	 * Get current user.
 	 * Not neccisarilly via session!
 	 * @return self
 	 */
 	public static function current() { return self::$CURRENT; }
-	
+
 	public static function setCurrent(GDO_User $user)
 	{
 	    self::$CURRENT = $user;
@@ -298,7 +298,7 @@ final class GDO_User extends GDO
 	 * @var GDO_User
 	 */
 	private static $CURRENT;
-	
+
 	/**
 	 * @return GDO_User
 	 */
@@ -315,7 +315,7 @@ final class GDO_User extends GDO
 	    }
 		return $this;
 	}
-	
+
 	/**
 	 * @param string $name
 	 * @return self
@@ -328,7 +328,7 @@ final class GDO_User extends GDO
 	        return $user;
 	    }
 	}
-	
+
 	/**
 	 * @param string $login
 	 * @return self
@@ -337,7 +337,7 @@ final class GDO_User extends GDO
 	{
 		return self::table()->select()->where(sprintf('user_name=%1$s OR user_email=%1$s', self::quoteS($login)))->first()->exec()->fetchObject();
 	}
-	
+
 	#######################
 	### With Permission ###
 	#######################
@@ -349,7 +349,7 @@ final class GDO_User extends GDO
 	{
 		return self::withPermission('admin');
 	}
-	
+
 	/**
 	 * Get all staff members.
 	 * @return self[]
@@ -358,7 +358,7 @@ final class GDO_User extends GDO
 	{
 		return self::withPermission('staff');
 	}
-	
+
 	/**
 	 * Get all users with a permission.
 	 * @param string $permission
@@ -383,7 +383,7 @@ final class GDO_User extends GDO
 // 	    }
 	    return $cache;
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -391,12 +391,12 @@ final class GDO_User extends GDO
 	{
 	    return GDT_Template::php('User', 'list/list_user.php', ['user' => $this]);
 	}
-	
+
 	public function renderCell()
 	{
 	    return GDT_Template::php('User', 'cell/user.php', ['user'=>$this]);
 	}
-	
+
 	public function renderChoice()
 	{
 	    $pre = '';
@@ -417,7 +417,7 @@ final class GDO_User extends GDO
 	    }
 	    return $pre . $this->displayNameLabel();
 	}
-	
+
 	public function renderJSON()
 	{
 		return [
@@ -437,7 +437,7 @@ final class GDO_User extends GDO
 			'permissions' => $this->loadPermissions(),
 		];
 	}
-	
+
 	#############
 	### Count ###
 	#############
@@ -455,7 +455,7 @@ final class GDO_User extends GDO
 	    }
 	    return self::$MEMBERCOUNT;
 	}
-	
+
 }
 
 # Initial valid state

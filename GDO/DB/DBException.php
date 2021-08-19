@@ -8,5 +8,5 @@ final class DBException extends GDOError
 	{
 		parent::__construct($key, $args, $code);
 	}
-	
+
 }

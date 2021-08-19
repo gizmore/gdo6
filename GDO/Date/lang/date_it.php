@@ -23,13 +23,13 @@ return [
     'tu_d' => 'd',
     'tu_w' => 'w',
     'tu_y' => 'y',
-    
+
     # Timezone
     'ft_date_timezone' => 'Imposta il tuo fuso orario',
     'msg_timezone_changed' => 'Il tuo fuso orario ora è %s.',
     'cfg_tz_probe_js' => 'Determina il fuso orario con Javascript?',
     'cfg_tz_sidebar_select' => 'Mostra la selezione del fuso orario nella barra laterale?',
- 
+
     # Epoch
     'mtitle_date_epoch' => 'Data e ora di uscita',
     'msg_time_unix' => 'Unix timestamp: %s',

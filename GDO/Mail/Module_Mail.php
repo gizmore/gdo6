@@ -10,21 +10,21 @@ use GDO\UI\GDT_Link;
  * - Mail stuff.
  * - Some user settings.
  * - Send function.
- * 
+ *
  * @author gizmore
  *
  */
 final class Module_Mail extends GDO_Module
 {
     public $module_priority = 30;
-    
+
     public function isCoreModule() { return true; }
-    
+
     public function onLoadLanguage()
     {
         return $this->loadLanguage('lang/mail');
     }
-    
+
     public function getConfig()
     {
         return [
@@ -32,10 +32,10 @@ final class Module_Mail extends GDO_Module
             GDT_Checkbox::make('show_in_sidebar')->initial('1'),
         ];
     }
-    
+
     public function cfgSidebar() { return $this->getConfigValue('show_in_sidebar'); }
     public function cfgAllowEmail() { return $this->getConfigValue('allow_email'); }
-    
+
     public function getUserSettings()
     {
         return [
@@ -43,7 +43,7 @@ final class Module_Mail extends GDO_Module
             GDT_EmailFormat::make('email_format')->initial('html'),
         ];
     }
-    
+
     public function onInitSidebar()
     {
         if ($this->cfgSidebar())
@@ -56,5 +56,5 @@ final class Module_Mail extends GDO_Module
             }
         }
     }
-    
+
 }

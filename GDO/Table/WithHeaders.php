@@ -11,7 +11,7 @@ use GDO\Util\Strings;
 /**
  * - A trait for tables and list which adds an extra headers variable. This has to be a \GDO\Core\GDT_Fields.
  * - Implements @\GDO\Core\ArrayResult multisort for use in @\GDO\Table\MethodTable.
- * 
+ *
  * @author gizmore
  * @version 6.10.4
  * @since 6.5.0
@@ -25,14 +25,14 @@ trait WithHeaders
 	 * @var GDT_Fields
 	 */
 	public $headers;
-	
+
 	/**
 	 * @return GDT_Fields
 	 */
 	public function makeHeaders() { if ($this->headers === null) $this->headers = GDT_Fields::make(self::nextOrderName()); return $this->headers; }
 	public function addHeaders(array $fields) { return count($fields) ? $this->makeHeaders()->addFields($fields) : $this; }
 	public function addHeader(GDT $field) { return $this->makeHeaders()->addField($field); }
-	
+
 	##############################
 	### REQUEST container name ###
 	##############################
@@ -41,7 +41,7 @@ trait WithHeaders
 	{
 		return "o" . (self::$ORDER_NAME++);
 	}
-	
+
 	###############
 	### Ordered ###
 	###############
@@ -58,7 +58,7 @@ trait WithHeaders
 	    {
 	        $orders = @$orders['o'];
 	    }
-	    
+
 	    if (empty($orders) && $defaultOrder)
 	    {
 	        $col = Strings::substrTo($defaultOrder, ' ', $defaultOrder);
@@ -66,16 +66,16 @@ trait WithHeaders
 	        $orders[$col] = $order;
 	        $_REQUEST[$this->headers->name]['o'] = $orders;
 	    }
-		
+
 		# Build sort func
 		$sort = $this->make_cmp($orders);
-		
+
 		# Use it
 		uasort($result->getData(), $sort);
-		
+
 		return $result;
 	}
-	
+
 	private function make_cmp(array $sorting)
 	{
 		$headers = $this->headers;
@@ -94,5 +94,5 @@ trait WithHeaders
 			return 0;
 		};
 	}
-	
+
 }

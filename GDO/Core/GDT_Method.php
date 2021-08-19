@@ -13,30 +13,30 @@ class GDT_Method extends GDT
     {
         return self::make()->method($method);
     }
-    
+
     public $method;
     public function method(Method $method)
     {
         $this->method = $method;
         return $this;
     }
-    
+
     public function renderCell()
     {
         return $this->execute()->renderCell();
     }
-    
+
     public function renderJSON()
     {
         return [
             'method' => $this->method->gdoShortName(),
         ];
     }
-    
+
     public function execute()
     {
         $response = GDT_Response::newWith();
         return $response->addField($this->method->execute());
     }
-    
+
 }

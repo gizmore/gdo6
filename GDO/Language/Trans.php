@@ -21,9 +21,9 @@ final class Trans
      * @var string
      */
 	public static $ISO = 'en';
-	
+
 	public static $FILE_CACHE = GDO_FILECACHE;
-	
+
 	private static $HAS_LOADED_FILE_CACHE = false;
 
 	/**
@@ -31,38 +31,38 @@ final class Trans
 	 * @var string[]
 	 */
 	private static $PATHS = [];
-	
+
 	/**
 	 * Translation data cache.
 	 * @var string[string]
 	 */
 	private static $CACHE = [];
-	
+
 	/**
 	 * Are all pathes added?
 	 * @var boolean
 	 */
 	private static $INITED = false;
-	
+
 	/**
 	 * Shall sitename be appended to seo titles?
 	 * @TODO move
 	 * @var boolean
 	 */
 	public static $NO_SITENAME = false;
-	
+
 	/**
 	 * Number of missing translation keys for stats and testing.
 	 * @var integer
 	 */
 	public static $MISS = 0;
-	
+
 	/**
 	 * The keys that are missing in translation.
 	 * @var string[]
 	 */
 	public static $MISSING = [];
-	
+
 	/**
 	 * Set the current ISO
 	 * @param string $iso
@@ -82,7 +82,7 @@ final class Trans
 //     		self::inited(true);
 	    }
 	}
-	
+
 	/**
 	 * Show number of registered translation data base pathes.
 	 * @return int
@@ -104,7 +104,7 @@ final class Trans
 	{
 	    self::$PATHS[$path] = $path;
 	}
-	
+
 	/**
 	 * Set inited and clear cache.
 	 * @TODO separate calls. maybe cache should not be cleared quickly? no idea. Make performance tests for language loading on init.
@@ -115,7 +115,7 @@ final class Trans
 		self::$INITED = $inited;
 	    self::$CACHE = [];
 	}
-	
+
 	/**
 	 * Get the cache for an ISO.
 	 * @param string $iso
@@ -125,7 +125,7 @@ final class Trans
 	{
 		return self::load($iso);
 	}
-	
+
 	/**
 	 * Load a translation data into and from cache.
 	 * @param string $iso
@@ -139,7 +139,7 @@ final class Trans
 		}
 		return self::$CACHE[$iso];
 	}
-	
+
 	/**
 	 * Translate into current ISO.
 	 * @param string $key
@@ -150,7 +150,7 @@ final class Trans
 	{
 		return self::tiso(self::$ISO, $key, $args);
 	}
-	
+
 	/**
 	 * Translate into an language ISO.
 	 * @param string $iso
@@ -164,7 +164,7 @@ final class Trans
 	    {
 	        return '';
 	    }
-	    
+
 		$cache = self::load($iso);
 
 		if (isset($cache[$key]))
@@ -199,7 +199,7 @@ final class Trans
 	{
 		$trans = [];
 		$trans2 = [];
-		
+
 		# Try cache
 		$key = "gdo_trans_{$iso}.json";
 		if (self::$FILE_CACHE && Cache::fileHas($key))
@@ -209,7 +209,7 @@ final class Trans
 		    self::$HAS_LOADED_FILE_CACHE = true;
 		    return self::$CACHE[$iso];
 		}
-		
+
 		# Build lang map
 		if (self::$INITED)
 		{
@@ -247,7 +247,7 @@ final class Trans
 			$loaded = $trans;
 			$trans = $loaded;
     		self::$CACHE[$iso] = $trans;
-    		
+
     		# Save cache
     		if (self::$FILE_CACHE)
     		{
@@ -255,10 +255,10 @@ final class Trans
     		    Cache::fileSet($key, json_encode($trans, JSON_PRETTY_PRINT));
     		}
 		}
-		
+
 		return $trans;
 	}
-	
+
 	/**
 	 * Check if a translation key exists.
 	 * @param string $key

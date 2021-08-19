@@ -6,7 +6,7 @@ use GDO\Core\Method;
 /**
  * Default method that simply loads a template.
  * Uses gdoParameters to populate template vars.
- * 
+ *
  * @author gizmore
  * @version 6.10.3
  * @since 6.4.0
@@ -23,7 +23,7 @@ abstract class MethodPage extends Method
 		return $this->templatePHP("page/{$name}.php",
 		  $this->getTemplateVars());
 	}
-	
+
 	protected function getTemplateVars()
 	{
 		$tVars = [];

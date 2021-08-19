@@ -14,13 +14,13 @@ use GDO\Core\GDT_Template;
 class GDT_Divider extends GDT
 {
 	use WithLabel;
-	
+
 	public $editable = false;
-	
+
 	public function blankData() {}
 
 	public function defaultLabel() { return $this->noLabel(); }
-	
+
 	public function renderJSON() {}
 	public function renderCLI() {}
 	public function renderCell() { return GDT_Template::php('UI', 'cell/divider.php', ['field' => $this]); }
@@ -29,5 +29,5 @@ class GDT_Divider extends GDT
 	{
 	    return '<div class="gdt-card-divider">'.$this->displayLabel().'</div>';
 	}
-	
+
 }

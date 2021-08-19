@@ -24,11 +24,11 @@ class Module_Install extends GDO_Module
 	{
 	    return 'install';
 	}
-	
+
 	public function onInit()
 	{
 	    Cache::flush();
 	    Cache::fileFlush();
 	}
-	
+
 }

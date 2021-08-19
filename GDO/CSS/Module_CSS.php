@@ -13,18 +13,18 @@ use GDO\Util\Strings;
 final class Module_CSS extends GDO_Module
 {
     public function onLoadLanguage() { return $this->loadLanguage('lang/css'); }
-    
+
     public function isCoreModule() { return true; }
-    
+
     public function getConfig()
     {
         return [
             GDT_Checkbox::make('minify_css')->initial('0'),
         ];
     }
-    
+
     public function cfgMinify() { return $this->getConfigVar('minify_css'); }
-    
+
     public function includeMinifier()
     {
         spl_autoload_register([$this, 'psr']);
@@ -44,7 +44,7 @@ final class Module_CSS extends GDO_Module
             $path = GDO_PATH . 'GDO/CSS/minify/src/' . $path . '.php';
             require $path;
         }
-        
+
         $prefix = 'MatthiasMullie\\PathConverter\\';
         if (Strings::startsWith($classname, $prefix))
         {
@@ -54,5 +54,5 @@ final class Module_CSS extends GDO_Module
             require $path;
         }
     }
-    
+
 }

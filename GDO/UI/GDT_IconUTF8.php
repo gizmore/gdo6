@@ -92,7 +92,7 @@ final class GDT_IconUTF8
         'view' => '👁',
         'wait' => '◴',
     );
-    
+
 	public static function iconS($icon, $iconText, $style)
 	{
 	    $title = $iconText ? ' title="'.html($iconText).'"' : '';

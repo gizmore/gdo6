@@ -4,7 +4,7 @@ return array(
 'install_title_1' => 'Welcome',
 'install_text_1' => 'Welcome to GDO6, Please continue here: %s',
 'install_text_2' => 'If you plan to use a Database, please execute the following mysql commands.',
-    
+
 # System Test
 'install_title_2' => 'System–Test',
 'install_title_2_tests' => 'Mandatory Requirements',
@@ -48,7 +48,7 @@ return array(
 'install_config_boxinfo_success' => 'Your system looks solid. You can continue with %s',
 'save_config' => 'Save',
 'test_config' => 'Test',
-    
+
 # Modules
 'install_title_4' => 'GDO Modules',
 'install_modules_info_text' => 'Here you can choose the modules to install. Dependencies are not 100% resolved yet.',
@@ -95,10 +95,10 @@ cd www/gdo6<br/>
 Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 </code>
 ',
-	
+
 'install_title_8' => 'Import Backup',
 'ft_install_importbackup' => 'Import a backup',
-	
+
 'install_title_9' => 'Copy htaccess (optional)',
 'ft_install_copyhtaccess' => 'Copy default htaccess to gdo6 root',
 'copy_htaccess_info' => '<b>This overwrites a currently present <i>.htaccess</i> file!</b><br>You can then continue with %s.',
@@ -107,7 +107,7 @@ Note: Currently bower and yarn are both in use. Bower will be dropped.<br/>
 'install_title_10' => 'Security',
 'ft_install_security' => 'Finish installation by removing access to install wizard and the protected folder',
 'protect_folders' => 'Protect Folders',
-	
+
 # gdo6 binary
 'msg_config_written' => 'A default config file has been written to protected/%s',
 'msg_available_config' => 'Available config vars for module %s: %s.',

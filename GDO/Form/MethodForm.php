@@ -22,24 +22,24 @@ abstract class MethodForm extends Method
 	 * @var GDT_Form
 	 */
 	private $form;
-	
+
 	protected $pressedButton = null;
-	
+
 	public function isTransactional() { return true; }
-	
+
 	public function isUserRequired() { return true; }
-	
+
 	public function formName() { return GDT_Form::DEFAULT_NAME; }
-	
+
 	public abstract function createForm(GDT_Form $form);
-	
+
 	public function allParameters()
 	{
 	    return array_merge(
 	        $this->gdoParameters(),
 	        $this->getForm()->getFieldsRec());
 	}
-	
+
 	############
 	### Shim ###
 	############
@@ -57,13 +57,13 @@ abstract class MethodForm extends Method
 	    }
 	    return $this;
 	}
-	
+
 	public function requestParameters(array $params=null)
 	{
 	    $this->formParameters($params);
 	    return $this;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \GDO\Core\Method::execute()
@@ -74,7 +74,7 @@ abstract class MethodForm extends Method
 		$this->executeEditMethods();
 		return $this->executeForm();
 	}
-	
+
 	public function executeEditMethods()
 	{
 		if (count($_POST))
@@ -92,7 +92,7 @@ abstract class MethodForm extends Method
 			}
 		}
 	}
-	
+
 	/**
 	 * Render this form as response.
 	 * @return \GDO\Core\GDT_Response
@@ -101,7 +101,7 @@ abstract class MethodForm extends Method
 	{
 	    return GDT_Response::makeWith($this->getForm());
 	}
-	
+
 	/**
 	 * Validate the form and execute it.
 	 * @return \GDO\Core\GDT_Response
@@ -109,9 +109,9 @@ abstract class MethodForm extends Method
 	public function executeForm()
 	{
 	    $form = $this->getForm();
-	    
+
 	    $response = null;
-		
+
 		### Flow upload
 		if ($flowField = Common::getRequestString('flowField'))
 		{
@@ -121,7 +121,7 @@ abstract class MethodForm extends Method
     			return $formField->flowUpload();
 		    }
 		}
-		
+
 		### buttons
 		foreach ($form->actions()->getFieldsRec() as $field)
 		{
@@ -130,7 +130,7 @@ abstract class MethodForm extends Method
 				if (isset($_REQUEST[$this->formName()][$field->name]))
 				{
 				    $this->pressedButton = $field->name;
-				    
+
 					if ($form->validateForm())
 					{
 					    GDT_Form::$CURRENT = $form;
@@ -154,10 +154,10 @@ abstract class MethodForm extends Method
 				}
 			}
 		}
-	
+
 		return $response ? $response : $this->renderPage();
 	}
-	
+
 	/**
 	 * @return \GDO\Form\GDT_Form
 	 */
@@ -171,18 +171,18 @@ abstract class MethodForm extends Method
 		}
 		return $this->form;
 	}
-	
+
 	public function resetForm()
 	{
 		unset($this->form);
 	}
-	
+
 	###
 	public function onSubmit_submit(GDT_Form $form)
 	{
 		return $this->formValidated($form);
 	}
-	
+
    /**
 	 * @param GDT_Form $form
 	 * @return GDT_Response
@@ -191,7 +191,7 @@ abstract class MethodForm extends Method
 	{
 		return $this->message('msg_form_saved');
 	}
-	
+
 	/**
 	 * @param GDT_Form $form
 	 * @return GDT_Response
@@ -205,7 +205,7 @@ abstract class MethodForm extends Method
 	    }
 	    return $this->error('err_form_invalid');
 	}
-	
+
 	/**
 	 * Output a success creation message.
 	 * Redirect via $redirect=href or $redirect=true.
@@ -229,7 +229,7 @@ abstract class MethodForm extends Method
 	    return $this->message('msg_crud_created', [
 	        $gdo->gdoHumanName(), $gdo->getID()]);
 	}
-	
+
 	###########
 	### SEO ###
 	###########
@@ -237,7 +237,7 @@ abstract class MethodForm extends Method
 	{
 	    return strtolower('ft_'.$this->getModuleName().'_'.$this->getMethodName());
 	}
-	
+
 	###########
 	### CLI ###
 	###########
@@ -245,10 +245,10 @@ abstract class MethodForm extends Method
 	{
 	    return $this->getForm()->renderCLIHelp($this);
 	}
-	
+
 	public function getButtons()
 	{
 	    return $this->getForm()->actions()->getFieldsRec();
 	}
-	
+
 }

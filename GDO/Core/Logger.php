@@ -23,7 +23,7 @@ final class Logger
 	const IP = 0x400;
 	const BUFFERED = 0x1000;
 	const DEBUG = 0x2000;
-	
+
 	const _NONE = 0x00;
 	const _ALL = 0x37ff;
 	const _DEFAULT = self::_ALL;
@@ -61,7 +61,7 @@ final class Logger
 	public static function disable($bits) { self::$logbits &= (~$bits); }
 
 	public static function setLogFormat($format) { self::$logformat = $format; }
-	
+
 	public static function enableBuffer() { self::enable(self::BUFFERED); }
 	public static function disableBuffer() { self::flush();	self::disable(self::BUFFERED); }
 	public static function isBuffered() { return self::isEnabled(self::BUFFERED); }
@@ -211,7 +211,7 @@ final class Logger
 			self::logB($filename, sprintf(self::$logformat, $time, $ip, $username, $message));
 		}
 	}
-	
+
 	private static function tz()
 	{
 	    static $tz;
@@ -277,7 +277,7 @@ final class Logger
 
 		return true;
 	}
-	
+
 	public static function debug(...$objects)
 	{
 		foreach ($objects as $object)
@@ -290,7 +290,7 @@ final class Logger
 			self::logDebug($message);
 		}
 	}
-	
+
 }
 
 if (!defined('GDO_LOG_REQUEST'))

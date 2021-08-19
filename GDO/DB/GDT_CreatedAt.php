@@ -8,7 +8,7 @@ use GDO\Date\GDT_DateTime;
  * The created at column is not null and filled upon creation.
  * It can not be edited by a user.
  * It has a default label and the default order is descending.
- * 
+ *
  * @author gizmore
  * @version 6.10.6
  * @since 5.0
@@ -20,7 +20,7 @@ class GDT_CreatedAt extends GDT_DateTime
 	public $editable = false;
 // 	public $hidden = true;
 	public $orderDefaultAsc = false;
-	
+
 	public function defaultLabel() { return $this->label('created_at'); }
 
 	/**
@@ -32,7 +32,7 @@ class GDT_CreatedAt extends GDT_DateTime
 	    $var = $this->var ? $this->var : Time::getDate();
 		return [$this->name => Time::getDate(Time::getTimestamp($var))];
 	}
-	
+
 	public function displayValue($var)
 	{
 	    return $this->gdo->gdoColumn($var)->displayLabel();

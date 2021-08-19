@@ -28,7 +28,7 @@ final class Stream
 		}
 		return $result;
 	}
-	
+
 	private static function _path($path)
 	{
 		if ($fh = fopen($path, 'rb'))
@@ -43,12 +43,12 @@ final class Stream
 		}
 		return false;
 	}
-	
+
 	public static function file(GDO_File $file, $variant='')
 	{
 		self::path($file->getVariantPath($variant));
 	}
-	
+
 	public static function serve(GDO_File $file, $variant='', $disposition=true)
 	{
 	    hdr('Content-Type: '.$file->getType());
@@ -63,7 +63,7 @@ final class Stream
 		    die();
 		}
 	}
-	
+
 	/**
 	 * Serve a HTTP range request if desired.
 	 * @param GDO_File $file
@@ -78,7 +78,7 @@ final class Stream
 
 	    $path = $file->getVariantPath($variant);
 	    $fp = fopen($path, 'rb');
-	    
+
 	    hdr('Content-type: ' . $file->getType());
 	    hdr('Accept-Ranges: 0-' . $size);
 
@@ -86,7 +86,7 @@ final class Stream
 	    {
             $c_start = $start;
 	        $c_end = $end;
-	        
+
 	        list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
 	        if (strpos($range, ',') !== false)
 	        {
@@ -117,10 +117,10 @@ final class Stream
 	        fseek($fp, $start);
 	        hdr('HTTP/1.1 206 Partial Content');
 	    }
-	    
+
 	    hdr("Content-Range: bytes $start-$end/$size");
 	    hdr("Content-Length: ".$length);
-	    
+
 	    $buffer = 1024 * 8;
 	    while (!feof($fp) && ($p = ftell($fp)) <= $end)
 	    {
@@ -133,7 +133,7 @@ final class Stream
 // 	        {
 // 	            fpassthru($fp);
 // 	        }
-	        
+
 	        $data = fread($fp, $buffer);
 	        if ($die)
 	        {
@@ -151,7 +151,7 @@ final class Stream
 	        echo "Served ".$file->displayName();
 	    }
 	}
-	
+
 	public static function serveText($content, $fileName)
 	{
 	    hdr('Content-Type: application/octet-stream');

@@ -9,5 +9,5 @@ use GDO\Form\MethodForm;
  */
 abstract class MethodCLI extends MethodForm
 {
-    
+
 }

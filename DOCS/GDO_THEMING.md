@@ -5,7 +5,7 @@ GDO6 is very flexible when it comes to theming.
 Your theme is defined in protected/config.php like this.
 
     define('GDO_THEME', 'jqui,classic,default');
-    
+
 
 This will instruct the template engine to look for templates in jqui first, then classic, and at last the default theme.
 
@@ -22,19 +22,19 @@ Create a new module and return a theme name.
     {
         public function getThemes() { return ['mytheme']; }
     }
-    
+
 
 After the module is installed you can change the config.
 
     define('GDO_THEME', 'mytheme,classic,default');
-    
+
 
 As an example we will change the impressum from the Core module. In the Core module this template is located at GDO/Core/tpl/page/impressum.php.
 
-Create a new file in your module with this path. 
+Create a new file in your module with this path.
 
      GDO/MyModule/thm/mytheme/Core/tpl/page/impressum.php
-     
+
 
 Voila, you have succesfully overwritten a template.
 
@@ -54,7 +54,7 @@ You can call the static php function or add a real GDT to the fields you work wi
 Render a template:
 
     echo GDT_Template::php('MyModule', 'page/mypage.php', ['test' => 'foobar']);
-    
+
 Use GDT_Template as a GDT to be added to forms, tables, lists, etc.:
 
     $gdt = GDT_Template::make()->template('MyModule', 'page/mypage.php', ['test' => 'foobar']);

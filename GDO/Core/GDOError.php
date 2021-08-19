@@ -7,5 +7,5 @@ class GDOError extends GDOException
 	{
 		parent::__construct(t($key, $args), $code);
 	}
-	
+
 }

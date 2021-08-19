@@ -15,24 +15,24 @@ use GDO\Core\GDO;
 trait WithDatabase
 {
 	public function unique($unique=true) { $this->unique = $unique; return $this; }
-	
+
 	public function primary($primary=true) { $this->primary = $primary; return $this->notNull(); }
 	public function isPrimary() { return $this->primary; }
-	
+
 	public $virtual = false;
 	public function virtual($virtual=true) { $this->virtual = $virtual; return $this; }
-	
+
 	public function filterQueryCondition(Query $query, $condition)
 	{
 		return $this->virtual ? $query->having($condition) : $query->where($condition);
 	}
-	
+
 	public function renderHeader()
 	{
 	    $tt = $this->iconText ? sprintf(' title="%s"', t($this->iconText, $this->iconTextArgs)) : '';
 	    return sprintf('<label%s>%s</label>', $tt, $this->displayLabel());
 	}
-	
+
 	###########
 	### GDT ###
 	###########
@@ -48,5 +48,5 @@ trait WithDatabase
 	    $v = $v === '' || $v === null ? null : $v;
 	    return [$this->name => $v];
 	}
-	
+
 }

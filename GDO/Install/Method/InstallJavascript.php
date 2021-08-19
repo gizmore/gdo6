@@ -15,7 +15,7 @@ final class InstallJavascript extends Method
 		ModuleLoader::instance()->loadModulesA();
 		return $this->renderPage();
 	}
-	
+
 	public function renderPage()
 	{
 		return $this->templatePHP('page/installjavascript.php');

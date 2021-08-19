@@ -15,14 +15,14 @@ trait WithFormFields
 {
 	public $inlineJS;
 	public function inlineJS($inlineJS) { $this->inlineJS = $inlineJS; return $this; }
-	
+
 	public function required($required=true) { $this->notNull = $required; return $this; }
 	public function htmlRequired() { return $this->notNull ? ' required="required"' : ''; }
-	
+
 	public function enabled($enabled=true) { return $this->writable($enabled); }
 	public function disabled($disabled=true) { return $this->writable(!$disabled); }
 	public function htmlDisabled() { return $this->writable ? '' : ' disabled="disabled"'; }
-	
+
 	public $placeholder;
 	public function placeholder($placeholder) { $this->placeholder = $placeholder; return $this; }
 	public function htmlPlaceholder() { return sprintf(' placeholder="%s"', html(t($this->placeholder))); }
@@ -46,5 +46,5 @@ trait WithFormFields
     		$_POST['form'][$this->name] = $value;
 	    }
 	}
-	
+
 }

@@ -25,7 +25,7 @@ final class InstallModules extends Method
 	 * @var GDO_Module[]
 	 */
 	private $modules;
-	
+
 	public function execute()
 	{
 	    Cache::fileFlush();
@@ -33,15 +33,15 @@ final class InstallModules extends Method
 		$loader = ModuleLoader::instance();
 		$loader->loadModules(false, true, true);
 		$this->modules = $loader->getInstallableModules();
-		
+
 		if (isset($_REQUEST['btn_install']))
 		{
 			return $this->onInstall(Common::getRequestArray('module'));
 		}
-		
+
 		return $this->renderModuleTable();
 	}
-	
+
 	public function renderModuleTable()
 	{
 		$tVars = array(
@@ -53,7 +53,7 @@ final class InstallModules extends Method
 		);
 		return $this->templatePHP('page/installmodules.php', $tVars);
 	}
-	
+
 	private function getModuleNames()
 	{
 		$mods = [];
@@ -63,7 +63,7 @@ final class InstallModules extends Method
 		}
 		return $mods;
 	}
-	
+
 	private function getCoreModuleNames()
 	{
 		$mods = [];
@@ -76,7 +76,7 @@ final class InstallModules extends Method
 		}
 		return $mods;
 	}
-	
+
 	private function getSiteModuleNames()
 	{
 		$mods = [];
@@ -89,7 +89,7 @@ final class InstallModules extends Method
 		}
 		return $mods;
 	}
-	
+
 	private function getModuleDependencies()
 	{
 		$deps = [];
@@ -99,7 +99,7 @@ final class InstallModules extends Method
 		}
 		return $deps;
 	}
-	
+
 	public function onInstall(array $toInstall)
 	{
 		$response = GDT_Response::make();
@@ -127,8 +127,8 @@ final class InstallModules extends Method
 		{
 			Cache::flush();
 		}
-		
+
 		return $response->addField(GDT_Success::with(t('install_modules_completed', [Config::linkStep(5)])));
 	}
-	
+
 }

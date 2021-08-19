@@ -18,7 +18,7 @@ final class Epoch extends Method
             GDT_EnumNoI18n::make('format')->enumValues('unix', 'java', 'micro')->notNull()->initial('unix'),
         ];
     }
-    
+
     public function execute()
     {
         $format = $this->gdoParameterVar('format');
@@ -31,5 +31,5 @@ final class Epoch extends Method
         $key = 'msg_time_'.$format;
         return $this->message($key, [$time]);
     }
-    
+
 }

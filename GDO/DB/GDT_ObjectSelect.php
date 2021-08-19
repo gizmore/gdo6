@@ -9,7 +9,7 @@ use GDO\Form\GDT_Select;
  * A select WithObject trait.
  * It behaves a tiny bit different than GDT_Select, for the selected value.
  * It inits the choices with a call to $table->all()!
- * 
+ *
  * @author gizmore
  * @version 6.10.3
  * @since 6.2.0
@@ -17,17 +17,17 @@ use GDO\Form\GDT_Select;
 class GDT_ObjectSelect extends GDT_Select
 {
 	use WithObject;
-	
+
 	public function getChoices()
 	{
 		return $this->table ? $this->table->allCached() : [];
 	}
-	
+
 	public function initChoices()
 	{
 		return $this->choices($this->getChoices());
 	}
-	
+
 	public function validate($value)
 	{
 		$this->initChoices();
@@ -43,21 +43,21 @@ class GDT_ObjectSelect extends GDT_Select
             }
             return true;
         }
-        
+
         if (!$this->getValue())
         {
             return $this->errorInvalidChoice();
         }
-        
+
 		return true;
 	}
-	
+
 	public function errorNotFound()
 	{
 	    return $this->error('err_gdo_not_found', [
 	        $this->foreignTable()->gdoHumanName(), html($this->getVar())]);
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -70,7 +70,7 @@ class GDT_ObjectSelect extends GDT_Select
 		}
 		return parent::renderForm();
 	}
-	
+
 	public function renderCell()
 	{
 		if ($obj = $this->getValue())
@@ -88,17 +88,17 @@ class GDT_ObjectSelect extends GDT_Select
 		}
 		return $obj;
 	}
-	
+
 	public function renderJSON()
 	{
 	    return $this->renderCell();
 	}
-	
+
 	public function renderFilter($f)
 	{
 		return GDT_Template::php('DB', 'filter/object.php', ['field' => $this, 'f' => $f]);
 	}
-	
+
 	#############
 	### Value ###
 	#############
@@ -106,7 +106,7 @@ class GDT_ObjectSelect extends GDT_Select
 	{
 		return parent::getVar(); # required to overwrite trait.
 	}
-	
+
 	public function toVar($value)
 	{
 		if ($value === null)
@@ -115,7 +115,7 @@ class GDT_ObjectSelect extends GDT_Select
 		}
 		return $this->multiple ? $this->multipleToVar($value) : $value->getID();
 	}
-	
+
 	/**
 	 * @param GDO[] $value
 	 * @return string
@@ -129,7 +129,7 @@ class GDT_ObjectSelect extends GDT_Select
 		}
 		return json_encode($json);
 	}
-	
+
 	public function toValue($var)
 	{
 	    if ($this->foreignTable())
@@ -138,21 +138,21 @@ class GDT_ObjectSelect extends GDT_Select
 	    }
 	    return $this->multiple ? [] : null;
 	}
-	
+
 	public function getValueSingle($id)
 	{
 		return $this->foreignTable()->find($id, false);
 	}
-	
+
 	public function getValueMulti($var)
 	{
 		$back = [];
-		
+
 		if (!is_array($var))
 		{
 		    $var = json_decode($var);
 		}
-		
+
 		foreach ($var as $id)
 		{
 		    if ($object = $this->table->find($id, false))
@@ -162,7 +162,7 @@ class GDT_ObjectSelect extends GDT_Select
 		}
 		return $back;
 	}
-	
+
 	##############
 	### Config ###
 	##############
@@ -201,12 +201,12 @@ class GDT_ObjectSelect extends GDT_Select
 	    }
 	    return $selected;
 	}
-	
+
 	public function configJSON()
 	{
 	    return array_merge(parent::configJSON(), array(
 	        'selected' => $this->configJSONSelected(),
 	    ));
 	}
-	
+
 }

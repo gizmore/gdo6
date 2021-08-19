@@ -17,7 +17,7 @@ use GDO\UI\GDT_Link;
  * Set HTTP Status to 404.
  * Disable saving of last url.
  * Send 404 mails optionally.
- * 
+ *
  * @author gizmore
  * @version 6.10.4
  * @since 6.10.0
@@ -28,7 +28,7 @@ final class Page404 extends MethodPage
     public function saveLastUrl() { return false; }
     public function showInSitemap() { return false; }
     public function isTrivial() { return false; } # no auto test
-    
+
     public function beforeExecute()
     {
         GDT_Response::$CODE = 404;
@@ -41,12 +41,12 @@ final class Page404 extends MethodPage
             }
         }
     }
-    
+
     public function getTitle()
     {
         return t('err_404');
     }
-    
+
     public function send404Mails()
     {
         foreach (GDO_User::admins() as $user)
@@ -54,7 +54,7 @@ final class Page404 extends MethodPage
             $this->send404Mail($user);
         }
     }
-    
+
     public function send404Mail(GDO_User $user)
     {
         $mail = Mail::botMail();
@@ -62,7 +62,7 @@ final class Page404 extends MethodPage
         $mail->setBody($this->send404MailBody($user));
         $mail->sendToUser($user);
     }
-    
+
     private function send404MailBody(GDO_User $user)
     {
         $args = [
@@ -75,5 +75,5 @@ final class Page404 extends MethodPage
         ];
         return tusr($user, 'mail_body_404', $args);
     }
-    
+
 }

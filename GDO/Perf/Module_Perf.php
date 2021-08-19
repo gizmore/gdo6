@@ -10,17 +10,17 @@ use GDO\UI\GDT_Page;
  * Performance statistics in footer.
  * Config perf_bottom_bar to restrict footer to staff or all or none.
  * This module is part of the gdo6 core.
- * 
+ *
  * @author gizmore
  * @version 6.10.3
  * @since 5.3.0
- * 
+ *
  * @see GDT_PerfBar
  */
 final class Module_Perf extends GDO_Module
 {
     public function onLoadLanguage() { return $this->loadLanguage('lang/perf'); }
-    
+
     ##############
     ### Config ###
     ##############

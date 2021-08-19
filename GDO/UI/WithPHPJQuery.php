@@ -3,7 +3,7 @@ namespace GDO\UI;
 
 /**
  * Should be extended to reflect a jQuery API on PHP objects.
- * 
+ *
  * @author gizmore
  * @since 6.07
  */
@@ -21,13 +21,13 @@ trait WithPHPJQuery
 		}
 		if ($value === null)
 		{
-			return isset($this->htmlAttributes[$attribute]) ? 
+			return isset($this->htmlAttributes[$attribute]) ?
 			    $this->htmlAttributes[$attribute] : null;
 		}
 		$this->htmlAttributes[$attribute] = $value;
 		return $this;
 	}
-	
+
 	public function htmlAttributes()
 	{
 		$html = '';
@@ -49,7 +49,7 @@ trait WithPHPJQuery
 		{
 			$classes = [];
 		}
-		
+
 		# Merge new classes
 		$newclss = explode(" ", $class); # multiple possible
 		foreach ($newclss as $class)
@@ -62,10 +62,10 @@ trait WithPHPJQuery
     			}
 		    }
 		}
-		
+
 		return $this->attr('class', implode(" ", $classes));
 	}
-	
+
 	# CSS
 	private $css;
 	public function css($attr, $value=null)
@@ -75,7 +75,7 @@ trait WithPHPJQuery
 		$this->css[$attr] = $value;
 		return $this->updateCSS();
 	}
-	
+
 	private function updateCSS()
 	{
 		$rules = '';

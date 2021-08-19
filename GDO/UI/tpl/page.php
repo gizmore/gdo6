@@ -19,7 +19,7 @@ use GDO\Language\Trans;
 	<?=Website::displayLink()?>
   </head>
   <body>
-    
+
     <input type="checkbox" id="gdo-left-nav" class="gdo-nav" />
     <input type="checkbox" id="gdo-right-nav" class="gdo-nav" />
 
@@ -28,11 +28,11 @@ use GDO\Language\Trans;
 
     <nav id="gdo-right-bar" class="gdo-nav-bar"><?=$page->rightNav->render()?></nav>
     <label for="gdo-right-nav"></label>
-  
+
 	<div id="gdo-pagewrap">
-	
+
 	  <header id="gdo-header"><?=$page->topNav->render()?></header>
-	
+
 	  <div class="gdo-body">
 		<label for="gdo-left-nav" id="gdo-left-nav2"></label>
 		<label for="gdo-right-nav" id="gdo-right-nav2"></label>
@@ -44,9 +44,9 @@ use GDO\Language\Trans;
 	  </div>
 
 	  <footer id="gdo-footer"><?=$page->bottomNav->render()?></footer>
-	
+
 	</div>
-	
+
 	<?=GDT_Loading::make()->render()?>
 
 	<?php $jsMode = module_enabled('Javascript') ? Module_Javascript::instance()->cfgMinifyJS() === 'concat' : false; ?>	

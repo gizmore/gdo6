@@ -16,7 +16,7 @@ final class GDT_Protocol extends GDT_Select
 	const TCP = 'tcp';
 	const TCPS = 'tcps';
 	const RDP = 'rdp';
-	
+
 	###########
 	### GDT ###
 	###########
@@ -24,7 +24,7 @@ final class GDT_Protocol extends GDT_Select
 	{
 		return $this->allowProtocols('http', 'https');
 	}
-	
+
 	public $protocols = [];
 	public function allowProtocols(string ...$protocols)
 	{
@@ -32,7 +32,7 @@ final class GDT_Protocol extends GDT_Select
 		$this->protocols = array_combine($this->protocols, $this->protocols);
 		return $this;
 	}
-	
+
 	public function allowProtocol(string $protocol, bool $allow=true)
 	{
 		if ($allow)
@@ -45,7 +45,7 @@ final class GDT_Protocol extends GDT_Select
 		}
 		return $this;
 	}
-	
+
 	####################
 	### Init Choices ###
 	####################
@@ -63,7 +63,7 @@ final class GDT_Protocol extends GDT_Select
 		}
 		return $this->choices;
 	}
-	
+
 	##############
 	### Render ###
 	##############
@@ -72,7 +72,7 @@ final class GDT_Protocol extends GDT_Select
 		$this->initChoices();
 		return parent::render();
 	}
-	
+
 	################
 	### Validate ###
 	################

@@ -12,10 +12,10 @@ final class Completion extends MethodCompletion
 	{
 		$response = [];
 		$q = $this->getSearchTerm();
-		
+
 		$table = GDO_Language::table();
 		$languages = isset($_REQUEST['all']) ? $table->all() : $table->allSupported();
-		
+
 		$cell = GDT_Language::make('lang_iso');
 		foreach ($languages as $iso => $language)
 		{
@@ -30,8 +30,8 @@ final class Completion extends MethodCompletion
 				);
 			}
 		}
-		
+
 		return GDT_Array::makeWith($response);
 	}
-	
+
 }

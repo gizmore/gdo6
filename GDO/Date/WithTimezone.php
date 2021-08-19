@@ -5,7 +5,7 @@ use GDO\User\GDO_User;
 
 /**
  * Add a timezone to a gdt.
- * 
+ *
  * @author gizmore
  * @version 6.10.4
  * @since 6.10.4
@@ -25,10 +25,10 @@ trait WithTimezone
         $this->timezone = $timezone;
         return $this;
     }
-    
+
     public function getTimezoneObject()
     {
         return Time::getTimezoneObject($this->timezone);
     }
-    
+
 }

@@ -49,7 +49,7 @@ final class AES
         $encrypted = base64_encode($iv).openssl_encrypt($data, self::CIPHER, $key, null, $iv);
 	    return $encrypted.hash_hmac("sha256",$encrypted,$key);
 	}
-	
+
 	/**
 	 * Decrypt data encrypted with with the encryptIV function above.
 	 * @param string $data
@@ -64,7 +64,7 @@ final class AES
         $data = substr($data,0,-64);
         $key = hash('SHA256', $password, true);
         if($hmac !== hash_hmac("sha256",$data, $key)) //only decrypt if cookie has not been tampered
-        { 
+        {
             return false;
         }
 	    $iv = substr($data, 0, $iv64);

@@ -11,7 +11,7 @@ use GDO\CSS\Module_CSS;
 
 /**
  * General Website utility.
- * 
+ *
  * @author gizmore
  * @version 6.10.4
  * @since 3.0.5
@@ -22,7 +22,7 @@ final class Website
 	private static $_links = []; # TODO: Uppercase static members.
 // 	private static $_inline_css = '';
 	private static $_redirected = false;
-	
+
 	/**
 	 * @param number $time
 	 * @return \GDO\Core\GDT_Response
@@ -31,7 +31,7 @@ final class Website
 	{
 	    return self::redirect(self::hrefBack($default), $time);
 	}
-	
+
 	/**
 	 * Try to get a referrer URL for hrefBack.
 	 * @param string $default
@@ -43,7 +43,7 @@ final class Website
 	    {
 	        return $default ? $default : hrefDefault();
 	    }
-	    
+	
 	    $sess = GDO_Session::instance();
 	    if ( (!$sess) || (!($url = $sess->getLastURL())) )
 	    {
@@ -53,7 +53,7 @@ final class Website
 	    }
 	    return $url;
 	}
-	
+
 	public static function redirect($url, $time=0)
 	{
 	    if (Application::instance()->isCLI())
@@ -88,19 +88,19 @@ final class Website
 		# Don't do this at home kids!
 		return sprintf('<script type="text/javascript">setTimeout(function(){ window.location.href="%s" }, %d);</script>', $url, $time*1000);
 	}
-	
+
 	public static function addInlineCSS($css)
 	{
 	    Minifier::addInline($css);
 // 	    self::$_inline_css .= $css;
 	}
-	
+
 	public static function addCSS($path)
 	{
 	    Minifier::addFile($path);
 // 	    self::addLink($path, 'text/css', 'stylesheet');
 	}
-	
+
 	/**
 	 * add an html <link>
 	 * @param string $type = mime_type
@@ -113,12 +113,12 @@ final class Website
 	{
 		self::$_links[] = array($href, $type, $rel);
 	}
-	
+
 	public static function addPrefetch($href, $type)
 	{
 	    array_unshift(self::$_links, [$href, $type, 'prefetch']);
 	}
-	
+
 	/**
 	 * Output of {$head_links}
 	 * @return string
@@ -126,24 +126,24 @@ final class Website
 	public static function displayLink()
 	{
 		$back = '';
-		
+
 		foreach(self::$_links as $link)
 		{
 			list($href, $type, $rel) = $link;
 			$back .= sprintf('<link rel="%s" type="%s" href="%s" />'."\n", $rel, $type, $href);
 		}
-		
+
 		if (Module_CSS::instance()->cfgMinify())
 		{
 		    return $back . "\n" . Minifier::renderMinified();
 		}
 
 		$back .= Minifier::renderOriginal();
-		
-		
+
+
 		return $back;
 	}
-	
+
 	############
 	### Meta ###
 	############
@@ -165,7 +165,7 @@ final class Website
 		self::$_meta[$metaA[0]] = $metaA;
 		return true;
 	}
-	
+
 	public static function addMetaA(array $metaA)
 	{
 		foreach($metaA as $meta)
@@ -173,7 +173,7 @@ final class Website
 			self::addMeta($meta);
 		}
 	}
-	
+
 	/**
 	 *
 	 * @see addMeta()
@@ -184,7 +184,7 @@ final class Website
 	    if ($method && $method->isSEOIndexed())
 	    {
     	    self::$_meta[] = ['robots', 'index, follow', 'name'];
-	        
+	
 	    }
 	    else
 	    {
@@ -207,7 +207,7 @@ final class Website
 		}
 		return $back;
 	}
-	
+
 	/**
 	 * Renders a json response and dies.
 	 * @param mixed $json
@@ -221,12 +221,12 @@ final class Website
 		}
 		return json_encode($json, JSON_PRETTY_PRINT); # pretty json
 	}
-	
+
 	public static function outputStarted()
 	{
 		return headers_sent() || ob_get_contents();
 	}
-	
+
 	#############
 	### Error ###
 	#############
@@ -234,7 +234,7 @@ final class Website
 	{
 	    self::topResponse()->addField(GDT_Error::with($key, $args, 405));
 	}
-	
+
 	/**
 	 * Redirect and show a message at the new page.
 	 * @param string $key
@@ -247,13 +247,13 @@ final class Website
 	{
 	    return self::redirectMessageRaw(t($key, $args), $url, $time);
 	}
-	
+
 	public static function redirectMessageRaw($message, $url=null, $time=0)
 	{
 	    $app = Application::instance();
-	 
+	
 	    self::topResponse()->addField(GDT_Success::withText($message));
-	  
+	
 	    if ($app->isCLI())
 	    {
 // 	        echo "{$message}\n";
@@ -263,31 +263,31 @@ final class Website
 	        }
 	        return;
 	    }
-	    
+	
 	    $url = $url === null ? self::hrefBack() : $url;
-	    
+	
 	    if (!$app->isInstall())
 	    {
 	        GDO_Session::set('redirect_message', $message);
 	        return self::redirect($url, $time);
 	    }
 	}
-	
+
 	public static function redirectError($key, array $args=null, $url=null, $time=0)
 	{
 	    return self::redirectErrorRaw(t($key, $args), $url, $time);
 	}
-	
+
 	public static function redirectErrorRaw($message, $url=null, $time=0)
 	{
 	    self::topResponse()->addField(GDT_Error::withText($message, 405));
-	    
+	
 	    if (Application::instance()->isCLI())
 	    {
 	        echo "{$message}\n";
 	        return true;
 	    }
-	    
+	
 	    $url = $url === null ? self::hrefBack() : $url;
 	    $app = Application::instance();
 	    if (!$app->isInstall())
@@ -296,7 +296,7 @@ final class Website
 	        return self::redirect($url, $time);
 	    }
 	}
-	
+
 	####################
 	### Top Response ###
 	####################
@@ -322,12 +322,12 @@ final class Website
 	    }
 	    return self::$TOP_RESPONSE;
 	}
-	
+
 	public static function renderTopResponse()
 	{
 	    return self::topResponse()->render();
 	}
-	
+
 	#####################
 	### JSON Response ###
 	#####################
@@ -340,7 +340,7 @@ final class Website
 	    }
 	    return self::$JSON_RESPONSE;
 	}
-	
+
 	public static function renderJSONResponse()
 	{
 	    if (self::$JSON_RESPONSE)
@@ -348,7 +348,7 @@ final class Website
 	        return self::$JSON_RESPONSE->renderJSON();
 	    }
 	}
-	
+
 	####################
 	### Generic Head ###
 	####################
@@ -357,12 +357,12 @@ final class Website
 	{
 		self::$HEAD .= $string . "\n";
 	}
-	
+
 	public static function displayHead()
 	{
 		return self::$HEAD;
 	}
-	
+
 	#############
 	### Title ###
 	#############
@@ -372,7 +372,7 @@ final class Website
 	    self::$TITLE = $title;
 	    GDT_Page::$INSTANCE->titleRaw(self::displayTitle());
 	}
-	
+
 	public static function displayTitle()
 	{
 	    $title = html(self::$TITLE);
