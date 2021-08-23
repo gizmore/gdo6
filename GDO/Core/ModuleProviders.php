@@ -173,6 +173,7 @@ final class ModuleProviders
         'Audio' => ['File', 'Birthday'],
         'Avatar' => ['File'],
         'Backup' => ['ZIP'],
+        'BasicAuth' => [],
         'BBCode' => [],
         'Birthday' => ['Profile', 'Friends'],
         'Blog' => [],

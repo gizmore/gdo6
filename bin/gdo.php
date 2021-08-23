@@ -13,6 +13,7 @@ use GDO\Core\Logger;
 use GDO\Core\Debug;
 use GDO\DB\Cache;
 use GDO\DB\Database;
+use GDO\Date\Time;
 use GDO\Session\GDO_Session;
 use GDO\UI\GDT_Page;
 use GDO\Core\Application;
@@ -98,6 +99,7 @@ if (!($user = GDO_User::getBy('user_name', CLI::getUsername())))
 }
 GDO_User::setCurrent($user);
 Trans::setISO($user->getLangISO());
+Time::setTimezone($user->getTimezone());
 Logger::init($user->getName(), GDO_ERROR_LEVEL);
 
 $page = GDT_Page::make();
