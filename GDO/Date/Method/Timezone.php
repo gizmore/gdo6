@@ -8,6 +8,7 @@ use GDO\Form\GDT_Submit;
 use GDO\User\GDO_User;
 use GDO\Core\Website;
 use GDO\Core\GDT_Response;
+use GDO\Session\GDO_Session;
 
 /**
  * Change a user's timezone.
@@ -48,6 +49,17 @@ final class Timezone extends MethodForm
             if ($user->isUser())
             {
                 $user->save();
+            }
+            else
+            {
+                if (class_exists('\\GDO\\Session\\GDO_Session', false))
+                {
+                    GDO_Session::set('timezone', $new);
+                }
+                else
+                {
+                    $user->tempSet('timezone', $new);
+                }
             }
             if ($redirect)
             {

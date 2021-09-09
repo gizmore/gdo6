@@ -21,7 +21,6 @@ define('GDO_PERF_START', microtime(true));
 
 # Autoconf path
 define('GDO_PATH', str_replace('\\', '/', __DIR__) . '/');
-chdir(GDO_PATH);
 
 # Verbose error handling is default
 // while (ob_get_level()>0) { ob_end_clean(); }

@@ -240,16 +240,16 @@ class GDO_Module extends GDO
 	 * @param string $path
 	 * @return string
 	 */
-	public function filePath($path='') { return rtrim(GDO_PATH, '/') . $this->wwwPath($path); }
+	public function filePath($path='') { return rtrim(GDO_PATH, '/') . $this->wwwPath($path, '/'); }
 	
 	/**
 	 * Relative www path for a resource.
 	 * @param string $path
 	 * @return string
 	 */
-	public function wwwPath($path='')
+	public function wwwPath($path='', $webRoot=GDO_WEB_ROOT)
 	{
-	    return GDO_WEB_ROOT . "GDO/{$this->getName()}/{$path}";
+	    return $webRoot . "GDO/{$this->getName()}/{$path}";
 	}
 	
 	/**

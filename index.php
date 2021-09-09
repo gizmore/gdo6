@@ -19,7 +19,7 @@ use GDO\UI\GDT_HTML;
 
 require 'GDO6.php';
 
-@include 'protected/config.php';
+@include GDO_PATH . 'protected/config.php';
 if (!defined('GDO_CONFIGURED'))
 {
     require 'index_install.php';
@@ -89,8 +89,8 @@ try
     { 
         # If we are not index or index, and not start with a query string immediately we have a 404 error.
         $f = $_SERVER['REQUEST_URI'];
-        if ( (($f !== (GDO_WEB_ROOT.'index.php')) && ($f !== '/'))
-            && (!Strings::startsWith($f, '/?')) )
+        if ( (($f !== (GDO_WEB_ROOT.'index.php')) && ($f !== GDO_WEB_ROOT))
+            && (!Strings::startsWith($f, GDO_WEB_ROOT.'?')) )
         {
             $method = Page404::make();
             $_GET['mo'] = $_REQUEST['mo'] = 'Core';

@@ -134,7 +134,7 @@ final class GDO_User extends GDO
 	public function getCountryISO() { return $this->getVar('user_country'); }
 	public function getCountry() { $c = $this->getValue('user_country'); return $c ? $c : GDO_Country::unknownCountry(); }
 	public function hasTimezone() { return $this->getVar('user_timezone') !== 'UTC'; }
-	public function getTimezone() { return $this->getVar('user_timezone'); }
+	public function getTimezone() { return $this->hasTimezone() ? $this->getVar('user_timezone') : GDO_Session::get('timezone', GDO_TIMEZONE); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
 	
