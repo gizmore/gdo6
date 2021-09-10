@@ -17,6 +17,17 @@ The installation process for a gdo6 module is as follows.
         git clone --recursive https://github.com/gizmore/gdo6-jquery JQuery # clone this module as JQuery
         cd gdo6 # go to root folder
         ./gdo_yarn.sh # Install all js dependencies
+
+Meanwhile there is a gdoadm.sh command for that:
+
+    cd gdo6
+    ./gdoadm.sh modules
+    ./gdoadm.sh provide Module
+    ./gdoadm.sh install Module
+    ./gdo_yarn.sh
+    
+To make an sh script run on windows, install git4windows.
+  
     
 2) Enable the module by installing it via admin panel.
 
@@ -42,4 +53,4 @@ This will run git pull on the core and all modules.
 
 It might be that you have to run install on some modules after update. This can be done via the installer or the admin panel.
 
-The developers must assure that all modules stay backwards compatible!
+The developers shall assure that all modules stay backwards compatible! (There were auto updates breaking sites, yes)

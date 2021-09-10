@@ -8,12 +8,13 @@ there is also a useful list in [INSTALL.md](https://github.com/gizmore/gdo6/blob
 
 Each of these modules are a project / website / gdo6 demo.
 
+ - [Mettwitze](https://github.com/gizmore/gdo6-mettwitze) [Mettwitze is a BootstapTheme demo site](https://mettwitze.gizmore.org)
+ - [TBS](https://github.com/gizmore/gdo6-tbs)
  - [Geo2Country](https://github.com/gizmore/gdo6-geo2country) [convert lat/lng to country](http://geo2country.gizmore.org)
  - [ITMB](https://github.com/gizmore/gdo6-itmb) [My company website](https://service.busch-peine.de)
- - [Mettwitze](https://github.com/gizmore/gdo6-mettwitze) [Mettwitze is a BootstapTheme demo site](https://mettwitze.gizmore.org)
  - [Ranzgruppe](https://github.com/gizmore/gdo6-ranzgruppe) [Ranzgruppe](https://ranzgruppe.com)
- - [TBS](https://github.com/gizmore/gdo6-tbs)
  - [DogWebsite](https://github.com/gizmore/gdo6-dog-website)
+ - [Diary](https://diary.gizmore.org) [Classic theme]
 
 
 ## Theme modules

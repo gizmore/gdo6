@@ -31,8 +31,8 @@ Here is an example on how to use MethodForm.
     
         public function formValidated(GDT_Form $form) # default submit button pressed
         {
-            $user = $form->getFormValue(); # GDO_User object
-            return $this->message('hello_user', [$form->getFormVar()]);
+            $user = $form->getFormValue('username'); # GDO_User object
+            return $this->message('hello_user', [$form->getFormVar('username')]);
         }
     } 
     
