@@ -9,7 +9,7 @@ use GDO\User\GDO_User;
 
 /**
  * GDT_Form CSRF protection.
- * Can optionally fallback to a static token. @todo verify crypto.
+ * Can optionally fallback to a static token. @TODO verify crypto.
  * This is useful in fileCached() MethodForm's.
  * 
  * @see Cache

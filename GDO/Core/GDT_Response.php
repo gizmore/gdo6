@@ -41,6 +41,13 @@ class GDT_Response extends GDT
 	    return $this->code >= 400;
 	}
 	
+	public function hasError()
+	{
+	    return
+	       $this->isError() ||
+	       parent::hasError();
+	}
+	
 	###############
 	### Factory ###
 	###############
@@ -142,7 +149,10 @@ class GDT_Response extends GDT
 	    }
 	    if ($field instanceof GDT_Response)
 	    {
-	        $this->code($field->code);
+	        if ($field->code > 200)
+	        {
+	            $this->code($field->code);
+	        }
 	        return $this->addFields($field->fields);
 	    }
 	    else

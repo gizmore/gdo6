@@ -300,7 +300,7 @@ final class Debug
 	/**
 	 * Get some additional information
 	 * 
-	 * @todo move?
+	 * @TODO move?
 	 */
 	public static function getDebugText($message)
 	{

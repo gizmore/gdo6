@@ -284,7 +284,7 @@ class GDO_Module extends GDO
 	{
 		switch (Application::instance()->getFormat())
 		{
-			case 'json': return $tVars; # @todo here is the spot to enable json for genereic templates.
+			case 'json': return $tVars; # @TODO here is the spot to enable json for genereic templates.
 			case 'html':
 			default: return GDT_Template::make()->template($this->getName(), $path, $tVars);
 		}

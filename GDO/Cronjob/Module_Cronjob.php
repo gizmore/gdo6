@@ -6,7 +6,7 @@ use GDO\Core\GDO_Module;
 /**
  * Cronjob stuff.
  * 
- * @todo add a helper for run frequencies for cronjob methods.
+ * @TODO add a helper for run frequencies for cronjob methods.
  * @author gizmore
  * @version 6.10.4
  * @since 6.1.0

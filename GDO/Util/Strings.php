@@ -5,8 +5,8 @@ namespace GDO\Util;
  * String utility class.
  * 
  * @author gizmore
- * @version 6.10.3
- * @since 1.0
+ * @version 6.10.4
+ * @since 1.0.0
  */
 final class Strings
 {

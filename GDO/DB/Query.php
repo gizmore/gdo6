@@ -138,7 +138,7 @@ final class Query
 	
 	/**
 	 * Specify which GDO class is used for fetching.
-	 * @todo Rename function
+	 * @TODO Rename function
 	 * @param GDO $fetchTable
 	 * @return \GDO\DB\Query
 	 */
@@ -357,7 +357,7 @@ final class Query
 	
 	/**
 	 * Order clause.
-	 * @todo make it one var. 'foo ASC'
+	 * @TODO make it one var. 'foo ASC'
 	 * @param string $order
 	 * @return self
 	 */

@@ -45,7 +45,7 @@ a[disabled] { opacity: 0.25; cursor: text; }
 .gdo-form .gdo-link { text-decoration: underline; }
 .gdo-form-title { text-align: center; line-height: 38px; margin-bottom: 6px; background: #eee; }
 input[type=submit]:hover { cursor: pointer; }
-.gdo-form .gdt_link a { padding: 8px; }
+.gdo-form .gdt-link a { padding: 8px; }
 .gdo-form .gdt-divider { padding: 8px; background: #eee; border: 1px solid #fff; font-weight: bold; }
 input, textarea { padding: 4px; }
 select { padding: 7px 3px; }
@@ -62,7 +62,7 @@ select { padding: 7px 3px; }
 .gdt-table tbody tr:nth-child(odd) { background: #eee; }
 .gdt-table tbody tr:hover { background: #fff; }
 .gdt-table td.gdt-num { text-align: right; padding-right: 4px; /* font-family: monospace; */ }
-.gdt-table td.gdt_country { text-align: center; }
+.gdt-table td.gdt-country { text-align: center; }
 .gdt-table td { padding: 0px 2px; }
 .gdt-table th select { padding: 4px 2px; }
 .gdt-table > h3 { padding: 4px 8px; margin-top: 4px; background: #ddd; }
@@ -106,7 +106,7 @@ select { padding: 7px 3px; }
 .gdt-card-title-texts, .gdt-card-title, .gdt-card-subtitle, .gdt-card-title-texts { width: 100%; }
 .gdt-card label.gdt-card-divider { margin: 0; }
 .gdt-message-card,
-.gdt-card .gdt_link,
+.gdt-card .gdt-link,
 .gdt-card-divider,
 .gdt-card .gdt-accordeon,
 .gdt-card .gdt-paragraph { grid-column-start: 1; grid-column-end: 3; }

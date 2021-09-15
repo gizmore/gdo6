@@ -14,3 +14,9 @@ For a complete todo, please grep -R "@TODO" GDO/.
 - @TODO: Add postgres. (thx Nekomander) - This can be done by making module DB an own repo. Just provide us with an impl of [Module_DB](https://github.com/gizmore/gdo6/edit/master/GDO/DB/) that uses postgres only. @TODO there are more classes that generate SQL COLUMN code. All these GDT which provide DB code need to be in /DB?
 
 - @TODO: Use a real mailer library. Make two modules. gdo6-mail and gdo6-mail-foomailer. Make Mail a normal module, not a core module.
+
+- @TODO: Write module gdo6-impressum. Remove impressum stuff from core. Allow only an url to be set. default is a page with a translation key used?
+
+- @TODO: Enhance I18n Trans class. t(key, [args]) shall be changed to t(key, ...args)
+
+- @TODO: Move GDT_ACL from gdo6-friends to gdo6 core.

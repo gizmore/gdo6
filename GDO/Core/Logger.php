@@ -95,7 +95,7 @@ final class Logger
 
 	/**
 	 * strip values from arraykeys which begin with 'pass'
-	 * @todo faster way without foreach...
+	 * @TODO faster way without foreach...
 	 * print_r and preg_match ?
 	 * array_map stripos('pass') return '';
 	 */

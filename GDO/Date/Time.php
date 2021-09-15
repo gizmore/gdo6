@@ -91,7 +91,7 @@ final class Time
 	
 /**
 	 * Get a datetime object from a timestamp.
-	 * @param int $time
+	 * @param number $time
 	 * @return \DateTime
 	 */
 	public static function getDateTime($time=0)
@@ -147,6 +147,25 @@ final class Time
 	 */
 	public static function parseDateIso($iso, $date, $timezone=null, $format='parse')
 	{
+	    if ($d = self::parseDateTimeISO($iso, $date, $timezone, $format))
+	    {
+            $timestamp = $d->format('U.v');
+	        return (float)$timestamp;
+	    }
+	}
+	
+	public static function parseDateTime($date, $timezone=null, $format='parse')
+	{
+	    return self::parseDateTimeIso(Trans::$ISO, $date, $timezone, $format);
+	}
+	
+	public static function parseDateTimeDB($date, $timezone='UTC', $format='parse')
+	{
+	    return self::parseDateTimeIso(Trans::$ISO, $date, $timezone, $format);
+	}
+	
+	public static function parseDateTimeISO($iso, $date, $timezone=null, $format='parse')
+	{
 	    # Adjust
 	    if (!$date)
 	    {
@@ -166,7 +185,7 @@ final class Time
 	    {
 	        $date .= '.000';
 	    }
-
+	    
 	    # Parse
 	    if ( ($date[4] === '-') || ($format === 'db') )
 	    {
@@ -182,8 +201,7 @@ final class Time
 	    {
 	        throw new GDOError('err_invalid_date', [html($date), $format]);
 	    }
-	    $timestamp = $d->format('U.v');
-	    return (float)$timestamp;
+	    return $d;
 	}
 	
 	###############
@@ -231,8 +249,13 @@ final class Time
 	    {
 	        return $default_return;
 	    }
-	    $timestamp = self::getTimestamp($date);
-	    return self::displayTimestampISO($iso, $timestamp, $format, $default_return, $timezone);
+	    if (!($d = self::parseDateTimeISO($iso, $date, 'utc')))
+	    {
+	        return $default_return; 
+	    }
+	    $d->setTimezone(self::getTimezoneObject());
+	    $format = tiso($iso, "df_$format");
+        return $d->format($format);
 	}
 	
 	/**
@@ -271,6 +294,22 @@ final class Time
 	    return $date ?
 	       Application::$MICROTIME - self::getTimestamp($date) : 
 	       null;
+	}
+	
+	/**
+	 * Get the age in years of a date.
+	 * @param string $date
+	 * @return number
+	 */
+	public static function getAge($date)
+	{
+	    $seconds = self::getAgo($date);
+	    return $seconds / self::ONE_YEAR;
+	}
+	
+	public static function getAgeTS($duration)
+	{
+	    return $duration / self::ONE_YEAR;
 	}
 	
 	public static function displayAge($date)

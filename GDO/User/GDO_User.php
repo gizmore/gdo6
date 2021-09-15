@@ -366,7 +366,7 @@ final class GDO_User extends GDO
 	 */
 	public static function withPermission($permission)
 	{
-	    # @todo This triggers a bug when all admin users are reloaded they poison the cache with outdated data. 
+	    # @TODO This triggers a bug when all admin users are reloaded they poison the cache with outdated data. 
 	    #       The reason is not very known, as even ->uncache() does not help.
 	    #       On uncache results, cache shall flow in the different direction.
 	    #       The loaded cache data shall be updated with current cache? not sure if that's the bug.

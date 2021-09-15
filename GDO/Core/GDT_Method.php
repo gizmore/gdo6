@@ -7,7 +7,7 @@ namespace GDO\Core;
  * @version 6.10.4
  * @since 6.10.0
  */
-final class GDT_Method extends GDT
+class GDT_Method extends GDT
 {
     public static function with(Method $method)
     {
@@ -24,6 +24,13 @@ final class GDT_Method extends GDT
     public function renderCell()
     {
         return $this->execute()->renderCell();
+    }
+    
+    public function renderJSON()
+    {
+        return [
+            'method' => $this->method->gdoShortName(),
+        ];
     }
     
     public function execute()

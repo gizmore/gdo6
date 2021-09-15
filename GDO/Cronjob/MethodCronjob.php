@@ -6,7 +6,7 @@ use GDO\Core\Method;
 
 /**
  * Baseclass method for a cronjob.
- * @todo Introduce function runEvery() return a duration.
+ * @TODO Introduce function runEvery() return a duration.
  * 
  * @author gizmore
  * @version 6.10.3

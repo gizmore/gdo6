@@ -118,7 +118,7 @@ final class Website
 			$back .= sprintf('<link rel="%s" type="%s" href="%s" />'."\n", $rel, $type, $href);
 		}
 		
-		# embedded CSS (move?) # @todo create a CSS minifier?
+		# embedded CSS (move?) # @TODO create a CSS minifier?
 		if(self::$_inline_css)
 		{
 			$back .= sprintf("\n\t<style><!--\n\t%s\n\t--></style>\n",
@@ -137,8 +137,8 @@ final class Website
 	 * @param array $meta = array($name, $content, 0=>name;1=>http-equiv);
 	 * @param boolean $overwrite overwrite key if exist?
 	 * @return boolean false if metakey was not overwritten, otherwise true
-	 * @todo possible without key but same functionality?
-	 * @todo strings as params? addMeta($name, $content, $mode, $overwrite)
+	 * @TODO possible without key but same functionality?
+	 * @TODO strings as params? addMeta($name, $content, $mode, $overwrite)
 	 */
 	public static function addMeta(array $metaA, $overwrite=true)
 	{

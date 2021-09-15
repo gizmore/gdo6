@@ -116,7 +116,10 @@ abstract class GDT
 	### Name ###
 	############
 	public function name($name=null) { $this->name = $name; return $this; }
-    public function htmlClass() { return ' ' . strtolower($this->gdoShortName()); }
+    public function htmlClass()
+    {
+        return ' ' . str_replace('_', '-', strtolower($this->gdoShortName()));
+    }
 	
 	##############
 	### FormID ###

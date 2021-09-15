@@ -24,7 +24,7 @@ use GDO\User\PermissionException;
  * Provides transaction wrapping and permission checks.
  * Provides parameters via ->gdoParameters().
  * 
- * @todo Rename init() to onInit()
+ * @TODO Rename init() to onInit()
  * 
  * @see MethodForm
  * @see MethodCrud
@@ -59,7 +59,7 @@ abstract class Method
 	/**
 	 * @return GDT_Response
 	 */
-	public function init() {} # @todo rename to onInit()
+	public function init() {} # @TODO rename to onInit()
 	public function isCLI() { return true; }
 	public function isAjax() { return false; }
 	public function isEnabled() { $m = $this->getModule(); return $m && $m->isEnabled(); }
@@ -374,7 +374,7 @@ abstract class Method
 	
 	/**
 	 * Get all selected checkboxes of a table column.
-	 * @todo get rid and move it to GDT_Checkbox. New option: allowToggleAll(true)
+	 * @TODO get rid and move it to GDT_Checkbox. New option: allowToggleAll(true)
 	 * @deprecated
 	 * @return string
 	 */
@@ -595,8 +595,13 @@ abstract class Method
 	        
 	        # Exec 1.before - 2.execute - 3.after
 	        GDT_Hook::callHook('BeforeExecute', $this, $response);
+	        
+	        $response = GDT_Response::make();
+	        if ($response->hasError()) { return $response; }
+	        
 	        $response->addField($this->beforeExecute());
-
+	        if ($response->hasError()) { return $response; }
+	        
 	        $response->addField($this->execute());
 
 	        if (!$response->isError())

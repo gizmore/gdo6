@@ -93,7 +93,7 @@ final class Module_Language extends GDO_Module
         {
             # Add js trans
             $iso = Trans::$ISO;
-            $href = $this->href('GetTransData', "&ajax=1&fmt=html&iso={$iso}&".$this->nocacheVersion());
+            $href = $this->href('GetTransData', "&ajax=1&fmt=json&iso={$iso}&".$this->nocacheVersion());
             Javascript::addJavascript($href);
             
             # Add cheap translation engine.

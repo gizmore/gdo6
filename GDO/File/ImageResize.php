@@ -9,7 +9,7 @@ use GDO\Core\GDOError;
  * @see http://salman-w.blogspot.de/2009/04/crop-to-fit-image-using-aspphp.html
  * @see https://stackoverflow.com/questions/7489742/php-read-exif-data-and-adjust-orientation
  * 
- * @todo Use imagemagick and a system/exec call. PHP needs too much mem.
+ * @TODO Use imagemagick and a system/exec call. PHP needs too much mem.
  * 
  * @author gizmore
  * @version 6.10.1

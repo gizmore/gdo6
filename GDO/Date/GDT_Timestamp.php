@@ -42,7 +42,10 @@ class GDT_Timestamp extends GDT
 	#############
 	public function toValue($var)
 	{
-		return empty($var) ? null : Time::getTimestamp($var);
+	    if ($var)
+	    {
+	        return Time::parseDate($var);
+	    }
 	}
 	
 	public function toVar($value)
@@ -147,20 +150,35 @@ class GDT_Timestamp extends GDT
 	################
 	### Validate ###
 	################
+	/**
+	 * Validate a Datetime.
+	 */
 	public function validate($value)
 	{
 		if ( ($value === null) && (!$this->notNull) )
 		{
 			return true;
 		}
-		if ( ($this->minDate !== null) && ($value < Time::getTimestamp($this->minDate)) )
+		
+		/** @var $value \DateTime **/
+		if ($this->minDate !== null)
 		{
-		    return $this->error('err_min_date', [Time::displayDate($this->minDate, $this->getDateFormat())]);
+		    if ($value->diff($this->minDate) < 0)
+		    {
+    		    return $this->error('err_min_date', [
+    		        Time::displayDate($this->minDate, $this->getDateFormat())]);
+		    }
 		}
-		if ( ($this->maxDate !== null) && ($value > Time::getTimestamp($this->maxDate)) )
+		
+		if ($this->maxDate !== null)
 		{
-			return $this->error('err_max_date', [Time::displayDate($this->maxDate, $this->getDateFormat())]);
+		    if ($value->diff($this->maxDate) > 0)
+		    {
+		        return $this->error('err_max_date', [
+		            Time::displayDate($this->maxDate, $this->getDateFormat())]);
+		    }
 		}
+
 		return parent::validate($value);
 	}
 	

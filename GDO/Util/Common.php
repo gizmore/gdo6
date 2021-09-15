@@ -37,7 +37,7 @@ final class Common
 	
 	/**
 	 * Return the first match of capturing regex.
-	 * @todo Move to another file?
+	 * @TODO Move to another file?
 	 * @param string $pattern
 	 * @param string $s
 	 * @return string|false

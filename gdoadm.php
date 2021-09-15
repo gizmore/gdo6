@@ -55,7 +55,7 @@ use GDO\UI\GDT_Page;
  * Show usage of the gdoadm.sh shell command.
  * 
  * @example gdoadm.sh install MailGPG
- * @see gdo.php mail.send gizmore 'Subject' 'Body text' # @todo: implement it that way
+ * @see gdo.php mail.send gizmore 'Subject' 'Body text'
  */
 function printUsage($code=1)
 {

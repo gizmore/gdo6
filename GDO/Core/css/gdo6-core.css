@@ -13,7 +13,7 @@ img.gdo-language { width: 24px; height: 17px; position: relative; top: 0px; bord
 .ce { text-align: center; margin: auto; }
 .cb { clear: both; }
 .dn { display: none; }
-.gdt-table td.gdt-num.gdt_user { text-align: left; }
+.gdt-table td.gdt-num.gdt-user { text-align: left; }
 .ri { text-align: right; float: right; }
 .ri:after,.fr:after,.fl:after { content: ""; visibility: hidden; display: block; height: 0; clear: both; }
 .fr { float: right; }
@@ -32,4 +32,4 @@ img.gdo-language { width: 24px; height: 17px; position: relative; top: 0px; bord
 
 /** Basic UI components **/
 div.gdt-hr { height: 1px; width: 100%; background: #eee; margin: 8px 2px; }
-.gdt_captcha > span > input[type=text] { vertical-align: top; }
+.gdt-captcha > span > input[type=text] { vertical-align: top; }

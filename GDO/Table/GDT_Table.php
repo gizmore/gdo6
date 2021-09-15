@@ -128,7 +128,7 @@ class GDT_Table extends GDT
 	#######################
 	public function setupHeaders($searched=false, $paginated=false)
 	{
-	    # @todo what about ordered and sorted and filtered?
+	    # @TODO what about ordered and sorted and filtered?
 
 	    if ($searched)
 	    {

@@ -308,3 +308,177 @@ function explode(delimiter, string, limit) {
 
 	return s;
 }
+
+/**
+ * https://locutus.io/php/strings/str_replace/
+ */
+function str_replace (search, replace, subject, countObj) { // eslint-disable-line camelcase
+  //  discuss at: https://locutus.io/php/str_replace/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Gabriel Paderni
+  // improved by: Philip Peterson
+  // improved by: Simon Willison (https://simonwillison.net)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Onno Marsman (https://twitter.com/onnomarsman)
+  // improved by: Brett Zamir (https://brett-zamir.me)
+  //  revised by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
+  // bugfixed by: Anton Ongson
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Oleg Eremeev
+  // bugfixed by: Glen Arason (https://CanadianDomainRegistry.ca)
+  // bugfixed by: Glen Arason (https://CanadianDomainRegistry.ca)
+  // bugfixed by: Mahmoud Saeed
+  //    input by: Onno Marsman (https://twitter.com/onnomarsman)
+  //    input by: Brett Zamir (https://brett-zamir.me)
+  //    input by: Oleg Eremeev
+  //      note 1: The countObj parameter (optional) if used must be passed in as a
+  //      note 1: object. The count will then be written by reference into it's `value` property
+  //   example 1: str_replace(' ', '.', 'Kevin van Zonneveld')
+  //   returns 1: 'Kevin.van.Zonneveld'
+  //   example 2: str_replace(['{name}', 'l'], ['hello', 'm'], '{name}, lars')
+  //   returns 2: 'hemmo, mars'
+  //   example 3: str_replace(Array('S','F'),'x','ASDFASDF')
+  //   returns 3: 'AxDxAxDx'
+  //   example 4: var countObj = {}
+  //   example 4: str_replace(['A','D'], ['x','y'] , 'ASDFASDF' , countObj)
+  //   example 4: var $result = countObj.value
+  //   returns 4: 4
+  //   example 5: str_replace('', '.', 'aaa')
+  //   returns 5: 'aaa'
+  let i = 0
+  let j = 0
+  let temp = ''
+  let repl = ''
+  let sl = 0
+  let fl = 0
+  const f = [].concat(search)
+  let r = [].concat(replace)
+  let s = subject
+  let ra = Object.prototype.toString.call(r) === '[object Array]'
+  const sa = Object.prototype.toString.call(s) === '[object Array]'
+  s = [].concat(s)
+  const $global = (typeof window !== 'undefined' ? window : global)
+  $global.$locutus = $global.$locutus || {}
+  const $locutus = $global.$locutus
+  $locutus.php = $locutus.php || {}
+  if (typeof (search) === 'object' && typeof (replace) === 'string') {
+    temp = replace
+    replace = []
+    for (i = 0; i < search.length; i += 1) {
+      replace[i] = temp
+    }
+    temp = ''
+    r = [].concat(replace)
+    ra = Object.prototype.toString.call(r) === '[object Array]'
+  }
+  if (typeof countObj !== 'undefined') {
+    countObj.value = 0
+  }
+  for (i = 0, sl = s.length; i < sl; i++) {
+    if (s[i] === '') {
+      continue
+    }
+    for (j = 0, fl = f.length; j < fl; j++) {
+      if (f[j] === '') {
+        continue
+      }
+      temp = s[i] + ''
+      repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0]
+      s[i] = (temp).split(f[j]).join(repl)
+      if (typeof countObj !== 'undefined') {
+        countObj.value += ((temp.split(f[j])).length - 1)
+      }
+    }
+  }
+  return sa ? s : s[0]
+}
+
+function strtr (str, trFrom, trTo) {
+  //  discuss at: https://locutus.io/php/strtr/
+  // original by: Brett Zamir (https://brett-zamir.me)
+  //    input by: uestla
+  //    input by: Alan C
+  //    input by: Taras Bogach
+  //    input by: jpfle
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
+  //   example 1: var $trans = {'hello' : 'hi', 'hi' : 'hello'}
+  //   example 1: strtr('hi all, I said hello', $trans)
+  //   returns 1: 'hello all, I said hi'
+  //   example 2: strtr('äaabaåccasdeöoo', 'äåö','aao')
+  //   returns 2: 'aaabaaccasdeooo'
+  //   example 3: strtr('ääääääää', 'ä', 'a')
+  //   returns 3: 'aaaaaaaa'
+  //   example 4: strtr('http', 'pthxyz','xyzpth')
+  //   returns 4: 'zyyx'
+  //   example 5: strtr('zyyx', 'pthxyz','xyzpth')
+  //   returns 5: 'http'
+  //   example 6: strtr('aa', {'a':1,'aa':2})
+  //   returns 6: '2'
+//   const krsort = require('../array/krsort')
+//   const iniSet = require('../info/ini_set')
+  let fr = ''
+  let i = 0
+  let j = 0
+  let lenStr = 0
+  let lenFrom = 0
+  let sortByReference = false
+  let fromTypeStr = ''
+  let toTypeStr = ''
+  let istr = ''
+  const tmpFrom = []
+  const tmpTo = []
+  let ret = ''
+  let match = false
+  // Received replace_pairs?
+  // Convert to normal trFrom->trTo chars
+  if (typeof trFrom === 'object') {
+    // Not thread-safe; temporarily set to true
+    // @todo: Don't rely on ini here, use internal krsort instead
+//    sortByReference = iniSet('locutus.sortByReference', false)
+//    trFrom = krsort(trFrom)
+//   iniSet('locutus.sortByReference', sortByReference)
+    for (fr in trFrom) {
+      if (trFrom.hasOwnProperty(fr)) {
+        tmpFrom.push(fr)
+        tmpTo.push(trFrom[fr])
+      }
+    }
+    trFrom = tmpFrom
+    trTo = tmpTo
+  }
+  // Walk through subject and replace chars when needed
+  lenStr = str.length
+  lenFrom = trFrom.length
+  fromTypeStr = typeof trFrom === 'string'
+  toTypeStr = typeof trTo === 'string'
+  for (i = 0; i < lenStr; i++) {
+    match = false
+    if (fromTypeStr) {
+      istr = str.charAt(i)
+      for (j = 0; j < lenFrom; j++) {
+        if (istr === trFrom.charAt(j)) {
+          match = true
+          break
+        }
+      }
+    } else {
+      for (j = 0; j < lenFrom; j++) {
+        if (str.substr(i, trFrom[j].length) === trFrom[j]) {
+          match = true
+          // Fast forward
+          i = (i + trFrom[j].length) - 1
+          break
+        }
+      }
+    }
+    if (match) {
+      ret += toTypeStr ? trTo.charAt(j) : trTo[j]
+    } else {
+      ret += str.charAt(i)
+    }
+  }
+  return ret
+}

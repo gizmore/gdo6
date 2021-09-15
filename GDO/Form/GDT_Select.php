@@ -248,7 +248,7 @@ class GDT_Select extends GDT_ComboBox
 	###############
 	### Choices ###
 	###############
-	public $emptyValue = '0'; # @todo rename to emptyVar
+	public $emptyValue = '0'; # @TODO rename to emptyVar
 	public function emptyValue($emptyValue='0')
 	{
 		$this->emptyValue = $emptyValue;

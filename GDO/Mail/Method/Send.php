@@ -17,7 +17,7 @@ use GDO\Mail\Mail;
 /**
  * Send a mail to a user that allows it.
  * 
- * @todo implement
+ * @TODO implement
  * @author gizmore
  *
  */

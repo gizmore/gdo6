@@ -18,7 +18,7 @@ use GDO\Util\CLI;
  * @see GDT_Table
  * @see GDT_Card
  * 
- * @todo remove ugly static behaviour
+ * @TODO remove ugly static behaviour
  * 
  * @author gizmore
  * @version 6.10.4

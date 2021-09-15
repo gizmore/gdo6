@@ -13,7 +13,7 @@ use GDO\DB\GDT_Text;
  * The content is html, filtered through a whitelist with html-purifier.
  * A gdo6-tinymce / ckeditor is available. Planned is markdown and bbcode.
  * 
- * @todo: write a Markdown module. Hook into DECODE() to turn input markdown into output html.
+ * @TODO: write a Markdown module. Hook into DECODE() to turn input markdown into output html.
  * 
  * @see \GDO\TinyMCE\Module_TinyMCE
  * @see \GDO\CKEditor\Module_CKEditor
