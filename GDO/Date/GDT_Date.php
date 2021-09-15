@@ -48,11 +48,7 @@ class GDT_Date extends GDT_Timestamp
 	
 	public function htmlValue()
 	{
-	    if ($seconds = $this->getValue())
-	    {
-    	    $isodate = date('Y-m-d', $seconds);
-    	    return sprintf(' value="%s"', $isodate);
-	    }
+	    return sprintf(' value="%s"', $this->getVar());
 	}
 	
 	public function displayValue($var)
