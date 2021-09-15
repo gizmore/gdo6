@@ -24,6 +24,7 @@ Meanwhile there is a gdoadm.sh command for that:
     ./gdoadm.sh modules
     ./gdoadm.sh provide Module
     ./gdoadm.sh install Module
+    ./gdo_bower.sh
     ./gdo_yarn.sh
     
 To make an sh script run on windows, install git4windows.

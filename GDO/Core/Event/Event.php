@@ -10,6 +10,4 @@ final class Event
         
     }
     
-    public 
-    
 }

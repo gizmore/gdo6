@@ -1,7 +1,17 @@
 # History
 
-gdo6 Changelog and roadmap.
+gdo6 Changelog.
 
+
+## 6.10.5 (15.09.2021)
+
+ - Time based GDT, like Date, DateTime and Timestamp now return a \DateTime object in toValue().
+
+ - Module_Birthday allows to age restrict a site or method easily.
+ 
+ - The Module_Dog chatbot got some unit tests for the IRC connector and more.
+
+ 
 ## 6.10.4
 
  - Better performance by only once, and lazily, converting GDT vars to values.
@@ -39,9 +49,4 @@ gdo6 Changelog and roadmap.
  - HTML classnames have been cleaned up.
  
  - GWF_ prefixed config defines are now prefixed GDO_. Try `php gwf2gdo.php`
-
- 
-## TODO
-
- - Gather a real big todo file.
 

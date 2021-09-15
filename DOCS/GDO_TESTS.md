@@ -4,6 +4,7 @@ Modules can have a Test/ folder that is automatically used when invoking
 
     gdo6/gdo_test.sh
 
+
 ## Testing configuration
 
 The gdo_test.sh will create a files_test/ folder and load config from protected/config_test.php. The production files are not overwritten.

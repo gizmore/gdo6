@@ -30,11 +30,12 @@ final class Module_Core extends GDO_Module
 {
     /**
      * GDO6 revision string.
+     * Sometimes just counts up to be in sync and poison some other module caches for updates.
      * 6.11.0 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.4-r6097';
+	public static $GDO_REVISION = '6.10.5-r6102'; # count me up to poison all caches.
 
 	##############
 	### Module ###
@@ -74,13 +75,14 @@ final class Module_Core extends GDO_Module
 	public function getConfig()
 	{
 		return [
-			GDT_User::make('system_user')->editable(false)->initial('1'),
-		    GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum', '0')),
-		    GDT_Checkbox::make('show_privacy')->initial($this->env('show_privacy', '0')),
-		    GDT_Checkbox::make('allow_guests')->initial($this->env('allow_guests', '1')),
+			GDT_User::make('system_user')->editable(false)->initial('1'), # System user / id should be 1.
+		    GDT_Checkbox::make('show_impressum')->initial($this->env('show_impressum', '0')), # show impressum in footer.
+		    GDT_Checkbox::make('show_privacy')->initial($this->env('show_privacy', '0')), # show privacy link in footer.
+		    GDT_Checkbox::make('allow_guests')->initial($this->env('allow_guests', '1')), # generally allow guests.
 			GDT_Version::make('asset_revision')->initial($this->module_version), # append this version to asset include urls?v=.
 			GDT_Checkbox::make('siteshort_title_append')->initial('1'),
-		    GDT_Checkbox::make('mail_404')->initial('1'),
+		    GDT_Checkbox::make('mail_403')->initial('1'), # mail 403 error mails?
+		    GDT_Checkbox::make('mail_404')->initial('1'), # mail 404 error mails?
 		    GDT_Checkbox::make('load_sidebars')->initial('1'),
 		];
 	}
@@ -95,6 +97,7 @@ final class Module_Core extends GDO_Module
 	public function cfgAssetVersion() { return sprintf('%.02f', $this->getConfigVar('asset_revision')); }
 	public function cfgAllowGuests() { return $this->getConfigValue('allow_guests'); }
 	public function cfgSiteShortTitleAppend() { return $this->getConfigValue('siteshort_title_append'); }
+	public function cfgMail403() { return $this->getConfigValue('mail_404'); }
 	public function cfgMail404() { return $this->getConfigValue('mail_404'); }
 	public function cfgLoadSidebars() { return $this->getConfigValue('load_sidebars'); }
 	

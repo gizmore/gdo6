@@ -45,6 +45,7 @@ GDO6 templates are simple php files. It is recommended to NOT output any HTML or
 
 GDO6 templates support locale aware loading. For example you can create impressum_en.php and impressum_de.php.
 
+
 ### Template API
 
 Templates are handled by the GDT_Template implementation.

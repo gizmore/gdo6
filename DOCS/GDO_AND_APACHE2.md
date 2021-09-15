@@ -6,19 +6,15 @@ I run apache2 with mod mpm itk.
 
 This allows switching users easily.
 
+
 ## Document Root
 
-I put my document root in /home/user/www/site.
+I put my document root in /home/user/www/gdo6.
 
 
 ## Virtual Hosts
 
-This virtual hosts configuration does the following:
-
-- redirect to www
-- serve both, http and https
-- allow letsencrypt to verify www and non-www domains.
-
+A starting point might be:
 
 ```
     <VirtualHost *:80>
@@ -30,10 +26,10 @@ This virtual hosts configuration does the following:
                 Require all granted
         </Directory>
         AssignUserID gizmore gizmore
-        ErrorLog /home/gizmore/www/recalcolo.errors.log
-        CustomLog /home/gizmore/www/recalcolo.access.log combined
-        RewriteCond %{REQUEST_URI} "!/.well-known/acme-challenge/"
-        RewriteRule ^/*(.*)$ https://%{HTTP_HOST}/$1 [NE,L,R=301]
+        ErrorLog /home/gizmore/gdo6.errors.log
+        CustomLog /home/gizmore/gdo6.access.log combined
+        #RewriteCond %{REQUEST_URI} "!/.well-known/acme-challenge/" not needed anymore?
+        #RewriteRule ^/*(.*)$ https://%{HTTP_HOST}/$1 [NE,L,R=301]
     </VirtualHost>
     <VirtualHost *:80>
         ServerName www.gdo6.com
@@ -44,41 +40,12 @@ This virtual hosts configuration does the following:
                 Require all granted
         </Directory>
         AssignUserID gizmore gizmore
-        ErrorLog /home/gizmore/www/recalcolo.errors.log
-        CustomLog /home/gizmore/www/recalcolo.access.log combined
-    </VirtualHost>
-    <VirtualHost *:443>
-        ServerName gdo6.com
-        SSLEngine on
-        SSLProtocol all -SSLv2
-        SSLCipherSuite HIGH:!aNULL:!MD5
-        SSLCertificateFile /root/.acme.sh/gdo6.com/fullchain.cer
-        SSLCertificateKeyFile  /root/.acme.sh/gdo6.com/gdo6.com.key
-        AssignUserID gizmore gizmore
-        ErrorLog /home/gizmore/www/recalcolo.errors.log
-        CustomLog /home/gizmore/www/recalcolo.access.log combined
-        Redirect permanent / https://www.gdo6.com/
-    </VirtualHost>
-    <VirtualHost *:443>
-        ServerName www.gdo6.com
-        DocumentRoot /home/gizmore/www/gdo6
-        <Directory "/home/gizmore/www/gdo6">
-                Options +Indexes +FollowSymLinks -MultiViews
-                AllowOverride All
-                Require all granted
-        </Directory>
-        SSLEngine on
-        SSLProtocol all -SSLv2
-        SSLCipherSuite HIGH:!aNULL:!MD5
-        SSLCertificateFile /root/.acme.sh/www.gdo6.com/fullchain.cer
-        SSLCertificateKeyFile  /root/.acme.sh/www.gdo6.com/www.gdo6.com.key
-        AssignUserID gizmore gizmore
-        ErrorLog /home/gizmore/www/recalcolo.errors.log
-        CustomLog /home/gizmore/www/recalcolo.access.log combined
+        ErrorLog /home/gizmore/gdo6.errors.log
+        CustomLog /home/gizmore/gdo6.access.log combined
     </VirtualHost>
 ```
 
 ## letsencrypt
 
 I use acme.sh
-
+Try `acme.sh --issue --domain gdo6.com --web-root /home/gdo6/www/gdo6 --apache`

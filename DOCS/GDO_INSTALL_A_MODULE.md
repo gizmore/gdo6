@@ -6,7 +6,7 @@ Each gdo6 module is cloned via git into the gdo6/GDO/ folder.
 
 Do not forget a --recursive when you clone a module, as sometimes 3rd party repositories are cloned.
 
-The core UI module for example needs htmlpurifier.
+The core module for example needs htmlpurifier.
  
 
 ## Clone a module repository
@@ -32,9 +32,11 @@ Switch to the gdo root folder and invoke helpers. These install all javascript d
     ./gdo_bower.sh
     ./gdo_yarn.sh
    
+   
 ## Install the module via gdo6 admin panel
 
 Open the gdo6 admin panel and install the module. In recovery cases you can try the install wizard.
+
 
 ## Install the module via command line
 
