@@ -23,7 +23,7 @@ use GDO\User\GDO_UserPermission;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.5
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
@@ -35,7 +35,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.5-r6102'; # count me up to poison all caches.
+	public static $GDO_REVISION = '6.10.5-r6104'; # count me up to poison all caches.
 
 	##############
 	### Module ###
