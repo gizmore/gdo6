@@ -8,10 +8,9 @@ namespace GDO\Core;
  * Both provide Module_Session.
  * 
  * You can generate providers and dependenices with providers.php and provider_dependenciews.php
- * @TODO: make the installers use this providers to automatically install module dependencies.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.5
  * @since 6.10.0
  */
 final class ModuleProviders
@@ -138,6 +137,7 @@ final class ModuleProviders
         'Python' => 'gdo6-python',
         'QRCode' => 'gdo6-qrcode',
         'Quotes' => 'gdo6-quotes',
+        'RandomOrg' => 'gdo6-random-org',
         'Ranzgruppe' => 'gdo6-ranzgruppe',
         'Recovery' => 'gdo6-recovery',
         'Register' => 'gdo6-register',

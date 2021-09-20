@@ -72,6 +72,7 @@ These modules wrap another library or software. GDO6/GDT integration provided.
  - [Prism](https://github.com/gizmore/gdo6-prism)
  - [Python](https://github.com/gizmore/gdo6-python)
  - [QRCode](https://github.com/gizmore/gdo6-qrcode)
+ - [RandomOrg](https://github.com/gizmore/gdo6-random-org)
  - [Sevenzip](https://github.com/gizmore/gdo6-sevenzip)
  - [TCPDF](https://github.com/gizmore/gdo6-tcpdf)
  - [ThreeJS](https://github.com/gizmore/gdo6-three-js)

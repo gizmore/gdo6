@@ -179,6 +179,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-python Python
     git clone --recursive https://github.com/gizmore/gdo6-qrcode QRCode
     git clone --recursive https://github.com/gizmore/gdo6-quotes Quotes
+    git clone --recursive https://github.com/gizmore/gdo6-random-org RandomOrg
     ## git clone --recursive https://github.com/gizmore/gdo6-ranzgruppe Ranzgruppe
     git clone --recursive https://github.com/gizmore/gdo6-recovery Recovery
     git clone --recursive https://github.com/gizmore/gdo6-register Register
