@@ -15,7 +15,7 @@ use GDO\Core\Application;
  * The value type is an integer/timestamp.
  *  
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.5
  * @since 6.0.7
  */
 class GDT_Timestamp extends GDT
@@ -66,6 +66,20 @@ class GDT_Timestamp extends GDT
 		return $this->initialValue($time);
 	}
 	
+	public function initialNow()
+	{
+	    return $this->initialAgo(0);
+	}
+	
+	/**
+	 * @param int $secondsAgo
+	 * @return self
+	 */
+	public function initialAgo($secondsAgo)
+	{
+	    return $this->initial(Time::getDate(Application::$MICROTIME + $secondsAgo));
+	}
+
 	#####################
 	### Starting view ###
 	#####################
