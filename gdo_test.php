@@ -84,6 +84,8 @@ Database::instance()->useDatabase(GDO_DB_NAME);
 echo "Loading modules from filesystem\n";
 $modules = $app->loader->loadModules(false, true);
 
+FileUtil::removeDir(GDO_PATH . '/temp_test');
+
 if ($argc === 2)
 {
     $count = 0;

@@ -16,6 +16,8 @@ use GDO\User\GDO_User;
 use GDO\DB\GDT_Text;
 use GDO\Tests\Module_Tests;
 use GDO\Table\GDT_Sort;
+use GDO\File\FileUtil;
+use GDO\Util\Strings;
 
 /**
  * GDO base module class.
@@ -259,7 +261,12 @@ class GDO_Module extends GDO
 	 */
 	public function tempPath($path='')
 	{
-	    return GDO_PATH . 'temp/' . $this->getName() .'/' . $path;
+	    $base = Application::instance()->isUnitTests() ?
+	       'temp_test' : 'temp';
+	    $path = GDO_PATH . "{$base}/" . $this->getName() .'/' . $path;
+	    $dir = Strings::rsubstrTo($path, "/");
+	    FileUtil::createDir($dir);
+	    return $path;
 	}
 	
 	#################
@@ -438,6 +445,12 @@ class GDO_Module extends GDO
 	        $gdt->initial(null);
 	        GDO_ModuleVar::removeModuleVar($this, $key);
 	    }
+	}
+	
+	public function increaseConfigVar($key, $by=1)
+	{
+	    $value = $this->getConfigValue($key);
+	    return $this->saveConfigVar($key, $value + 1);
 	}
 	
 	###################

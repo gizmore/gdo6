@@ -13,6 +13,7 @@ files_test/
 assets/
 protected/
 temp/
+temp_test/
 
 # Install hta
 install/*

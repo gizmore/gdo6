@@ -89,15 +89,16 @@ final class FileUtil
 			$objects = scandir($dir);
 			foreach ($objects as $object)
 			{
-				if ($object !== "." && $object !== "..")
+				if ($object !== '.' && $object !== '..')
 				{
-					if (is_dir($dir."/".$object))
+				    $obj = "{$dir}/{$object}";
+					if (is_dir($obj))
 					{
-						self::removeDir($dir."/".$object);
+						self::removeDir($obj);
 					}
 					else
 					{
-					    if (!unlink($dir."/".$object))
+					    if (!unlink($obj))
 					    {
 					        return false;
 					    }
