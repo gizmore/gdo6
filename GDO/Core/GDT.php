@@ -1,6 +1,8 @@
 <?php
 namespace GDO\Core;
 
+require 'GDO/util/Shim.php';
+
 use GDO\DB\Query;
 use GDO\Table\GDT_Table;
 use GDO\Form\GDT_Form;
