@@ -62,11 +62,13 @@ class GDT_AntiCSRF extends GDT_Hidden
 	 * @TODO verify crypto
 	 * @return string
 	 */
-	public function fixedToken(GDO_User $user)
+	public static function fixedToken(GDO_User $user=null)
 	{
-	    $time = Application::$TIME;
-	    $time = $time - ($time % $this->csrfExpire);
-	    $time = date('YmdHis', $time);
+	    $user = $user ? $user : GDO_User::current();
+// 	    $time = Application::$TIME;
+// 	    $time = $time - ($time % $this->csrfExpire);
+// 	    $time = date('YmdHis', $time);
+	    $time = 1337;
 	    $hash = sprintf('%s_%s_%s_%s_%s',
 	        GDO_SALT, $user->displayNameLabel(),
             $user->getVar('user_email'),
@@ -81,7 +83,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 	{
 	    if ($this->fixed)
 	    {
-	        return $this->fixedToken(GDO_User::current());
+	        return self::fixedToken();
 	    }
 	    
 	    $token = '';
@@ -120,6 +122,12 @@ class GDT_AntiCSRF extends GDT_Hidden
 	################
 	public function validate($value)
 	{
+	    $headers = getallheaders();
+	    if (isset($headers['X-CSRF-TOKEN']))
+	    {
+	        $value = $headers['X-CSRF-TOKEN'];
+	    }
+	    
 	    $app = Application::instance();
 	    if ($app->isCLI() || $app->isUnitTests())
 	    {
@@ -134,7 +142,7 @@ class GDT_AntiCSRF extends GDT_Hidden
 		
 		if ($this->fixed)
 		{
-		    if ($value === $this->fixedToken(GDO_User::current()))
+		    if ($value === self::fixedToken())
 		    {
 		        return true;
 		    }

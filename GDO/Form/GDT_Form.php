@@ -71,10 +71,12 @@ class GDT_Form extends GDT
 	##############
 	### Method ###
 	##############
-	public $method = 'POST';
+	const GET = 'GET';
+	const POST = 'POST';
+	public $method = self::POST;
 	public function method($method) { $this->method = $method; return $this; }
-	public function methodGET() { return $this->method('GET'); }
-	public function methodPOST() { return $this->method('POST'); }
+	public function methodGET() { return $this->method(self::GET); }
+	public function methodPOST() { return $this->method(self::POST); }
 	
 	################
 	### Encoding ###
@@ -123,17 +125,18 @@ class GDT_Form extends GDT
 	        {
 	            $errors[] = $gdt->displayLabel() . ': ' . $gdt->error;
 	        }
-// 	        if ($gdt->isSerializable())
-// 	        {
-// 	            if ($gdt->name)
-// 	            {
-// 	                $json[$gdt->name] = [
+	        if ($gdt->isSerializable())
+	        {
+	            if ($gdt->name)
+	            {
+	                $json[$gdt->name] = $gdt->configJSON();
+// 	                [
 // 	                    'var' => $gdt->var,
 // 	                    'display' => $gdt->renderJSON(),
 // 	                    'error' => $gdt->error,
 // 	                ];
-// 	            }
-// 	        }
+	            }
+	        }
 	    }
 	    
 	    if ($errors)
