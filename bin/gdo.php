@@ -41,6 +41,8 @@ function printUsage()
     die(0);
 }
 
+set_include_path(__DIR__ . '/../');
+
 require 'GDO6.php';
 
 if (FileUtil::isFile('protected/config_cli.php'))

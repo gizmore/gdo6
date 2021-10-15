@@ -5,6 +5,7 @@ use GDO\Tests\TestCase;
 use GDO\Date\Time;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertTrue;
+use GDO\User\GDO_User;
 
 /**
  * Test date and time.
@@ -87,6 +88,12 @@ final class DateTest extends TestCase
         $dbdate = '2021-11-09 08:00:59.123';
         $result = Time::displayDate($dbdate);
         assertEquals('09.11.2021 09:00', $result);
+    }
+    
+    public function testTinyIncrement()
+    {
+        $user = GDO_User::blank(['user_name' => 'dator'])->insert();
+        $dt = $user->getValue('user_created');
     }
     
 }

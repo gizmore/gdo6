@@ -36,7 +36,7 @@ spl_autoload_register(function($name) {
     {
         $name = str_replace('\\', '/', $name) . '.php';
         {
-            require $name;
+            require GDO_PATH . $name;
             # perf
             global $GDT_LOADED;
             $GDT_LOADED++;

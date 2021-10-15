@@ -453,7 +453,7 @@ abstract class GDT
 		}
 		return isset($arr[$name]) ?
 		  $this->inputToVar($arr[$name]) :
-		  $this->inputToVar($default);
+		  $default;
 	}
 	
 	##############

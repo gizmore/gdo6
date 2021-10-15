@@ -1089,8 +1089,8 @@ abstract class GDO
             if (isset($initial[$column->name]))
             {
                 $var = $initial[$column->name];
-//                 $column->var($var);
-                $column->var($column->inputToVar($var));
+                $column->var($var);
+//                 $column->var($column->inputToVar($var));
             }
             else
             {

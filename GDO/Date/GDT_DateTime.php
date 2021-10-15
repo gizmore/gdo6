@@ -41,4 +41,14 @@ class GDT_DateTime extends GDT_Date
 	    return Time::displayDate($var);
 	}
 	
+	public function inputToVar($input)
+	{
+	    $input = str_replace('T', ' ', $input);
+	    $input = str_replace('Z', '', $input);
+	    $d = Time::parseDateTime($input, Time::$TIMEZONE);
+	    $d->setTimezone(Time::$UTC);
+	    $var = $d->format('Y-m-d H:i:s.u');
+	    return $var;
+	}
+
 }

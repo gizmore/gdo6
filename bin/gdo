@@ -1,5 +1,3 @@
 #!/bin/bash
-cd "$(dirname "$0")"
-cd ..
-
-php bin/gdo.php "$@"
+gdopath="$(dirname "$0")/gdo.php"
+php $gdopath "$@"
