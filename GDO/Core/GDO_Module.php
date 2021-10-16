@@ -768,4 +768,10 @@ class GDO_Module extends GDO
 	    return Website::addCSS($this->wwwPath($path.'?'.$this->nocacheVersion()));
 	}
 
+	public function prefetch($path)
+	{
+	    $v = $this->nocacheVersion();
+	    $href = $this->wwwPath($path.'?'.$v);
+	    Website::addPrefetch($href);
+	}
 }
