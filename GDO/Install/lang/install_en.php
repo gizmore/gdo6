@@ -18,8 +18,9 @@ return array(
 'install_test_7' => 'Is a timezone set in php.ini?',
 'install_test_8' => 'Is fileinfo extension available?',
 'install_title_2_optionals' => 'Optional Features',
-'install_optional_0' => 'Is PHP gd installed?',
-'install_optional_1' => 'Is PHP memcached installed?',
+'install_optional_0' => 'Is PHP curl installed?',
+'install_optional_1' => 'Is PHP gd installed?',
+'install_optional_2' => 'Is PHP memcached installed?',
 'install_system_ok' => 'Your system is able to run GDO6. You can continue with %s.',
 'install_system_not_ok' => 'Your system is currently not able to run GDO6. You can try again to run %s.',
 

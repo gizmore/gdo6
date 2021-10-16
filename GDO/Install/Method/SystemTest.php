@@ -26,8 +26,9 @@ final class SystemTest extends Method
 			    function_exists('mime_content_type'),
 			),
 			'optional' => array(
-				function_exists('imagecreate'),
-				class_exists('\\Memcached'),
+			    function_exists('curl_init'),
+			    function_exists('imagecreate'),
+			    class_exists('\\Memcached'),
 			),
 		);
 		return $this->templatePHP('page/systemtest.php', $tVars);

@@ -1,4 +1,5 @@
 <?php
+namespace GDO\Core\lang;
 return array(
 'sitename' => GDO_SITENAME,
 
@@ -312,4 +313,8 @@ Cordiali saluti,<br/>
 'cfg_tt_load_sidebars' => 'Disable can give a slight performance use, if you use a very custom sidebar / page / theme.',
 'thousands_seperator' => '.',
 'decimal_point' => ',',
+    
+# v6.10.5 Fixes
+'min' => 'Min',
+'max' => 'Max',
 );
