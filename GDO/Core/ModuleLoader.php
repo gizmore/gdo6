@@ -388,7 +388,7 @@ final class ModuleLoader
         		while ($row = $result->fetchRow())
         		{
         		    /** @var $module \GDO\Core\GDO_Module **/
-        			if ($module = $this->modules[strtolower($row[0])])
+        			if ($module = @$this->modules[strtolower($row[0])])
         			{
         				if ($gdt = $module->getConfigColumn($row[1], false))
         				{

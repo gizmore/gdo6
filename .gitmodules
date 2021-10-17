@@ -2,3 +2,6 @@
 	path = GDO/UI/htmlpurifier
 	url = https://github.com/ezyang/htmlpurifier
 	branch = master
+[submodule "GDO/CSS/minify"]
+	path = GDO/CSS/minify
+	url = https://github.com/matthiasmullie/minify

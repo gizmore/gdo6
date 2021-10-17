@@ -27,6 +27,7 @@ GDO/*
 !GDO/Core/
 !GDO/Country/
 !GDO/Cronjob/
+!GDO/CSS/
 !GDO/Date/
 !GDO/DB/
 !GDO/File/

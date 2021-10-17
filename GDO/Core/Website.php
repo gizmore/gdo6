@@ -6,6 +6,8 @@ use GDO\Session\GDO_Session;
 use GDO\UI\GDT_HTML;
 use GDO\UI\GDT_Page;
 use GDO\UI\GDT_Container;
+use GDO\CSS\Minifier;
+use GDO\CSS\Module_CSS;
 
 /**
  * General Website utility.
@@ -87,9 +89,17 @@ final class Website
 		return sprintf('<script type="text/javascript">setTimeout(function(){ window.location.href="%s" }, %d);</script>', $url, $time*1000);
 	}
 	
-	public static function addBowerCSS($path) { self::addCSS("bower_components/$path"); }
-	public static function addInlineCSS($css) { self::$_inline_css .= $css; }
-	public static function addCSS($path) { self::addLink($path, 'text/css', 'stylesheet'); }
+	public static function addInlineCSS($css)
+	{
+	    Minifier::addInline($css);
+// 	    self::$_inline_css .= $css;
+	}
+	
+	public static function addCSS($path)
+	{
+	    Minifier::addFile($path);
+// 	    self::addLink($path, 'text/css', 'stylesheet');
+	}
 	
 	/**
 	 * add an html <link>
@@ -124,12 +134,13 @@ final class Website
 			$back .= sprintf('<link rel="%s" type="%s" href="%s" />'."\n", $rel, $type, $href);
 		}
 		
-		# embedded CSS (move?) # @TODO create a CSS minifier?
-		if(self::$_inline_css)
-		{
-			$back .= sprintf("\n\t<style><!--\n\t%s\n\t--></style>\n",
-			    self::$_inline_css);
-		}
+// 		if (Module_CSS::instance()->cfgMinify())
+// 		{
+// 		    return $back . "\n" . Minifier::renderMinified();
+// 		}
+
+		$back .= Minifier::renderOriginal();
+		
 		
 		return $back;
 	}
