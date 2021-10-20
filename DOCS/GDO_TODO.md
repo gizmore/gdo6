@@ -31,3 +31,5 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 - @TODO: Add a (database) lock to the javascript minifier, so only one thread/user is performing it, the others have to wait. Lock timeout maybe 90s . Move Util/JS stuff to the GDO/Javascript module.
 
 - @TODO: Add security gpg key for security.txt contact.
+
+- @TODO: Implement auto migrations via: dump->wipe->install->reimport. Trigger this via a list of revisions that require it. Measure revision before and after update. If revision is between this, trigger a wipe-reinstall.
