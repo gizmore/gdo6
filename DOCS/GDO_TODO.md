@@ -33,3 +33,6 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 - @TODO: Add security gpg key for security.txt contact.
 
 - @TODO: Implement auto migrations via: dump->wipe->install->reimport. Trigger this via a list of revisions that require it. Measure revision before and after update. If revision is between this, trigger a wipe-reinstall.
+
+- @TODO: Module_Login.force_auth ... if enabled, only login would work unless authenticated.
+
