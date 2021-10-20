@@ -5,13 +5,15 @@ gdo6 Changelog.
 
 ## 6.10.6 (21.10.2021)
 
- - SEO friendly urls, finally :)
+ - SEO friendly urls, finally :) The format is /module/method/key/val/key/val/....?arraysOrStuff#hash
 
  - All requests are now routed through index.php
 
- - Directory Indexing
+ - Directory Indexing. Easy peasy
 
- - CSS minifier
+ - CSS minifier. Pretty fast 3rd party PHP impl.
+ 
+ - Optionally disallow css and js dev source files
  
 
 ## 6.10.5 (15.09.2021)

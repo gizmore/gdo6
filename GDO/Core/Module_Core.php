@@ -23,7 +23,7 @@ use GDO\User\GDO_UserPermission;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.10.5
+ * @version 6.10.6
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
@@ -38,7 +38,7 @@ final class Module_Core extends GDO_Module
      * 
      * @var string
      */
-	const GDO_REVISION = '6.10.6-r6135';
+	const GDO_REVISION = '6.10.6-r6136';
 
 	##############
 	### Module ###
