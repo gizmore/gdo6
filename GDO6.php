@@ -67,12 +67,12 @@ function hrefSEO($seoString, $module, $method, $append='', $lang=true)
         }
         else
         {
-            $href = $_SERVER['SCRIPT_NAME'] . "?mo={$module}&me={$method}";
+            $href = GDO_WEB_ROOT . $_SERVER['SCRIPT_NAME'] . "?mo={$module}&me={$method}";
         }
     }
     else
     {
-        $href = $_SERVER['SCRIPT_NAME'] . "?mo={$module}&me={$method}";
+        $href = GDO_WEB_ROOT . $_SERVER['SCRIPT_NAME'] . "?mo={$module}&me={$method}";
     }
     
     if ($lang)

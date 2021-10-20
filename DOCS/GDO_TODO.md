@@ -27,3 +27,5 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 - @TODO: gdo6-session-db can use precalculated sessids to fix the ugly problem of requiering a 2nd request for a real saved session.
 
 - @TODO: move method ClearCache from Module_Admin to Module_Core.
+
+- @TODO: Add a (database) lock to the javascript minifier, so only one thread/user is performing it, the others have to wait. lock timeout maybe 90s . Move Util/JS stuff to the GDO/Javascript module.
