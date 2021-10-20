@@ -1,11 +1,7 @@
-##################################################################
-### This redirects all requests, except existing, to index.php ###
-##################################################################
+################################################
+### This redirects all requests to index.php ###
+################################################
+# If your GDO_WEB_ROOT is /foo/, use /foo/index.php in all lines
 RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.php%1 [NC,L,QSA]
-
-###################################################################
-### This disallows js resources from being transmitted from GDO ###
-###################################################################
+RewriteCond %{REQUEST_URI} !^/index.php$
+RewriteRule ^(.*)$ /index.php?_url=$1&%1 [QSA,L]

@@ -16,6 +16,9 @@ use GDO\DB\Cache;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_HTML;
+use GDO\File\FileUtil;
+use GDO\Core\Module_Core;
+use GDO\Core\GDOError;
 
 require 'GDO6.php';
 
@@ -75,6 +78,59 @@ if (GDO_LOG_REQUEST)
 
 # All fine!
 define('GDO_CORE_STABLE', 1);
+
+# File other than index.php requested
+if (isset($_GET['_url']) && $_GET['_url'])
+{
+    $url = $_GET['_url'];
+
+    # For directories, show the index, if configured
+    if (is_dir($url))
+    {
+        $_REQUEST['mo'] = 'Core';
+        $_REQUEST['me'] = 'DirectoryIndex';
+        # .. fallthrough
+    }
+    
+    # For virtual files, parse SEO urls :)
+    elseif (!is_file($url))
+    {
+        $parts = explode('/', $url);
+        $_REQUEST['mo'] = array_shift($parts);
+        $_REQUEST['me'] = array_shift($parts);
+        
+        while (count($parts))
+        {
+            $key = array_shift($parts);
+            $val = array_shift($parts);
+            $_REQUEST[$key] = $val;
+        }
+        # .. fallthrough
+    }
+    
+    # For real files, just serve it, unless it is css or javascript and module assets are disabled.
+    else
+    {
+        $type = FileUtil::mimetype($url);
+        
+        if ($type === 'text/x-php')
+        {
+            throw new GDOError('err_no_permission');
+        }
+        
+        if ( ($type === 'text/javascript') ||
+             ($type === 'text/css') )
+        {
+            Module_Core::instance()->checkAssetAllowance($url);
+        }
+        
+        hdr('Content-Type: '.$type);
+        hdr('Content-Size: '.filesize($url));
+        readfile($url);
+        die(0); # no fallthrough!
+    }
+}
+
 try
 {
 	$rqmethod = $_SERVER['REQUEST_METHOD'];

@@ -60,9 +60,9 @@ final class Debug
 			set_error_handler(array(
 				'GDO\\Core\\Debug',
 				'error_handler'));
-			register_shutdown_function(array(
-				'GDO\\Core\\Debug',
-				'shutdown_function'));
+// 			register_shutdown_function(array(
+// 				'GDO\\Core\\Debug',
+// 				'shutdown_function'));
 			self::$enabled = true;
 		}
 	}

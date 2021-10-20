@@ -20,7 +20,7 @@ use GDO\CSS\Module_CSS;
 final class Website
 {
 	private static $_links = []; # TODO: Uppercase static members.
-	private static $_inline_css = '';
+// 	private static $_inline_css = '';
 	private static $_redirected = false;
 	
 	/**
@@ -134,10 +134,10 @@ final class Website
 			$back .= sprintf('<link rel="%s" type="%s" href="%s" />'."\n", $rel, $type, $href);
 		}
 		
-// 		if (Module_CSS::instance()->cfgMinify())
-// 		{
-// 		    return $back . "\n" . Minifier::renderMinified();
-// 		}
+		if (Module_CSS::instance()->cfgMinify())
+		{
+		    return $back . "\n" . Minifier::renderMinified();
+		}
 
 		$back .= Minifier::renderOriginal();
 		

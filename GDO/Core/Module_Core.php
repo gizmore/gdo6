@@ -35,7 +35,7 @@ final class Module_Core extends GDO_Module
      * 6.12.0 will be the GIZ edition.
      * @var string
      */
-	public static $GDO_REVISION = '6.10.5-r6126'; # count me up to poison all caches.
+	public static $GDO_REVISION = '6.10.5-r6128'; # count me up to poison all caches.
 
 	##############
 	### Module ###
@@ -64,9 +64,10 @@ final class Module_Core extends GDO_Module
 	
 	public function onInstall()
 	{
+	    FileUtil::createDir(GDO_PATH.'assets');
 	    FileUtil::createDir(GDO_PATH.'temp');
 	    FileUtil::createDir(GDO_PATH.'temp/cache');
-	    touch(GDO_PATH  . 'temp/ipc.socket');
+	    FileUtil::createFile(GDO_PATH.'temp/ipc.socket');
 	}
 	
 	##############
@@ -84,6 +85,8 @@ final class Module_Core extends GDO_Module
 		    GDT_Checkbox::make('mail_403')->initial('1'), # mail 403 error mails?
 		    GDT_Checkbox::make('mail_404')->initial('1'), # mail 404 error mails?
 		    GDT_Checkbox::make('load_sidebars')->initial('1'),
+		    GDT_Checkbox::make('directory_indexing')->initial('0'),
+		    GDT_Checkbox::make('module_assets')->initial('1'),
 		];
 	}
 	
@@ -97,9 +100,11 @@ final class Module_Core extends GDO_Module
 	public function cfgAssetVersion() { return sprintf('%.02f', $this->getConfigVar('asset_revision')); }
 	public function cfgAllowGuests() { return $this->getConfigValue('allow_guests'); }
 	public function cfgSiteShortTitleAppend() { return $this->getConfigValue('siteshort_title_append'); }
-	public function cfgMail403() { return $this->getConfigValue('mail_404'); }
-	public function cfgMail404() { return $this->getConfigValue('mail_404'); }
+	public function cfgMail403() { return $this->getConfigVar('mail_404'); }
+	public function cfgMail404() { return $this->getConfigVar('mail_404'); }
 	public function cfgLoadSidebars() { return $this->getConfigValue('load_sidebars'); }
+	public function cfgDirectoryIndex() { return $this->getConfigVar('directory_indexing'); }
+	public function cfgModuleAssets() { return $this->getConfigVar('module_assets'); }
 	
 	#############
 	### Hooks ###
@@ -163,6 +168,24 @@ window.GDO_REVISION = '%s';
 	{
 		$user = GDO_User::current();
 		return $user->renderJSON();
+	}
+
+	public function checkAssetAllowance($url)
+	{
+	    if (stripos($url, 'GDO/') !== false)
+	    {
+    	    if (!$this->cfgModuleAssets())
+    	    {
+    	        return $this->errorModuleAssetNotAllowed();
+    	    }
+	    }
+	}
+	
+	private function errorModuleAssetNotAllowed()
+	{
+	    http_response_code(405);
+	    echo 'You are not allowed to require module code directly.';
+	    die(1);
 	}
 	
 }

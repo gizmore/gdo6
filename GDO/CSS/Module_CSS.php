@@ -41,7 +41,17 @@ final class Module_CSS extends GDO_Module
         {
             $classname = substr($classname, strlen($prefix));
             $path = str_replace('\\', '/', $classname);
-            require 'minify/src/' . $path;
+            $path = GDO_PATH . 'GDO/CSS/minify/src/' . $path . '.php';
+            require $path;
+        }
+        
+        $prefix = 'MatthiasMullie\\PathConverter\\';
+        if (Strings::startsWith($classname, $prefix))
+        {
+            $classname = substr($classname, strlen($prefix));
+            $path = str_replace('\\', '/', $classname);
+            $path = GDO_PATH . 'GDO/CSS/path-converter/src/' . $path . '.php';
+            require $path;
         }
     }
     

@@ -27,8 +27,8 @@ final class MinifyJS
 	private $processedSize = 0;
 	private $error = false;
 
-	private $external = array();
-	private $concatenate = array();
+	private $external = [];
+	private $concatenate = [];
 	
 	private $skipMinified = false;
 	
@@ -73,7 +73,7 @@ final class MinifyJS
 					$this->external[] = $path;
 				}
 			}
-			$this->external[] = "assets/$earlyhash.js?".Module_Core::instance()->nocacheVersion();
+			$this->external[] = GDO_WEB_ROOT . "assets/$earlyhash.js?".Module_Core::instance()->nocacheVersion();
 			return $this->external;
 		}
 		
@@ -112,8 +112,8 @@ final class MinifyJS
 		# Copy to early access
 		copy($finalpath, $earlypath);
 		
-		# Abuse external as small JS.
-		$this->external[] = "assets/$finalhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
+		# Abuse external as final loader.
+		$this->external[] = GDO_WEB_ROOT . "assets/$finalhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
 		return $this->external;
 	}
 	
@@ -134,6 +134,7 @@ final class MinifyJS
 	
 	public function minifiedJavascript($path)
 	{
+	    $path = Strings::substrFrom($path, GDO_WEB_ROOT, $path);
 		$src = GDO_PATH . Strings::substrTo($path, '?', $path);
 		
 		if (FileUtil::isFile($src))

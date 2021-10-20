@@ -21,6 +21,17 @@ final class FileUtil
     public static function isFile($filename) { return stream_resolve_include_path($filename) !== false; } # fast check
     public static function isDir($filename) { return is_dir($filename); }
 	public static function createDir($path) { return (self::isDir($path) && is_writable($path)) ? true : mkdir($path, GDO_CHMOD, true); }
+	public static function createFile($path)
+	{
+	    if (!self::isFile($path))
+	    {
+	        if (!@touch($path))
+	        {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
 	
 	###############
 	### Dirsize ###
@@ -200,7 +211,18 @@ final class FileUtil
 	############
 	public static function mimetype($path)
 	{
-	    return mime_content_type($path);
+	    $type = mime_content_type($path);
+	    if ($type === 'text/plain')
+	    {
+	        $suffix = substr($path, -3);
+	        switch($suffix)
+	        {
+	            case '.js': return 'text/javascript';
+	            case 'css': return 'text/css';
+	            case 'php': return 'text/x-php';
+	        }
+	    }
+	    return $type;
 	}
 	
 	##############

@@ -13,7 +13,7 @@ use GDO\Core\GDO;
  * The basic API is identical for static memory results and queried data.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.5
  * @since 5.0.0
  * @see ArrayResult
  * @see GDT_Table

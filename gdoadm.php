@@ -35,7 +35,7 @@ use GDO\UI\GDT_Page;
  * @TODO Make a new gdoadm.sh clone Foo to clone all required providers.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.5
  * @since 6.10.0
  * 
  * @see gdo_update.sh - to update your gdo6 installation
@@ -75,6 +75,7 @@ function printUsage($code=1)
     echo "php $exe install_all - To install all modules inside the GDO/ folder and their dependencies\n";
     echo "php $exe wipe <module> - To uninstall modules\n";
     echo "php $exe wipeall - To erase the whole database\n";
+    echo "php $exe update - Is automatically called after gdo_update.sh - it re-installs all installed modules.\n";
     echo "\n--- Module config ---\n";
     echo "php $exe config <module> - To show the config variables for a module\n";
     echo "php $exe config <module> <key> - To show the description for a module variable\n";
@@ -610,6 +611,16 @@ elseif ($argv[1] === 'secure')
     $_REQUEST['form'] = ['submit' => 'submit'];
     $result = $method->executeWithInit();
     echo $result->renderCLI();
+}
+
+elseif ($argv[1] === 'update')
+{
+    $modules = ModuleLoader::instance()->getEnabledModules();
+    foreach ($modules as $module)
+    {
+        Installer::installModule($module);
+    }
+    echo "Update complete.\n"; 
 }
 
 else
