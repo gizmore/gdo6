@@ -36,3 +36,9 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 
 - @TODO: Module_Login.force_auth ... if enabled, only login would work unless authenticated.
 
+- @TODO: Make a table for last cronjob execution. Create MethodCronjob function every($duration) and compare with last execution to make creating periodic cronjobs way easier. Some cronjobs already handle periodicy theyself. Make them use the new system.
+
+- @TODO: Create a command to list all gdo6 related todos from all modules.
+
+
+
