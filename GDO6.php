@@ -48,40 +48,66 @@ spl_autoload_register(function($name) {
 ### Global utility ###
 ######################
 function sitename() { return t('sitename'); }
-function url($module, $method, $append='', $lang=true) { return urlSEO('index.php', $module, $method, $append, $lang); }
-function urlSEO($seoString, $module, $method, $append='', $lang=true) { return GDT_Url::absolute(hrefSEO($seoString, $module, $method, $append, $lang)); }
+function url($module, $method, $append='', $lang=true) { return GDT_Url::absolute(href($module, $method, $append, $lang)); }
 function jxhref($module, $method, $append='', $lang=true) { return href($module, $method, $append.'&ajax=1&fmt=json', $lang); }
+function hrefDefault() { return href(GDO_MODULE, GDO_METHOD); }
 function href($module, $method, $append='', $lang=true)
 {
-    return hrefSEO($_SERVER['SCRIPT_NAME'], $module, $method, $append, $lang);
-}
-function hrefDefault() { return href(GDO_MODULE, GDO_METHOD); }
-function hrefSEO($seoString, $module, $method, $append='', $lang=true)
-{
-    if (defined('GDO_SEO_URLS') && GDO_SEO_URLS)
+    if (GDO_SEO_URLS)
     {
-        if ($seoString === '/index.php')
+        $module = strtolower($module);
+        $method = strtolower($method);
+        $href = GDO_WEB_ROOT . "{$module}/{$method}";
+        
+        if ($append)
         {
-            $html = $seoString === $_SERVER['SCRIPT_NAME'] ? '' : '.html'; # append .html?
-            $href = urlencodeSEO($seoString) . "{$html}?mo={$module}&me={$method}";
-        }
-        else
-        {
-            $href = GDO_WEB_ROOT . $_SERVER['SCRIPT_NAME'] . "?mo={$module}&me={$method}";
+            $append = ltrim($append, '&');
+            $hashparts = explode('#', $append);
+            $query = $hashparts[0];
+            $hash = isset($hashparts[1]) ? $hashparts[1] : '';
+            $qparts = explode('&', $query);
+            $q = '';
+            foreach ($qparts as $part)
+            {
+                if (!strpos($part, '['))
+                {
+                    $kv = explode('=', $part);
+                    $k = $kv[0];
+                    $v = urlencode($kv[1]);
+                    $href .= "/{$k}/{$v}";
+                }
+                else
+                {
+                    $q .= $part;
+                }
+            }
+            if ($q)
+            {
+                $href .= '?' . $q;
+                if ($lang)
+                {
+                    $href .= '&_lang=' . Trans::$ISO;
+                }
+            }
+            elseif ($lang)
+            {
+                $href .= '?_lang=' . Trans::$ISO;
+            }
+            if ($hash)
+            {
+                $href .= "#{$hash}";
+            }
         }
     }
     else
     {
-        $href = GDO_WEB_ROOT . $_SERVER['SCRIPT_NAME'] . "?mo={$module}&me={$method}";
+        $href = GDO_WEB_ROOT . "index.php?mo={$module}&me={$method}";
+        $href .= $append;
+        if ($lang)
+        {
+            $href .= '&_lang='.Trans::$ISO;
+        }
     }
-    
-    if ($lang)
-    {
-        $href .= '&_lang='.Trans::$ISO;
-    }
-    
-    $href .= $append;
-
     return $href;
 }
 function urlencodeSEO($str) { return trim(preg_replace('#[^\\.\\p{L}0-9]#', '_', $str), '_'); }

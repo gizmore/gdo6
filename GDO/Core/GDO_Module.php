@@ -307,7 +307,7 @@ class GDO_Module extends GDO
 		}
 	}
 	
-	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args); }
+	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args, 405); }
 	public function message($key, array $args=null) { return GDT_Success::responseWith($key, $args); }
 	
 	############
@@ -740,7 +740,7 @@ class GDO_Module extends GDO
 	{
 	    if (!self::$_NC)
 	    {
-	        $v = Module_Core::$GDO_REVISION;
+	        $v = Module_Core::GDO_REVISION;
 	        $av = Module_Core::instance()->cfgAssetVersion();
 	        self::$_NC = "v={$v}&av={$av}";
 	    }
@@ -768,10 +768,10 @@ class GDO_Module extends GDO
 	    return Website::addCSS($this->wwwPath($path.'?'.$this->nocacheVersion()));
 	}
 
-	public function prefetch($path)
+	public function prefetch($path, $type)
 	{
 	    $v = $this->nocacheVersion();
 	    $href = $this->wwwPath($path.'?'.$v);
-	    Website::addPrefetch($href);
+	    Website::addPrefetch($href, $type);
 	}
 }

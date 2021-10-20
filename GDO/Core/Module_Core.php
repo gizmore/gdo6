@@ -31,11 +31,14 @@ final class Module_Core extends GDO_Module
     /**
      * GDO6 revision string.
      * Sometimes just counts up to be in sync and poison some other module caches for updates.
+     * Increase this value to poison all caches.
+     * 
      * 6.11.0 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
+     * 
      * @var string
      */
-	public static $GDO_REVISION = '6.10.5-r6131'; # count me up to poison all caches.
+	const GDO_REVISION = '6.10.6-r6135';
 
 	##############
 	### Module ###
@@ -183,9 +186,7 @@ window.GDO_REVISION = '%s';
 	
 	private function errorModuleAssetNotAllowed()
 	{
-	    http_response_code(405);
-	    echo 'You are not allowed to require module code directly.';
-	    die(1);
+	    return $this->error('err_properitary_asset_code');
 	}
 	
 }

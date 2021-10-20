@@ -20,6 +20,7 @@ A starting point might be:
     <VirtualHost *:80>
         ServerName gdo6.com
         DocumentRoot /home/gizmore/www/gdo6
+        AllowEncodedSlashes NoDecode
         <Directory "/home/gizmore/www/gdo6">
                 Options +Indexes +FollowSymLinks -MultiViews
                 AllowOverride All
@@ -34,6 +35,7 @@ A starting point might be:
     <VirtualHost *:80>
         ServerName www.gdo6.com
         DocumentRoot /home/gizmore/www/gdo6
+        AllowEncodedSlashes NoDecode
         <Directory "/home/gizmore/www/gdo6">
                 Options +Indexes +FollowSymLinks -MultiViews
                 AllowOverride All

@@ -28,4 +28,6 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 
 - @TODO: move method ClearCache from Module_Admin to Module_Core.
 
-- @TODO: Add a (database) lock to the javascript minifier, so only one thread/user is performing it, the others have to wait. lock timeout maybe 90s . Move Util/JS stuff to the GDO/Javascript module.
+- @TODO: Add a (database) lock to the javascript minifier, so only one thread/user is performing it, the others have to wait. Lock timeout maybe 90s . Move Util/JS stuff to the GDO/Javascript module.
+
+- @TODO: Add security gpg key for security.txt contact.

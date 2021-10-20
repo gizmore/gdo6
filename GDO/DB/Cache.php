@@ -359,7 +359,7 @@ class Cache
 	public static function filePath($key='')
 	{
 	    $domain = GDO_DOMAIN;
-	    $version = Module_Core::$GDO_REVISION;
+	    $version = Module_Core::GDO_REVISION;
 	    return GDO_PATH . "temp/cache/{$domain}_{$version}/{$key}";
 	}
 	
@@ -372,7 +372,7 @@ if (!class_exists('Memcached', false))
 }
 
 # Dynamic poisonable prefix
-define('MEMCACHEPREFIX', GDO_DOMAIN.Module_Core::$GDO_REVISION);
+define('MEMCACHEPREFIX', GDO_DOMAIN.Module_Core::GDO_REVISION);
 
 # Default filecache config
 if (!defined('GDO_FILECACHE'))

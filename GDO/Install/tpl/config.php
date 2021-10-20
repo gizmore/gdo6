@@ -18,7 +18,7 @@ if (defined('GDO_CONFIGURED')) return; // double include
 /**
  * Please work down each section carefully.
  * Common pitfall is that there are 2 domains to set: GDO_DOMAIN and GDO_SESS_DOMAIN.
- * GDO <?=Module_Core::$GDO_REVISION; ?>
+ * GDO <?=Module_Core::GDO_REVISION; ?>
  **/
 
 <?php

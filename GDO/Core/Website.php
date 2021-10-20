@@ -114,10 +114,9 @@ final class Website
 		self::$_links[] = array($href, $type, $rel);
 	}
 	
-	public static function addPrefetch($href)
+	public static function addPrefetch($href, $type)
 	{
-	    $prefetch = 'prefetch';
-	    array_unshift(self::$_links, [$href, $prefetch, $prefetch]);
+	    array_unshift(self::$_links, [$href, $type, 'prefetch']);
 	}
 	
 	/**

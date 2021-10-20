@@ -467,7 +467,7 @@ abstract class Method
 	{
 		if ($this->isAjax())
 		{
-			$_GET['fmt'] = $_REQUEST['fmt'] = 'json';
+// 			$_GET['fmt'] = $_REQUEST['fmt'] = 'json';
 			$_GET['ajax'] = $_REQUEST['ajax'] = '1';
 		}
 		

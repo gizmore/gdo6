@@ -95,17 +95,30 @@ if (isset($_GET['_url']) && $_GET['_url'])
     # For virtual files, parse SEO urls :)
     elseif (!is_file($url))
     {
-        $parts = explode('/', $url);
-        $_REQUEST['mo'] = array_shift($parts);
-        $_REQUEST['me'] = array_shift($parts);
-        
-        while (count($parts))
+        if ($url === 'robots.txt')
         {
-            $key = array_shift($parts);
-            $val = array_shift($parts);
-            $_REQUEST[$key] = $val;
+            $_REQUEST['mo'] = 'Core';
+            $_REQUEST['me'] = 'Robots';
         }
-        # .. fallthrough
+        elseif ($url === 'security.txt')
+        {
+            $_REQUEST['mo'] = 'Core';
+            $_REQUEST['me'] = 'Security';
+        }
+        else
+        {
+            $parts = explode('/', $url);
+            $_REQUEST['mo'] = array_shift($parts);
+            $_REQUEST['me'] = array_shift($parts);
+            
+            while (count($parts))
+            {
+                $key = array_shift($parts);
+                $val = array_shift($parts);
+                $_REQUEST[$key] = urldecode($val);
+            }
+            # .. fallthrough
+        }
     }
     
     # For real files, just serve it, unless it is css or javascript and module assets are disabled.
@@ -136,7 +149,7 @@ try
 	$rqmethod = $_SERVER['REQUEST_METHOD'];
 	if (!in_array($rqmethod, ['GET', 'POST', 'HEAD', 'OPTIONS'], true))
 	{
-		die('HTTP method not processed: ' . html($rqmethod));
+		die('HTTP method not processed: ' . html($rqmethod) . ' ONLY "GET POST HEAD OPTIONS" ARE ALLOWED.');
 	}
 
 	# Exec
@@ -240,7 +253,10 @@ switch ($app->getFormat())
         
     case 'html':
         
-        $ajax = Application::instance()->isAjax();
+        if ($ajax = Application::instance()->isAjax())
+        {
+            hdr('Content-Type: text/plain');
+        }
         
         if ($response)
         {
@@ -279,7 +295,7 @@ if (isset($method) && $method->fileCached() && (!$cacheLoad))
     Cache::fileSet($key, $cacheContent);
 }
 
-# Fire recache IPC events.
+# Fire recache IPC events. Probably disabled
 Cache::recacheHooks();
 
 echo $content;

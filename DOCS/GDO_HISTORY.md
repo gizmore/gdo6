@@ -3,6 +3,17 @@
 gdo6 Changelog.
 
 
+## 6.10.6 (21.10.2021)
+
+ - SEO friendly urls, finally :)
+
+ - All requests are now routed through index.php
+
+ - Directory Indexing
+
+ - CSS minifier
+ 
+
 ## 6.10.5 (15.09.2021)
 
  - Time based GDT, like Date, DateTime and Timestamp now return a \DateTime object in toValue().

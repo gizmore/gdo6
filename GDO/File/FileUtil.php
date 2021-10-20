@@ -211,18 +211,14 @@ final class FileUtil
 	############
 	public static function mimetype($path)
 	{
-	    $type = mime_content_type($path);
-	    if ($type === 'text/plain')
-	    {
-	        $suffix = substr($path, -3);
-	        switch($suffix)
-	        {
-	            case '.js': return 'text/javascript';
-	            case 'css': return 'text/css';
-	            case 'php': return 'text/x-php';
-	        }
-	    }
-	    return $type;
+        $suffix = substr($path, -3);
+        switch($suffix)
+        {
+            case '.js': return 'text/javascript';
+            case 'css': return 'text/css';
+            case 'php': return 'text/x-php';
+        }
+	    return mime_content_type($path);
 	}
 	
 	##############
