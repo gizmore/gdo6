@@ -40,5 +40,6 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 
 - @TODO: Create a command to list all gdo6 related todos from all modules.
 
+- @TODO: Allow to create gui apps with QT or GTK+ or something. Just a wrapper for CLI, but similiar to html layout.
 
-
+- @TODO: 

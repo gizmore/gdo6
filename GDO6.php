@@ -102,11 +102,11 @@ function href($module, $method, $append='', $lang=true)
     else
     {
         $href = GDO_WEB_ROOT . "index.php?mo={$module}&me={$method}";
-        $href .= $append;
         if ($lang)
         {
             $href .= '&_lang='.Trans::$ISO;
         }
+        $href .= $append;
     }
     return $href;
 }
