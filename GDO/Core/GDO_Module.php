@@ -660,7 +660,15 @@ class GDO_Module extends GDO
 	 */
 	public function getMethod($methodName)
 	{
-		return method($this->getName(), $methodName);
+	    $methods = $this->getMethods();
+	    foreach ($methods as $method)
+	    {
+	        if (strcasecmp($methodName, $method->gdoShortName()) === 0)
+	        {
+	            return $method;
+	        }
+	    }
+// 		return method($this->getName(), $methodName);
 	}
 	
 	/**
@@ -691,6 +699,10 @@ class GDO_Module extends GDO
 	    }, $methods);
 	}
 	
+	/**
+	 * @param boolean $withPermission
+	 * @return Method[]
+	 */
 	public function getMethods($withPermission=true)
 	{
 	    $methods = scandir($this->filePath('Method'));

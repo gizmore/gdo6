@@ -9,8 +9,8 @@ use GDO\Session\GDO_Session;
  * It holds the global time variables for exact time measurements in games or replays.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.6
+ * @since 6.0.0
  */
 class Application
 {
@@ -83,7 +83,11 @@ class Application
 	/**
 	 * @return \GDO\Core\Method
 	 */
-	public function getMethod() { return method(mo(), me()); }
+	public function getMethod()
+	{
+	    $module = ModuleLoader::instance()->getModule(mo());
+	    $method = $module->getMethod(me());
+	}
 	
 	################
 	### Override ###
