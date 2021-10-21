@@ -660,7 +660,7 @@ class GDO_Module extends GDO
 	 */
 	public function getMethod($methodName)
 	{
-	    $methods = $this->getMethods(true);
+	    $methods = $this->getMethods(false);
 	    foreach ($methods as $method)
 	    {
 	        if (strcasecmp($methodName, $method->gdoShortName()) === 0)
