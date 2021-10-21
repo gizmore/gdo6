@@ -87,6 +87,7 @@ class Application
 	{
 	    $module = ModuleLoader::instance()->getModule(mo());
 	    $method = $module->getMethod(me());
+	    return $method;
 	}
 	
 	################
