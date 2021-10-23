@@ -15,7 +15,7 @@ if (!($country instanceof GDO_Country ))
  class="gdo-country"
  alt="<?= $country->displayName(); ?>"
  title="<?= $country->displayName(); ?>"
- src="GDO/Country/img/<?= $country->getIDFile(); ?>.png" />
+ src="<?=GDO_WEB_ROOT?>GDO/Country/img/<?= $country->getIDFile(); ?>.png" />
 <?php if ($field->withName) : ?>
 <span><?= $country->displayName(); ?></span>
 <?php endif; ?>
@@ -24,7 +24,7 @@ if (!($country instanceof GDO_Country ))
  class="gdo-country"
  title="<?= t('unknown_country'); ?>"
  alt="<?= t('unknown_country'); ?>"
- src="GDO/Country/img/zz.png" />
+ src="<?=GDO_WEB_ROOT?>GDO/Country/img/zz.png" />
 <?php if ($field->withName) : ?>
 <span><?= t('unknown_country'); ?></span>
 <?php endif;?>
