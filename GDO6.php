@@ -8,6 +8,7 @@ use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Env;
 use GDO\Core\Application;
+use GDO\Util\Strings;
 
 /**
  * GDO6 autoloader and public functions.
@@ -66,10 +67,11 @@ function href($module, $method, $append='', $lang=true)
             $query = $hashparts[0];
             $hash = isset($hashparts[1]) ? $hashparts[1] : '';
             $qparts = explode('&', $query);
-            $q = '';
+            $q = [];
             foreach ($qparts as $part)
             {
-                if (!strpos($part, '['))
+                if ( (!strpos($part, '[')) &&
+                     (!Strings::startsWith($part, '_')) )
                 {
                     $kv = explode('=', $part);
                     $k = $kv[0];
@@ -78,12 +80,12 @@ function href($module, $method, $append='', $lang=true)
                 }
                 else
                 {
-                    $q .= $part;
+                    $q[] = $part;
                 }
             }
             if ($q)
             {
-                $href .= '?' . $q;
+                $href .= '?' . implode('&', $q);
                 if ($lang)
                 {
                     $href .= '&_lang=' . Trans::$ISO;

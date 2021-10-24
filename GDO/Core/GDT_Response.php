@@ -5,8 +5,8 @@ use GDO\UI\GDT_HTML;
 
 /**
  * The response class renders fields according to the request content-type.
- * You can control the content type with the &fmt=json|html|cli|xml GET parameter.
- * The &ajax=1 parameter will drop the gdo6 site around it so you can focus on the data.
+ * You can control the content type with the &_fmt=json|html|cli|xml GET parameter.
+ * The &_ajax=1 parameter will drop the gdo6 site around it so you can focus on the data.
  * There is only one global Response used by the rendering, which can be stacked via GDT_Response::newWith().
  * 
  * @author gizmore

@@ -111,7 +111,7 @@ class Application
 	    {
 	        return self::CLI;
 	    }
-	    return Common::getRequestString('fmt', self::HTML);
+	    return Common::getRequestString('_fmt', self::HTML);
 	}
 	
 	##############

@@ -133,7 +133,7 @@ class GDT_File extends GDT_Object
 	public $action;
 	public function action($action)
 	{
-		$this->action = $action.'&ajax=1&fmt=json&flowField='.$this->name;
+		$this->action = $action.'&_ajax=1&_fmt=json&flowField='.$this->name;
 		return $this;
 	}
 	

@@ -2,7 +2,7 @@
 document.querySelectorAll('.gdo-flow-file input[type=file], input[type=file].gdo-flow-file').forEach(function(input){
 	
 	var flow = new Flow({
-		target: location.href + "&ajax=1&fmt=json&flowField=" + input.name,
+		target: location.href + "&_ajax=1&_fmt=json&flowField=" + input.name,
 		withCredentials: true,
 		fileParameterName: input.name,
 		singleFile: input.className.indexOf('multiple') < 0,

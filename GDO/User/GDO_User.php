@@ -403,14 +403,17 @@ final class GDO_User extends GDO
 	    if (module_enabled('Avatar'))
 	    {
 	        # ugly switch to html output for the avatar.
-	        $old = @$_REQUEST['fmt'];
-	        $_REQUEST['fmt'] = 'html';
+	        $old = @$_REQUEST['_fmt'];
+	        $_REQUEST['_fmt'] = 'html';
 	        $pre = GDT_Avatar::make()->user($this)->addClass('fl')->renderCell(); # html avatar
 	        if (!$old)
 	        {
-	            unset($_REQUEST['fmt']);
+	            unset($_REQUEST['_fmt']);
 	        }
-	        $_REQUEST['fmt'] = $old;
+	        else
+	        {
+	            $_REQUEST['_fmt'] = $old;
+	        }
 	    }
 	    return $pre . $this->displayNameLabel();
 	}
