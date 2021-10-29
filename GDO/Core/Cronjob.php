@@ -50,8 +50,23 @@ final class Cronjob
 		$method = Installer::loopMethod($module, $path);
 		if ($method instanceof MethodCronjob)
 		{
-			self::executeCronjob($method);
+		    if (self::shouldRun($method))
+		    {
+		        self::executeCronjob($method);
+		    }
 		}
+	}
+	
+	private static function shouldRun(MethodCronjob $method)
+	{
+	    $gdo = GDO_Cronjob::table();
+	    $query = $gdo->select('cron_finished')
+	       ->where('cron_method='.quote(get_class($method)))
+	       ->order("cron_finished DESC");
+	    $last = $query->exec()->fetchValue();
+	    return $last ?
+	       $method->runEvery() <= Time::getAgo($last) :
+	       true;
 	}
 
 	public static function executeCronjob(MethodCronjob $method)

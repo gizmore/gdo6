@@ -296,12 +296,12 @@ final class CLI
             }
             if ($gdt->isPositional())
             {
-                $usage1[] = sprintf('<%s>', $gdt->displayLabel());
+                $usage1[] = sprintf('<%s>(%s)', $gdt->displayLabel(), $gdt->gdoExampleVars());
             }
             else
             {
                 $usage2[] = sprintf('[--%s=<%s>(%s)]',
-                    $gdt->displayLabel(), $gdt->gdoExampleVars(), $gdt->getVar());
+                    $gdt->name, $gdt->gdoExampleVars(), $gdt->getVar());
             }
         }
         $usage = implode(' ', $usage2) . ' ' . implode(' ', $usage1);

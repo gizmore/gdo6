@@ -42,6 +42,7 @@ class Cronjob extends MethodForm
 		}
 		catch (Exception $ex)
 		{
+		    echo ob_get_contents();
 			throw $ex;
 		}
 		finally

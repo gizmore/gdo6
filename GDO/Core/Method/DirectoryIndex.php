@@ -36,14 +36,14 @@ final class DirectoryIndex extends MethodTable
     public function getResult()
     {
         $data = [];
-        $files = scandir($_GET['_url']);
+        $files = scandir($_REQUEST['_url']);
         foreach ($files as $file)
         {
             if ($file === '.')
             {
                 continue;
             }
-            $path = $_GET['_url'] . '/' . $file;
+            $path = $_REQUEST['_url'] . '/' . $file;
             $data[] = $this->entry($path, $file);
         }
         return new ArrayResult($data, $this->gdoTable());

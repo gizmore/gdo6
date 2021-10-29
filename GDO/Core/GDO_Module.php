@@ -719,14 +719,14 @@ class GDO_Module extends GDO
         if ($withPermission)
         {
             $methods = array_filter($methods, function(Method $method) {
-                try
-                {
+//                 try
+//                 {
                     return $method->hasUserPermission(GDO_User::current());
-                }
-                catch (\Throwable $ex)
-                {
-                    return false;
-                }
+//                 }
+//                 catch (\Throwable $ex)
+//                 {
+//                     return false;
+//                 }
             });
         }
         return $methods;

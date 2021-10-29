@@ -6,10 +6,9 @@ use GDO\Core\Method;
 
 /**
  * Baseclass method for a cronjob.
- * @TODO Introduce function runEvery() return a duration.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.6
  * @since 6.1.0
  */
 abstract class MethodCronjob extends Method
@@ -23,6 +22,11 @@ abstract class MethodCronjob extends Method
 		$this->start();
 		$this->run();
 		$this->end();
+	}
+	
+	public function runEvery()
+	{
+	    return 1;
 	}
 
 	###########
