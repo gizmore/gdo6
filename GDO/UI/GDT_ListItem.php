@@ -88,6 +88,11 @@ final class GDT_ListItem extends GDT
 	    return $this;
 	}
 	
+// 	public function editorFooter()
+// 	{
+// 	    $this->goo
+// 	    return t('foozzzz');
+// 	}
 	
 	/**
 	 * @var GDT_Menu

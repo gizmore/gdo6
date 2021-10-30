@@ -101,7 +101,7 @@ class GDT_Int extends GDT
 		if ($this->unique)
 		{
 			$condition = "{$this->identifier()}=".GDO::quoteS($value);
-			if ($this->gdo->getID()) // persisted
+			if ($this->gdo->isPersisted()) // persisted
 			{ // ignore own row
 				$condition .= " AND NOT ( " . $this->gdo->getPKWhere() . " )";
 			}

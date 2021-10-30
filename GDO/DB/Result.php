@@ -150,7 +150,7 @@ class Result
 	{
 	    if ($gdoVars = $this->fetchAssoc())
 	    {
-	        return $gdo->tempReset()->setGDOVars($gdoVars);
+	        return $gdo->tempReset()->setGDOVars($gdoVars)->setPersisted();
 	    }
 	}
 

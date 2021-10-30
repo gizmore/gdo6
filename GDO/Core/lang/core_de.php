@@ -104,9 +104,9 @@ return array(
 'btn_sort' => 'Sortieren',
     
 # Sorting
-'order_by' => 'Sortierung',
+'order_by' => 'Reihenfolge',
 'order_dir' => 'Richtung',
-'list_order' => 'Sortierung: %s, %s',
+'list_order' => 'Reihenfolge: %s, %s',
 'asc' => 'Aufsteigend',
 'desc' => 'Absteigend',
 'lbl_search_criteria' => 'Kriterien: %s',
@@ -322,4 +322,6 @@ Viele Grüße,<br/>
 'max' => 'Max',
 # v6.10.6
 'list_core_directoryindex' => '%s Dateien und Ordner',
+'date' => 'Datum',
+'cfg_footer' => 'Im Footer anzeigen?',
 );

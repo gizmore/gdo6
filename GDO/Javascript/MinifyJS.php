@@ -87,8 +87,9 @@ final class MinifyJS
 		# Pass 2 - Rebuild
 		try
 		{
-    		set_time_limit(120); # may take a while
-    		Database::instance()->lock('js_minify', 120);
+		    $t = 300; # 5 minutes?
+    		set_time_limit($t); # may take a while
+    		Database::instance()->lock('js_minify', $t);
     		
     		# After the lock the file is there.
     		# So someone else calculated it.

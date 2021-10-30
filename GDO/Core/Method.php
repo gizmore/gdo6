@@ -53,6 +53,17 @@ abstract class Method
 	 */
 	public static function make() { return new static(); }
 	
+	/**
+	 * Get method identifier as css ID.
+	 * @return string
+	 */
+	public function gdoMethodId()
+	{
+	    return strtolower(
+	        $this->getModuleName() . '-' .
+	        $this->getMethodName());
+	}
+	
 	################
 	### Override ###
 	################

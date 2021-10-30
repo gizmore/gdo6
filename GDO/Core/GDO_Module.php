@@ -141,7 +141,43 @@ class GDO_Module extends GDO
 	    return strtolower($this->getName());
 	}
 	
+	public function displayModuleLicense() { return html($this->getModuleLicense()); }
+	
+	public function getModuleLicenseFilenames()
+	{
+	    return [
+	        'LICENSE',
+	    ];
+	}
+	
+	public function getModuleLicense()
+	{
+	    $all = '';
+	    if ($files = $this->getModuleLicenseFilenames())
+	    {
+	        foreach ($files as $i => $filename)
+	        {
+	            if ($i > 0)
+	            {
+	                $all .= "\n\n============================================\n\n";
+	            }
+
+       	        $filename = $this->filePath($filename);
+        	    if (FileUtil::isFile($filename))
+        	    {
+        	        $all .= file_get_contents($filename);
+        	    }
+	        }
+	    }
+	    else
+	    {
+	        $all .= 'UNLICENSED / PROPERITARY';
+	    }
+        return $all;
+	}
+
 	public function displayModuleDescription() { return html($this->getModuleDescription()); }
+	
 	
 	/**
 	 * Module description is fetched from README.md by default.
@@ -654,7 +690,6 @@ class GDO_Module extends GDO
 	### Method ###
 	##############
 	/**
-	 * @deprecated Use Method::make() instead.
 	 * @param string $methodName
 	 * @return Method
 	 */
@@ -668,8 +703,6 @@ class GDO_Module extends GDO
 	            return $method;
 	        }
 	    }
-	    return false;
-// 		return method($this->getName(), $methodName);
 	}
 	
 	/**

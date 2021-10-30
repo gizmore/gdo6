@@ -16,6 +16,7 @@ trait WithName
      */
 	public function gdoHumanName() { return t(strtolower(self::gdoShortNameS())); }
 	public function gdoClassName() { return static::class; }
+	public function gdoClassNameLower() { return strtolower(static::class); }
 	public function gdoShortName() { $r = new \ReflectionClass($this); return $r->getShortName(); }
 	public static function gdoClassNameS() { return static::class; }
 	public static function gdoShortNameS() { $r = new \ReflectionClass(static::class); return $r->getShortName(); }

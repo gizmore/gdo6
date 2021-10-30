@@ -9,10 +9,38 @@ window.GDO = {};
  * Automatically focus the first editable form field.
  */
 window.GDO.autofocusForm = function() {
-	var id = window.GDO_FIRST_EDITABLE_FIELD;
+	let id = window.GDO_FIRST_EDITABLE_FIELD;
 	if (id) {
-		var e = window.document.getElementById(id);
+		let e = window.document.getElementById(id);
 		e && e.focus();
+	}
+};
+
+window.GDO.enterForm = function(form, event) {
+	console.log('GDO.enterForm()', form, event);
+	if (event.keyCode == 13) {
+		if (event.srcElement.nodeName !== 'TEXTAREA') {
+			event.preventDefault();
+			let submits = form.querySelectorAll('input[type=submit]');
+			submits[0] && submits[0].click();
+		}
+	}
+};
+
+window.GDO.triggerResize = function() {
+	setTimeout(
+		GDO.triggerEvent.bind(window, 'resize')
+		, 1000);
+};
+
+window.GDO.triggerEvent = function(name) {
+	if (typeof(Event) === 'function') {
+		window.dispatchEvent(new Event('resize'));
+	}
+	else {
+		var evt = window.document.createEvent('UIEvents'); 
+		evt.initUIEvent('resize', true, false, window, 0); 
+		window.dispatchEvent(evt);
 	}
 };
 

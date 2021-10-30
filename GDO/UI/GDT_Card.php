@@ -13,15 +13,13 @@ use GDO\Core\WithFields;
 use GDO\DB\GDT_EditedBy;
 use GDO\DB\GDT_EditedAt;
 use GDO\Core\Application;
-use GDO\Core\Website;
-use GDO\Core\GDT_Response;
 
 /**
  * A card with title, subtitle, creator, date, content and actions.
  *  
  * @author gizmore
- * @version 6.10
- * @since 6.04
+ * @version 6.10.6
+ * @since 6.0.4
  */
 final class GDT_Card extends GDT
 {
@@ -216,4 +214,5 @@ final class GDT_Card extends GDT
 	    }
 	    return $this;
 	}
+	
 }

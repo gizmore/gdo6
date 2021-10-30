@@ -28,9 +28,9 @@ final class GDT_EditedAt extends GDT_DateTime
 // 	    }
 	}
 
-	public function blankData()
-	{
-	    return [$this->name => Time::getDate()];
-	}
+// 	public function blankData()
+// 	{
+// 	    return [$this->name => Time::getDate()];
+// 	}
 
 }

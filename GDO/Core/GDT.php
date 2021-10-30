@@ -126,7 +126,7 @@ abstract class GDT
 	##############
 	### FormID ###
 	##############
-	public function id() { return (GDT_Form::$CURRENT?GDT_Form::$CURRENT->name."_":'').$this->name; }
+	public function id() { return (GDT_Form::$CURRENT?GDT_Form::$CURRENT->name."_":'').str_replace(['[', ']'], ['_', '_'], $this->name); }
 	public function htmlID() { return $this->name ? sprintf('id="%s"', $this->id()) : ''; }
 	public function htmlForID() { return $this->name ? sprintf('for="%s"', $this->id()) : ''; }
 	

@@ -17,9 +17,10 @@ use GDO\DB\GDT_Text;
  * 
  * @see \GDO\TinyMCE\Module_TinyMCE
  * @see \GDO\CKEditor\Module_CKEditor
+ * @see \GDO\Markdown\Module_Markdown
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.6
  * @since 4.0.0
  */
 class GDT_Message extends GDT_Text
@@ -29,6 +30,7 @@ class GDT_Message extends GDT_Text
     private $input; # Raw user input
     private $output; # Decoded input to output 
     private $text; # Output with removed html for search
+    private $editor; # Message Codec Provider used for this message.
     
     ###########
     ### GDT ###
@@ -68,11 +70,16 @@ class GDT_Message extends GDT_Text
     ###############
     ### Decoder ###
     ###############
-    public static $DECODER = [self::class, 'DECODE'];
     public static $EDITOR_NAME = 'GDT';
+    public static $DECODER = [self::class, 'DECODE'];
+    public static $DECODERS = ['GDT' => [self::class, 'DECODE']];
+
     public static function DECODE($s)
     {
-        return '<div class="gdt-message ck-content">' . self::getPurifier()->purify($s) . '</div>';
+        $decoded  = '<div class="gdt-message ck-content">';
+        $decoded .= self::getPurifier()->purify($s);
+        $decoded .= '</div>';
+        return $decoded;
     }
     
     public static function decodeMessage($s)
@@ -115,7 +122,7 @@ class GDT_Message extends GDT_Text
             $config->set('URI.DisableExternalResources', false);
             $config->set('URI.DisableResources', false);
             $config->set('HTML.TargetBlank', true);
-            $config->set('HTML.Allowed', 'br,a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption,center,b,i,div[class]');
+            $config->set('HTML.Allowed', 'br,a[href|rel|target],p,pre[class],code[class],img[src|alt],figure[style|class],figcaption,center,b,i,div[class],h1,h2,h3,h4,h5,h6');
             $config->set('Attr.DefaultInvalidImageAlt', t('img_not_found'));
             $config->set('HTML.SafeObject', true);
             $config->set('Attr.AllowedRel', array('nofollow'));
@@ -158,6 +165,7 @@ class GDT_Message extends GDT_Text
         $this->input = $value;
         $this->output = $decoded;
         $this->text = $text;
+        $this->editor = self::$EDITOR_NAME;
         return true;
     }
     
@@ -176,12 +184,12 @@ class GDT_Message extends GDT_Text
     ######################
     ### 3 column hacks ###
     ######################
-    
     public function initial($var=null)
     {
         $this->input = $var;
         $this->output = self::decodeMessage($var);
         $this->text = self::plaintext($this->output);
+        $this->editor = $this->nowysiwyg ? 'GDT' : self::$EDITOR_NAME;
         return parent::initial($var);
     }
     
@@ -195,6 +203,7 @@ class GDT_Message extends GDT_Text
         $this->input = $var;
         $this->output = self::decodeMessage($var);
         $this->text = self::plaintext($this->output);
+        $this->editor = self::$EDITOR_NAME;
         return parent::var($var);
     }
     
@@ -204,6 +213,7 @@ class GDT_Message extends GDT_Text
             "{$this->name}_input" => $this->input,
             "{$this->name}_output" => $this->output,
             "{$this->name}_text" => $this->text,
+            "{$this->name}_editor" => self::$EDITOR_NAME,
         ];
     }
     
@@ -219,6 +229,7 @@ class GDT_Message extends GDT_Text
         $this->input = $gdo->getVar("{$name}_input");
         $this->output = $gdo->getVar("{$name}_output");
         $this->text = $gdo->getVar("{$name}_text");
+        $this->editor = $gdo->getVar("{$name}_editor");
         return $this;
     }
     
@@ -234,23 +245,9 @@ class GDT_Message extends GDT_Text
             "{$this->name}_input" => $this->input,
             "{$this->name}_output" => $this->output,
             "{$this->name}_text" => $this->text,
+            "{$this->name}_editor" => $this->editor,
         ];
     }
-    
-//     /**
-//      * Turn an output string to an input string.
-//      * {@inheritDoc}
-//      * @see \GDO\Core\GDT::toVar()
-//      */
-//     public function toVar($value)
-//     {
-//         return "<pre>{$value}\n</pre>\n";
-//     }
-    
-//     public function toValue($var)
-//     {
-//         return $this->output; #self::decodeMessage($var);
-//     }
     
     ##############
     ### Getter ###

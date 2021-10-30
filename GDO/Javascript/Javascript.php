@@ -37,10 +37,10 @@ final class Javascript
 	    self::$_javascript_post_inline .= $script_html . "\n";
 	}
 	
-	public static function addBowerJavascript($path)
-	{
-		self::addJavascript("bower_components/$path");
-	}
+// 	public static function addBowerJavascript($path)
+// 	{
+// 		self::addJavascript("bower_components/$path");
+// 	}
 	
 	##############
 	### Render ###

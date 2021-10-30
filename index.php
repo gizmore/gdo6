@@ -10,15 +10,12 @@ use GDO\DB\Database;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Website;
 use GDO\Core\GDT_Error;
-use GDO\Core\Method\Page404;
-use GDO\Util\Strings;
 use GDO\DB\Cache;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_HTML;
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
-use GDO\Core\GDOError;
 
 require 'GDO6.php';
 
@@ -111,7 +108,7 @@ if (isset($_GET['_url']) && $_GET['_url'])
             $_REQUEST['mo'] = array_shift($parts);
             $_REQUEST['me'] = array_shift($parts);
             
-            if (!Application::instance()->getMethod())
+            if (!$app->getMethod())
             {
                 $_REQUEST['mo'] = 'Core';
                 $_REQUEST['me'] = 'Page404';
@@ -140,7 +137,6 @@ if (isset($_GET['_url']) && $_GET['_url'])
         {
             $_REQUEST['mo'] = 'Core';
             $_REQUEST['me'] = 'Page403';
-//             throw new GDOError('err_no_permission');
         }
         
         elseif ( (($type === 'text/javascript') ||
@@ -171,22 +167,14 @@ try
 	}
 
 	# Exec
+	$method = $app->getMethod();
+	
     ob_start();
-    if (!isset($_REQUEST['mo']))
-    { 
-        # If we are not index or index, and not start with a query string immediately we have a 404 error.
-        $f = $_SERVER['REQUEST_URI'];
-        if ( (($f !== (GDO_WEB_ROOT.'index.php')) && ($f !== GDO_WEB_ROOT))
-            && (!Strings::startsWith($f, GDO_WEB_ROOT.'?')) )
-        {
-            $method = Page404::make();
-            $_GET['mo'] = $_REQUEST['mo'] = 'Core';
-            $_GET['me'] = $_REQUEST['me'] = 'Page404';
-        }
-    }
     
-    if (!isset($method))
+    if (!$method)
     {
+        $_REQUEST['mo'] = 'Core';
+        $_REQUEST['me'] = 'Page404';
         $method = $app->getMethod();
     }
 
@@ -233,7 +221,6 @@ finally
     ob_end_clean();
 }
 
-
 # Render Page
 switch ($app->getFormat())
 {
@@ -245,7 +232,10 @@ switch ($app->getFormat())
             $cacheContent = $response->renderCLI();
             $content .= $cacheContent;
         }
-        if ($session) $session->commit();
+        if ($session)
+        {
+            $session->commit();
+        }
         break;
     case 'json':
         hdr('Content-Type: application/json');
@@ -271,7 +261,7 @@ switch ($app->getFormat())
         
     case 'html':
         
-        if ($ajax = Application::instance()->isAjax())
+        if ($ajax = $app->isAjax())
         {
             hdr('Content-Type: text/plain');
         }
@@ -293,7 +283,10 @@ switch ($app->getFormat())
             {
                 $content = GDT_Page::$INSTANCE->html($cacheContent)->render();
             }
-            if ($session) $session->commit();
+            if ($session)
+            {
+                $session->commit();
+            }
         }
         break;
         
@@ -303,7 +296,10 @@ switch ($app->getFormat())
         {
             $content = $cacheContent = $response->renderXML();
         }
-        if ($session) $session->commit();
+        if ($session)
+        {
+            $session->commit();
+        }
         break;
 }
 
@@ -315,5 +311,8 @@ if ($method && $method->fileCached() && (!$cacheLoad))
 
 # Fire recache IPC events. Probably disabled
 Cache::recacheHooks();
+
+hdr(sprintf('X-GDO-TIME: %.03f',
+    microtime(true) - GDO_PERF_START));
 
 echo $content;

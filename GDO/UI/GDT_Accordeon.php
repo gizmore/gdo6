@@ -1,14 +1,15 @@
 <?php
 namespace GDO\UI;
 
+use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 
 /**
  * A panel that collapses onclick.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.10
+ * @version 6.10.6
+ * @since 6.10.0
  */
 final class GDT_Accordeon extends GDT_Panel
 {
@@ -38,4 +39,13 @@ final class GDT_Accordeon extends GDT_Panel
         return $this;
     }
     
+    public $titles = [];
+    public $sections = [];
+    public function addSection($title, GDT $gdt)
+    {
+        $this->titles[] = $title;
+        $this->sections[] = $gdt;
+        return $this;
+    }
+
 }

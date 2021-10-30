@@ -15,13 +15,13 @@ use GDO\Util\CLI;
 /**
  * A form.
  * 
- * @see GDT_Table
  * @see GDT_Card
+ * @see GDT_Table
  * 
  * @TODO remove ugly static behaviour
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.6
  * @since 3.0.0
  */
 class GDT_Form extends GDT
@@ -34,6 +34,8 @@ class GDT_Form extends GDT
 	
 	use WithTitle;
 	use WithFields;
+	
+	public $focusable = true;
 	
 	public function defaultName() { return self::DEFAULT_NAME; }
 	public function isSerializable() { return true; }

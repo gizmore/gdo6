@@ -320,4 +320,6 @@ Kind Regards,<br/>
 
 # v6.10.6 Fixes
 'list_core_directoryindex' => '%s files and folders',
+'date' => 'Date',
+'cfg_footer' => 'Show in footer?',
 );

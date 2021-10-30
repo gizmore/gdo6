@@ -320,4 +320,6 @@ Cordiali saluti,<br/>
 
 # v6.10.6 Fixes
 'list_core_directoryindex' => '%s File e cartelle',
+'date' => 'Data',
+'cfg_footer' => 'Mostra nel piè di pagina?',
 );

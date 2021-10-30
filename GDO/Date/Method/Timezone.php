@@ -25,6 +25,7 @@ final class Timezone extends MethodForm
     public function createForm(GDT_Form $form)
     {
         $tz = GDO_User::current()->getTimezone();
+        $form->action(href('Date', 'Timezone'));
         $form->slim()->noTitle();
         $form->addFields([
             GDT_Timezone::make('timezone')->positional()->notNull()->initial($tz),

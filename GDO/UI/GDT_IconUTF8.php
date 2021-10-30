@@ -55,6 +55,7 @@ final class GDT_IconUTF8
         'image' => '📷',
         'language' => '⚐',
         'level' => '🏆',
+        'license' => '§',
         'like' => '❤',
         'link' => '🔗',
         'list' => '▤',

@@ -212,9 +212,9 @@ trait WithFields
 		    {
 		        $gdt->gdo($this->gdo);
 		    }
-			if ($data = $gdt->renderJSON())
+// 			if ($data = $gdt->renderJSON())
 			{
-		        $json[$gdt->name] = $data;
+			    $json[$gdt->name] = $gdt->renderJSON();
 		        if ($gdt->error)
 		        {
 		            $json[$gdt->name]['error'] = $gdt->error;

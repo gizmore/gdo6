@@ -3,9 +3,10 @@ namespace GDO\UI;
 
 /**
  * Add HTML href capabilities.
+ * 
  * @author gizmore
- * @since 6.00
- * @version 6.10
+ * @version 6.10.6
+ * @since 6.0.0
  */
 trait WithHREF
 {
@@ -36,10 +37,12 @@ trait WithHREF
 	        $key = preg_quote($key);
 	        $href = preg_replace("#&{$key}=[^&]+#", $new, $href);
 	    }
+	    
 	    else
 	    {
 	        $href = $href . $new;
 	    }
+	    
 	    return $href;
 	}
 

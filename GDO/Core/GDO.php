@@ -306,6 +306,10 @@ abstract class GDO
     public function setGDOVars(array $vars, $dirty=false)
     {
         $this->gdoVars = $vars;
+//         foreach ($this->gdoColumnsCache() as $gdt)
+//         {
+//             $gdt->gdo($this);
+//         }
         return $this->dirty($dirty);
     }
     
@@ -1136,18 +1140,24 @@ abstract class GDO
     ##############
     ### Get ID ###
     ##############
+//     private $id;
     /**
      * Id cache
      * @var $id string
      */
     public function getID()
     {
+//         if ($this->id)
+//         {
+//             return $this->id;
+//         }
         $id = '';
         foreach ($this->gdoPrimaryKeyColumnNames() as $name)
         {
             $id2 = $this->getVar($name);
             $id = $id ? "{$id}:{$id2}" : $id2;
         }
+//         $this->id = $id;
         return $id;
     }
     
@@ -1409,7 +1419,7 @@ abstract class GDO
     
     public function uncacheAll()
     {
-        $this->cache->all = null;
+        $this->table()->cache->all = null;
         Cache::remove($this->cacheAllKey());
         return $this;
     }

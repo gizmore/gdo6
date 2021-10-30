@@ -2,7 +2,7 @@
 namespace GDO\UI;
 
 use GDO\Core\GDT_Template;
-use GDO\Form\WithFormFields;
+use GDO\Form\GDT_Submit;
 
 /**
  * A simple button.
@@ -12,23 +12,13 @@ use GDO\Form\WithFormFields;
  * @see GDT_IconButton
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.6
  * @since 6.1.0
  */
-class GDT_Button extends GDT_Label
+class GDT_Button extends GDT_Submit
 {
 	use WithHREF;
-	use WithIcon;
-	use WithFormFields;
-	use WithPHPJQuery;
 	use WithAnchorRelation;
-	
-	public $writable = true;
-	public $groupable = false;
-	
-	public $primaryButton = true;
-	public function primary() { $this->primaryButton = true; return $this; }
-	public function secondary() { $this->primaryButton = false; return $this; }
 	
 	##############
 	### Render ###
@@ -40,6 +30,11 @@ class GDT_Button extends GDT_Label
     	    $this->writable(call_user_func($this->checkEnabled, $this));
 	    }
 		return GDT_Template::php('UI', 'cell/button.php', ['field'=>$this, 'href'=>$this->gdoHREF()]);
+	}
+	
+	public function renderForm()
+	{
+	    return $this->renderCell();
 	}
 	
 	public function renderJSON()

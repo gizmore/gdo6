@@ -7,6 +7,7 @@ $firstEditableField = null;
 <div class="gdo-form <?=$form->htmlClassSlim()?>">
 
   <form <?=$form->htmlID()?>
+   onkeydown="GDO.enterForm(this, event)"
    action="<?=$form->action?>"
    method="<?=$form->method?>"
    enctype="<?=$form->encoding?>">
