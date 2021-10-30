@@ -188,10 +188,6 @@ abstract class GDT
     	        return $this->setGDOData($gdo);
 	        }
 	    }
-// 	    else
-// 	    {
-// 	        return $this->var($this->initial);
-// 	    }
 	    return $this;
 	}
 	

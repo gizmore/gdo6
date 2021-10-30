@@ -35,12 +35,14 @@ final class GDT_Accordeon extends GDT_Panel
     
     public function closed($closed=true)
     {
-        $this->opened = !$closed;
-        return $this;
+    	return $this->opened(!$closed);
     }
     
-    public $titles = [];
+    /**
+     * @var GDT[]
+     */
     public $sections = [];
+    public $titles = [];
     public function addSection($title, GDT $gdt)
     {
         $this->titles[] = $title;

@@ -13,7 +13,7 @@ use GDO\Util\Strings;
 /**
  * GDO6 autoloader and public functions.
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.6
  * @since 6.0.0
  */
 
@@ -112,7 +112,7 @@ function href($module, $method, $append='', $lang=true)
     }
     return $href;
 }
-function urlencodeSEO($str) { return trim(preg_replace('#[^\\.\\p{L}0-9]#', '_', $str), '_'); }
+function seo($str) { return trim(preg_replace('#[^\\.\\p{L}0-9]#', '_', $str), '_'); }
 
 function quote($value) { return GDO::quoteS($value); }
 function json_quote($s) { return str_replace("'", "&#39;", $s); }

@@ -75,12 +75,6 @@ class GDT_Link extends GDT_String
 		return self::make()->href($href)->labelRaw($label)->render();
 	}
 	
-	public static function urlencodeSEO($url)
-	{
-	    $url = str_replace([' '], '_', $url);
-	    return urlencode($url);
-	}
-	
 	##############
 	### Render ###
 	##############

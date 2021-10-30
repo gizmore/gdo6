@@ -1,11 +1,13 @@
 <?php
 namespace GDO\UI;
 
+use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Core\GDO;
 use GDO\Util\Common;
-use GDO\Core\GDT_Response;
 use GDO\DB\GDT_Object;
+use GDO\Core\GDT_ResponseCard;
+use GDO\Table\GDT_GWF;
 
 abstract class MethodCard extends Method
 {
@@ -30,7 +32,7 @@ abstract class MethodCard extends Method
      */
     public function getObject()
     {
-        return $this->gdoTable()->getById(Common::getRequestString($this->idName()));
+        return $this->gdoTable()->find($this->getID());
     }
     
     public function execute()
@@ -40,7 +42,7 @@ abstract class MethodCard extends Method
         {
             return $this->error('err_no_data_yet');
         }
-        return GDT_Response::makeWithHTML($gdo->renderCard());
+        return GDT_ResponseCard::newWith()->gdo($gdo);
     }
     
     public function getTitle()

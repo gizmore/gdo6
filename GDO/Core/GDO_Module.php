@@ -18,6 +18,7 @@ use GDO\Tests\Module_Tests;
 use GDO\Table\GDT_Sort;
 use GDO\File\FileUtil;
 use GDO\Util\Strings;
+use GDO\UI\GDT_Link;
 
 /**
  * GDO base module class.
@@ -141,7 +142,10 @@ class GDO_Module extends GDO
 	    return strtolower($this->getName());
 	}
 	
-	public function displayModuleLicense() { return html($this->getModuleLicense()); }
+	public function displayModuleLicense()
+	{
+		return $this->getModuleLicense();
+	}
 	
 	public function getModuleLicenseFilenames()
 	{
@@ -150,18 +154,56 @@ class GDO_Module extends GDO
 	    ];
 	}
 	
+	/**
+	 * Print license information.
+	 * @TODO move to module gdo6-licenses
+	 * @return string
+	 */
 	public function getModuleLicense()
 	{
 	    $all = '';
-	    if ($files = $this->getModuleLicenseFilenames())
+	    
+	    $files = $this->getModuleLicenseFilenames();
+	    
+	    $div = '<hr/>';
+	    
+	    if ($descr = $this->getModuleDescription())
+	    {
+	    	$all .= "$descr\n$div";
+	    	if ($files)
+	    	{
+	    		$gdo = 0; # gdo licenses
+	    		foreach ($files as $file)
+	    		{
+	    			if ($this->filePath('LICENSE') === $this->filePath($file))
+	    			{
+	    				$gdo = 1;
+	    			}
+	    		}
+	    		
+	    		$count = count($files) - $gdo;
+	    		if ($count)
+	    		{
+		    		$all .= "$count third-party-licenses involved:";
+		    		$all .= "\n$div";
+	    		}
+	    	}
+	    }
+	    
+	    if ($files)
 	    {
 	        foreach ($files as $i => $filename)
 	        {
 	            if ($i > 0)
 	            {
-	                $all .= "\n\n============================================\n\n";
+	            	$all .= "\n$div";
 	            }
 
+	            $all .= GDT_Link::make()->
+	            	labelRaw(Strings::substrFrom($filename, GDO_WEB_ROOT))->
+	            	href($this->wwwPath($filename))->
+	            	renderCell();
+	            
        	        $filename = $this->filePath($filename);
         	    if (FileUtil::isFile($filename))
         	    {

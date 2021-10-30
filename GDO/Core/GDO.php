@@ -32,7 +32,7 @@ use GDO\User\GDO_User;
  * @see Query
  * 
  * @author gizmore@wechall.net
- * @version 6.10.4
+ * @version 6.10.6
  * @since 3.2.0
  * @license MIT
  */
@@ -306,10 +306,6 @@ abstract class GDO
     public function setGDOVars(array $vars, $dirty=false)
     {
         $this->gdoVars = $vars;
-//         foreach ($this->gdoColumnsCache() as $gdt)
-//         {
-//             $gdt->gdo($this);
-//         }
         return $this->dirty($dirty);
     }
     

@@ -23,7 +23,7 @@ final class Debug
 	private static $ENABLED = false;
 	private static $EXCEPTION = false;
 	private static $MAIL_ON_ERROR = false;
-	public static $MAX_ARG_LEN = 32;
+	public static $MAX_ARG_LEN = 23;
 	
 	/**
 	 * Call this to auto include.
@@ -359,7 +359,7 @@ final class Debug
 	
 	public static function backtraceException(\Throwable $e, $html = true, $message = '')
 	{
-		$message = sprintf("PHP Exception: %s in %s line %s", $e->getMessage(), self::shortpath($e->getFile()), $e->getLine());
+		$message = sprintf("PHP Exception: '%s' in %s line %s", $e->getMessage(), self::shortpath($e->getFile()), $e->getLine());
 		return self::backtraceMessage($message, $html, $e->getTrace(), $e->getLine(), $e->getFile());
 	}
 	
@@ -409,7 +409,7 @@ final class Debug
 		$arg = $is_html ? html($arg) : $arg;
 		$arg = str_replace('&quot;', '"', $arg); # It is safe to inject quotes. Turn back to get length calc right.
 		$arg = str_replace('\\\\', '\\', $arg); # Double backslash was escaped always via json encode?
-		
+		$arg = str_replace('\\/', '/', $arg); # Double backslash was escaped always via json encode?
 		if (mb_strlen($arg) > self::$MAX_ARG_LEN)
 		{
 		    return mb_substr($arg, 0, self::$MAX_ARG_LEN) . '…' . mb_substr($arg, -14);

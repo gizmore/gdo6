@@ -589,7 +589,10 @@ abstract class Method
 	        self::$CURRENT = $this;
 	        
 	        # Wrap transaction start
-	        if ($transactional) $db->transactionBegin();
+	        if ($transactional)
+	        {
+	        	$db->transactionBegin();
+	        }
 	        
 	        # Init method
 	        $response = GDT_Response::newWith();
@@ -599,7 +602,10 @@ abstract class Method
 	        
 	        if ($response->isError())
 	        {
-	            if ($transactional) $db->transactionEnd();
+	            if ($transactional)
+	            {
+	            	$db->transactionRollback();
+	            }
 	            return $response;
 	        }
 	        
@@ -607,12 +613,27 @@ abstract class Method
 	        GDT_Hook::callHook('BeforeExecute', $this, $response);
 	        
 	        $response = GDT_Response::make();
-	        if ($response->hasError()) { return $response; }
+	        if ($response->hasError())
+	        {
+	        	if ($transactional)
+	        	{
+	        		$db->transactionRollback();
+	        	}
+	        	return $response;
+	        }
 	        
 	        $response->addField($this->beforeExecute());
-	        if ($response->hasError()) { return $response; }
+	        if ($response->hasError())
+	        {
+	        	if ($transactional)
+	        	{
+	        		$db->transactionRollback();
+	        	}
+	        	return $response;
+	        }
 	        
-	        $response->addField($this->execute());
+	        $response2 = $this->execute();
+	        GDT_Response::make()->addField($response2);
 
 	        if (!$response->isError())
 	        {
@@ -621,18 +642,27 @@ abstract class Method
 	        }
 	        
 	        # Wrap transaction end
-	        if ($transactional) $db->transactionEnd();
+	        if ($transactional)
+	        {
+	        	$db->transactionEnd();
+	        }
 	        
 	        return $response;
 	    }
 	    catch (PermissionException $e)
 	    {
-	        if ($transactional) $db->transactionRollback();
+	        if ($transactional)
+	        {
+	        	$db->transactionRollback();
+	        }
 	        return GDT_Response::makeWith(GDT_Error::make()->textRaw($e->getMessage()));
 	    }
 	    catch (\Throwable $e)
 	    {
-	        if ($transactional) $db->transactionRollback();
+	        if ($transactional)
+	        {
+	        	$db->transactionRollback();
+	        }
 	        throw $e;
 	    }
 	    finally

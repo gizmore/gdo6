@@ -88,13 +88,9 @@ class Application
 	    static $method;
 	    if ($method === null)
 	    {
-    	    if ($module = ModuleLoader::instance()->getModule(mo(), true))
+    	    if ($module = ModuleLoader::instance()->getModule(mo(), false))
     	    {
         	    $method = $module->getMethod(me());
-    	    }
-    	    else
-    	    {
-//     	        $method = false;
     	    }
 	    }
 	    return $method;

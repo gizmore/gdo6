@@ -75,6 +75,11 @@ class GDT_Response extends GDT
 	    return self::$INSTANCE;
 	}
 	
+	public static function makeWith(GDT ...$fields)
+	{
+		return self::make()->addFields($fields);
+	}
+	
 	/**
 	 * Make a new response. Has to be called for any execute within an execute.
 	 * @param GDT ...$fields

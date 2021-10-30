@@ -19,7 +19,8 @@ window.GDO.autofocusForm = function() {
 window.GDO.enterForm = function(form, event) {
 	console.log('GDO.enterForm()', form, event);
 	if (event.keyCode == 13) {
-		if (event.srcElement.nodeName !== 'TEXTAREA') {
+		let nn = event.srcElement.nodeName;
+		if ( (nn === 'INPUT') || (nn === 'SELECT') ) {
 			event.preventDefault();
 			let submits = form.querySelectorAll('input[type=submit]');
 			submits[0] && submits[0].click();
