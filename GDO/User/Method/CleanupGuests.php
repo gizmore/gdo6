@@ -8,12 +8,18 @@ use GDO\Date\Time;
 
 /**
  * Cleanup old guest accounts that are unused.
+ * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.6
  * @since 6.10.3
  */
 final class CleanupGuests extends MethodCronjob
 {
+	public function runEvery()
+	{
+		return Time::ONE_DAY;
+	}
+	
     public function run()
     {
         $cut = Time::getDate(Application::$TIME - GDO_SESS_TIME);

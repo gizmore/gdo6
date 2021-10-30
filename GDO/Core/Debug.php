@@ -8,71 +8,68 @@ use GDO\User\GDO_User;
 
 /**
  * Debug backtrace and error handler.
- * 
- * Can send email on PHP errors.
- * 
- * Also has a method to get debug timings.
+ * Can send email on PHP fatal errors.
+ * Has a method to get debug timings.
  * 
  * @example Debug::enableErrorHandler(); fatal_ooops();
  * 
- * @TODO: It displays and sends two errors for each error... why?!
- * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.10.6
  * @since 3.0.1
  */
 final class Debug
 {
-	private static $die = false; # @TODO uppercase static members
-	private static $enabled = false;
-	private static $exception = false;
+	private static $DIE = false; # @TODO uppercase static members
+	private static $ENABLED = false;
+	private static $EXCEPTION = false;
 	private static $MAIL_ON_ERROR = false;
-	public static $MAX_ARG_LEN = 28;
+	public static $MAX_ARG_LEN = 32;
 	
-	// Call this to auto inc.
-	public static function init()
-	{
-	}
+	/**
+	 * Call this to auto include.
+	 */
+	public static function init() {}
 	
 	###############
 	## Settings ###
 	###############
 	public static function setDieOnError($bool = true)
 	{
-		self::$die = $bool;
+		self::$DIE = $bool;
 	}
+	
 	public static function setMailOnError($bool = true)
 	{
 		self::$MAIL_ON_ERROR = $bool;
 	}
+	
 	public static function disableErrorHandler()
 	{
-		if (self::$enabled)
+		if (self::$ENABLED)
 		{
 			restore_error_handler();
-			self::$enabled = false;
+			self::$ENABLED = false;
 		}
 	}
+	
 	public static function enableErrorHandler()
 	{
-		if (!self::$enabled)
+		if (!self::$ENABLED)
 		{
 			set_error_handler(array(
 				'GDO\\Core\\Debug',
 				'error_handler'));
-// 			register_shutdown_function(array(
-// 				'GDO\\Core\\Debug',
-// 				'shutdown_function'));
-			self::$enabled = true;
+			self::$ENABLED = true;
 		}
 	}
+	
 	public static function enableStubErrorHandler()
 	{
 		self::disableErrorHandler();
 		set_error_handler(array(
 			'GDO\\Core\\Debug',
 			'error_handler_stub'));
-		self::$enabled = true;
+		self::$ENABLED = true;
 	}
 	
 	#####################
@@ -87,16 +84,16 @@ final class Debug
 	 * This one get's called on a fatal.
 	 * No stacktrace available and some vars are messed up.
 	 */
-	public static function shutdown_function()
-	{
-		if ($error = error_get_last())
-		{
-			if ($error && ($error['type'] === 1))
-			{
-				self::error_handler(1, $error['message'], self::shortpath($error['file']), $error['line'], NULL);
-			}
-		}
-	}
+// 	public static function shutdown_function()
+// 	{
+// 		if ($error = error_get_last())
+// 		{
+// 			if ($error && ($error['type'] === 1))
+// 			{
+// 				self::error_handler(1, $error['message'], self::shortpath($error['file']), $error['line'], NULL);
+// 			}
+// 		}
+// 	}
 	
 	public static function error(\Error $e)
 	{
@@ -196,13 +193,15 @@ final class Debug
 			echo self::renderError($message);
 		}
 		
-		if (self::$die)
+		if (self::$DIE)
 		{
-			die(500);
+		    http_response_code(500);
+			die(1);
 		}
 		
 		return true;
 	}
+	
 	public static function exception_handler($e)
 	{
 	    return self::debugException($e);
@@ -230,7 +229,6 @@ final class Debug
 	        Logger::flush();
 	    }
 	    
-	    // $content = ''; while (ob_get_level() > 0) { $content .= ob_get_contents(); ob_end_clean(); }
 	    $message = self::backtraceException($e, $is_html, ' (XH)');
 	    
 	    if ($render)
@@ -270,19 +268,21 @@ final class Debug
 		    return GDT_Page::$INSTANCE->html($message)->render();
 		}
 	}
+	
 	public static function disableExceptionHandler()
 	{
-		if (self::$exception === true)
+		if (self::$EXCEPTION === true)
 		{
 			restore_exception_handler();
-			self::$exception = false;
+			self::$EXCEPTION = false;
 		}
 	}
+	
 	public static function enableExceptionHandler()
 	{
-		if (!self::$exception)
+		if (!self::$EXCEPTION)
 		{
-			self::$exception = true;
+			self::$EXCEPTION = true;
 			set_exception_handler(array('GDO\\Core\\Debug', 'exception_handler'));
 		}
 	}
@@ -323,27 +323,28 @@ final class Debug
 			isset($_SERVER['USER_AGENT']) ? $_SERVER['USER_AGENT'] : 'NULL',
 			$user,
 			$message,
+		    print_r($_ENV, true),
 			print_r($_GET, true),
 		    print_r($_POST, true),
 		    print_r($_REQUEST, true),
 		    print_r($_COOKIE, true),
 		];
 		$args = array_map('html', $args);
-		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_GET: %s\n\n_POST: %s\n\nREQUEST: %s\n\n_COOKIE: %s\n\n";
+		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_ENV: %s\n\n_GET: %s\n\n_POST: %s\n\nREQUEST: %s\n\n_COOKIE: %s\n\n";
 		return vsprintf($pattern, $args);
 	}
 	
 	private static function getMoMe()
 	{
 		return
-		  Common::getGetString('mo', 'NoModule') .
+		  Common::getRequestString('mo', '-none-') .
 		  '/' .
-		  Common::getGetString('me', 'NoMethod');
+		  Common::getRequestString('me', '-none-');
 	}
 	
 	/**
 	 * Return a backtrace in either HTML or plaintext.
-	 * You should use monospace font for html.
+	 * You should use monospace font for html style rendering / pre tags.
 	 * HTML means (x)html(5) and <pre> style.
 	 * Plaintext means nice for logfiles.
 	 * 
@@ -416,6 +417,7 @@ final class Debug
 		
 		return $arg;
 	}
+
 	private static function backtraceMessage($message, $html, array $stack, $lastLine='?', $lastFile='[unknown file]')
 	{
 		// Fix full path disclosure

@@ -16,6 +16,7 @@ use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_HTML;
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
+use GDO\Util\Strings;
 
 require 'GDO6.php';
 
@@ -133,25 +134,33 @@ if (isset($_GET['_url']) && $_GET['_url'])
     {
         $type = FileUtil::mimetype($url);
         
-        if ($type === 'text/x-php')
+        if (Strings::endsWith($url, '.php'))
         {
             $_REQUEST['mo'] = 'Core';
             $_REQUEST['me'] = 'Page403';
         }
         
         elseif ( (($type === 'text/javascript') ||
-              ($type === 'text/css'))
-            &&
-            (!Module_Core::instance()->checkAssetAllowance($url))
-           )
+                 ($type === 'text/css'))
+               &&
+                 (!Module_Core::instance()->checkAssetAllowance($url))
+               )
         {
             $_REQUEST['mo'] = 'Core';
             $_REQUEST['me'] = 'Page403';
         }
+        
+        elseif (Strings::startsWith($url, '.'))
+        {
+            $_REQUEST['mo'] = 'Core';
+            $_REQUEST['me'] = 'Page403';
+        }
+        
         else
         {
             hdr('Content-Type: '.$type);
             hdr('Content-Size: '.filesize($url));
+            timingHeader();
             readfile($url);
             die(0); # no fallthrough!
         }
@@ -275,7 +284,10 @@ switch ($app->getFormat())
             {
                 $content = GDT_Page::$INSTANCE->html($content)->render();
             }
-            if ($session) $session->commit();
+            if ($session)
+            {
+                $session->commit();
+            }
         }
         else
         {
@@ -312,7 +324,12 @@ if ($method && $method->fileCached() && (!$cacheLoad))
 # Fire recache IPC events. Probably disabled
 Cache::recacheHooks();
 
-hdr(sprintf('X-GDO-TIME: %.03f',
-    microtime(true) - GDO_PERF_START));
+timingHeader();
+
+function timingHeader()
+{
+    hdr(sprintf('X-GDO-TIME: %.03f',
+        (microtime(true) - GDO_PERF_START)));
+}
 
 echo $content;
