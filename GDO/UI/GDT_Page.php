@@ -77,10 +77,9 @@ final class GDT_Page extends GDT
     
     public function renderCell()
     {
-//         $this->reset();
         if (Module_Core::instance()->cfgLoadSidebars())
         {
-            GDT_Page::$INSTANCE->loadSidebars();
+            $this->loadSidebars();
         }
         return GDT_Template::php('UI', 'page.php', ['page' => $this]);
     }

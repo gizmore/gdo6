@@ -63,10 +63,13 @@ class GDT_Date extends GDT_Timestamp
 
 	public function inputToVar($input)
 	{
-        $input = str_replace('T', ' ', $input);
-        $input = str_replace('Z', '', $input);
-        $d = Time::parseDateTime($input, 'UTC');
-        return $d->format('Y-m-d');
+	    if ($input)
+	    {
+            $input = str_replace('T', ' ', $input);
+            $input = str_replace('Z', '', $input);
+            $d = Time::parseDateTime($input, 'UTC');
+            return $d->format('Y-m-d');
+	    }
 	}
 
 }

@@ -6,7 +6,7 @@ use GDO\Util\Strings;
 use GDO\Core\Application;
 use GDO\User\GDO_User;
 use GDO\Session\GDO_Session;
-use GDO\Util\Javascript;
+use GDO\Javascript\Javascript;
 use GDO\Util\Common;
 use GDO\Core\Website;
 use GDO\UI\GDT_Divider;

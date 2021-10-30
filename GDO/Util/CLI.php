@@ -276,7 +276,7 @@ final class CLI
             }
         }
         
-        return $success ? $parameters : false;
+        return $success ? $parameters : [];
     }
 
     /**

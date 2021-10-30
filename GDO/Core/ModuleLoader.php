@@ -322,7 +322,7 @@ final class ModuleLoader
 				    {
 				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
 				    }
-				    if (!Application::instance()->isInstall())
+// 				    if (!Application::instance()->isInstall())
 				    {
     				    $module->buildConfigCache();
     				    $module->buildSettingsCache();

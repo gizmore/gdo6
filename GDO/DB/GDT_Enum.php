@@ -83,6 +83,19 @@ class GDT_Enum extends GDT
 	{
 	    $vars = array_slice($this->enumValues, 0, 3);
 	    $vars = array_map(function($enumValue) {
+	        return $enumValue;
+	    }, $vars);
+        if (count($this->enumValues) > 3)
+        {
+            $vars[] = $this->gdoHumanName() . '...';
+        }
+        return implode('|', $vars);
+	}
+	
+	public function gdoExampleValues()
+	{
+	    $vars = array_slice($this->enumValues, 0, 3);
+	    $vars = array_map(function($enumValue) {
 	        return $this->displayValue($enumValue);
 	    }, $vars);
 	    if (count($this->enumValues) > 3)

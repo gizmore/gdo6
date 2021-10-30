@@ -483,7 +483,7 @@ class GDT_Table extends GDT
 	    $json = array_merge($this->configJSON(), [
 		    'data' => $this->renderJSONData(),
 		]);
-	    return [$this->name => $json];
+	    return $json;
 	}
 	
 	public function configJSON()

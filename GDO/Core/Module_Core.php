@@ -3,7 +3,7 @@ namespace GDO\Core;
 
 use GDO\UI\GDT_Link;
 use GDO\User\GDO_User;
-use GDO\Util\Javascript;
+use GDO\Javascript\Javascript;
 use GDO\User\GDT_User;
 use GDO\Language\Trans;
 use GDO\DB\GDT_Version;
@@ -38,7 +38,7 @@ final class Module_Core extends GDO_Module
      * 
      * @var string
      */
-	const GDO_REVISION = '6.10.6-r6141';
+	const GDO_REVISION = '6.10.6-r6143';
 
 	##############
 	### Module ###
@@ -179,9 +179,11 @@ window.GDO_REVISION = '%s';
 	    {
     	    if (!$this->cfgModuleAssets())
     	    {
-    	        return $this->errorModuleAssetNotAllowed();
+    	        $this->errorModuleAssetNotAllowed();
+    	        return false;
     	    }
 	    }
+	    return true;
 	}
 	
 	private function errorModuleAssetNotAllowed()

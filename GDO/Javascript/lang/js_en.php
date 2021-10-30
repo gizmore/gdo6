@@ -1,6 +1,7 @@
 <?php
 return [
     'cfg_minify_js' => 'Javascript minify mode',
+    'cfg_compress_js' => 'Javascript minify compression',
     'cfg_nodejs_path' => 'Path to nodejs',
     'cfg_uglifyjs_path' => 'Path to uglify-js',
     'cfg_ng_annotate_path' => 'Path to ng-annotate',

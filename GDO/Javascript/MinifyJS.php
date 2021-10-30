@@ -1,9 +1,11 @@
 <?php
-namespace GDO\Util;
+namespace GDO\Javascript;
 
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
-use GDO\Javascript\Module_Javascript;
+use GDO\Util\Process;
+use GDO\Util\Strings;
+use GDO\DB\Database;
 
 /**
  * Very basic on-the-fly javascript mangler.
@@ -12,7 +14,7 @@ use GDO\Javascript\Module_Javascript;
  * Output goes to assets/ now instead of temp/ as temp/ is a protected folder.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.6
  * @since 4.1.0
  * @see Module_Javascript
  */
@@ -57,6 +59,21 @@ final class MinifyJS
 	
 	public function earlyHash() { return md5(implode('|', $this->input)); }
 	
+	private function getOptimizedResult($earlyhash)
+	{
+	    foreach ($this->input as $path)
+	    {
+	        if ((strpos($path, '://')) ||
+	            (strpos($path, '//') === 0) ||
+	            (strpos($path, GDO_WEB_ROOT.'index.php?') === 0) )
+	        {
+	            $this->external[] = $path;
+	        }
+	    }
+	    $this->external[] = GDO_WEB_ROOT . "assets/$earlyhash.js?".Module_Core::instance()->nocacheVersion();
+	    return $this->external;
+	}
+	
 	public function execute()
 	{
 		# Pass 1 - Early hash
@@ -64,57 +81,66 @@ final class MinifyJS
 		$earlypath = $this->tempDir("$earlyhash.js");
 		if (FileUtil::isFile($earlypath))
 		{
-			foreach ($this->input as $path)
-			{
-				if ((strpos($path, '://')) ||
-				    (strpos($path, '//') === 0) || 
-				    (strpos($path, GDO_WEB_ROOT.'index.php?') === 0) )
-				{
-					$this->external[] = $path;
-				}
-			}
-			$this->external[] = GDO_WEB_ROOT . "assets/$earlyhash.js?".Module_Core::instance()->nocacheVersion();
-			return $this->external;
+		    return $this->getOptimizedResult($earlyhash);
 		}
 		
 		# Pass 2 - Rebuild
-		
-		set_time_limit(120); # may take a while
-		
-		# Minify single files and sort them in concatenate and external
-		$minified = array_map(array($this, 'minifiedJavascriptPath'), $this->input);
-		
-		if ($this->error)
+		try
 		{
-			return $this->input;
+    		set_time_limit(120); # may take a while
+    		Database::instance()->lock('js_minify', 120);
+    		
+    		# After the lock the file is there.
+    		# So someone else calculated it.
+    		if (FileUtil::isFile($earlypath))
+    		{
+    		    return $this->getOptimizedResult($earlyhash);
+    		}
+    		
+    		# After lock it is still not there... i am the first
+    		# Minify single files and sort them in concatenate and external
+    		$minified = array_map(array($this, 'minifiedJavascriptPath'), $this->input);
+    		
+    		if ($this->error)
+    		{
+    		    return $this->input;
+    		}
+    		
+    		# Build final file
+    		$finalhash = $this->finalHash();
+    		$finalpath = $this->tempDir("$finalhash.js");
+    		if (!FileUtil::isFile($finalpath))
+    		{
+    		    $concat = implode(' ', $this->concatenate);
+    		    $cat = 'cat';
+    		    if (Process::isWindows())
+    		    {
+    		        $cat = 'type';
+    		        $concat = str_replace('/', '\\', $concat);
+    		    }
+    		    $command = "$cat $concat > $finalpath";
+    		    exec($command);
+    		    if (!(FileUtil::isFile($finalpath)))
+    		    {
+    		        return $minified; # Fail, inbetween version should be ok though.
+    		    }
+    		}
+    		
+    		# Copy to early access
+    		copy($finalpath, $earlypath);
+    		
+    		# Abuse external as final loader.
+    		$this->external[] = GDO_WEB_ROOT . "assets/$finalhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
+    		return $this->external;
 		}
-		
-		# Build final file
-		$finalhash = $this->finalHash();
-		$finalpath = $this->tempDir("$finalhash.js");
-		if (!FileUtil::isFile($finalpath))
+		catch (\Throwable $ex)
 		{
-			$concat = implode(' ', $this->concatenate);
-			$cat = 'cat';
-			if (Process::isWindows())
-			{
-			    $cat = 'type';
-			    $concat = str_replace('/', '\\', $concat);
-			}
-			$command = "$cat $concat > $finalpath";
-			exec($command);
-			if (!(FileUtil::isFile($finalpath)))
-			{
-				return $minified; # Fail, inbetween version should be ok though.
-			}
+		    throw $ex;
 		}
-		
-		# Copy to early access
-		copy($finalpath, $earlypath);
-		
-		# Abuse external as final loader.
-		$this->external[] = GDO_WEB_ROOT . "assets/$finalhash.js?vc=".Module_Core::instance()->cfgAssetVersion();
-		return $this->external;
+		finally
+		{
+		    Database::instance()->unlock('js_minify');
+		}
 	}
 	
 	public function minifiedJavascriptPath($path)
@@ -159,15 +185,16 @@ final class MinifyJS
 					$annotate = $this->annotate;
 					$uglifyjs = $this->uglify;
 // 					$nodejs = $this->nodejs;
-					# TODO: remove console.log calls+
-					if (Process::isWindows())
-					{
-					    $command = "$annotate -ar $src | $uglifyjs --no-annotations --compress pure_funcs=console.log --mangle -o $dest";
-					}
-					else
-					{
-    					$command = "$annotate -ar $src | $uglifyjs --no-annotations --compress pure_funcs=console.log --mangle -o $dest";
-					}
+// 					if (Process::isWindows())
+// 					{
+// 					    $command = "$annotate -ar $src | $uglifyjs --no-annotations --compress pure_funcs=console.log --mangle -o $dest";
+// 					}
+// 					else
+// 					{
+//     					$command = "$annotate -ar $src | $uglifyjs --no-annotations --compress pure_funcs=console.log --mangle -o $dest";
+// 					}
+                    $compress = Module_Javascript::instance()->cfgCompressJS() ? '--compress' : '';
+					$command = "$annotate -ar $src | $uglifyjs --no-annotations $compress --mangle -o $dest";
 					$return = 0;
 					$output = array();
 					exec($command, $output, $return);

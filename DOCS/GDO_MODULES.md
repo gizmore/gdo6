@@ -66,6 +66,7 @@ These modules wrap another library or software. GDO6/GDT integration provided.
  - [Maps](https://github.com/gizmore/gdo6-maps)
  - [Mibbit](https://github.com/gizmore/gdo6-mibbit)
  - [Moment](https://github.com/gizmore/gdo6-moment)
+ - [Normalize](https://github.com/gizmore/gdo6-normalize)
  - [PaymentPaypal](https://github.com/gizmore/gdo6-payment-paypal)
  - [PaypalDonation](https://github.com/gizmore/gdo6-paypal-donation)
  - [PhpMyAdmin](https://github.com/gizmore/gdo6-pma)

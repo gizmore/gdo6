@@ -138,19 +138,27 @@ if (isset($_GET['_url']) && $_GET['_url'])
         
         if ($type === 'text/x-php')
         {
-            throw new GDOError('err_no_permission');
+            $_REQUEST['mo'] = 'Core';
+            $_REQUEST['me'] = 'Page403';
+//             throw new GDOError('err_no_permission');
         }
         
-        if ( ($type === 'text/javascript') ||
-             ($type === 'text/css') )
+        elseif ( (($type === 'text/javascript') ||
+              ($type === 'text/css'))
+            &&
+            (!Module_Core::instance()->checkAssetAllowance($url))
+           )
         {
-            Module_Core::instance()->checkAssetAllowance($url);
+            $_REQUEST['mo'] = 'Core';
+            $_REQUEST['me'] = 'Page403';
         }
-        
-        hdr('Content-Type: '.$type);
-        hdr('Content-Size: '.filesize($url));
-        readfile($url);
-        die(0); # no fallthrough!
+        else
+        {
+            hdr('Content-Type: '.$type);
+            hdr('Content-Size: '.filesize($url));
+            readfile($url);
+            die(0); # no fallthrough!
+        }
     }
 }
 

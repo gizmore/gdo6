@@ -10,7 +10,7 @@ namespace GDO\Core;
  * You can generate providers and dependenices with providers.php and provider_dependenciews.php
  * 
  * @author gizmore
- * @version 6.10.5
+ * @version 6.10.6
  * @since 6.10.0
  */
 final class ModuleProviders
@@ -119,6 +119,7 @@ final class ModuleProviders
         'Mibbit' => 'gdo6-mibbit',
         'Moment' => 'gdo6-moment',
         'Nasdax' => 'gdo6-nasdax',
+        'Normalize' => 'gdo6-normalize',
         'News' => 'gdo6-news',
         'OnlineUsers' => 'gdo6-online-users',
         'OpenTimes' => 'gdo6-opentimes',
@@ -255,6 +256,7 @@ final class ModuleProviders
         'Moment' => [],
         'Nasdax' => [],
         'News' => ['Comment', 'Category', 'Mail'],
+        'Normalize' => [],
         'OnlineUsers' => [],
         'OpenTimes' => [],
         'Pagecounter' => [],

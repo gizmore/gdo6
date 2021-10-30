@@ -31,5 +31,5 @@ img.gdo-language { width: 24px; height: 17px; position: relative; top: 0px; bord
 .flx-row > * { align-self: center; }
 
 /** Basic UI components **/
-div.gdt-hr { height: 1px; width: 100%; background: #eee; margin: 8px 2px; }
+div.gdt-hr { height: 2px; width: 100%; background: #eee; margin: 8px 0; }
 .gdt-captcha > span > input[type=text] { vertical-align: top; }

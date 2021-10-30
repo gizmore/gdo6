@@ -15,7 +15,7 @@ use GDO\Core\Application;
  * The value type is an integer/timestamp.
  *  
  * @author gizmore
- * @version 6.10.5
+ * @version 6.10.6
  * @since 6.0.7
  */
 class GDT_Timestamp extends GDT
@@ -212,7 +212,7 @@ class GDT_Timestamp extends GDT
 	public function renderForm() { return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]); }
 	public function renderAge() { return Time::displayAge($this->getVar()); }
 	public function renderCLI() { return $this->displayLabel() . ': ' . $this->displayVar(); }
-	public function renderJSON() { return $this->getValue() * 1000; }
+	public function renderJSON() { return Time::getTimestamp($this->getVar()) * 1000; }
 	
 	/**
 	 * Convert user input to db var date.

@@ -25,17 +25,14 @@ use GDO\Core\ModuleProviders;
 use GDO\Util\Strings;
 use GDO\Install\Module_Install;
 use GDO\Install\Method\InstallCronjob;
-use GDO\UI\GDT_Page;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
  * 
  * @see ./gdoadm.sh
  * 
- * @TODO Make a new gdoadm.sh clone Foo to clone all required providers.
- * 
  * @author gizmore
- * @version 6.10.5
+ * @version 6.10.6
  * @since 6.10.0
  * 
  * @see gdo_update.sh - to update your gdo6 installation
@@ -440,24 +437,31 @@ elseif ($argv[1] === 'config')
     $module = ModuleLoader::instance()->loadModuleFS($argv[2]);
     if ($argc === 3)
     {
-        $config = $module->getConfigCache();
-        $vars = [];
-        foreach ($config as $key => $gdt)
+        if ($config = $module->getConfigCache())
         {
-            $vars[] = $key;
+            $vars = [];
+            foreach ($config as $key => $gdt)
+            {
+                $vars[] = $key;
+            }
+            $keys = implode(', ', $vars);
+            $keys = $keys ? $keys : t('none');
+            echo t('msg_available_config', [$module->getName(), $keys]);
+            echo PHP_EOL;
+            die(0);
         }
-        $keys = implode(', ', $vars);
-        $keys = $keys ? $keys : t('none');
-        echo t('msg_available_config', [$module->getName(), $keys]);
-        echo PHP_EOL;
-        die(0);
+        else
+        {
+            echo t('msg_module_has_no_config');
+            die(1);
+        }
     }
 
     $key = $argv[3];
     if ($argc === 4)
     {
         $config = $module->getConfigColumn($key);
-        echo t('msg_set_config', [$key, $module->getName(), $config->initial]);
+        echo t('msg_set_config', [$key, $module->getName(), $config->initial, $config->gdoExampleVars()]);
         echo PHP_EOL;
         die(0);
     }

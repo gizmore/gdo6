@@ -24,7 +24,7 @@ use GDO\Core\Website;
 	</div>
   </div>
   <footer>
-	&copy;2017-2020 <?= GDT_Email::make()->var('Christian <gizmore@wechall.net>')->renderCell(); ?>
+	&copy;2017-2022 <?= GDT_Email::make()->var('Christian <gizmore@wechall.net>')->renderCell(); ?>
 	<?= GDT_Divider::make()->renderCell(); ?>
 	<?= GDT_PerfBar::make()->renderCell(); ?>
   </footer>

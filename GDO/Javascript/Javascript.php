@@ -1,5 +1,5 @@
 <?php
-namespace GDO\Util;
+namespace GDO\Javascript;
 
 use GDO\Core\Application;
 
@@ -7,7 +7,7 @@ use GDO\Core\Application;
  * Add JS here, it calls minify on it, if enabled.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.6
  * @since 6.0.0
  */
 final class Javascript

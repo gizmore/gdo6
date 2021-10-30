@@ -33,6 +33,12 @@ final class DirectoryIndex extends MethodTable
         return GDO_DirectoryIndex::table();
     }
     
+    public function getTableTitle()
+    {
+        $key = $this->getTableTitleLangKey();
+        return t($key, [$this->table->countItems() - 1]);
+    }
+    
     public function getResult()
     {
         $data = [];

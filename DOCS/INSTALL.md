@@ -163,6 +163,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-moment Moment
     ## git clone --recursive https://github.com/gizmore/gdo6-nasdax Nasdax
     git clone --recursive https://github.com/gizmore/gdo6-news News
+    git clone --recursive https://github.com/gizmore/gdo6-normalize Normalize
     git clone --recursive https://github.com/gizmore/gdo6-online-users OnlineUsers
     # git clone --recursive https://github.com/gizmore/gdo6-opentimes OpenTimes
     git clone --recursive https://github.com/gizmore/gdo6-payment Payment

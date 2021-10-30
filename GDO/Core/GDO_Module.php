@@ -9,7 +9,7 @@ use GDO\DB\GDT_Int;
 use GDO\DB\GDT_Name;
 use GDO\DB\GDT_Version;
 use GDO\User\GDO_UserSetting;
-use GDO\Util\Javascript;
+use GDO\Javascript\Javascript;
 use GDO\DB\GDT_Checkbox;
 use GDO\User\GDO_UserSettingBlob;
 use GDO\User\GDO_User;
@@ -405,7 +405,7 @@ class GDO_Module extends GDO
 	    }
 	    if ($throwError)
 	    {
-	        Website::error('err_unknown_config', [$this->displayName(), html($key)]);
+	        throw new GDOError('err_unknown_config', [$this->displayName(), html($key)]);
 	    }
 	}
 	
