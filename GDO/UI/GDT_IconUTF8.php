@@ -7,7 +7,7 @@ namespace GDO\UI;
  * However, the possible icons are not limited to the few used ones.
  * @author gizmore
  * @since 6.05
- * @version 6.10
+ * @version 6.10.6
  * @see https://www.utf8icons.com/
  */
 final class GDT_IconUTF8

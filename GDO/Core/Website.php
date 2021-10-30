@@ -180,7 +180,8 @@ final class Website
 	 */
 	public static function displayMeta()
 	{
-	    if (Application::instance()->getMethod()->isSEOIndexed())
+	    $method = Application::instance()->getMethod();
+	    if ($method && $method->isSEOIndexed())
 	    {
     	    self::$_meta[] = ['robots', 'index, follow', 'name'];
 	        

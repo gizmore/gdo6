@@ -668,6 +668,7 @@ class GDO_Module extends GDO
 	            return $method;
 	        }
 	    }
+	    return false;
 // 		return method($this->getName(), $methodName);
 	}
 	

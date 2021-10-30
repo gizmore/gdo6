@@ -85,8 +85,18 @@ class Application
 	 */
 	public function getMethod()
 	{
-	    $module = ModuleLoader::instance()->getModule(mo());
-	    $method = $module->getMethod(me());
+	    static $method = null;
+	    if ($method === null)
+	    {
+    	    if ($module = ModuleLoader::instance()->getModule(mo()))
+    	    {
+        	    $method = $module->getMethod(me());
+    	    }
+    	    else
+    	    {
+//     	        $method = false;
+    	    }
+	    }
 	    return $method;
 	}
 	

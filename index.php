@@ -111,13 +111,23 @@ if (isset($_GET['_url']) && $_GET['_url'])
             $_REQUEST['mo'] = array_shift($parts);
             $_REQUEST['me'] = array_shift($parts);
             
-            while (count($parts))
+            if (!Application::instance()->getMethod())
             {
-                $key = array_shift($parts);
-                $val = array_shift($parts);
-                $_REQUEST[$key] = urldecode($val);
+                $_REQUEST['mo'] = 'Core';
+                $_REQUEST['me'] = 'Page404';
             }
-            # .. fallthrough
+            
+            else
+            {
+                while (count($parts))
+                {
+                    $key = array_shift($parts);
+                    $val = array_shift($parts);
+                    $_REQUEST[$key] = urldecode($val);
+                }
+                # .. fallthrough
+            }
+            
         }
     }
     
@@ -172,7 +182,7 @@ try
         $method = $app->getMethod();
     }
 
-    if (GDO_DB_ENABLED && GDO_SESS_LOCK && $method->isLockingSession() && $session)
+    if (GDO_DB_ENABLED && GDO_SESS_LOCK && $method && $method->isLockingSession() && $session)
     {
         $lock = 'sess_'.$session->getID();
         Database::instance()->lock($lock);
@@ -185,7 +195,7 @@ try
     GDT_Hook::callHook('BeforeRequest', $method);
     
     $cacheContent = '';
-    if ($method->fileCached())
+    if ($method && $method->fileCached())
     {
         $cacheContent = $cacheLoad = $method->fileCacheContent();
     }
@@ -289,7 +299,7 @@ switch ($app->getFormat())
         break;
 }
 
-if (isset($method) && $method->fileCached() && (!$cacheLoad))
+if ($method && $method->fileCached() && (!$cacheLoad))
 {
     $key = $method->fileCacheKey();
     Cache::fileSet($key, $cacheContent);

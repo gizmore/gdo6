@@ -5,6 +5,7 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use GDO\Util\Strings;
+use GDO\DB\GDT_Float;
 
 /**
  * File system utilities.
@@ -143,9 +144,15 @@ final class FileUtil
 			$bytes = bcdiv($bytes, $factor);
 			$i++;
 		}
-		return $i === 0
-		? sprintf("%s%s", $bytes, $txt[$i])
-		: sprintf("%.0{$digits}f%s", ($bytes+$rem/$factor), $txt[$i]);
+		
+		if ($i === 0)
+		{
+		    # empty?
+		    return sprintf("%s%s", $bytes, $txt[$i]);
+		}
+		
+		$var = $bytes + ($rem / $factor);
+		return GDT_Float::displayS($var, $digits) . $txt[$i];
 	}
 	
 	private static function getTextArray()

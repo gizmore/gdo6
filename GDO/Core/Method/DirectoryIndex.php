@@ -54,7 +54,7 @@ final class DirectoryIndex extends MethodTable
         if (is_dir($path))
         {
             return GDO_DirectoryIndex::blank([
-                'file_icon' => 'dir',
+                'file_icon' => 'folder',
                 'file_name' => $filename,
                 'file_type' => 'directory',
             ]);

@@ -320,4 +320,6 @@ Viele Grüße,<br/>
 # v6.10.5 Fixes
 'min' => 'Min',
 'max' => 'Max',
+# v6.10.6
+'list_core_directoryindex' => '%s Dateien und Ordner',
 );

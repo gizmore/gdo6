@@ -317,4 +317,7 @@ Cordiali saluti,<br/>
 # v6.10.5 Fixes
 'min' => 'Min',
 'max' => 'Max',
+
+# v6.10.6 Fixes
+'list_core_directoryindex' => '%s File e cartelle',
 );
