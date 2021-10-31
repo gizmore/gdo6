@@ -1,5 +1,4 @@
 <?php
-
 /**
  * A non-operation memcached shim, for when you don't have memcached.
  * @author gizmore

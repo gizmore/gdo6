@@ -517,12 +517,16 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
             }
             else
             {
-                $moreDeps = ModuleProviders::$DEPENDENCIES[$dep];
+                $moreDeps = @ModuleProviders::$DEPENDENCIES[$dep];
             }
             
             if ($moreDeps)
             {
                 $deps = array_unique(array_merge($deps, $moreDeps));
+            }
+            else
+            {
+            	echo "Unknown module: $dep\n";
             }
         }
     }
