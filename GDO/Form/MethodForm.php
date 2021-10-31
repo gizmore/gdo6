@@ -135,7 +135,14 @@ abstract class MethodForm extends Method
 					{
 					    GDT_Form::$CURRENT = $form;
 					    unset($_REQUEST['nojs']);
-						$response = call_user_func([$this, "onSubmit_{$field->name}"], $form);
+					    if ($field->click)
+					    {
+					    	$field->click($this->getForm());
+					    }
+					    else
+					    {
+					    	$response = call_user_func([$this, "onSubmit_{$field->name}"], $form);
+					    }
 						$form->onValidated();
 						GDT_Form::$CURRENT = null;
 					}

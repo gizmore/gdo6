@@ -254,6 +254,13 @@ abstract class GDO
         return @$this->gdoVars[$key];
     }
     
+    public function getVars(array $keys)
+    {
+    	return array_combine($keys, array_map(function($key) {
+    		return $this->getVar($key);
+    	}, $keys));
+    }
+    
     /**
      * @param string $key
      * @param string $var

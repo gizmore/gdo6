@@ -51,12 +51,14 @@ class GDT_Button extends GDT_Submit
 	    {
 	        return $this->href;
 	    }
-		return call_user_func([$this->gdo, 'href_' . $this->name]);
+		return call_user_func([
+			$this->gdo, 'href_' . $this->name]);
 	}
 	
 	public function gdoLabel()
 	{
-		return call_user_func([$this->gdo, 'display_'.$this->name]);
+		return call_user_func(
+			[$this->gdo, 'display_'.$this->name]);
 	}
 	
 	########################

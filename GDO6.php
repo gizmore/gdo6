@@ -50,9 +50,9 @@ spl_autoload_register(function($name) {
 ######################
 function sitename() { return t('sitename'); }
 function url($module, $method, $append='', $lang=true) { return GDT_Url::absolute(href($module, $method, $append, $lang)); }
-function jxhref($module, $method, $append='', $lang=true) { return href($module, $method, $append.'&ajax=1&fmt=json', $lang); }
+function jxhref($module, $method, $append='', $lang=true) { return href($module, $method, $append.'&_ajax=1&_fmt=json', $lang); }
 function hrefDefault() { return href(GDO_MODULE, GDO_METHOD); }
-function href($module, $method, $append='', $lang=true)
+function href($module, $method, $append=null, $lang=true)
 {
     if (GDO_SEO_URLS)
     {

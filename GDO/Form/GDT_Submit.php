@@ -30,8 +30,36 @@ class GDT_Submit extends GDT_Label
     #################
 	### Secondary ###
 	#################
-	public $primaryButton = true;
-	public function primary() { $this->primaryButton = true; return $this; }
-	public function secondary() { $this->primaryButton = false; return $this; }
+	const PRIMARY = 0;
+	const SECONDARY = 1;
+	const UNADVISED = 2;
 	
+	public $priority = self::PRIMARY;
+	
+	public function primary() { return $this->priority(self::PRIMARY); }
+	public function secondary() { return $this->priority(self::SECONDARY); }
+	public function unadvised() { return $this->priority(self::UNADVISED); }
+	public function priority($priority) { $this->priority = $priority; return $this; }
+	
+	/**
+	 * @var callable
+	 */
+	public $click;
+	
+	/**
+	 * Click handler.
+	 * @param callable $callable
+	 * @return self
+	 */
+	public function onclick($callable)
+	{
+		$this->click = $callable;
+		return $this;
+	}
+	
+	public function click(...$args)
+	{
+		return call_user_func($this->click, ...$args);
+	}
+
 }
