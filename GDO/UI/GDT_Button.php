@@ -20,6 +20,11 @@ class GDT_Button extends GDT_Submit
 	use WithHREF;
 	use WithAnchorRelation;
 	
+	public function defaultName()
+	{
+		# important to override submit default.
+	}
+	
 	##############
 	### Render ###
 	##############
