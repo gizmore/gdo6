@@ -334,7 +334,7 @@ abstract class Method
 	public function getFormat() { return Application::instance()->getFormat(); }
 	public function getSiteName() { return sitename(); }
 	public function getMethodName() { return $this->gdoShortName(); }
-	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6)-4); }
+	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6) - 4); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
 	
 	public function error($key, array $args=null, $code=405, $log=true)
@@ -596,7 +596,7 @@ abstract class Method
 	        
 	        # Init method
 	        $response = GDT_Response::newWith();
-	        $response = GDT_Response::make();
+// 	        $response = GDT_Response::make();
 	        
 	        $response->addField($this->init());
 	        
@@ -633,7 +633,7 @@ abstract class Method
 	        }
 	        
 	        $response2 = $this->execute();
-	        GDT_Response::make()->addField($response2);
+	        $response->addField($response2);
 
 	        if (!$response->isError())
 	        {
