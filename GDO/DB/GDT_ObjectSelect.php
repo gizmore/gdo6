@@ -75,10 +75,18 @@ class GDT_ObjectSelect extends GDT_Select
 	{
 		if ($obj = $this->getValue())
 		{
-			# TODO: Multiple
+			if (is_array($obj))
+			{
+				$back = '';
+				foreach ($obj as $gdo)
+				{
+					$back .= $gdo->renderCell();
+				}
+				return $back;
+			}
 			return $obj->renderCell();
 		}
-		return $this->getValue();
+		return $obj;
 	}
 	
 	public function renderJSON()
