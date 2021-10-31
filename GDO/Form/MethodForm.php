@@ -137,7 +137,7 @@ abstract class MethodForm extends Method
 					    unset($_REQUEST['nojs']);
 					    if ($field->click)
 					    {
-					    	$field->click($this->getForm());
+					    	$field->click();
 					    }
 					    else
 					    {
@@ -203,14 +203,7 @@ abstract class MethodForm extends Method
 	    {
 		    return GDT_Response::make()->code(405);
 	    }
-		if ($app->isAjax())
-		{
-		    return $this->error('err_form_invalid');
-		}
-		else
-		{
-		    return $this->error('err_form_invalid');
-		}
+	    return $this->error('err_form_invalid');
 	}
 	
 	/**
