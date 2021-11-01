@@ -561,8 +561,9 @@ final class GDT_Hook extends GDT
 	{
 		return json_encode([
 			'event' => $event,
-			'args' => $args],
-		);
+			'args' => $args,
+			
+		]);
 	}
 	
 }
