@@ -55,7 +55,7 @@ final class Module_Date extends GDO_Module
         {
             if (!GDO_User::current()->hasTimezone())
             {
-                $this->addJavascript('js/gdo6_timezone_probe.js');
+                $this->addJS('js/gdo6_timezone_probe.js');
             }
         }
     }

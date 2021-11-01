@@ -3,9 +3,27 @@
 gdo6 Changelog.
 
 
-## 6.10.6 (21.10.2021)
+## Install today!
 
- - SEO friendly urls, finally :) The format is /module/method/key/val/key/val/....?arraysOrStuff#hash
+    git clone --recursive https://github.com/gizmore/gdo6 && cd gdo6
+    ./gdoadm.sh configure
+    # create a mysql database.
+    ./gdoadm.sh provide DogWebsite
+    ./gdoadm.sh install_all
+    ./gdo_yarn.sh
+    ./gdo_bower.sh
+    ./gdoadm.sh admin username password email
+    ./gdoadm.sh htaccess
+    ./gdoadm.sh cronjob
+    ./gdoadm.sh secure
+    # Set your PATH env to gdo6/bin
+    gdo admin.clearcache. # :)
+    # It is also possible to install via http://gdo6/install/wizard.php
+    
+    
+## Improvements for v6.10.6 (21.10.2021)
+
+ - SEO friendly urls. The format is /module/method/key/val/key/val/?arrays[]=OrUnder&_score=Params#hash
 
  - All requests are now routed through index.php
 
@@ -15,8 +33,12 @@ gdo6 Changelog.
  
  - Optionally disallow css and js dev source files
  
+ - Bootstrap5 Theme
+ 
+ - GDT_Message Markdown CoDec
+ 
 
-## 6.10.5 (15.09.2021)
+## v6.10.5 (15.09.2021)
 
  - Time based GDT, like Date, DateTime and Timestamp now return a \DateTime object in toValue().
 
@@ -25,7 +47,7 @@ gdo6 Changelog.
  - The Module_Dog chatbot got some unit tests for the IRC connector and more.
 
  
-## 6.10.4
+## v6.10.4
 
  - Better performance by only once, and lazily, converting GDT vars to values.
  
@@ -36,7 +58,7 @@ gdo6 Changelog.
  - JQuery error dialogs
  
 
-## 6.10.3
+## v6.10.3
  
  - New config GDO_SESS_LOCK to globally toggle session locking capabilities. Requires a database. Method has isLockingSession(). By default every Method returns true when a POST request ist made. 
  
@@ -46,16 +68,16 @@ gdo6 Changelog.
  
  - Cache can now have an expire time.
  
- - New thrid cache for rendered responses on the filesystem (soon).
+ - New thrid cache for rendered responses on the filesystem.
  
  - New GDO_ERROR_TIMEZONE option for the Logger.
  
- - GDO_MEMCACHE_PREFIX has been removed. The prefix is now version dependant.
+ - GDO_MEMCACHE_PREFIX has been removed. The prefix is now version and domain dependant.
  
 
 ## 6.10.2
 
- - Dropped the auto generated name column for performance reasons. Name is optional now. GDT can have a defaultName().
+ - Dropped the auto generated name column for performance reasons. Name is optional now. GDT can have a defaultName(). Unnamed GDT use a numeric array index.
  
  - JSON rendering has breaking changes and makes sense now.
  

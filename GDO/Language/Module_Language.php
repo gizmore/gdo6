@@ -95,10 +95,10 @@ final class Module_Language extends GDO_Module
     		$href = sprintf(
     			'%sindex.php?mo=Language&me=GetTransData&iso=%s&_ajax=1&_fmt=html&%s',
     			GDO_WEB_ROOT, Trans::$ISO, $this->nocacheVersion());
-    		Javascript::addJavascript($href);
+    		Javascript::addJS($href);
     
     		# Add cheap translation engine.
-    		$this->addJavascript('js/gdo-trans.js');
+    		$this->addJS('js/gdo-trans.js');
 	    }
 	}
 	

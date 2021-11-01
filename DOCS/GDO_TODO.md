@@ -42,4 +42,8 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 
 - @TODO: Allow to create gui apps with QT or GTK+ or something. Just a wrapper for CLI, but similiar to html layout.
 
-- @TODO: 
+- @TODO: On module init, set up the hooks, so not every module has to be tested. Looking forward to another ms saved.
+
+- @TODO: Module_Heartbeat or an implementation in OnlineUsers.
+
+- 

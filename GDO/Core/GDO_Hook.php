@@ -10,7 +10,7 @@ use GDO\DB\GDT_AutoInc;
  * @see GDT_Hook
  * @see GWS_Server
  * @author gizmore@wechall.net
- * @version 6.10.3
+ * @version 6.10.6
  * @since 6.5.0
  */
 final class GDO_Hook extends GDO
@@ -27,9 +27,4 @@ final class GDO_Hook extends GDO
 		];
 	}
 	
-	public static function encodeHookMessage($event, array $args)
-	{
-		return json_encode(['event'=>$event, 'args' => $args]);
-	}
-
 }

@@ -9,8 +9,8 @@ use GDO\Util\Strings;
 /**
  * Scan the fonts dir for a select.
  * @author gizmore
- * @version 6.10
- * @since 6.03
+ * @version 6.10.6
+ * @since 6.0.3
  */
 class GDT_Font extends GDT_Select
 {

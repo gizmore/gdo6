@@ -4,7 +4,7 @@ namespace GDO\DB;
  * The auto inc column is unsigned and sets the primary key after insertions.
  *
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.6
  * @since 5.0.0
  * @see GDT_CreatedAt
  * @see GDT_CreatedBy
@@ -49,7 +49,8 @@ final class GDT_AutoInc extends GDT_UInt
 	
 	public function blankData()
 	{
-	    return [$this->name => null]; # prevent old values to be used.
+		# prevent old values to be used.
+	    return [$this->name => null];
 	}
 	
 }

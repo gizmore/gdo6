@@ -48,6 +48,8 @@ spl_autoload_register(function($name) {
 ######################
 ### Global utility ###
 ######################
+require GDO_PATH . 'GDO/Util/Shim.php';
+	
 function sitename() { return t('sitename'); }
 function url($module, $method, $append='', $lang=true) { return GDT_Url::absolute(href($module, $method, $append, $lang)); }
 function jxhref($module, $method, $append='', $lang=true) { return href($module, $method, $append.'&_ajax=1&_fmt=json', $lang); }

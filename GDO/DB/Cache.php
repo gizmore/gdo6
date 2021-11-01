@@ -26,7 +26,7 @@ use GDO\Core\Application;
  * The other memcached keys work on a per row basis with table_name_id as key.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.6
  * @since 5.0.0
  * @license MIT
  */
@@ -58,7 +58,19 @@ class Cache
 	 * @param string $key
 	 * @return boolean
 	 */
-    public static function get($key) { return GDO_MEMCACHE ? self::$MEMCACHED->get(MEMCACHEPREFIX.$key) : false; }
+    public static function get($key)
+    {
+    	return GDO_MEMCACHE ? 
+    		self::$MEMCACHED->get(MEMCACHEPREFIX.$key) :
+    		false;
+    }
+
+    /**
+     * Set a memcached item.
+     * @param string $key
+     * @param mixed $value
+     * @param integer $expire
+     */
     public static function set($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->set(MEMCACHEPREFIX.$key, $value, $expire); }
     public static function replace($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->replace(MEMCACHEPREFIX.$key, $value, $expire); }
     public static function remove($key) { if (GDO_MEMCACHE) self::$MEMCACHED->delete(MEMCACHEPREFIX.$key); }
@@ -276,6 +288,23 @@ class Cache
 	### File cache ###
 	##################
 	/**
+	 * Store an item in a file cash.
+	 * You can use self::fileSet() instead, if you only want to cache a single string.
+	 * @param string $key
+	 * @param mixed $value
+	 * @return boolean
+	 */
+	public static function fileSetSerialized($key, $value)
+	{
+		if (GDO_FILECACHE)
+		{
+			$content = serialize($value);
+			return self::fileSet($key, $content);
+		}
+		return false;
+	}
+	
+	/**
 	 * Put cached content on the file system.
 	 * @param string $key
 	 * @param string $content
@@ -283,12 +312,12 @@ class Cache
 	 */
 	public static function fileSet($key, $content)
 	{
-	    if (!GDO_FILECACHE)
+	    if (GDO_FILECACHE)
 	    {
-	        return false;
+		    $path = self::filePath($key);
+		    return file_put_contents($path, $content);
 	    }
-	    $path = self::filePath($key);
-	    return file_put_contents($path, $content);
+        return false;
 	}
 	
 	/**
@@ -315,6 +344,21 @@ class Cache
 	        return false;
 	    }
 	    return true;
+	}
+
+	/**
+	 * Get a value from file cache and de-serialize.
+	 * @param string $key
+	 * @param string $expire
+	 * @return array
+	 */
+	public static function fileGetSerialized($key, $expire=GDO_MEMCACHE_TTL)
+	{
+		if ($str = self::fileGet($key, $expire))
+		{
+			return unserialize($str);
+		}
+		return false;
 	}
 	
 	/**

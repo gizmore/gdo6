@@ -38,8 +38,8 @@ final class Module_File extends GDO_Module
 	
 	public function onIncludeScripts()
 	{
-		$this->addBowerJavascript("flow.js/dist/flow.js");
-		$this->addJavascript('js/gdo-flow.js');
+		$this->addBowerJS("flow.js/dist/flow.js");
+		$this->addJS('js/gdo-flow.js');
 	}
 	
 }

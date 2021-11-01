@@ -15,7 +15,7 @@ Each of these modules are a project / website / gdo6 demo.
  - [Ranzgruppe](https://github.com/gizmore/gdo6-ranzgruppe) [Ranzgruppe](https://ranzgruppe.com)
  - [DogWebsite](https://github.com/gizmore/gdo6-dog-website)
  - [Diary](https://diary.gizmore.org) [Classic theme]
-
+ - [DogWebsite](https://dog.gizmore.org) [Bootstrap5 theme]
 
 ## Theme modules
 
@@ -38,7 +38,7 @@ These modules are providing an encoder for [GDT_Message](https://github.com/gizm
  - [BBCode](https://github.com/gizmore/gdo6-bbcode) (todo)
  - [CKEditor](https://github.com/gizmore/gdo6-ckeditor) (maybe still buggy. no like ck much. file upload might work)
  - [DevExtreme](https://github.com/gizmore/gdo6-dev-extreme) (not very powerful but ok)
- - [Markdown](https://github.com/gizmore/gdo6-markdown) (todo)
+ - [Markdown](https://github.com/gizmore/gdo6-markdown) (smilieys are missing. File upload is missing)
  - [TinyMCE](https://github.com/gizmore/gdo6-tinymce) (should be ok)
  
 
@@ -107,7 +107,7 @@ These modules add functionality to the website and are (mostly) own code.
  - [Forum](https://github.com/gizmore/gdo6-forum)
  - [Friends](https://github.com/gizmore/gdo6-friends)
  - [Gallery](https://github.com/gizmore/gdo6-gallery)
- - [Guestbook](https://github.com/gizmore/gdo6-guestbook)
+ - [Guestbook](https://github.com/gizmore/gdo6-guestbook) TODO
  - [Helpdesk](https://github.com/gizmore/gdo6-helpdesk)
  - [Invite](https://github.com/gizmore/gdo6-invite)
  - [IP2Country](https://github.com/gizmore/gdo6-ip2country)
@@ -157,7 +157,6 @@ These modules add functionality to the website and are (mostly) own code.
  - [JavascriptDetector]() (place a javascript snippet that sets a cookie. This way the js parameter is passed by every request)
  - [LanguageEditor](https://github.com/gizmore/gdo6-language-editor)
  - [Licenses](https://github.com/gizmore/gdo6-licenses)
- - [Markdown](https://github.com/gizmore/gdo6-markdown)
  - [Memorized](https://github.com/gizmore/gdo6-memorized)
  - [OpenTimes](https://github.com/gizmore/gdo6-opentimes)
  - [Poll](https://github.com/gizmore/gdo6-poll)

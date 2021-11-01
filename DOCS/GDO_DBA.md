@@ -1,7 +1,7 @@
 # GDO
 
 The DataBase Abstraction layer.
-Here are some tutorials to get you started with GDO.
+Here are some examples to get you started with GDO.
 
 
 ## Basics
@@ -43,7 +43,7 @@ find the system user via a user by id:
     
 find the system user via user_type:
 
-    GDO_User::findBy('user_type', 'system);
+    GDO_User::findBy('user_type', 'system');
     
 create a new user:
 
@@ -68,3 +68,17 @@ delete the user Peter:
 delete the user Peter and trigger deletion hook:
 
     GDO_User::table()->select()->where("user_name='Peter'")->exec()->fetchObject()->delete()
+
+
+## Writing no migrations anymore
+
+In gdo6 you do not have to write migration and validators.
+The GDT typesystem allows you to plug relations and logic together by adding GDT to other GDT, Methods or GDO.
+Plug a live GDT from your GDO model into a GDT_Table header and just enjoy that there is very few duplicate code.
+There are already some generic GDO Entities and Modules which can be re-used easily for votes, files, comments and likes.
+
+
+## Writing no validation code anymore
+
+Because the GDT have a nice hierarchy, validation code is re-used as well.
+For example the "not-null" check is a few lines of code in the base GDT class.

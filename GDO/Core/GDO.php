@@ -140,7 +140,12 @@ abstract class GDO
     #################
     private $persisted = false;
     public function isPersisted() { return $this->persisted; }
-    public function setPersisted($persisted=true) { $this->persisted = $persisted; return $this; }
+    public function setPersisted($persisted=true)
+    {
+    	$this->id = null;
+    	$this->persisted = $persisted;
+    	return $this;
+    }
     
     public $isTable = false;
     public function isTable() { return $this->isTable; }
@@ -423,7 +428,7 @@ abstract class GDO
 
     /**
      * Get the primary key columns for a table.
-     * @return \GDO\Core\GDT[]
+     * @return GDT[]
      */
     public function gdoPrimaryKeyColumns()
     {
@@ -1143,24 +1148,24 @@ abstract class GDO
     ##############
     ### Get ID ###
     ##############
-//     private $id;
+    private $id;
     /**
      * Id cache
      * @var $id string
      */
     public function getID()
     {
-//         if ($this->id)
-//         {
-//             return $this->id;
-//         }
+        if ($this->id)
+        {
+            return $this->id;
+        }
         $id = '';
         foreach ($this->gdoPrimaryKeyColumnNames() as $name)
         {
             $id2 = $this->getVar($name);
             $id = $id ? "{$id}:{$id2}" : $id2;
         }
-//         $this->id = $id;
+        $this->id = $id;
         return $id;
     }
     
@@ -1252,7 +1257,9 @@ abstract class GDO
             $query = $table->select();
             foreach ($table->gdoPrimaryKeyColumns() as $column)
             {
-                $query->where($column->identifier() . '=' . self::quoteS($id[$i++]));
+            	$condition = $column->identifier() .
+            		'=' . self::quoteS($id[$i++]);
+                $query->where($condition);
             }
             $object = $query->first()->exec()->fetchObject();
         }
@@ -1567,7 +1574,7 @@ abstract class GDO
     {
         # Flags
         $this->dirty = false;
-        $this->persisted = true;
+        $this->setPersisted();
         # Trigger event for AutoCol, EditedAt, EditedBy, etc.
         foreach ($this->gdoColumnsCache() as $gdoType)
         {

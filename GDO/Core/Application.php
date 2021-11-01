@@ -80,6 +80,13 @@ class Application
 	
 	public function isCronjob() { return false; }
 	
+	public function isWebServer()
+	{
+		return ( (!$this->isWebsocket()) &&
+		         (!$this->isCLI()) &&
+		         (!$this->isInstall()) );
+	}
+	
 	/**
 	 * @return \GDO\Core\Method
 	 */

@@ -97,14 +97,14 @@ class GDO_Module extends GDO
 	    }
 	}
 	
-	/**
-	 * Return a list of friend modules that enhance this one.
-	 * @return string[]
-	 */
-	public function friendencies()
-	{
-	    return $this->getFriendencies();
-	}
+// 	/**
+// 	 * Return a list of friend modules that enhance this one.
+// 	 * @return string[]
+// 	 */
+// 	public function friendencies()
+// 	{
+// 	    return $this->getFriendencies();
+// 	}
 	
 	/**
 	 * Provided theme name in module /thm/$themeName/ folder.
@@ -219,7 +219,6 @@ class GDO_Module extends GDO
 	}
 
 	public function displayModuleDescription() { return html($this->getModuleDescription()); }
-	
 	
 	/**
 	 * Module description is fetched from README.md by default.
@@ -835,15 +834,15 @@ class GDO_Module extends GDO
         return self::$_NC;
 	}
 	
-	public function addBowerJavascript($path)
+	public function addBowerJS($path)
 	{
-	    return $this->addJavascript('bower_components/'.$path);
+	    return $this->addJS('bower_components/'.$path);
 	}
 	
-	public function addJavascript($path)
+	public function addJS($path)
 	{
-	    return Javascript::addJavascript(
-	        $this->wwwPath($path.'?'.$this->nocacheVersion()));
+	    return Javascript::addJS(
+	        $this->wwwPath($path . '?' . $this->nocacheVersion()));
 	}
 	
 	public function addBowerCSS($path)

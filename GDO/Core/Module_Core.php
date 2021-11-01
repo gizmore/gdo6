@@ -38,7 +38,7 @@ final class Module_Core extends GDO_Module
      * 
      * @var string
      */
-	const GDO_REVISION = '6.10.6-r6161';
+	const GDO_REVISION = '6.10.6-r6162';
 
 	##############
 	### Module ###
@@ -136,11 +136,11 @@ final class Module_Core extends GDO_Module
 	public function onIncludeScripts()
 	{
 		$this->addCSS('css/gdo6-core.css');
-		$this->addJavascript('js/gdo-string-util.js');
-		$this->addJavascript('js/gdo-user.js');
-		$this->addJavascript('js/gdo-core.js');
-		Javascript::addJavascriptPreInline($this->gdoConfigJS());
-		Javascript::addJavascriptPostInline($this->gdoUserJS());
+		$this->addJS('js/gdo-string-util.js');
+		$this->addJS('js/gdo-user.js');
+		$this->addJS('js/gdo-core.js');
+		Javascript::addJSPreInline($this->gdoConfigJS());
+		Javascript::addJSPostInline($this->gdoUserJS());
 	}
 
 	/**

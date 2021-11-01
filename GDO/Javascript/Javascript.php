@@ -15,32 +15,27 @@ final class Javascript
 	###################################
 	### Asset loader and obfuscator ###
 	###################################
-	private static $_javascripts = [];
-	private static $_javascript_pre_inline = '';
-	private static $_javascript_post_inline = '';
+	private static $_JAVASCRIPTS = [];
+	private static $_JAVASCRIPT_PRE_INLINE = '';
+	private static $_JAVASCRIPT_POST_INLINE = '';
 	
 	###########
 	### Add ###
 	###########
-	public static function addJavascript($path)
+	public static function addJS($path)
 	{
-		self::$_javascripts[] = $path;
+		self::$_JAVASCRIPTS[] = $path;
 	}
 	
-	public static function addJavascriptPreInline($script_html)
+	public static function addJSPreInline($script_html)
 	{
-	    self::$_javascript_pre_inline .= $script_html . "\n";
+	    self::$_JAVASCRIPT_PRE_INLINE .= $script_html . "\n";
 	}
 	
-	public static function addJavascriptPostInline($script_html)
+	public static function addJSPostInline($script_html)
 	{
-	    self::$_javascript_post_inline .= $script_html . "\n";
+	    self::$_JAVASCRIPT_POST_INLINE .= $script_html . "\n";
 	}
-	
-// 	public static function addBowerJavascript($path)
-// 	{
-// 		self::addJavascript("bower_components/$path");
-// 	}
 	
 	##############
 	### Render ###
@@ -51,7 +46,7 @@ final class Javascript
 	    if (Application::instance()->allowJavascript())
 	    {
 	        $back .= self::displayJavascriptPreInline();
-    		$javascripts = $minfied ? MinifyJS::minified(self::$_javascripts) : self::$_javascripts;
+    		$javascripts = $minfied ? MinifyJS::minified(self::$_JAVASCRIPTS) : self::$_JAVASCRIPTS;
     		foreach ($javascripts as $js)
     		{
     			$back .= sprintf('<script src="%s"></script>'."\n", $js);
@@ -66,12 +61,12 @@ final class Javascript
 	###############
 	private static function displayJavascriptPreInline()
 	{
-	    return self::displayJavascriptInline(self::$_javascript_pre_inline);
+	    return self::displayJavascriptInline(self::$_JAVASCRIPT_PRE_INLINE);
 	}
 	
 	private static function displayJavascriptPostInline()
 	{
-	    return self::displayJavascriptInline(self::$_javascript_post_inline);
+	    return self::displayJavascriptInline(self::$_JAVASCRIPT_POST_INLINE);
 	}
 	
 	private static function displayJavascriptInline($inline)

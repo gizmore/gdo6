@@ -14,7 +14,7 @@ use GDO\Table\Sort;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.6
  * @since 3.0.0
  */
 final class ModuleLoader
