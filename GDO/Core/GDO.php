@@ -317,6 +317,7 @@ abstract class GDO
     
     public function setGDOVars(array $vars, $dirty=false)
     {
+    	$this->id = null;
         $this->gdoVars = $vars;
         return $this->dirty($dirty);
     }
