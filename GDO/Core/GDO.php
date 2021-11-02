@@ -80,7 +80,7 @@ abstract class GDO
     {
         if (is_string($var))
         {
-            return sprintf('"%s"', self::escapeS($var));
+            return '"' . self::escapeS($var) . '"';
         }
         elseif ($var === null)
         {
@@ -1060,7 +1060,7 @@ abstract class GDO
         $where = "";
         foreach ($this->gdoPrimaryKeyColumns() as $column)
         {
-            if ($where !== '')
+            if ($where)
             {
                 $where .= ' AND ';
             }
@@ -1080,8 +1080,9 @@ abstract class GDO
      */
     public static function entity(array $gdoVars)
     {
-        $class = self::gdoClassNameS();
-        $instance = new $class();
+//         $class = self::gdoClassNameS();
+//         $instance = new $class();
+		$instance = new static();
         $instance->gdoVars = $gdoVars;
         return $instance;
     }

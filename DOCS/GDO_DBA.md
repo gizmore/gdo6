@@ -10,6 +10,8 @@ The base class GDO is both, entity and table.
 Every class has one object stored in the Database to describe all entities.
 Columns are defined in the gdoColumns() method, returning an array of GDT.
 Please note that GDO is not SQL injection safe, but this reduces code complexity a lot.
+Also stuff like quoted identifiers is not implemented, for best performance.
+There is no "has many", there are GDT_Join, GDT_Object etc you put in gdoColumns().
 
 
 ## Classes
