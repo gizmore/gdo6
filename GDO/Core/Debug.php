@@ -412,6 +412,10 @@ final class Debug
 		$arg = str_replace('\\/', '/', $arg); # Double backslash was escaped always via json encode?
 		if (mb_strlen($arg) > self::$MAX_ARG_LEN)
 		{
+			if ($app->isCLI())
+			{
+				self::$MAX_ARG_LEN = 32;
+			}
 		    return mb_substr($arg, 0, self::$MAX_ARG_LEN) . '…' . mb_substr($arg, -14);
 		}
 		
@@ -470,12 +474,19 @@ final class Debug
 		}
 		
 		$copy = [];
+		$cli = Application::instance()->isCLI();
 		foreach ($implode as $imp)
 		{
 			list ($func, $file, $line) = $imp;
-			$len = mb_strlen($func);
-			$func .= ' ' . str_repeat('.', $longest - $len);
-			$copy[] = sprintf(' - %s %s line %s.', $func, self::shortpath($file), $line);
+			if ($cli)
+			{
+			}
+			else
+			{
+				$len = mb_strlen($func);
+				$func .= ' ' . str_repeat('.', $longest - $len);
+			}
+			$copy[] = sprintf(' - %s %s line %s.', $func, self::shortpath($file, "\n"), $line);
 		}
 		
 		$back .= $html ? '<div class="gdt-hr"></div>' : "\n";
@@ -491,11 +502,16 @@ final class Debug
 	 * @param string $path			
 	 * @return string
 	 */
-	public static function shortpath($path)
+	public static function shortpath($path, $newline="")
 	{
 		$path = str_replace('\\', '/', $path);
 		$path = str_replace(GDO_PATH, '', $path);
-		return trim($path, ' /');
+		$path = trim($path, ' /');
+// 		if (Application::instance()->isCLI())
+// 		{
+// 			$path = "{$newline}{$path}";
+// 		}
+		return $path;
 	}
 	
 }

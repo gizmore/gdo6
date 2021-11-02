@@ -2,7 +2,7 @@
 ### This redirects all requests to index.php ###
 ################################################
 # Please enable in your vhost config: AllowEncodedSlashes NoDecode
-# If your GDO_WEB_ROOT is /foo/, use /foo/index.php in all lines
 RewriteEngine on
+# If your GDO_WEB_ROOT is /foo/, use /foo/index.php in all lines
 RewriteCond %{REQUEST_URI} !^/index.php$
 RewriteRule ^(.*)$ /index.php?_url=$1&%1 [QSA,L]

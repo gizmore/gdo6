@@ -24,7 +24,7 @@ use GDO\UI\GDT_Link;
  * GDO base module class.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.6
  * @since 1.0.0
  */
 class GDO_Module extends GDO
@@ -54,7 +54,7 @@ class GDO_Module extends GDO
 	    return [
 	        'Core', 'Country', 'Language', 'Date', 'Mail',
 	        'Table', 'User', 'Country', 'Javascript', 'UI',
-	        'Session', 'File',
+	        'Session', 'File', 'CSS',
 	    ];
 	}
 	
@@ -96,15 +96,6 @@ class GDO_Module extends GDO
 	        return $coreDeps;
 	    }
 	}
-	
-// 	/**
-// 	 * Return a list of friend modules that enhance this one.
-// 	 * @return string[]
-// 	 */
-// 	public function friendencies()
-// 	{
-// 	    return $this->getFriendencies();
-// 	}
 	
 	/**
 	 * Provided theme name in module /thm/$themeName/ folder.
