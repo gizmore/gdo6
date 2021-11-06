@@ -322,4 +322,5 @@ Kind Regards,<br/>
 'list_core_directoryindex' => '%s files and folders',
 'date' => 'Date',
 'cfg_footer' => 'Show in footer?',
+'err_input_not_numeric' => 'Please enter only numeric values.',
 );

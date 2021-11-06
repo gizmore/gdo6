@@ -9,6 +9,7 @@ use GDO\UI\WithLabel;
 use GDO\Util\Strings;
 use GDO\Form\WithFormFields;
 use GDO\Table\WithOrder;
+use GDO\Util\Common;
 
 /** 
  * Database capable base integer class.
@@ -76,12 +77,22 @@ class GDT_Int extends GDT
 	################
 	### Validate ###
 	################
+	public function is_numeric($input)
+	{
+		return !!Common::regex('/\\d+[.,]?\\d*/', $input);
+	}
+	
 	public function validate($value)
 	{
 		if (parent::validate($value))
 		{
 			if ($value !== null)
 			{
+				if (!$this->is_numeric($this->getVar()))
+				{
+					return $this->numericError();
+				}
+				
 				if ( (($this->min !== null) && ($value < $this->min)) ||
 					 (($this->max !== null) && ($value > $this->max)) )
 				{
@@ -108,6 +119,11 @@ class GDT_Int extends GDT
 			return $this->gdo->table()->select('1')->where($condition)->first()->exec()->fetchValue() !== '1';
 		}
 		return true;
+	}
+	
+	private function numericError()
+	{
+		return $this->error('err_input_not_numeric');
 	}
 	
 	/**

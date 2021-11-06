@@ -45,7 +45,15 @@ final class Common
 	public static function regex($pattern, $s)
 	{
 	    $matches = null;
-		return preg_match($pattern, $s, $matches) ? $matches[1] : null;
+	    if (preg_match($pattern, $s, $matches))
+	    {
+	    	if (isset($matches[1]))
+	    	{
+	    		return $matches[1];
+	    	}
+	    	return true;
+	    }
+	    return false;
 	}
 	
 	/**

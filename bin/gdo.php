@@ -5,7 +5,7 @@
  * @see Method
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.10.6
  * @since 6.0.1
  */
 

@@ -324,4 +324,5 @@ Viele Grüße,<br/>
 'list_core_directoryindex' => '%s Dateien und Ordner',
 'date' => 'Datum',
 'cfg_footer' => 'Im Footer anzeigen?',
+'err_input_not_numeric' => 'Bitte nur Zahlen eingeben.',
 );
