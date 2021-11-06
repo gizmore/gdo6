@@ -79,7 +79,7 @@ class GDT_Int extends GDT
 	################
 	public function is_numeric($input)
 	{
-		return !!Common::regex('/\\d+[.,]?\\d*/', $input);
+		return !!Common::regex('/^\\d+[.,]?\\d*$/iD', $input);
 	}
 	
 	public function validate($value)
@@ -88,10 +88,10 @@ class GDT_Int extends GDT
 		{
 			if ($value !== null)
 			{
-				if (!$this->is_numeric($this->getVar()))
-				{
-					return $this->numericError();
-				}
+// 				if (!$this->is_numeric($this->getRequestVar()))
+// 				{
+// 					return $this->numericError();
+// 				}
 				
 				if ( (($this->min !== null) && ($value < $this->min)) ||
 					 (($this->max !== null) && ($value > $this->max)) )
