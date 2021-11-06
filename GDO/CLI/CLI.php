@@ -1,5 +1,5 @@
 <?php
-namespace GDO\Util;
+namespace GDO\CLI;
 
 use GDO\Core\GDOParameterException;
 use GDO\Core\GDT_Error;
@@ -10,6 +10,7 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDO_Module;
 use GDO\Form\GDT_Submit;
+use GDO\Util\Strings;
 
 /**
  * CLI utilities.
@@ -18,7 +19,7 @@ use GDO\Form\GDT_Submit;
  * @see Method
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.6
  * @since 6.10.2
  */
 final class CLI

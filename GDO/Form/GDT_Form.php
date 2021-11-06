@@ -10,7 +10,7 @@ use GDO\UI\WithTitle;
 use GDO\UI\GDT_SearchField;
 use GDO\UI\GDT_Container;
 use GDO\Core\GDT_Response;
-use GDO\Util\CLI;
+use GDO\CLI\CLI;
 
 /**
  * A form.

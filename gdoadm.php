@@ -20,7 +20,7 @@ use GDO\Core\GDT_Response;
 use GDO\Install\Method\Security;
 use GDO\Core\GDT_Hook;
 use GDO\File\FileUtil;
-use GDO\Util\CLI;
+use GDO\CLI\CLI;
 use GDO\Core\ModuleProviders;
 use GDO\Util\Strings;
 use GDO\Install\Module_Install;

@@ -5,7 +5,7 @@ use GDO\Core\Debug;
 use GDO\Core\GDT_Template;
 use GDO\MailGPG\GDO_PublicKey;
 use GDO\User\GDO_User;
-use GDO\Util\CLI;
+use GDO\CLI\CLI;
 use GDO\Util\Strings;
 
 /**
