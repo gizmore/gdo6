@@ -9,6 +9,7 @@
  * @since 6.0.1
  */
 
+use GDO\CLI\CLI;
 use GDO\Core\Logger;
 use GDO\Core\Debug;
 use GDO\DB\Cache;

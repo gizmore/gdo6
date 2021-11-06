@@ -64,3 +64,4 @@ vendor/
 .phpunit.result.cache
 
 /xfcm/
+/*replay*
