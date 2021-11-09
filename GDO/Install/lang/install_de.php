@@ -76,9 +76,9 @@ Sie können dann hier fortfahren: %s',
 
 'install_title_7' => 'Javascript installieren',
 'install_content_7' => '
-<p>Sie sollten nun die Javascript abhängigkeiten installieren.</p>
+<p>Sie sollten nun die Javascript Abhängigkeiten installieren.</p>
 <p>Als Alternative können Sie diese manuell hochladen.</p>
-<p>Fürhren Sie folgende Befehle auf einer Debian Machine aus:<p>
+<p>Führen Sie folgende Befehle auf einer Debian Maschine aus:<p>
 <code>
 Als root:<br/>
 <br/>
