@@ -31,7 +31,7 @@ final class AES
 	 */
 	public static function encrypt4($data, $key, $iv)
 	{
-	    return openssl_encrypt($data, self::CIPHER, $key, null, $iv);
+		return openssl_encrypt($data, self::CIPHER, $key, null, $iv);
 	}
 
 	/**
@@ -43,13 +43,13 @@ final class AES
 	 */
 	public static function encryptIV($data, $password)
 	{
-	    $iv_size = openssl_cipher_iv_length(self::CIPHER);
-	    $iv = openssl_random_pseudo_bytes($iv_size);
+		$iv_size = openssl_cipher_iv_length(self::CIPHER);
+		$iv = openssl_random_pseudo_bytes($iv_size);
 		$key = hash('SHA256', $password, true);
-        $encrypted = base64_encode($iv).openssl_encrypt($data, self::CIPHER, $key, null, $iv);
-	    return $encrypted.hash_hmac("sha256",$encrypted,$key);
+		$encrypted = base64_encode($iv).openssl_encrypt($data, self::CIPHER, $key, null, $iv);
+		return $encrypted.hash_hmac("sha256", $encrypted, $key);
 	}
-	
+
 	/**
 	 * Decrypt data encrypted with with the encryptIV function above.
 	 * @param string $data
@@ -58,19 +58,18 @@ final class AES
 	 */
 	public static function decryptIV($data, $password)
 	{
-	    $iv_size = openssl_cipher_iv_length(self::CIPHER);
-	    $iv64 = ((4 * $iv_size / 3) + 3) & ~3;
-        $hmac = substr($data,-64);
-        $data = substr($data,0,-64);
-        $key = hash('SHA256', $password, true);
-        if($hmac !== hash_hmac("sha256",$data, $key)) //only decrypt if cookie has not been tampered
-        { 
-            return false;
-        }
-	    $iv = substr($data, 0, $iv64);
-	    $iv = base64_decode($iv);
-	    $data = substr($data, $iv64);
-	    return openssl_decrypt($data, self::CIPHER, $key, null, $iv);
+		$iv_size = openssl_cipher_iv_length(self::CIPHER);
+		$iv64 = ((4 * $iv_size / 3) + 3) & ~3;
+		$hmac = substr($data, -64);
+		$data = substr($data, 0, -64);
+		$key = hash('SHA256', $password, true);
+		if ($hmac !== hash_hmac("sha256", $data, $key)) { // only decrypt if cookie has not been tampered
+			return false;
+		}
+		$iv = substr($data, 0, $iv64);
+		$iv = base64_decode($iv);
+		$data = substr($data, $iv64);
+		return openssl_decrypt($data, self::CIPHER, $key, null, $iv);
 	}
 
 	/**
@@ -92,8 +91,7 @@ final class AES
 	 */
 	public static function decrypt4($data, $key, $iv)
 	{
-	    return openssl_decrypt($data, self::CIPHER, $key, null, $iv);
+		return openssl_decrypt($data, self::CIPHER, $key, null, $iv);
 	}
 
 }
-
