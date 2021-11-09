@@ -1,3 +1,3 @@
-# Security Contributers of gdo6
+# Security Contributors of gdo6
 
 Enjoy!
