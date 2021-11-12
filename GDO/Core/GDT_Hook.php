@@ -552,9 +552,9 @@ final class GDT_Hook extends GDT
 	private static function callIPCDB($event, array $args)
 	{
 		$args = self::encodeIPCArgs($args);
-		GDO_Hook::blank(array(
-			'hook_message' => GDO_Hook::encodeHookMessage($event, $args),
-		))->insert();
+		GDO_Hook::blank([
+			'hook_message' => self::encodeHookMessage($event, $args),
+		])->insert();
 	}
 	
 	private static function encodeHookMessage($event, array $args)

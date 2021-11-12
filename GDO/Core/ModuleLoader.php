@@ -156,17 +156,20 @@ final class ModuleLoader
 	        }
 		}
 		Trans::inited(true);
-
+	}
+		
+	public function initModulesB()
+	{
 		# Init modules
 		$app = Application::instance();
-		if ( (!$app->isInstall()) && (!$app->isCLI()) )
+		if (!$app->isInstall())
 		{
 			foreach ($this->getEnabledModules() as $module)
 			{
 				if (!$module->isInited())
 				{
-				    $module->onInit();
-				    $module->initedModule();
+					$module->onInit();
+					$module->initedModule();
 				}
 			}
 		}

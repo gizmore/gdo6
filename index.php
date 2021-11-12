@@ -194,6 +194,8 @@ try
         $_REQUEST['me'] = 'Page404';
         $method = $app->getMethod();
     }
+    
+    ModuleLoader::instance()->initModulesB();
 
     if (GDO_DB_ENABLED && GDO_SESS_LOCK && $method && $method->isLockingSession() && $session)
     {

@@ -86,6 +86,7 @@ GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, G
 
 $app->loader->loadModules(GDO_DB_ENABLED, !GDO_DB_ENABLED, true);
 
+$app->loader->initModulesB();
 
 #################
 ### Load User ###
