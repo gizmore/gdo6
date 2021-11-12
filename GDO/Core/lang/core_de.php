@@ -151,6 +151,7 @@ return array(
 'err_user_type' => 'Das Konto ist nicht vom Typ %s.',
 'err_table_not_sortable' => 'Die %s Tabelle kann nicht ohne ein GDT_Sort sortiert werden.',
 'err_pass_too_short' => 'Ihr Passwort muss mindestens %s Zeichen lang sein.',
+'err_module' => 'Das Modul konnte nicht gefunden werden: %s.',
 'err_module_method' => 'Die Funktion konnte nicht gefunden werden.',
 'err_invalid_choice' => 'Ihre Auswahl ist ungültig.',
 'err_permission_create_level' => 'Sie benötigen einen Nutzerlevel von %s um dies anzulegen.',

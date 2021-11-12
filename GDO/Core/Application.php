@@ -114,7 +114,7 @@ class Application
 	##############
 	### Format ###
 	##############
-	public function isAjax() { return !!@$_GET['ajax']; }
+	public function isAjax() { return !!@$_REQUEST['_ajax']; }
 	public function isXML() { return $this->getFormat() === self::XML; }
 	public function isHTML() { return $this->getFormat() === self::HTML; }
 	public function isJSON() { return $this->getFormat() === self::JSON; }

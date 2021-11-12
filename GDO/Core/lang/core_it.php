@@ -151,6 +151,7 @@ return array(
 'err_user_type' => 'L\'account non è un tipo di %s.',
 'err_table_not_sortable' => 'La tabella %s non puó essere ordinata senza un GDT_Sort.',
 'err_pass_too_short' => 'Il vostro password deve avere una lungezza di minimo %s caratteri.',
+'err_module' => 'Impossibile trovare il modulo: %s.',
 'err_module_method' => 'La funzione non é stata trovata.',
 'err_invalid_choice' => 'La vostra selezione è invalida.',
 'err_permission_create_level' => 'È necessario un livello utente di %s per creare questo.',

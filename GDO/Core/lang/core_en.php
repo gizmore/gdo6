@@ -151,6 +151,7 @@ return array(
 'err_user_type' => 'This account is not of membership type %s.',
 'err_table_not_sortable' => 'The %s table cannot be sorted without a GDT_Sort field.',
 'err_pass_too_short' => 'Your password has to be at least %s characters long.',
+'err_module' => 'The module could not been found: %s.',
 'err_module_method' => 'The module and method could not been not found.',
 'err_invalid_choice' => 'Your selection is not applicable.',
 'err_permission_create_level' => 'You need a userlevel of %s to create this.',

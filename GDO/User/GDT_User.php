@@ -36,7 +36,7 @@ class GDT_User extends GDT_Object
 
 	public function withCompletion()
 	{
-		return $this->completionHref(href('User', 'Completion'));
+		return $this->completionHref(href('User', 'Completion', '&_fmt=json'));
 	}
 	
 	#############

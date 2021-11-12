@@ -331,7 +331,7 @@ final class ModuleLoader
 			}
 			elseif ($throw)
 			{
-			    throw new GDOError('err_module_method');
+				throw new GDOError('err_module', [html($name)]);
 			}
 			else
 			{
