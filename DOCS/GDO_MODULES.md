@@ -100,6 +100,7 @@ These modules add functionality to the website and are (mostly) own code.
  - [Contact](https://github.com/gizmore/gdo6-contact)
  - [CORS](https://github.com/gizmore/gdo6-cors)
  - [CountryCoordinates](https://github.com/gizmore/gdo6-country-coordinates) (uses a github data repo for country shapes)
+ - [Cronjob](https://github.com/gizmore/gdo6-cronjob)
  - [Currency](https://github.com/gizmore/gdo6-currency)
  - [Download](https://github.com/gizmore/gdo6-download)
  - [DSGVO](https://github.com/gizmore/gdo6-dsgvo)

@@ -109,6 +109,7 @@ Copy this list and remove / add modules.
     git clone --recursive https://github.com/gizmore/gdo6-contact Contact
     git clone --recursive https://github.com/gizmore/gdo6-cors CORS
     git clone --recursive https://github.com/gizmore/gdo6-country-coordinates CountryCoordinates
+    git clone --recursive https://github.com/gizmore/gdo6-cronjob Cronjob
     git clone --recursive https://github.com/gizmore/gdo6-currency Currency
     ## git clone --recursive https://github.com/gizmore/gdo6-docs Docs
     ## git clone --recursive https://github.com/gizmore/gdo6-dog Dog
