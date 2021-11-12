@@ -476,9 +476,11 @@ abstract class Method
 	 */
 	public function exec()
 	{
+		ModuleLoader::instance()->onIncludeScripts();
+		
 		if ($this->isAjax())
 		{
-			$_GET['_ajax'] = $_REQUEST['_ajax'] = '1';
+			$_REQUEST['_ajax'] = '1';
 		}
 		
 		$user = GDO_User::current();

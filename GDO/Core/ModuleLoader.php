@@ -147,16 +147,13 @@ final class ModuleLoader
 	{
 		# Register themes
 		# Load language
-		foreach ($this->modules as $module)
+		foreach ($this->getEnabledModules() as $module)
 		{
-		    if ($module->isEnabled())
-		    {
-		        $module->onLoadLanguage();
-		        if ($theme = $module->getTheme())
-		        {
-		            GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
-		        }
-		    }
+	        $module->onLoadLanguage();
+	        if ($theme = $module->getTheme())
+	        {
+	            GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
+	        }
 		}
 		Trans::inited(true);
 
@@ -164,27 +161,22 @@ final class ModuleLoader
 		$app = Application::instance();
 		if ( (!$app->isInstall()) && (!$app->isCLI()) )
 		{
-			foreach ($this->modules as $module)
+			foreach ($this->getEnabledModules() as $module)
 			{
-				if ($module->isEnabled())
+				if (!$module->isInited())
 				{
-					if (!$module->isInited())
-					{
-					    $module->onInit();
-					}
+				    $module->onInit();
+				    $module->initedModule();
 				}
 			}
-			foreach ($this->modules as $module)
-			{
-			    if ($module->isEnabled())
-			    {
-			        if (!$module->isInited())
-    			    {
-					    $module->onIncludeScripts();
-						$module->initedModule();
-    			    }
-			    }
-			}
+		}
+	}
+	
+	public function onIncludeScripts()
+	{
+		foreach ($this->getEnabledModules() as $module)
+		{
+			$module->onIncludeScripts();
 		}
 	}
 	

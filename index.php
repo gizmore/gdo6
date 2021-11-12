@@ -172,7 +172,8 @@ try
 	$rqmethod = $_SERVER['REQUEST_METHOD'];
 	if (!in_array($rqmethod, ['GET', 'POST', 'HEAD', 'OPTIONS'], true))
 	{
-		die('HTTP method not processed: ' . html($rqmethod) . ' ONLY "GET POST HEAD OPTIONS" ARE ALLOWED.');
+		$_REQUEST['mo'] = 'Core';
+		$_REQUEST['me'] = 'Page403';
 	}
 
 	# Exec
