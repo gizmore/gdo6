@@ -176,7 +176,14 @@ try
 	}
 
 	# Exec
-	$method = $app->getMethod();
+	if ($method = $app->getMethod())
+	{
+		if (!isset($_REQUEST['mo']))
+		{
+			$_REQUEST['mo'] = $method->getModuleName();
+			$_REQUEST['me'] = $method->gdoShortName();
+		}
+	}
 	
     ob_start();
     
