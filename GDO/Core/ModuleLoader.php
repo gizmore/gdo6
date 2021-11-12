@@ -284,6 +284,12 @@ final class ModuleLoader
 // 	    Trans::inited(false);
 		Filewalker::traverse($this->path, null, false, array($this, '_loadModuleFS'), false, $init);
 		Trans::inited(true);
+		$this->sortModules(['module_priority' => true]);
+		foreach ($this->getEnabledModules() as $module)
+		{
+			$module->buildConfigCache();
+			$module->buildSettingsCache();
+		}
 	}
 	
 	public function _loadModuleFS($entry, $path, $init)
@@ -318,10 +324,10 @@ final class ModuleLoader
 				        GDT_Template::registerTheme($theme, $module->filePath("thm/$theme/"));
 				    }
 // 				    if (!Application::instance()->isInstall())
-				    {
-    				    $module->buildConfigCache();
-    				    $module->buildSettingsCache();
-				    }
+// 				    {
+//     				    $module->buildConfigCache();
+//     				    $module->buildSettingsCache();
+// 				    }
 				}
 			}
 			elseif ($throw)

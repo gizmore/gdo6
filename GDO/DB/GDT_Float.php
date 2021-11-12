@@ -3,7 +3,11 @@ namespace GDO\DB;
 
 class GDT_Float extends GDT_Int
 {
-	public function toValue($var) { return $var === null ? null : (float) $var; }
+	public function toValue($var)
+	{
+		return ( ($var === null) ||
+			     (trim($var, "\r\n\t ") ==='') ) ?
+			null : (float) $var; }
 	
 	public function gdoColumnDefine()
 	{

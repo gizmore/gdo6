@@ -20,6 +20,7 @@ final class Module_File extends GDO_Module
 	
 	public function getDependencies()
 	{
+		# @TODO remove Cronjob dependency by scaling images on the fly. Add cronjob dependencies where necessary.
 		return ['Cronjob'];
 	}
 	

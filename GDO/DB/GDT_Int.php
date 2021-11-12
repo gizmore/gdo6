@@ -44,8 +44,9 @@ class GDT_Int extends GDT
 
 	public function toValue($var)
 	{
-	    return $var === null || trim($var, "\r\n\t ") === '' ?
-	       null : (int) $var;
+	    return (($var === null) ||
+	    	    (trim($var, "\r\n\t ") === '')) ?
+	    	null : (int) $var;
 	}
 	
 	public function inputToVar($input)
