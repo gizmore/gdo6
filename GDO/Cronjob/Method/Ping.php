@@ -1,5 +1,5 @@
 <?php
-namespace GDO\Core\Method;
+namespace GDO\Cronjob\Method;
 
 use GDO\Cronjob\MethodCronjob;
 
@@ -9,10 +9,10 @@ use GDO\Cronjob\MethodCronjob;
  * and on all sites.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.10.6
  * @since 6.10.1
  */
-final class PingCronjob extends MethodCronjob
+final class Ping extends MethodCronjob
 {
     public function run()
     {

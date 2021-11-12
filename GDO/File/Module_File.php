@@ -18,6 +18,11 @@ final class Module_File extends GDO_Module
 
 	public function isCoreModule() { return true; }
 	
+	public function getDependencies()
+	{
+		return ['Cronjob'];
+	}
+	
 	public function getClasses()
 	{
 		return [

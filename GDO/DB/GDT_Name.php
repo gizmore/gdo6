@@ -15,7 +15,7 @@ class GDT_Name extends GDT_String
 	
 	public function defaultLabel() { return $this->label('name'); }
 
-	const LENGTH = 64;
+	const LENGTH = 96;
 	
 	public $min = 2, $max = self::LENGTH;
 	public $encoding = self::ASCII;
