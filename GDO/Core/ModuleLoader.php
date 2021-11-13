@@ -285,7 +285,7 @@ final class ModuleLoader
 		Filewalker::traverse($this->path, null, false, array($this, '_loadModuleFS'), false, $init);
 		Trans::inited(true);
 		$this->sortModules(['module_priority' => true]);
-		foreach ($this->getEnabledModules() as $module)
+		foreach ($this->modules as $module)
 		{
 			$module->buildConfigCache();
 			$module->buildSettingsCache();

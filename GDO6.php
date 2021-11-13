@@ -127,7 +127,7 @@ function html($html)
 }
 function env($key, $default=null) { return Env::get($key, $default); }
 function def($key, $default=null) { return defined($key) ? constant($key) : $default; }
-function hdr($header, $replace=null)
+function hdr($header, $replace=true)
 {
     $app = Application::instance();
     if ($app->isUnitTests())

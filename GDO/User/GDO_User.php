@@ -29,7 +29,7 @@ use GDO\Session\GDO_Session;
  * @author gizmore
  * @link https://www.wechall.net
  * @link https://mettwitze.gizmore.org
- * @version 6.10.4
+ * @version 6.10.6
  * @since 1.0.0
  */
 final class GDO_User extends GDO
@@ -204,13 +204,19 @@ final class GDO_User extends GDO
 	#############
 	public function loadPermissions()
 	{
-		if (null === ($cache = $this->tempGet('gdo_permission')))
+		if ($this->isPersisted())
 		{
-			$cache = GDO_UserPermission::load($this);
-			$this->tempSet('gdo_permission', $cache);
-			$this->recache();
+			if (null === ($cache = $this->tempGet('gdo_permission')))
+			{
+				if ($cache = GDO_UserPermission::load($this))
+				{
+					$this->tempSet('gdo_permission', $cache);
+					$this->recache();
+				}
+			}
+			return $cache;
 		}
-		return $cache;
+		return [];
 	}
 	public function hasPermissionID($permissionId)
 	{
@@ -241,12 +247,15 @@ final class GDO_User extends GDO
 	public function getPermissionLevel()
 	{
 	    $max = 0;
-	    foreach ($this->loadPermissions() as $level)
+	    if ($perms = $this->loadPermissions())
 	    {
-	        if ($level > $max)
-	        {
-	            $max = $level;
-	        }
+		    foreach ($perms as $level)
+		    {
+		        if ($level > $max)
+		        {
+		            $max = $level;
+		        }
+		    }
 	    }
 	    return $max;
 	}

@@ -123,13 +123,16 @@ class Cache
 	
 	public static function recacheHooks()
 	{
-        if (GDO_IPC)
-        {
-            foreach (self::$RECACHING as $gdo)
-            {
-                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->table()->cache->klass, $gdo->getID());
-            }
-        }
+		if (Application::instance()->isWebServer())
+		{
+	        if (GDO_IPC)
+	        {
+	            foreach (self::$RECACHING as $gdo)
+	            {
+	                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->table()->cache->klass, $gdo->getID());
+	            }
+	        }
+		}
 	}
 
 	public function getDummy()
@@ -199,6 +202,11 @@ class Cache
 	
 	public function recache(GDO $object)
 	{
+		if (!$object->isPersisted())
+		{
+			return $object;
+		}
+			
 		$back = $object;
 		
 		# GDO cache
