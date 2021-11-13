@@ -51,7 +51,9 @@ class GDT_Username extends GDT_String
 	
 	public function renderCLI()
 	{
-	    return $this->gdo->displayName();
+		return $this->gdo ? 
+			$this->gdo->displayName() :
+			$this->renderCell();
 	}
 	
 	################

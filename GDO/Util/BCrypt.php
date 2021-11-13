@@ -5,8 +5,8 @@ namespace GDO\Util;
  * Password hash object.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.00
+ * @version 6.10.6
+ * @since 6.0.0
  */
 final class BCrypt
 {

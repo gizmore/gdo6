@@ -326,4 +326,5 @@ Viele Grüße,<br/>
 'date' => 'Datum',
 'cfg_footer' => 'Im Footer anzeigen?',
 'err_input_not_numeric' => 'Bitte nur Zahlen eingeben.',
+'err_missing_template' => 'Eine Template-Datei wird vermisst: %s',
 );

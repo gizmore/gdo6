@@ -12,7 +12,7 @@ use GDO\DB\GDT_String;
  */
 class GDT_Password extends GDT_String
 {
-    public function isSerializable() { return false; }
+    public function isSerializable() { return true; }
     
     protected function __construct()
 	{

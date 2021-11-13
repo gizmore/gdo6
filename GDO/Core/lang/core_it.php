@@ -324,4 +324,5 @@ Cordiali saluti,<br/>
 'date' => 'Data',
 'cfg_footer' => 'Mostra nel piè di pagina?',
 'err_input_not_numeric' => 'Si prega di inserire solo numeri.',
+'err_missing_template' => 'Manca un file modello: %s',
 );

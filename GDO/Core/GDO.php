@@ -1660,7 +1660,10 @@ abstract class GDO
      * Create a response from card rendering.
      * @return \GDO\Core\GDT_Response
      */
-    public function responseCard() { return GDT_Response::makeWithHTML($this->renderCard()); }
+    public function responseCard()
+    {
+    	return GDT_Response::makeWithHTML($this->renderCard());
+    }
     
     ###############
     ### Sorting ###

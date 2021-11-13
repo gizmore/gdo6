@@ -641,12 +641,13 @@ abstract class Method
 	        {
 	            $response->addField($this->afterExecute());
     	        GDT_Hook::callHook('AfterExecute', $this, $response);
+    	        $db->transactionEnd();
 	        }
 	        
 	        # Wrap transaction end
-	        if ($transactional)
+	        else if ($transactional)
 	        {
-	        	$db->transactionEnd();
+	        	$db->transactionRollback();
 	        }
 	        
 	        return $response;

@@ -10,7 +10,7 @@ use GDO\UI\GDT_HTML;
  * There is only one global Response used by the rendering, which can be stacked via GDT_Response::newWith().
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.6
  * @since 6.0.0
  */
 class GDT_Response extends GDT

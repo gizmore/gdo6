@@ -324,4 +324,5 @@ Kind Regards,<br/>
 'date' => 'Date',
 'cfg_footer' => 'Show in footer?',
 'err_input_not_numeric' => 'Please enter only numeric values.',
+'err_missing_template' => 'A template file is missing: %s',
 );

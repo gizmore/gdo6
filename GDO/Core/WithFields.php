@@ -206,20 +206,45 @@ trait WithFields
 	public function renderJSONFields()
 	{
 		$json = [];
-		foreach ($this->getFieldsRec() as $gdt)
+		
+		if ($this->error)
+		{
+			$json['error'] = $this->error;
+		}
+		
+		foreach ($this->getFields() as $gdt)
 		{
 		    if ($this->gdo)
 		    {
 		        $gdt->gdo($this->gdo);
 		    }
-// 			if ($data = $gdt->renderJSON())
-			{
-			    $json[$gdt->name] = $gdt->renderJSON();
-		        if ($gdt->error)
-		        {
-		            $json[$gdt->name]['error'] = $gdt->error;
-		        }
-			}
+
+		    # Add to json.
+		    if ($gdt->name)
+		    {
+		    	$json[$gdt->name] = $gdt->renderJSON();
+		    }
+		    else
+		    {
+		    	$json[] = $gdt->renderJSON();
+		    }
+		    
+		    # Add to errors
+	        if ($gdt->error)
+	        {
+            	if (!isset($json['errors']))
+            	{
+            		$json['errors'] = [];
+            	}
+	            if ($gdt->name)
+	            {
+	            	$json['errors'][$gdt->name] = $gdt->error;
+	            }
+	            else
+	            {
+	            	$json['error'] .= $gdt->error;
+	            }
+	        }
 		}
 		return $json;
 	}

@@ -11,6 +11,7 @@ use GDO\UI\GDT_SearchField;
 use GDO\UI\GDT_Container;
 use GDO\Core\GDT_Response;
 use GDO\CLI\CLI;
+use GDO\Core\Website;
 
 /**
  * A form.
@@ -18,7 +19,9 @@ use GDO\CLI\CLI;
  * @see GDT_Card
  * @see GDT_Table
  * 
- * @TODO remove ugly static behaviour
+ * @TODO remove ugly static api. :(
+ * 
+ * @see WithFields
  * 
  * @author gizmore
  * @version 6.10.6
@@ -43,7 +46,11 @@ class GDT_Form extends GDT
 	protected function __construct()
 	{
 	    parent::__construct();
-		$this->action = @$_SERVER['REQUEST_URI'];
+	    
+		if (!($this->action = @$_SERVER['REQUEST_URI']))
+		{
+			$this->action = Website::hrefBack();
+		}
 	}
 	
 	###############
@@ -115,39 +122,44 @@ class GDT_Form extends GDT
 		return $back;
 	}
 	
-	public function renderJSON()
-	{
-	    $json = [];
+// 	public function renderJSON()
+// 	{
+		
+// 	}
+	
+// 	public function renderJSON()
+// 	{
+// 	    $json = [];
 	    
-	    $errors = [];
+// 	    $errors = [];
 	    
-	    foreach ($this->getFieldsRec() as $gdt)
-	    {
-	        if ($gdt->error)
-	        {
-	            $errors[] = $gdt->displayLabel() . ': ' . $gdt->error;
-	        }
-	        if ($gdt->isSerializable())
-	        {
-	            if ($gdt->name)
-	            {
-	                $json[$gdt->name] = $gdt->configJSON();
-// 	                [
-// 	                    'var' => $gdt->var,
-// 	                    'display' => $gdt->renderJSON(),
-// 	                    'error' => $gdt->error,
-// 	                ];
-	            }
-	        }
-	    }
+// 	    foreach ($this->getFieldsRec() as $gdt)
+// 	    {
+// 	        if ($gdt->error)
+// 	        {
+// 	            $errors[] = $gdt->displayLabel() . ': ' . $gdt->error;
+// 	        }
+// 	        if ($gdt->isSerializable())
+// 	        {
+// 	            if ($gdt->name)
+// 	            {
+// 	                $json[$gdt->name] = $gdt->configJSON();
+// // 	                [
+// // 	                    'var' => $gdt->var,
+// // 	                    'display' => $gdt->renderJSON(),
+// // 	                    'error' => $gdt->error,
+// // 	                ];
+// 	            }
+// 	        }
+// 	    }
 	    
-	    if ($errors)
-	    {
-	        $json['error'] = t('err_form', [implode(' ', $errors)]);
-	    }
+// 	    if ($errors)
+// 	    {
+// 	        $json['error'] = t('err_form', [implode(' ', $errors)]);
+// 	    }
 	    
-	    return $json;
-	}
+// 	    return $json;
+// 	}
 	
 	public function renderCLI()
 	{
@@ -214,6 +226,11 @@ class GDT_Form extends GDT
 		        self::$VALIDATING_SUCCESS = false;
 		    }
 		}
+		if (!self::$VALIDATING_SUCCESS)
+		{
+			$this->error('err_form_invalid');
+		}
+		
 		self::$CURRENT = null;
 		return self::$VALIDATING_SUCCESS;
 	}
