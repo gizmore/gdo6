@@ -167,17 +167,17 @@ class GDT_Response extends GDT
 	    }
 	}
 	
-	public function addFields(array $fields=null)
-	{
-	    if ($fields)
-	    {
-	        foreach ($fields as $gdt)
-	        {
-	            $this->addField($gdt);
-	        }
-	    }
-	    return $this;
-	}
+// 	public function addFields(array $fields=null)
+// 	{
+// 	    if ($fields)
+// 	    {
+// 	        foreach ($fields as $gdt)
+// 	        {
+// 	            $this->addField($gdt);
+// 	        }
+// 	    }
+// 	    return $this;
+// 	}
 	
 	/**
 	 * @param string $html

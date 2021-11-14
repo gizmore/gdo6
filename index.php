@@ -292,7 +292,8 @@ switch ($app->getFormat())
             $content .= $cacheContent;
             if (!$ajax)
             {
-                $content = GDT_Page::$INSTANCE->html($content)->render();
+            	ModuleLoader::instance()->onIncludeScripts();
+            	$content = GDT_Page::$INSTANCE->html($content)->render();
             }
             if ($session)
             {
@@ -303,7 +304,8 @@ switch ($app->getFormat())
         {
             if (!$ajax)
             {
-                $content = GDT_Page::$INSTANCE->html($cacheContent)->render();
+            	ModuleLoader::instance()->onIncludeScripts();
+            	$content = GDT_Page::$INSTANCE->html($cacheContent)->render();
             }
             if ($session)
             {

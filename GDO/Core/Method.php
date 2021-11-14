@@ -476,8 +476,6 @@ abstract class Method
 	 */
 	public function exec()
 	{
-		ModuleLoader::instance()->onIncludeScripts();
-		
 		if ($this->isAjax())
 		{
 			$_REQUEST['_ajax'] = '1';

@@ -62,7 +62,10 @@ trait WithFields
 		{
 			foreach ($fields as $gdt)
 			{
-			    $this->addField($gdt);
+				if ($gdt instanceof GDT)
+				{
+				    $this->addField($gdt);
+				}
 			}
 		}
 		return $this;
