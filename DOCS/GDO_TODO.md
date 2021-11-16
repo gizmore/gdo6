@@ -38,8 +38,6 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 
 - @TODO: Make a table for last cronjob execution. Create MethodCronjob function every($duration) and compare with last execution to make creating periodic cronjobs way easier. Some cronjobs already handle periodicy theyself. Make them use the new system.
 
-- @TODO: Create a command to list all gdo6 related todos from all modules.
-
 - @TODO: Allow to create gui apps with QT or GTK+ or something. Just a wrapper for CLI, but similiar to html layout.
 
 - @TODO: On module init, set up the hooks, so not every module has to be tested. Looking forward to another ms saved.
