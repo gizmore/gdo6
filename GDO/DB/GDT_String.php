@@ -121,6 +121,7 @@ class GDT_String extends GDT
 	public function renderCell() { return html($this->getVar()); }
 	public function renderForm() { return GDT_Template::php('DB', 'form/string.php', ['field' => $this]); }
 	public function renderCLI() { return $this->displayLabel() . ': ' . $this->displayVar(); }
+	public function renderJSON() { return $this->getVar(); }
 	
 	################
 	### Validate ###

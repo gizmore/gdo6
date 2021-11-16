@@ -62,6 +62,13 @@ class GDT_Template extends GDT
 // 		self::$CURRENT = $me;
 // 		return $me;
 // 	}
+
+// 	public static $NAME = 0;
+// 	public function defaultName()
+// 	{
+// 		self::$NAME++;
+// 		return 'tpl' . self::$NAME;
+// 	}
 	
 	public function defaultLabel()
 	{
@@ -128,7 +135,13 @@ class GDT_Template extends GDT
 		$this->templateModule = $moduleName;
 		$this->templatePath = $path;
 		$this->templateVars = $tVars;
-		GDT_Response::make()->addFields($tVars);
+		
+		# HTML renders directly.
+		# JSON/CLI/XML render only the fields.
+		if (!Application::instance()->isHTML())
+		{
+			GDT_Response::make()->addFields($tVars);
+		}
 // 		$this->addFields($tVars);
 		return $this;
 	}

@@ -11,7 +11,7 @@ use GDO\Core\GDT_Template;
  * @TODO what about real checkboxes? Not a single one wanted/needed?
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.10.6
  * @since 5.0.0
  */
 class GDT_Checkbox extends GDT_Select
@@ -168,10 +168,10 @@ class GDT_Checkbox extends GDT_Select
 	    return $this->displayValue($this->getVar());
 	}
 	
-	public function renderJSON()
-	{
-	    return $this->displayValue($this->getVar());
-	}
+// 	public function renderJSON()
+// 	{
+// 	    return $this->displayValue($this->getVar());
+// 	}
 	
 	public function renderFilter($f)
 	{
