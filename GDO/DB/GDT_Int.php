@@ -180,6 +180,11 @@ class GDT_Int extends GDT
 	##########
 	### DB ###
 	##########
+	public function gdoColumnNames()
+	{
+		return [$this->name];
+	}
+	
 	public function gdoColumnDefine()
 	{
 		$unsigned = $this->unsigned ? " UNSIGNED" : "";

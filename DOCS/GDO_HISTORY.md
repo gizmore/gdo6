@@ -19,7 +19,18 @@ gdo6 Changelog.
     # Set your PATH env to gdo6/bin
     gdo admin.clearcache. # :)
     # It is also possible to install via http://gdo6/install/wizard.php
+
+## Improvements for v6.11.0 (27.11.2021)
     
+ - GDT_CreatedAt, GDT_EditedAt and GDT_DeletedAt are now GDT_Timestamp(6) instead of GDT_DateTime(3).
+ 
+ - GDO now automigrates via DB table copy, drop, create fresh, select copy into original table.
+
+     
+## Improvements for v6.10.7 (27.11.2021)
+
+ - GDT_Timezone is now a GDO_Timezone database table for using IDs as timezones
+
     
 ## Improvements for v6.10.6 (21.10.2021)
 

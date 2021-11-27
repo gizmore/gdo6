@@ -1,8 +1,8 @@
 <?php
 namespace GDO\DB;
 
-use GDO\Date\Time;
-use GDO\Date\GDT_DateTime;
+use GDO\Date\GDT_Timestamp;
+use GDO\Core\Application;
 
 /**
  * The created at column is not null and filled upon creation.
@@ -10,10 +10,10 @@ use GDO\Date\GDT_DateTime;
  * It has a default label and the default order is descending.
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 5.0
  */
-class GDT_CreatedAt extends GDT_DateTime
+class GDT_CreatedAt extends GDT_Timestamp
 {
 	public $notNull = true;
 	public $writable = false;
@@ -29,8 +29,8 @@ class GDT_CreatedAt extends GDT_DateTime
 	 */
 	public function blankData()
 	{
-	    $var = $this->var ? $this->var : Time::getDate();
-		return [$this->name => Time::getDate(Time::getTimestamp($var))];
+	    $var = $this->var ? $this->var : Application::$MICROTIME;
+		return [$this->name => $var];
 	}
 	
 	public function displayValue($var)

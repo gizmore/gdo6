@@ -14,6 +14,7 @@ use GDO\Date\Time;
 use GDO\Core\Website;
 use GDO\Util\Common;
 use GDO\DB\GDT_CreatedBy;
+use GDO\Core\Application;
 
 /**
  * Abstract Create|Update|Delete for a GDO using MethodForm.
@@ -333,7 +334,7 @@ abstract class MethodCrud extends MethodForm
 		# Mark deleted
 		if ($delAt = $this->gdo->gdoColumnOf(GDT_DeletedAt::class))
 		{
-		    $this->gdo->setVar($delAt->name, Time::getDate());
+		    $this->gdo->setVar($delAt->name, Application::$MICROTIME);
 		    if ($delBy = $this->gdo->gdoColumnOf(GDT_DeletedBy::class))
 		    {
 		        $this->gdo->setVar($delBy->name, GDO_User::current()->getID());

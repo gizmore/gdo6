@@ -2,6 +2,7 @@
 namespace GDO\Date;
 
 use GDO\Form\GDT_Select;
+use GDO\DB\GDT_ObjectSelect;
 
 /**
  * Timezone select.
@@ -10,7 +11,7 @@ use GDO\Form\GDT_Select;
  * @version 6.10.3
  * @since 6.10.0
  */
-final class GDT_Timezone extends GDT_Select
+final class GDT_Timezone extends GDT_ObjectSelect
 {
     public $max = 64;
     
@@ -21,28 +22,29 @@ final class GDT_Timezone extends GDT_Select
     {
         parent::__construct();
         $this->notNull();
-        $this->initChoices();
+        $this->table = GDO_Timezone::table();
+//         $this->initChoices();
         $this->initial(GDO_TIMEZONE);
         $this->icon('time');
-        $this->caseS();
-        $this->ascii();
+//         $this->caseS();
+//         $this->ascii();
         $this->completionHref(href('Core', 'TimezoneComplete'));
         $this->searchable(false);
     }
     
-    public function initChoices()
-    {
-        if (!$this->choices)
-        {
-            $tz = array_values(timezone_identifiers_list());
-            $this->choices = array_combine($tz, $tz);
-        }
-        return $this;
-    }
+//     public function initChoices()
+//     {
+//         if (!$this->choices)
+//         {
+//             $tz = array_values(timezone_identifiers_list());
+//             $this->choices = array_combine($tz, $tz);
+//         }
+//         return $this;
+//     }
     
     public function plugVar()
     {
-        return 'Europe/Berlin';
+        return GDO_Timezone::getBy('tz_name', 'Europe/Berlin');
     }
 
 }

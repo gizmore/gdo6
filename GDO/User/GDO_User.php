@@ -29,7 +29,7 @@ use GDO\Session\GDO_Session;
  * @author gizmore
  * @link https://www.wechall.net
  * @link https://mettwitze.gizmore.org
- * @version 6.10.6
+ * @version 6.11.0
  * @since 1.0.0
  */
 final class GDO_User extends GDO
@@ -63,12 +63,12 @@ final class GDO_User extends GDO
 			GDT_UInt::make('user_credits')->notNull()->initial('0')->label('credits')->icon('money')->searchable(false),
 			GDT_Gender::make('user_gender'),
 			GDT_Country::make('user_country'),
-			GDT_Language::make('user_language')->notNull()->initial(GDO_LANGUAGE)->searchable(false),
+			GDT_Language::make('user_language')->notNull()->initial(GDO_LANGUAGE)->searchable(false)->cascadeRestrict(),
 			GDT_Password::make('user_password'),
 		    GDT_DeletedAt::make('user_deleted_at'),
 		    GDT_CreatedAt::make('user_last_activity')->label('last_activity')->format('short'),
 			GDT_CreatedAt::make('user_register_time')->label('registered_at')->format('short'),
-		    GDT_Timezone::make('user_timezone')->initial('UTC')->notNull(),
+		    GDT_Timezone::make('user_timezone')->notNull()->initial('1')->cascadeRestrict(),
 			GDT_IP::make('user_register_ip')->useCurrent(),
 		    # Indexes
 		    GDT_Index::make()->indexColumns('user_last_activity'),
@@ -133,7 +133,7 @@ final class GDO_User extends GDO
 	public function getLanguage() { return GDO_Language::findById($this->getLangISO()); }
 	public function getCountryISO() { return $this->getVar('user_country'); }
 	public function getCountry() { $c = $this->getValue('user_country'); return $c ? $c : GDO_Country::unknownCountry(); }
-	public function hasTimezone() { return $this->getVar('user_timezone') !== 'UTC'; }
+	public function hasTimezone() { return $this->getVar('user_timezone') != 1; }
 	public function getTimezone() { return $this->hasTimezone() ? $this->getVar('user_timezone') : GDO_Session::get('timezone', GDO_TIMEZONE); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }

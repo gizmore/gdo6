@@ -280,7 +280,17 @@ abstract class GDT
 	    return $this->getValue();
 	}
 	
+	/**
+	 * Is this gdt automatically exchanged via systems, e.g. client<->server.
+	 * Interesting for password hashes and secrets (not serialize). GDT_Password is serializable as it's just the password form field.
+	 * @return boolean
+	 */
 	public function isSerializable() { return false; }
+	
+	/**
+	 * @TODO GDT::isPrimary() is weirdly used in Database types and Buttons. Rename the button one to isButtonPrimiary(). Document the weird quirk for GDT_AutoIncrement? (or where was the weird primary quirk?)
+	 * @return boolean
+	 */
 	public function isPrimary() { return false; }
 	
 	###################
@@ -675,6 +685,7 @@ abstract class GDT
 	################
 	### Database ###
 	################
+	public function gdoColumnNames() {}
 	public function gdoColumnDefine() {}
 	
 	##############

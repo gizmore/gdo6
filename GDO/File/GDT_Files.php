@@ -24,6 +24,7 @@ class GDT_Files extends GDT_File
 	########################
 	### STUB GDT methods ###
 	########################
+	public function gdoColumnNames() {} # NO DB column.
 	public function gdoColumnDefine() { return null; } # NO DB column. Your GDO_FileTable has the data.
 	public function getGDOData() {} # Only relation table. Handled by onCreate and onUpdate.
 	public function setGDOData(GDO $gdo=null) { return $this; }

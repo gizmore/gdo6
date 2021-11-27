@@ -42,6 +42,11 @@ class GDT_Enum extends GDT
 	############
 	### Base ###
 	############
+	public function gdoColumnNames()
+	{
+		return [$this->name];
+	}
+	
 	public function gdoColumnDefine()
 	{
 		$values = implode(',', array_map(array('GDO\Core\GDO', 'quoteS'), $this->enumValues));

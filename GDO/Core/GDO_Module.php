@@ -24,7 +24,7 @@ use GDO\UI\GDT_Link;
  * GDO base module class.
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 1.0.0
  */
 class GDO_Module extends GDO
@@ -32,7 +32,7 @@ class GDO_Module extends GDO
 	################
 	### Override ###
 	################
-	public $module_version = "6.10";
+	public $module_version = "6.11";
 	public $module_author = "Christian Busch <gizmore@wechall.net>";
 	public $module_license = "MIT";
 	public $module_priority = 50;
@@ -65,12 +65,13 @@ class GDO_Module extends GDO
 	 */
 	public function getDependencies() {}
 	
-    /**
-     * A list of optional modules that enhance this one.
-     * Override this.
-	 * @return string[]
-	 */
-	public function getFriendencies() {}
+//     /**
+//      * A list of optional modules that enhance this one.
+//      * Override this.
+//      * @deprecated
+// 	 * @return string[]
+// 	 */
+// 	public function getFriendencies() {}
 	
     /**
 	 * Skip these folders in unit tests using strpos.
@@ -89,7 +90,7 @@ class GDO_Module extends GDO
 	    $coreDeps = $this->gdoDependencies();
 	    if ($deps = $this->getDependencies())
 	    {
-	        return array_merge($coreDeps, $deps);
+	        return array_unique(array_merge($coreDeps, $deps));
 	    }
 	    else
 	    {
@@ -565,6 +566,7 @@ class GDO_Module extends GDO
 	{
 	    if ($gdt = $this->getSetting($key))
 	    {
+	    	$gdt->gdo($user);
     	    $settings = $this->loadUserSettings($user);
     	    $var = isset($settings[$key]) ? $settings[$key] : $gdt->initial;
    	        return $gdt->initial($var);

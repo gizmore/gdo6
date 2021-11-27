@@ -88,6 +88,11 @@ class GDT_String extends GDT
 	######################
 	### Table creation ###
 	######################
+	public function gdoColumnNames()
+	{
+		return [$this->name];
+	}
+	
 	public function gdoColumnDefine()
 	{
 		$charset = $this->gdoCharsetDefine();

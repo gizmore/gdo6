@@ -1,15 +1,17 @@
 <?php
 namespace GDO\DB;
 
-use GDO\Date\Time;
-use GDO\Date\GDT_DateTime;
+use GDO\Date\GDT_Timestamp;
+use GDO\Core\Application;
 
 /**
  * Automatically update on updates.
+ * 
  * @author gizmore
- * @since 6.04
+ * @version 6.11.0
+ * @since 6.4.0
  */
-final class GDT_EditedAt extends GDT_DateTime
+final class GDT_EditedAt extends GDT_Timestamp
 {
 	public $writable = false;
 	public $editable = false;
@@ -20,17 +22,9 @@ final class GDT_EditedAt extends GDT_DateTime
 	
 	public function gdoBeforeUpdate(Query $query)
 	{
-// 	    if (!$this->var)
-// 	    {
-    		$now = Time::getDate();
-    		$query->set($this->identifier() . "=" . quote($now));
-    		$this->gdo->setVar($this->name, $now);
-// 	    }
+		$now = Application::$MICROTIME;
+		$query->set($this->identifier() . "=" . $now);
+		$this->gdo->setVar($this->name, $now);
 	}
-
-// 	public function blankData()
-// 	{
-// 	    return [$this->name => Time::getDate()];
-// 	}
 
 }

@@ -192,6 +192,7 @@ class Result
 	public function &fetchAllArray2dObject(GDO $table=null, $json=false)
 	{
 		$table = $table ? $table : $this->table;
+// 		$object = $table->cache->getDummy();
 		$array2d = [];
 		while ($object = $this->fetchAs($table))
 		{

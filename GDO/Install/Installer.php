@@ -15,8 +15,9 @@ use GDO\Util\Strings;
 
 /**
  * Install helper.
+ * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.11.0
  * @since 6.0.0
  */
 class Installer
@@ -36,9 +37,9 @@ class Installer
 		if (!$module->isPersisted())
 		{
 			GDO_Module::table()->deleteWhere('module_name = '.$module->quoted('module_name'));
-			$module->setVars(['module_enabled'=>'1', 'module_version'=>'6.00', 'module_priority' => $module->module_priority]);
+			$module->setVars(['module_enabled'=>'1', 'module_version'=>'6.10', 'module_priority' => $module->module_priority]);
 			$module->insert();
-			self::upgradeTo($module, '6.00');
+			self::upgradeTo($module, '6.10');
 		}
 		
 		while ($module->getVersion() != $module->module_version)
@@ -127,7 +128,78 @@ class Installer
 		self::upgradeTo($module, $version);
 	}
 		
+	/**
+	 * On an upgrade we execute a possible upgrade file.
+	 * We also recreate the database schema.
+	 * 
+	 * @param GDO_Module $module
+	 * @param string $version
+	 */
 	public static function upgradeTo(GDO_Module $module, $version)
+	{
+		self::includeUpgradeFile($module, $version);
+		self::recreateDatabaseSchema($module, $version);
+	}
+	
+	/**
+	 * Recreate a database schema / automigration.
+	 * 
+	 * @param GDO_Module $module
+	 * @param string $version
+	 */
+	public static function recreateDatabaseSchema(GDO_Module $module, $version)
+	{
+		if ($classes = $module->getClasses())
+		{
+			try
+			{
+				$db = Database::instance();
+				foreach ($classes as $classname)
+				{
+					/**
+					 * @var GDO $gdo
+					 */
+					$gdo = $classname::table();
+					if ($gdo->gdoIsTable())
+					{
+						$tablename = $gdo->gdoTableName();
+						$temptable = "TEMP_{$tablename}";
+						$db->disableForeignKeyCheck();
+						$gdo->createTable(); # CREATE TABLE IF NOT EXIST
+						$db->disableForeignKeyCheck();
+						$query = "CREATE TABLE $temptable LIKE $tablename";
+						$db->queryWrite($query);
+						$query = "INSERT INTO $temptable SELECT * FROM $tablename";
+						$db->queryWrite($query);
+						$db->disableForeignKeyCheck();
+						$query = "DROP TABLE $tablename";
+						$db->queryWrite($query);
+						$gdo->createTable(); # RECREATE TABLE
+						$db->disableForeignKeyCheck();
+						$columns = [];
+						foreach ($gdo->gdoColumnsCache() as $gdt)
+						{
+							if ($c = $gdt->gdoColumnNames())
+							{
+								$columns = array_merge($columns, $c);
+							}
+						}
+						$columns = implode(', ', $columns);
+						$query = "INSERT INTO $tablename ($columns) SELECT $columns FROM $temptable";
+						$db->queryWrite($query);
+						$query = "DROP TABLE $temptable";
+						$db->queryWrite($query);
+					}
+				}
+			}
+			finally
+			{
+				$db->enableForeignKeyCheck();
+			}
+		}
+	}
+	
+	public static function includeUpgradeFile(GDO_Module $module, $version)
 	{
 		$upgradeFile = $module->filePath("upgrade/$version.php");
 		if (FileUtil::isFile($upgradeFile))

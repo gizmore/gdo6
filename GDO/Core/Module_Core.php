@@ -12,6 +12,7 @@ use GDO\User\GDO_Permission;
 use GDO\UI\GDT_Page;
 use GDO\File\FileUtil;
 use GDO\User\GDO_UserPermission;
+use GDO\Date\GDO_Timezone;
 
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
@@ -23,7 +24,7 @@ use GDO\User\GDO_UserPermission;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
@@ -38,7 +39,7 @@ final class Module_Core extends GDO_Module
      * 
      * @var string
      */
-	const GDO_REVISION = '6.10.6-r6182';
+	const GDO_REVISION = '6.11.0-r6186';
 
 	##############
 	### Module ###
@@ -60,6 +61,7 @@ final class Module_Core extends GDO_Module
 	        GDO_Module::class,
 	        GDO_ModuleVar::class,
 	        GDO_Permission::class,
+	    	GDO_Timezone::class,
 	        GDO_User::class,
 	        GDO_UserPermission::class,
 	    ];

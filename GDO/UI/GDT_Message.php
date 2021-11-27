@@ -172,6 +172,16 @@ class GDT_Message extends GDT_Text
     ##########
     ### DB ###
     ##########
+    public function gdoColumnNames()
+    {
+    	return [
+    		"{$this->name}_input",
+    		"{$this->name}_output",
+    		"{$this->name}_text",
+    		"{$this->name}_editor",
+    	];
+    }
+    
     public function gdoColumnDefine()
     {
         return

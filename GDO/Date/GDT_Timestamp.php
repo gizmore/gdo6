@@ -15,7 +15,7 @@ use GDO\Core\Application;
  * The value type is an integer/timestamp.
  *  
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 6.0.7
  */
 class GDT_Timestamp extends GDT
@@ -144,8 +144,9 @@ class GDT_Timestamp extends GDT
 	##############
 	### Millis ###
 	##############
-	public $millis = true;
-	public function millis($millis)
+	# @TODO rename millis to precision in GDT_Timestamp.
+	public $millis = 3;
+	public function millis($millis=3)
 	{
 	    $this->millis = $millis;
 	    return $this;
@@ -199,9 +200,14 @@ class GDT_Timestamp extends GDT
 	##############
 	### Column ###
 	##############
+	public function gdoColumnNames()
+	{
+		return [$this->name];
+	}
+	
 	public function gdoColumnDefine()
 	{
-		return "{$this->identifier()} TIMESTAMP{$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
+		return "{$this->identifier()} TIMESTAMP({$this->millis}){$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 	
 	##############

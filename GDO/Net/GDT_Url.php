@@ -28,7 +28,7 @@ class GDT_Url extends GDT_String
 	public function defaultLabel() { return $this->label('url'); }
 	
 	public $reachable = false;
-	public $allowLocal = false;
+	public $allowLocal = true;
 	public $allowExternal = true;
 	public $schemes = ['http', 'https'];
 	public $noFollow = false;
