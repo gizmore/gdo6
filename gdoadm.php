@@ -28,11 +28,12 @@ use GDO\Install\Method\InstallCronjob;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
+ * It shall not be accesible to normal users!
  * 
  * @see ./gdoadm.sh
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 6.10.0
  * 
  * @see gdo_update.sh - to update your gdo6 installation
@@ -42,7 +43,7 @@ use GDO\Install\Method\InstallCronjob;
  * @see gdo_bower.sh to install javascript dependencies
  * @see gdo_post_install.sh to finish the installation process
  * @see gdo_cronjob.sh - to run the module cronjobs
- * @see bin/gdo - to invoke a gdo6 method via the CLI
+ * @see bin/gdo - to invoke a gdo6 method via the CLI - also for normal users.
  */
 
 /** @var $argc int **/

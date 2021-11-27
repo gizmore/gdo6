@@ -252,7 +252,7 @@ class GDO_Module extends GDO
 			GDT_Name::make('module_name')->notNull()->unique(),
 			GDT_Int::make('module_priority')->notNull()->unsigned()->initial($this->module_priority),
 			GDT_Sort::make('module_sort'),
-			GDT_Version::make('module_version')->notNull()->initial('0.00'),
+			GDT_Version::make('module_version')->notNull(),
 			GDT_Checkbox::make('module_enabled')->notNull()->initial('0'),
 		];
 	}

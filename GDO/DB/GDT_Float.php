@@ -7,7 +7,8 @@ class GDT_Float extends GDT_Int
 	{
 		return ( ($var === null) ||
 			     (trim($var, "\r\n\t ") ==='') ) ?
-			null : (float) $var; }
+			null : (float) $var;
+	}
 	
 	public function gdoColumnDefine()
 	{
@@ -22,8 +23,6 @@ class GDT_Float extends GDT_Int
 
 	/**
 	 * Replace , with . for user input.
-	 * {@inheritDoc}
-	 * @see \GDO\DB\GDT_Int::inputToVar()
 	 */
 	public function inputToVar($input)
 	{
@@ -45,15 +44,18 @@ class GDT_Float extends GDT_Int
 	    return t('decimal_point');
 	}
 	
-	public static function displayS($var, $decimals=5, $dot=null, $comma=null)
+	public static function displayS($var, $decimals=4, $dot=null, $comma=null)
 	{
-	    $dot = $dot !== null ? $dot : self::decimalPoint();
-	    $comma = $comma != null ? $comma : self::thousandSeperator();
-	    $display = number_format($var, $decimals, $dot, $comma);
-	    return $display;
+		if ($var !== null)
+		{
+		    $dot = $dot !== null ? $dot : self::decimalPoint();
+		    $comma = $comma != null ? $comma : self::thousandSeperator();
+		    $display = number_format($var, $decimals, $dot, $comma);
+		    return $display;
+		}
 	}
 	
-	public $decimals = 5;
+	public $decimals = 4;
 	public function decimals($decimals)
 	{
 	    $this->decimals = $decimals;

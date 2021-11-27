@@ -42,6 +42,7 @@ final class GDT_IconUTF8
         'edit' => '✎',
         'email' => '✉',
         'error' => '⚠',
+    	'eye' => '👁',
         'face' => '☺',
         'female' => '♀',
         'file' => '🗎',

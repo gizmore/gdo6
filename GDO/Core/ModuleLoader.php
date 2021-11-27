@@ -14,7 +14,7 @@ use GDO\Table\Sort;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 3.0.0
  */
 final class ModuleLoader
@@ -219,8 +219,8 @@ final class ModuleLoader
 		
 		if ($loadFS && (!$this->loadedFS) )
 		{
-		    $init = !$loadDB;
-			$this->loadModulesFS($init);
+// 		    $init = !$loadDB;
+			$this->loadModulesFS(false);
 			$loaded = $this->loadedFS = true;
 		}
 		
@@ -289,8 +289,11 @@ final class ModuleLoader
 		$this->sortModules(['module_priority' => true]);
 		foreach ($this->modules as $module)
 		{
-			$module->buildConfigCache();
-			$module->buildSettingsCache();
+			if ($init)
+			{
+				$module->buildConfigCache();
+				$module->buildSettingsCache();
+			}
 		}
 	}
 	

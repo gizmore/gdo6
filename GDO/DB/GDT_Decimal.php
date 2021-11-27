@@ -34,7 +34,7 @@ class GDT_Decimal extends GDT_Int
 	
 	public function renderCell()
 	{
-	    return GDT_Float::displayS($this->getVar(), 0);
+	    return GDT_Float::displayS($this->getVar(), $this->digitsAfter);
 	}
 	
 	public function renderForm()
