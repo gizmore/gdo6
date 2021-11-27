@@ -6,7 +6,7 @@ use GDO\Core\GDT_Template;
 /**
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  */
 class GDT_DateTime extends GDT_Date
 {

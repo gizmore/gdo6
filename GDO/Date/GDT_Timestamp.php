@@ -52,7 +52,7 @@ class GDT_Timestamp extends GDT
 	
 	public function toVar($value)
 	{
-		return $value === null ? null : Time::displayTimestamp($value, 'db', null, 'UTC');
+		return $value === null ? null : Time::displayTimestamp($value, 'db', null, Time::UTC);
 	}
 	
 	public function getVar()
