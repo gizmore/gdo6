@@ -1,6 +1,4 @@
 <?php
-namespace GDO;
-
 use GDO\Core\Application;
 use GDO\Core\Debug;
 use GDO\Core\Logger;
@@ -25,6 +23,7 @@ use GDO\Core\ModuleProviders;
 use GDO\Util\Strings;
 use GDO\Install\Module_Install;
 use GDO\Install\Method\InstallCronjob;
+use GDO\Install\Method\SystemTest;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
@@ -61,6 +60,7 @@ function printUsage($code=1)
     $exe = $argv[0];
     echo "Usage:\n";
     echo "\n--- Spawn ---\n";
+    echo "php $exe systemtest - To run the installer system test.\n";
     echo "php $exe configure [<config.php>] - To generate a protected/config.php.\n";
     echo "php $exe test [<config.php>] - To test your protected/config.php\n";
     echo "php $exe admin <username> <password> [<email>] - to (re)set an admin account\n";
@@ -110,13 +110,13 @@ if (!defined('GDO_CONFIGURED'))
 }
 
 # App is CLI and an installer
-final class InstallerApp extends Application
+final class gdoadm extends Application
 {
     public function isCLI() { return true; }
     public function isInstall() { return true; }
 }
 
-new InstallerApp(); # Create App
+new gdoadm(); # Create App
 Database::init();
 Cache::flush();
 Cache::fileFlush();
@@ -131,7 +131,16 @@ ModuleLoader::instance()->loadModules(GDO_DB_ENABLED, true);
 
 define('GDO_CORE_STABLE', 1);
 
-if ($argv[1] === 'configure')
+if ($argv[1] === 'systemtest')
+{
+	if ($argc !== 2)
+	{
+		printUsage(1);
+	}
+	echo SystemTest::make()->execute()->renderCLI();
+	echo PHP_EOL;
+}
+elseif ($argv[1] === 'configure')
 {
     # @TODO write a repl configurator.
 	if ($argc === 2)

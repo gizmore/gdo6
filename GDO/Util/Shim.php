@@ -43,3 +43,16 @@ if (!function_exists('getallheaders')) {
     }
     
 }
+
+if (!function_exists('openssl_random_pseudo_bytes'))
+{
+	function openssl_random_pseudo_bytes($length, $crypto_strong)
+	{
+		$rand = '';
+		for ($i = 0; $i < $length; $i++)
+		{
+			$rand .= chr(rand(0, 255));
+		}
+		return $rand;
+	}
+}

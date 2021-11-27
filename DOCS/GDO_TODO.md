@@ -1,10 +1,8 @@
 # TODO
 
-This is a todo list that did not make it into a code annotation yet.
-For a complete todo, please grep -R --case-i "@TODO" GDO/.
+This is a todo list that did not make it into a code annotation yet, or are just ideas.
+For a more complete todo, please see GDO_TODO_AUTO_GENERATED.md
 
-
-- @TODO: Make Query::order() to use one param "date desc" instead of 2 params "date", false. (DONE, it is not as nice and fast but feels more easy to use->order('uer_level DESC'). Before it was use->order('user_level', false). Maybe the old way with constants is best?: ->order('user_level', Query::DESC) or ->orderDESC('user_level). nah!
 
 - @TODO: Make use of user_type bot. Write a module that identifes bots by their user agent. What else?
 
@@ -22,21 +20,13 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 
 - @TODO: Move GDT_ACL from gdo6-friends to gdo6 core.
 
-- @TODO: gdo6-session-cookie shall not use fake cookies. It can fix this ugly problem of requiering a 2nd request for a cookie.
-
 - @TODO: gdo6-session-db can use precalculated sessids to fix the ugly problem of requiering a 2nd request for a real saved session.
 
 - @TODO: move method ClearCache from Module_Admin to Module_Core.
 
-- @TODO: Add a (database) lock to the javascript minifier, so only one thread/user is performing it, the others have to wait. Lock timeout maybe 90s . Move Util/JS stuff to the GDO/Javascript module.
-
 - @TODO: Add security gpg key for security.txt contact.
 
-- @TODO: Implement auto migrations via: dump->wipe->install->reimport. Trigger this via a list of revisions that require it. Measure revision before and after update. If revision is between this, trigger a wipe-reinstall.
-
-- @TODO: Module_Login.force_auth ... if enabled, only login would work unless authenticated.
-
-- @TODO: Make a table for last cronjob execution. Create MethodCronjob function every($duration) and compare with last execution to make creating periodic cronjobs way easier. Some cronjobs already handle periodicy theyself. Make them use the new system.
+- @TODO: Module_Login.force_auth ... if enabled, only login would work unless authenticated. Steal from lup-project.
 
 - @TODO: Allow to create gui apps with QT or GTK+ or something. Just a wrapper for CLI, but similiar to html layout.
 
@@ -46,6 +36,5 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 
 - @TODO: Module_Benchmark to benchmark some stuff. maybe make it rely on Module_CountryCoordinates for bulk and many insert stuff.
 
-- @TODO: make gdo.cmd work without git4windows.
-
+- @TODO: create a composer package for the gdo6 core. Further packages can still be maintained with gdoadm.sh
 

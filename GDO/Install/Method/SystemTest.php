@@ -22,13 +22,13 @@ final class SystemTest extends Method
 			    FileUtil::createDir(GDO_PATH . 'assets'),
 				$this->testBower(),
 				function_exists('mb_strlen'),
-			    (bool) ini_get('date.timezone'),
 			    function_exists('mime_content_type'),
 			),
 			'optional' => array(
 			    function_exists('curl_init'),
 			    function_exists('imagecreate'),
 			    class_exists('\\Memcached'),
+				function_exists('openssl_cipher_iv_length'),
 			),
 		);
 		return $this->templatePHP('page/systemtest.php', $tVars);
