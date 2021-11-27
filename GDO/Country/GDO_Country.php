@@ -63,15 +63,15 @@ final class GDO_Country extends GDO
 	/**
 	 * @return self[]
 	 */
-	public function &allCached($oder=null, $asc=true)
+	public function &allCached($order=null, $json=false)
 	{
-	    $all = parent::allCached($oder, $asc);
+	    $all = parent::allCached($order, $json);
 	    return $this->allSorted($all);
 	}
 	
-	public function &all($oder=null, $asc=true)
+	public function &all($order=null, $json=false)
 	{
-	    return $this->allSorted(parent::all($oder, $asc));
+	    return $this->allSorted(parent::all($order, $json));
 	}
 	
 	private function &allSorted(array &$all)

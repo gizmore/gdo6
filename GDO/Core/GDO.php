@@ -202,11 +202,11 @@ abstract class GDO
     public function toJSON()
     {
         $values = [];
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            if ($gdoType->isSerializable())
+            if ($gdt->isSerializable())
             {
-                if ($data = $gdoType->gdo($this)->getGDOData())
+                if ($data = $gdt->gdo($this)->getGDOData())
                 {
                     foreach ($data as $k => $v)
                     {
@@ -1428,20 +1428,20 @@ abstract class GDO
     /**
      * @return self[]
      */
-    public function &all($order=null, $asc=true)
+    public function &all($order=null, $json=false)
     {
         $order = $order ? $order : $this->gdoPrimaryKeyColumn()->name;
-        return self::allWhere('true', $order, $asc);
+        return self::allWhere('true', $order, $json);
     }
     
     /**
      * @return self[]
      */
-    public function &allWhere($condition='true', $order=null, $asc=true)
+    public function &allWhere($condition='true', $order=null, $json=false)
     {
         return self::table()->select()->
-            where($condition)->order($order, $asc)->
-            exec()->fetchAllArray2dObject();
+            where($condition)->order($order)->
+            exec()->fetchAllArray2dObject(null, $json);
     }
     
     public function uncacheAll()
@@ -1467,7 +1467,7 @@ abstract class GDO
      * @param boolean $asc
      * @return self[]
      */
-    public function &allCached($order=null, $asc=true)
+    public function &allCached($order=null, $json=false)
     {
         if ($this->cached())
         {
@@ -1481,13 +1481,13 @@ abstract class GDO
         else
         {
             # No caching at all
-        	return $this->select()->order("$order $asc")->exec()->fetchAllArray2dObject();
+        	return $this->select()->order($order)->exec()->fetchAllArray2dObject(null, $json);
         }
         
         if (!$this->memCached())
         {
             # GDO cached
-            $all = $this->select()->order("$order $asc")->exec()->fetchAllArray2dObject();
+        	$all = $this->select()->order($order)->exec()->fetchAllArray2dObject(null, $json);
             $cache->all = $all;
             return $all;
         }
@@ -1497,7 +1497,7 @@ abstract class GDO
             $key = $this->cacheAllKey();
             if (false === ($all = Cache::get($key)))
             {
-            	$all = $this->select()->order("$order $asc")->exec()->fetchAllArray2dObject();
+            	$all = $this->select()->order($order)->exec()->fetchAllArray2dObject(null, $json);
                 Cache::set($key, $all);
             }
             $cache->all = $all;

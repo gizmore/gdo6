@@ -3,14 +3,13 @@ namespace GDO\Country\Method;
 
 use GDO\Country\GDO_Country;
 use GDO\Core\GDT_Array;
-use GDO\Core\Website;
 use GDO\Core\MethodAjax;
 
 /**
  * AJAX List of all countries.
  * 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.11.0
  * @since 6.10.1
  */
 final class AjaxList extends MethodAjax

@@ -16,7 +16,7 @@ final class Timezones extends MethodAjax
 {
 	public function execute()
 	{
-		$data = GDO_Timezone::table()->select()->exec()->fetchAllArray2dObject();
+		$data = GDO_Timezone::table()->allTimezones();
 		return GDT_Array::makeWith($data);
 	}
 

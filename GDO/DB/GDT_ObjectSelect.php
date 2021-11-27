@@ -11,7 +11,7 @@ use GDO\Form\GDT_Select;
  * It inits the choices with a call to $table->all()!
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.11.0
  * @since 6.2.0
  */
 class GDT_ObjectSelect extends GDT_Select
@@ -91,7 +91,25 @@ class GDT_ObjectSelect extends GDT_Select
 	
 	public function renderJSON()
 	{
-	    return $this->renderCell();
+		/**
+		 * @var $value GDO
+		 */
+		if ($value = $this->getValue())
+		{
+			if (is_array($value))
+			{
+				$json = [];
+				foreach ($value as $obj)
+				{
+					$json[] = $obj->toJSON();
+				}
+				return $json;
+			}
+			else
+			{
+				return $value->toJSON();
+			}
+		}
 	}
 	
 	public function renderFilter($f)

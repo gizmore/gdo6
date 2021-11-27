@@ -10,7 +10,8 @@ use GDO\Form\GDT_Submit;
 
 /**
  * Detect timezone by name.
- * 
+ * Call Timezone method with resolved id.
+ *
  * @author gizmore
  */
 final class TimezoneDetect extends MethodForm
@@ -23,7 +24,7 @@ final class TimezoneDetect extends MethodForm
 			GDT_String::make('timezone')->notNull(),
 			GDT_Validator::make('validTimezone')->validator('timezone', [$this, 'validateTimezoneName']),
 		]);
-		$form->actions()->addField(GDT_Submit::make());
+		$form->actions()->addField(GDT_Submit::make()->label('btn_set'));
 	}
 	
 	public function validateTimezoneName(GDT_Form $form, GDT_String $string, $value)
@@ -38,7 +39,7 @@ final class TimezoneDetect extends MethodForm
 	public function formValidated(GDT_Form $form)
 	{
 		$_REQUEST['tzform']['timezone'] = $this->tz->getID();
-		return Timezone::make()->execute();
+		return Timezone::make()->execute($form);
 	}
 
 }

@@ -40,14 +40,14 @@ final class GDO_Timezone extends GDO
 	###############
 	public function displayName()
 	{
-		return $this->getName();
+		return $this->getName() . ' ' . $this->displayOffset();
 	}
 	
 	public function displayOffset()
 	{
 		$o = $this->getOffset();
 		$oo = abs($o);
-		return sprintf('%s%02d:%02d',
+		return sprintf('%s%02d%02d',
 			$o >= 0 ? '+' : '-',
 			$oo / 60, $oo % 60
 		);
@@ -57,28 +57,19 @@ final class GDO_Timezone extends GDO
 	### Timezone Object ###
 	#######################
 	/**
-	 * @var \DateTimeZone
-	 */
-	private $timezone = null;
-	
-	/**
 	 * @return \DateTimeZone
 	 */
 	public function getTimezone()
 	{
-		if ($this->timezone === null)
-		{
-			$this->timezone = new \DateTimeZone($this->getName());
-		}
-		return $this->timezone;
+		return Time::getTimezoneObject($this->getID());
 	}
 
 	#############
 	### Cache ###
 	#############
-	public static function allTimezones()
+	public function allTimezones()
 	{
-		return self::table()->select()->exec()->fetchAllArray2dObject();
+		return array_values($this->allCached('tz_name', true));
 	}
-
+	
 }
