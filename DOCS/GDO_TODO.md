@@ -44,4 +44,8 @@ For a complete todo, please grep -R --case-i "@TODO" GDO/.
 
 - @TODO: Module_Heartbeat or an implementation in OnlineUsers.
 
-- 
+- @TODO: Module_Benchmark to benchmark some stuff. maybe make it rely on Module_CountryCoordinates for bulk and many insert stuff.
+
+- @TODO: make gdo.cmd work without git4windows.
+
+

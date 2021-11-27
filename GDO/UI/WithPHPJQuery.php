@@ -86,4 +86,25 @@ trait WithPHPJQuery
 		return $this->attr('style', $rules);
 	}
 
+	/**
+	 * @var callable
+	 */
+	public $click;
+	
+	/**
+	 * Click handler.
+	 * @param callable $callable
+	 * @return self
+	 */
+	public function onclick($callable)
+	{
+		$this->click = $callable;
+		return $this;
+	}
+	
+	public function click(...$args)
+	{
+		return call_user_func($this->click, ...$args);
+	}
+	
 }

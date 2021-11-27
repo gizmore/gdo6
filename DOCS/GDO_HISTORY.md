@@ -25,11 +25,11 @@ gdo6 changelog.
  
  - GDT_CreatedAt, GDT_EditedAt and GDT_DeletedAt are now GDT_Timestamp(3) instead of GDT_DateTime(3).
  
- - GDO now automigrates on minor patch levels via DB table 1.copy, 2.drop, 3.create_fresh, 4.select copy into fresh table. Works!
+ - GDO now automigrates on minor patch levels via DB table 1.copy, 2.drop, 3.create_fresh, 4.select copy_into_fresh_table.
  
  - Copy of GDT is no longer supported. Reuse is a key feature. Might only be a problem for ranzgruppe.com.
 
- - MethodCronjob methods can now specify the function runAt() to configure when and how often the cronjobs run. Crontab syntax is used.
+ - MethodCronjob methods can now specify the function runAt() to configure when and how often the cronjobs run. Crontab syntax is used. Some old cronjob code still needs to be refactored.
  
      
 ## Improvements for v6.10.7 (27.11.2021)

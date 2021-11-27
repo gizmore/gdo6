@@ -41,25 +41,4 @@ class GDT_Submit extends GDT_Label
 	public function unadvised() { return $this->priority(self::UNADVISED); }
 	public function priority($priority) { $this->priority = $priority; return $this; }
 	
-	/**
-	 * @var callable
-	 */
-	public $click;
-	
-	/**
-	 * Click handler.
-	 * @param callable $callable
-	 * @return self
-	 */
-	public function onclick($callable)
-	{
-		$this->click = $callable;
-		return $this;
-	}
-	
-	public function click(...$args)
-	{
-		return call_user_func($this->click, ...$args);
-	}
-
 }
