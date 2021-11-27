@@ -26,7 +26,7 @@ use GDO\Util\Common;
  * Uses WithLabel, WithFormFields, WithDatabase and WithOrder.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 6.0.0
  * 
  * @see GDT_UInt
@@ -191,7 +191,7 @@ class GDT_Int extends GDT
 		return "{$this->identifier()} {$this->gdoSizeDefine()}INT{$unsigned}{$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 	
-	private function gdoSizeDefine()
+	protected function gdoSizeDefine()
 	{
 		switch ($this->bytes)
 		{

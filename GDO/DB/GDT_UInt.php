@@ -9,7 +9,7 @@ namespace GDO\DB;
  * Base class of GDT_Object.
 
  * @author gizmore
- * @version 6.10.1
+ * @version 6.11.0
  * @since 6.5.0
  * 
  * @see GDT_Object
