@@ -216,7 +216,7 @@ abstract class Method
 	public function gdoParameter($key, $throw=true)
 	{
 	    /** @var $gdt GDT **/
-	    if ($gdt = $this->gdoParameterCache()[$key])
+	    if ($gdt = @$this->gdoParameterCache()[$key])
 	    {
 	        $gdt->var($gdt->initial);
     	    $gdt->getRequestVar($gdt->formVariable(), $gdt->var);

@@ -247,9 +247,9 @@ class Database
 	private static function hashedColumns(GDO $gdo)
 	{
 		$columns = [];
-		foreach ($gdo->gdoColumns() as $gdoType)
+		foreach ($gdo->gdoColumns() as $gdt)
 		{
-			$columns[$gdoType->name] = $gdoType->gdtTable($gdo);
+			$columns[$gdt->name] = $gdt->gdtTable($gdo);
 		}
 		return $columns;
 	}

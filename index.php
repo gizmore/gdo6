@@ -166,6 +166,22 @@ if (isset($_GET['_url']) && $_GET['_url'])
         
         else
         {
+        	# serve static file with etag.
+        	$last_modified_time = filemtime($url);
+        	$etag = md5_file($url);
+        	hdr("Last-Modified: ".gmdate("D, d M Y H:i:s", $last_modified_time)." GMT");
+        	hdr("Etag: $etag");
+        	
+        	# cache hit
+        	if (@strtotime(@$_SERVER['HTTP_IF_MODIFIED_SINCE']) == $last_modified_time ||
+        	    trim(@$_SERVER['HTTP_IF_NONE_MATCH']) == $etag)
+        	{
+        		http_response_code(304);
+        		timingHeader();
+        		die(0); 
+        	}
+        	
+        	# 200 - serve
             hdr('Content-Type: '.$type);
             hdr('Content-Size: '.filesize($url));
             timingHeader();

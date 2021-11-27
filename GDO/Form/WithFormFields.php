@@ -6,7 +6,7 @@ namespace GDO\Form;
  * They also can have inline javascript.
  *  
  * @author gizmore
- * @version 6.10.1
+ * @version 6.11.0
  * @since 6.1.0
  * 
  * @see WithPHPJQuery
@@ -16,7 +16,7 @@ trait WithFormFields
 	public $inlineJS;
 	public function inlineJS($inlineJS) { $this->inlineJS = $inlineJS; return $this; }
 	
-	public function required($required=true) { $this->notNull = $required; return $this; }
+	public function required($required=true) { return $this->notNull($required); }
 	public function htmlRequired() { return $this->notNull ? ' required="required"' : ''; }
 	
 	public function enabled($enabled=true) { return $this->writable($enabled); }

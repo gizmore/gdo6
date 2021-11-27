@@ -5,9 +5,9 @@ $field instanceof GDT_Toolbar;
 <md-toolbar md-scroll-shrink>
   <div class="md-toolbar-tools">
 <?php
-foreach ($field->getFields() as $gdoType)
+foreach ($field->getFields() as $gdt)
 {
-	echo $gdoType->renderCell();
+	echo $gdt->renderCell();
 }
 ?>
   </div>

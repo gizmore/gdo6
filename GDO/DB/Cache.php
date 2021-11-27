@@ -242,6 +242,8 @@ class Cache
     	    }
 		}
 		
+		$back->tempReset();
+		
 		return $back;
 	}
 	

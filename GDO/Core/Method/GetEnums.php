@@ -32,11 +32,11 @@ final class GetEnums extends Method
 						{
 							if (!$table->gdoAbstract())
 							{
-								foreach ($table->gdoColumnsCache() as $name => $gdoType)
+								foreach ($table->gdoColumnsCache() as $name => $gdt)
 								{
-									if ($gdoType instanceof GDT_Enum)
+									if ($gdt instanceof GDT_Enum)
 									{
-										$columns[$table->gdoClassName().'.'.$name] = $gdoType->enumValues;
+										$columns[$table->gdoClassName().'.'.$name] = $gdt->enumValues;
 									}
 								}
 							}
@@ -47,33 +47,33 @@ final class GetEnums extends Method
 			
 			if ($config = $module->getConfigCache())
 			{
-				foreach ($config as $gdoType)
+				foreach ($config as $gdt)
 				{
-					if ($gdoType instanceof GDT_Enum)
+					if ($gdt instanceof GDT_Enum)
 					{
-						$columns[$module->getName().'.config.'.$gdoType->name] = $gdoType->enumValues;
+						$columns[$module->getName().'.config.'.$gdt->name] = $gdt->enumValues;
 					}
 				}
 			}
 		
 			if ($config = $module->getUserConfig())
 			{
-				foreach ($config as $gdoType)
+				foreach ($config as $gdt)
 				{
-					if ($gdoType instanceof GDT_Enum)
+					if ($gdt instanceof GDT_Enum)
 					{
-						$columns[$module->getName().'.userconfig.'.$name] = $gdoType->enumValues;
+						$columns[$module->getName().'.userconfig.'.$name] = $gdt->enumValues;
 					}
 				}
 			}
 
 			if ($config = $module->getUserSettings())
 			{
-				foreach ($config as $gdoType)
+				foreach ($config as $gdt)
 				{
-					if ($gdoType instanceof GDT_Enum)
+					if ($gdt instanceof GDT_Enum)
 					{
-						$columns[$module->getName().'.settings.'.$name] = $gdoType->enumValues;
+						$columns[$module->getName().'.settings.'.$name] = $gdt->enumValues;
 					}
 				}
 			}

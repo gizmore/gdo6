@@ -1,4 +1,5 @@
 <?php
+namespace GDO\Mail\lang;
 return [
     'cfg_user_allow_email' => 'Allow people to email you?',
     'ft_mail_send' => 'Send a mail',

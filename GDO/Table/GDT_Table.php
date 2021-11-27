@@ -276,11 +276,11 @@ class GDT_Table extends GDT
 		if ($this->filtered)
 		{
 		    $rq = $this->headers->name;
-		    foreach ($this->getHeaderFields() as $gdoType)
+		    foreach ($this->getHeaderFields() as $gdt)
 		    {
-		        if ($gdoType->filterable)
+		        if ($gdt->filterable)
 		        {
-		            $gdoType->filterQuery($query, $rq);
+		            $gdt->filterQuery($query, $rq);
 		        }
 		    }
 		}

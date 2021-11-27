@@ -32,9 +32,9 @@ class GDT_List extends GDT_Table
 	### Template ###
 	################
 	public $itemTemplate;
-	public function itemTemplate(GDT $gdoType)
+	public function itemTemplate(GDT $gdt)
 	{
-		$this->itemTemplate = $gdoType;
+		$this->itemTemplate = $gdt;
 		return $this;
 	}
 	

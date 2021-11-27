@@ -245,9 +245,9 @@ class Result
 		while ($gdo = $this->fetchObject())
 		{
 			$row = [];
-			foreach($headers as $gdoType)
+			foreach($headers as $gdt)
 			{
-				$row[] = $gdoType->gdo($gdo)->gdoRenderCell();
+				$row[] = $gdt->gdo($gdo)->gdoRenderCell();
 			}
 			$data[] = $row;
 		}

@@ -87,7 +87,7 @@ abstract class GDO
         {
             return "NULL";
         }
-        elseif (is_numeric($var))
+        elseif (is_float($var) || is_int($var))
         {
             return "$var";
         }
@@ -519,11 +519,11 @@ abstract class GDO
      */
     public function gdoColumnOf($className)
     {
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            if (is_a($gdoType, $className, true))
+            if (is_a($gdt, $className, true))
             {
-                return $gdoType->gdo($this);
+                return $gdt->gdo($this);
             }
         }
     }
@@ -1553,36 +1553,36 @@ abstract class GDO
     ##############
     private function beforeCreate(Query $query)
     {
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            $gdoType->gdo($this)->gdoBeforeCreate($query);
+            $gdt->gdo($this)->gdoBeforeCreate($query);
         }
         $this->gdoBeforeCreate();
     }
     
     private function beforeRead(Query $query)
     {
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            $gdoType->gdoBeforeRead($query);
+            $gdt->gdoBeforeRead($query);
         }
         $this->gdoBeforeRead();
     }
     
     private function beforeUpdate(Query $query)
     {
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            $gdoType->gdo($this)->gdoBeforeUpdate($query);
+            $gdt->gdo($this)->gdoBeforeUpdate($query);
         }
         $this->gdoBeforeUpdate();
     }
 
     private function beforeDelete(Query $query)
     {
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            $gdoType->gdo($this)->gdoBeforeDelete($query);
+            $gdt->gdo($this)->gdoBeforeDelete($query);
         }
         $this->gdoBeforeDelete();
     }
@@ -1593,18 +1593,18 @@ abstract class GDO
         $this->dirty = false;
         $this->setPersisted();
         # Trigger event for AutoCol, EditedAt, EditedBy, etc.
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            $gdoType->gdo($this)->gdoAfterCreate();
+            $gdt->gdo($this)->gdoAfterCreate();
         }
         $this->gdoAfterCreate();
     }
     
     public function afterRead()
     {
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            $gdoType->gdo($this)->gdoAfterRead();
+            $gdt->gdo($this)->gdoAfterRead();
         }
         $this->gdoAfterRead();
     }
@@ -1614,9 +1614,9 @@ abstract class GDO
         # Flags
         $this->dirty = false;
         # Trigger event for AutoCol, EditedAt, EditedBy, etc.
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            $gdoType->gdo($this)->gdoAfterUpdate();
+            $gdt->gdo($this)->gdoAfterUpdate();
         }
         $this->gdoAfterUpdate();
     }
@@ -1627,9 +1627,9 @@ abstract class GDO
         $this->dirty = false;
         $this->persisted = false;
         # Trigger events on GDTs.
-        foreach ($this->gdoColumnsCache() as $gdoType)
+        foreach ($this->gdoColumnsCache() as $gdt)
         {
-            $gdoType->gdo($this)->gdoAfterDelete();
+            $gdt->gdo($this)->gdoAfterDelete();
         }
         $this->gdoAfterDelete();
     }

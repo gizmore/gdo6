@@ -398,24 +398,24 @@ final class Query
 	 */
 	public function joinObject($key, $join='JOIN', $tableAlias='')
 	{
-		if (!($gdoType = $this->table->gdoColumn($key)))
+		if (!($gdt = $this->table->gdoColumn($key)))
 		{
 			throw new GDOException(t('err_column', [html($key)]));
 		}
 		
-		if ($gdoType instanceof GDT_Join)
+		if ($gdt instanceof GDT_Join)
 		{
-			$join = $gdoType->join;
+			$join = $gdt->join;
 		}
-		elseif ( ($gdoType instanceof GDT_Object) ||
-			($gdoType instanceof GDT_ObjectSelect) )
+		elseif ( ($gdt instanceof GDT_Object) ||
+			($gdt instanceof GDT_ObjectSelect) )
 		{
-			$table = $gdoType->foreignTable();
+			$table = $gdt->foreignTable();
 			$ftbl = $tableAlias ? $tableAlias : $table->gdoTableIdentifier();
 			$atbl = $this->table->gdoTableIdentifier();
 			$tableAlias = $tableAlias ? " AS {$tableAlias}" : '';
 			
-			$join = "{$join} {$table->gdoTableIdentifier()}{$tableAlias} ON {$ftbl}.{$table->gdoPrimaryKeyColumn()->identifier()}=$atbl.{$gdoType->identifier()}";
+			$join = "{$join} {$table->gdoTableIdentifier()}{$tableAlias} ON {$ftbl}.{$table->gdoPrimaryKeyColumn()->identifier()}=$atbl.{$gdt->identifier()}";
 		}
 		else
 		{

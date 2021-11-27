@@ -3,8 +3,8 @@
   <div class="title"><?= $field->displayLabel(); ?></div>
   <div class="content">
 <?php
-foreach ($field->getFields() as $gdoType) :
-	echo $cell ? $gdoType->renderCell() : $gdoType->renderForm();
+foreach ($field->getFields() as $gdt) :
+	echo $cell ? $gdt->renderCell() : $gdt->renderForm();
 endforeach;?>
   </div>
 </div>
