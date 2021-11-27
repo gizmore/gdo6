@@ -10,9 +10,11 @@ use GDO\Core\GDOError;
  * Time helper class.
  * Using mysql date with milliseconds.
  * For GDT, the value is the timestamp and the var is the date in mysql format.
+ * This class is quite a mess meanwhile. Because timezones came late to my mind :)
+ * @TODO Time - Make the function names better. They shall reflect if they are for db or for display.
  *
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 1.0.0
  * 
  * @see GDT_Date
@@ -89,7 +91,7 @@ final class Time
 	    return self::getDate($time, 'Y-m-d H:i:s');
 	}
 	
-/**
+	/**
 	 * Get a datetime object from a timestamp.
 	 * @param number $time
 	 * @return \DateTime

@@ -9,6 +9,7 @@ use GDO\User\GDO_User;
 use GDO\Core\Website;
 use GDO\Core\GDT_Response;
 use GDO\Session\GDO_Session;
+use GDO\Date\GDO_Timezone;
 
 /**
  * Change a user's timezone.
@@ -28,7 +29,7 @@ final class Timezone extends MethodForm
         $form->action(href('Date', 'Timezone'));
         $form->slim()->noTitle();
         $form->addFields([
-            GDT_Timezone::make('timezone')->positional()->notNull()->initial($tz),
+            GDT_Timezone::make('timezone')->notNull()->initial($tz),
         ]);
         $form->actions()->addField(
             GDT_Submit::make()->label('btn_set'));
@@ -39,15 +40,15 @@ final class Timezone extends MethodForm
         $this->setTimezone($form->getFormValue('timezone'), false);
     }
     
-    public function setTimezone($timezone, $redirect=true)
+    public function setTimezone(GDO_Timezone $timezone, $redirect=true)
     {
         $user = GDO_User::current();
         $old = $user->getTimezone();
-        $new = $timezone;
-        if ($old !== $new)
+        $new = $timezone->getID();
+        if ($old != $new)
         {
             $user->setVar('user_timezone', $new);
-            if ($user->isUser())
+            if ($user->isPersisted())
             {
                 $user->save();
             }

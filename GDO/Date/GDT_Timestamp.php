@@ -13,7 +13,9 @@ use GDO\Core\Application;
  * The GDT_Timestamp field is the baseclass for all datefields.
  * The var type is a mysql date.
  * The value type is an integer/timestamp.
- *  
+ * 
+ * @TODO make GDT_Timestamp->getValue() also return a Datetime?
+ * 
  * @author gizmore
  * @version 6.11.0
  * @since 6.0.7
@@ -77,7 +79,7 @@ class GDT_Timestamp extends GDT
 	 */
 	public function initialAgo($secondsAgo)
 	{
-	    return $this->initial(Time::getDate(Application::$MICROTIME + $secondsAgo));
+	    return $this->initial(Time::getDate(Application::$MICROTIME - $secondsAgo));
 	}
 
 	#####################
@@ -144,7 +146,7 @@ class GDT_Timestamp extends GDT
 	##############
 	### Millis ###
 	##############
-	# @TODO rename millis to precision in GDT_Timestamp.
+	# @TODO rename $millis to $precision in GDT_Timestamp.
 	public $millis = 3;
 	public function millis($millis=3)
 	{

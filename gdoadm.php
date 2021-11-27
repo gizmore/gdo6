@@ -71,7 +71,7 @@ function printUsage($code=1)
     echo "php $exe install <module> - To install a module and it's dependencies\n";
     echo "php $exe install_all - To install all modules inside the GDO/ folder and their dependencies\n";
     echo "php $exe wipe <module> - To uninstall modules\n";
-    echo "php $exe wipeall - To erase the whole database\n";
+    echo "php $exe wipe_all - To erase the whole database\n";
     echo "php $exe update - Is automatically called after gdo_update.sh - it re-installs all installed modules.\n";
     echo "\n--- Module config ---\n";
     echo "php $exe config <module> - To show the config variables for a module\n";
@@ -379,7 +379,7 @@ elseif ($argv[1] === 'admin')
     echo t('msg_admin_created', [$argv[2]]) . "\n";
 }
 
-elseif ($argv[1] === 'wipeall')
+elseif ($argv[1] === 'wipe_all')
 {
     if ($argc !== 2)
     {
@@ -387,7 +387,7 @@ elseif ($argv[1] === 'wipeall')
     }
     Database::instance()->queryWrite("DROP DATABASE " . GDO_DB_NAME);
     Database::instance()->queryWrite("CREATE DATABASE " . GDO_DB_NAME);
-    printf("The database has been killed.\n");
+    printf("The database has been killed completely and created empty.\n");
 }
 
 elseif ($argv[1] === 'wipe')

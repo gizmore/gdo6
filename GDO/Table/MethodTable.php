@@ -101,12 +101,6 @@ abstract class MethodTable extends Method
      */
     public $table;
     
-    public function __construct()
-    {
-        $this->table = $this->createCollection();
-        $this->table->setupHeaders($this->isSearched(), $this->isPaginated());
-    }
-    
     /**
      * Creates the collection GDT.
      * @return GDT_Table|GDT_List
@@ -197,7 +191,6 @@ abstract class MethodTable extends Method
 	###############
 	public function beforeExecute()
 	{
-	    $this->table->result = null;
 	}
 	
 	public function execute()
@@ -239,10 +232,13 @@ abstract class MethodTable extends Method
 	
 	public function initTable()
 	{
-	    $table = $this->table;
+		$this->table = $this->createCollection();
+		$this->table->result = null;
+		$table = $this->table;
+		$this->table->setupHeaders($this->isSearched(), $this->isPaginated());
 	    $this->setupCollection($table);
+		$this->table->addHeaders($this->gdoHeaders());
 	    $this->createTable($table);
-	    $this->table->addHeaders($this->gdoHeaders());
 	    $this->calculateTable($table);
 	    $result = $table->getResult();
 	    if ($fetchAs = $this->fetchAs())

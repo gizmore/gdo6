@@ -7,7 +7,7 @@ namespace GDO\Core;
  * It does not lock session.
  * 
  * @author gizmore
- * @version 6.10.2
+ * @version 6.11.0
  * @since 6.2.0
  */
 abstract class MethodAjax extends Method

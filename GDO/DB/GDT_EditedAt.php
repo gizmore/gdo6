@@ -2,10 +2,11 @@
 namespace GDO\DB;
 
 use GDO\Date\GDT_Timestamp;
-use GDO\Core\Application;
+use GDO\Date\Time;
 
 /**
- * Automatically update on updates.
+ * Automatically update 'edited at' on updates.
+ * NULL on inserts.
  * 
  * @author gizmore
  * @version 6.11.0
@@ -22,8 +23,8 @@ final class GDT_EditedAt extends GDT_Timestamp
 	
 	public function gdoBeforeUpdate(Query $query)
 	{
-		$now = Application::$MICROTIME;
-		$query->set($this->identifier() . "=" . $now);
+		$now = Time::getDate();
+		$query->set($this->identifier() . "=" . quote($now));
 		$this->gdo->setVar($this->name, $now);
 	}
 

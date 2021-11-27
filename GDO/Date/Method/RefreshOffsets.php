@@ -15,7 +15,7 @@ final class RefreshOffsets extends MethodCronjob
 {
 	public function runAt()
 	{
-		return "0 0 * * *"; # run daily
+		return $this->runDailyAt(2);
 	}
 	
 	public function run()
@@ -32,7 +32,7 @@ final class RefreshOffsets extends MethodCronjob
 		$datetime = new \DateTime();
 		$timezone = $tz->getTimezone();
 		$offset = $timezone->getOffset($datetime);
-		$tz->saveVar('tz_offset', $offset, false);
+		$tz->saveVar('tz_offset', $offset / 60, false);
 	}
 
 }

@@ -1,5 +1,8 @@
 <?php
 use GDO\Core\Application;
+use GDO\DB\Database;
+use GDO\Core\Logger;
+use GDO\Cronjob\Cronjob;
 
 ############
 ### Init ###
@@ -12,10 +15,6 @@ if (php_sapi_name() !== 'cli')
 
 require 'GDO6.php';
 require 'protected/config.php';
-
-use GDO\DB\Database;
-use GDO\Core\Logger;
-use GDO\Core\Cronjob;
 
 Logger::init();
 Database::init();

@@ -19,7 +19,7 @@ use GDO\Date\Method\Timezone;
  */
 final class Module_Date extends GDO_Module
 {
-    public $module_priority = 8;
+    public $module_priority = 2;
     public function isCoreModule() { return true; }
     public function onLoadLanguage() { return $this->loadLanguage('lang/date'); }
     
@@ -40,13 +40,6 @@ final class Module_Date extends GDO_Module
     ############
     ### Init ###
     ############
-//     public function getClasses()
-//     {
-//     	return [
-//     		GDO_Timezone::class,
-//     	];
-//     }
-    
     public function onInstall()
     {
     	Install::install($this);

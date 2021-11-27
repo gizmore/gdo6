@@ -1,7 +1,8 @@
 <?php
 namespace GDO\Date\lang;
 return [
-    'ago' => 'vor %s',
+	'gdo_timezone' => 'Zeitzone',
+	'ago' => 'vor %s',
     'duration' => 'Dauer',
     'err_min_date' => 'Dieses Datum muss nach %s sein.',
     'err_max_date' => 'Dieses Datum muss vor %s sein.',

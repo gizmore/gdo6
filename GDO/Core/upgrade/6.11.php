@@ -14,6 +14,8 @@ use GDO\DB\GDT_EditedAt;
 use GDO\DB\GDT_DeletedAt;
 use GDO\Core\GDO_Module;
 use GDO\User\GDO_User;
+use GDO\Core\Logger;
+use GDO\Core\Application;
 
 # Change datetime to timestamp
 $modules = ModuleLoader::instance()->getEnabledModules();
@@ -35,7 +37,10 @@ foreach ($modules as $module)
 				     ($gdt instanceof GDT_DeletedAt)
 				)
 				{
-					changeColumn($module, $gdo, $gdt);
+					if ($gdt->name !== 'sess_created')
+					{
+						changeColumn($module, $gdo, $gdt);
+					}
 				}
 			}
 		}
@@ -73,6 +78,17 @@ function changeColumn(GDO_Module $module, GDO $table, GDT $gdt)
 		$db->queryWrite($query);
 		$query = "DROP TABLE {$temptable}";
 		$db->queryWrite($query);
+	}
+	catch (\Throwable $ex)
+	{
+		Logger::logException($ex);
+		if (Application::instance()->isCLI())
+		{
+			echo $ex->getMessage();
+			echo PHP_EOL;
+			echo $ex->getTraceAsString();
+			echo PHP_EOL;
+		}
 	}
 	finally
 	{

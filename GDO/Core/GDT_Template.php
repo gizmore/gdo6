@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Core;
 
-use Exception;
 use GDO\UI\WithLabel;
 use GDO\Util\Strings;
 use GDO\Language\Trans;
@@ -9,29 +8,22 @@ use GDO\User\GDO_User;
 use GDO\File\FileUtil;
 
 /**
- * GWF Template Engine and GDT implementation.
+ * GDO Template Engine and GDT implementation.
  *
  * Automatically appends fields from tVars.
  *
  * - There are php and static file templates.
  * - Themes is an array, so you can always override with your theme.
- * - Templates add WithFields for GDT $templateVars ($tVars). It can render with JSON. @TODO automatically append any created
- * GDT to the current template in GDT::make()
+ * - Templates add WithFields for GDT $templateVars ($tVars). It can render with JSON.
  *
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 3.0.0
  */
 class GDT_Template extends GDT
 {
 	use WithLabel;
 	use WithFields;
-
-	/**
-	 *
-	 * @var GDT_Template
-	 */
-// 	public static $CURRENT = null;
 
 	/**
 	 *
@@ -52,24 +44,6 @@ class GDT_Template extends GDT
 	############
 	### Base ###
 	############
-	/**
-	 * @param string $name
-	 * @return self
-	 */
-// 	public static function make($name=null)
-// 	{
-// 		$me = parent::make($name);
-// 		self::$CURRENT = $me;
-// 		return $me;
-// 	}
-
-// 	public static $NAME = 0;
-// 	public function defaultName()
-// 	{
-// 		self::$NAME++;
-// 		return 'tpl' . self::$NAME;
-// 	}
-	
 	public function defaultLabel()
 	{
 		return $this->noLabel();
@@ -233,16 +207,6 @@ class GDT_Template extends GDT
 			{
 				foreach ($tVars as $__key => $__value)
 				{
-					# Add GDT tVars to this template,
-					# to render JSON.
-// 					if (self::$CURRENT)
-// 					{
-// 						if ($__value instanceof GDT)
-// 						{
-// 							self::$CURRENT->addField($__value);
-// 						}
-// 					}
-
 					# make tVars locals for the template.
 					$$__key = $__value;
 				}
@@ -250,7 +214,7 @@ class GDT_Template extends GDT
 			include $path; # a hell of a bug is to supress errors here.
 			return ob_get_contents();
 		}
-		catch (Exception $e)
+		catch (\Throwable $e)
 		{
 			Logger::logException($e);
 			return html(ob_get_contents()) .

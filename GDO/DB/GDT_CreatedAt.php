@@ -2,7 +2,7 @@
 namespace GDO\DB;
 
 use GDO\Date\GDT_Timestamp;
-use GDO\Core\Application;
+use GDO\Date\Time;
 
 /**
  * The created at column is not null and filled upon creation.
@@ -29,7 +29,7 @@ class GDT_CreatedAt extends GDT_Timestamp
 	 */
 	public function blankData()
 	{
-	    $var = $this->var ? $this->var : Application::$MICROTIME;
+	    $var = $this->var ? $this->var : Time::getDate();
 		return [$this->name => $var];
 	}
 	

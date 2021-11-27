@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Date\lang;
 return [
+	'gdo_timezone' => 'Timezone',
     'ago' => '%s ago',
     'duration' => 'Duration',
     'err_min_date' => 'This date has to be after %s.',

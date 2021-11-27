@@ -24,7 +24,7 @@ use GDO\Core\Website;
  * @see WithFields
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 3.0.0
  */
 class GDT_Form extends GDT
@@ -363,7 +363,7 @@ class GDT_Form extends GDT
 	        }
 	        elseif (!$this->hasField($k))
 	        {
-	            $out .= sprintf('<input type="hidden" name="%s" value="%s" />', html($k), html($v));
+	            $out .= sprintf('<input type="hidden" name="%s" value="%s" />'.PHP_EOL, html($k), html($v));
 	        }
 	    }
 	    return $out;

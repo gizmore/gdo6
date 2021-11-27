@@ -8,11 +8,7 @@ final class Install
 	public static function install(Module_Date $module)
 	{
 		$list = timezone_identifiers_list();
-		GDO_Timezone::blank([
-			'tz_id' => '1',
-			'tz_name' => 'UTC',
-			'tz_offset' => '0',
-		])->insert();
+		array_unshift($list, 'UTC');
 		foreach ($list as $tz)
 		{
 			if (!(GDO_Timezone::getBy('tz_name', $tz)))

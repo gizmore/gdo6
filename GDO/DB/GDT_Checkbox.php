@@ -5,18 +5,17 @@ use GDO\Form\GDT_Select;
 use GDO\Core\GDT_Template;
 
 /**
- * Boolean Checkbox.
+ * Boolean tri-state Checkbox; NULL, 1 and 0
  * Implemented as select to reflect undetermined status. Also HTML does not send unchecked boxes over HTTP.
  * 
- * @TODO what about real checkboxes? Not a single one wanted/needed?
+ * @TODO what about real checkboxes? Not a single one wanted/needed? UI Sugar?
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 5.0.0
  */
 class GDT_Checkbox extends GDT_Select
 {
-    # db var representation. '2' is the third state.
     const TRUE = '1';
     const FALSE = '0';
     const UNDETERMINED = '2';
@@ -55,8 +54,6 @@ class GDT_Checkbox extends GDT_Select
 	################
 	/**
 	 * Get TINYINT(1) column define.
-	 * {@inheritDoc}
-	 * @see \GDO\DB\GDT_String::gdoColumnDefine()
 	 */
 	public function gdoColumnDefine()
 	{

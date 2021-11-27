@@ -1,14 +1,13 @@
 <?php
 namespace GDO\Date;
 
-use GDO\Form\GDT_Select;
 use GDO\DB\GDT_ObjectSelect;
 
 /**
  * Timezone select.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.11.0
  * @since 6.10.0
  */
 final class GDT_Timezone extends GDT_ObjectSelect
@@ -23,24 +22,11 @@ final class GDT_Timezone extends GDT_ObjectSelect
         parent::__construct();
         $this->notNull();
         $this->table = GDO_Timezone::table();
-//         $this->initChoices();
-        $this->initial(GDO_TIMEZONE);
+        $this->initial('1');
         $this->icon('time');
-//         $this->caseS();
-//         $this->ascii();
-        $this->completionHref(href('Core', 'TimezoneComplete'));
+        $this->completionHref(href('Date', 'TimezoneComplete'));
         $this->searchable(false);
     }
-    
-//     public function initChoices()
-//     {
-//         if (!$this->choices)
-//         {
-//             $tz = array_values(timezone_identifiers_list());
-//             $this->choices = array_combine($tz, $tz);
-//         }
-//         return $this;
-//     }
     
     public function plugVar()
     {

@@ -334,7 +334,7 @@ abstract class MethodCrud extends MethodForm
 		# Mark deleted
 		if ($delAt = $this->gdo->gdoColumnOf(GDT_DeletedAt::class))
 		{
-		    $this->gdo->setVar($delAt->name, Application::$MICROTIME);
+		    $this->gdo->setVar($delAt->name, Time::getDate());
 		    if ($delBy = $this->gdo->gdoColumnOf(GDT_DeletedBy::class))
 		    {
 		        $this->gdo->setVar($delBy->name, GDO_User::current()->getID());

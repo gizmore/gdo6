@@ -357,7 +357,6 @@ final class Query
 	
 	/**
 	 * Order clause.
-	 * @TODO make it one var. 'foo ASC'
 	 * @param string $order
 	 * @return self
 	 */

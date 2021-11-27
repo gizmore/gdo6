@@ -7,12 +7,12 @@ use GDO\User\GDO_User;
  * Add a timezone to a gdt.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 6.10.4
  */
 trait WithTimezone
 {
-    public $timezone = 'UTC';
+    public $timezone = GDO_TIMEZONE;
 
     public function userTimezone(GDO_User $user=null)
     {

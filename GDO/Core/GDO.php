@@ -1091,8 +1091,6 @@ abstract class GDO
      */
     public static function entity(array $gdoVars)
     {
-//         $class = self::gdoClassNameS();
-//         $instance = new $class();
 		$instance = new static();
         $instance->gdoVars = $gdoVars;
         return $instance;
@@ -1477,23 +1475,23 @@ abstract class GDO
         else
         {
             # No caching at all
-            return $this->allWhere('true', $order, $asc);
+        	return $this->select()->order("$order $asc")->exec()->fetchAllArray2dObject();
         }
         
         if (!$this->memCached())
         {
-            # Memcached
-            $all = $this->allWhere('true', $order, $asc);
+            # GDO cached
+            $all = $this->select()->order("$order $asc")->exec()->fetchAllArray2dObject();
             $cache->all = $all;
             return $all;
         }
         else
         {
-            # GDO cached
+            # Memcached
             $key = $this->cacheAllKey();
             if (false === ($all = Cache::get($key)))
             {
-                $all = $this->allWhere('true', $order, $asc);
+            	$all = $this->select()->order("$order $asc")->exec()->fetchAllArray2dObject();
                 Cache::set($key, $all);
             }
             $cache->all = $all;

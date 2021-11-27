@@ -1,7 +1,8 @@
 <?php
 namespace GDO\Date\lang;
 return [
-    'ago' => '%s fa',
+	'gdo_timezone' => 'fuso orario',
+	'ago' => '%s fa',
     'duration' => 'Durata',
     'err_min_date' => 'Questa data non deve essere %s.',
     'err_max_date' => 'Questa data deve essere prima del %s.',
