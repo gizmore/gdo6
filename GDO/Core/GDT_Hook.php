@@ -12,10 +12,12 @@ use GDO\DB\Cache;
  * 2) The method name in your object has to be hookUserAuthenticated in this example.
  * 3) The hook name should include the module name, e.g. LoginSuccess, FriendsAccepted, CoreInitiated.
  *
+ * @TODO GDO_Module: Instead of looping over all modules, modules shall hook into GDT_Hook onInit(). This should speed up a bit.
+ *
  * @see Module_Websocket
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 3.0.0
  */
 final class GDT_Hook extends GDT

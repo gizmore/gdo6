@@ -33,7 +33,7 @@ use GDO\User\PermissionException;
  * @see MethodCronjob
  *
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 3.0.0
  */
 abstract class Method

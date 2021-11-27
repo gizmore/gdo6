@@ -234,7 +234,9 @@ final class ModuleLoader
 // 		    }
 
 			$this->modules = $this->sortModules([
-			    'module_priority' => true, 'module_name' => true]);
+			    'module_priority' => true,
+				'module_name' => true
+			]);
 			
 			$this->initModules();
 		}

@@ -13,7 +13,7 @@ use GDO\Core\GDO;
  * The basic API is identical for static memory results and queried data.
  * 
  * @author gizmore
- * @version 6.10.5
+ * @version 6.11.0
  * @since 5.0.0
  * @see ArrayResult
  * @see GDT_Table
@@ -230,14 +230,18 @@ abstract class MethodTable extends Method
 	    $table->fetchInto($this->useFetchInto());
 	}
 	
-	public function initTable()
+	public function init()
 	{
 		$this->table = $this->createCollection();
-		$this->table->result = null;
-		$table = $this->table;
 		$this->table->setupHeaders($this->isSearched(), $this->isPaginated());
-	    $this->setupCollection($table);
+		$this->setupCollection($this->table);
 		$this->table->addHeaders($this->gdoHeaders());
+	}
+	
+	public function initTable()
+	{
+		$table = $this->table;
+		$this->table->result = null;
 	    $this->createTable($table);
 	    $this->calculateTable($table);
 	    $result = $table->getResult();

@@ -64,7 +64,7 @@ trait WithHeaders
 	        $col = Strings::substrTo($defaultOrder, ' ', $defaultOrder);
 	        $order = stripos($defaultOrder, ' DESC') ? '0' : '1';
 	        $orders[$col] = $order;
-	        $_REQUEST[$this->headers->name]['o'] = $orders;
+	        $_REQUEST[$this->headers->name]['o'] = $orders[$col];
 	    }
 		
 		# Build sort func
