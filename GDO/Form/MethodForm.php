@@ -13,7 +13,7 @@ use GDO\Core\Website;
  * Generic method that uses a GDT_Form.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 6.0.0
  */
 abstract class MethodForm extends Method
@@ -52,7 +52,10 @@ abstract class MethodForm extends Method
     	    foreach ($params as $key => $var)
     	    {
     	        $_REQUEST[$key] = $var;
-    	        $_REQUEST[$form][$key] = $var;
+    	        if ($form)
+    	        {
+    	        	$_REQUEST[$form][$key] = $var;
+    	        }
     	    }
 	    }
 	    return $this;
@@ -64,11 +67,6 @@ abstract class MethodForm extends Method
 	    return $this;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * @see \GDO\Core\Method::execute()
-	 * @return \GDO\Core\GDT_Response
-	 */
 	public function execute()
 	{
 		$this->executeEditMethods();
@@ -79,14 +77,15 @@ abstract class MethodForm extends Method
 	{
 		if (count($_POST))
 		{
-			foreach ($this->getForm()->getFields() as $field)
+			foreach ($this->getForm()->getFieldsRec() as $field)
 			{
 				if ($field instanceof GDT_File)
 				{
 					$key = 'delete_' . $field->name;
-					if ( isset($_REQUEST[$this->formName()][$key]) && (is_array($ids = Common::getRequestArray($key))) )
+					if (isset($_REQUEST[$this->formName()][$key]))
 					{
-						$field->onDeleteFiles(array_keys($ids));
+						$fileIds = array_keys($_REQUEST[$this->formName()][$key]);
+						$field->onDeleteFiles($fileIds);
 					}
 				}
 			}
@@ -95,7 +94,7 @@ abstract class MethodForm extends Method
 	
 	/**
 	 * Render this form as response.
-	 * @return \GDO\Core\GDT_Response
+	 * @return GDT_Response
 	 */
 	public function renderPage()
 	{
@@ -104,7 +103,7 @@ abstract class MethodForm extends Method
 	
 	/**
 	 * Validate the form and execute it.
-	 * @return \GDO\Core\GDT_Response
+	 * @return GDT_Response
 	 */
 	public function executeForm()
 	{
@@ -167,6 +166,7 @@ abstract class MethodForm extends Method
 		{
 			$this->form = GDT_Form::make($this->formName())->
 			    titleRaw($this->getTitle());
+			$this->form->autofocus();
 			$this->createForm($this->form);
 		}
 		return $this->form;

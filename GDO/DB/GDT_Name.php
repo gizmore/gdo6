@@ -6,7 +6,7 @@ namespace GDO\DB;
  * Is unique among their table and case-s ascii.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 6.1.0
  */
 class GDT_Name extends GDT_String
@@ -15,12 +15,12 @@ class GDT_Name extends GDT_String
 	
 	public function defaultLabel() { return $this->label('name'); }
 
-	const LENGTH = 96;
+	const LENGTH = 64;
 	
 	public $min = 2, $max = self::LENGTH;
 	public $encoding = self::ASCII;
 	public $caseSensitive = true;
-	public $pattern = "/^[-a-z _0-9;:@.!?]{1,64}$/is";
+	public $pattern = "/^[-A-Za-z _0-9;:]{1,64}$/sD";
 	public $notNull = true;
 	public $unique = true;
 	

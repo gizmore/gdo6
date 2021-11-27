@@ -26,4 +26,5 @@ return array(
     'file_download' => 'Download',
     'browse' => 'Browse&hellip;',
     'cfg_upload_max_size' => 'Default max upload size',
+	'msg_file_deleted' => 'The file has been deleted.',
 );

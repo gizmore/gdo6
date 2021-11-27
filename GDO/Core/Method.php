@@ -393,7 +393,7 @@ abstract class Method
 	{
 	    return implode(',', array_map('intval', 
 	        array_keys(Common::getRequestArray('rbx',
-	            [Common::getGetString('id')=>'on'])))); }
+	            [Common::getRequestString('id')=>'on'])))); }
 
 	############
 	### Shim ###

@@ -598,43 +598,43 @@ abstract class GDO
         return $columns;
     }
     
-    /**
-     * Get a copy of all GDT columns except those listed. Slow.
-     * Used in MethodCRUD because some GDO have not correct fields in gdoColumns(). 
-     * 
-     * @param string[] ...$except
-     * @return GDT[]
-     */
-    public function gdoColumnsCopyExcept(...$except)
-    {
-        $columns = array();
-        foreach (array_keys($this->gdoColumnsCache()) as $key)
-        {
-            if (!in_array($key, $except, true))
-            {
-                $columns[$key] = $this->gdoColumnCopy($key);
-            }
-        }
-        return $columns;
-    }
+//     /**
+//      * Get a copy of all GDT columns except those listed. Slow.
+//      * Used in MethodCRUD because some GDO have not correct fields in gdoColumns(). 
+//      * 
+//      * @param string[] ...$except
+//      * @return GDT[]
+//      */
+//     public function gdoColumnsCopyExcept(...$except)
+//     {
+//         $columns = array();
+//         foreach (array_keys($this->gdoColumnsCache()) as $key)
+//         {
+//             if (!in_array($key, $except, true))
+//             {
+//                 $columns[$key] = $this->gdoColumnCopy($key);
+//             }
+//         }
+//         return $columns;
+//     }
     
-    /**
-     * Get a copy of multiple gdt.
-     * @param string[] ...$names
-     * @return GDT[]
-     */
-    public function gdoColumnsCopy(...$names)
-    {
-        $columns = array();
-        foreach (array_keys($this->gdoColumnsCache()) as $key)
-        {
-            if (in_array($key, $names, true))
-            {
-                $columns[$key] = $this->gdoColumnCopy($key);
-            }
-        }
-        return $columns;
-    }
+//     /**
+//      * Get a copy of multiple gdt.
+//      * @param string[] ...$names
+//      * @return GDT[]
+//      */
+//     public function gdoColumnsCopy(...$names)
+//     {
+//         $columns = array();
+//         foreach (array_keys($this->gdoColumnsCache()) as $key)
+//         {
+//             if (in_array($key, $names, true))
+//             {
+//                 $columns[$key] = $this->gdoColumnCopy($key);
+//             }
+//         }
+//         return $columns;
+//     }
     
     ##########
     ### DB ###
@@ -963,7 +963,7 @@ abstract class GDO
      * @param array $vars
      * @param boolean $withHooks
      * @param boolean $worthy
-     * @return \GDO\Core\GDO
+     * @return GDO
      */
     public function saveVars(array $vars, $withHooks=true, &$worthy=false)
     {
@@ -983,7 +983,10 @@ abstract class GDO
         }
 
         # Call hooks even when not needed. Because its needed on GDT_Files
-        if ($withHooks) $this->beforeUpdate($query); # Can do trickery here... not needed?
+        if ($withHooks)
+        {
+        	$this->beforeUpdate($query); # Can do trickery here... not needed?
+        }
 
         if ($worthy)
         {
@@ -999,7 +1002,10 @@ abstract class GDO
         }
 
         # Call hooks even when not needed. Because its needed on GDT_Files
-        if ($withHooks) $this->afterUpdate();
+        if ($withHooks)
+        {
+        	$this->afterUpdate();
+        }
         
         return $this;
     }

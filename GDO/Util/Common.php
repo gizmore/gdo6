@@ -1,10 +1,13 @@
 <?php
 namespace GDO\Util;
+
 /**
  * Often used stuff.
+ * 
+ * @deprecated
  * @author gizmore
- * @version 6.10
- * @since 1.00
+ * @version 6.11.0
+ * @since 1.0.0
  */
 final class Common
 {
@@ -61,10 +64,11 @@ final class Common
 	 * null as min or max disables a check.
 	 * $val should be an int or float.
 	 * No conversion is done when something is in range.
+	 * 
 	 * @param $val number
 	 * @param $min number
 	 * @param $max number
-	 * @return int|float
+	 * @return number
 	 */
 	public static function clamp($val, $min=null, $max=null)
 	{
@@ -72,13 +76,11 @@ final class Common
 	    {
 	        return $min;
 	    }
-	    elseif ($max !== null && $val > $max)
+	    if ($max !== null && $val > $max)
 	    {
 	        return $max;
 	    }
-	    else
-	    {
-	        return $val;
-	    }
+        return $val;
 	}
+	
 }

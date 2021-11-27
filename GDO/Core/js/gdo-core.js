@@ -17,7 +17,7 @@ window.GDO.autofocusForm = function() {
 };
 
 window.GDO.enterForm = function(form, event) {
-	console.log('GDO.enterForm()', form, event);
+//	console.log('GDO.enterForm()', form, event);
 	if (event.keyCode == 13) {
 		let nn = event.srcElement.nodeName;
 		if ( (nn === 'INPUT') || (nn === 'SELECT') ) {
@@ -36,11 +36,11 @@ window.GDO.triggerResize = function() {
 
 window.GDO.triggerEvent = function(name) {
 	if (typeof(Event) === 'function') {
-		window.dispatchEvent(new Event('resize'));
+		window.dispatchEvent(new Event(name));
 	}
 	else {
 		var evt = window.document.createEvent('UIEvents'); 
-		evt.initUIEvent('resize', true, false, window, 0); 
+		evt.initUIEvent(name, true, false, window, 0); 
 		window.dispatchEvent(evt);
 	}
 };
@@ -95,6 +95,10 @@ window.GDO.openDialog = function(dialogId) {
 	dlg.showModal();
 };
 
+/**
+ * @TODO make seo friendly urls like in PHP.
+ * @see GDO6.php
+ */
 window.GDO.href = function(module, method, append) {
 	return GDO_WEB_ROOT + 'index.php?mo=' + module + '&me=' + method + append;
 };

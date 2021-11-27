@@ -1,6 +1,6 @@
 # History
 
-gdo6 Changelog.
+gdo6 changelog.
 
 
 ## Install today!
@@ -20,16 +20,23 @@ gdo6 Changelog.
     gdo admin.clearcache. # :)
     # It is also possible to install via http://gdo6/install/wizard.php
 
-## Improvements for v6.11.0 (27.11.2021)
-    
- - GDT_CreatedAt, GDT_EditedAt and GDT_DeletedAt are now GDT_Timestamp(6) instead of GDT_DateTime(3).
- 
- - GDO now automigrates via DB table copy, drop, create fresh, select copy into original table.
 
+## Improvements for v6.11.0 (28.11.2021)
+ 
+ - GDT_CreatedAt, GDT_EditedAt and GDT_DeletedAt are now GDT_Timestamp(3) instead of GDT_DateTime(3).
+ 
+ - GDO now automigrates on minor patch levels via DB table 1.copy, 2.drop, 3.create_fresh, 4.select copy into fresh table. Works!
+ 
+ - Copy of GDT is no longer supported. Reuse is a key feature. Might only be a problem for ranzgruppe.com.
+
+ - MethodCronjob methods can now specify the function runAt() to configure when and how often the cronjobs run. Crontab syntax is used.
+ 
      
 ## Improvements for v6.10.7 (27.11.2021)
 
  - GDT_Timezone is now a GDO_Timezone database table for using IDs as timezones
+ 
+ - GDO_TIMEZONE config var has been removed. UTC is the default timezone until user selects one, or autosets via javascript.
 
     
 ## Improvements for v6.10.6 (21.10.2021)
@@ -64,7 +71,7 @@ gdo6 Changelog.
  
  - Timezone detection via Javascript
 
- - CLI is getting somewhere (but more on TODO)
+ - CLI is getting somewhere
   
  - JQuery error dialogs
  
@@ -77,9 +84,9 @@ gdo6 Changelog.
  
  - Now only 1 global GDT_Response exists. Nested views work by nulling the global instance on rendering, causing a new global instance to be created.
  
- - Cache can now have an expire time.
+ - Caches can now have an expire time.
  
- - New thrid cache for rendered responses on the filesystem.
+ - New third cache for rendered responses on the filesystem. (GDO_FILECACHE) Also used for a merged lang file.
  
  - New GDO_ERROR_TIMEZONE option for the Logger.
  
@@ -94,5 +101,5 @@ gdo6 Changelog.
  
  - HTML classnames have been cleaned up.
  
- - GWF_ prefixed config defines are now prefixed GDO_. Try `php gwf2gdo.php`
+ - GWF_ prefixed config defines are now prefixed GDO_. Try `php gwf2gdo.php` (removed)
 

@@ -9,7 +9,7 @@ use GDO\Session\GDO_Session;
  * It holds the global time variables for exact time measurements in games or replays.
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 6.0.0
  */
 class Application

@@ -32,7 +32,7 @@ $firstEditableField = null;
 <?php endif; ?>
 <?php foreach ($form->getFields() as $field) : ?>
      <?php $field->var($field->getRequestVar($form->name)); ?>
-     <?php if ( ($field->editable) && ($field->getVar() === null) && ($field->focusable) && (!$field instanceof GDT_File) ) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
+     <?php if ( ($form->autofocus) && ($field->editable) && ($field->getVar() === null) && ($field->focusable) && (!$field instanceof GDT_File) ) $firstEditableField = $firstEditableField ? $firstEditableField : $field; ?>
       <?= $field->gdo($form->gdo)->renderForm(); ?>
 <?php endforeach; ?>
 <?php if ($form->hasVisibleFields()) : ?>

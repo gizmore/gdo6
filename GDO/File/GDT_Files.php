@@ -4,6 +4,8 @@ namespace GDO\File;
 use GDO\Util\Arrays;
 use GDO\User\GDO_User;
 use GDO\Core\GDO;
+use GDO\Core\GDT_Response;
+use GDO\Core\GDT_Success;
 
 /**
  * Use this GDT in a has_many files relationship.
@@ -14,8 +16,8 @@ use GDO\Core\GDO;
  * @see GDO_FileTable
  * 
  * @author gizmore@wechall.net
- * @version 6.10
- * @since 6.08
+ * @version 6.11.0
+ * @since 6.8.0
  */
 class GDT_Files extends GDT_File
 {
@@ -32,8 +34,7 @@ class GDT_Files extends GDT_File
 	/**
 	 * @var $value GDO_File[]
 	 */
-// 	public function toVar($value) { return $value->getID(); } # cannot be saved as column.
-	public function toVar($value) { return null; } # cannot be saved as column.
+	public function toVar($value) {} # cannot be saved as column.
 	
 	##################
 	### File Table ###
@@ -67,14 +68,16 @@ class GDT_Files extends GDT_File
 	}
 	
 	/**
-	 * @return GDO_File
+	 * @return GDO_File[]
 	 */
-	private $files = null;
 	public function getValidationValue()
 	{
-		if (!$this->files)
+		if (empty($this->files))
 		{
-			$this->files = array_merge($this->getInitialFiles(), Arrays::arrayed($this->getFiles($this->name)));
+			$this->files = array_merge(
+				$this->getInitialFiles(),
+				Arrays::arrayed(
+					$this->getFiles($this->name)));
 		}
 		return $this->files;
 	}
@@ -99,10 +102,10 @@ class GDT_Files extends GDT_File
 		{
 			$this->updateFiles($files);
 		}
-		$this->files = null;
+		$this->files = [];
 	}
 	
-	private function updateFiles($files)
+	private function updateFiles(array $files)
 	{
 		foreach ($files as $file)
 		{
@@ -136,16 +139,20 @@ class GDT_Files extends GDT_File
 	
 	/**
 	 * This is the delete action that removes the files.
+	 * 
 	 */
 	public function onDeleteFiles(array $ids)
 	{
-		$id = array_shift($ids);
-		if ($file = $this->fileTable->getBy('files_file', $id))
+		foreach ($ids as $id)
 		{
-			if ($file->canDelete(GDO_User::current()))
+			if ($file = $this->fileTable->getBy('files_file', $id))
 			{
-				$file = $file->getFile();
-				$file->delete();
+				if ($file->canDelete(GDO_User::current()))
+				{
+					$file = $file->getFile();
+					$file->delete();
+					GDT_Response::make()->addField(GDT_Success::make()->text('msg_file_deleted'));
+				}
 			}
 		}
 	}

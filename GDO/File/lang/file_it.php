@@ -26,4 +26,5 @@ return array(
 'file_download' => 'Scarica',
 'browse' => 'Ricerca&hellip;',
 'cfg_upload_max_size' => 'Dimensione massima di caricamento predefinita',
+'msg_file_deleted' => 'Il file è stato eliminato.',
 );

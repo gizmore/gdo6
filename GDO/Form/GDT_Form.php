@@ -111,6 +111,12 @@ class GDT_Form extends GDT
 	public function slim($slim=true) { $this->slim = $slim; return $this; }
 	public function htmlClassSlim() { return $this->slim ? 'gdo-form-slim' : 'gdo-form-large'; }
 
+	#################
+	### AutoFocus ###
+	#################
+	public $autofocus = false;
+	public function autofocus($autofocus=true) { $this->autofocus = $autofocus; return $this; }
+	
 	##############
 	### Render ###
 	##############
@@ -121,45 +127,6 @@ class GDT_Form extends GDT
 		self::$CURRENT = null;
 		return $back;
 	}
-	
-// 	public function renderJSON()
-// 	{
-		
-// 	}
-	
-// 	public function renderJSON()
-// 	{
-// 	    $json = [];
-	    
-// 	    $errors = [];
-	    
-// 	    foreach ($this->getFieldsRec() as $gdt)
-// 	    {
-// 	        if ($gdt->error)
-// 	        {
-// 	            $errors[] = $gdt->displayLabel() . ': ' . $gdt->error;
-// 	        }
-// 	        if ($gdt->isSerializable())
-// 	        {
-// 	            if ($gdt->name)
-// 	            {
-// 	                $json[$gdt->name] = $gdt->configJSON();
-// // 	                [
-// // 	                    'var' => $gdt->var,
-// // 	                    'display' => $gdt->renderJSON(),
-// // 	                    'error' => $gdt->error,
-// // 	                ];
-// 	            }
-// 	        }
-// 	    }
-	    
-// 	    if ($errors)
-// 	    {
-// 	        $json['error'] = t('err_form', [implode(' ', $errors)]);
-// 	    }
-	    
-// 	    return $json;
-// 	}
 	
 	public function renderCLI()
 	{
@@ -309,10 +276,10 @@ class GDT_Form extends GDT
 	    }
 	}
 	
-	private static $formData; # ugly
+	private static $FORM_DATA; # ugly
 	public function getFormData()
 	{
-		self::$formData = [];
+		self::$FORM_DATA = [];
 		$this->withFields(function(GDT $gdt)
 		{
 		    if ($gdt->writable)
@@ -321,12 +288,12 @@ class GDT_Form extends GDT
     			{
     			    foreach ($data as $k => $v)
     			    {
-        			    self::$formData[$k] = $v;
+        			    self::$FORM_DATA[$k] = $v;
     			    }
     			}
 		    }
 		});
-		return self::$formData;
+		return self::$FORM_DATA;
 	}
 
 	public function getFormVar($key)
@@ -349,7 +316,7 @@ class GDT_Form extends GDT
 	public function htmlHidden()
 	{
 	    $back = '';
-	    $back = $this->htmlHiddenRec($_GET, $back);
+	    $back = $this->htmlHiddenRec($_REQUEST, $back);
 	    return $back;
 	}
 

@@ -26,7 +26,7 @@ final class Module_Date extends GDO_Module
     ##############
     ### Config ###
     ##############
-    public $timezone = GDO_TIMEZONE;
+    public $timezone = '1';
     public function getConfig()
     {
         return [

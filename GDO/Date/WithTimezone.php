@@ -12,7 +12,7 @@ use GDO\User\GDO_User;
  */
 trait WithTimezone
 {
-    public $timezone = GDO_TIMEZONE;
+    public $timezone = '1';
 
     public function userTimezone(GDO_User $user=null)
     {

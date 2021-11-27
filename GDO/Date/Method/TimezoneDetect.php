@@ -1,14 +1,12 @@
 <?php
 namespace GDO\Date\Method;
 
-use GDO\Core\Method;
 use GDO\DB\GDT_String;
 use GDO\Form\GDT_Validator;
 use GDO\Form\GDT_Form;
 use GDO\Date\GDO_Timezone;
 use GDO\Form\MethodForm;
 use GDO\Form\GDT_Submit;
-use GDO\Form\GDT_AntiCSRF;
 
 /**
  * Detect timezone by name.
@@ -24,7 +22,6 @@ final class TimezoneDetect extends MethodForm
 		$form->addFields([
 			GDT_String::make('timezone')->notNull(),
 			GDT_Validator::make('validTimezone')->validator('timezone', [$this, 'validateTimezoneName']),
-			GDT_AntiCSRF::make()->fixed(),
 		]);
 		$form->actions()->addField(GDT_Submit::make());
 	}
@@ -35,6 +32,7 @@ final class TimezoneDetect extends MethodForm
 		{
 			return $string->error('err_unknown_timezone');
 		}
+		return true;
 	}
 	
 	public function formValidated(GDT_Form $form)

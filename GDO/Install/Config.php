@@ -90,7 +90,7 @@ class Config
 		if (!defined('GDO_SITENAME')) define('GDO_SITENAME', 'GDO6');
 		if (!defined('GDO_SITECREATED')) define('GDO_SITECREATED', Time::getDate(microtime(true)));
 		if (!defined('GDO_LANGUAGE')) define('GDO_LANGUAGE', 'en');
-		if (!defined('GDO_TIMEZONE')) define('GDO_TIMEZONE', ini_get('date.timezone'));
+// 		if (!defined('GDO_TIMEZONE')) define('GDO_TIMEZONE', ini_get('date.timezone'));
 		if (!defined('GDO_THEMES')) define('GDO_THEMES', '[default]');
 		if (!defined('GDO_MODULE')) define('GDO_MODULE', 'Core');
 		if (!defined('GDO_METHOD')) define('GDO_METHOD', 'Welcome');
@@ -158,7 +158,7 @@ class Config
 		    GDT_Checkbox::make('seo_urls')->initialValue(GDO_SEO_URLS),
 			GDT_Hidden::make('sitecreated')->var(GDO_SITECREATED),
 		    GDT_Enum::make('language')->enumValues('en', 'de')->initialValue(GDO_LANGUAGE)->required(),
-		    GDT_String::make('timezone')->initialValue(GDO_TIMEZONE)->required(),
+// 		    GDT_String::make('timezone')->initialValue(GDO_TIMEZONE)->required(),
 		    GDT_Select::make('themes')->multiple()->choices(array_combine($themes, $themes))->required()->initialValue(array('default')),
 			GDT_String::make('module')->required()->initialValue(GDO_MODULE),
 			GDT_String::make('method')->required()->initialValue(GDO_METHOD),

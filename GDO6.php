@@ -77,7 +77,7 @@ function href($module, $method, $append=null, $lang=true)
                 {
                     $kv = explode('=', $part);
                     $k = $kv[0];
-                    $v = urlencode($kv[1]);
+                    $v = seo($kv[1]);
                     $href .= "/{$k}/{$v}";
                 }
                 else
@@ -114,7 +114,7 @@ function href($module, $method, $append=null, $lang=true)
     }
     return $href;
 }
-function seo($str) { return trim(preg_replace('#[^\\.\\p{L}0-9]#', '_', $str), '_'); }
+function seo($str) { return trim(preg_replace('#[^{}\\.\\p{L}0-9]#', '_', $str), '_'); }
 
 function quote($value) { return GDO::quoteS($value); }
 function json_quote($s) { return str_replace("'", "&#39;", $s); }

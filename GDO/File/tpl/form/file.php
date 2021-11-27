@@ -2,7 +2,7 @@
 <div class="gdo-file-controls">
 <div id="gdo-file-preview-<?=$field->name?>"></div>
 <?php foreach ($field->getInitialFiles() as $file) : $file instanceof \GDO\File\GDO_File; ?>
-<?php $deleteButton = $field->noDelete ? '' : sprintf('<input type="submit" name="delete_%s[%s]" value="Remove File" onclick="return confirm(\'%s\')"/>', $field->name, $file->getID(), t('confirm_delete')); ?>
+<?php $deleteButton = $field->noDelete ? '' : sprintf('<input type="submit" name="%s[delete_%s][%s]" value="Remove File" onclick="return confirm(\'%s\')"/>', $field->formVariable(), $field->name, $file->getID(), t('confirm_delete')); ?>
 <?php if ($field->preview && $file->isImageType()) : ?>
 <?php printf('<div class="gdo-file-preview"><img src="%s" />%s (%s)</div>', $field->displayPreviewHref($file), $deleteButton, html($file->getName())); ?>
 <?php else : ?>

@@ -67,7 +67,7 @@ class GDT_Date extends GDT_Timestamp
 	    {
             $input = str_replace('T', ' ', $input);
             $input = str_replace('Z', '', $input);
-            $d = Time::parseDateTime($input, 'UTC');
+            $d = Time::parseDateTime($input, Time::UTC);
             return $d->format('Y-m-d');
 	    }
 	}

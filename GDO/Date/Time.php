@@ -42,16 +42,18 @@ final class Time
 	################
 	### Timezone ###
 	################
+	const UTC = '1';
 	public static $UTC;
-	public static $TIMEZONE = 'UTC'; # default timezone
-	private static $TIMEZONE_OBJECTS = [];
+	public static $TIMEZONE = '1'; # default timezone
+	public static $TIMEZONE_OBJECTS = [];
 	public static function getTimezoneObject($timezone=null)
 	{
 	    $timezone = $timezone ? $timezone : self::$TIMEZONE;
 	    if (!isset(self::$TIMEZONE_OBJECTS[$timezone]))
 	    {
-	        $tz = new \DateTimeZone($timezone);
-	        self::$TIMEZONE_OBJECTS[$timezone] = $tz;
+	    	$timezone = GDO_Timezone::findById($timezone);
+	        $tz = new \DateTimeZone($timezone->getName());
+	        self::$TIMEZONE_OBJECTS[$timezone->getID()] = $tz;
 	        return $tz;
 	    }
 	    return self::$TIMEZONE_OBJECTS[$timezone];
@@ -114,7 +116,7 @@ final class Time
 	 */
 	public static function getTimestamp($date=null)
 	{
-	    $ts = $date ? self::parseDate($date, 'UTC', 'db') : Application::$MICROTIME;
+	    $ts = $date ? self::parseDate($date, self::UTC, 'db') : Application::$MICROTIME;
 	    return $ts;
 	}
 	
@@ -134,7 +136,7 @@ final class Time
 	
 	public static function parseDateDB($date, $timezone=null, $format='parse')
 	{
-	    return self::parseDate($date, 'UTC', 'db');
+		return self::parseDate($date, self::UTC, 'db');
 	}
 	
 	/**
@@ -161,7 +163,7 @@ final class Time
 	    return self::parseDateTimeIso(Trans::$ISO, $date, $timezone, $format);
 	}
 	
-	public static function parseDateTimeDB($date, $timezone='UTC', $format='parse')
+	public static function parseDateTimeDB($date, $timezone=self::UTC, $format='parse')
 	{
 	    return self::parseDateTimeIso(Trans::$ISO, $date, $timezone, $format);
 	}
@@ -197,7 +199,7 @@ final class Time
 	    {
 	        $format = tiso($iso, 'df_' . $format);
 	    }
-	    $timezone = $timezone ? $timezone : 'UTC';
+	    $timezone = $timezone ? $timezone : '1';
 	    $timezone = self::getTimezoneObject($timezone);
 	    if (!($d = DateTime::createFromFormat($format, $date, $timezone)))
 	    {
@@ -556,4 +558,5 @@ final class Time
 }
 	
 date_default_timezone_set('UTC');
-Time::$UTC = Time::getTimezoneObject('UTC');
+Time::$UTC = new \DateTimeZone('UTC');
+Time::$TIMEZONE_OBJECTS[Time::UTC] = Time::$UTC;

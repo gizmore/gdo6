@@ -2,6 +2,10 @@
 namespace GDO\File;
 
 /**
+ * An image file array with N:M table.
+ * 
+ * @version 6.11.0
+ * @see GDT_Files
  * @author gizmore
  */
 final class GDT_ImageFiles extends GDT_Files
@@ -21,11 +25,12 @@ final class GDT_ImageFiles extends GDT_Files
 
 	public function displayPreviewHref(GDO_File $file)
 	{
-	    $href = $this->previewHREF . $file->getID();
+		$href = parent::displayPreviewHref($file);
 	    if ($this->variant)
 	    {
 	        $href .= '&variant='.$this->variant;
 	    }
 	    return $href;
 	}
+
 }

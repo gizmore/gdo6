@@ -63,7 +63,7 @@ final class GetFile extends Method
 			return $this->error('err_file_not_found', [htmlspecialchars($path)]);
 		}
 		
-		Stream::serve($file, $variant, (!isset($_GET['nodisposition'])));
+		Stream::serve($file, $variant, (!isset($_REQUEST['nodisposition'])));
 	}
 	
 }

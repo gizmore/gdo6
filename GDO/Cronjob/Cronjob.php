@@ -63,7 +63,7 @@ final class Cronjob
 		$lastRun = $module->cfgLastRun();
 		$dt = Time::getDateTime($lastRun);
 		$minute = $dt->format('Y-m-d H:i');
-		$dt = Time::parseDate($minute, 'UTC', 'Y-m-d H:i');
+		$dt = Time::parseDate($minute, Time::UTC, 'Y-m-d H:i');
 		$now = Application::$TIME;
 		while ($dt <= $now)
 		{

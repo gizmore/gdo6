@@ -3,6 +3,10 @@ namespace GDO\Date;
 
 use GDO\Date\Method\RefreshOffsets;
 
+/**
+ * Install timezone table.
+ * @author gizmore
+ */
 final class Install
 {
 	public static function install(Module_Date $module)
@@ -21,4 +25,5 @@ final class Install
 		$refresh = RefreshOffsets::make();
 		$refresh->run();
 	}
+	
 }

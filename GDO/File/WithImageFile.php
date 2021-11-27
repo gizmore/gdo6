@@ -7,8 +7,8 @@ use GDO\UI\WithImageSize;
  * Add this trait for image related file stuff.
  * 
  * @author gizmore, kalle
- * @version 6.10
- * @since 6.07
+ * @version 6.11.0
+ * @since 6.7.0
  */
 trait WithImageFile
 {
@@ -37,7 +37,7 @@ trait WithImageFile
 	############
 	public function displayPreviewHref(GDO_File $file)
 	{
-	    $href = $this->previewHREF . $file->getID();
+	    $href = parent::displayPreviewHref($file);
 	    if ($this->variant)
 	    {
 	        $href .= '&variant='.$this->variant;

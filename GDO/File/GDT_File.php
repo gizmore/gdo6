@@ -11,6 +11,7 @@ use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Success;
 use GDO\Core\GDO_Module;
 use GDO\UI\WithImageSize;
+use GDO\Core\GDT_Response;
 
 /**
  * File input and upload backend for flow.js
@@ -81,7 +82,12 @@ class GDT_File extends GDT_Object
 	
 	public $previewHREF;
 	public function previewHREF($previewHREF=null) { $this->previewHREF = $previewHREF; return $this->preview($previewHREF!==null); }
-	public function displayPreviewHref(GDO_File $file) { return $this->previewHREF . $file->getID(); }
+	public function displayPreviewHref(GDO_File $file)
+	{
+		return str_replace(
+			'{id}', $file->getID(),
+			$this->previewHREF);
+	}
 	
 	##################
 	### File count ###
@@ -185,7 +191,7 @@ class GDT_File extends GDT_Object
 	{
 		$json = [];
 		$files = Arrays::arrayed($this->getValue());
-		/** @var $file \GDO\File\GDO_File **/
+		/** @var $file GDO_File **/
 		foreach ($files as $file)
 		{
 			$file->tempHref($this->href);
@@ -197,7 +203,7 @@ class GDT_File extends GDT_Object
 	#############
 	### Value ###
 	#############
-	private $files = [];
+	protected $files = [];
 	public function toVar($value)
 	{
 		if ($value)
@@ -325,6 +331,7 @@ class GDT_File extends GDT_Object
 		if ($file = GDO_File::getById($id)) # Delete file physically
 		{
 			$file->delete();
+			GDT_Response::make()->addField(GDT_Success::make()->text('msg_file_deleted'));
 		}
 	}
 	
@@ -336,7 +343,7 @@ class GDT_File extends GDT_Object
         $valid = true;
 	    try
 	    {
-	        /** @var $files \GDO\File\GDO_File[] **/
+	        /** @var $files GDO_File[] **/
 	        $files = Arrays::arrayed($value);
 	        $this->files = [];
 	        
@@ -375,10 +382,16 @@ class GDT_File extends GDT_Object
 	                        {
 	                            if (!$this->gdo->isTable())
 	                            {
-	                                $this->gdo->setVar($this->name, $file->getID());
+	                            	if (!$this->multiple)
+	                            	{
+	                            		$this->gdo->setVar($this->name, $file->getID());
+	                            	}
 	                            }
 	                        }
-	                        $this->var($file->getID());
+	                        if (!$this->multiple)
+	                        {
+	                        	$this->var($file->getID());
+	                        }
 	                        $this->files[] = $file;
 	                    }
 	                }
@@ -508,7 +521,6 @@ class GDT_File extends GDT_Object
 	
 	public function cleanup()
 	{
-		$this->files = null;
 		FileUtil::removeDir($this->getTempDir($this->name));
 	}
 	
