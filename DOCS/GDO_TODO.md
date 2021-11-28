@@ -32,7 +32,7 @@ For a more complete todo, please see GDO_TODO_AUTO_GENERATED.md
 
 - @TODO: Allow to create gui apps with QT or GTK+ or something. Just a wrapper for CLI, but similiar to html layout.
 
-- @TODO: On module init, set up the hooks, so not every module has to be tested. Looking forward to another ms saved.
+- @TODO: On module init, set up the hooks, so not every module has to be tested. Looking forward to another millisecond saved.
 
 - @TODO: Module_Heartbeat or an implementation in OnlineUsers.
 
@@ -41,4 +41,8 @@ For a more complete todo, please see GDO_TODO_AUTO_GENERATED.md
 - @TODO: create a composer package for the gdo6 core. Further packages can still be maintained with gdoadm.sh
 
 - @TODO: finish the [Helpdesk](https://github.com/gizmore/gdo6-helpdesk) coding tutorial.
+
+- @TODO: Write an admin module configurator that shows all module configs at once.
+
+- @TODO: Write a user setting configurator that shows all settings at once.
 
