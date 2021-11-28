@@ -928,6 +928,7 @@ abstract class GDO
     }
     
     /**
+     * Save this entity.
      * @return self
      */
     public function save($withHooks=true)
@@ -944,12 +945,15 @@ abstract class GDO
             {
                 $this->beforeUpdate($query);
             }
+            
             $query->exec();
+            
             $this->dirty = false;
+            
             if ($withHooks)
             {
-                $this->recache(); # save is the only action where we recache!
                 $this->afterUpdate();
+                $this->recache(); # save is the only action where we recache!
             }
         }
         return $this;
