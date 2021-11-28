@@ -29,7 +29,7 @@ final class Module_Mail extends GDO_Module
     {
         return [
             GDT_Checkbox::make('allow_email')->initial('1'),
-            GDT_Checkbox::make('show_in_sidebar')->initial('1'),
+            GDT_Checkbox::make('show_in_sidebar')->initial('0'),
         ];
     }
     

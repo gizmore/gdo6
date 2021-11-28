@@ -806,7 +806,7 @@ abstract class GDO
     /**
      * Delete multiple rows, but still one by one to trigger all events correctly.
      * @param string $condition
-     * @return int
+     * @return int number of deleted rows
      */
     public function deleteWhere($condition, $withHooks=true)
     {
@@ -865,15 +865,20 @@ abstract class GDO
     
     public function replace($withHooks=true)
     {
-        if (!$this->isPersisted())
-        {
-        	return $this->insert($withHooks);
-        }
+    	# Check for empty id.
+    	# Checking for $persisted is wrong, as replace rows can be constructed from scratch.
+    	$id = $this->getID(); 
+		if ( (!$id) || preg_match('#^[:0]+$#D', $id) )
+		{
+			return $this->insert($withHooks);
+    	}
+
         $query = $this->query()->
         	replace($this->gdoTableIdentifier())->
         	values($this->gdoPrimaryKeyValues())->
         	values($this->getDirtyVars());
-        return $this->insertOrReplace($query, $withHooks);
+        
+       	return $this->insertOrReplace($query, $withHooks);
     }
     
     private function insertOrReplace(Query $query, $withHooks)
