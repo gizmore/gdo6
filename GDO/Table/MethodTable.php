@@ -232,10 +232,13 @@ abstract class MethodTable extends Method
 	
 	public function init()
 	{
-		$this->table = $this->createCollection();
-		$this->table->setupHeaders($this->isSearched(), $this->isPaginated());
-		$this->setupCollection($this->table);
-		$this->table->addHeaders($this->gdoHeaders());
+		if (!$this->table)
+		{
+			$this->table = $this->createCollection();
+			$this->table->setupHeaders($this->isSearched(), $this->isPaginated());
+			$this->setupCollection($this->table);
+			$this->table->addHeaders($this->gdoHeaders());
+		}
 	}
 	
 	public function initTable()

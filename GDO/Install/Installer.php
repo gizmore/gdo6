@@ -164,7 +164,7 @@ class Installer
 					{
 						$tablename = $gdo->gdoTableName();
 						$temptable = "TEMP_{$tablename}";
-						$columns = self::getColumnNames($gdo);
+						$columns = self::getColumnNames($gdo, $temptable);
 						$db->disableForeignKeyCheck();
 						$gdo->createTable(); # CREATE TABLE IF NOT EXIST
 						$db->disableForeignKeyCheck();
@@ -191,13 +191,20 @@ class Installer
 		}
 	}
 	
-	public static function getColumnNames(GDO $gdo)
+	public static function getColumnNames(GDO $gdo, $temptable)
 	{
 		$db = GDO_DB_NAME;
 		$query = "SELECT group_concat(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS " .
 		         "WHERE TABLE_SCHEMA = '{$db}' AND TABLE_NAME = '{$gdo->gdoTableName()}'";
 		$result = Database::instance()->queryRead($query);
-		return mysqli_fetch_array($result)[0];
+		$old = mysqli_fetch_array($result)[0];
+		
+		$query = "SELECT group_concat(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS " .
+		         "WHERE TABLE_SCHEMA = '{$db}' AND TABLE_NAME = '{$temptable}'";
+		$result = Database::instance()->queryRead($query);
+		$new = mysqli_fetch_array($result)[0];
+		
+		return array_intersect($new, $old);
 	}
 	
 	public static function includeUpgradeFile(GDO_Module $module, $version)

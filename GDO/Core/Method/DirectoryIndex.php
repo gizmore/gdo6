@@ -42,14 +42,15 @@ final class DirectoryIndex extends MethodTable
     public function getResult()
     {
         $data = [];
-        $files = scandir($_REQUEST['_url']);
+        $url = isset($_REQUEST['_url']) ? $_REQUEST['_url'] : GDO_WEB_ROOT;
+        $files = scandir($url);
         foreach ($files as $file)
         {
             if ($file === '.')
             {
                 continue;
             }
-            $path = $_REQUEST['_url'] . '/' . $file;
+            $path = $url . '/' . $file;
             $data[] = $this->entry($path, $file);
         }
         return new ArrayResult($data, $this->gdoTable());
