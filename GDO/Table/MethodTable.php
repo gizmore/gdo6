@@ -243,6 +243,7 @@ abstract class MethodTable extends Method
 	
 	public function initTable()
 	{
+		$this->init();
 		$table = $this->table;
 		$this->table->result = null;
 	    $this->createTable($table);

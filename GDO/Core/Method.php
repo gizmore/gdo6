@@ -197,6 +197,7 @@ abstract class Method
 	{
 		if ($this->paramCache === null)
 		{
+			$this->init();
 		    $this->paramCache = [];
 		    if ($params = $this->allParameters())
 		    {
