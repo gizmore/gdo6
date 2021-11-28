@@ -1,23 +1,30 @@
 # History
 
-gdo6 changelog.
+Gdo6 Changelog.
 
 
-## Install today!
+## Install gdo6 today!
 
+Before you read the history, please take your time to actually install gdo6.
+Maybe implement something from the [GDO_TODO](https://github.com/gizmore/gdo6/master/DOCS/GDO_TODO.md) list.
+
+
+    echo "What are we waiting for? christmas?!";
+    # Enjoy coding a framework that actually makes things easier.
+    # Start with cloning the core.
     git clone --recursive https://github.com/gizmore/gdo6 && cd gdo6
-    ./gdoadm.sh configure
-    # create a mysql database.
-    ./gdoadm.sh provide DogWebsite
-    ./gdoadm.sh install_all
-    ./gdo_yarn.sh
-    ./gdo_bower.sh
-    ./gdoadm.sh admin username password email
-    ./gdoadm.sh htaccess
-    ./gdoadm.sh cronjob
-    ./gdoadm.sh secure
-    # Set your PATH env to gdo6/bin
-    gdo admin.clearcache. # :)
+    ./gdoadm.sh configure # create protected/config.php
+    # create a mysql database. # Your turn, devops.
+    ./gdoadm.sh provide DogWebsite # Install the dog.gizmore.org website. provide will clone the required packages.
+    ./gdoadm.sh install_all # Install all cloned packages
+    ./gdo_yarn.sh # Javascript
+    ./gdo_bower.sh # assets
+    ./gdoadm.sh admin username password email # create an admin
+    ./gdoadm.sh htaccess # install htaccess for SEO mode
+    ./gdoadm.sh cronjob # show us a crontab config
+    ./gdoadm.sh secure # secure install and protected folders
+    # Set your PATH env to /gdo6/bin # Do it!
+    gdo admin.clearcache. # should fix some caching bugs during install
     # It is also possible to install via http://gdo6/install/wizard.php
 
 
@@ -27,7 +34,7 @@ gdo6 changelog.
  
  - GDO now automigrates on minor patch levels via DB table 1.copy, 2.drop, 3.create_fresh, 4.select copy_into_fresh_table.
  
- - Copy of GDT is no longer supported. Reuse is a key feature. Might only be a problem for ranzgruppe.com.
+ - GDO->copy helpers for copying GDT are no longer supported. Reuse is a key feature. Might only be a problem for ranzgruppe.com.
 
  - MethodCronjob methods can now specify the function runAt() to configure when and how often the cronjobs run. Crontab syntax is used. Some old cronjob code still needs to be refactored.
  

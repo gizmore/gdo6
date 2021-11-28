@@ -116,7 +116,6 @@ class GDT_Template extends GDT
 		{
 			GDT_Response::make()->addFields($tVars);
 		}
-// 		$this->addFields($tVars);
 		return $this;
 	}
 

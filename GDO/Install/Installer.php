@@ -163,24 +163,32 @@ class Installer
 					if ($gdo->gdoIsTable())
 					{
 						$tablename = $gdo->gdoTableName();
-						$temptable = "TEMP_{$tablename}";
-						$columns = self::getColumnNames($gdo, $temptable);
+						$temptable = "zzz_temp_{$tablename}";
+						
+						# create temp and copy as old
 						$db->disableForeignKeyCheck();
-						$gdo->createTable(); # CREATE TABLE IF NOT EXIST
-						$db->disableForeignKeyCheck();
-						$query = "CREATE TABLE $temptable LIKE $tablename";
+						$query = "CREATE TABLE IF NOT EXISTS $temptable LIKE $tablename";
 						$db->queryWrite($query);
 						$query = "INSERT INTO $temptable SELECT * FROM $tablename";
 						$db->queryWrite($query);
-						$db->disableForeignKeyCheck();
+
+						# drop existing and recreate as new
 						$query = "DROP TABLE $tablename";
 						$db->queryWrite($query);
-						$gdo->createTable(); # RECREATE TABLE
+						$gdo->createTable(); # CREATE TABLE IF NOT EXIST
 						$db->disableForeignKeyCheck();
-						$query = "INSERT INTO $tablename ($columns) SELECT $columns FROM $temptable";
-						$db->queryWrite($query);
-						$query = "DROP TABLE $temptable";
-						$db->queryWrite($query);
+
+						# calculate columns and copy back in new
+						if ($columns = self::getColumnNames($gdo, $temptable))
+						{
+							$columns = implode(',', $columns);
+							$query = "INSERT INTO $tablename ($columns) SELECT $columns FROM $temptable";
+							$db->queryWrite($query);
+							
+							# drop temp
+							$query = "DROP TABLE $temptable";
+							$db->queryWrite($query);
+						}
 					}
 				}
 			}
@@ -191,20 +199,30 @@ class Installer
 		}
 	}
 	
-	public static function getColumnNames(GDO $gdo, $temptable)
+	/**
+	 * Get intersecting columns of old and new format.
+	 * @param GDO $gdo
+	 * @param string $temptable
+	 * @return array
+	 */
+	private static function getColumnNames(GDO $gdo, $temptable)
 	{
 		$db = GDO_DB_NAME;
-		$query = "SELECT group_concat(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS " .
-		         "WHERE TABLE_SCHEMA = '{$db}' AND TABLE_NAME = '{$gdo->gdoTableName()}'";
-		$result = Database::instance()->queryRead($query);
-		$old = mysqli_fetch_array($result)[0];
 		
 		$query = "SELECT group_concat(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS " .
 		         "WHERE TABLE_SCHEMA = '{$db}' AND TABLE_NAME = '{$temptable}'";
 		$result = Database::instance()->queryRead($query);
-		$new = mysqli_fetch_array($result)[0];
+		$old = mysqli_fetch_array($result)[0];
+		$old = explode(',', $old);
 		
-		return array_intersect($new, $old);
+		$query = "SELECT group_concat(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS " .
+		"WHERE TABLE_SCHEMA = '{$db}' AND TABLE_NAME = '{$gdo->gdoTableName()}'";
+		$result = Database::instance()->queryRead($query);
+		$new = mysqli_fetch_array($result)[0];
+		$new = explode(',', $new);
+		
+		return ($old && $new) ? 
+			array_intersect($old, $new) : [];
 	}
 	
 	public static function includeUpgradeFile(GDO_Module $module, $version)

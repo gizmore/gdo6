@@ -5,17 +5,17 @@ use GDO\Core\GDO;
 use GDO\Core\Logger;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
-use Exception;
 use GDO\Util\Strings;
 use GDO\Core\Debug;
 
 /**
  * mySQLi abstraction.
  * 
- * @TODO support postgres? This can be achieved via making module DB a separate module. Just need to move any GDT there, that does db creation code. Tricky for Maps/GDT_Position?
+ * @TODO support postgres? This can be achieved via making module DB a separate module. Just need to move some classes to core and ifelse them in creation code?
+ * @TODO support sqlite? This can be achieved by a few string tricks maybe. No foreign keys? no idea.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 3.0.0
  * 
  * @see Query
@@ -99,30 +99,32 @@ class Database
 	
 	public function getLink()
 	{
-		if (!$this->link)
+		return $this->link ? $this->link : $this->openLink();
+	}
+	
+	private function openLink()
+	{
+		try
 		{
-			try
+			$t1 = microtime(true);
+			if ($this->link = $this->connect())
 			{
-				$t1 = microtime(true);
-				if ($this->link = $this->connect())
-				{
-				    # This is more like a read because nothing is written to the disk.
-					$this->queryRead("SET NAMES UTF8");
-					$this->queryRead("SET time_zone = '+00:00'");
-				}
-			}
-			catch (Exception $e)
-			{
-				throw new DBException('err_db_connect', [$e->getMessage()]);
-			}
-			finally
-			{
-				$timeTaken = microtime(true) - $t1;
-				$this->queryTime += $timeTaken;
-				self::$QUERY_TIME += $timeTaken;
+				# This is more like a read because nothing is written to the disk.
+				$this->queryRead("SET NAMES UTF8");
+				$this->queryRead("SET time_zone = '+00:00'");
+				return $this->link;
 			}
 		}
-		return $this->link;
+		catch (\Throwable $e)
+		{
+			throw new DBException('err_db_connect', [$e->getMessage()]);
+		}
+		finally
+		{
+			$timeTaken = microtime(true) - $t1;
+			$this->queryTime += $timeTaken;
+			self::$QUERY_TIME += $timeTaken;
+		}
 	}
 	
 	public function connect()
@@ -214,7 +216,7 @@ class Database
 	/**
 	 * @param string $classname
 	 * @throws GDOError
-	 * @return \GDO\Core\GDO
+	 * @return GDO
 	 */
 	public static function tableS($classname, $initCache=true)
 	{
@@ -325,57 +327,8 @@ class Database
 		    $this->enableForeignKeyCheck();
 		}
 		
-// 		@TODO Implement auto alter table... very tricky!
-// 		if ($reinstall)
-// 		{
-// 			$this->alterTable($gdo);
-// 		}
-		
 		return true;
 	}
-	
-	# @TODO Implement auto alter table... very tricky!
-// 	/**
-// 	 * Simply alter all columns again.
-// 	 * Check if key changes need to be done.
-// 	 * @param GDO $gdo
-// 	 */
-// 	public function alterTable(GDO $gdo)
-// 	{
-// 		$query = "select tab.table_schema as database_schema,
-//     sta.index_name as pk_name,
-//     sta.seq_in_index as column_id,
-//     sta.column_name,
-//     tab.table_name
-// from information_schema.tables as tab
-// inner join information_schema.statistics as sta
-//         on sta.table_schema = tab.table_schema
-//         and sta.table_name = tab.table_name
-//         and sta.index_name = 'primary'
-// where tab.table_schema = '{$this->db}'
-//     and tab.table_type = 'BASE TABLE'
-//     and tab.table_name = '{$gdo->gdoTableName()}'
-// order by tab.table_name,
-//     column_id;";
-// // 		$result = $this->queryRead($query);
-// // 		var_dump(mysqli_fetch_assoc($result));
-// // 		die();
-
-// // 		$columns = [];
-// // 		$lastCol = null;
-// // 		foreach ($gdo->gdoColumnsCache() as $column)
-// // 		{
-// // 			if ($define = $column->gdoColumnDefine())
-// // 			{
-// // 				$after = $lastCol === null ? "FIRST" : "AFTER {$lastCol->name}";
-// // 				$query = "ALTER TABLE {$gdo->gdoTableName()} ".
-// //                   "CHANGE COLUMN {$column->name} $define {$after}";
-// // 				$lastCol = $column;
-// // 				$this->queryWrite($query);
-// // 			}
-// // 		}
-		
-// 	}
 	
 	public function dropTable(GDO $gdo)
 	{
@@ -404,7 +357,7 @@ class Database
 	
 	public function useDatabase($databaseName)
 	{
-	    $this->queryWrite("USE $databaseName");
+	    $this->queryRead("USE $databaseName");
 	}
 	
 	###################
@@ -471,6 +424,10 @@ class Database
 	##############
 	### Import ###
 	##############
+	/**
+	 * Import a large SQL file.
+	 * @param string $path
+	 */
 	public function parseSQLFile($path)
 	{
 	    $fh = fopen($path, 'r');
@@ -492,6 +449,7 @@ class Database
 	        {
 	            # Most likely a write
     	        $this->queryWrite($command);
+    	        $command = '';
 	        }
 	    }
 	}

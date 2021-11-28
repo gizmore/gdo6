@@ -857,18 +857,22 @@ abstract class GDO
     ###############
     public function insert($withHooks=true)
     {
-        $query = $this->query()->insert($this->gdoTableIdentifier())->values($this->getDirtyVars());
+        $query = $this->query()->
+        	insert($this->gdoTableIdentifier())->
+        	values($this->getDirtyVars());
         return $this->insertOrReplace($query, $withHooks);
     }
     
     public function replace($withHooks=true)
     {
-        $id = $this->getID();
-        if ( (!$id) || preg_match('#^[:0]+$#D', $id) )
+        if (!$this->isPersisted())
         {
-            return $this->insert();
+        	return $this->insert($withHooks);
         }
-        $query = $this->query()->replace($this->gdoTableIdentifier())->values($this->gdoPrimaryKeyValues())->values($this->getDirtyVars());
+        $query = $this->query()->
+        	replace($this->gdoTableIdentifier())->
+        	values($this->gdoPrimaryKeyValues())->
+        	values($this->getDirtyVars());
         return $this->insertOrReplace($query, $withHooks);
     }
     
@@ -925,7 +929,7 @@ abstract class GDO
     {
         if (!$this->persisted)
         {
-            return $this->insert();
+        	return $this->insert($withHooks);
         }
         if ($setClause = $this->getSetClause())
         {

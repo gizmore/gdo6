@@ -6,8 +6,9 @@ use GDO\DB\GDT_String;
 
 /**
  * Duration field int in seconds.
+ * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 6.0.0
  */
 class GDT_Duration extends GDT_String
@@ -26,7 +27,7 @@ class GDT_Duration extends GDT_String
 
 	public function toValue($var)
 	{
-	    return $var === null ? null : Time::humanToSeconds($var);
+	    return empty($var) ? null : Time::humanToSeconds($var);
 	}
 	
 	public function toVar($value)
