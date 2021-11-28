@@ -23,6 +23,11 @@ class GDT_CreatedAt extends GDT_Timestamp
 	
 	public function defaultLabel() { return $this->label('created_at'); }
 
+	public function gdoColumnDefine()
+	{
+		return "{$this->identifier()} TIMESTAMP({$this->millis}){$this->gdoNullDefine()} DEFAULT CURRENT_TIMESTAMP";
+	}
+	
 	/**
 	 * Fill with creation date timestamp.
 	 * @see \GDO\Core\GDT::blankData()

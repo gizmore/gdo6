@@ -4,6 +4,7 @@ namespace GDO\Date;
 use GDO\Core\GDT_Template;
 
 /**
+ * A datetime column has a bigger range of dates compared to a GDT_Timestamp.
  * 
  * @author gizmore
  * @version 6.11.0
