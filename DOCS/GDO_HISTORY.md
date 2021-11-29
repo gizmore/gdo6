@@ -15,11 +15,12 @@ Maybe implement something from the [GDO_TODO](https://github.com/gizmore/gdo6/ma
     git clone --recursive https://github.com/gizmore/gdo6 && cd gdo6
     ./gdoadm.sh configure # create protected/config.php
     # create a mysql database. # Your turn, devops.
-    ./gdoadm.sh provide DogWebsite # Install the dog.gizmore.org website. provide will clone the required packages.
-    ./gdoadm.sh install_all # Install all cloned packages
-    ./gdo_yarn.sh # Javascript
-    ./gdo_bower.sh # assets
-    ./gdoadm.sh admin username password email # create an admin
+    ./gdoadm.sh provide DogWebsite # Download the dog.gizmore.org website. provide will clone the required packages. OR
+    #./gdoadm.sh provide_all # Download all 100+ available modules.
+    ./gdoadm.sh install_all # Install all downloaded packages
+    ./gdo_yarn.sh # Javascript and
+    ./gdo_bower.sh # CSS assets
+    ./gdoadm.sh admin `whoami` password e@mail # create an admin
     ./gdoadm.sh htaccess # install htaccess for SEO mode
     ./gdoadm.sh cronjob # show us a crontab config
     ./gdoadm.sh secure # secure install and protected folders
@@ -38,6 +39,7 @@ Maybe implement something from the [GDO_TODO](https://github.com/gizmore/gdo6/ma
 
  - MethodCronjob methods can now specify the function runAt() to configure when and how often the cronjobs run. Crontab syntax is used. Some old cronjob code still needs to be refactored.
  
+ - New ./gdoadm.sh provide_all - to download all available gdo6 packages.
      
 ## Improvements for v6.10.7 (27.11.2021)
 

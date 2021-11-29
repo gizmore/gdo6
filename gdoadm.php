@@ -69,6 +69,7 @@ function printUsage($code=1)
     echo "\n--- Modules ---\n";
     echo "php $exe modules [<module>] - To show a list of modules or show module details\n";
     echo "php $exe provide <module> - To download all modules that are required to provide a module\n";
+    echo "php $exe provide_all - To download and install all available modules. This for devs who work on global module stuff and unit testing\n";
     echo "php $exe install <module> - To install a module and it's dependencies\n";
     echo "php $exe install_all - To install all modules inside the GDO/ folder and their dependencies\n";
     echo "php $exe wipe <module> - To uninstall modules\n";
@@ -494,51 +495,57 @@ elseif ($argv[1] === 'config')
     }
 }
 
-elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_ssh') )
+elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_all') || ($argv[1] === 'provide_ssh') )
 {
-    if ($argc !== 3)
+	if (($argc !== 3) && ($argc !== 2))
     {
-        printUsage();
+    	if ( ($argc !== 2) || ($argv[1] !== 'provide_all') )
+    	{
+        	printUsage(-1);
+    	}
     }
     
     $loader = ModuleLoader::instance();
     
     $loader->loadModules(false, true, true);
     
-//     if (!($module = $loader->getModule($argv[2])))
-//     {
-//         echo "Unknown module: {$argv[2]}!\n";
-//         die(1);
-//     }
-
-//     $deps = ModuleProviders::$DEPENDENCIES[$argv[2]];
-    
     # Get all dependencies
     $cd = 0;
-    $deps = [$argv[2]];
-    while ($cd != count($deps))
+    if ($argv[2] === 'provide_all')
     {
-        $cd = count($deps);
-        foreach ($deps as $dep)
-        {
-            if ($module = $loader->getModule($dep))
-            {
-                $moreDeps = $module->dependencies();
-            }
-            else
-            {
-                $moreDeps = @ModuleProviders::$DEPENDENCIES[$dep];
-            }
-            
-            if ($moreDeps)
-            {
-                $deps = array_unique(array_merge($deps, $moreDeps));
-            }
-            else
-            {
-            	echo "Unknown module: $dep\n";
-            }
-        }
+    	$deps = [];
+    	foreach ($loader->getModules() as $module)
+    	{
+    		$deps[] = $module->getName();
+    	}
+    }
+    else
+    {
+    	$deps = [$argv[2]];
+    	while ($cd != count($deps))
+    	{
+    		$cd = count($deps);
+    		foreach ($deps as $dep)
+    		{
+    			if ($module = $loader->getModule($dep))
+    			{
+    				$moreDeps = $module->dependencies();
+    			}
+    			else
+    			{
+    				$moreDeps = @ModuleProviders::$DEPENDENCIES[$dep];
+    			}
+    			
+    			if ($moreDeps)
+    			{
+    				$deps = array_unique(array_merge($deps, $moreDeps));
+    			}
+    			else
+    			{
+    				echo "Unknown module: $dep\n";
+    			}
+    		}
+    	}
     }
     
     # Sort by name
