@@ -101,6 +101,7 @@ final class ModuleProviders
     	'gdo6-session-db' => 'gdo6-session-db',
     	'Geo2Country' => 'gdo6-geo2country',
     	'GoogleTranslate' => 'gdo6-google-translate',
+    	'GTK' => 'gdo6-gtk',
     	'Guestbook' => 'gdo6-guestbook',
     	'Helpdesk' => 'gdo6-helpdesk',
     	'HVSC' => 'gdo6-hvsc',
