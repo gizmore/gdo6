@@ -5,7 +5,6 @@ use GDO\Tests\TestCase;
 use GDO\Date\Time;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertTrue;
-use GDO\User\GDO_User;
 
 /**
  * Test date and time.
@@ -90,15 +89,4 @@ final class DateTest extends TestCase
         assertEquals('09.11.2021 09:00', $result);
     }
     
-//     public function testTinyIncrement()
-//     {
-//         $user = GDO_User::blank(['user_name' => 'dator'])->insert();
-//         $dt = $user->getValue('user_created');
-//     }
-    
-    public function testNegativeYearInDate()
-    {
-    	$input = '3.4.-150000000'; # April, the 3rd, approx 150 million years ago.
-    	# @TODO test if this date can be parsed in german and english.
-    }
 }

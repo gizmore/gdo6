@@ -3,7 +3,6 @@ namespace GDO\Date\lang;
 return [
 	'gdo_timezone' => 'Zeitzone',
 	'ago' => 'vor %s',
-    'duration' => 'Dauer',
     'err_min_date' => 'Dieses Datum muss nach %s sein.',
     'err_max_date' => 'Dieses Datum muss vor %s sein.',
     'err_invalid_date' => 'Ungültige Zeitangabe: %s ist nicht im Format %s. Bitte stellen Sie sicher, dass Ihre Sprache und Zeitzone korrekt eingestellt sind.',
@@ -37,4 +36,7 @@ return [
     'msg_time_java' => 'Java timestamp: %s',
     'msg_time_micro' => 'Microtimestamp: %s',
     
+	# Duration
+	'duration' => 'Dauer',
+	'err_min_duration' => 'Die Dauer muss mindestens %s Sekunden betragen.',
 ];

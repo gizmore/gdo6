@@ -3,7 +3,6 @@ namespace GDO\Date\lang;
 return [
 	'gdo_timezone' => 'fuso orario',
 	'ago' => '%s fa',
-    'duration' => 'Durata',
     'err_min_date' => 'Questa data non deve essere %s.',
     'err_max_date' => 'Questa data deve essere prima del %s.',
     'err_invalid_date' => 'Invalid Time: %s does not match the format of %s. Please make sure to setup your language and timezone.',
@@ -36,4 +35,9 @@ return [
     'msg_time_unix' => 'Unix timestamp: %s',
     'msg_time_java' => 'Java timestamp: %s',
     'msg_time_micro' => 'Microtimestamp: %s',
+
+	# Duration
+	'duration' => 'Durata',
+	'err_min_duration' => 'La durata deve essere almeno % s secondi.',
+	
 ];

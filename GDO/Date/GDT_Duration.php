@@ -24,7 +24,14 @@ class GDT_Duration extends GDT_String
 		$this->ascii();
 		$this->max(16);
 	}
-
+	
+	public $minDuration = 0;
+	public function minDuration($minDuration)
+	{
+		$this->minDuration = $minDuration;
+		return $this;
+	}
+	
 	public function toValue($var)
 	{
 	    return empty($var) ? null : Time::humanToSeconds($var);
@@ -43,6 +50,19 @@ class GDT_Duration extends GDT_String
 	public function renderForm()
 	{
 		return GDT_Template::php('Date', 'form/duration.php', ['field' => $this]);
+	}
+	
+	public function validate($value)
+	{
+		if (!parent::validate($value))
+		{
+			return false;
+		}
+		if ($value < $this->minDuration)
+		{
+			return $this->error('err_min_duration', [$this->minDuration]);
+		}
+		return true;
 	}
 	
 }
