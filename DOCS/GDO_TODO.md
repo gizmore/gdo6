@@ -46,3 +46,4 @@ For a more complete todo, please see GDO_TODO_AUTO_GENERATED.md
 
 - @TODO: Write a user setting configurator that shows all settings at once.
 
+- @TODO: Make a provide_all command in gdoadm.php, to install every single module with one command. Useful for testing stuff that affects multiple modules.

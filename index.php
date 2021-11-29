@@ -69,12 +69,15 @@ if (GDO_User::current()->isUser())
     }
 }
 
-# Turn a json content into $_REQUEST
+# Turn json content into $_REQUEST
 if (@$_SERVER["CONTENT_TYPE"] === 'application/json')
 {
 	$data = file_get_contents('php://input');
 	$data = json_decode($data, true);
-	$_REQUEST = array_merge($_REQUEST, $data);
+	if (is_array($data))
+	{
+		$_REQUEST = array_merge($_REQUEST, $data);
+	}
 }
 
 if (GDO_LOG_REQUEST)
