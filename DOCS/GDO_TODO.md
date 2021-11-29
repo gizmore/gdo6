@@ -47,3 +47,7 @@ For a more complete todo, please see GDO_TODO_AUTO_GENERATED.md
 - @TODO: Write a user setting configurator that shows all settings at once.
 
 - @TODO: Make a provide_all command in gdoadm.php, to install every single module with one command. Useful for testing stuff that affects multiple modules.
+
+- @TODO: Implement BBCode decoder with this lib: https://github.com/thunderer/Shortcode - thx livinskull
+
+- @TODO: Implement a better GDT_PhoneNumber with https://github.com/google/libphonenumber - thx ogon
