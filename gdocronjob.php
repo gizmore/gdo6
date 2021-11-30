@@ -3,6 +3,7 @@ use GDO\Core\Application;
 use GDO\DB\Database;
 use GDO\Core\Logger;
 use GDO\Cronjob\Cronjob;
+use GDO\Language\Trans;
 
 ############
 ### Init ###
@@ -18,13 +19,14 @@ require 'protected/config.php';
 
 Logger::init();
 Database::init();
+Trans::setISO('en');
 
-final class CronjobApplication extends Application
+final class gdocronjob extends Application
 {
     public function isCLI() { return true; }
     public function isCronjob() { return true; }
     
 }
 
-new CronjobApplication();
+new gdocronjob();
 Cronjob::run();
