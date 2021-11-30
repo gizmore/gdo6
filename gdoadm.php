@@ -617,7 +617,14 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_all') || ($argv[1] =
     }
     else
     {
-        echo "Your filesystem has all the required modules. You can: \n./gdoadm.sh install {$argv[2]}\n";
+    	if ($argv[1] === 'provide_all')
+    	{
+    		echo "Your filesystem has all the required modules. You can: ./gdoadm.sh install_all\n";
+    	}
+    	else
+    	{
+    		echo "Your filesystem has all the required modules. You can: ./gdoadm.sh install {$argv[2]}\n";
+    	}
     }
 }
 
