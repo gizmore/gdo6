@@ -3,6 +3,7 @@
 To install gdo6 via, and for, the CLI, follow this document.
 To install gdo6 via the install/wizard.php web interface follow GDO_INSTALL_WWW.md - coming soon.
 
+
 ## Install gdo6 today!
 
 Maybe implement something from the [GDO_TODO.md](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_TODO.md) list.
@@ -13,7 +14,8 @@ Maybe implement something from the [GDO_TODO.md](https://github.com/gizmore/gdo6
  - You *have to* install PHP. It might run fine on 6.? Surely 7.0 and 8.1 is latest and recommended.
 
  - You *have to* install a mariadb compatible database.
- 
+
+ - You *have to* install git. See [git4windows](https://git-scm.com/download/win) or [git](https://github.com/git/git)
  
 It is recommended to have nodejs, npm, yarn and bower   installed.
 Bower will be dropped sooner or later.
@@ -22,14 +24,25 @@ Bower will be dropped sooner or later.
     npm -g install bower
 
 
-
-
 ## Install the gdo6 core
 
     git clone --recursive https://github.com/gizmore/gdo6
     cd gdo6
     ./gdo_yarn.sh
     ./gdo_bower.sh
+    
+    
+## gdoadm.sh
+
+You will work with the gdoadm CLI tool.
+
+    ./gdoadm.sh # linux style
+    php gdoadm.php # windows
+    
+    
+## Run the system test
+
+    ./gdoadm.sh systemtest
 
 
 ## Configure the gdo6 system
@@ -38,6 +51,20 @@ Please configure your system by creating a config at the protected/ folder.
 
     ./gdoadm.sh configure # Create a default config. Please edit it.
 
+
+## Download modules
+
+    ./gdoadm.sh modules # show modules
+    ./gdoadm.sh provide <module> # download module
+    ./gdoadm.sh install <module> # install module
+    
+    
+## Install full dev suite
+
+    composer update
+    ./gdoadm.sh provide_all
+    ./gdoadm.sh install_all
+    
 
 ## PATH
 
@@ -94,3 +121,6 @@ Here is an example on how to create the TBS website.
     ./gdo_yarn.sh
     ./gdo_bower.sh
     composer update
+    ./gdo_test.sh
+
+
