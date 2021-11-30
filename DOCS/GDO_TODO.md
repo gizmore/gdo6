@@ -1,7 +1,7 @@
 # TODO
 
 This is a todo list that did not make it into a code annotation yet, or are just ideas.
-For a more complete todo, please see GDO_TODO_AUTO_GENERATED.md
+For a more complete todo, please see [GDO_TODO_AUTO_GENERATED.md](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_TODO_AUTO_GENERATED.md)
 
 
 - @TODO: Make use of user_type bot. Write a module that identifes bots by their user agent. What else?

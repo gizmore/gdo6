@@ -1,32 +1,6 @@
-# History
+# gdo6 History
 
-Gdo6 Changelog.
-
-
-## Install gdo6 today!
-
-Before you read the history, please take your time to actually install gdo6.
-Maybe implement something from the [GDO_TODO](https://github.com/gizmore/gdo6/master/DOCS/GDO_TODO.md) list.
-
-
-    echo "What are we waiting for? christmas?!";
-    # Enjoy coding a framework that actually makes things easier.
-    # Start with cloning the core.
-    git clone --recursive https://github.com/gizmore/gdo6 && cd gdo6
-    ./gdoadm.sh configure # create protected/config.php - *you will need a mysql db*
-    ./gdoadm.sh provide DogWebsite # Download the dog.gizmore.org website. provide will clone the required packages. OR
-    ./gdoadm.sh provide_all # Download all 100+ available modules.
-    ./gdoadm.sh install_all # Install all downloaded packages
-    ./gdo_yarn.sh # Javascript and
-    ./gdo_bower.sh # CSS assets
-    ./gdoadm.sh admin `whoami` password e@mail # create an admin
-    ./gdoadm.sh htaccess # install htaccess for SEO mode
-    ./gdoadm.sh cronjob # show us a crontab config
-    ./gdoadm.sh secure # secure install and protected folders
-    # Set your PATH env to /gdo6/bin # Do it!
-    gdo admin.clearcache. # should fix some caching bugs after install
-    # It is also possible to install via http://gdo6/install/wizard.php
-    ./gdo_test.sh # run all unit tests. (requires composer update)
+Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
 
 
 ## Improvements for v6.11.0 (29.11.2021)

@@ -1,16 +1,27 @@
-# GDO6 CLI installation
+# gdo6 CLI installation
 
 To install gdo6 via, and for, the CLI, follow this document.
-To install gdo6 via the web interface follow [GDO_INSTALL_WWW.md].
+To install gdo6 via the install/wizard.php web interface follow [GDO_INSTALL_WWW.md].
+
+## Install gdo6 today!
+
+Maybe implement something from the [GDO_TODO.md](https://github.com/gizmore/gdo6/master/DOCS/GDO_TODO.md) list.
 
 
 ## Prerequisites
 
-It is recommended to have nodejs, npm, yarn and bower installed.
-Bower support and dependency will be dropped sooner or later.
+ - You *have to* install PHP. It might run fine on 6.? Surely 7.0 and 8.1 is latest and recommended.
+
+ - You *have to* install a mariadb compatible database.
+ 
+ 
+It is recommended to have nodejs, npm, yarn and bower   installed.
+Bower will be dropped sooner or later.
 
     npm -g install yarn
     npm -g install bower
+
+
 
 
 ## Install the gdo6 core
@@ -32,8 +43,15 @@ Please configure your system by creating a config at the protected/ folder.
 
 You can add gdo6/bin/ to your PATH environment, so you can do fancy stuff like this.
     
-    gdo core.impressum. # prints method Core/Impressum to the CLI
-    gdo register.form --tos=1 gizmore gizmore@gizmore.org password password # Register at your gdo6 installation via CLI
+    gdo core.impressum. # prints method GDO/Core/Method/Impressum to the CLI
+    
+Send a mail to gizmore via the CLI.
+
+    gdo mail.send gizmore "Hi there" "Mail body goes here."
+    
+Register at your gdo6 installation via CLI. This happens on your first command.
+
+    gdo core.whoami. # print your gdo_user.user_name
     
     
 ## Cronjob
@@ -51,6 +69,13 @@ You want some folders to be inaccessible from the outside. Like the install wiza
     ./gdoadm.sh secure
     
 
+## Admin account
+
+Of course you want an admin account for your installation.
+
+    ./gdoadm.sh admin username password <email>
+
+
 ## Build your site
 
 You can now clone more modules and install them.
@@ -62,9 +87,10 @@ Here is an example on how to create the TBS website.
     ./gdo_bower.sh
     
     
-## Admin account
+## Install all modules for a complete unit test  and development environment
 
-Of course you want an admin account for your installation.
-
-    ./gdoadm.sh admin username password <email>
-        
+    ./gdo_adm.sh provide_all
+    ./gdo_adm.sh install_all
+    ./gdo_yarn.sh
+    ./gdo_bower.sh
+    composer update
