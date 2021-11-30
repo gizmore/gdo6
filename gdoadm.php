@@ -511,7 +511,7 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_all') || ($argv[1] =
     
     # Get all dependencies
     $cd = 0;
-    if ($argv[2] === 'provide_all')
+    if ($argv[1] === 'provide_all')
     {
     	$deps = [];
     	foreach ($loader->getModules() as $module)

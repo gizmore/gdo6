@@ -53,3 +53,7 @@ For a more complete todo, please see GDO_TODO_AUTO_GENERATED.md
 - @TODO: Implement a better GDT_PhoneNumber with https://github.com/google/libphonenumber - thx ogon
 
 - @TODO: A loc counter excluding 3rd party. only gdo6 php+js+css
+
+- @TODO: Base65536 challenge
+
+- @TODO: Better GDT_Version type with major.minor.patch format.

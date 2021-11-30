@@ -1539,7 +1539,7 @@ abstract class GDO
      */
     public static function table() { return Database::tableS(static::class); }
     
-    public function createTable($reinstall=false) { return Database::instance()->createTable($this, $reinstall); }
+    public function createTable($reinstall=false) { return Database::instance()->createTable($this); }
     public function dropTable() { return Database::instance()->dropTable($this); }
     public function truncate() { return Database::instance()->truncateTable($this); }
     

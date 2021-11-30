@@ -273,12 +273,7 @@ class Database
 	####################
 	### Table create ###
 	####################
-	/**
-	 * Create a database table from a GDO. 
-	 * @param GDO $gdo
-	 * @return bool
-	 */
-	public function createTable(GDO $gdo, $reinstall=false)
+	public function createTableCode(GDO $gdo)
 	{
 		$columns = [];
 		$primary = [];
@@ -300,7 +295,7 @@ class Database
 			$primary = implode(',', $primary);
 			$columns[] = "PRIMARY KEY ($primary) " . self::PRIMARY_USING;
 		}
-
+		
 		foreach ($gdo->gdoColumnsCache() as $column)
 		{
 			if ($column->unique)
@@ -311,11 +306,23 @@ class Database
 		
 		$columnsCode = implode(",\n", $columns);
 		
+		$query = "CREATE TABLE IF NOT EXISTS {$gdo->gdoTableIdentifier()} ".
+		         "(\n$columnsCode\n) ENGINE = {$gdo->gdoEngine()}";
+		
+		return $query;
+	}
+	
+	/**
+	 * Create a database table from a GDO. 
+	 * @param GDO $gdo
+	 * @return bool
+	 */
+	public function createTable(GDO $gdo)
+	{
 		try
 		{
 		    $this->disableForeignKeyCheck();
-    		$query = "CREATE TABLE IF NOT EXISTS {$gdo->gdoTableIdentifier()} ".
-    		  "(\n$columnsCode\n) ENGINE = {$gdo->gdoEngine()}";
+    		$query = $this->createTableCode($gdo);
     		$this->queryWrite($query);
 		}
 		catch (\Throwable $ex)

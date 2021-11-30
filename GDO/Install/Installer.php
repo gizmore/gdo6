@@ -12,6 +12,12 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\User\GDO_Permission;
 use GDO\Util\Strings;
+use GDO\Core\Logger;
+use GDO\Core\GDT_Error;
+use GDO\Core\GDOException;
+use GDO\Core\Website;
+use GDO\Core\Application;
+use GDO\Core\Debug;
 
 /**
  * Install helper.
@@ -24,9 +30,27 @@ class Installer
 {
 	public static function installModules(array $modules)
 	{
+		/**
+		 * @var $module GDO_Module
+		 */
 		foreach ($modules as $module)
 		{
-			self::installModule($module);
+			try
+			{
+				self::installModule($module);
+			}
+			catch (\Throwable $e)
+			{
+				$app = Application::instance();
+				if ($app->isCLI())
+				{
+					echo Debug::backtraceException($e, false, "Cannot install {$module->getName()}");
+				}
+				else
+				{
+					throw $e;
+				}
+			}
 		}
 	}
 	
@@ -36,10 +60,10 @@ class Installer
 		
 		if (!$module->isPersisted())
 		{
+			$version = $module->module_version;
 			GDO_Module::table()->deleteWhere('module_name = '.$module->quoted('module_name'));
-			$module->setVars(['module_enabled'=>'1', 'module_version'=>'6.10', 'module_priority' => $module->module_priority]);
+			$module->setVars(['module_enabled'=>'1', 'module_version'=>$version, 'module_priority' => $module->module_priority]);
 			$module->insert();
-			self::upgradeTo($module, '6.10');
 		}
 		
 		while ($module->getVersion() != $module->module_version)
@@ -74,11 +98,11 @@ class Installer
 		}
 	}
 	
-	public static function installModuleClass(GDO $gdo, $reinstall=false)
+	public static function installModuleClass(GDO $gdo)
 	{
 		if ($gdo->gdoIsTable())
 		{
-			$gdo->createTable($reinstall);
+			$gdo->createTable();
 		}
 	}
 	
@@ -87,7 +111,7 @@ class Installer
 		$db = Database::instance();
 		try
 		{
-			$db->queryWrite('SET FOREIGN_KEY_CHECKS=0');
+			$db->disableForeignKeyCheck();
 			$module->onWipe();
 			self::dropModuleClasses($module);
 			$module->delete();
@@ -99,7 +123,7 @@ class Installer
 		}
 		finally
 		{
-			$db->queryWrite('SET FOREIGN_KEY_CHECKS=1');
+			$db->enableForeignKeyCheck();
 		}
 	}
 
@@ -124,8 +148,9 @@ class Installer
 	
 	public static function upgrade(GDO_Module $module)
 	{
-		$version = self::increaseVersion($module);
+		$version = self::increaseVersion($module, false);
 		self::upgradeTo($module, $version);
+		self::increaseVersion($module, true);
 	}
 		
 	/**
@@ -167,7 +192,11 @@ class Installer
 						
 						# create temp and copy as old
 						$db->disableForeignKeyCheck();
-						$query = "CREATE TABLE IF NOT EXISTS $temptable LIKE $tablename";
+						# Do not! drop the temp table. It might contain live data from a failed upgrade
+						$query = "SHOW CREATE TABLE $tablename";
+						$result = Database::instance()->queryRead($query);
+						$query = mysqli_fetch_row($result)[1];
+						$query = str_replace($tablename, $temptable, $query);
 						$db->queryWrite($query);
 						$query = "INSERT INTO $temptable SELECT * FROM $tablename";
 						$db->queryWrite($query);
@@ -185,9 +214,9 @@ class Installer
 							$query = "INSERT INTO $tablename ($columns) SELECT $columns FROM $temptable";
 							$db->queryWrite($query);
 							
-							# drop temp
-							$query = "DROP TABLE $temptable";
-							$db->queryWrite($query);
+// 							# drop temp after all succeded.
+// 							$query = "DROP TABLE $temptable";
+// 							$db->queryWrite($query);
 						}
 					}
 				}
@@ -234,10 +263,13 @@ class Installer
 		}
 	}
 	
-	public static function increaseVersion(GDO_Module $module)
+	private static function increaseVersion(GDO_Module $module, bool $write)
 	{
 		$v = sprintf('%.02f', (floatval($module->getVersion()) + 0.01));
-		$module->saveVar('module_version', $v);
+		if ($write)
+		{
+			$module->saveVar('module_version', $v);
+		}
 		return $v;
 	}
 	

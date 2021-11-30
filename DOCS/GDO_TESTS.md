@@ -19,4 +19,11 @@ Core is installed for the core database tables.
 Language and Country are installed for more tables.
 User is installed for more tables.
 "Tests" module is executed which run basic tests.
-There is a module TestMethods that runs automated tests on all trivial Methods, GDT and GDO.
+There is a final module *Module_TestMethods* that runs automated tests on all trivial Methods, GDT and GDO.
+It plugs all parameters with mock values. A GDT usually has a mock value that mostly always passes a validation.
+
+
+## Setup a test machine
+
+Use `./gdoadm.sh provide_all` to download all avaible gdo6 modules.
+Use `composer update` to install phpunit dependency.

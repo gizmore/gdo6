@@ -10,8 +10,10 @@ use GDO\DB\Cache;
  * 
  * Provides the install theme to style the install wizard.
  * 
+ * @see Installer
+ * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.11.0
  * @since 6.0.0
  */
 class Module_Install extends GDO_Module

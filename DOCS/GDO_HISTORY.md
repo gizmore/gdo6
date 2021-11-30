@@ -13,10 +13,9 @@ Maybe implement something from the [GDO_TODO](https://github.com/gizmore/gdo6/ma
     # Enjoy coding a framework that actually makes things easier.
     # Start with cloning the core.
     git clone --recursive https://github.com/gizmore/gdo6 && cd gdo6
-    ./gdoadm.sh configure # create protected/config.php
-    # create a mysql database. # Your turn, devops.
+    ./gdoadm.sh configure # create protected/config.php - *you will need a mysql db*
     ./gdoadm.sh provide DogWebsite # Download the dog.gizmore.org website. provide will clone the required packages. OR
-    #./gdoadm.sh provide_all # Download all 100+ available modules.
+    ./gdoadm.sh provide_all # Download all 100+ available modules.
     ./gdoadm.sh install_all # Install all downloaded packages
     ./gdo_yarn.sh # Javascript and
     ./gdo_bower.sh # CSS assets
@@ -25,12 +24,15 @@ Maybe implement something from the [GDO_TODO](https://github.com/gizmore/gdo6/ma
     ./gdoadm.sh cronjob # show us a crontab config
     ./gdoadm.sh secure # secure install and protected folders
     # Set your PATH env to /gdo6/bin # Do it!
-    gdo admin.clearcache. # should fix some caching bugs during install
+    gdo admin.clearcache. # should fix some caching bugs after install
     # It is also possible to install via http://gdo6/install/wizard.php
+    ./gdo_test.sh # run all unit tests. (requires composer update)
 
 
-## Improvements for v6.11.0 (28.11.2021)
+## Improvements for v6.11.0 (29.11.2021)
  
+ - *./gdoadm.sh provide_all* - to download all available gdo6 packages. Unit test all the things!
+     
  - GDT_CreatedAt, GDT_EditedAt and GDT_DeletedAt are now GDT_Timestamp(3) instead of GDT_DateTime(3).
  
  - GDO now automigrates on minor patch levels via DB table 1.copy, 2.drop, 3.create_fresh, 4.select copy_into_fresh_table.
@@ -39,8 +41,7 @@ Maybe implement something from the [GDO_TODO](https://github.com/gizmore/gdo6/ma
 
  - MethodCronjob methods can now specify the function runAt() to configure when and how often the cronjobs run. Crontab syntax is used. Some old cronjob code still needs to be refactored.
  
- - New ./gdoadm.sh provide_all - to download all available gdo6 packages.
-     
+
 ## Improvements for v6.10.7 (27.11.2021)
 
  - GDT_Timezone is now a GDO_Timezone database table for using IDs as timezones

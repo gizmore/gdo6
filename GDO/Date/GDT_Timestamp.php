@@ -13,8 +13,7 @@ use GDO\Core\Application;
  * The GDT_Timestamp field is the baseclass for all datefields.
  * The var type is a mysql date.
  * The value type is an integer/timestamp.
- * 
- * @TODO make GDT_Timestamp->getValue() also return a Datetime?
+ * It transfers as f32 for the websocket protocol. 
  * 
  * @author gizmore
  * @version 6.11.0
