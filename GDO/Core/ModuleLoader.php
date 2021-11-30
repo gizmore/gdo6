@@ -257,9 +257,16 @@ final class ModuleLoader
 				$moduleName = strtolower($moduleData['module_name']);
 				if (!isset($this->modules[$moduleName]))
 				{
-					if ($module = self::instanciate($moduleData))
+					try
 					{
-						$this->modules[$moduleName] = $module->setPersisted(true);
+						if ($module = self::instanciate($moduleData))
+						{
+							$this->modules[$moduleName] = $module->setPersisted(true);
+						}
+					}
+					catch (\Throwable $e)
+					{
+						echo "A module file or folder is missing in filesystem: GDO/{$moduleName}(\n";
 					}
 				}
 			}
