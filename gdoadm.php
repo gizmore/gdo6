@@ -513,7 +513,14 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_all') || ($argv[1] =
     $cd = 0;
     if ($argv[1] === 'provide_all')
     {
-    	$deps = array_keys(ModuleProviders::$PROVIDERS);
+    	$deps = [];
+    	foreach (ModuleProviders::$PROVIDERS as $name => $providers)
+    	{
+    		if ($providers)
+    		{
+    			$deps[] = $name;
+    		}
+    	}
     }
     else
     {
