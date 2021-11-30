@@ -1,11 +1,11 @@
 # gdo6 CLI installation
 
 To install gdo6 via, and for, the CLI, follow this document.
-To install gdo6 via the install/wizard.php web interface follow [GDO_INSTALL_WWW.md].
+To install gdo6 via the install/wizard.php web interface follow GDO_INSTALL_WWW.md - coming soon.
 
 ## Install gdo6 today!
 
-Maybe implement something from the [GDO_TODO.md](https://github.com/gizmore/gdo6/master/DOCS/GDO_TODO.md) list.
+Maybe implement something from the [GDO_TODO.md](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_TODO.md) list.
 
 
 ## Prerequisites
