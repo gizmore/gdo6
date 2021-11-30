@@ -133,8 +133,8 @@ final class GDO_User extends GDO
 	public function getLanguage() { return GDO_Language::findById($this->getLangISO()); }
 	public function getCountryISO() { return $this->getVar('user_country'); }
 	public function getCountry() { $c = $this->getValue('user_country'); return $c ? $c : GDO_Country::unknownCountry(); }
-	public function hasTimezone() { return $this->getVar('user_timezone') != 1; }
-	public function getTimezone() { return $this->hasTimezone() ? $this->getVar('user_timezone') : GDO_Session::get('timezone', '1'); }
+	public function hasTimezone() { return $this->getTimezone() > 1; }
+	public function getTimezone() { return $this->getVar('user_timezone') > 1 ? $this->getVar('user_timezone') : GDO_Session::get('timezone', '1'); }
 	public function getAge() { return Time::getAge($this->getBirthdate()); }
 	public function displayAge() { return Time::displayAge($this->getBirthdate()); }
 	

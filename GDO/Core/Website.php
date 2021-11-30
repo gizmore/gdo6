@@ -86,7 +86,7 @@ final class Website
 	private static function ajaxRedirect($url, $time)
 	{
 		# Don't do this at home kids!
-		return sprintf('<script type="text/javascript">setTimeout(function(){ window.location.href="%s" }, %d);</script>', $url, $time*1000);
+		return sprintf('<script>setTimeout(function(){ window.location.href="%s" }, %d);</script>', $url, $time*1000);
 	}
 	
 	public static function addInlineCSS($css)

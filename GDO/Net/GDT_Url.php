@@ -1,16 +1,19 @@
 <?php
 namespace GDO\Net;
+
 use GDO\DB\GDT_String;
 use GDO\Util\Arrays;
 use GDO\Core\GDT_Template;
 use GDO\UI\WithTitle;
+use GDO\UI\GDT_Link;
+
 /**
  * URL field.
  * Features link checking.
  * Value is a @see URL.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 5.0.0
  */
 class GDT_Url extends GDT_String
@@ -52,6 +55,7 @@ class GDT_Url extends GDT_String
 	### Render ###
 	##############
 	public function renderCell() { return GDT_Template::php('Net', 'cell/url.php', ['field' => $this]); }
+	public function displayValue($value) { return GDT_Link::anchor($value->raw, $this->displayLabel()); }
 	
 	###############
 	### Options ###

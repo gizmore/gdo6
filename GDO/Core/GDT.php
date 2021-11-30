@@ -269,7 +269,7 @@ abstract class GDT
 	}
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }
 	public function displayVar() { return html($this->getVar()); }
-	public function displayValue($var) { return html($var); }
+	public function displayValue($value) { return html($value); }
 	public function displayJSON() { return json_encode($this->renderJSON()); }
 
 	public function getFields() {}

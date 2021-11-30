@@ -25,7 +25,7 @@ final class OnInstall
 				'user_email' => GDO_BOT_EMAIL,
 				'user_type' => 'system',
 				'user_password' => BCrypt::create('system')->__toString(),
-			])->insert();
+			])->replace();
 		}
 
 		Module_Core::instance()->saveConfigVar('system_user', $user->getID());

@@ -20,7 +20,7 @@ class GDT_Name extends GDT_String
 	public $min = 2, $max = self::LENGTH;
 	public $encoding = self::ASCII;
 	public $caseSensitive = true;
-	public $pattern = "/^[-A-Za-z _0-9;:]{1,64}$/sD";
+	public $pattern = "/^[A-Za-z][-A-Za-z _0-9;:]{1,63}$/sD";
 	public $notNull = true;
 	public $unique = true;
 	

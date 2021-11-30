@@ -18,6 +18,9 @@ final class TimezoneDetect extends MethodForm
 {
 	public function formName() { return 'tzform'; }
 	
+	public function isUserRequired() { return false; }
+	public function isTransactional() { return false; }
+	
 	public function createForm(GDT_Form $form)
 	{
 		$form->addFields([

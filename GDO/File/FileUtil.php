@@ -112,6 +112,7 @@ final class FileUtil
 					{
 					    if (!unlink($obj))
 					    {
+					    	echo "cannot unlink $obj\n";
 					        return false;
 					    }
 					}

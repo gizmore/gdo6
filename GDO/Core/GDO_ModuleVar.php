@@ -22,7 +22,7 @@ final class GDO_ModuleVar extends GDO
 	{
 		return [
 			GDT_Object::make('mv_module_id')->table(GDO_Module::table())->primary(),
-			GDT_Name::make('mv_name')->primary(),
+			GDT_Name::make('mv_name')->primary()->unique(false),
 			GDT_String::make('mv_value'),
 		];
 	}

@@ -19,8 +19,8 @@ use GDO\UI\WithPHPJQuery;
  * 
  * @author gizmore
  * 
- * @version 6.10
- * @since 6.00
+ * @version 6.10.0
+ * @since 6.0.0
  * 
  * @see \GDO\UI\GDT_Message
  */
