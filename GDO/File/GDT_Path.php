@@ -12,7 +12,7 @@ use GDO\DB\GDT_String;
  */
 final class GDT_Path extends GDT_String
 {
-	public $pattern = "#^[^?]+$#";
+	public $pattern = "#^[^?]+$#iD";
 	
 	public function defaultLabel() { return $this->label('path'); }
 	public function htmlClass()
@@ -42,6 +42,7 @@ final class GDT_Path extends GDT_String
 				}
 			}
 		}
+		return true;
 	}
 	
 	public function validatePath($filename)

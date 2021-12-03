@@ -11,8 +11,8 @@ use GDO\Core\WithFields;
  * Should almost work with CSS only.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.10
+ * @version 6.11.0
+ * @since 6.10.4
  */
 class GDT_Dialog extends GDT
 {
@@ -22,13 +22,13 @@ class GDT_Dialog extends GDT
     
 	public function renderCell()
 	{
-		return GDT_Template::php('UI', 'cell/dialog', ['field' => $this]);
+		return GDT_Template::php('UI', 'cell/dialog.php', ['field' => $this]);
 	}
 	
 	##############
 	### Opened ###
 	##############
-	private $opened = false;
+	public $opened = false;
 	
 	/**
 	 * Start dialog in open mode?

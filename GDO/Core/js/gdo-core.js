@@ -87,12 +87,29 @@ window.GDO.exception = function(ex) {
 	return window.GDO.responseError({json:{error: ex.message, stack: ex.stack}});
 };
 
+window.GDO.OPEN_DIALOG = null;
+
+window.GDO.closeDialog = function(resolve) {
+	window.GDO.OPEN_DIALOG[0].close();
+	window.GDO.OPEN_DIALOG[1].style.display = 'none';
+	resolve();
+}
+
 window.GDO.openDialog = function(dialogId) {
 	var dlg = document.querySelector('#'+dialogId+' dialog');
 	if (!dlg) {
 		console.error('Cannot find dialog with id ' + dialogId)
 	}
-	dlg.showModal();
+	else {
+		let wrap = document.querySelector('#'+dialogId);
+		wrap.style.display = 'block';
+		let promise = new Promise((reject, resolve) => {
+			
+		});
+		GDO.OPEN_DIALOG = [dlg, wrap, promise];
+		dlg.showModal();
+		return promise;
+	}
 };
 
 /**
