@@ -24,8 +24,6 @@ use GDO\User\PermissionException;
  * Provides transaction wrapping and permission checks.
  * Provides parameters via ->gdoParameters().
  * 
- * @TODO Rename init() to onInit()
- * 
  * @see MethodForm
  * @see MethodCrud
  * @see MethodTable
@@ -70,7 +68,7 @@ abstract class Method
 	/**
 	 * @return GDT_Response
 	 */
-	public function init() {} # @TODO rename to onInit()
+	public function onInit() {}
 	public function isCLI() { return true; }
 	public function isAjax() { return false; }
 	public function isEnabled() { $m = $this->getModule(); return $m && $m->isEnabled(); }
@@ -167,6 +165,20 @@ abstract class Method
 	        $keywords .= ',' . t($key);
 	    }
 	    return $keywords;
+	}
+	
+	############
+	### Init ###
+	############
+	private $inited = false;
+	public function init()
+	{
+		if (!$this->inited)
+		{
+			$this->inited = true;
+			$this->onInit();
+		}
+		return $this;
 	}
 	
 	######################
@@ -599,7 +611,8 @@ abstract class Method
 	        $response = GDT_Response::newWith();
 // 	        $response = GDT_Response::make();
 	        
-	        $response->addField($this->init());
+	        $this->inited = false;
+	        $response->addField($this->onInit());
 	        
 	        if ($response->isError())
 	        {

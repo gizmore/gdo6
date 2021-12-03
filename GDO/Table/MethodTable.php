@@ -24,6 +24,7 @@ abstract class MethodTable extends Method
 {
     public function allParameters()
     {
+    	$this->init();
         return array_merge($this->gdoParameters(),
             $this->table->headers->fields);
     }
@@ -230,8 +231,9 @@ abstract class MethodTable extends Method
 	    $table->fetchInto($this->useFetchInto());
 	}
 	
-	public function init()
+	public function onInit()
 	{
+		parent::onInit();
 		if (!$this->table)
 		{
 			$this->table = $this->createCollection();

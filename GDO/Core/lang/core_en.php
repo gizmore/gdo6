@@ -325,4 +325,8 @@ Kind Regards,<br/>
 'cfg_footer' => 'Show in footer?',
 'err_input_not_numeric' => 'Please enter only numeric values.',
 'err_missing_template' => 'A template file is missing: %s',
+
+# v6.11.0
+'mtitle_core_directoryindex' => 'Directory Index',
+	
 );

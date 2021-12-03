@@ -327,4 +327,8 @@ Viele Grüße,<br/>
 'cfg_footer' => 'Im Footer anzeigen?',
 'err_input_not_numeric' => 'Bitte nur Zahlen eingeben.',
 'err_missing_template' => 'Eine Template-Datei wird vermisst: %s',
+
+# v6.11.0
+'mtitle_core_directoryindex' => 'Verzeichnisinhalt',
+	
 );
