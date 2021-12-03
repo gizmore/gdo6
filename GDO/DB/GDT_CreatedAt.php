@@ -15,7 +15,7 @@ use GDO\Date\Time;
  */
 class GDT_CreatedAt extends GDT_Timestamp
 {
-	public $notNull = true;
+	public $notNull = false;
 	public $writable = false;
 	public $editable = false;
 // 	public $hidden = true;

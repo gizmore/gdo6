@@ -44,12 +44,16 @@ class GDT_DateTime extends GDT_Date
 	
 	public function inputToVar($input)
 	{
-	    $input = str_replace('T', ' ', $input);
-	    $input = str_replace('Z', '', $input);
-	    $d = Time::parseDateTime($input, Time::$TIMEZONE);
-	    $d->setTimezone(Time::$UTC);
-	    $var = $d->format('Y-m-d H:i:s.u');
-	    return $var;
+		if (trim($input))
+		{
+		    $input = str_replace('T', ' ', $input);
+		    $input = str_replace('Z', '', $input);
+		    $d = Time::parseDateTime($input, Time::$TIMEZONE);
+		    $d->setTimezone(Time::$UTC);
+		    $var = $d->format('Y-m-d H:i:s.u');
+		    return $var;
+		}
+		return null;
 	}
 
 }
