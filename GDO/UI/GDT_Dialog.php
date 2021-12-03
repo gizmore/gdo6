@@ -19,6 +19,7 @@ class GDT_Dialog extends GDT
     use WithTitle;
     use WithFields;
     use WithPHPJQuery;
+    use WithActions;
     
 	public function renderCell()
 	{
@@ -55,4 +56,20 @@ class GDT_Dialog extends GDT
 	    return $this;
 	}
 	
+	public function okButton($key='btn_ok', array $args=null)
+	{
+		$btn = GDT_IconButton::make('ok')->label($key, $args);
+		$btn->attr('onclick', "GDO.closeDialog('{$this->id()}', 'ok')");
+		$this->actions()->addField($btn);
+		return $this;
+	}
+
+	public function cancelButton($key='btn_cancel', array $args=null)
+	{
+		$btn = GDT_IconButton::make('cancel')->label($key, $args);
+		$btn->attr('onclick', "GDO.closeDialog('{$this->id()}', 'cancel')");
+		$this->actions()->addField($btn);
+		return $this;
+	}
+
 }

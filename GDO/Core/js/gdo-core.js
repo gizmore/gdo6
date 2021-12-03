@@ -87,29 +87,31 @@ window.GDO.exception = function(ex) {
 	return window.GDO.responseError({json:{error: ex.message, stack: ex.stack}});
 };
 
-window.GDO.OPEN_DIALOG = null;
+window.GDO.DIALOG_RESULT = null;
 
-window.GDO.closeDialog = function(resolve) {
-	window.GDO.OPEN_DIALOG[0].close();
-	window.GDO.OPEN_DIALOG[1].style.display = 'none';
-	resolve();
+window.GDO.closeDialog = function(dialogId, result) {
+	console.log('GDO.closeDialog()', dialogId, result);
+	window.GDO.DIALOG_RESULT = result;
+	let wrap = document.querySelector('#'+dialogId);
+	let onclose = wrap.getAttribute('gdo-on-close');
+	let dlg = document.querySelector('#'+dialogId+' dialog');
+	dlg.close();
+	wrap.style.display = 'none';
+	if (onclose) {
+		eval(onclose);
+	}
 }
 
 window.GDO.openDialog = function(dialogId) {
+	console.log('GDO.openDialog()', dialogId);
 	var dlg = document.querySelector('#'+dialogId+' dialog');
 	if (!dlg) {
-		console.error('Cannot find dialog with id ' + dialogId)
+		console.error('Cannot find dialog with id ' + dialogId);
+		return;
 	}
-	else {
-		let wrap = document.querySelector('#'+dialogId);
-		wrap.style.display = 'block';
-		let promise = new Promise((reject, resolve) => {
-			
-		});
-		GDO.OPEN_DIALOG = [dlg, wrap, promise];
-		dlg.showModal();
-		return promise;
-	}
+	let wrap = document.querySelector('#'+dialogId);
+	wrap.style.display = 'block';
+	dlg.showModal();
 };
 
 /**

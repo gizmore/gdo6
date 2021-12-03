@@ -198,8 +198,7 @@ abstract class Method
 	 * Cached GET parameters.
 	 * @var GDT[]
 	 */
-	private $paramCache = null;
-	private $allParamCache = null;
+	protected $paramCache = null;
 	
 	/**
 	 * Build and/or get the GET parameter cache.
@@ -211,7 +210,7 @@ abstract class Method
 		{
 			$this->init();
 		    $this->paramCache = [];
-		    if ($params = $this->allParameters())
+		    if ($params = $this->gdoParameters())
 		    {
 		        foreach ($params as $gdt)
     		    {
@@ -329,14 +328,6 @@ abstract class Method
 		return $this;
 	}
 	
-	/**
-	 * @return GDT[]
-	 */
-	public function allParameters()
-	{
-	    return $this->gdoParameters();
-	}
-	
 	##############
 	### Helper ###
 	##############
@@ -417,12 +408,12 @@ abstract class Method
 	 */
 	public function requestParameters(array $params=null)
 	{
-	    $_REQUEST = $_GET = [];
+	    $_REQUEST = [];
 	    if ($params)
 	    {
     	    foreach ($params as $key => $value)
     	    {
-    	        $_REQUEST[$key] = $_GET[$key] = $value;
+    	        $_REQUEST[$key] = $value;
     	    }
 	    }
 	    return $this;

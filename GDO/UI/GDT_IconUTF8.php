@@ -32,6 +32,7 @@ final class GDT_IconUTF8
         'calendar' => '📅',
         'captcha' => '♺',
         'caret' => '⌄',
+    	'close' => '✖',
         'country' => '⚑',
         'check' => '✔',
         'create' => '✚',

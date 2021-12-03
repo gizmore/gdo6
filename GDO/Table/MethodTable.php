@@ -3,6 +3,7 @@ namespace GDO\Table;
 
 use GDO\Core\Method;
 use GDO\DB\ArrayResult;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Fields;
 use GDO\Core\GDO;
@@ -22,13 +23,38 @@ use GDO\Core\GDO;
  */
 abstract class MethodTable extends Method
 {
-    public function allParameters()
-    {
-    	$this->init();
-        return array_merge($this->gdoParameters(),
-            $this->table->headers->fields);
-    }
-    
+	
+	/**
+	 * Build and/or get the GET parameter cache.
+	 * @return GDT[]
+	 */
+	public function &gdoParameterCache()
+	{
+		if ($this->paramCache === null)
+		{
+			$this->init();
+			$this->paramCache = [];
+			if ($params = $this->gdoParameters())
+			{
+				foreach ($params as $gdt)
+				{
+					$this->paramCache[$gdt->name] = $gdt;
+				}
+			}
+			if ($params = $this->table->headers->getFieldsRec())
+			{
+				foreach ($params as $gdt)
+				{
+					if ($gdt->name)
+					{
+						$this->paramCache[$gdt->name] = $gdt;
+					}
+				}
+			}
+		}
+		return $this->paramCache;
+	}
+	
     public function gdoParameterVar($key)
     {
         $gdt = $this->gdoParameter($key);

@@ -4,6 +4,7 @@ namespace GDO\Core;
 use GDO\UI\WithPHPJQuery;
 use GDO\UI\WithText;
 use GDO\UI\WithTitle;
+use GDO\UI\GDT_Panel;
 
 /**
  * A success message, the pedant to GDT_Error.

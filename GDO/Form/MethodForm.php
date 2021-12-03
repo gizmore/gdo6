@@ -2,6 +2,7 @@
 namespace GDO\Form;
 
 use GDO\Core\GDO;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Util\Common;
@@ -33,11 +34,35 @@ abstract class MethodForm extends Method
 	
 	public abstract function createForm(GDT_Form $form);
 	
-	public function allParameters()
+	/**
+	 * Build and/or get the GET parameter cache.
+	 * @return GDT[]
+	 */
+	public function &gdoParameterCache()
 	{
-	    return array_merge(
-	        $this->gdoParameters(),
-	        $this->getForm()->getFieldsRec());
+		if ($this->paramCache === null)
+		{
+			$this->init();
+			$this->paramCache = [];
+			if ($params = $this->gdoParameters())
+			{
+				foreach ($params as $gdt)
+				{
+					$this->paramCache[$gdt->name] = $gdt;
+				}
+			}
+			if ($params = $this->getForm()->getFieldsRec())
+			{
+				foreach ($params as $gdt)
+				{
+					if ($gdt->name)
+					{
+						$this->paramCache[$gdt->name] = $gdt;
+					}
+				}
+			}
+		}
+		return $this->paramCache;
 	}
 	
 	############
