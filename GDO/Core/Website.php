@@ -109,9 +109,9 @@ final class Website
 	 * @param string $href URL
 	 * @see http://www.w3schools.com/tags/tag_link.asp
 	 */
-	public static function addLink($href, $type, $rel)
+	public static function addLink($href, $type, $rel, $title=null)
 	{
-		self::$_links[] = array($href, $type, $rel);
+		self::$_links[] = array($href, $type, $rel, $title);
 	}
 	
 	public static function addPrefetch($href, $type)
@@ -129,8 +129,9 @@ final class Website
 		
 		foreach(self::$_links as $link)
 		{
-			list($href, $type, $rel) = $link;
-			$back .= sprintf('<link rel="%s" type="%s" href="%s" />'."\n", $rel, $type, $href);
+			list($href, $type, $rel, $title) = $link;
+			$title = $title ? " title=\"$title\"" : '';
+			$back .= sprintf('<link rel="%s" type="%s" href="%s"%s />'."\n", $rel, $type, $href, $title);
 		}
 		
 		if (Module_CSS::instance()->cfgMinify())

@@ -16,6 +16,8 @@ use GDO\Country\GDT_Country;
  */
 final class TimezoneComplete extends MethodCompletion
 {
+	public function isUserRequired() { return false; }
+	
 	public function gdoParameters()
 	{
 		return [
