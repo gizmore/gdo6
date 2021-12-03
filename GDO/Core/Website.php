@@ -13,7 +13,7 @@ use GDO\CSS\Module_CSS;
  * General Website utility.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.0
  * @since 3.0.5
  * @see \GDO\UI\GDT_Page
  */
@@ -111,12 +111,12 @@ final class Website
 	 */
 	public static function addLink($href, $type, $rel, $title=null)
 	{
-		self::$_links[] = array($href, $type, $rel, $title);
+		self::$_links[] = [$href, $type, $rel, $title];
 	}
 	
 	public static function addPrefetch($href, $type)
 	{
-	    array_unshift(self::$_links, [$href, $type, 'prefetch']);
+	    array_unshift(self::$_links, [$href, $type, 'prefetch', null]);
 	}
 	
 	/**
