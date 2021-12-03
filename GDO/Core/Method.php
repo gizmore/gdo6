@@ -644,7 +644,10 @@ abstract class Method
 	        {
 	            $response->addField($this->afterExecute());
     	        GDT_Hook::callHook('AfterExecute', $this, $response);
-    	        $db->transactionEnd();
+    	        if ($transactional)
+    	        {
+    	        	$db->transactionEnd();
+    	        }
 	        }
 	        
 	        # Wrap transaction end
