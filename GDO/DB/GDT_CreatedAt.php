@@ -15,7 +15,7 @@ use GDO\Date\Time;
  */
 class GDT_CreatedAt extends GDT_Timestamp
 {
-	public $notNull = false;
+	public $notNull = true;
 	public $writable = false;
 	public $editable = false;
 // 	public $hidden = true;
@@ -25,7 +25,7 @@ class GDT_CreatedAt extends GDT_Timestamp
 
 	public function gdoColumnDefine()
 	{
-		return "{$this->identifier()} TIMESTAMP({$this->millis}){$this->gdoNullDefine()} DEFAULT CURRENT_TIMESTAMP";
+		return "{$this->identifier()} TIMESTAMP({$this->millis}){$this->gdoNullDefine()} DEFAULT CURRENT_TIMESTAMP({$this->millis})";
 	}
 	
 	/**
