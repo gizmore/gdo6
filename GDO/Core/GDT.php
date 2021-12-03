@@ -396,13 +396,6 @@ abstract class GDT
 	 */
 	public function getRequestVar($firstLevel=null, $default=null, $name=null)
 	{
-// 		if ($firstLevel === null)
-// 		{
-// 			if (GDT_Form::$CURRENT)
-// 			{
-// 				$firstLevel = GDT_Form::$CURRENT->name;
-// 			}
-// 		}
 	    $new = $this->_getRequestVar($firstLevel, $default, $name);
         $new = $this->toVar($this->toValue($new)); # fix bug!
 	    $this->var($new);

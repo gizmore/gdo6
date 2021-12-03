@@ -134,6 +134,7 @@ abstract class MethodCrud extends MethodForm
 	
 	public function onInit()
 	{
+		parent::onInit();
 	    $this->crudMode = self::CREATED;
 	    $table = $this->gdoTable();
 	    if ($id = $this->getCRUDID())
@@ -189,22 +190,23 @@ abstract class MethodCrud extends MethodForm
 		{
 	        $gdt->writable = $this->crudMode !== self::READ;
 
-			if ( ($gdt instanceof GDT_Object) ||
-				 ($gdt instanceof GDT_ObjectSelect) )
-			{
-				if ($gdt->composition)
-				{
-					foreach ($gdt->table->gdoColumnsCache() as $gdt2)
-					{
-						$this->createFormRec($form, $gdt2);
-					}
-				}
-				else
-				{
+// 			if ( ($gdt instanceof GDT_Object) ||
+// 				 ($gdt instanceof GDT_ObjectSelect) )
+// 			{
+// 				if ($gdt->composition)
+// 				{
+// 					foreach ($gdt->table->gdoColumnsCache() as $gdt2)
+// 					{
+// 						$this->createFormRec($form, $gdt2);
+// 					}
+// 				}
+// 				else
+// 				{
 				    $form->addField($gdt);
-				}
-			}
-			elseif (!$gdt->virtual)
+// 				}
+// 			}
+// 			else
+			if (!$gdt->virtual)
 			{
 			    $form->addField($gdt);
 			}
