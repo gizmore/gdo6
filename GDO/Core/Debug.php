@@ -14,7 +14,7 @@ use GDO\User\GDO_User;
  * @example Debug::enableErrorHandler(); fatal_ooops();
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 3.0.1
  */
 final class Debug
@@ -328,7 +328,7 @@ final class Debug
 		    print_r($_COOKIE, true),
 		];
 		$args = array_map('html', $args);
-		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_ENV: %s\n\n_GET: %s\n\n_POST: %s\n\nREQUEST: %s\n\n_COOKIE: %s\n\n";
+		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nGDO_User: %s\n\nMessage: %s\n\n_GET: %s\n\n_POST: %s\n\nREQUEST: %s\n\n_COOKIE: %s\n\n";
 		return vsprintf($pattern, $args);
 	}
 	

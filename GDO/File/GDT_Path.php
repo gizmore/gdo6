@@ -6,6 +6,8 @@ use GDO\DB\GDT_String;
 /**
  * A path variable with existance validator.
  * 
+ * @TODO: Make a GDT_PathCompleted that is GDT_ComboBox with auto completion.
+ * 
  * @author gizmore
  * @version 6.11.0
  * @since 6.0.0
