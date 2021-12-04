@@ -1,4 +1,5 @@
 <?php
+namespace GDO\Mail\tpl;
 use GDO\Util\Strings;
 /** @var $content string **/
 ?>

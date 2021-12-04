@@ -80,10 +80,10 @@ final class Debug
 		return false;
 	}
 	
-	/**
-	 * This one get's called on a fatal.
-	 * No stacktrace available and some vars are messed up.
-	 */
+// 	/**
+// 	 * This one get's called on a fatal.
+// 	 * No stacktrace available and some vars are messed up.
+// 	 */
 // 	public static function shutdown_function()
 // 	{
 // 		if ($error = error_get_last())
@@ -207,19 +207,21 @@ final class Debug
 	    return self::debugException($e);
 	}
 	
-	public static function debugException(\Throwable $e, $render=true)
+	public static function debugException(\Throwable $ex, $render=true)
 	{
 	    $app = Application::instance();
 	    $is_html = $app ? (!$app->isUnitTests()) && $app->isHTML() : true;
-	    $firstLine = sprintf("%s in %s Line %s", $e->getMessage(), $e->getFile(), $e->getLine());
+	    $firstLine = sprintf("%s in %s Line %s",
+	    	$ex->getMessage(), $ex->getFile(), $ex->getLine());
 	    
-	    $mail = self::$MAIL_ON_ERROR;
 	    $log = true;
+	    $mail = self::$MAIL_ON_ERROR;
+	    $message = self::backtraceException($ex, $is_html, ' (XH)');
 	    
 	    // Send error to admin?
 	    if ($mail)
 	    {
-	        self::sendDebugMail($firstLine . "\n" . $e->getTraceAsString());
+	        self::sendDebugMail($firstLine . "\n\n" . $message);
 	    }
 	    
 	    // Log it?
@@ -229,14 +231,10 @@ final class Debug
 	        Logger::flush();
 	    }
 	    
-	    $message = self::backtraceException($e, $is_html, ' (XH)');
-	    
 	    if ($render)
 	    {
 	        echo self::renderError($message);
 	    }
-	    
-	    return true;
 	}
 	
 	private static function renderError($message)
@@ -307,10 +305,10 @@ final class Debug
 		$user = "~~GHOST~~";
 		if (class_exists('GDO_User', false))
 		{
-    		try { $user = GDO_User::current()->displayNameLabel(); } catch (\Throwable $e) { }
+    		try { $user = GDO_User::current()->displayNameLabel(); } catch (\Throwable $ex) { }
 		}
 		
-		if ($url = @$_SERVER['REQUEST_URI'])
+		if ($url = trim(@$_SERVER['REQUEST_URI'], '//'))
 		{
 		    $url = GDO_PROTOCOL . '://' . GDO_DOMAIN . GDO_WEB_ROOT . $url;
 		}
@@ -323,7 +321,7 @@ final class Debug
 			isset($_SERVER['USER_AGENT']) ? $_SERVER['USER_AGENT'] : 'NULL',
 			$user,
 			$message,
-		    print_r($_ENV, true),
+// 		    print_r($_ENV, true), # security vuln here?
 			print_r($_GET, true),
 		    print_r($_POST, true),
 		    print_r($_REQUEST, true),
@@ -357,10 +355,11 @@ final class Debug
 		return self::backtraceMessage($message, $html, debug_backtrace());
 	}
 	
-	public static function backtraceException(\Throwable $e, $html = true, $message = '')
+	public static function backtraceException(\Throwable $ex, $html = true, $message = '')
 	{
-		$message = sprintf("PHP Exception: '%s' in %s line %s", $e->getMessage(), self::shortpath($e->getFile()), $e->getLine());
-		return self::backtraceMessage($message, $html, $e->getTrace(), $e->getLine(), $e->getFile());
+		$message = sprintf("PHP Exception: '%s' in %s line %s",
+			$ex->getMessage(), self::shortpath($ex->getFile()), $ex->getLine());
+		return self::backtraceMessage($message, $html, $ex->getTrace(), $ex->getLine(), $ex->getFile());
 	}
 	
 	private static function backtraceArgs(array $args = null)
@@ -458,10 +457,11 @@ final class Debug
 				    self::backtraceArgs(isset($row['args']) ? $row['args'] : null));
 				
 				# Collect relevant stack frame
-				$implode[] = array(
+				$implode[] = [
 					$function,
 					$prefile,
-					$preline);
+					$preline,
+				];
 				
 				# Calculations for align
 				$len = mb_strlen($function);
@@ -478,10 +478,7 @@ final class Debug
 		foreach ($implode as $imp)
 		{
 			list ($func, $file, $line) = $imp;
-			if ($cli)
-			{
-			}
-			else
+			if (!$cli)
 			{
 				$len = mb_strlen($func);
 				$func .= ' ' . str_repeat('.', $longest - $len);

@@ -1,14 +1,13 @@
 <?php
+namespace bin;
+
 /**
  * Execute gdo6 methods via CLI.
- * 
- * @see Method
- * 
- * @author gizmore
- * @version 6.10.6
- * @since 6.0.1
+ * We assume everything is installed correctly. If an exception is thrown display it, send mails, etc :)
+ *  - gizmore - the gdo project.
+ * @version 6.11.0
+ * @since 6.4.0
  */
-
 use GDO\CLI\CLI;
 use GDO\Core\Logger;
 use GDO\Core\Debug;
@@ -22,8 +21,8 @@ use GDO\File\FileUtil;
 use GDO\User\GDO_User;
 use GDO\Language\Trans;
 use GDO\Core\GDT_Response;
-use GDO\Core\GDT_Error;
 use GDO\Core\Website;
+use GDO\Core\GDOError;
 
 if (PHP_SAPI !== 'cli')
 {
@@ -31,14 +30,19 @@ if (PHP_SAPI !== 'cli')
     die(1);
 }
 
-
-function printUsage()
+function printUsage($exitCode=0)
 {
-    printf("Usage: ./gdo module to show module methods.\n");
-    printf("Usage: ./gdo module.method to print help.\n");
-    printf("Usage: ./gdo module.method. to execute the submit button. (dot after method)\n");
-    printf("Usage: ./gdo module.method.button to execute a different button than submit.\n");
-    die(0);
+    printf("Usage: \$ gdo <module> to show module methods.\n");
+    printf("Usage: \$ gdo <module.method> to print method help.\n");
+    printf("Usage: \$ gdo <module.method.> to execute the submit button. (dot after method)\n");
+    printf("Usage: \$ gdo <module.method> <args> to execute the submit button. (dot after method can be ommited)\n");
+    printf("Usage: \$ gdo <module.method.button> to execute a different button than submit.\n");
+	printf("\n");
+	printf("Parameters: paramters are like: \$ gdo account.form \"--real_name=Christian Busch\" --language=de --timezone=Europe/Berlin\n");
+	printf("Parameters: positional parameters are required and default null. They have to be specified after optionals. Positional Parameters may not use/require --param_name=\n");
+	printf("\n");
+	printf("Example: \$ gdo mail.send giz \"Hi there!\" \"Here goes the mail body!\"\n");
+	die($exitCode);
 }
 
 set_include_path(__DIR__ . '/../');
@@ -56,12 +60,22 @@ else
 
 CLI::autoFlush();
 
+# Early logger init with system user
 Logger::init('system', GDO_ERROR_LEVEL);
 
 ###################
 ### Application ###
 ###################
-final class GDOApplication extends Application
+/**
+ * Execute gdo6 methods via CLI.
+ *
+ * @see Method
+ *
+ * @author gizmore
+ * @version 6.11.0
+ * @since 6.0.1
+ */
+final class gdo extends Application
 {
     private $cli = true;
     public function cli($cli) { $this->cli = $cli; return $this; }
@@ -69,7 +83,7 @@ final class GDOApplication extends Application
     public function isUnitTests() { return false; }
 }
 
-$app = new GDOApplication();
+$app = new gdo();
 
 ############
 ### Init ###
@@ -103,6 +117,8 @@ if (!($user = GDO_User::getBy('user_name', CLI::getUsername())))
 GDO_User::setCurrent($user);
 Trans::setISO($user->getLangISO());
 Time::setTimezone($user->getTimezone());
+
+# Switch logger to user file
 Logger::init($user->getName(), GDO_ERROR_LEVEL);
 
 $page = GDT_Page::make();
@@ -110,7 +126,15 @@ $page = GDT_Page::make();
 /** @var $argc int **/
 /** @var $argv string[] **/
 
-Logger::log('cli', json_encode($argv));
+if (GDO_LOG_REQUEST)
+{
+	Logger::log('cli', json_encode($argv));
+}
+
+if (!module_enabled('CLI'))
+{
+	throw new GDOError('err_module_disabled', ['CLI']); # @TODO: err_module_disabled %s shall be the way to show err_module_disabled. Clean up similiar repetitions / variantics.
+}
 
 $norepl = false;
 if ($argc > 1)
@@ -125,6 +149,8 @@ else
     printUsage();
 }
 
+
+# Do the repl or execute a single command.
 try
 {
     # repl
@@ -150,7 +176,6 @@ try
                     echo Website::$TOP_RESPONSE->renderCLI() . "\n";
                 }
                 echo $response->renderCLI();
-                
             }
             else
             {
@@ -159,7 +184,7 @@ try
         }
         catch (\Throwable $ex)
         {
-            echo GDT_Error::responseException($ex)->render();
+        	echo Debug::debugException($ex);
         }
         echo PHP_EOL;
         
@@ -172,9 +197,7 @@ try
 }
 catch (\Throwable $ex)
 {
-    Logger::logException($ex);
-    echo GDT_Error::responseException($ex)->render();
-    echo PHP_EOL;
+	echo Debug::debugException($ex);
 }
 finally
 {

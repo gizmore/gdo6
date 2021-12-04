@@ -152,7 +152,7 @@ class GDT_Message extends GDT_Text
         }
         
         # Decode the message
-        $decoded = self::decodeMessage($this->getVar());
+        $decoded = self::decodeMessage($this->toVar($value));
         $text = self::plaintext($decoded);
         
         # Check decoded input for length and pattern etc.

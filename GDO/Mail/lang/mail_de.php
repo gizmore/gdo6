@@ -18,7 +18,7 @@ return [
 	
 Titel: %s
 Nachricht:
-%S
+%s
 	
 Mit freundlichen Grüßen
 Das %3$s-System',

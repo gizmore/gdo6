@@ -1,4 +1,5 @@
 <?php
+namespace GDO\Mail\tpl\form;
 use GDO\Mail\GDT_Email;
 /** @var $field GDT_Email **/
 ?>

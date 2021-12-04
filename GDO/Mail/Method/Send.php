@@ -17,9 +17,7 @@ use GDO\Mail\Mail;
 /**
  * Send a mail to a user that allows it.
  * 
- * @TODO implement
  * @author gizmore
- *
  */
 final class Send extends MethodForm
 {
