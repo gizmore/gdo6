@@ -190,11 +190,11 @@ class Database
 		{
 			$timeTaken = sprintf('%.04f', $timeTaken);
 			Logger::log('queries', "#" . self::$QUERIES .
-			    ": ({$timeTaken}s) ".$query, Logger::DEBUG);
+			    ": ({$timeTaken}s) ".$query);
 			if ($this->debug > 1)
 			{
 			    Logger::log('queries', 
-			    Debug::backtrace('#' . self::$QUERIES . ' Backtrace', false, Logger::DEBUG));
+			    Debug::backtrace('#' . self::$QUERIES . ' Backtrace', false));
 			}
 		}
 		return $result;
