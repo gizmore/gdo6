@@ -213,12 +213,11 @@ class GDT_Template extends GDT
 			include $path; # a hell of a bug is to supress errors here.
 			return ob_get_contents();
 		}
-		catch (\Throwable $e)
+		catch (\Throwable $ex)
 		{
-			Logger::logException($e);
+			Logger::logException($ex);
 			return html(ob_get_contents()) .
-			Debug::backtraceException($e, Application::instance()->isHTML(),
-			' (TPL)');
+				Debug::debugException($ex);
 		}
 		finally
 		{
