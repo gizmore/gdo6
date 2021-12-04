@@ -1,4 +1,5 @@
 <?php
+namespace GDO\Install\tpl;
 use GDO\Date\Time;
 use GDO\Form\GDT_Form;
 use GDO\UI\GDT_Divider;
@@ -20,14 +21,13 @@ if (defined('GDO_CONFIGURED')) return; // double include
  * Common pitfall is that there are 2 domains to set: GDO_DOMAIN and GDO_SESS_DOMAIN.
  * GDO <?=Module_Core::GDO_REVISION; ?>
  **/
-
 <?php
 // $tz = $form->getField('timezone')->var;
 $created = Time::getDate(microtime(true));
 $form->getField('sitecreated')->var($created);
-?>
-<?php foreach ($form->fields as $field) : ?>
-<?php
+
+foreach ($form->fields as $field) :
+
 if ($field instanceof GDT_Divider)
 {
 	echo "\n";
@@ -72,7 +72,6 @@ else
 		$value = $value ? 'true' : 'false';
 	}
 	
-	printf("define('GDO_%1\$s', env('GDO_%1\$s', %2\$s));\n", strtoupper($name), $value);
+	printf("define('GDO_%s', %s);\n", strtoupper($name), $value);
 }
-?>
-<?php endforeach; ?>
+endforeach;

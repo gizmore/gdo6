@@ -194,7 +194,7 @@ class Database
 			if ($this->debug > 1)
 			{
 			    Logger::log('queries', 
-			        Debug::backtrace('#' . self::$QUERIES . ' Backtrace', false));
+			    Debug::backtrace('#' . self::$QUERIES . ' Backtrace', false, Logger::DEBUG));
 			}
 		}
 		return $result;
