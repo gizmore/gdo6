@@ -79,6 +79,16 @@ final class Module_Date extends GDO_Module
     #############
     ### Hooks ###
     #############
+    /**
+     * Save timezone on authenticated.
+     * 
+     * @param GDO_User $user
+     */
+    public function hookUserAuthenticated(GDO_User $user)
+    {
+    	$user->saveVar('user_timezone', $user->getTimezone());
+    }
+    
     public function hookUserLoggedOut(GDO_User $user)
     {
     	if ($tz = GDO_Timezone::getById($this->timezone))
