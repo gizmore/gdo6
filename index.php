@@ -135,8 +135,8 @@ if (isset($_GET['_url']) && $_GET['_url'])
                 while (count($parts))
                 {
                     $key = array_shift($parts);
-                    $val = array_shift($parts);
-                    $_REQUEST[$key] = urldecode($val);
+                    $var = array_shift($parts);
+                    $_REQUEST[$key] = urldecode($var);
                 }
                 # .. fallthrough
             }
