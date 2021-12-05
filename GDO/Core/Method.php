@@ -23,6 +23,7 @@ use GDO\User\PermissionException;
  * There are some derived method classes for forms, tables and cronjobs.
  * Provides transaction wrapping and permission checks.
  * Provides parameters via ->gdoParameters().
+ * Is responsible for authentication.
  * 
  * @see MethodForm
  * @see MethodCrud
@@ -31,7 +32,7 @@ use GDO\User\PermissionException;
  * @see MethodCronjob
  *
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 3.0.0
  */
 abstract class Method
@@ -185,7 +186,9 @@ abstract class Method
 	### GET Parameters ###
 	######################
 	/**
-	 * Valid GET Parameters as GDT array.
+	 * Method parameters as GDT array.
+	 * Parameters require your GDTs to have set a name.
+	 * 
 	 * @see GDT
 	 * @see gdoParameter()
 	 * @see gdoParameterVar()
@@ -222,6 +225,8 @@ abstract class Method
 	}
 	
 	/**
+	 * Get a parameter and validate it immediately.
+	 * 
 	 * @param string $key
 	 * @return GDT
 	 */

@@ -23,6 +23,7 @@ require 'GDO6.php';
 @include GDO_PATH . 'protected/config.php';
 if (!defined('GDO_CONFIGURED'))
 {
+	define('GDO_WEB_ROOT', '/');
     require 'index_install.php';
     die(0);
 }
@@ -31,7 +32,6 @@ GDT_Page::make();
 $response = GDT_Response::make();
 
 Database::init();
-new ModuleLoader(GDO_PATH . 'GDO/');
 $noSession = true;
 if (@class_exists('\\GDO\\Session\\GDO_Session', true))
 {
@@ -60,11 +60,12 @@ if (!$noSession)
 {
     $session = GDO_Session::instance();
 }
-if (GDO_User::current()->isUser())
+
+$user = GDO_User::current();
+if ($user->isUser())
 {
-    if ($name = GDO_User::current()->getUserName())
+	if ($name = $user->getUserName())
     {
-        $name = str_replace(GDO_User::GUEST_NAME_PREFIX, '_', $name);
     	Logger::init($name, GDO_ERROR_LEVEL); # 2nd init with username
     }
 }
@@ -84,6 +85,8 @@ if (GDO_LOG_REQUEST)
 {
     Logger::logRequest();
 }
+
+$app->initThemes();
 
 # All fine!
 define('GDO_CORE_STABLE', 1);
@@ -196,7 +199,7 @@ if (isset($_GET['_url']) && $_GET['_url'])
 
 try
 {
-	$rqmethod = $_SERVER['REQUEST_METHOD'];
+	$rqmethod = @$_SERVER['REQUEST_METHOD'];
 	if (!in_array($rqmethod, ['GET', 'POST', 'HEAD', 'OPTIONS'], true))
 	{
 		$_REQUEST['mo'] = 'Core';

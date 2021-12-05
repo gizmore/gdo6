@@ -13,7 +13,7 @@ use GDO\DB\Cache;
  * @see Installer
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 6.0.0
  */
 class Module_Install extends GDO_Module
@@ -22,6 +22,7 @@ class Module_Install extends GDO_Module
 
 	public function onLoadLanguage() { $this->loadLanguage('lang/install'); }
 	public function defaultEnabled() { return false; }
+	
 	public function getTheme()
 	{
 	    return 'install';

@@ -22,7 +22,7 @@ use GDO\DB\GDT_Enum;
  * Most GDT either are Database enabled (GDT_String, GDT_Int, GDT_Enum) or mostly used for rendering like (GDT_Title, GDT_Link, etc...)
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.1
  * @since 6.0.0
  * 
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
@@ -494,7 +494,7 @@ abstract class GDT
 	public function onValidated() {}
 	
 	/**
-	 * Validation is a great experience in GDO6.
+	 * Validation is a great experience in GDO6. @TODO make validate use $var instead of $value.
 	 * 
 	 * Almost all GDT have a quite decent validator. There is also a GDT to top that; The GDT_Validator.
 	 * This GDT parameterizes the target GDT to validate, the value to validate, and the form to check for related fields.

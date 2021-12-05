@@ -10,18 +10,33 @@ use GDO\CSS\Minifier;
 use GDO\CSS\Module_CSS;
 
 /**
- * General Website utility.
+ * General Website utility and storage for header and javascript elements.
+ * Feauters redirect alerts.
+ *
+ * @see Module_Website
+ * @see Minifier
+ * @see Javascript
+ * @see GDO_Session
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 3.0.5
- * @see \GDO\UI\GDT_Page
+ * @see GDT_Page
  */
 final class Website
 {
-	private static $_links = []; # TODO: Uppercase static members.
-// 	private static $_inline_css = '';
-	private static $_redirected = false;
+	/**
+	 * Redirection URL
+	 * @var string
+	 */
+	public static $REDIRECTED = null;
+
+	/**
+	 * HTML page LINK elements.
+	 * array<array<string>>
+	 * @var array
+	 */
+	private static $LINKS = [];
 	
 	/**
 	 * @param number $time
@@ -56,18 +71,19 @@ final class Website
 	
 	public static function redirect($url, $time=0)
 	{
-	    if (Application::instance()->isCLI())
+		$app = Application::instance();
+	    if ($app->isCLI())
 	    {
-	        return null;
+	        return;
 	    }
-		switch (Application::instance()->getFormat())
+	    switch ($app->getFormat())
 		{
-			case 'html':
-				if (Application::instance()->isAjax())
+			case Application::HTML:
+				if ($app->isAjax())
 				{
 					return GDT_Response::makeWith(GDT_HTML::withHTML(self::ajaxRedirect($url, $time)));
 				}
-				elseif (!self::$_redirected)
+				elseif (!self::$REDIRECTED)
 				{
 					if ($time > 0)
 					{
@@ -77,7 +93,7 @@ final class Website
 					{
 						hdr('Location: ' . $url);
 					}
-					self::$_redirected = true;
+					self::$REDIRECTED = $url;
 				}
 		}
 		self::topResponse()->addField(GDT_Success::with('msg_redirect', [GDT_Link::anchor($url), $time]));
@@ -92,13 +108,11 @@ final class Website
 	public static function addInlineCSS($css)
 	{
 	    Minifier::addInline($css);
-// 	    self::$_inline_css .= $css;
 	}
 	
 	public static function addCSS($path)
 	{
 	    Minifier::addFile($path);
-// 	    self::addLink($path, 'text/css', 'stylesheet');
 	}
 	
 	/**
@@ -111,12 +125,12 @@ final class Website
 	 */
 	public static function addLink($href, $type, $rel, $title=null)
 	{
-		self::$_links[] = [$href, $type, $rel, $title];
+		self::$LINKS[] = [$href, $type, $rel, $title];
 	}
 	
 	public static function addPrefetch($href, $type)
 	{
-	    array_unshift(self::$_links, [$href, $type, 'prefetch', null]);
+	    array_unshift(self::$LINKS, [$href, $type, 'prefetch', null]);
 	}
 	
 	/**
@@ -127,7 +141,7 @@ final class Website
 	{
 		$back = '';
 		
-		foreach(self::$_links as $link)
+		foreach(self::$LINKS as $link)
 		{
 			list($href, $type, $rel, $title) = $link;
 			$title = $title ? " title=\"$title\"" : '';
@@ -141,14 +155,14 @@ final class Website
 
 		$back .= Minifier::renderOriginal();
 		
-		
 		return $back;
 	}
 	
 	############
 	### Meta ###
 	############
-	private static $_meta = [];
+	private static $META = [];
+	
 	/**
 	 * add an html <meta> tag
 	 * @param array $meta = array($name, $content, 0=>name;1=>http-equiv);
@@ -159,24 +173,16 @@ final class Website
 	 */
 	public static function addMeta(array $metaA, $overwrite=true)
 	{
-		if ((false === $overwrite) && (isset(self::$_meta[$metaA[0]]) === true))
+		if ((!$overwrite) && (isset(self::$META[$metaA[0]])) )
 		{
 			return false;
 		}
-		self::$_meta[$metaA[0]] = $metaA;
+		self::$META[$metaA[0]] = $metaA;
 		return true;
 	}
 	
-	public static function addMetaA(array $metaA)
-	{
-		foreach($metaA as $meta)
-		{
-			self::addMeta($meta);
-		}
-	}
-	
 	/**
-	 *
+	 * Print head meta tags.
 	 * @see addMeta()
 	 */
 	public static function displayMeta()
@@ -184,26 +190,20 @@ final class Website
 	    $method = Application::instance()->getMethod();
 	    if ($method && $method->isSEOIndexed())
 	    {
-    	    self::$_meta[] = ['robots', 'index, follow', 'name'];
-	        
+    	    self::$META[] = ['robots', 'index, follow', 'name'];
 	    }
 	    else
 	    {
-    	    self::$_meta[] = ['robots', 'noindex', 'name'];
+    	    self::$META[] = ['robots', 'noindex', 'name'];
 	    }
 	    $back = '';
-// 		$mode = array('name', 'http-equiv');
-		foreach (self::$_meta as $meta)
+		foreach (self::$META as $meta)
 		{
-// 			if (!is_array($meta))
-// 			{
-// 				continue; # TODO: spaceone fix.
-// 			}
 			list($name, $content, $equiv) = $meta;
-// 			$equiv = $mode[$equiv];
             if ($content)
             {
-                $back .= sprintf("<meta %s=\"%s\" content=\"%s\" />\n", $equiv, $name, $content);
+                $back .= sprintf("\t<meta %s=\"%s\" content=\"%s\" />\n",
+                	$equiv, $name, $content);
             }
 		}
 		return $back;
@@ -211,6 +211,7 @@ final class Website
 	
 	/**
 	 * Renders a json response and dies.
+	 * 
 	 * @param mixed $json
 	 * @param boolean $die
 	 */
@@ -257,7 +258,6 @@ final class Website
 	  
 	    if ($app->isCLI())
 	    {
-// 	        echo "{$message}\n";
 	        if ($app->isUnitTests())
 	        {
 	            echo "Redirect => $url\n";
@@ -274,23 +274,24 @@ final class Website
 	    }
 	}
 	
-	public static function redirectError($key, array $args=null, $url=null, $time=0)
+	public static function redirectError($key, array $args=null, $url=null, $time=0, $code=409)
 	{
-	    return self::redirectErrorRaw(t($key, $args), $url, $time);
+		return self::redirectErrorRaw(t($key, $args), $url, $time, $code);
 	}
 	
 	public static function redirectErrorRaw($message, $url=null, $time=0, $code=409)
 	{
+	    $app = Application::instance();
+
 	    self::topResponse()->addField(GDT_Error::withText($message, $code));
 	    
-	    if (Application::instance()->isCLI())
+	    if ($app->isCLI())
 	    {
 	        echo "{$message}\n";
-	        return true;
+	        return;
 	    }
 	    
 	    $url = $url === null ? self::hrefBack() : $url;
-	    $app = Application::instance();
 	    if (!$app->isInstall())
 	    {
 	        GDO_Session::set('redirect_error', $message);

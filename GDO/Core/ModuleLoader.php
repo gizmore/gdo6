@@ -22,8 +22,8 @@ final class ModuleLoader
 	/**
 	 * @return ModuleLoader
 	 */
-	public static function instance() { return self::$instance; }
-	private static $instance;
+	public static function instance() { return self::$INSTANCE; }
+	private static $INSTANCE;
 	
 	/**
 	 * Base modules path, the modules folder.
@@ -33,7 +33,7 @@ final class ModuleLoader
 	public function __construct($path)
 	{
 		$this->path = $path;
-		self::$instance = $this;
+		self::$INSTANCE = $this;
 	}
 	
 	#############
@@ -314,8 +314,8 @@ final class ModuleLoader
 	
 	/**
 	 * Load a module from filesystem if it is not loaded yet.
-	 * @param string $name
-	 * @param boolean $init
+	 * @param string $name The case sensitive name.
+	 * @param boolean $throw If it shall throw an exception if not found.
 	 * @return \GDO\Core\GDO_Module
 	 */
 	public function loadModuleFS($name, $throw=true)

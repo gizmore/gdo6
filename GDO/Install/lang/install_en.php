@@ -8,7 +8,7 @@ return array(
 # System Test
 'install_title_2' => 'System–Test',
 'install_title_2_tests' => 'Mandatory Requirements',
-'install_test_0' => 'Is PHP Version '.PHP_VERSION.'supported?',
+'install_test_0' => 'Is PHP Version '.PHP_VERSION.' supported?',
 'install_test_1' => 'Is the protected folder writable?',
 'install_test_2' => 'Is the files folder writable?',
 'install_test_3' => 'Is the temp folder writable?',

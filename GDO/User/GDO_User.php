@@ -29,7 +29,7 @@ use GDO\Session\GDO_Session;
  * @author gizmore
  * @link https://www.wechall.net
  * @link https://mettwitze.gizmore.org
- * @version 6.11.0
+ * @version 6.11.1
  * @since 1.0.0
  */
 final class GDO_User extends GDO
@@ -64,14 +64,14 @@ final class GDO_User extends GDO
 			GDT_Gender::make('user_gender'),
 			GDT_Country::make('user_country'),
 			GDT_Language::make('user_language')->notNull()->initial(GDO_LANGUAGE)->searchable(false)->cascadeRestrict(),
+		    GDT_Timezone::make('user_timezone')->notNull()->initial('1')->cascadeRestrict(),
 			GDT_Password::make('user_password'),
 		    GDT_DeletedAt::make('user_deleted_at'),
 		    GDT_CreatedAt::make('user_last_activity')->label('last_activity')->format('short'),
 			GDT_CreatedAt::make('user_register_time')->label('registered_at')->format('short'),
-		    GDT_Timezone::make('user_timezone')->notNull()->initial('1')->cascadeRestrict(),
 			GDT_IP::make('user_register_ip')->useCurrent(),
 		    # Indexes
-		    GDT_Index::make()->indexColumns('user_last_activity'),
+// 		    GDT_Index::make()->indexColumns('user_last_activity'),
 		    GDT_Index::make()->indexColumns('user_type'),
 		];
 	}
@@ -295,7 +295,10 @@ final class GDO_User extends GDO
 	 * Not neccisarilly via session!
 	 * @return self
 	 */
-	public static function current() { return self::$CURRENT; }
+	public static function current()
+	{
+		return self::$CURRENT;
+	}
 	
 	public static function setCurrent(GDO_User $user)
 	{

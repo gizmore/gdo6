@@ -5,7 +5,7 @@ namespace bin;
  * Execute gdo6 methods via CLI.
  * We assume everything is installed correctly. If an exception is thrown display it, send mails, etc :)
  *  - gizmore - the gdo project.
- * @version 6.11.0
+ * @version 6.11.1
  * @since 6.4.0
  */
 use GDO\CLI\CLI;
@@ -22,7 +22,6 @@ use GDO\User\GDO_User;
 use GDO\Language\Trans;
 use GDO\Core\GDT_Response;
 use GDO\Core\Website;
-use GDO\Core\GDOError;
 
 if (PHP_SAPI !== 'cli')
 {
@@ -72,7 +71,7 @@ Logger::init('system', GDO_ERROR_LEVEL);
  * @see Method
  *
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 6.0.1
  */
 final class gdo extends Application
@@ -117,7 +116,7 @@ Trans::setISO($user->getLangISO());
 Time::setTimezone($user->getTimezone());
 
 # Switch logger to user file
-Logger::init($user->getName(), GDO_ERROR_LEVEL);
+Logger::init($user->getUserName(), GDO_ERROR_LEVEL);
 
 $page = GDT_Page::make();
 
@@ -131,9 +130,12 @@ if (GDO_LOG_REQUEST)
 
 if (!module_enabled('CLI'))
 {
-	echo t('err_module_disabled', ['CLI']);
+	echo t('err_module_disabled', ['CLI']) . "\n";
 	die(-1);
 }
+
+$app->initThemes();
+$app->loader->initModulesB();
 
 $norepl = false;
 if ($argc > 1)

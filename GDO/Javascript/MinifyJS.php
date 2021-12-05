@@ -14,7 +14,7 @@ use GDO\DB\Database;
  * Output goes to assets/ now instead of temp/ as temp/ is a protected folder.
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.1
  * @since 4.1.0
  * @see Module_Javascript
  */
@@ -87,7 +87,7 @@ final class MinifyJS
 		# Pass 2 - Rebuild
 		try
 		{
-		    $t = 300; # 5 minutes?
+		    $t = 600; # 10 minutes?
     		set_time_limit($t); # may take a while
     		Database::instance()->lock('js_minify', $t);
     		

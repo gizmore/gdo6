@@ -132,10 +132,7 @@ final class Mail
 		$mail->setSubject($subject);
 		$mail->setBody($body);
 		$mail->setResendCheck($resendCheck);
-
-		return false === $html
-			? $mail->sendAsText()
-			: $mail->sendAsHTML();
+		return $html ? $mail->sendAsHTML() : $mail->sendAsText();
 	}
 
 	public static function sendDebugMail($subject, $body)

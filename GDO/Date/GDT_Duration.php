@@ -34,7 +34,8 @@ class GDT_Duration extends GDT_String
 	
 	public function toValue($var)
 	{
-	    return empty($var) ? null : Time::humanToSeconds($var);
+		$var = parent::toValue($var);
+	    return $var === null ? null : Time::humanToSeconds($var);
 	}
 	
 	public function toVar($value)

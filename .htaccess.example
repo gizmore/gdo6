@@ -5,4 +5,5 @@
 RewriteEngine on
 # If your GDO_WEB_ROOT is /foo/, use /foo/index.php in all lines
 RewriteCond %{REQUEST_URI} !^/index.php$
+RewriteCond %{REQUEST_URI} !^/install/
 RewriteRule ^(.*)$ /index.php?_url=$1&%1 [QSA,L]

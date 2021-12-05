@@ -12,10 +12,6 @@ use GDO\File\FileUtil;
 use GDO\File\Filewalker;
 use GDO\User\GDO_Permission;
 use GDO\Util\Strings;
-use GDO\Core\Logger;
-use GDO\Core\GDT_Error;
-use GDO\Core\GDOException;
-use GDO\Core\Website;
 use GDO\Core\Application;
 use GDO\Core\Debug;
 
@@ -23,7 +19,7 @@ use GDO\Core\Debug;
  * Install helper.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 6.0.0
  */
 class Installer

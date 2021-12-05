@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Core;
 
-use GDO\UI\GDT_Page;
 use GDO\Util\Common;
 use GDO\Mail\Mail;
 use GDO\User\GDO_User;
@@ -199,9 +198,9 @@ final class Debug
 		return true;
 	}
 	
-	public static function exception_handler($e)
+	public static function exception_handler($ex)
 	{
-	    echo self::debugException($e);
+	    echo self::debugException($ex);
 	}
 	
 	public static function debugException(\Throwable $ex, $render=true)
@@ -254,14 +253,14 @@ final class Debug
 		{
 // 		    $message = html($message);
 		}
-		if ($app->isAjax() || (!defined('GDO_CORE_STABLE')))
-		{
+// 		if ($app->isAjax() || (!defined('GDO_CORE_STABLE')))
+// 		{
 		    return $message;
-		}
-		else
-		{
-		    return GDT_Page::$INSTANCE->html($message)->render();
-		}
+// 		}
+// 		else
+// 		{
+// 		    return GDT_Page::$INSTANCE->html($message)->render();
+// 		}
 	}
 	
 	public static function disableExceptionHandler()
@@ -300,12 +299,12 @@ final class Debug
 	public static function getDebugText($message)
 	{
 		$user = "~~GHOST~~";
-		if (class_exists('GDO_User', false))
+		if (class_exists('GDO\\User\\GDO_User', false))
 		{
     		try { $user = GDO_User::current()->displayNameLabel(); } catch (\Throwable $ex) { }
 		}
 		
-		if ($url = trim(@$_SERVER['REQUEST_URI'], '//'))
+		if ($url = trim(@$_SERVER['REQUEST_URI'], '/'))
 		{
 		    $url = GDO_PROTOCOL . '://' . GDO_DOMAIN . GDO_WEB_ROOT . $url;
 		}

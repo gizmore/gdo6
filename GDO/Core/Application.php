@@ -7,9 +7,10 @@ use GDO\Session\GDO_Session;
 /**
  * The application can control main behaviour settings.
  * It holds the global time variables for exact time measurements in games or replays.
+ * Holds registered themes.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 6.0.0
  */
 class Application
@@ -45,25 +46,23 @@ class Application
 	################
 	### Instance ###
 	################
+	/**
+	 * @var ModuleLoader
+	 */
 	public $loader;
+
+	/**
+	 * Instanciate a gdo6 application.
+	 */
 	public function __construct()
 	{
 		self::$instance = $this;
         ini_set('date.timezone', 'UTC');
 		date_default_timezone_set('UTC');
-		
-		if (PHP_SAPI !== 'cli')
-		{
-			$this->initThemes();
-		}
-		else
-		{
-			$this->themes = ['default'];
-		}
-
         $this->loader = ModuleLoader::instance() ?
             ModuleLoader::instance() :
             new ModuleLoader(GDO_PATH . 'GDO/');
+		$this->themes = GDO_THEMES;
 	}
 	
 	public function __destruct()
@@ -80,6 +79,10 @@ class Application
 	
 	public function isCronjob() { return false; }
 	
+	/**
+	 * Check if normal website (not install)
+	 * @return boolean
+	 */
 	public function isWebServer()
 	{
 		return ( (!$this->isWebsocket()) &&
@@ -135,12 +138,15 @@ class Application
 	public function hasTheme($theme) { return isset($this->themes[$theme]); }
 	public function initThemes()
 	{
-	    if (!$this->isInstall())
+	    if ( (!$this->isInstall()) && (!$this->isCLI()) )
 	    {
-    	    if (GDO_Session::get('theme_name'))
-    	    {
-    	        $this->themes = GDO_Session::get('theme_chain');
-    	    }
+	    	if (class_exists('GDO\\Session\\GDO_Session', false))
+	    	{
+	    	    if (GDO_Session::get('theme_name'))
+	    	    {
+	    	        $this->themes = GDO_Session::get('theme_chain');
+	    	    }
+	    	}
     	    $this->themes = explode(',', $this->themes);
     	    $this->themes = array_combine($this->themes, $this->themes);
 	    }

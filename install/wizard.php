@@ -1,4 +1,5 @@
 <?php
+namespace install;
 chdir('../');
 require 'GDO6.php';
 
@@ -30,12 +31,12 @@ Logger::init();
 
 Trans::$ISO = GDO_LANGUAGE;
 
-final class InstallerApp extends Application
+final class wizard extends Application
 {
     public function isInstall() { return true; }
     public function getThemes() { return ['install', 'default']; }
 }
-new InstallerApp();
+new wizard();
 
 # Current user is ghost
 GDO_User::setCurrent(GDO_User::ghost());
@@ -43,8 +44,8 @@ GDO_User::setCurrent(GDO_User::ghost());
 GDT_Page::make();
 
 # Load only two basic modules from FS for installation process.
-ModuleLoader::instance()->loadModuleFS('Core', 1);
-ModuleLoader::instance()->loadModuleFS('Install', 1);
+ModuleLoader::instance()->loadModuleFS('Core');
+ModuleLoader::instance()->loadModuleFS('Install');
 Trans::inited(true);
 
 define('GDO_CORE_STABLE', 1);
@@ -56,9 +57,9 @@ try
     $method = method('Install', $steps[$step-1]);
     $response = $method->execute();
 }
-catch (Exception $e)
+catch (\Throwable $ex)
 {
-    $response = GDT_Error::responseException($e);
+    $response = GDT_Error::responseException($ex);
 }
 
 # Render Page

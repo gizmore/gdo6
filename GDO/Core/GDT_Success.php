@@ -7,10 +7,15 @@ use GDO\UI\WithTitle;
 
 /**
  * A success message, the pedant to GDT_Error.
+ * Almost inherited from GDT_Panel.
  * Logs a message if desired.
+ * Sets http_response_code.
+ * 
+ * @see GDT_Error
+ * @see GDT_Panel
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 6.0.0
  * @see GDT_Error
  */
@@ -32,12 +37,17 @@ class GDT_Success extends GDT
         return $back;
     }
     
+    /**
+     * Stores the current request status code.
+     * @param int $code
+     * @return self
+     */
     public function code($code)
 	{
-	    if ($code > 200)
+	    if ($code != 200)
 	    {
 	        GDT_Response::$CODE = $code;
-	        http_response_code($code);
+			http_response_code($code);
 	    }
 	    return $this;
 	}
@@ -68,7 +78,11 @@ class GDT_Success extends GDT
 	##############
 	### Render ###
 	##############
-	public function renderCell() { return GDT_Template::php('Core', 'cell/success.php', ['field' => $this]); }
+	public function renderCell()
+	{
+		return GDT_Template::php('Core', 'cell/success.php', ['field' => $this]);
+	}
+	
 	public function renderJSON()
 	{
 	    if ($this->hasTitle())

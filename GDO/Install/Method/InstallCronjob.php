@@ -4,6 +4,7 @@ use GDO\DB\Database;
 use GDO\Core\Method;
 use GDO\Core\ModuleLoader;
 use GDO\Core\GDT_Hook;
+use GDO\UI\GDT_Container;
 /**
  * Show info howto install cronjob
  * @author gizmore
@@ -20,9 +21,9 @@ final class InstallCronjob extends Method
 	
 	public function renderPage()
 	{
-		$fields = [];
-		GDT_Hook::callHook('InstallCronjob', $fields);
-		return $this->templatePHP('page/installcronjob.php', ['fields' => $fields]);
+		$container = GDT_Container::make()->vertical(true);
+		GDT_Hook::callHook('InstallCronjob', $container);
+		return $this->templatePHP('page/installcronjob.php', ['container' => $container]);
 	}
 	
 }

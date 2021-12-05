@@ -34,12 +34,12 @@ final class Module_Core extends GDO_Module
      * Sometimes just counts up to be in sync and poison some other module caches for updates.
      * Increase this value to poison all caches.
      * 
-     * 6.11.2 will be the first stable version.
+     * 6.11.5 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
      * 
      * @var string
      */
-	const GDO_REVISION = '6.11.1-r6240';
+	const GDO_REVISION = '6.11.1-r6242';
 
 	##############
 	### Module ###
@@ -100,11 +100,11 @@ final class Module_Core extends GDO_Module
 	 */
 	public function cfgSystemUser() { return $this->getConfigValue('system_user'); }
 	public function cfgSystemUserID() { return $this->getConfigVar('system_user'); }
-	public function cfgShowImpressum() { return $this->getConfigValue('show_impressum'); }
-	public function cfgShowPrivacy() { return $this->getConfigValue('show_privacy'); }
+	public function cfgShowImpressum() { return $this->getConfigVar('show_impressum'); }
+	public function cfgShowPrivacy() { return $this->getConfigVar('show_privacy'); }
 	public function cfgAssetVersion() { return sprintf('%.02f', $this->getConfigVar('asset_revision')); }
-	public function cfgAllowGuests() { return $this->getConfigValue('allow_guests'); }
-	public function cfgSiteShortTitleAppend() { return $this->getConfigValue('siteshort_title_append'); }
+	public function cfgAllowGuests() { return $this->getConfigVar('allow_guests'); }
+	public function cfgSiteShortTitleAppend() { return $this->getConfigVar('siteshort_title_append'); }
 	public function cfgMail403() { return $this->getConfigVar('mail_404'); }
 	public function cfgMail404() { return $this->getConfigVar('mail_404'); }
 	public function cfgLoadSidebars() { return $this->getConfigValue('load_sidebars'); }

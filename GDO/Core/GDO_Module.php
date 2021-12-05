@@ -376,7 +376,7 @@ class GDO_Module extends GDO
 		}
 	}
 	
-	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args, 409); }
+	public function error($key, array $args=null, $code=409) { return GDT_Error::responseWith($key, $args, $code); }
 	public function message($key, array $args=null) { return GDT_Success::responseWith($key, $args); }
 	
 	############

@@ -10,11 +10,12 @@ use GDO\Core\GDOError;
  * Time helper class.
  * Using mysql date with milliseconds.
  * For GDT, the value is the timestamp and the var is the date in mysql format.
- * This class is quite a mess meanwhile. Because timezones came late to my mind :)
- * @TODO Time - Make the function names better. They shall reflect if they are for db or for display.
+ * This class is quite a mess meanwhile. Because timezones came late to my mind.
  *
+ * @TODO Time - Make the function names better. They shall reflect if they are for db or for display.
+ * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 1.0.0
  * 
  * @see GDT_Date
@@ -44,7 +45,7 @@ final class Time
 	################
 	const UTC = '1';
 	public static $UTC;
-	public static $TIMEZONE = '1'; # default timezone
+	public static $TIMEZONE = self::UTC; # default timezone
 	public static $TIMEZONE_OBJECTS = [];
 	public static function getTimezoneObject($timezone=null)
 	{
@@ -134,7 +135,7 @@ final class Time
 	    return $timestamp;
 	}
 	
-	public static function parseDateDB($date, $timezone=null, $format='parse')
+	public static function parseDateDB($date)
 	{
 		return self::parseDate($date, self::UTC, 'db');
 	}
@@ -163,11 +164,20 @@ final class Time
 	    return self::parseDateTimeIso(Trans::$ISO, $date, $timezone, $format);
 	}
 	
-	public static function parseDateTimeDB($date, $timezone=self::UTC, $format='parse')
+	public static function parseDateTimeDB($date)
 	{
-	    return self::parseDateTimeIso(Trans::$ISO, $date, $timezone, $format);
+	    return self::parseDateTimeIso('en', $date, self::UTC, 'db');
 	}
 	
+	/**
+	 * Parse a string into a datetime.
+	 * @param string $iso
+	 * @param string $date
+	 * @param int $timezone
+	 * @param string $format
+	 * @throws GDOError
+	 * @return \DateTime
+	 */
 	public static function parseDateTimeISO($iso, $date, $timezone=null, $format='parse')
 	{
 	    # Adjust
@@ -233,13 +243,22 @@ final class Time
 	    return self::displayDateTimeISO($iso, $dt, $format, $default_return, $timezone);
 	}
 	
+	/**
+	 * Display a datetime string.
+	 * @param string $date
+	 * @param string $format
+	 * @param string $default_return
+	 * @param int $timezone
+	 * @return string
+	 */
 	public static function displayDate($date=null, $format='short', $default_return='---', $timezone=null)
 	{
 	    return self::displayDateISO(Trans::$ISO, $date, $format, $default_return, $timezone);
 	}
 	
 	/**
-	 * Display a database date.
+	 * Display a datestring.
+	 * 
 	 * @param string $iso
 	 * @param string $date a date from the database in utc
 	 * @param string $format display format
