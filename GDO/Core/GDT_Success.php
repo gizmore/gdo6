@@ -4,14 +4,13 @@ namespace GDO\Core;
 use GDO\UI\WithPHPJQuery;
 use GDO\UI\WithText;
 use GDO\UI\WithTitle;
-use GDO\UI\GDT_Panel;
 
 /**
  * A success message, the pedant to GDT_Error.
  * Logs a message if desired.
  * 
  * @author gizmore
- * @version 6.10.3
+ * @version 6.11.0
  * @since 6.0.0
  * @see GDT_Error
  */

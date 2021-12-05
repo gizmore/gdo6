@@ -6,7 +6,7 @@ namespace GDO\Table;
  * Not filtered by default.
  *
  * @author gizmore
- * @version 6.10.1
+ * @version 6.11.0
  * @since 5.0.0
  */
 abstract class MethodQueryList extends MethodQueryTable
@@ -23,6 +23,7 @@ abstract class MethodQueryList extends MethodQueryTable
 	{
 	    return GDT_List::make($this->listName())->
 	       gdtTable($this->gdoTable())->
+	       fetchAs($this->gdoTable())->
 	       listMode($this->gdoListMode());
 	}
 	

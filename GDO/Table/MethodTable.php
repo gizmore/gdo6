@@ -74,6 +74,7 @@ abstract class MethodTable extends Method
      */
     public abstract function gdoTable();
     public function gdoTableName() { return 'table'; }
+    public function gdoFetchAs() { return $this->gdoTable(); }
     
     /**
      * Override this with returning an ArrayResult with data.
