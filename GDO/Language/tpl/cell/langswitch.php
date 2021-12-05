@@ -11,7 +11,7 @@ $languages = Module_Language::instance()->cfgSupported();
   <input type="hidden" name="me" value="SwitchLanguage" />
   <input type="hidden" name="ref" value="<?=html($_SERVER['REQUEST_URI'])?>" />
   <label><?php echo t('lbl_langswitch'); ?></label>
-  <select name="lang">
+  <select name="_lang">
 <?php
 foreach ($languages as $language)
 {
