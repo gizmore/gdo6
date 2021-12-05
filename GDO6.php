@@ -9,11 +9,12 @@ use GDO\Core\ModuleLoader;
 use GDO\Core\Env;
 use GDO\Core\Application;
 use GDO\Util\Strings;
+use GDO\Core\GDT_Response;
 
 /**
  * GDO6 autoloader and public functions.
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.1
  * @since 6.0.0
  */
 
@@ -127,6 +128,12 @@ function html($html)
 }
 function env($key, $default=null) { return Env::get($key, $default); }
 function def($key, $default=null) { return defined($key) ? constant($key) : $default; }
+function hdrc($header, $replace=true)
+{
+	hdr($header, $replace);
+	$code = (int)Common::regex('#HTTP/1.1 (\\d+)#', $header);
+	GDT_Response::$CODE = $code;
+}
 function hdr($header, $replace=true)
 {
     $app = Application::instance();

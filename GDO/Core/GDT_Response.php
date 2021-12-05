@@ -137,7 +137,7 @@ class GDT_Response extends GDT
 	public function renderJSON()
 	{
 		return [
-			'code' => $this->code,
+			'code' => self::$CODE,
 // 		    'top' => Website::renderTopResponse(),
 			'json' => $this->renderJSONFields(),
 		];

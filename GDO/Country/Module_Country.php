@@ -5,6 +5,8 @@ use GDO\Core\GDO_Module;
 
 /**
  * Country related functionality.
+ * @TODO: Make own, non core, Module_Country. userSettings: country. 
+ * @TODO: Country/img flages should be named uppercase. cannot do this nicely on window.  
  * @author gizmore
  * @version 6.10
  * @since 3.00

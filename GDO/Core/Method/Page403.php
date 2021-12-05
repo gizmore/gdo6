@@ -31,7 +31,7 @@ final class Page403 extends MethodPage
     public function beforeExecute()
     {
         GDT_Response::$CODE = 403;
-        http_response_code(403);
+        hdrc('HTTP/1.1 403 Forbidden');
         if (Module_Core::instance()->cfgMail403())
         {
             $this->send403Mails();

@@ -90,7 +90,7 @@ final class Stream
 	        list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
 	        if (strpos($range, ',') !== false)
 	        {
-	            hdr('HTTP/1.1 416 Requested Range Not Satisfiable');
+	            hdrc('HTTP/1.1 416 Requested Range Not Satisfiable');
 	            hdr("Content-Range: bytes $start-$end/$size");
 	            exit;
 	        }
@@ -107,7 +107,7 @@ final class Stream
 	        $c_end = ($c_end > $end) ? $end : $c_end;
 	        if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size)
 	        {
-	            hdr('HTTP/1.1 416 Requested Range Not Satisfiable');
+	            hdrc('HTTP/1.1 416 Requested Range Not Satisfiable');
 	            hdr("Content-Range: bytes $start-$end/$size");
 	            return;
 	        }
@@ -115,7 +115,7 @@ final class Stream
 	        $end    = $c_end;
 	        $length = $end - $start + 1;
 	        fseek($fp, $start);
-	        hdr('HTTP/1.1 206 Partial Content');
+	        hdrc('HTTP/1.1 206 Partial Content');
 	    }
 	    
 	    hdr("Content-Range: bytes $start-$end/$size");

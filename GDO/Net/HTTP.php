@@ -28,13 +28,8 @@ final class HTTP
 	 * @param string $url
 	 * @return true|false
 	 */
-	public static function pageExists($url=null)
+	public static function pageExists($url)
 	{
-		if ($url === null)
-		{
-			return false;
-		}
-		
 		if (@$url[0] === '/')
 		{
 			$url = GDO_PROTOCOL . '://' . GDO_DOMAIN . $url;
@@ -100,7 +95,9 @@ final class HTTP
   		}
  
   		# See if code indicates success
-  		return (($code>=200) && ($code<400)) || $code === 403 || $code === 401;	
+  		return (($code>=200) && ($code<400)) ||
+  		       ($code === 403) ||
+  		       ($code === 401);	
 	}
 
 	/**

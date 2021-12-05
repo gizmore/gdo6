@@ -134,7 +134,16 @@ class Application
 	### Themes ###
 	##############
 	private $themes = GDO_THEMES;
-	public function getThemes() { return $this->themes; }
+	public function getThemes()
+	{
+		if (is_string($this->themes))
+		{
+			$this->themes = explode(',', $this->themes);
+			$this->themes = array_combine($this->themes, $this->themes);
+		}
+		return $this->themes;
+	}
+	
 	public function hasTheme($theme) { return isset($this->themes[$theme]); }
 	public function initThemes()
 	{
@@ -147,8 +156,6 @@ class Application
 	    	        $this->themes = GDO_Session::get('theme_chain');
 	    	    }
 	    	}
-    	    $this->themes = explode(',', $this->themes);
-    	    $this->themes = array_combine($this->themes, $this->themes);
 	    }
 	    return $this;
 	}

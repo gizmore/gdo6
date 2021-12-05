@@ -31,8 +31,7 @@ final class Page404 extends MethodPage
     
     public function beforeExecute()
     {
-        GDT_Response::$CODE = 404;
-        http_response_code(404);
+        hdrc('HTTP/1.1 404 Not Found');
         if (!Strings::endsWith($_SERVER['REQUEST_URI'], '.map'))
         {
             if (Module_Core::instance()->cfgMail404())

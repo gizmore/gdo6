@@ -184,7 +184,7 @@ if (isset($_GET['_url']) && $_GET['_url'])
         	if (@strtotime(@$_SERVER['HTTP_IF_MODIFIED_SINCE']) == $last_modified_time ||
         	    trim(@$_SERVER['HTTP_IF_NONE_MATCH']) == $etag)
         	{
-        		http_response_code(304);
+        		hdrc('HTTP/1.1 304 Not Modified');
         		timingHeader();
         		die(0); 
         	}
@@ -229,7 +229,12 @@ try
     
     ModuleLoader::instance()->initModulesB();
 
-    if (GDO_DB_ENABLED && GDO_SESS_LOCK && $method && $method->isLockingSession() && $session)
+    if ($err = GDT_Response::globalError())
+    {
+    	
+    }
+    	
+    elseif (GDO_DB_ENABLED && GDO_SESS_LOCK && $method && $method->isLockingSession() && $session)
     {
         $lock = 'sess_'.$session->getID();
         Database::instance()->lock($lock);
@@ -239,15 +244,23 @@ try
         }
     }
     
-    GDT_Hook::callHook('BeforeRequest', $method);
-    
     $cacheContent = '';
-    if ($method && $method->fileCached())
+
+    if (!$err)
     {
-        $cacheContent = $cacheLoad = $method->fileCacheContent();
+	    GDT_Hook::callHook('BeforeRequest', $method);
+	    
+	    if ($method && $method->fileCached())
+	    {
+	        $cacheContent = $cacheLoad = $method->fileCacheContent();
+	    }
     }
    
-    if ($cacheContent)
+    if ($err)
+    {
+    	
+    }
+    elseif ($cacheContent)
     {
         $response = null;
         $content = $cacheContent;
@@ -258,13 +271,17 @@ try
         $response = $method->exec();
     }
 
-    GDT_Hook::callHook('AfterRequest', $method);
+    if (!$err)
+    {
+	    GDT_Hook::callHook('AfterRequest', $method);
+    }
 }
 catch (\Throwable $e)
 {
 	Logger::logException($e);
 	Debug::debugException($e, false); # send exception mail
 	$response = GDT_Error::responseException($e);
+	$err = true;
 }
 finally
 {

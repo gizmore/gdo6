@@ -178,6 +178,8 @@ final class Debug
 			self::sendDebugMail(self::backtrace($message, false));
 		}
 		
+		hdrc('HTTP/1.1 500 Server Error');
+
 		// Output error
 		if ($app->isCLI())
 		{
@@ -189,13 +191,7 @@ final class Debug
 			echo self::renderError($message);
 		}
 		
-		if (self::$DIE)
-		{
-		    http_response_code(500);
-			die(1);
-		}
-		
-		return true;
+		return self::$DIE ? die(1) : true;
 	}
 	
 	public static function exception_handler($ex)
@@ -235,7 +231,7 @@ final class Debug
 	
 	private static function renderError($message)
 	{
-		http_response_code(409);
+		hdrc('HTTP/1.1 409 Conflict');
 		$app = Application::instance();
 		if (!$app)
 		{

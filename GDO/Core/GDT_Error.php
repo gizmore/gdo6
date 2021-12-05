@@ -6,8 +6,12 @@ namespace GDO\Core;
  * The message is logged into messages facility, as this is a client caused error.
  * Server crashes still goto the error or critical facility.
  * 
+ * @TODO: If there are multiple errors and messages render json as array. 
+ * 
+ * @see GDT_Success
+ * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.1
  * @since 6.0.0
  */
 class GDT_Error extends GDT_Success
