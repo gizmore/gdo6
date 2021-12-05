@@ -30,11 +30,6 @@ if (!defined('GDO_CONFIGURED'))
     die(0);
 }
 
-$app = new Application();
-
-GDT_Page::make();
-$response = GDT_Response::make();
-
 Database::init();
 $noSession = true;
 if (@class_exists('\\GDO\\Session\\GDO_Session', true))
@@ -51,7 +46,15 @@ Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
 Debug::setDieOnError(GDO_ERROR_DIE);
 Debug::setMailOnError(GDO_ERROR_MAIL);
+
+$app = new Application();
+
 ModuleLoader::instance()->loadModulesCache();
+
+
+GDT_Page::make();
+$response = GDT_Response::make();
+
 if (!module_enabled('Core'))
 {
     require 'index_install.php';
