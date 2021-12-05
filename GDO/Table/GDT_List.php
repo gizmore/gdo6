@@ -49,7 +49,7 @@ class GDT_List extends GDT_Table
 	public function renderCell()
 	{
 		$template = $this->listMode === self::MODE_CARD ? 'cell/list_card.php' : 'cell/list.php';
-		return GDT_Template::php('Table', $template, ['field'=>$this]);
+		return GDT_Template::php('Table', $template, ['field' => $this]);
 	}
 	
 	public function configJSON()

@@ -143,21 +143,23 @@ trait WithObject
 	
 	public function getGDOData()
 	{
-		if ($object = $this->getValue())
-		{
-			# Array for multiple select. ignore. 
-			if (is_array($object))
-			{
-				return null ;
-			}
-			return [$this->name => $object->getID()];
-		}
-		else
-		{
-// 		    return [$this->name => $this->var ? $this->var : null]; # use value anyway
-// 		    return [$this->name => $this->getVar()]; # bug in import tbs forum
-		    return [$this->name => null]; # bug in import tbs forum
-		}
+		return [$this->name => $this->var];
+		# @TODO: This may break various stuff!
+// 		if ($object = $this->getValue())
+// 		{
+// 			# Array for multiple select. ignore. 
+// 			if (is_array($object))
+// 			{
+// 				return null ;
+// 			}
+// 			return [$this->name => $object->getID()];
+// 		}
+// 		else
+// 		{
+// // 		    return [$this->name => $this->var ? $this->var : null]; # use value anyway
+// // 		    return [$this->name => $this->getVar()]; # bug in import tbs forum
+// 		    return [$this->name => null]; # bug in import tbs forum
+// 		}
 	}
 	
 	################

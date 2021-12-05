@@ -72,14 +72,25 @@ class GDT_Message extends GDT_Text
     ###############
     public static $EDITOR_NAME = 'GDT';
     public static $DECODER = [self::class, 'DECODE'];
-    public static $DECODERS = ['GDT' => [self::class, 'DECODE']];
+    public static $DECODERS = [
+    	'GDT' => [self::class, 'DECODE'],
+    	'NONE' => [self::class, 'NONDECODE'],
+    ];
+    
+    public static function setDecoder($decoder)
+    {
+    	self::$EDITOR_NAME = $decoder;
+    	self::$DECODER = self::$DECODERS[$decoder];
+    }
 
     public static function DECODE($s)
     {
-        $decoded  = '<div class="gdt-message ck-content">';
-        $decoded .= self::getPurifier()->purify($s);
-        $decoded .= '</div>';
-        return $decoded;
+    	return self::getPurifier()->purify($s);
+    }
+    
+    public static function NONDECODE($s)
+    {
+    	return $s;
     }
     
     public static function decodeMessage($s)
@@ -213,7 +224,7 @@ class GDT_Message extends GDT_Text
         $this->input = $var;
         $this->output = self::decodeMessage($var);
         $this->text = self::plaintext($this->output);
-        $this->editor = self::$EDITOR_NAME;
+        $this->editor = $this->nowysiwyg ? 'GDT' : self::$EDITOR_NAME;
         return parent::var($var);
     }
     

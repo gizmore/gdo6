@@ -1,14 +1,18 @@
 <?php
 namespace GDO\UI;
 
-use GDO\Core\GDT_Response;
 use GDO\Core\Method;
 use GDO\Core\GDO;
 use GDO\Util\Common;
 use GDO\DB\GDT_Object;
 use GDO\Core\GDT_ResponseCard;
-use GDO\Table\GDT_GWF;
 
+/**
+ * Abstract method to render a single GDO as a card.
+ * @author gizmore
+ * @version 6.11.0
+ * @since 6.6.4
+ */
 abstract class MethodCard extends Method
 {
     /**

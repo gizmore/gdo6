@@ -233,7 +233,7 @@ final class Debug
 	    
 	    if ($render)
 	    {
-	        echo self::renderError($message);
+	        return self::renderError($message);
 	    }
 	}
 	

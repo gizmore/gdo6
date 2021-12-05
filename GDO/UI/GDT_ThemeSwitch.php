@@ -3,7 +3,7 @@ namespace GDO\UI;
 
 use GDO\Form\GDT_Select;
 
-final class GDT_ThemeSwitcher extends GDT_Select
+final class GDT_ThemeSwitch extends GDT_Select
 {
     public function initChoices()
     {
