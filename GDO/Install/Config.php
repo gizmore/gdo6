@@ -182,7 +182,6 @@ class Config
 			GDT_Checkbox::make('error_stacktrace')->initialValue(GDO_ERROR_STACKTRACE),
 			GDT_Checkbox::make('error_die')->initialValue(GDO_ERROR_DIE),
 		    GDT_Checkbox::make('error_mail')->initialValue(GDO_ERROR_MAIL),
-		    GDT_Checkbox::make('error_mail')->initialValue(GDO_ERROR_MAIL),
 		    # Database
 			GDT_Divider::make()->label('install_config_section_database'),
 			GDT_Hidden::make('salt')->initialValue(GDO_SALT),

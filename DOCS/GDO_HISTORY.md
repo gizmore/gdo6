@@ -3,6 +3,13 @@
 Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
 
 
+## Improvements for v6.11.1 (5.12.2021)
+
+ - The gdo6 http error response code changed from 405 to 409.
+ 
+ - The GDT_Hook system now uses a filecache for the hook table.
+ 
+
 ## Improvements for v6.11.0 (29.11.2021)
  
  - *./gdoadm.sh provide_all* - to download all available gdo6 packages. Unit test all the things!

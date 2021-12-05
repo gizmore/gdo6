@@ -331,4 +331,6 @@ Viele Grüße,<br/>
 # v6.11.0
 'mtitle_core_directoryindex' => 'Verzeichnisinhalt',
 	
+# v6.11.1
+'err_module_disabled' => 'Das Modul %s ist derzeit deaktiviert.',
 );

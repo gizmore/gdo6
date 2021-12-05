@@ -226,7 +226,7 @@ abstract class MethodForm extends Method
 	    $app = Application::instance();
 	    if ($app->isCLI())
 	    {
-		    return GDT_Response::make()->code(405);
+		    return GDT_Response::make()->code(409);
 	    }
 	    return $this->error('err_form_invalid');
 	}

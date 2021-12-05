@@ -263,7 +263,7 @@ class GDT_Template extends GDT
 	private static $PATHES = [];
 
 	/**
-	 * Get the Path for the GWF Design if the file exists
+	 * Get the Path for the GDO Design if the file exists
 	 *
 	 * @param string $path
 	 *        templatepath

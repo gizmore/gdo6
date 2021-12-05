@@ -39,7 +39,6 @@ class GDO_Module extends GDO
 	
 	public function gdoCached() { return false; }
 	public function memCached() { return false; }
-	public function sqlBuffered() { return true; } # Override with true or false for force.
 	public function defaultEnabled() { return !$this->isSiteModule(); }
 	public function isCoreModule() { return false; }
 	public function isSiteModule() { return false; }
@@ -245,6 +244,7 @@ class GDO_Module extends GDO
 	public function &gdoColumnsCache() { return Database::columnsS(self::class); } # Polymorph fix
 	public function gdoTableName() { return 'gdo_module'; } # Polymorph fix
 	public function gdoClassName() { return self::class; } # Polymorph fix
+	public function gdoRealClassName() { return static::class; } # Polymorph fix fix
 	public function gdoColumns()
 	{
 		return [
@@ -376,7 +376,7 @@ class GDO_Module extends GDO
 		}
 	}
 	
-	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args, 405); }
+	public function error($key, array $args=null) { return GDT_Error::responseWith($key, $args, 409); }
 	public function message($key, array $args=null) { return GDT_Success::responseWith($key, $args); }
 	
 	############

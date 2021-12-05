@@ -341,13 +341,13 @@ abstract class Method
 	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6) - 4); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
 	
-	public function error($key, array $args=null, $code=405, $log=true)
+	public function error($key, array $args=null, $code=409, $log=true)
 	{
 	    Website::topResponse()->addField(GDT_Error::with($key, $args, $code, $log));
 	    return GDT_Response::make()->code($code);
 	}
 	
-	public function errorRedirect($key, array $args=null, $code=405, $url=null, $time=null, $log=true)
+	public function errorRedirect($key, array $args=null, $code=409, $url=null, $time=null, $log=true)
 	{
 	    Website::redirectError($key, $args, $url, $time);
 	    return $this->error($key, $args, $code, $log);

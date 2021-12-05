@@ -5,8 +5,8 @@ namespace GDO\Util;
  * String utility class.
  * 
  * @author gizmore
- * @version 6.10.4
- * @since 1.0.0
+ * @version 6.11.0
+ * @since 3.0.0
  */
 final class Strings
 {
@@ -15,6 +15,7 @@ final class Strings
 	######################
 	/**
 	 * Check if a string starts with another string.
+	 * 
 	 * @param string $s
 	 * @param string $with
 	 * @return boolean

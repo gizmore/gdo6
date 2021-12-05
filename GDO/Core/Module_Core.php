@@ -24,7 +24,7 @@ use GDO\Date\GDO_Timezone;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
@@ -34,12 +34,12 @@ final class Module_Core extends GDO_Module
      * Sometimes just counts up to be in sync and poison some other module caches for updates.
      * Increase this value to poison all caches.
      * 
-     * 6.11.0 will be the first stable version. (not really)
+     * 6.11.2 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
      * 
      * @var string
      */
-	const GDO_REVISION = '6.11.0-r6239';
+	const GDO_REVISION = '6.11.1-r6240';
 
 	##############
 	### Module ###

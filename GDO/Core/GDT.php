@@ -140,8 +140,8 @@ abstract class GDT
 	### Error ###
 	#############
 	public $error;
-	public function error($key, array $args=null, $code=405) { return $this->rawError(t($key, $args), $code); }
-	public function rawError($html=null, $code=405) { if (!$this->error) $this->error = $html; GDT_Response::$CODE = $code;  return false; }
+	public function error($key, array $args=null, $code=409) { return $this->rawError(t($key, $args), $code); }
+	public function rawError($html=null, $code=409) { if (!$this->error) $this->error = $html; GDT_Response::$CODE = $code;  return false; }
 	public function hasError() { return is_string($this->error); }
 	public function htmlError() { return $this->error ? ('<div class="gdo-form-error">' . $this->error . '</div>') : ''; }
 	public function classError()

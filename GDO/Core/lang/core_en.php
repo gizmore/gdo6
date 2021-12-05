@@ -329,4 +329,6 @@ Kind Regards,<br/>
 # v6.11.0
 'mtitle_core_directoryindex' => 'Directory Index',
 	
+# v6.11.1
+'err_module_disabled' => 'The %s module is currently disabled.',
 );

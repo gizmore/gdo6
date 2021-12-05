@@ -5,6 +5,7 @@ use GDO\UI\GDT_Page;
 use GDO\Util\Common;
 use GDO\Mail\Mail;
 use GDO\User\GDO_User;
+use GDO\Util\Strings;
 
 /**
  * Debug backtrace and error handler.
@@ -13,13 +14,15 @@ use GDO\User\GDO_User;
  * 
  * @example Debug::enableErrorHandler(); fatal_ooops();
  * 
+ * @TODO: check, on an out of memory fatal error, if a shutdown function would draw a stack trace.
+ * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 3.0.1
  */
 final class Debug
 {
-	private static $DIE = false; # @TODO uppercase static members
+	private static $DIE = false;
 	private static $ENABLED = false;
 	private static $EXCEPTION = false;
 	private static $MAIL_ON_ERROR = false;
@@ -56,29 +59,25 @@ final class Debug
 	{
 		if (!self::$ENABLED)
 		{
-			set_error_handler(array(
-				'GDO\\Core\\Debug',
-				'error_handler'));
+			set_error_handler([self::class, 'error_handler']);
 			self::$ENABLED = true;
 		}
 	}
 	
-	public static function enableStubErrorHandler()
-	{
-		self::disableErrorHandler();
-		set_error_handler(array(
-			'GDO\\Core\\Debug',
-			'error_handler_stub'));
-		self::$ENABLED = true;
-	}
+// 	public static function enableStubErrorHandler()
+// 	{
+// 		self::disableErrorHandler();
+// 		set_error_handler([self::class, 'error_handler_stub']);
+// 		self::$ENABLED = true;
+// 	}
 	
 	#####################
 	## Error Handlers ###
 	#####################
-	public static function error_handler_stub($errno, $errstr, $errfile, $errline, $errcontext)
-	{
-		return false;
-	}
+// 	public static function error_handler_stub($errno, $errstr, $errfile, $errline, $errcontext)
+// 	{
+// 		return false;
+// 	}
 	
 // 	/**
 // 	 * This one get's called on a fatal.
@@ -95,9 +94,9 @@ final class Debug
 // 		}
 // 	}
 	
-	public static function error(\Error $e)
+	public static function error(\Error $ex)
 	{
-	    self::error_handler($e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine());
+	    self::error_handler($ex->getCode(), $ex->getMessage(), $ex->getFile(), $ex->getLine());
 	}
 	
 	/**
@@ -126,8 +125,8 @@ final class Debug
 		
 		switch ($errno)
 		{
-			case - 1:
-				$errnostr = 'GWF Error';
+			case -1:
+				$errnostr = 'GDO Error';
 				break;
 			
 			case E_ERROR:
@@ -149,8 +148,6 @@ final class Debug
 			case E_STRICT:
 				$errnostr = 'PHP Strict Error';
 				break;
-			// if(PHP5.3) case E_DEPRECATED: case E_USER_DEPRECATED: $errnostr = 'PHP Deprecated'; break;
-			// if(PHP5.2) case E_RECOVERABLE_ERROR: $errnostr = 'PHP Recoverable Error'; break;
 			case E_COMPILE_WARNING:
 			case E_COMPILE_ERROR:
 				$errnostr = 'PHP Compiling Error';
@@ -204,7 +201,7 @@ final class Debug
 	
 	public static function exception_handler($e)
 	{
-	    return self::debugException($e);
+	    echo self::debugException($e);
 	}
 	
 	public static function debugException(\Throwable $ex, $render=true)
@@ -239,7 +236,7 @@ final class Debug
 	
 	private static function renderError($message)
 	{
-		http_response_code(405);
+		http_response_code(409);
 		$app = Application::instance();
 		if (!$app)
 		{
@@ -247,7 +244,7 @@ final class Debug
 		}
 		if ($app->isJSON())
 		{
-			return json_encode(array('error' => $message));
+			return json_encode(['error' => $message]);
 		}
 		if ($app->isCLI() || $app->isUnitTests())
 		{
@@ -357,8 +354,9 @@ final class Debug
 	
 	public static function backtraceException(\Throwable $ex, $html = true, $message = '')
 	{
-		$message = sprintf("PHP Exception: '%s' in %s line %s",
-			$ex->getMessage(), self::shortpath($ex->getFile()), $ex->getLine());
+		$message = sprintf("PHP %s: '%s' in %s line %s",
+			get_class($ex), $ex->getMessage(),
+			self::shortpath($ex->getFile()), $ex->getLine());
 		return self::backtraceMessage($message, $html, $ex->getTrace(), $ex->getLine(), $ex->getFile());
 	}
 	
@@ -389,13 +387,10 @@ final class Debug
 		{
 			return 'false';
 		}
-		elseif (is_string($arg) || is_array($arg))
-		{
-			$arg = json_encode($arg);
-		}
 		elseif (is_object($arg))
 		{
-			return get_class($arg);
+			$class = get_class($arg);
+			return Strings::rsubstrFrom($class, '\\', $class);
 		}
 		else
 		{
@@ -413,7 +408,7 @@ final class Debug
 		{
 			if ($app->isCLI())
 			{
-				self::$MAX_ARG_LEN = 32;
+				self::$MAX_ARG_LEN = 40;
 			}
 		    return mb_substr($arg, 0, self::$MAX_ARG_LEN) . '…' . mb_substr($arg, -14);
 		}
@@ -448,7 +443,7 @@ final class Debug
 		foreach ($stack as $row)
 		{
 		    # Skip debugger trace
-		    if (@$row['class'] !== 'GDO\\Core\\Debug')
+		    if (@$row['class'] !== self::class)
 		    {
 		        # Build current call
 				$function = sprintf('%s%s(%s)',
@@ -504,10 +499,6 @@ final class Debug
 		$path = str_replace('\\', '/', $path);
 		$path = str_replace(GDO_PATH, '', $path);
 		$path = trim($path, ' /');
-// 		if (Application::instance()->isCLI())
-// 		{
-// 			$path = "{$newline}{$path}";
-// 		}
 		return $path;
 	}
 	

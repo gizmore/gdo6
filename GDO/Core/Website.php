@@ -231,9 +231,9 @@ final class Website
 	#############
 	### Error ###
 	#############
-	public static function error($key, array $args=null)
+	public static function error($key, array $args=null, $code=409)
 	{
-	    self::topResponse()->addField(GDT_Error::with($key, $args, 405));
+	    self::topResponse()->addField(GDT_Error::with($key, $args, $code));
 	}
 	
 	/**
@@ -279,9 +279,9 @@ final class Website
 	    return self::redirectErrorRaw(t($key, $args), $url, $time);
 	}
 	
-	public static function redirectErrorRaw($message, $url=null, $time=0)
+	public static function redirectErrorRaw($message, $url=null, $time=0, $code=409)
 	{
-	    self::topResponse()->addField(GDT_Error::withText($message, 405));
+	    self::topResponse()->addField(GDT_Error::withText($message, $code));
 	    
 	    if (Application::instance()->isCLI())
 	    {

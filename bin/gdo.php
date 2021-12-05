@@ -89,7 +89,7 @@ $app = new gdo();
 ### Init ###
 ############
 Debug::init();
-Debug::setMailOnError(false);
+Debug::setMailOnError(GDO_ERROR_MAIL);
 Debug::setDieOnError(GDO_ERROR_DIE);
 Debug::enableErrorHandler();
 Debug::enableExceptionHandler();
@@ -98,9 +98,7 @@ Cache::init();
 Database::init();
 GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
 
-$app->loader->loadModules(GDO_DB_ENABLED, !GDO_DB_ENABLED, true);
-
-$app->loader->initModulesB();
+$app->loader->loadModulesCache();
 
 #################
 ### Load User ###
@@ -133,7 +131,8 @@ if (GDO_LOG_REQUEST)
 
 if (!module_enabled('CLI'))
 {
-	throw new GDOError('err_module_disabled', ['CLI']); # @TODO: err_module_disabled %s shall be the way to show err_module_disabled. Clean up similiar repetitions / variantics.
+	echo t('err_module_disabled', ['CLI']);
+	die(-1);
 }
 
 $norepl = false;
