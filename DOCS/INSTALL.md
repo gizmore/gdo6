@@ -49,6 +49,7 @@ This can be done via CLI installer.
     
 For the www wizard, please read [GDO_INSTALL_A_MODULE.md](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_A_MODULE.md)
 
+For the cli wizard, please read [GDO_INSTALL_CLI.md](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md)
 
 ### GDO6 modules
 
@@ -212,18 +213,21 @@ Copy this list and remove / add modules.
     ## git clone --recursive https://github.com/gizmore/gdo6-wombat Wombat
     git clone --recursive https://github.com/gizmore/gdo6-zip ZIP
 
+
 ### After cloning    
 
 Then make your webserver point to the gdo6 directory and request install/wizard.php in your browser.
+
 
 ### CLI install
 
     # install gdo via gdoadm.php
     cd gdo6
     php gdoadm.php configure # configure gdo6 installation
-    php gdoadm.php install <Module> # install a module
+    php gdoadm.php provide <Module> # Download module and dependencies
+    php gdoadm.php install <Module> # Install a module
     php gdoadm.php admin <user> <pass> [<email>] # create an admin
 
     # Try some commands via gdo6/bin/gdo
-    gdo admin.clearcache # Call clearcache method of module Admin.
-    gdo core.impressum # Call Impressum method of module Core
+    gdo admin.clearcache. # Call clearcache method of module Admin.
+    gdo core.impressum. # Call Impressum method of module Core

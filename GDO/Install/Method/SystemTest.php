@@ -23,6 +23,7 @@ final class SystemTest extends Method
 				$this->testBower(),
 				function_exists('mb_strlen'),
 			    function_exists('mime_content_type'),
+				function_exists('bcadd'),
 			),
 			'optional' => array(
 			    function_exists('curl_init'),

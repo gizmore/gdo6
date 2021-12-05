@@ -22,6 +22,7 @@ use GDO\Date\Time;
 require 'GDO6.php';
 
 @include GDO_PATH . 'protected/config.php';
+
 if (!defined('GDO_CONFIGURED'))
 {
 	define('GDO_WEB_ROOT', '/');
@@ -231,7 +232,7 @@ try
 
     if ($err = GDT_Response::globalError())
     {
-    	
+    	# do nothing
     }
     	
     elseif (GDO_DB_ENABLED && GDO_SESS_LOCK && $method && $method->isLockingSession() && $session)
@@ -258,7 +259,7 @@ try
    
     if ($err)
     {
-    	
+    	# do nothing
     }
     elseif ($cacheContent)
     {

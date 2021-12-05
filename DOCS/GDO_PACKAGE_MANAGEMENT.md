@@ -51,5 +51,6 @@ Updating all your GDO6 modules can be easily done using the following command.
     ./gdo_update.sh
     
 This will run git pull on the core and all modules.
+Afterwards ./gdoadm upgrade is executed.
 
 The developers shall assure that all modules stay backwards compatible!

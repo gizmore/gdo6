@@ -16,6 +16,7 @@ return array(
 'install_test_5' => 'Sind nodejs, npm, bower und yarn verfügbar?',
 'install_test_6' => 'Ist PHP mbstring installiert?',
 'install_test_7' => 'Ist die fileinfo Erweiterung verfügbar?',
+'install_test_8' => 'Ist die bcmath Erweiterung installiert?',
 'install_title_2_optionals' => 'Optionale Features',
 'install_optional_0' => 'Ist PHP curl installiert?',
 'install_optional_1' => 'Ist PHP gd installiert?',

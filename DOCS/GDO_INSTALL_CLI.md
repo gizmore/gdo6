@@ -42,7 +42,7 @@ You will work with the gdoadm CLI tool.
     
 ## Run the system test
 
-    ./gdoadm.sh systemtest
+    ./gdoadm.sh test
 
 
 ## Configure the gdo6 system
