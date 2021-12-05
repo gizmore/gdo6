@@ -30,6 +30,8 @@ if (!defined('GDO_CONFIGURED'))
     die(0);
 }
 
+$app = new Application();
+
 GDT_Page::make();
 $response = GDT_Response::make();
 
@@ -40,8 +42,6 @@ if (@class_exists('\\GDO\\Session\\GDO_Session', true))
     $noSession = false;
     GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
 }
-
-$app = new Application();
 
 # Bootstrap
 Trans::$ISO = GDO_LANGUAGE;
