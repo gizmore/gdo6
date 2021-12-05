@@ -118,13 +118,14 @@ trait WithObject
 	##############
 	### Render ###
 	##############
-	public function displayVar()
+	public function displayVar($var)
 	{
-		if ($gdo = $this->getValue())
+		/** @var $gdo GDO **/
+		if ($gdo = $this->toValue($var))
 		{
-			if ($column = $gdo->gdoNameColumn())
+			if ($gdt = $gdo->gdoNameColumn())
 			{
-				return html($column->getVar());
+				return html($gdt->display());
 			}
 			else
 			{

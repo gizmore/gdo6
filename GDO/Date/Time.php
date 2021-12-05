@@ -8,11 +8,20 @@ use GDO\Core\GDOError;
 
 /**
  * Time helper class.
- * Using mysql date with milliseconds.
- * For GDT, the value is the timestamp and the var is the date in mysql format.
- * This class is quite a mess meanwhile. Because timezones came late to my mind.
+ * Using mysql dates with milliseconds.
+ * 
+ * For GDT_Timestamp, the value is the microtime(true) timestamp.
+ * For GDT_Date and GDT_DateTime, the value is a \DateTime object.
+ * The $var is always a mysql date string in UTC.
+ * 
+ * @TODO: Turn $default_return='---' into a translation text.
  *
- * @TODO Time - Make the function names better. They shall reflect if they are for db or for display.
+ * There are 3 time datatypes the class operates on.
+ *  - $time(stamp): A float, microtime(true)
+ *  - $date: A string, date($format_via_trans)
+ *  - $datetime: A PHP @\DateTime object.
+ *
+ * @TODO: Make the function names better. They shall reflect if they are for db or for display.
  * 
  * @author gizmore
  * @version 6.11.1
@@ -25,6 +34,7 @@ use GDO\Core\GDOError;
 final class Time
 {
     # durations in seconds
+    const ONE_MILLISECOND = 0.001;
 	const ONE_SECOND = 1;
 	const ONE_MINUTE = 60;
 	const ONE_HOUR = 3600;
@@ -33,7 +43,7 @@ final class Time
 	const ONE_MONTH = 2592000;
 	const ONE_YEAR = 31536000;
 	
-	# known display formats
+	# known display formats from lang file
 	const FMT_MINUTE = 'minute';
 	const FMT_SHORT = 'short';
 	const FMT_LONG = 'long';
@@ -43,6 +53,11 @@ final class Time
 	################
 	### Timezone ###
 	################
+	/**
+	 * UTC DB ID
+	 * @see GDO_Timezone
+	 * @var string
+	 */
 	const UTC = '1';
 	public static $UTC;
 	public static $TIMEZONE = self::UTC; # default timezone
@@ -282,6 +297,19 @@ final class Time
 	}
 	
 	/**
+	 * 
+	 * @param DateTime $datetime
+	 * @param string $format
+	 * @param string $default_return
+	 * @param int $timezone
+	 * @return string
+	 */
+	public static function displayDateTime(DateTime $datetime, $format='short', $default_return='---', $timezone=null)
+	{
+		return self::displayDateTimeISO(Trans::$ISO, $datetime, $format, $default_return, $timezone);
+	}
+	
+	/**
 	 * Actual display of a \DateTime.
 	 * 
 	 * @param string $iso
@@ -289,7 +317,7 @@ final class Time
 	 * @param string $format
 	 * @return string
 	 */
-	private static function displayDateTimeISO($iso, DateTime $datetime, $format='short', $default_return='---', $timezone=null)
+	public static function displayDateTimeISO($iso, DateTime $datetime, $format='short', $default_return='---', $timezone=null)
 	{
 	    $timezone = $timezone ? $timezone : self::$TIMEZONE;
         $datetime->setTimezone(self::getTimezoneObject($timezone));
@@ -449,68 +477,63 @@ final class Time
 	########################
 	/**
 	 * Convert a human duration to seconds.
-	 * Input may be like 3d5h8i 7s.
+	 * Input may be like 3d5h8m 7s.
+	 * There is no months, only minutes and weeks etc.
 	 * Also possible is 1 month 3 days or 1year2sec.
 	 * No unit means default unit, which is seconds.
 	 * Supported units are:
+	 * ms, millis, millisecond,
 	 * s, sec, second, seconds,
 	 * m, min, minute, minutes,
 	 * h, hour, hours,
 	 * d, day, days,
 	 * w, week, weeks,
+	 * mo, month, months,
 	 * y, year, years.
+	 * 
 	 * @param $duration string is the duration in human format.
-	 * @return int duration as seconds
+	 * @return float duration in seconds
 	 * */
 	public static function humanToSeconds($duration)
 	{
 		if (is_int($duration)) { return $duration; }
-		if (!is_string($duration)) { return 0; }
-		if (is_numeric($duration)) { return (int)$duration; }
-		$duration = trim(mb_strtolower($duration));
-		if (!preg_match('/^(?:(?:[0-9 ]+[sihdwmy]*)+)$/', $duration)) { return 0; }
-		
-		$multis = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 86400, 'w' => 86400*7, 'y' => 31536000);
-		$replace = array(
-			'seconds' => 's', 'second' => 's', 'sec' => 's',
-			'minutes' => 'm', 'minute' => 'm', 'min' => 'm',
-		    'hours' => 'h', 'hour' => 'h',
-		    'days' => 'd', 'day' => 'd',
-		    'weeks' => 'w', 'week' => 'w',
-			'years' => 'y', 'year' => 'y',
-		);
-		
-		$negative = 1;
-		$duration = mb_strtolower(trim($duration));
-		if ($duration[0] == '-')
+		if (!is_string($duration)) { return 0.0; }
+		if (is_numeric($duration)) { return floatval($duration); }
+		$matches = null;
+		$duration = strtolower($duration);
+		if (!preg_match('/^\\s*(([0-9]+)\\s*([smhdwoy]{0,2}))+\\s*$/iD', $duration, $matches))
 		{
-			$negative = -1;
+			return 0.0;
 		}
-		$duration = trim($duration, '-');
-		$duration = str_replace(array_keys($replace), array_values($replace), $duration);
-		// 		$duration = preg_replace('/[^sihdwmy0-9]/', '', $duration);
-		$duration = preg_replace('/([sihdwmy])/', '$1 ', $duration);
-		$duration = explode(' ', trim($duration));
-		$back = 0;
-		foreach ($duration as $d)
+		$multis = [
+			'ms' => 0.001,
+			's' => 1,
+			'm' => 60,
+			'h' => 3600,
+			'd' => 86400,
+			'w' => 604800,
+			'mo' => 2592000,
+			'y' => 31536000,
+		];
+		$back = 0.0;
+		$len = (count($matches) - 1) / 3;
+		$j = 1;
+		for ($i = 0; $i < $len; $i++, $j+=3)
 		{
-			if ($d = trim($d))
+			$d = floatval($matches[$j+1]);
+			if ($d)
 			{
-				$unit = mb_substr($d, -1);
-				if (is_numeric($unit))
+				if ($unit = @$multis[$matches[$j+2]])
 				{
-				    $back += $unit;
-				    continue;
+					$back += $d * $unit;
 				}
 				else
 				{
-				    $d = mb_substr($d, 0, -1);
+				    $back += $d;
 				}
-				$d = floatval($d);
-				$back += $multis[$unit] * $d;
 			}
 		}
-		return $negative * $back;
+		return $back;
 	}
 	
 	#############
@@ -520,60 +543,6 @@ final class Time
 	public static function getMonth($date) { return substr($date, 5 , 2); }
 	public static function getDay($date) { return substr($date, 8 , 2); }
 	
-	########################
-	### Calendar utility ###
-	########################
-	/**
-	 * Get timestamp of start of this week. (Monday)
-	 * @return int unix timestamp.
-	 * */
-	public static function getTimeWeekStart()
-	{
-	    return strtotime('previous monday', Application::$TIME + self::ONE_DAY);
-	}
-	
-	// 	/**
-	// 	 * Get Long Weekday Names (translated), starting from monday. returns array('monday', 'tuesday', ...);
-	// 	 * @return array
-	// 	 */
-	// 	public static function getWeekdaysFromMo()
-	// 	{
-	// 		return array(t('D1'),t('D2'),t('D3'),t('D4'),t('D5'),t('D6'),t('D0'));
-	// 	}
-		
-	// 	/**
-	// 	 * Compute the week of the day for a given GDO_Date.
-	// 	 * 0=Sunday.
-	// 	 * @param $gdo_date string min length 8
-	// 	 * @return int 0-6
-	// 	 */
-	// 	public static function computeWeekDay($date)
-	// 	{
-	// 		$century = array('12' => 6, '13' => 4, '14' => 2, '15'=> 0, # <-- not sure if these are correct :(
-	// 		'16'=>6, '17'=>4, '18'=>2, '19'=>0, '20'=>6, '21'=>4, '22'=>2, '23'=>0); # <-- these are taken from wikipedia
-	// 		static $months = array(array(0,3,3,6,1,4,6,2,5,0,3,5), array(6,2,3,6,1,4,6,2,5,0,3,5));
-	// 		$step1 = $century[substr($date, 0, 2)];
-	// 		$y = intval(substr($date, 2, 2), 10); // step2
-	// 		$m = intval(substr($date, 5, 2), 10);
-	// 		$d = intval(substr($date, 8, 2), 10);
-	// 		$leap = ($y % 4) === 0 ? 1 : 0;
-	// 		$step3 = intval($y / 4);
-	// 		$step4 = $months[$leap][$m-1];
-	// 		$sum = $step1 + $y + $step3 + $step4 + $d;
-	// 		return $sum % 7;
-	// 	}
-	
-	// 	public static function getNumDaysForMonth($month, $year)
-	// 	{
-	// 		$leap = (($year % 4) === 0) || (($year % 100) === 0);
-	// 		switch ($month)
-	// 		{
-	// 			case 1: case 3: case 5: case 7: case 8: case 10: case 12: return 31;
-	// 			case 4: case 6: case 9: case 11: return 30;
-	// 			case 2: return $leap ? 29 : 28;
-	// 			default: return false;
-	// 		}
-	// 	}
 }
 	
 date_default_timezone_set('UTC');

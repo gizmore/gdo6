@@ -33,7 +33,7 @@ class GDT_Name extends GDT_String
 	    {
 	        return $this->gdo->displayName();
 	    }
-	    return $this->displayVar();
+	    return $this->display();
 	}
 	
 	public function renderCLI()

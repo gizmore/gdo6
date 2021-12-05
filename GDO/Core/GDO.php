@@ -395,7 +395,7 @@ abstract class GDO
         else
         {
             $vars = [];
-            foreach ($this->dirty as $name)
+            foreach (array_keys($this->dirty) as $name)
             {
                 if ($data = $this->gdoColumn($name)->getGDOData())
                 {

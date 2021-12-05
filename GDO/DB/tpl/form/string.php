@@ -11,6 +11,6 @@
    maxlength="<?=$field->max?>"
    size="<?=min($field->max, 32) ?>"
    <?=$field->htmlFormName()?>
-   value="<?= $field->displayVar(); ?>" />
+   value="<?= $field->display(); ?>" />
   <?= $field->htmlError(); ?>
 </div>

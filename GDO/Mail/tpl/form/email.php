@@ -11,7 +11,7 @@ use GDO\Mail\GDT_Email;
    type="email"
    <?=$field->htmlID()?>
    <?=$field->htmlFormName()?>
-   value="<?= $field->displayVar(); ?>"
+   value="<?= $field->display(); ?>"
    <?= $field->htmlRequired(); ?>
    <?= $field->htmlDisabled(); ?> />
   <?= $field->htmlError(); ?>

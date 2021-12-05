@@ -108,7 +108,7 @@ abstract class GDT
 	    Logger::log('gdt', sprintf('%d: %s', self::$COUNT, self::gdoClassNameS()));
 	    if (self::$DEBUG >= 2)
 	    {
-	        Logger::log('gdt', Debug::backtrace('Backtrace', false));
+	        Logger::log('gdt', Debug::backtrace('Backtrace GDT allocation', false));
 	    }
 	}
 	
@@ -260,7 +260,7 @@ abstract class GDT
 	    return $this->toValue($this->initial);
 	}
 	
-	public function initial($var=null)
+	public function initial($var)
 	{
 	    $this->initial = $this->var = $var === null ? 
 	       null : (string)$var;
@@ -268,7 +268,9 @@ abstract class GDT
 	    return $this;
 	}
 	public function initialValue($value) { return $this->initial($this->toVar($value)); }
-	public function displayVar() { return html($this->getVar()); }
+	
+	public function display() { return $this->displayVar($this->getVar()); }
+	public function displayVar($var) { return html($var); }
 	public function displayValue($value) { return html($value); }
 	public function displayJSON() { return json_encode($this->renderJSON()); }
 
@@ -494,7 +496,7 @@ abstract class GDT
 	public function onValidated() {}
 	
 	/**
-	 * Validation is a great experience in GDO6. @TODO make validate use $var instead of $value.
+	 * Validation is a great experience in GDO6. @TODO make validate use $var instead of $value. Or maybe make a second func validateVar.
 	 * 
 	 * Almost all GDT have a quite decent validator. There is also a GDT to top that; The GDT_Validator.
 	 * This GDT parameterizes the target GDT to validate, the value to validate, and the form to check for related fields.

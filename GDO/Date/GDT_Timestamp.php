@@ -191,7 +191,7 @@ class GDT_Timestamp extends GDT
 		    if ($value->diff($this->maxDate) > 0)
 		    {
 		        return $this->error('err_max_date', [
-		            Time::displayDate($this->maxDate, $this->getDateFormat())]);
+		            Time::displayDate($this->maxDate, $this->format)]);
 		    }
 		}
 
@@ -214,11 +214,11 @@ class GDT_Timestamp extends GDT
 	##############
 	### Render ###
 	##############
-	public function displayVar() { return Time::displayDate($this->getVar(), $this->format); }
+	public function displayVar($var) { return Time::displayDate($var, $this->format); }
 	public function renderCell() { return $this->renderCellSpan(Time::displayDate($this->getVar(), $this->format, '---')); }
 	public function renderForm() { return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]); }
 	public function renderAge() { return Time::displayAge($this->getVar()); }
-	public function renderCLI() { return $this->displayLabel() . ': ' . $this->displayVar(); }
+	public function renderCLI() { return $this->displayLabel() . ': ' . $this->display(); }
 	public function renderJSON() { return Time::getTimestamp($this->getVar()) * 1000; }
 	
 	/**
@@ -247,20 +247,11 @@ class GDT_Timestamp extends GDT
 	{
 		return array_merge(parent::configJSON(), [
 			'dateStartView' => $this->dateStartView,
-			'format' => $this->getDateFormat(),
+			'format' => $this->format,
 			'minDate' => $this->minDate,
 			'maxDate' => $this->maxDate,
 		    'millis' => $this->millis,
 		]);
-	}
-	
-	public function getDateFormat()
-	{
-	    if (!$this->format)
-	    {
-	        return $this->millis ? 'ms' : 'long';
-	    }
-	    return $this->format;
 	}
 	
 	public function getDate()

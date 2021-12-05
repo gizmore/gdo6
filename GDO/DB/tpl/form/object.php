@@ -7,7 +7,7 @@
    type="number"
    step="1"
    <?=$field->htmlFormName()?>
-   value="<?= $field->displayVar(); ?>"
+   value="<?= $field->display(); ?>"
    <?= $field->htmlRequired(); ?>
    <?= $field->htmlDisabled(); ?> />
   <?= $field->htmlError(); ?>

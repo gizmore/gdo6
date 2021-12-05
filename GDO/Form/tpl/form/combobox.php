@@ -15,7 +15,7 @@
    size="<?=min($field->max, 32)?>"
    <?=$field->htmlFormName()?>
    <?=$field->htmlPlaceholder()?>
-   value="<?=$field->displayVar()?>" />
+   value="<?=$field->display()?>" />
   <?=$field->htmlError()?>
-  <input type="hidden" id="completion-<?=$field->name?>" value="<?=$field->displayVar()?>" />
+  <input type="hidden" id="completion-<?=$field->name?>" value="<?=$field->display()?>" />
 </div>

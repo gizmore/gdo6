@@ -38,6 +38,11 @@ final class Website
 	 */
 	private static $LINKS = [];
 	
+	public static function isTLS()
+	{
+		return (!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off');
+	}
+	
 	/**
 	 * @param number $time
 	 * @return \GDO\Core\GDT_Response

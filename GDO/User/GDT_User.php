@@ -18,7 +18,7 @@ use GDO\Util\Strings;
  * @TODO: rename fallbackCurrentUser()
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.1
  * @since 6.0.0
  */
 class GDT_User extends GDT_Object
@@ -107,9 +107,9 @@ class GDT_User extends GDT_Object
 		}
 	}
 	
-	public function displayVar()
+	public function displayVar($var)
 	{
-		if ($gdo = $this->getUser())
+		if ($gdo = $this->toValue($var))
 		{
 			return $gdo->displayNameLabel();
 		}

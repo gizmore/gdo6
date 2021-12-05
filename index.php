@@ -17,6 +17,7 @@ use GDO\UI\GDT_HTML;
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
 use GDO\Util\Strings;
+use GDO\Date\Time;
 
 require 'GDO6.php';
 
@@ -177,6 +178,7 @@ if (isset($_GET['_url']) && $_GET['_url'])
         	$etag = md5_file($url);
         	hdr("Last-Modified: ".gmdate("D, d M Y H:i:s", $last_modified_time)." GMT");
         	hdr("Etag: $etag");
+        	hdr("Expires: ".gmdate("D, d M Y H:i:s", $last_modified_time + Time::ONE_MONTH)." GMT");
         	
         	# cache hit
         	if (@strtotime(@$_SERVER['HTTP_IF_MODIFIED_SINCE']) == $last_modified_time ||
@@ -258,7 +260,7 @@ try
 
     GDT_Hook::callHook('AfterRequest', $method);
 }
-catch (Throwable $e)
+catch (\Throwable $e)
 {
 	Logger::logException($e);
 	Debug::debugException($e, false); # send exception mail
@@ -370,7 +372,7 @@ timingHeader();
 
 function timingHeader()
 {
-    hdr(sprintf('X-GDO-TIME: %.03f',
+    hdr(sprintf('X-GDO-TIME: %.04f',
         (microtime(true) - GDO_PERF_START)));
 }
 
