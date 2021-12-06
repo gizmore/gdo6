@@ -431,5 +431,5 @@ define('MEMCACHEPREFIX', GDO_DOMAIN.Module_Core::GDO_REVISION);
 # Default filecache config
 if (!defined('GDO_FILECACHE'))
 {
-    define('GDO_FILECACHE', 'GDO_FILECACHE', 1);
+    define('GDO_FILECACHE', 1);
 }
