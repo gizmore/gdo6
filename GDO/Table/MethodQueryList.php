@@ -23,7 +23,7 @@ abstract class MethodQueryList extends MethodQueryTable
 	{
 	    return GDT_List::make($this->listName())->
 	       gdtTable($this->gdoTable())->
-	       fetchAs($this->gdoTable())->
+	       fetchAs($this->gdoFetchAs())->
 	       listMode($this->gdoListMode());
 	}
 	

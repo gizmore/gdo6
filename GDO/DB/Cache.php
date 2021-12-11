@@ -123,15 +123,12 @@ class Cache
 	
 	public static function recacheHooks()
 	{
-		if (Application::instance()->isWebServer())
+		if (GDO_IPC && Application::instance()->isWebServer())
 		{
-	        if (GDO_IPC)
-	        {
-	            foreach (self::$RECACHING as $gdo)
-	            {
-	                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->table()->cache->klass, $gdo->getID());
-	            }
-	        }
+            foreach (self::$RECACHING as $gdo)
+            {
+                GDT_Hook::callWithIPC('CacheInvalidate', $gdo->table()->cache->klass, $gdo->getID());
+            }
 		}
 	}
 

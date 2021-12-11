@@ -42,7 +42,7 @@ You will work with the gdoadm CLI tool.
     
 ## Run the system test
 
-    ./gdoadm.sh test
+    ./gdoadm.sh systemtest
 
 
 ## Configure the gdo6 system
@@ -122,5 +122,4 @@ Here is an example on how to create the TBS website.
     ./gdo_bower.sh
     composer update
     ./gdo_test.sh
-
 
