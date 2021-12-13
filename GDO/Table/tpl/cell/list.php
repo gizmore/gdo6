@@ -45,7 +45,7 @@ echo $pagemenu;
   <h3><?=$field->renderTitle()?></h3>
 <?php endif; ?>
 <?php
-$dummy = $field->gdtTable->cache->getDummy();
+$dummy = $field->fetchAs->cache->getDummy();
 while ($gdo = $result->fetchInto($dummy)) :
 	echo $template->gdo($gdo)->renderList();
 endwhile;
