@@ -120,6 +120,16 @@ trait WithObject
 	##############
 	public function displayVar($var)
 	{
+		if (isset($this->multiple) && $this->multiple)
+		{
+			if ($gdos = $this->toValue($var))
+			{
+				return implode(', ', array_map(function(GDO $gdo) {
+					return $gdo->displayName();
+				}, $gdos));
+			}
+			return '';
+		}
 		/** @var $gdo GDO **/
 		if ($gdo = $this->toValue($var))
 		{
