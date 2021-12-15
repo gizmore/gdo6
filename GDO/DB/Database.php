@@ -441,8 +441,8 @@ class Database
 	    $command = '';
 	    while ($line = fgets($fh))
 	    {
-	        if ( (Strings::startsWith($line, '-- ')) ||
-	            (Strings::startsWith($line, '/*')) )
+	        if ( (str_starts_with($line, '-- ')) ||
+	            (str_starts_with($line, '/*')) )
 	        {
 	            # skip comments
 	            continue;
@@ -452,7 +452,7 @@ class Database
 	        $command .= $line;
 	        
 	        # Finished command
-	        if (Strings::endsWith(trim($line), ';'))
+	        if (str_ends_with(trim($line), ';'))
 	        {
 	            # Most likely a write
     	        $this->queryWrite($command);

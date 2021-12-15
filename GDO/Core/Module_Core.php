@@ -34,12 +34,12 @@ final class Module_Core extends GDO_Module
      * Sometimes just counts up to be in sync and poison some other module caches for updates.
      * Increase this value to poison all caches.
      * 
-     * 6.11.5 will be the first stable version.
+     * 6.11.2 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
      * 
      * @var string
      */
-	const GDO_REVISION = '6.11.1-r6253';
+	const GDO_REVISION = '6.11.1-r6258';
 
 	##############
 	### Module ###

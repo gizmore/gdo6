@@ -7,8 +7,6 @@ use GDO\Mail\Mail;
 use GDO\User\GDO_User;
 use GDO\Net\GDT_IP;
 use GDO\Core\Website;
-use GDO\Core\GDT_Response;
-use GDO\Util\Strings;
 use GDO\Net\GDT_Url;
 use GDO\UI\GDT_Link;
 
@@ -32,7 +30,7 @@ final class Page404 extends MethodPage
     public function beforeExecute()
     {
         hdrc('HTTP/1.1 404 Not Found');
-        if (!Strings::endsWith($_SERVER['REQUEST_URI'], '.map'))
+        if (str_ends_with($_SERVER['REQUEST_URI'], '.map'))
         {
             if (Module_Core::instance()->cfgMail404())
             {

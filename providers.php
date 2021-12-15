@@ -30,7 +30,7 @@ function ($entry, $fullpath)
 		global $mode;
 		$c = file_get_contents('GDO/' . $entry . "/.git/config");
 		$c = Common::regex('#/gizmore/([-_a-z0-9]+)#m', $c);
-		if (Strings::startsWith($entry, 'gdo6-'))
+		if (str_starts_with($entry, 'gdo6-'))
 		{
 			return;
 		}

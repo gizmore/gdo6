@@ -56,3 +56,4 @@ For a more complete todo, please see [GDO_TODO_AUTO_GENERATED.md](https://github
 
 - @TODO: Better GDT_Version type with major.minor.patch format.
 
+- @TODO: GDO/Time/GDT_Week shall make use of browser-native week input in many themes? Else support a nice weekpicker.

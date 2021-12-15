@@ -37,7 +37,7 @@ final class Module_CSS extends GDO_Module
     public function psr($classname)
     {
         $prefix = 'MatthiasMullie\\Minify\\';
-        if (Strings::startsWith($classname, $prefix))
+        if (str_starts_with($classname, $prefix))
         {
             $classname = substr($classname, strlen($prefix));
             $path = str_replace('\\', '/', $classname);
@@ -46,7 +46,7 @@ final class Module_CSS extends GDO_Module
         }
         
         $prefix = 'MatthiasMullie\\PathConverter\\';
-        if (Strings::startsWith($classname, $prefix))
+        if (str_starts_with($classname, $prefix))
         {
             $classname = substr($classname, strlen($prefix));
             $path = str_replace('\\', '/', $classname);

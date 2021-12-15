@@ -74,7 +74,7 @@ function href($module, $method, $append=null, $lang=true)
             foreach ($qparts as $part)
             {
                 if ( (!strpos($part, '[')) &&
-                     (!Strings::startsWith($part, '_')) )
+                     (!str_starts_with($part, '_')) )
                 {
                     $kv = explode('=', $part);
                     $k = $kv[0];

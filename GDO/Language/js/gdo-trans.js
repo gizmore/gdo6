@@ -4,10 +4,19 @@ function GDO_Trans() {
 	this.CACHE = {};
 	
 	this.t = function(key) {
-		key = this.CACHE[key] ? this.CACHE[key] : key;
-		var args = Array.prototype.slice.call(arguments);
-		args.shift();
-		return vsprintf(key, args);
+		try {
+			key = this.CACHE[key] || key;
+			if (key.slice) {
+				return key;
+			}
+			var args = Array.prototype.slice.call(arguments);
+			args.shift();
+			return vsprintf(key, args);
+		}
+		catch (ex) {
+			console.error(ex);
+			return key;
+		}
 	};
 }
 if (window.GDO_TRANS) {

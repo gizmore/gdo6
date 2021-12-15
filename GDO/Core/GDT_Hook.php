@@ -289,7 +289,7 @@ final class GDT_Hook extends GDT
 			$methods = get_class_methods($classname);
 			foreach ($methods as $methodName)
 			{
-				if (Strings::startsWith($methodName, 'hook'))
+				if (str_starts_with($methodName, 'hook'))
 				{
 					$event = substr($methodName, 4);
 					if (!isset($cache[$event]))

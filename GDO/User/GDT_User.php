@@ -117,15 +117,15 @@ class GDT_User extends GDT_Object
 	
 	public function findByName($name)
 	{
-		if (Strings::startsWith($name, GDO_User::GHOST_NAME_PREFIX))
+		if (str_starts_with($name, GDO_User::GHOST_NAME_PREFIX))
 		{
 			return null;
 		}
-		elseif (Strings::startsWith($name, GDO_User::REAL_NAME_PREFIX))
+		elseif (str_starts_with($name, GDO_User::REAL_NAME_PREFIX))
 		{
 			return GDO_User::table()->findBy('user_real_name', trim($name, GDO_User::REAL_NAME_PREFIX.GDO_User::REAL_NAME_POSTFIX));
 		}
-		elseif (Strings::startsWith($name, GDO_User::GUEST_NAME_PREFIX))
+		elseif (str_starts_with($name, GDO_User::GUEST_NAME_PREFIX))
 		{
 			return GDO_User::table()->findBy('user_guest_name', trim($name, GDO_User::GUEST_NAME_PREFIX));
 		}

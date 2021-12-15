@@ -5,41 +5,11 @@ namespace GDO\Util;
  * String utility class.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 3.0.0
  */
 final class Strings
 {
-	######################
-	### Start/End with ###
-	######################
-	/**
-	 * Check if a string starts with another string.
-	 * 
-	 * @param string $s
-	 * @param string $with
-	 * @return boolean
-	 */
-	public static function startsWith($s, $with)
-	{
-	    return strpos($s, $with) === 0; 
-	}
-	
-	/**
-	 * Check if a string ends with another string.
-	 * @param string $s
-	 * @param string $with
-	 * @return boolean
-	 */
-	public static function endsWith($s, $with)
-	{
-		if ($length = mb_strlen($with))
-		{
-			return mb_strrpos($s, $with) === (mb_strlen($s) - $length);
-		}
-		return true;
-	}
-	
 	#########################
 	### Substring to/from ###
 	#########################
@@ -59,6 +29,14 @@ final class Strings
 		return $default;
 	}
 	
+	/**
+	 * Take the portion of a string after/from a portion. You can nibble tokens with that. slow?
+	 * 
+	 * @param string $s
+	 * @param string $from
+	 * @param string $default
+	 * @return string
+	 */
 	public static function substrFrom($s, $from, $default=null)
 	{
 		if (false !== ($index = strpos($s, $from)))

@@ -478,7 +478,7 @@ final class Query
 	
 	public function raw($raw)
 	{
-	    $this->write = !Strings::startsWith($raw, 'SELECT');
+	    $this->write = !str_starts_with($raw, 'SELECT');
 	    $this->raw = $raw;
 	    return $this;
 	}

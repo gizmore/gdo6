@@ -153,7 +153,7 @@ if (isset($_GET['_url']) && $_GET['_url'])
     {
         $type = FileUtil::mimetype($url);
         
-        if (Strings::endsWith($url, '.php'))
+        if (str_ends_with($url, '.php'))
         {
             $_REQUEST['mo'] = 'Core';
             $_REQUEST['me'] = 'Page403';
@@ -169,7 +169,7 @@ if (isset($_GET['_url']) && $_GET['_url'])
             $_REQUEST['me'] = 'Page403';
         }
         
-        elseif (Strings::startsWith($url, '.'))
+        elseif (str_starts_with($url, '.'))
         {
             $_REQUEST['mo'] = 'Core';
             $_REQUEST['me'] = 'Page403';

@@ -768,7 +768,7 @@ abstract class Method
 	{
 	    $start = $this->fileCacheKeyGroup();
 	    Filewalker::traverse(Cache::filePath(), null, function($entry, $path) use ($start){
-	        if (Strings::startsWith($entry, $start))
+	        if (str_starts_with($entry, $start))
 	        {
 	            unlink($path);
 	        }

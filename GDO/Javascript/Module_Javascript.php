@@ -40,7 +40,7 @@ final class Module_Javascript extends GDO_Module
     public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
     public function cfgUglifyPath() { return $this->getConfigVar('uglifyjs_path'); }
     public function cfgAnnotatePath() { return $this->getConfigVar('ng_annotate_path'); }
-    public function jsMinAppend() { return $this->cfgMinifyJS() === 'no' ? '' : '.min'; }
+    public function cfgMinAppend() { return $this->cfgMinifyJS() === 'no' ? '' : '.min'; }
     
     public function onInstall()
     {

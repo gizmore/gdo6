@@ -161,7 +161,7 @@ final class HTTP
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		
 		# Handle HTTPS links
-		if(Strings::startsWith($url, 'https://'))
+		if(str_starts_with($url, 'https://'))
 		{
 			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,0);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); # should be 1!

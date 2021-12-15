@@ -52,7 +52,7 @@ final class GDO_File extends GDO
 	public function getSize() { return $this->getVar('file_size'); }
 	public function getType() { return $this->getVar('file_type'); }
 	public function displaySize() { return FileUtil::humanFilesize($this->getSize()); }
-	public function isImageType() { return Strings::startsWith($this->getType(), 'image/'); }
+	public function isImageType() { return str_starts_with($this->getType(), 'image/'); }
 	public function getWidth() { return $this->getVar('file_width'); }
 	public function getHeight() { return $this->getVar('file_height'); }
 	public function getContents() {}

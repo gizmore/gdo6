@@ -211,7 +211,7 @@ final class CLI
         # Parse optionals --parameter=value
         foreach ($args as $var)
         {
-            if (Strings::startsWith($var, '--'))
+            if (str_starts_with($var, '--'))
             {
                 $key = Strings::substrTo($var, '=', $var);
                 $key = ltrim($key, '-');
