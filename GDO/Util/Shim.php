@@ -56,3 +56,13 @@ if (!function_exists('openssl_random_pseudo_bytes'))
 		return $rand;
 	}
 }
+
+if (!function_exists('str_starts_with') )
+{
+	function str_starts_with($haystack, $needle)
+	{
+		return $needle &&
+			(strpos($haystack, $needle) === 0);
+	}
+	
+}
