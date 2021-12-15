@@ -26,7 +26,8 @@ final class Module_Javascript extends GDO_Module
     public function getConfig()
     {
         return [
-            GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial($this->env('minify_js', 'no')),
+        	GDT_Divider::make('div_minify'),
+        	GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial($this->env('minify_js', 'no')),
             GDT_Checkbox::make('compress_js')->initial('0'),
         	GDT_Divider::make('div_binaries'),
             GDT_Link::make('link_node_detect')->href(href('Javascript', 'DetectNode')),
