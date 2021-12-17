@@ -171,6 +171,7 @@ if (isset($_GET['_url']) && $_GET['_url'])
         
         elseif (str_starts_with($url, '.'))
         {
+        	
             $_REQUEST['mo'] = 'Core';
             $_REQUEST['me'] = 'Page403';
         }
@@ -272,7 +273,7 @@ try
     }
     else
     {
-        $response = $method->exec();
+        $response = GDT_Response::makeWith($method->exec());
     }
 
     if (!$err)

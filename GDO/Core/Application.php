@@ -144,7 +144,7 @@ class Application
 		return $this->themes;
 	}
 	
-	public function hasTheme($theme) { return isset($this->themes[$theme]); }
+	public function hasTheme($theme) { return isset($this->getThemes()[$theme]); }
 	public function initThemes()
 	{
 	    if ( (!$this->isInstall()) && (!$this->isCLI()) )

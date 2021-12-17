@@ -39,7 +39,7 @@ final class Module_Core extends GDO_Module
      * 
      * @var string
      */
-	const GDO_REVISION = '6.11.1-r6261';
+	const GDO_REVISION = '6.11.1-r6262';
 
 	##############
 	### Module ###
