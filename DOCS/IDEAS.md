@@ -9,5 +9,5 @@
  - RockScissorPaper mit ranking und ligen, gruppen, könig etc.
  - integer sequency enceclopedy modules (OEOIS->sequence('141414')->element(5)->forEach()->etc
 
- - A hashing algo that does a btree for the hash. Can it be useful?
+ - A hashing algo that does a btree for the int64 hash. Can it be useful? 
  

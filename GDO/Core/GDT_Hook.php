@@ -2,7 +2,6 @@
 namespace GDO\Core;
 
 use GDO\DB\Cache;
-use GDO\Util\Strings;
 
 /**
  * Hooks can add messages to the IPC queue, which are/can be consumed by the websocket server.
@@ -18,13 +17,13 @@ use GDO\Util\Strings;
  * @see Module_Websocket
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 3.0.0
  */
 final class GDT_Hook extends GDT
 {
 	# Hook cache key
-	const CACHE_KEY = 'HOOKS_';
+	const CACHE_KEY = 'HOOKS.gdo6';
 	
 	/**
 	 * @var string[string[]]

@@ -284,7 +284,7 @@ return array(
 'mail_body_404' => '
 Hello %s,<br/>
 <br/>
-A client has found a 404 page on %s.<br/>
+A client has found a %s page on %s.<br/>
 <br/>
 IP: %s<br/>
 User: %s<br/>

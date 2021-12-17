@@ -64,6 +64,7 @@ final class Page404 extends MethodPage
     {
         $args = [
             $user->displayNameLabel(),
+        	'404',
             sitename(),
             GDT_IP::current(),
             GDO_User::current()->displayNameLabel(),

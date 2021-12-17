@@ -3,6 +3,7 @@ namespace GDO\Util;
 
 /**
  * String utility class.
+ * Dedicated to Tim.
  * 
  * @author gizmore
  * @version 6.11.1
@@ -46,7 +47,13 @@ final class Strings
 		return $default;
 	}
 	
-
+	/**
+	 * 
+	 * @param string $s
+	 * @param string $to
+	 * @param string $default
+	 * @return string
+	 */
 	public static function rsubstrTo($s, $to, $default=null)
 	{
 		if (false !== ($index = strrpos($s, $to)))
