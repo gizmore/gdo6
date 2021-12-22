@@ -224,7 +224,7 @@ final class Time
 	    {
 	        $format = tiso($iso, 'df_' . $format);
 	    }
-	    $timezone = $timezone ? $timezone : '1';
+	    $timezone = $timezone ? $timezone : self::$TIMEZONE;
 	    $timezone = self::getTimezoneObject($timezone);
 	    if (!($d = DateTime::createFromFormat($format, $date, $timezone)))
 	    {
@@ -287,11 +287,11 @@ final class Time
 	    {
 	        return $default_return;
 	    }
-	    if (!($d = self::parseDateTimeISO($iso, $date, $timezone)))
+	    if (!($d = self::parseDateTimeISO($iso, $date, self::UTC)))
 	    {
 	        return $default_return; 
 	    }
-	    $d->setTimezone(self::getTimezoneObject());
+	    $d->setTimezone(self::getTimezoneObject($timezone));
 	    $format = tiso($iso, "df_$format");
         return $d->format($format);
 	}

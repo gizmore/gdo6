@@ -69,7 +69,7 @@ class GDT_Table extends GDT
 	{
 	    parent::__construct();
 	    $this->action = @$_SERVER['REQUEST_URI'];
-	    $this->makeHeaders();
+// 	    $this->makeHeaders();
 	}
 	
 	public function gdo(GDO $gdo=null)

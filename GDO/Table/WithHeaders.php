@@ -7,6 +7,7 @@ use GDO\Util\Common;
 use GDO\Core\GDT;
 use GDO\Core\GDO;
 use GDO\Util\Strings;
+use GDO\Util\Arrays;
 
 /**
  * - A trait for tables and list which adds an extra headers variable. This has to be a \GDO\Core\GDT_Fields.
@@ -29,17 +30,24 @@ trait WithHeaders
 	/**
 	 * @return GDT_Fields
 	 */
-	public function makeHeaders() { if ($this->headers === null) $this->headers = GDT_Fields::make(self::nextOrderName()); return $this->headers; }
+	public function makeHeaders() { if ($this->headers === null) $this->headers = GDT_Fields::make($this->nextOrderName()); return $this->headers; }
 	public function addHeaders(array $fields) { return count($fields) ? $this->makeHeaders()->addFields($fields) : $this; }
 	public function addHeader(GDT $field) { return $this->makeHeaders()->addField($field); }
 	
 	##############################
 	### REQUEST container name ###
 	##############################
-	public static $ORDER_NAME = 1;
-	public static function nextOrderName()
+	public $headerName = null;
+	public function headerName($headerName)
 	{
-		return "o" . (self::$ORDER_NAME++);
+		$this->headerName = $headerName;
+		return $this;
+	}
+	
+	public static $ORDER_NAME = 1;
+	public function nextOrderName()
+	{
+		return $this->headerName ? $this->headerName : ("o" . (self::$ORDER_NAME++));
 	}
 	
 	###############
@@ -56,7 +64,7 @@ trait WithHeaders
 		# Get order from request
 	    if ($orders = Common::getRequestArray($this->headers->name))
 	    {
-	        $orders = @$orders['o'];
+	        $orders = Arrays::arrayed(@$orders['o']);
 	    }
 	    
 	    if (empty($orders) && $defaultOrder)

@@ -22,7 +22,7 @@ class GDT_Title extends GDT_String
 	public function defaultLabel() { return $this->label('title'); }
 	
 	public $min = 2;
-	public $max = 96;
+	public $max = 128;
 	public $icon = 'title';
 	public $notNull = true;
 	public $encoding = self::UTF8;

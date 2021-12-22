@@ -472,7 +472,7 @@ abstract class GDT
 	public function renderJSON() { return $this->var; }
 	public function renderCell() { return $this->renderCellSpan($this->getVar()); }
 	public function renderCellSpan($var) { return sprintf('<span class="%s">%s</span>', $this->htmlClass(), html($var)); }
-	public function renderCard() { return sprintf('<label>%s</label><span>%s</span>', $this->displayLabel(), $this->displayValue($this->getVar())); }
+	public function renderCard() { return sprintf('<label>%s</label><span>%s</span>', $this->displayLabel(), $this->displayVar($this->getVar())); }
 	public function renderList() { return $this->render(); }
 	public function renderForm() { return $this->render(); }
 	public function renderFilter($f) {}

@@ -202,7 +202,7 @@ abstract class MethodCrud extends MethodForm
 // 				}
 // 				else
 // 				{
-				    $form->addField($gdt);
+// 				    $form->addField($gdt);
 // 				}
 // 			}
 // 			else

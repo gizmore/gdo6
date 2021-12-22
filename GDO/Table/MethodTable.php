@@ -136,6 +136,7 @@ abstract class MethodTable extends Method
     public function createCollection()
     {
         $this->table = GDT_Table::make($this->gdoTableName());
+        $this->table->headerName($this->getHeaderName());
         return $this->table->gdtTable($this->gdoTable());
     }
     
