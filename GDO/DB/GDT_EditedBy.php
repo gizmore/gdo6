@@ -27,18 +27,18 @@ final class GDT_EditedBy extends GDT_User
    		$this->gdo->setVar($this->name, $userId);
 	}
 
-	public function blankData()
-	{
-	    if ($this->var)
-	    {
-	        return [$this->name => $this->var];
-	    }
-	    $user = GDO_User::current();
-	    if (Application::instance()->isInstall() || (!$user->isPersisted()))
-	    {
-	        $user = GDO_User::system();
-	    }
-	    return [$this->name => $user->getID()];
-	}
+// 	public function blankData()
+// 	{
+// 	    if ($this->var)
+// 	    {
+// 	        return [$this->name => $this->var];
+// 	    }
+// 	    $user = GDO_User::current();
+// 	    if (Application::instance()->isInstall() || (!$user->isPersisted()))
+// 	    {
+// 	        $user = GDO_User::system();
+// 	    }
+// 	    return [$this->name => $user->getID()];
+// 	}
 
 }
