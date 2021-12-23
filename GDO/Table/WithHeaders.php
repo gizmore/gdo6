@@ -14,7 +14,7 @@ use GDO\Util\Arrays;
  * - Implements @\GDO\Core\ArrayResult multisort for use in @\GDO\Table\MethodTable.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.1
  * @since 6.5.0
  */
 trait WithHeaders

@@ -189,7 +189,7 @@ abstract class MethodTable extends Method
 	    {
 	        if ($gdt->orderable)
 	        {
-	            return $gdt->name;
+	            return $gdt->name . ($gdt->orderDefaultAsc ? ' ASC' : ' DESC');
 	        }
 	    }
 	}
@@ -218,9 +218,9 @@ abstract class MethodTable extends Method
 	###############
 	### Execute ###
 	###############
-	public function beforeExecute()
-	{
-	}
+// 	public function beforeExecute()
+// 	{
+// 	}
 	
 	public function execute()
 	{
@@ -266,8 +266,8 @@ abstract class MethodTable extends Method
 		{
 			$this->table = $this->createCollection();
 			$this->table->setupHeaders($this->isSearched(), $this->isPaginated());
-			$this->setupCollection($this->table);
 			$this->table->addHeaders($this->gdoHeaders());
+			$this->setupCollection($this->table);
 		}
 	}
 	

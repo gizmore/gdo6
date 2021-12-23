@@ -38,12 +38,10 @@ trait WithFormFields
 	    if ($value === null)
 	    {
 	        unset($_REQUEST['form'][$this->name]);
-	        unset($_POST['form'][$this->name]);
 	    }
 	    else
 	    {
     		$_REQUEST['form'][$this->name] = $value;
-    		$_POST['form'][$this->name] = $value;
 	    }
 	}
 	
