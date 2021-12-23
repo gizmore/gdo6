@@ -13,7 +13,7 @@ use GDO\UI\GDT_Divider;
  * Configure Javascript options and binaries.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 6.10.1
  */
 final class Module_Javascript extends GDO_Module
@@ -26,6 +26,8 @@ final class Module_Javascript extends GDO_Module
     public function getConfig()
     {
         return [
+        	GDT_Divider::make('div_debug'),
+        	GDT_Checkbox::make('debug_js')->initial('1'),
         	GDT_Divider::make('div_minify'),
         	GDT_Enum::make('minify_js')->enumValues('no', 'yes', 'concat')->initial($this->env('minify_js', 'no')),
             GDT_Checkbox::make('compress_js')->initial('0'),
@@ -36,6 +38,7 @@ final class Module_Javascript extends GDO_Module
             GDT_Path::make('ng_annotate_path')->label('ng_annotate_path'),
         ];
     }
+    public function cfgDebug() { return $this->getConfigVar('debug_js'); }
     public function cfgMinifyJS() { return $this->getConfigVar('minify_js'); }
     public function cfgCompressJS() { return $this->getConfigVar('compress_js'); }
     public function cfgNodeJSPath() { return $this->getConfigVar('nodejs_path'); }
@@ -57,6 +60,14 @@ final class Module_Javascript extends GDO_Module
     	if (!$this->cfgUglifyPath())
     	{
 	    	$detect->detectUglify();
+    	}
+    }
+    
+    public function onIncludeScripts()
+    {
+    	if ($this->cfgDebug())
+    	{
+    		$this->addJS('js/gdo6-debug.js');
     	}
     }
 

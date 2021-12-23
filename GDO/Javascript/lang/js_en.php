@@ -20,4 +20,16 @@ Install them <em>before</em> you run this method.<br/>
 apt-get install nodejs<br/>
 npm install uglify-js -g<br/>
 npm install -g ng-annotate-patched<br/>',
+	'mailb_js_error' => '
+A Javascript error occured:<br/>
+<br/>
+URL: %s<br/>
+<br/>
+Message: %s<br/>
+-----------------------
+%s<br/>
+<br/>
+Kind Regards<br/>
+The %s system<br/>
+',
 ];

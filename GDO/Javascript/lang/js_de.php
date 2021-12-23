@@ -21,4 +21,16 @@ Installieren Sie diese <em>bevor</em> Sie dies ausführen.<br/>
 apt-get install nodejs<br/>
 npm install uglify-js -g<br/>
 npm install -g ng-annotate-patched<br/>',
+	'mailb_js_error' => '
+Ein Javascript Fehler ist aufgetreten:<br/>
+<br/>
+URL: %s<br/>
+<br/>
+Fehler: %s<br/>
+-----------------------
+%s<br/>
+<br/>
+Viele Grüße<br/>
+Das %s Dystem<br/>
+',
 ];

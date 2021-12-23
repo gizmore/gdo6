@@ -16,6 +16,21 @@ String.prototype.substrTo = function(s, d) { var i = this.indexOf(s); return i =
 String.prototype.rsubstrTo = function(s, d) { var i = this.lastIndexOf(s); return i === -1 ? d : this.substring(0, i); };
 String.prototype.nibbleTo = function(s) { var r = this.substrTo(s); this.replace(this.substrFrom(s)); return r; };
 
+String.prototype.html = function(s) {
+	return s.replace(/[&<"']/g, function(m) {
+		switch (m) {
+		case '&':
+			return '&amp;';
+		case '<':
+			return '&lt;';
+		case '"':
+			return '&quot;';
+		default:
+			return '&#039;';
+		}
+	});
+};
+
 // -----------------------------------------------------------------------------
 
 function clamp(num, min, max) {

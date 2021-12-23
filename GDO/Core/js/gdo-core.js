@@ -64,22 +64,37 @@ window.GDO.toggleAll = function(toggler) {
 };
 
 window.GDO.responseError = function(response) {
+	let message = JSON.stringify(response);
+	
+	if ( (!response.json) && (response.responseJSON) ) {
+		response.json = response.responseJSON.json;
+	}
+	
 	if (response.json && response.json.error) {
-		var message = response.json.error;
+		message = response.json.error;
+	}
+	else if (response.json && response.json.topResponse) {
+		let r = response.json.topResponse;
+		if (r.error) {
+			message = r.error;
+		} else {
+			message = JSON.stringify(r);
+		}
 	}
 	else if (response.error) {
-		var message = response.error;
+		message = response.error;
 	}
 	
 	if (response.json && response.json.stack) {
 		message += "\n\n" + response.json.stack;
 	}
 	
-	window.GDO.error(message, "Ajax Error");
+	return window.GDO.error(message, "Error");
 };
 
 window.GDO.error = function(html, title) {
-	alert(title + "\n\n" + message);
+	alert(html);
+//	alert(title + "\n\n" + html);
 };
 
 window.GDO.exception = function(ex) {
@@ -131,4 +146,12 @@ window.GDO.Plugin = function(config) {
 			this[i] = config[i];
 		}
 	}
+};
+
+window.GDO.xhr = function(url, method, data) {
+	return fetch(url, {
+		method: method||'GET',
+		headers: {'Content-Type': 'application/json'},
+		body: JSON.stringify(data)
+	});
 };

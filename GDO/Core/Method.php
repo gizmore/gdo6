@@ -12,7 +12,6 @@ use GDO\Language\Trans;
 use GDO\DB\Cache;
 use GDO\File\FileUtil;
 use GDO\File\Filewalker;
-use GDO\Util\Strings;
 use GDO\CLI\CLI;
 use GDO\Form\GDT_Submit;
 use GDO\User\PermissionException;
