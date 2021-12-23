@@ -287,13 +287,11 @@ final class Time
 	    {
 	        return $default_return;
 	    }
-	    if (!($d = self::parseDateTimeISO($iso, $date, self::UTC)))
+	    if (!($d = self::parseDateTimeDB($date)))
 	    {
 	        return $default_return; 
 	    }
-	    $d->setTimezone(self::getTimezoneObject($timezone));
-	    $format = tiso($iso, "df_$format");
-        return $d->format($format);
+	    return self::displayDateTimeISO($iso, $d, $format, $default_return, $timezone);
 	}
 	
 	/**
