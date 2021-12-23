@@ -9,6 +9,8 @@ Before you read the history, please take your time to actually [install gdo6](ht
  
  - The GDT_Hook system now uses a filecache for the hook table.
  
+ - Cronjobs now run in --force mode via the admin panel. cronjobs.sh added the --force parameter.
+ 
 
 ## Improvements for v6.11.0 (29.11.2021)
  

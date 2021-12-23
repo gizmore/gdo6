@@ -4,7 +4,6 @@ namespace GDO\DB;
 use GDO\Core\GDO;
 use GDO\Core\Logger;
 use GDO\Core\GDOException;
-use GDO\Util\Strings;
 
 /**
  * Query builder.
@@ -124,6 +123,7 @@ final class Query
     		$clone->from = $this->from;
     		$clone->where = $this->where;
     		$clone->join = $this->join;
+    		$clone->joinedObjects = $this->joinedObjects;
     		$clone->group = $this->group;
     		$clone->having = $this->having;
             $clone->order = $this->order;
@@ -389,6 +389,8 @@ final class Query
 		return $this;
 	}
 	
+	private $joinedObjects = [];
+	
 	/**
 	 * Automatically build a join based on a GDT_Object column of this queries GDO table.
 	 * @param string $key the GDO
@@ -398,6 +400,13 @@ final class Query
 	 */
 	public function joinObject($key, $join='JOIN', $tableAlias='')
 	{
+		if (in_array($key, $this->joinedObjects, true))
+		{
+			return $this;
+		}
+		
+		$this->joinedObjects[] = $key;
+		
 		if (!($gdt = $this->table->gdoColumn($key)))
 		{
 			throw new GDOException(t('err_column', [html($key)]));

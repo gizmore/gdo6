@@ -1239,7 +1239,7 @@ abstract class GDO
      */
     public static function getBy($key, $var)
     {
-        return self::table()->getWhere(self::quoteIdentifierS($key) . '=' . self::quoteS($var));
+        return self::table()->getWhere($key . '=' . self::quoteS($var));
     }
     
     /**
@@ -1286,7 +1286,7 @@ abstract class GDO
             $query = $table->select();
             foreach ($table->gdoPrimaryKeyColumns() as $column)
             {
-            	$condition = $column->identifier() .
+            	$condition = $table->gdoTableName() . '.' . $column->identifier() .
             		'=' . self::quoteS($id[$i++]);
                 $query->where($condition);
             }

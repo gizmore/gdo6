@@ -412,10 +412,10 @@ class GDT_Table extends GDT
 		{
 		    if ($this->countQuery)
 		    {
-				foreach ($this->getHeaderFields() as $gdt)
-				{
-					$gdt->gdoBeforeRead($this->countQuery);
-				}
+// 				foreach ($this->getHeaderFields() as $gdt)
+// 				{
+// 					$gdt->gdoBeforeRead($this->countQuery);
+// 				}
 		        $this->countItems = $this->countQuery->selectOnly('COUNT(*)')->noOrder()->noLimit()->first()->exec()->fetchValue();
 		    }
 		    else
@@ -432,10 +432,10 @@ class GDT_Table extends GDT
 	 */
 	public function queryResult()
 	{
-		foreach ($this->getHeaderFields() as $gdt)
-		{
-			$gdt->gdoBeforeRead($this->query);
-		}
+// 		foreach ($this->getHeaderFields() as $gdt)
+// 		{
+// 			$gdt->gdoBeforeRead($this->query);
+// 		}
 		return $this->query->exec();
 	}
 	

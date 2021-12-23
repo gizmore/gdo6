@@ -29,4 +29,6 @@ final class gdocronjob extends Application
 }
 
 new gdocronjob();
-Cronjob::run();
+/** @var $argv string[] **/
+$force = in_array('--force', $argv, true);
+Cronjob::run($force);

@@ -371,4 +371,13 @@ trait WithObject
 	    return implode(' OR ', $where);
 	}
 	
+	############
+	### Join ###
+	############
+	public function gdoBeforeRead(Query $query)
+	{
+		$joinType = $this->notNull ? 'JOIN' : 'LEFT JOIN';
+		$query->joinObject($this->name, $joinType, $this->name.'_t');
+	}
+	
 }

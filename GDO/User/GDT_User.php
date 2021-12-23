@@ -4,7 +4,6 @@ namespace GDO\User;
 use GDO\DB\GDT_Object;
 use GDO\DB\Query;
 use GDO\Core\GDO;
-use GDO\Util\Strings;
 
 /**
  * An autocomplete enabled user field.

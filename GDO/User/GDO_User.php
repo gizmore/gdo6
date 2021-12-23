@@ -385,7 +385,7 @@ final class GDO_User extends GDO
 // 	    $key = "all-{$permission}-users";
 // 	    if (false === ($cache = Cache::get($key)))
 // 	    {
-	        $query = GDO_UserPermission::table()->select('gdo_user.*');
+	        $query = GDO_UserPermission::table()->select('perm_user_id_t.*');
 	        $query->joinObject('perm_user_id')->joinObject('perm_perm_id');
     	    $query->where("perm_name=".self::quoteS($permission));
     	    $query->uncached();

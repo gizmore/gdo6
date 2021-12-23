@@ -5,7 +5,6 @@ use GDO\Core\GDO;
 use GDO\Core\Logger;
 use GDO\Core\GDOError;
 use GDO\Core\GDT;
-use GDO\Util\Strings;
 use GDO\Core\Debug;
 
 /**
@@ -15,7 +14,7 @@ use GDO\Core\Debug;
  * @TODO support sqlite? This can be achieved by a few string tricks maybe. No foreign keys? no idea.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.1
  * @since 3.0.0
  * 
  * @see Query
@@ -159,13 +158,14 @@ class Database
 		}
 		else 
 		{
+			$result = false;
 		    if (mysqli_real_query($this->getLink(), $query))
 		    {
 		        $result = mysqli_use_result($this->getLink());
 		    }
 		}
 		
-		if (!($result))
+		if (!$result)
 		{
 			if ($this->link)
 			{
