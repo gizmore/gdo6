@@ -48,6 +48,14 @@ class GDT_Object extends GDT_UInt
 	}
 	
 	##############
+	### Filter ###
+	##############
+	public function filterVar($rq=null)
+	{
+		return $this->_getRequestVar("{$rq}[f]", null, $this->filterField ? $this->filterField : $this->name);
+	}
+	
+	##############
 	### Config ###
 	##############
 	public function configJSON()

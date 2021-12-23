@@ -1,6 +1,12 @@
 <?php
 namespace GDO\DB;
 
+use GDO\Core\GDO;
+
+/**
+ * Floating points return a float scalar as value.
+ * @author gizmore
+ */
 class GDT_Float extends GDT_Int
 {
 	public function toValue($var)
@@ -24,9 +30,12 @@ class GDT_Float extends GDT_Int
 	/**
 	 * Replace , with . for user input.
 	 */
-	public function inputToVar($input)
+	public function _inputToVar($input)
 	{
-	    return self::inputToVarS($input);
+		if (parent::_inputToVar($input))
+		{
+		    return self::inputToVarS($input);
+		}
 	}
 	
 	public static function inputToVarS($input)
@@ -65,6 +74,15 @@ class GDT_Float extends GDT_Int
 	public function renderCell()
 	{
 	    return self::displayS($this->var, $this->decimals);
+	}
+	
+	public function gdoCompare(GDO $a, GDO $b)
+	{
+		$va = $a->getValue($this->name);
+		$vb = $b->getValue($this->name);
+		if ($va > $vb) { return 1; }
+		if ($vb > $va) { return -1; }
+		return 0;
 	}
 	
 }

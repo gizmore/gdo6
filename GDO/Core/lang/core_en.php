@@ -332,4 +332,8 @@ Kind Regards,<br/>
 	
 # v6.11.1
 'err_module_disabled' => 'The %s module is currently disabled.',
+
+# v6.11.2
+'from' => 'From',
+'to' => 'To',
 );

@@ -24,7 +24,7 @@ use GDO\Date\GDO_Timezone;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.2
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
@@ -39,7 +39,7 @@ final class Module_Core extends GDO_Module
      * 
      * @var string
      */
-	const GDO_REVISION = '6.11.1-r6274';
+	const GDO_REVISION = '6.11.2-r6277';
 
 	##############
 	### Module ###

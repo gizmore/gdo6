@@ -14,7 +14,7 @@ use GDO\Table\Sort;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.2
  * @since 3.0.0
  */
 final class ModuleLoader
@@ -396,7 +396,7 @@ final class ModuleLoader
 		    {
     		    $result = GDO_ModuleVar::table()->
         			select('module_name, mv_name, mv_value')->
-        			join('JOIN gdo_module ON module_id=mv_module_id')->exec();
+    		    	exec();
         		# Assign them to the modules
         		while ($row = $result->fetchRow())
         		{

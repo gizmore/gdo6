@@ -385,7 +385,12 @@ final class Debug
 		elseif (is_object($arg))
 		{
 			$class = get_class($arg);
-			return Strings::rsubstrFrom($class, '\\', $class);
+			$back = Strings::rsubstrFrom($class, '\\', $class);
+			if ($arg instanceof GDO)
+			{
+				$back .= '#' . $arg->getID();
+			}
+			return $back;
 		}
 		else
 		{
@@ -405,6 +410,7 @@ final class Debug
 			{
 				self::$MAX_ARG_LEN = 40;
 			}
+			# @TODO: Debug parameter value output shows buggy parameter value for strings that are close to the limit. like {"foo":"bar", "bar":"fo..., "bar:foo"}. Only some basic math is needed.
 		    return mb_substr($arg, 0, self::$MAX_ARG_LEN) . '…' . mb_substr($arg, -14);
 		}
 		

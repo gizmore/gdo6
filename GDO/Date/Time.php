@@ -14,17 +14,13 @@ use GDO\Core\GDOError;
  * For GDT_Date and GDT_DateTime, the value is a \DateTime object.
  * The $var is always a mysql date string in UTC.
  * 
- * @TODO: Turn $default_return='---' into a translation text.
- *
  * There are 3 time datatypes the class operates on.
  *  - $time(stamp): A float, microtime(true)
  *  - $date: A string, date($format_via_trans)
  *  - $datetime: A PHP @\DateTime object.
  *
- * @TODO: Make the function names better. They shall reflect if they are for db or for display.
- * 
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.2
  * @since 1.0.0
  * 
  * @see GDT_Date
@@ -201,6 +197,10 @@ final class Time
 	        return null;
 	    }
 	    
+	    $date = preg_replace('/[ap]m/iD', '', $date);
+// 	    $date = preg_replace('/ {2,}/D', ' ', $date);
+	    $date = trim($date, "\r\n\t ");
+	    
 	    $len = strlen($date);
 	    if ($len === 10)
 	    {
@@ -216,7 +216,7 @@ final class Time
 	    }
 	    
 	    # Parse
-	    if ( ($date[4] === '-') || ($format === 'db') )
+	    if ($format === 'db')
 	    {
 	        $format = 'Y-m-d H:i:s.u';
 	    }
@@ -304,7 +304,7 @@ final class Time
 	 * @param int $timezone
 	 * @return string
 	 */
-	public static function displayDateTime(DateTime $datetime, $format='short', $default_return='---', $timezone=null)
+	public static function displayDateTime(DateTime $datetime=null, $format='short', $default_return='---', $timezone=null)
 	{
 		return self::displayDateTimeISO(Trans::$ISO, $datetime, $format, $default_return, $timezone);
 	}
@@ -317,8 +317,12 @@ final class Time
 	 * @param string $format
 	 * @return string
 	 */
-	public static function displayDateTimeISO($iso, DateTime $datetime, $format='short', $default_return='---', $timezone=null)
+	public static function displayDateTimeISO($iso, DateTime $datetime=null, $format='short', $default_return='---', $timezone=null)
 	{
+		if (!$datetime)
+		{
+			return $default_return;
+		}
 	    $timezone = $timezone ? $timezone : self::$TIMEZONE;
         $datetime->setTimezone(self::getTimezoneObject($timezone));
 	    $format = tiso($iso, "df_$format");

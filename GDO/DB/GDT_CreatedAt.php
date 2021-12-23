@@ -10,7 +10,7 @@ use GDO\Date\Time;
  * It has a default label and the default order is descending.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.2
  * @since 5.0
  */
 class GDT_CreatedAt extends GDT_Timestamp
@@ -18,7 +18,6 @@ class GDT_CreatedAt extends GDT_Timestamp
 	public $notNull = true;
 	public $writable = false;
 	public $editable = false;
-// 	public $hidden = true;
 	public $orderDefaultAsc = false;
 	
 	public function defaultLabel() { return $this->label('created_at'); }
@@ -41,6 +40,11 @@ class GDT_CreatedAt extends GDT_Timestamp
 	public function displayValue($var)
 	{
 	    return $this->gdo->gdoColumn($var)->displayLabel();
+	}
+	
+	public function htmlClass()
+	{
+		return ' gdt-datetime';
 	}
 
 }

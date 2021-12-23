@@ -104,8 +104,8 @@ final class ArrayResult extends Result
 	    {
 	        if ($gdt->filterable)
 	        {
-	            $filter = trim($gdt->filterVar($rq));
-	            if ( ($filter !== null) && ($filter !== '') )
+	            $filter = $gdt->filterVar($rq);
+	            if ($filter !== null)
 	            {
 	                $keep = [];
 	                foreach ($data as $gdo)

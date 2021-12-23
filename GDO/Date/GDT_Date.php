@@ -8,7 +8,7 @@ use GDO\Core\GDT_Template;
  * An example is the release date of a book, or a birthdate.
  * 
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.2
  * @since 5.0.0
  * 
  * @see GDT_Time
@@ -37,14 +37,24 @@ class GDT_Date extends GDT_Timestamp
 	{
 	    if ($value)
 	    {
+// 	    	return Time::displayDateTime($value, $this->format);
     	    /** @var $value \DateTime **/
     	    return $value->format('Y-m-d');
 	    }
 	}
 	
+	public function _inputToVar($input)
+	{
+		$input = str_replace('T', ' ', $input);
+		$input = str_replace('Z', '', $input);
+		$time = Time::parseDate($input, Time::UTC);
+		$input = Time::getDate($time, 'Y-m-d');
+		return $input;
+	}
+	
 	public function toValue($var)
 	{
-	    return empty($var) ? null : Time::parseDateTime($var);
+	    return empty($var) ? null : Time::parseDateTime($var, Time::UTC);
 	}
 	
 	public function htmlValue()
@@ -55,17 +65,6 @@ class GDT_Date extends GDT_Timestamp
 	public function displayValue($value)
 	{
 		return Time::displayDateTime($value, $this->format);
-	}
-
-	public function inputToVar($input)
-	{
-	    if ($input)
-	    {
-            $input = str_replace('T', ' ', $input);
-            $input = str_replace('Z', '', $input);
-            $d = Time::parseDateTime($input, Time::UTC);
-            return $d->format('Y-m-d');
-	    }
 	}
 
 }

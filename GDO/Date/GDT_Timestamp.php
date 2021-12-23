@@ -5,6 +5,7 @@ use GDO\Core\GDT_Template;
 use GDO\Core\GDT;
 use GDO\UI\WithLabel;
 use GDO\Form\WithFormFields;
+use GDO\DB\Query;
 use GDO\DB\WithDatabase;
 use GDO\Table\WithOrder;
 use GDO\Core\Application;
@@ -16,7 +17,7 @@ use GDO\Core\Application;
  * It transfers as f32 for the websocket protocol. 
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.2
  * @since 6.0.7
  */
 class GDT_Timestamp extends GDT
@@ -45,7 +46,7 @@ class GDT_Timestamp extends GDT
 	{
 	    if ($var)
 	    {
-	        return Time::parseDate($var);
+	        return Time::parseDateDB($var);
 	    }
 	}
 	
@@ -145,7 +146,7 @@ class GDT_Timestamp extends GDT
 	##############
 	### Millis ###
 	##############
-	# @TODO rename $millis to $precision in GDT_Timestamp.
+	# @TODO rename $millis to $precision or $decimals in GDT_Timestamp.
 	public $millis = 3;
 	public function millis($millis=3)
 	{
@@ -214,30 +215,32 @@ class GDT_Timestamp extends GDT
 	##############
 	### Render ###
 	##############
-	public function displayVar($var) { return Time::displayDate($var, $this->format); }
-	public function renderCell() { return $this->renderCellSpan(Time::displayDate($this->getVar(), $this->format, '---')); }
+	public function renderCell() { return $this->renderCellSpan(Time::displayDateTime(Time::parseDateTimeDB($this->getVar()), $this->format)); }
 	public function renderForm() { return GDT_Template::php('Date', 'form/datetime.php', ['field'=>$this]); }
 	public function renderAge() { return Time::displayAge($this->getVar()); }
 	public function renderCLI() { return $this->displayLabel() . ': ' . $this->display(); }
 	public function renderJSON() { return Time::getTimestamp($this->getVar()) * 1000; }
-	
-	/**
-	 * Convert user input to db var date.
-	 * If input is numeric it is a timestamp in ms.
-	 */
-	public function inputToVar($input)
+	public function displayVar($var)
 	{
-	    if (!is_numeric($input))
-	    {
-	        $input = str_replace('T', ' ', $input);
-	        $input = str_replace('Z', '', $input);
-	        $input = Time::parseDate($input);
-	    }
-	    else
-	    {
-	        $input /= 1000.0;
-	    }
-	    return $input ? Time::getDate($input) : null;
+		if ($dt = Time::parseDateTimeDB($var))
+		{
+			return Time::displayDateTime($dt, $this->format, '');
+		}
+	}
+	
+	public function _inputToVar($input)
+	{
+		if (!is_numeric($input))
+		{
+			$input = str_replace('T', ' ', $input);
+			$input = str_replace('Z', '', $input);
+			$input = Time::parseDate($input);
+		}
+		else
+		{
+			$input /= 1000.0;
+		}
+		return $input ? Time::getDate($input) : null;
 	}
 	
 	##############
@@ -257,6 +260,34 @@ class GDT_Timestamp extends GDT
 	public function getDate()
 	{
 	    return Time::getDate($this->getValue());
+	}
+	
+	##############
+	### Filter ###
+	##############
+	public function renderFilter($f)
+	{
+		return GDT_Template::php('Date', 'filter/timestamp.php', ['field' => $this, 'f' => $f]);
+	}
+	
+	public function filterQuery(Query $query, $rq=null)
+	{
+		$filter = $this->filterVar($rq);
+		if ($filter != '')
+		{
+			if ($condition = $this->searchQuery($query, $filter, true))
+			{
+				$this->filterQueryCondition($query, $condition);
+			}
+		}
+	}
+	
+	##############
+	### Search ###
+	##############
+	public function searchQuery(Query $query, $searchTerm, $first)
+	{
+		return $this->searchCondition($searchTerm);
 	}
 	
 }

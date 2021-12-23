@@ -3,6 +3,13 @@
 Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
 
 
+## Improvements for v6.11.2 (23.12.2021)
+
+ - New date datatypes; GDT_Month and GDT_Week.
+ 
+ - The Int and Date filters now have two fields for min and max.
+ 
+
 ## Improvements for v6.11.1 (5.12.2021)
 
  - The gdo6 http error response code changed from 405 to 409.

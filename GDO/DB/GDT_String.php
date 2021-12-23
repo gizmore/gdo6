@@ -8,6 +8,7 @@ use GDO\Form\WithFormFields;
 use GDO\Core\GDO;
 use GDO\Core\GDT;
 use GDO\UI\WithPHPJQuery;
+use GDO\Util\Arrays;
 
 /**
  * Basic String type with database support.
@@ -248,9 +249,21 @@ class GDT_String extends GDT
 	
 	public function filterGDO(GDO $gdo, $filtervalue)
 	{
-	    $pattern = chr(1).preg_quote($filtervalue, chr(1)).chr(1);
-		if ($this->caseSensitive) { $pattern .= 'i'; } # Switch to case-i if necessary
-		return preg_match($pattern, $gdo->getVar($this->name));
+		$var = $gdo->getVar($this->name);
+		foreach (Arrays::arrayed($filtervalue) as $flt)
+		{
+			$c = chr(1);
+			$pattern = $c.preg_quote($flt, $c).$c.'D';
+			if ($this->caseSensitive)
+			{
+				# Switch to case-i if necessary (db is caseS, but our filtering does not like that)
+				$pattern .= 'i';
+			}
+			if (preg_match($pattern, $var))
+			{
+				return true;
+			}
+		}
 	}
 	
 	##############

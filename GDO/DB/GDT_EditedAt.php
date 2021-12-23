@@ -28,4 +28,9 @@ final class GDT_EditedAt extends GDT_Timestamp
 		$this->gdo->setVar($this->name, $now);
 	}
 
+	public function htmlClass()
+	{
+		return ' gdt-datetime';
+	}
+	
 }

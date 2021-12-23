@@ -9,6 +9,6 @@ $sel = ' selected="selected"';
  name="<?=$f?>[f][<?=$field->name?>][]"
  multiple="multiple">
 <?php foreach ($field->enumValues as $enumValue) : ?>
-  <option value="<?=$enumValue?>"<?=in_array($enumValue, $val, true)?$sel:''?>><?=t($enumValue)?></option>
+  <option value="<?=html($enumValue)?>"<?=in_array($enumValue, $val, true)?$sel:''?>><?=t($enumValue)?></option>
 <?php endforeach; ?>
 </select>

@@ -4,7 +4,7 @@ p { word-break: break-word; }
 *[background-image] { background-size: cover; }
 .cf:after { content: "."; clear: both; display: block; visibility: hidden; height: 0px; }
 .ce { text-align: center; margin: auto; }
-.gdo-exception { white-space: pre-line; font-family: monospace; word-break: break-all; }
+.gdo-exception { white-space: pre-line; font-family: monospace; word-break: break-all; text-align: left; }
 .gdt-tblorder { display: inline-block; }
 img.gdo-country,
 img.gdo-language { width: 32px; border: 1px solid #555; }
@@ -39,3 +39,7 @@ div.gdt-hr { height: 2px; width: 100%; background: #eee; margin: 8px 0; }
 /** GDT_Dialog **/
 .gdo-dialog-inner { display: flex; flex-direction: column; }
 .gdo-dialog-fields { flex: 1 1 auto; }
+
+/** Table **/
+div.gdt-table { flex: 1 1 auto; }
+div.gdt-table table thead th { vertical-align: top; }

@@ -9,11 +9,11 @@ return [
     
     # Dateformats
     'df_db' => 'Y-m-d H:i:s.v', # do not change
-    'df_local' => 'Y-m-d\\TH:i:s', # do not change
+    'df_local' => 'm/d/Y\\TH:i', # do not change
     'df_parse' => 'm/d/Y H:i:s.u',
     'df_ms' => 'm/d/Y H:i:s.v',
-    'df_long' => 'm/d/Y h:i:s A',
-    'df_short' => 'm/d/Y h:i A',
+    'df_long' => 'm/d/Y H:i:s',
+    'df_short' => 'm/d/Y H:i',
     'df_minute' => 'Y-m-d H:i',
     'df_day' => 'm/d/Y',
     'df_sec' => 'm/d/Y H:i:s',

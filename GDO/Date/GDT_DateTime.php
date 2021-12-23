@@ -7,13 +7,13 @@ use GDO\Core\GDT_Template;
  * A datetime column has a bigger range of dates compared to a GDT_Timestamp.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.2
  */
 class GDT_DateTime extends GDT_Date
 {
 	public function gdoColumnDefine()
 	{
-		return "{$this->identifier()} DATETIME(3) {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
+		return "{$this->identifier()} DATETIME({$this->millis}) {$this->gdoNullDefine()}{$this->gdoInitialDefine()}";
 	}
 
 	public function renderForm()
@@ -33,6 +33,7 @@ class GDT_DateTime extends GDT_Date
 	    if ($value)
 	    {
 	        /** @var $value \DateTime **/
+	    	$value->setTimezone(Time::$UTC);
 	        return $value->format('Y-m-d H:i:s.u');
 	    }
 	}
@@ -42,18 +43,19 @@ class GDT_DateTime extends GDT_Date
 	    return Time::displayDate($var);
 	}
 	
-	public function inputToVar($input)
+	public function _inputToVar($input)
 	{
-		if (trim($input))
-		{
-		    $input = str_replace('T', ' ', $input);
-		    $input = str_replace('Z', '', $input);
-		    $d = Time::parseDateTime($input, Time::$TIMEZONE);
-		    $d->setTimezone(Time::$UTC);
-		    $var = $d->format('Y-m-d H:i:s.u');
-		    return $var;
-		}
-		return null;
+	    $input = str_replace('T', ' ', $input);
+	    $input = str_replace('Z', '', $input);
+	    $d = Time::parseDateTime($input);
+	    $d->setTimezone(Time::$UTC);
+	    $var = $d->format('Y-m-d H:i:s.u');
+	    return $var;
 	}
 
+	public function htmlClass()
+	{
+		return ' gdt-datetime';
+	}
+	
 }

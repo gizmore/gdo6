@@ -22,7 +22,7 @@ use GDO\UI\GDT_Page;
  * - Provide GDO_Language table
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.2
  * @since 2.0.0
  */
 final class Module_Language extends GDO_Module
@@ -58,7 +58,10 @@ final class Module_Language extends GDO_Module
 		$supported = [GDO_LANGUAGE => GDO_Language::table()->find(GDO_LANGUAGE)];
 		if ($additional = $this->getConfigValue('languages'))
 		{
-			$supported = array_merge($supported, $additional);
+			foreach ($additional as $lang)
+			{
+				$supported[$lang->getISO()] = $lang;
+			}
 		}
 		return $supported;
 	}

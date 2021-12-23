@@ -13,4 +13,13 @@ class GDT_IconButton extends GDT_Button
 	        'href' => $this->gdoHREF()]);
 	}
 	
+	public function htmlDisabled()
+	{
+		if ($this->writable && $this->href)
+		{
+			return '';
+		}
+		return ' disabled="disabled"';
+	}
+	
 }

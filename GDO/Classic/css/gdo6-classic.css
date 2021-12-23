@@ -19,8 +19,8 @@ div.gdo-body { padding: 64px 0px 0px; min-height: 100%; }
 
 
 /** Buttons **/
-.gdo-icon-button:HOVER { text-decoration: none; }
-a.gdt-button, input[type=submit], a.gdo-icon-button {
+.gdt-iconbutton:HOVER { text-decoration: none; }
+a.gdt-button, input[type=submit], a.gdt-iconbutton {
 	border: 1px ridge gray; background: #ddd; border-radius: 6px; padding: 0px 6px; color: #333; margin: 2px;
 	height: 24px; line-height: 22px; font-size: 16px; font-weight: 500;
 }

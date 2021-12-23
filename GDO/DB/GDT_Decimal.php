@@ -66,9 +66,12 @@ class GDT_Decimal extends GDT_Int
 	    return "3.14";
 	}
 	
-	public function inputToVar($input)
+	public function _inputToVar($input)
 	{
-	    return GDT_Float::inputToVarS($input);
+		if ($input = parent::_inputToVar($input))
+		{
+			return GDT_Float::inputToVarS($input);
+		}
 	}
 	
 }
