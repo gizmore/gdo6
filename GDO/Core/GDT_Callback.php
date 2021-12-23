@@ -24,7 +24,7 @@ final class GDT_Callback extends GDT
     
     public function renderCell()
     {
-        return call_user_func([$this->object, $this->method], $this->args);
+        return call_user_func([$this->object, $this->method], ...$this->args);
     }
     
 }

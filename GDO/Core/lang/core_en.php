@@ -82,6 +82,7 @@ return array(
 'gdo_permission' => 'Permission',
     
 # Generic Buttons
+'btn_ok' => 'OK',
 'btn_back' => 'Back',
 'btn_set' => 'Set',
 'btn_send' => 'Send',

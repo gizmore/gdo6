@@ -82,6 +82,7 @@ return array(
 'gdo_permission' => 'Autorizzazione',
     
 # Generic Buttons
+'btn_ok' => 'OK',
 'btn_back' => 'Indietro',
 'btn_set' => 'Posare',
 'btn_send' => 'Inviare',

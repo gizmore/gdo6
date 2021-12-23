@@ -9,6 +9,11 @@ class GDT_Object extends GDT_UInt
 	use WithObject;
 	use WithCompletion;
 	
+	public function htmlClass()
+	{
+		return ' gdt-object';
+	}
+	
 	##############
 	### Render ###
 	##############
