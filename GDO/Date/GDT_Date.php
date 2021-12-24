@@ -37,7 +37,6 @@ class GDT_Date extends GDT_Timestamp
 	{
 	    if ($value)
 	    {
-// 	    	return Time::displayDateTime($value, $this->format);
     	    /** @var $value \DateTime **/
     	    return $value->format('Y-m-d');
 	    }
