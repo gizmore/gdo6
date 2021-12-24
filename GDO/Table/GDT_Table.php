@@ -143,6 +143,8 @@ class GDT_Table extends GDT
 	# ######################
 	public function setupHeaders($searched = false, $paginated = false)
 	{
+		$this->makeHeaders();
+		
 		# @TODO what about ordered and sorted and filtered?
 		if ($searched)
 		{
@@ -151,12 +153,12 @@ class GDT_Table extends GDT
 
 		if ($paginated)
 		{
-			$o = $this->headers->name;
 			$this->addHeader(GDT_PageNum::make('page')->table($this));
 			$gdtIPP = GDT_IPP::make('ipp')->initial($this->getDefaultIPP());
 			$this->addHeader($gdtIPP);
-			$this->paginated(true, null,
-			$gdtIPP->getRequestVar($o, $gdtIPP->var));
+			$o = $this->headers->name;
+			$ipp = $gdtIPP->getRequestVar($o, $gdtIPP->var);
+			$this->paginated(true, null, $ipp);
 		}
 	}
 

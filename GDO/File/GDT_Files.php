@@ -26,6 +26,7 @@ class GDT_Files extends GDT_File
 	########################
 	### STUB GDT methods ###
 	########################
+	public $autojoin = false;
 	public function gdoColumnNames() {} # NO DB column.
 	public function gdoColumnDefine() { return null; } # NO DB column. Your GDO_FileTable has the data.
 	public function getGDOData() {} # Only relation table. Handled by onCreate and onUpdate.
@@ -62,9 +63,10 @@ class GDT_Files extends GDT_File
 			return []; # has no stored files as its not even saved yet.
 		}
 		# Fetch all from relation table as GDO_File array.
-		return $this->fileTable->select('*, gdo_file.*')->fetchTable(GDO_File::table())->
+		return $this->fileTable->select('*, files_file_t.*')->
+			fetchTable(GDO_File::table())->
 			where('files_object='.$this->gdo->getID())->
-			joinObject('files_file')->exec()->fetchAllObjects();
+			exec()->fetchAllObjects();
 	}
 	
 	/**
