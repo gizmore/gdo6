@@ -4,6 +4,13 @@ use GDO\Core\GDO;
 use GDO\Core\GDT_Template;
 use GDO\Core\WithCompletion;
 
+/**
+ * Object is an integer in the database. Uses WithObject trait for magic.
+ * 
+ * @author gizmore
+ * @see WithObject
+ * @version 6.11.2
+ */
 class GDT_Object extends GDT_UInt
 {
 	use WithObject;

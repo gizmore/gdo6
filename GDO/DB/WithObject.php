@@ -11,8 +11,10 @@ use GDO\Core\Application;
  * You would expect this to be in GDT_Object,
  * but this is also mixed into GDT_ObjectSelect, hence it is a trait.
  * 
+ * - autojoin controlls select behaviour
+ * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.2
  * @since 6.0.0
  * 
  * @see GDT_Object
