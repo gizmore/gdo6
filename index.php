@@ -16,7 +16,6 @@ use GDO\Core\GDT_Hook;
 use GDO\UI\GDT_HTML;
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
-use GDO\Util\Strings;
 use GDO\Date\Time;
 
 require 'GDO6.php';
@@ -27,7 +26,7 @@ if (!defined('GDO_CONFIGURED'))
 {
 	define('GDO_WEB_ROOT', '/');
     require 'index_install.php';
-    die(0);
+    die(1);
 }
 
 Database::init();
@@ -47,12 +46,12 @@ Debug::enableExceptionHandler();
 Debug::setDieOnError(GDO_ERROR_DIE);
 Debug::setMailOnError(GDO_ERROR_MAIL);
 
+GDT_Page::make();
+
 $app = new Application();
 
 ModuleLoader::instance()->loadModulesCache();
 
-
-GDT_Page::make();
 $response = GDT_Response::make();
 
 if (!module_enabled('Core'))
@@ -97,10 +96,8 @@ $app->initThemes();
 define('GDO_CORE_STABLE', 1);
 
 # File other than index.php requested
-if (isset($_GET['_url']) && $_GET['_url'])
+if ($url = @$_GET['_url'])
 {
-    $url = $_GET['_url'];
-
     # For directories, show the index, if configured
     if (is_dir($url))
     {
@@ -144,7 +141,6 @@ if (isset($_GET['_url']) && $_GET['_url'])
                 }
                 # .. fallthrough
             }
-            
         }
     }
     
@@ -152,13 +148,16 @@ if (isset($_GET['_url']) && $_GET['_url'])
     else
     {
         $type = FileUtil::mimetype($url);
-        
+        $serve = false;
         if (str_ends_with($url, '.php'))
         {
             $_REQUEST['mo'] = 'Core';
             $_REQUEST['me'] = 'Page403';
         }
-        
+        elseif (str_starts_with($url, '.well-known/'))
+        {
+        	$serve = true;
+        }
         elseif ( (($type === 'text/javascript') ||
                  ($type === 'text/css'))
                &&
@@ -178,8 +177,14 @@ if (isset($_GET['_url']) && $_GET['_url'])
         
         else
         {
+        	$serve = true;
+        }
+        
+        if ($serve)
+        {
         	# serve static file with etag.
         	$last_modified_time = filemtime($url);
+        	# @TODO: Cache etag-md5 via modified time
         	$etag = md5_file($url);
         	hdr("Last-Modified: ".gmdate("D, d M Y H:i:s", $last_modified_time)." GMT");
         	hdr("Etag: $etag");
