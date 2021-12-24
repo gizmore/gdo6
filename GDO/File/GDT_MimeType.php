@@ -5,8 +5,10 @@ use GDO\DB\GDT_String;
 
 /**
  * Mime Filetype widget.
- * Lots todo.
+ * Lots todo. But one can already use it.
+ * 
  * @author gizmore
+ * @version 6.11.2
  * @since 6.10
  */
 final class GDT_MimeType extends GDT_String
@@ -16,4 +18,5 @@ final class GDT_MimeType extends GDT_String
 	public $encoding = self::ASCII;
 	
 	public function defaultLabel() { return $this->label('file_type'); }
+
 }

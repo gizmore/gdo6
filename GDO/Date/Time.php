@@ -18,13 +18,18 @@ use GDO\Core\GDOError;
  *  - $time(stamp): A float, microtime(true)
  *  - $date: A string, date($format_via_trans)
  *  - $datetime: A PHP @\DateTime object.
+ *  
+ * @TODO: Sometimes functions take a formatstring sometimes a formatname t(df_). Always use formatstring. fix all bugs.
  *
  * @author gizmore
  * @version 6.11.2
  * @since 1.0.0
  * 
+ * @see GDT_Week
  * @see GDT_Date
  * @see GDT_DateTime
+ * @see GDT_Timestamp
+ * @see GDT_CreatedAt
  * @see GDT_Duration
  */
 final class Time
@@ -43,7 +48,7 @@ final class Time
 	const FMT_MINUTE = 'minute';
 	const FMT_SHORT = 'short';
 	const FMT_LONG = 'long';
-	const FMT_DAY = 'day';
+	const FMT_DAY = 'day'; # @TODO: Date format FMT_DAY is same as FMT_SHORT.
 	const FMT_MS = 'ms';
 	
 	################

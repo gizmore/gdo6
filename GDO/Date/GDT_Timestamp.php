@@ -14,7 +14,13 @@ use GDO\Core\Application;
  * The GDT_Timestamp field is the baseclass for all datefields.
  * The var type is a mysql date.
  * The value type is an integer/timestamp.
- * It transfers as f32 for the websocket protocol. 
+ * For DateTimes the value type is a DateTime.
+ * 
+ * - control min/max dates via age or a fixed date.
+ * - control precision with $millis (Default %.03f).
+ * 
+ * GDT_Timestamp transfers as f32 for the websocket protocol.
+ * @TODO: DateTimes transfer as string for the websocket protocol. 
  * 
  * @author gizmore
  * @version 6.11.2
@@ -259,7 +265,7 @@ class GDT_Timestamp extends GDT
 	
 	public function getDate()
 	{
-	    return Time::getDate($this->getValue());
+	    return $this->getVar();
 	}
 	
 	##############

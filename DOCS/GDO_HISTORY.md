@@ -1,18 +1,20 @@
 # gdo6 History
 
-Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
+Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md). To run all unit tests please use ``./gdoadm.sh provide_all``.
 
 
 ## Improvements for v6.11.2 (23.12.2021)
 
- - New date datatypes; GDT_Month and GDT_Week.
+ - New [GDT_Obejct]() attribute [$autojoin](). Columns like [GDT_DeletedBy]() are not required to automatically join during a select.
+
+ - New date datatypes; [GDT_Week](https://github.com/gizmore/gdo6/blob/master/GDO/Date/GDT_Week.php), [GDT_Month](https://github.com/gizmore/gdo6/blob/master/GDO/Date/GDT_Month.php), [GDT_Quarter](https://github.com/gizmore/gdo6/blob/master/GDO/Date/GDT_Quarter.php), [GDT_Year](https://github.com/gizmore/gdo6/blob/master/GDO/Date/GDT_Year.php). These inherit GDT_Date and snap their DATEs to the beginning of their timespan. Weekstart ist monday! :)
  
- - The Int and Date filters now have two fields for min and max.
+ - The int and date table filters now have two fields for min and max. First i tried custom syntax like "!foo" and "4-8" ... This did not work out very well in terms of compatibility with dev-extreme grid integration.
  
 
 ## Improvements for v6.11.1 (5.12.2021)
 
- - The gdo6 http error response code changed from 405 to 409.
+ - The gdo6 default http error response code changed from 405 Method to 409 Conflict. 
  
  - The GDT_Hook system now uses a filecache for the hook table.
  

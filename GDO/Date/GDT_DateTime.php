@@ -45,11 +45,11 @@ class GDT_DateTime extends GDT_Date
 	
 	public function _inputToVar($input)
 	{
-	    $input = str_replace('T', ' ', $input);
+	    $input = str_replace('T', ' ', $input); # remove RFC decorations
 	    $input = str_replace('Z', '', $input);
-	    $d = Time::parseDateTime($input);
-	    $d->setTimezone(Time::$UTC);
-	    $var = $d->format('Y-m-d H:i:s.u');
+	    $d = Time::parseDateTime($input); # parse user timezone
+	    $d->setTimezone(Time::$UTC); # convert to UTC
+	    $var = $d->format('Y-m-d H:i:s.u'); # output UTC
 	    return $var;
 	}
 

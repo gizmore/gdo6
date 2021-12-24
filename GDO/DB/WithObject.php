@@ -87,6 +87,7 @@ trait WithObject
 			 		return $user;
 			 	}
 			}
+			# @TODO: GDO->findOnlyCachedBy[IDs]()
 			if ($user = $this->table->findCached(...explode(':', $var)))
 			{
 				return $user;
@@ -144,14 +145,6 @@ trait WithObject
 		}
 	}
 	
-// 	/**
-// 	 * @return \GDO\Core\GDO
-// 	 */
-// 	public function getObject()
-// 	{
-// 		return $this->getValue();
-// 	}
-	
 	public function getGDOData()
 	{
 		return [$this->name => $this->var];
@@ -178,24 +171,30 @@ trait WithObject
 	################
 	public function validate($value)
 	{
-		if ($value)
+		if ($value) # we successfully converted the var to value.
 		{
 			return true;
 		}
-		elseif ($var = $this->getVar())
+		elseif ($var = $this->getVar()) # 404, as we have a search term.
 		{
 			return $this->error('err_gdo_not_found', [$this->table->gdoHumanName(), html($var)]);
 		}
-		elseif ($this->notNull)
+		elseif ($this->notNull) # empty input and not null
 		{
 			return $this->errorNotNull();
 		}
-		else
+		else # null
 		{
 			return true;
 		}
 	}
 	
+	/**
+	 * In unit tests return first row.
+	 * Two rows on multiple, if possible.
+	 * 
+	 * @return GDO
+	 */
 	public function plugVar()
 	{
 	    $first = $this->table->select()->first()->exec()->fetchObject();
@@ -206,7 +205,12 @@ trait WithObject
 	    $first = $first->getID();
         if (@$this->multiple)
         {
-            return '["' . $first . '"]';
+        	$data = [$first];
+        	if ($second = $this->table->select()->limit(1, 1)->exec()->fetchObject())
+        	{
+        		$data[] = $second->getID();
+        	}
+        	return json_encode($data);
         }
         return $first;
 	}
@@ -374,10 +378,21 @@ trait WithObject
 	############
 	### Join ###
 	############
+	public $autojoin = true;
+	public function noAutojoin($noAutojoin=true) { return $this->autojoin(!$noAutojoin); }
+	public function autojoin($autojoin=true)
+	{
+		$this->autojoin = $autojoin;
+		return $this;
+	}
+	
 	public function gdoBeforeRead(Query $query)
 	{
-		$joinType = $this->notNull ? 'JOIN' : 'LEFT JOIN';
-		$query->joinObject($this->name, $joinType, $this->name.'_t');
+		if ($this->autojoin)
+		{
+			$joinType = $this->notNull ? 'JOIN' : 'LEFT JOIN';
+			$query->joinObject($this->name, $joinType, $this->name.'_t');
+		}
 	}
 	
 }

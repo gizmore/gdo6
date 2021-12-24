@@ -13,7 +13,6 @@ use GDO\Core\GDT_Template;
  * 
  * @see GDT_Time
  * @see GDT_Timestamp
- * @see GDT_Date
  * @see GDT_DateTime
  * @see GDT_Duration
  * @see Time for conversion
