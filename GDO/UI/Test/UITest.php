@@ -5,6 +5,7 @@ use GDO\Tests\TestCase;
 use GDO\UI\GDT_Button;
 use function PHPUnit\Framework\assertStringContainsString;
 use GDO\Form\GDT_Form;
+use function PHPUnit\Framework\assertStringContainsStringIgnoringCase;
 
 final class UITest extends TestCase
 {
@@ -12,7 +13,7 @@ final class UITest extends TestCase
     {
         $btn = GDT_Button::make()->href(hrefDefault());
         $html = $btn->render();
-        assertStringContainsString(GDO_MODULE, $html, "Test if Button renders without name.");
+        assertStringContainsStringIgnoringCase(GDO_MODULE, $html, "Test if Button renders without name.");
         
         $form = GDT_Form::make();
         $form->addField($btn);

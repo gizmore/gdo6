@@ -52,7 +52,7 @@ class GDT_Date extends GDT_Timestamp
 	
 	public function toValue($var)
 	{
-	    return empty($var) ? null : Time::parseDateTime($var, Time::UTC);
+	    return empty($var) ? null : Time::parseDateTimeDB($var);
 	}
 	
 	public function htmlValue()

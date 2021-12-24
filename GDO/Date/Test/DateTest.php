@@ -75,9 +75,9 @@ final class DateTest extends TestCase
         $time = Time::parseDate($date);
         assertEquals('1618094423.123', sprintf('%.03f', $time), 'Test if US ms date can be parsed');
         
-        $date = '2021-04-10 18:40:23.123';
+        $date = '04/10/2021T18:40:23.124Z';
         $time = Time::parseDate($date);
-        assertEquals('1618094423.123', sprintf('%.03f', $time), 'Test if US ms date can be parsed');
+        assertEquals('1618094423.123', sprintf('%.03f', $time), 'Test if US ms date can be parsed for RFC schlachmichtot');
     }
 
     public function testDisplayDate()
