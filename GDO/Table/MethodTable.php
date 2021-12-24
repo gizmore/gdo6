@@ -23,7 +23,6 @@ use GDO\Core\GDO;
  */
 abstract class MethodTable extends Method
 {
-	
 	/**
 	 * Build and/or get the GET parameter cache.
 	 * @return GDT[]
@@ -218,10 +217,6 @@ abstract class MethodTable extends Method
 	###############
 	### Execute ###
 	###############
-// 	public function beforeExecute()
-// 	{
-// 	}
-	
 	public function execute()
 	{
 		return GDT_Response::makeWith(

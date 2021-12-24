@@ -23,7 +23,7 @@ use GDO\DB\GDT_Enum;
  * etc...)
  *
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.2
  * @since 6.0.0
  *       
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass

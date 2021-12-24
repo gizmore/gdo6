@@ -63,6 +63,7 @@ final class GDT_IconUTF8
         'list' => '▤',
         'lock' => '🔒',
         'male' => '♂',
+    	'medal' => '🥇',
         'menu' => '≡',
         'message' => '☰',
         'minus' => '-',
