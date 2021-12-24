@@ -43,6 +43,7 @@ final class DirectoryIndex extends MethodTable
     {
         $data = [];
         $url = isset($_REQUEST['_url']) ? $_REQUEST['_url'] : GDO_WEB_ROOT;
+        $url = "./{$url}";
         $files = scandir($url);
         foreach ($files as $file)
         {
