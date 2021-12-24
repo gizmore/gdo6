@@ -5,6 +5,8 @@ Before you read the history, please take your time to actually [install gdo6](ht
 
 ## Improvements for v6.11.2 (23.12.2021)
 
+ - New [Javascript](https://github.com/gizmore/gdo6/tree/master/GDO/Javascript) [error mails](https://github.com/gizmore/gdo6/blob/master/GDO/Javascript/Method/Error.php) and [error handler](https://github.com/gizmore/gdo6/blob/master/GDO/Javascript/js/gdo6-debug.js) to detect javascript problems on your clients.
+
  - New [GDT_Object](https://github.com/gizmore/gdo6/blob/master/GDO/DB/GDT_Object.php) attribute [$autojoin](https://github.com/gizmore/gdo6/blob/master/GDO/DB/WithObject.php#L381). Columns like [GDT_DeletedBy](https://github.com/gizmore/gdo6/blob/master/GDO/DB/GDT_DeletedBy.php) are not wanted to automatically join during every select.
 
  - New date datatypes; [GDT_Week](https://github.com/gizmore/gdo6/blob/master/GDO/Date/GDT_Week.php), [GDT_Month](https://github.com/gizmore/gdo6/blob/master/GDO/Date/GDT_Month.php), [GDT_Quarter](https://github.com/gizmore/gdo6/blob/master/GDO/Date/GDT_Quarter.php), [GDT_Year](https://github.com/gizmore/gdo6/blob/master/GDO/Date/GDT_Year.php). These inherit GDT_Date and snap their DATEs to the beginning of their timespan. Weekstart ist monday! :)

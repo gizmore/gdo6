@@ -64,7 +64,7 @@ function changeColumn(GDO_Module $module, GDO $table, GDT $gdt)
 		$db->disableForeignKeyCheck();
 		
 		$tablename = $table->gdoTableName();
-		$temptable = "TEMP_{$tablename}";
+		$temptable = "zzz_temp_{$tablename}";
 		$query = "CREATE TABLE $temptable LIKE $tablename";
 		$db->queryWrite($query);
 		$query = "INSERT INTO $temptable SELECT * FROM $tablename";
