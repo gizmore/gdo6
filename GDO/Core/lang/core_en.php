@@ -336,4 +336,5 @@ Kind Regards,<br/>
 # v6.11.2
 'from' => 'From',
 'to' => 'To',
+'mail_subj_403' => '%s: 403 Access Denied',
 );

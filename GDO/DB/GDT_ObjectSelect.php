@@ -11,7 +11,7 @@ use GDO\Form\GDT_Select;
  * It inits the choices with a call to $table->all()!
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.2
  * @since 6.2.0
  */
 class GDT_ObjectSelect extends GDT_Select
@@ -140,12 +140,9 @@ class GDT_ObjectSelect extends GDT_Select
 	 */
 	public function multipleToVar(array $value)
 	{
-		$json = [];
-		foreach ($value as $gdo)
-		{
-			$json[] = $gdo->getID();
-		}
-		return json_encode($json);
+		return array_map(function($gdo) {
+			return $gdo->getID();
+		}, $value);
 	}
 	
 	public function toValue($var)

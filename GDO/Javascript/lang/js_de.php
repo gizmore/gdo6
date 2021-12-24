@@ -28,9 +28,10 @@ URL: %s<br/>
 <br/>
 Fehler: %s<br/>
 -----------------------
-%s<br/>
+<pre>
+%s</pre><br/>
 <br/>
 Viele Grüße<br/>
-Das %s Dystem<br/>
+Das %s System<br/>
 ',
 ];

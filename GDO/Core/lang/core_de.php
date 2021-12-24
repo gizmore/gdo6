@@ -334,4 +334,9 @@ Viele Grüße,<br/>
 	
 # v6.11.1
 'err_module_disabled' => 'Das Modul %s ist derzeit deaktiviert.',
+
+# v6.11.2
+'from' => 'Von',
+'to' => 'Bis',
+'mail_subj_403' => '%s: 403 Zugang verweigert',
 );

@@ -27,7 +27,8 @@ URL: %s<br/>
 <br/>
 Message: %s<br/>
 -----------------------
-%s<br/>
+<pre>
+%s</pre><br/>
 <br/>
 Kind Regards<br/>
 The %s system<br/>

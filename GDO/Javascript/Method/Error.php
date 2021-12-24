@@ -32,7 +32,8 @@ final class Error extends MethodAjax
 			$message = $this->gdoParameterVar('message');
 			$stack = $this->gdoParameterVar('stack');
 			$stack = "<pre>{$stack}</pre>";
-			$message = tiso(GDO_LANGUAGE, 'mailb_js_error', [$url, $message, $stack]);
+			$message = tiso(GDO_LANGUAGE, 'mailb_js_error', [
+				$url, $message, $stack, sitename()]);
 			Mail::sendDebugMail(': JS Error', $message);
 		}
 	}

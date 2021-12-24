@@ -138,7 +138,7 @@ final class Mail
 	public static function sendDebugMail($subject, $body)
 	{
 		$to = defined('GDO_ERROR_EMAIL') ? GDO_ERROR_EMAIL : GDO_ADMIN_EMAIL;
-		return self::sendMailS(GDO_BOT_EMAIL, $to, GDO_SITENAME.": ".$subject, Debug::getDebugText($body), false, true);
+		return self::sendMailS(GDO_BOT_EMAIL, $to, GDO_SITENAME.": ".$subject, Debug::getDebugText($body), true, true);
 	}
 	
 	public function nestedHTMLBody()

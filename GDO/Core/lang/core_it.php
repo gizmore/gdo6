@@ -332,4 +332,9 @@ Cordiali saluti,<br/>
 
 # v6.11.1
 'err_module_disabled' => 'Il modulo %s è attualmente disattivato.',
+
+# v6.11.2
+'from' => 'Dal',
+'to' => 'Al',
+'mail_subj_403' => '%s: 403 Accesso negato',
 );
