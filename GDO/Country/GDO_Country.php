@@ -89,7 +89,7 @@ final class GDO_Country extends GDO
 	##############
 	public function renderFlag()
 	{
-		return GDT_Template::php('Country', 'cell/flag.php', ['field' => GDT_Country::make()->gdo($this), 'choice' => false]);
+		return GDT_Template::php('Country', 'cell/country.php', ['field' => GDT_Country::make()->gdo($this), 'choice' => false]);
 	}
 
 	public function renderCell()
