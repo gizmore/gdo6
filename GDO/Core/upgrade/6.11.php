@@ -55,7 +55,6 @@ while ($user = $users->fetchObject())
 	$user->saveVar('user_timezone', "1", false);
 }
 
-
 function changeColumn(GDO_Module $module, GDO $table, GDT $gdt)
 {
 	try
@@ -65,7 +64,11 @@ function changeColumn(GDO_Module $module, GDO $table, GDT $gdt)
 		
 		$tablename = $table->gdoTableName();
 		$temptable = "zzz_temp_{$tablename}";
-		$query = "CREATE TABLE $temptable LIKE $tablename";
+
+		$query = "SHOW CREATE TABLE $tablename";
+		$result = Database::instance()->queryRead($query);
+		$query = mysqli_fetch_row($result)[1];
+		$query = str_replace($tablename, $temptable, $query);
 		$db->queryWrite($query);
 		$query = "INSERT INTO $temptable SELECT * FROM $tablename";
 		$db->queryWrite($query);

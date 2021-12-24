@@ -14,7 +14,7 @@ use GDO\Core\GDO;
  * The basic API is identical for static memory results and queried data.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.2
  * @since 5.0.0
  * @see ArrayResult
  * @see GDT_Table
