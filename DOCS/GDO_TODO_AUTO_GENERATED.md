@@ -28,7 +28,7 @@
 
 
 # GDO/Birthday/Module_Birthday.php:
-- [ ] implement.
+- [ ] implement: On init, display other people birthda[yte]s.
 
 
 # GDO/Bootstrap5/BS5Icon.php:
@@ -59,7 +59,6 @@
 
 # GDO/Core/Debug.php:
 - [ ] move?
-- [ ] uppercase static members
 
 
 # GDO/Core/GDO.php:
@@ -75,11 +74,8 @@
 
 
 # GDO/Core/GDT.php:
-- [ ] GDT::isPrimary() is weirdly used in Database types and Buttons. Rename the button one to isButtonPrimiary(). Document the weird quirk for GDT_AutoIncrement? (or where was the weird primary quirk?)
-
-
-# GDO/Core/GDT_Hook.php:
-- [ ] GDO_Module: Instead of looping over all modules, modules shall hook into GDT_Hook onInit(). This should speed up a bit.
+- [ ] make validate use $var instead of $value. Or maybe make a second func validateVar.
+@todo GDT::isPrimary() is weirdly used in Database types and Buttons. Rename the button one to isButtonPrimiary().
 
 
 # GDO/Core/Logger.php:
@@ -87,9 +83,7 @@
 
 
 # GDO/Core/Method.php:
-- [ ] Rename init() to onInit()
 - [ ] get rid and move it to GDT_Checkbox. New option: allowToggleAll(true)
-- [ ] rename to onInit()
 
 
 # GDO/Core/Website.php:
@@ -98,16 +92,10 @@
 
 
 # GDO/Date/GDT_Timestamp.php:
-- [ ] make GDT_Timestamp->getValue() also return a Datetime?
-- [ ] rename $millis to $precision in GDT_Timestamp.
-
-
-# GDO/Date/Test/DateTest.php:
-- [ ] test if this date can be parsed in german and english.
+- [ ] rename $millis to $precision or $decimals in GDT_Timestamp.
 
 
 # GDO/Date/Time.php:
-- [ ] Time - Make the function names better. They shall reflect if they are for db or for display.
 - [ ] parseDateIso is broken a bit, because strlen($date) might differ across languages.
 
 
@@ -116,17 +104,13 @@
 
 
 # GDO/DB/Database.php:
-- [ ] Implement auto alter table... very tricky!
 - [ ] should always return an instance?
-- [ ] support postgres? This can be achieved via making module DB a separate module. Just need to move any GDT there, that does db creation code. Tricky for Maps/GDT_Position?
+- [ ] support postgres? This can be achieved via making module DB a separate module. Just need to move some classes to core and ifelse them in creation code?
+- [ ] support sqlite? This can be achieved by a few string tricks maybe. No foreign keys? no idea.
 
 
 # GDO/DB/GDT_Checkbox.php:
 - [ ] what about real checkboxes? Not a single one wanted/needed? UI Sugar?
-
-
-# GDO/DB/GDT_Int.php:
-- [ ] make a challenge: create test cases for patterns, require the user to write a webservice that parses them all correctly.
 
 
 # GDO/DB/Query.php:
@@ -257,10 +241,6 @@
 # GDO/Language/Trans.php:
 - [ ] move
 - [ ] separate calls. maybe cache should not be cleared quickly? no idea. Make performance tests for language loading on init.
-
-
-# GDO/Mail/Method/Send.php:
-- [ ] implement
 
 
 # GDO/PaymentBank/GDT_BIC.php:
@@ -512,9 +492,9 @@
 
 
 # GDO/Table/GDT_Table.php:
-- [ ] GDT_Enum is not searchable yet.
 - [ ] implement getPageFor() ArrayResult");
 - [ ] what about ordered and sorted and filtered?
+@todo GDT_Enum is not searchable yet.
 
 
 # GDO/TBS/GDT_TBS_GroupmasterIcon.php:
