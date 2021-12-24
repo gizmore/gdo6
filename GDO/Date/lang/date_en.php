@@ -9,7 +9,7 @@ return [
     
     # Dateformats
     'df_db' => 'Y-m-d H:i:s.v', # do not change
-    'df_local' => 'm/d/Y\\TH:i', # do not change
+    'df_local' => 'Y-m-d\TH:i', # do not change
     'df_parse' => 'm/d/Y H:i:s.u',
     'df_ms' => 'm/d/Y H:i:s.v',
     'df_long' => 'm/d/Y H:i:s',
