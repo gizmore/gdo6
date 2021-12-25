@@ -1,6 +1,6 @@
 # gdo6 History
 
-Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md). To run all unit tests please use ``./gdoadm.sh provide_all``.
+Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
 
 
 ## Improvements for v6.11.2 (23.12.2021)
