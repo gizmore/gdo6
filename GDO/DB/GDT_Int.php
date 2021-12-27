@@ -6,7 +6,6 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\GDOError;
 use GDO\UI\WithLabel;
-use GDO\Util\Strings;
 use GDO\Form\WithFormFields;
 use GDO\Table\WithOrder;
 use GDO\Util\Common;

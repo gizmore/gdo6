@@ -13,7 +13,6 @@ use GDO\UI\WithHREF;
 use GDO\UI\WithTitle;
 use GDO\UI\WithActions;
 use GDO\Core\WithFields;
-use GDO\Util\Classes;
 use GDO\Core\GDOException;
 
 /**
@@ -369,21 +368,19 @@ class GDT_Table extends GDT
 								if ($field->orderable)
 								{
 									$asc = $asc ? ' ASC' : ' DESC';
-									if ((Classes::class_uses_trait($field,
-									'GDO\\DB\\WithObject')) &&
-									($field->orderFieldName() !== $field->name))
-									{
-										$query->joinObject($field->name, 'JOIN',
-										"o{$o}");
-										$query->order(
-										"o{$o}." . $field->orderFieldName() .
-										$asc);
-									}
-									else
-									{
-										$query->order(
-										$field->orderFieldName() . $asc);
-									}
+									$query->order($field->name . '_t.'  . $field->orderFieldName() .$asc);
+									
+// 									if ((Classes::class_uses_trait($field,
+// 									'GDO\\DB\\WithObject')) &&
+// 									($field->orderFieldName() !== $field->name))
+// 									{
+// 										$query->joinObject($field->name, 'JOIN');
+// 										$query->order($field->name . '_t.'  . $field->orderFieldName() .$asc);
+// 									}
+// 									else
+// 									{
+// 										$query->order($		$field->orderFieldName() . $asc);
+// 									}
 									$hasCustomOrder = true;
 								}
 							}
