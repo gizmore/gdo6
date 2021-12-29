@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Table;
 
+use GDO\Util\Classes;
 use GDO\Util\Common;
 use GDO\DB\ArrayResult;
 use GDO\Core\GDO;
@@ -368,19 +369,19 @@ class GDT_Table extends GDT
 								if ($field->orderable)
 								{
 									$asc = $asc ? ' ASC' : ' DESC';
-									$query->order($field->name . '_t.'  . $field->orderFieldName() .$asc);
+// 									$query->order($field->orderFieldName() .$asc);
 									
-// 									if ((Classes::class_uses_trait($field,
-// 									'GDO\\DB\\WithObject')) &&
-// 									($field->orderFieldName() !== $field->name))
-// 									{
-// 										$query->joinObject($field->name, 'JOIN');
-// 										$query->order($field->name . '_t.'  . $field->orderFieldName() .$asc);
-// 									}
-// 									else
-// 									{
-// 										$query->order($		$field->orderFieldName() . $asc);
-// 									}
+									if ((Classes::class_uses_trait($field,
+									'GDO\\DB\\WithObject')) &&
+									($field->orderFieldName() !== $field->name))
+									{
+										$query->joinObject($field->name, 'JOIN');
+										$query->order($field->name . '_t.'  . $field->orderFieldName() .$asc);
+									}
+									else
+									{
+										$query->order($field->orderFieldName() . $asc);
+									}
 									$hasCustomOrder = true;
 								}
 							}
