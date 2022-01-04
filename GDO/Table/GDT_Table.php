@@ -375,7 +375,7 @@ class GDT_Table extends GDT
 									'GDO\\DB\\WithObject')) &&
 									($field->orderFieldName() !== $field->name))
 									{
-										$query->joinObject($field->name, 'JOIN');
+// 										$query->joinObject($field->name, 'JOIN');
 										$query->order($field->name . '_t.'  . $field->orderFieldName() .$asc);
 									}
 									else
