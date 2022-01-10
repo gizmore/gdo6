@@ -7,13 +7,11 @@ use GDO\DB\GDT_ObjectSelect;
  * Timezone select.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.2
  * @since 6.10.0
  */
 final class GDT_Timezone extends GDT_ObjectSelect
 {
-    public $max = 64;
-    
     public function defaultName() { return 'timezone'; }
     public function defaultLabel() { return $this->label('timezone'); }
     
@@ -30,7 +28,7 @@ final class GDT_Timezone extends GDT_ObjectSelect
     
     public function plugVar()
     {
-        return GDO_Timezone::getBy('tz_name', 'Europe/Berlin');
+        return GDO_Timezone::getBy('tz_name', 'Europe/Berlin')->getID();
     }
 
 }
