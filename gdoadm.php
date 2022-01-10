@@ -24,6 +24,8 @@ use GDO\Util\Strings;
 use GDO\Install\Module_Install;
 use GDO\Install\Method\InstallCronjob;
 use GDO\Install\Method\SystemTest;
+use GDO\Core\GDT_Error;
+use GDO\Core\GDT_Success;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
@@ -656,6 +658,32 @@ elseif ($argv[1] === 'update')
         Installer::installModule($module);
     }
     echo "Update complete.\n"; 
+}
+
+elseif ($argv[1] === 'migrate')
+{
+	if (count($argv) !== 3)
+	{
+		GDT_Error::responseWith('err_gdoadm_migrate');
+	}
+	else if (!($module = ModuleLoader::instance()->getModule($argv[2], true, false)))
+	{
+		GDT_Error::responseWith('err_module', [html($argv[2])]);
+	}
+	else
+	{
+		Installer::installModule($module, true);
+	}
+}
+
+elseif ($argv[1] === 'migrate_all')
+{
+	$modules = ModuleLoader::instance()->getEnabledModules();
+	foreach ($modules as $module)
+	{
+		Installer::installModule($module, true);
+	}
+	GDT_Success::responseWith('msg_gdoadm_migrated_all');
 }
 
 else

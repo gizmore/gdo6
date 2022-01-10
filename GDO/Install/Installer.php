@@ -50,9 +50,9 @@ class Installer
 		}
 	}
 	
-	public static function installModule(GDO_Module $module, $reinstall=false)
+	public static function installModule(GDO_Module $module, $forceMigrate=false)
 	{
-		self::installModuleClasses($module, $reinstall);
+		self::installModuleClasses($module, $forceMigrate);
 		
 		if (!$module->isPersisted())
 		{
@@ -62,9 +62,16 @@ class Installer
 			$module->insert();
 		}
 		
+		$upgraded = false;
 		while ($module->getVersion() != $module->module_version)
 		{
 			self::upgrade($module);
+			$upgraded = true;
+		}
+		
+		if ($forceMigrate && (!$upgraded))
+		{
+			self::recreateDatabaseSchema($module);
 		}
 		
 		self::installMethods($module);
@@ -75,7 +82,7 @@ class Installer
 		Cache::fileFlush();
 	}
 	
-	public static function installModuleClasses(GDO_Module $module, $reinstall=false)
+	public static function installModuleClasses(GDO_Module $module)
 	{
 		if ($classes = $module->getClasses())
 		{
@@ -87,7 +94,7 @@ class Installer
 					$gdo instanceof GDO;
 					if (!$gdo->gdoAbstract())
 					{
-						self::installModuleClass($gdo, $reinstall);
+						self::installModuleClass($gdo);
 					}
 				}
 			}
@@ -168,7 +175,7 @@ class Installer
 	 * @param GDO_Module $module
 	 * @param string $version
 	 */
-	public static function recreateDatabaseSchema(GDO_Module $module, $version)
+	public static function recreateDatabaseSchema(GDO_Module $module)
 	{
 		if ($classes = $module->getClasses())
 		{

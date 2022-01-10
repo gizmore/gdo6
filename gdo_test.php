@@ -33,7 +33,7 @@ Cache::flush();
 Database::init();
 GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
 
-final class TestApp extends Application
+final class gdo_test extends Application
 {
     private $cli = false;
     public function cli($cli) { $this->cli = $cli; return $this; }
@@ -50,7 +50,7 @@ final class TestApp extends Application
 }
 
 
-$app = new TestApp();
+$app = new gdo_test();
 GDT_Page::make();
 
 

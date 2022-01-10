@@ -2,6 +2,12 @@
 
 Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
 
+## Improvements for v6.11.3 (t.b.a.)
+
+ - New [GDT_Classname](https://github.com/gizmore/gdo6/tree/master/GDO/DB/GDT_Classname.php) to reflect a classname variable. Simliar to a GDT_Name, but longer and with a different string pattern.
+ 
+ - New `gdoadm.sh migrate <module>` and `migrate_all` to force run auto-migrations. This can also be triggered via reinstall in the www admin panel.
+
 
 ## Improvements for v6.11.2 (23.12.2021)
 

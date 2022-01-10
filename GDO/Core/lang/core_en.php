@@ -190,7 +190,7 @@ return array(
 'err_upload_move' => 'File could not be moved from %s to %s.',
 'err_404' => '404 - File not found',
 'err_user_no_permission' => 'The user needs the %s permission.',
-'err_curl' => 'HTTP request error(%s): %s',
+'err_curl' => 'HTTP request error(%s): %s<br/>URL: %s',
 'err_you_no_mail' => 'Your account needs an email for this.',
 'err_unknown_parameter' => 'Unknown Parameter for method %s/%s: %s',
 'err_select_candidates' => 'Possible matches: %s',

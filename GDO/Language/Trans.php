@@ -9,10 +9,10 @@ use GDO\DB\Cache;
 /**
  * Very cheap i18n.
  * 
- * TODO: Check if ini file parsing and using would be faster than php include.
+ * @TODO: Check if ini file parsing and using would be faster than php include.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.2
  * @since 1.0.0
  */
 final class Trans
@@ -195,17 +195,23 @@ final class Trans
 		return $text;
 	}
 
+	private static function getCacheKey($iso)
+	{
+		$key = md5("$iso;" . implode(',', self::$PATHS));
+		return $key;
+	}
+	
 	private static function &reload($iso)
 	{
 		$trans = [];
 		$trans2 = [];
 		
 		# Try cache
-		$key = "gdo_trans_{$iso}.json";
+		$key = self::getCacheKey($iso);
 		if (self::$FILE_CACHE && Cache::fileHas($key))
 		{
-		    $content = Cache::fileGet($key);
-		    self::$CACHE[$iso] = json_decode($content, true);
+		    $content = Cache::fileGetSerialized($key);
+		    self::$CACHE[$iso] = $content;
 		    self::$HAS_LOADED_FILE_CACHE = true;
 		    return self::$CACHE[$iso];
 		}
@@ -252,7 +258,7 @@ final class Trans
     		if (self::$FILE_CACHE)
     		{
     		    FileUtil::createDir(Cache::filePath());
-    		    Cache::fileSet($key, json_encode($trans, JSON_PRETTY_PRINT));
+    		    Cache::fileSetSerialized($key, $trans);
     		}
 		}
 		

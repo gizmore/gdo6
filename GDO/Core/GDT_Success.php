@@ -54,7 +54,7 @@ class GDT_Success extends GDT
 	
 	public static function with($key, array $args=null, $code=200, $log=true)
 	{
-	    if ($log)
+	    if ($log && class_exists('\GDO\Core\Logger', false))
 		{
 			Logger::logMessage(tiso('en', $key, $args));
 		}
@@ -63,7 +63,7 @@ class GDT_Success extends GDT
 	
 	public static function withText($text, $code=200, $log=true)
 	{
-	    if ($log)
+		if ($log && class_exists('\GDO\Core\Logger', false))
 	    {
 	        Logger::logMessage($text);
 	    }

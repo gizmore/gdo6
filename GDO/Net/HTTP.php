@@ -1,14 +1,16 @@
 <?php
 namespace GDO\Net;
-use GDO\Util\Strings;
+
 use GDO\Core\GDT_Error;
+
 /**
  * - very simple HTTP get/post using curl.
  * 
  * - simple HTTP Nocache headers.
  * 
  * @author gizmore
- * @version 6.05
+ * @version 6.11.2
+ * @since 3.0.0
  */
 final class HTTP
 {
@@ -170,7 +172,9 @@ final class HTTP
 		
 		if (!($received = curl_exec($ch)))
 		{
-			echo GDT_Error::with('err_curl', [curl_errno($ch), curl_error($ch)])->render();
+			echo GDT_Error::with('err_curl', [
+				curl_errno($ch), curl_error($ch), html($url)])->
+					render();
 		}
 		
 		curl_close($ch);

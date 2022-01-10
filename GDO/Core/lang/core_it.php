@@ -190,7 +190,7 @@ return array(
 'err_upload_move' => 'Non è stato possibile spostare un file da %s a %s.',
 'err_404' => '404 - Pagina non trovata',
 'err_user_no_permission' => 'Nessuna autorizzazione: %s.',
-'err_curl' => 'Richiesta HTTP non riuscita(%s): %s',
+'err_curl' => 'Richiesta HTTP non riuscita(%s): %s<br/>URL: %s',
 'err_you_no_mail' => 'Hai bisogno di un\'e-mail per questo.',
 'err_unknown_parameter' => 'Parametro sconosciuto per il metodo %s/%s: %s',
 'err_select_candidates' => 'Hit corrispondenti: %s',

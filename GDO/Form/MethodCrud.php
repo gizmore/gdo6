@@ -6,7 +6,6 @@ use GDO\User\PermissionException;
 use GDO\User\GDO_User;
 use GDO\Captcha\GDT_Captcha;
 use GDO\DB\GDT_Object;
-use GDO\DB\GDT_ObjectSelect;
 use GDO\Core\GDT;
 use GDO\DB\GDT_DeletedAt;
 use GDO\DB\GDT_DeletedBy;
@@ -19,7 +18,7 @@ use GDO\DB\GDT_CreatedBy;
  * Abstract Create|Update|Delete for a GDO using MethodForm.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.2
  * @since 5.1.0
  */
 abstract class MethodCrud extends MethodForm

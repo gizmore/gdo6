@@ -8,13 +8,13 @@ use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Env;
 use GDO\Core\Application;
-use GDO\Util\Strings;
 use GDO\Core\GDT_Response;
 
 /**
  * GDO6 autoloader and public functions.
+ * 
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.2
  * @since 6.0.0
  */
 

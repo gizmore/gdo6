@@ -89,14 +89,14 @@ final class ModuleLoader
 	 * @param string $moduleName
 	 * @return GDO_Module
 	 */
-	public function getModule($moduleName, $fs=false)
+	public function getModule($moduleName, $fs=false, $throw=true)
 	{
 	    $moduleName = strtolower($moduleName);
 	    if (isset($this->modules[$moduleName]))
 	    {
 	        return $this->modules[$moduleName];
 	    }
-	    return $fs ? $this->loadModuleFS($moduleName) : false;
+	    return $fs ? $this->loadModuleFS($moduleName, $throw) : false;
 	}
 	
 	/**
@@ -324,7 +324,7 @@ final class ModuleLoader
 		if (!isset($this->modules[$lowerName]))
 		{
 			$className = "GDO\\$name\\Module_$name";
-			if (class_exists($className, true))
+			if (@class_exists($className, true))
 			{
 				$moduleData = GDO_Module::table()->blankData(['module_name' => $name]);
 				if ($module = self::instanciate($moduleData, true))

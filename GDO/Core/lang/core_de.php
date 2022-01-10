@@ -190,7 +190,7 @@ return array(
 'err_upload_move' => 'Eine Datei konnte nicht von %s nach %s verschoben werden.',
 'err_404' => '404 - Seite nicht gefunden',
 'err_user_no_permission' => 'Der Benutzer benötigt die %s Berechtigung.',
-'err_curl' => 'HTTP Anfrage fehlgeschlagen(%s): %s',
+'err_curl' => 'HTTP Anfrage fehlgeschlagen(%s): %s<br/>URL: %s',
 'err_you_no_mail' => 'Sie benötigen eine E-Mail dafür.',
 'err_unknown_parameter' => 'Unbekannter Parameter für Methode %s/%s: %s',
 'err_select_candidates' => 'Passende Treffer: %s',
