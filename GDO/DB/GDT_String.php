@@ -20,7 +20,7 @@ use GDO\Util\Arrays;
  * 
  * @author gizmore
  * 
- * @version 6.10.0
+ * @version 6.11.3
  * @since 6.0.0
  * 
  * @see \GDO\UI\GDT_Message

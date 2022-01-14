@@ -140,9 +140,10 @@ class GDT_ObjectSelect extends GDT_Select
 	 */
 	public function multipleToVar(array $value)
 	{
-		return array_map(function($gdo) {
+		$ids = array_map(function($gdo) {
 			return $gdo->getID();
 		}, $value);
+		return json_encode(array_values($ids));
 	}
 	
 	public function toValue($var)
