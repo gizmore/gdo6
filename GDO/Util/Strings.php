@@ -6,7 +6,7 @@ namespace GDO\Util;
  * Dedicated to Tim.
  * 
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.3
  * @since 3.0.0
  */
 final class Strings
@@ -48,6 +48,7 @@ final class Strings
 	}
 	
 	/**
+	 * Get a portion of $s from 0 to last occurance of $to.
 	 * 
 	 * @param string $s
 	 * @param string $to
@@ -62,7 +63,15 @@ final class Strings
 		}
 		return $default;
 	}
-	
+
+	/**
+	 * Get a portion of $s from the last occurance of $from.
+	 * 
+	 * @param string $s
+	 * @param string $from
+	 * @param string $default
+	 * @return string
+	 */
 	public static function rsubstrFrom($s, $from, $default=null)
 	{
 		if (false !== ($index = strrpos($s, $from)))

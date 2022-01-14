@@ -15,9 +15,9 @@ final class Javascript
 	###################################
 	### Asset loader and obfuscator ###
 	###################################
-	private static $_JAVASCRIPTS = [];
-	private static $_JAVASCRIPT_PRE_INLINE = '';
-	private static $_JAVASCRIPT_POST_INLINE = '';
+	public static $_JAVASCRIPTS = [];
+	public static $_JAVASCRIPT_PRE_INLINE = '';
+	public static $_JAVASCRIPT_POST_INLINE = '';
 	
 	###########
 	### Add ###

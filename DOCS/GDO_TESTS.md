@@ -2,6 +2,15 @@
 
 Modules can have a Test/ folder that is automatically used when invoking `./gdo_test.sh`.
 
+You can launch individual module tests via `./gdo_test.sh <module>`. Core modules are always tested.
+
+It is recommended to install the modules gdo6-tests and gdo6-test-methods for automated test-cases. 
+
+    ./gdoadm.sh provide Tests
+    ./gdoadm.sh install Tests
+    ./gdoadm.sh provide TestMethods
+    ./gdoadm.sh install TestMethods
+
 
 ## Testing configuration
 

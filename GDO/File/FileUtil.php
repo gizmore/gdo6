@@ -34,6 +34,14 @@ final class FileUtil
 	    return true;
 	}
 	
+	
+	public static function copy($src, $dest)
+	{
+		$destDir = Strings::rsubstrTo($dest, '/');
+		self::createDir($destDir);
+		return copy($src, $dest);
+	}
+	
 	###############
 	### Dirsize ###
 	###############

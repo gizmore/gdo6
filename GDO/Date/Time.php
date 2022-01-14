@@ -431,7 +431,8 @@ final class Time
 				tiso($iso, 'tu_s') => 60,
 				tiso($iso, 'tu_m') => 60,
 				tiso($iso, 'tu_h') => 24,
-				tiso($iso, 'tu_d') => 365,
+				tiso($iso, 'tu_d') => 7,
+				tiso($iso, 'tu_w') => 52,
 				tiso($iso, 'tu_y') => 1000000,
 			);
 		}
@@ -507,8 +508,8 @@ final class Time
 		if (!is_string($duration)) { return 0.0; }
 		if (is_numeric($duration)) { return floatval($duration); }
 		$matches = null;
-		$duration = strtolower($duration);
-		if (!preg_match('/^\\s*(([0-9]+)\\s*([smhdwoy]{0,2}))+\\s*$/iD', $duration, $matches))
+// 		$duration = strtolower(trim($duration));
+		if (!preg_match_all('/(?:([0-9]+)\\s*([smhdwoy]{0,2}))+/Di', $duration, $matches))
 		{
 			return 0.0;
 		}
@@ -523,14 +524,13 @@ final class Time
 			'y' => 31536000,
 		];
 		$back = 0.0;
-		$len = (count($matches) - 1) / 3;
-		$j = 1;
-		for ($i = 0; $i < $len; $i++, $j+=3)
+		$len = count($matches[1]);
+		for ($i = $j = 0; $i < $len; $i++, $j++)
 		{
-			$d = floatval($matches[$j+1]);
+			$d = floatval($matches[1][$j]);
 			if ($d)
 			{
-				if ($unit = @$multis[$matches[$j+2]])
+				if ($unit = @$multis[$matches[2][$j]])
 				{
 					$back += $d * $unit;
 				}

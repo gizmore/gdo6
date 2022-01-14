@@ -15,6 +15,7 @@ use GDO\DB\GDT_DeletedAt;
 use GDO\Date\Time;
 use GDO\DB\GDT_DeletedBy;
 use GDO\User\GDO_User;
+use GDO\Util\Common;
 
 /**
  * - GDO -
@@ -33,7 +34,7 @@ use GDO\User\GDO_User;
  * @see Query
  * 
  * @author gizmore@wechall.net
- * @version 6.11.0
+ * @version 6.11.3
  * @since 3.2.0
  * @license MIT
  */
@@ -1782,4 +1783,23 @@ abstract class GDO
         return mysqli_fetch_field($result) === '1';
     }
     
+    ##############
+    ### Module ###
+    ##############
+    /**
+     * Get the module for a gdo.
+     * @return GDO_Module
+     */
+    public function getModule()
+    {
+    	$name = $this->getModuleName();
+    	return ModuleLoader::instance()->getModule($name);
+    }
+    
+    public function getModuleName()
+    {
+    	$klass = get_class($this);
+    	return Common::regex('/^GDO\\\\([^\\\\]+)\\\\/', $klass);
+    }
+
 }

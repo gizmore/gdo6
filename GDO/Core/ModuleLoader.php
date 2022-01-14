@@ -14,7 +14,7 @@ use GDO\Table\Sort;
  * Uses memcached for fast modulecache loading.
  *
  * @author gizmore
- * @version 6.11.2
+ * @version 6.11.3
  * @since 3.0.0
  */
 final class ModuleLoader
@@ -175,11 +175,16 @@ final class ModuleLoader
 		}
 	}
 	
+	private $scriptsIncluded = false;
 	public function onIncludeScripts()
 	{
-		foreach ($this->getEnabledModules() as $module)
+		if (!$this->scriptsIncluded)
 		{
-			$module->onIncludeScripts();
+			$this->scriptsIncluded = true;
+			foreach ($this->getEnabledModules() as $module)
+			{
+				$module->onIncludeScripts();
+			}
 		}
 	}
 	

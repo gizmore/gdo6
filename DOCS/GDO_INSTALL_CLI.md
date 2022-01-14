@@ -17,7 +17,7 @@ Maybe implement something from the [GDO_TODO.md](https://github.com/gizmore/gdo6
 
  - You *have to* install git. See [git4windows](https://git-scm.com/download/win) or [git](https://github.com/git/git)
  
-It is recommended to have nodejs, npm, yarn and bower   installed.
+It is recommended to have nodejs, npm, yarn and bower installed.
 Bower will be dropped sooner or later.
 
     npm -g install yarn
@@ -25,6 +25,8 @@ Bower will be dropped sooner or later.
 
 
 ## Install the gdo6 core
+
+The `--recursive` option has to be used.
 
     git clone --recursive https://github.com/gizmore/gdo6
     cd gdo6

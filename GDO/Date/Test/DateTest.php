@@ -85,4 +85,18 @@ final class DateTest extends TestCase
         assertEquals('09.11.2021 09:00', $result);
     }
     
+    public function testHumanDuration()
+    {
+    	# Test vector
+    	$tx = Time::ONE_WEEK*2 + Time::ONE_DAY*3;
+    	
+    	# To human
+    	$hd = Time::humanDuration($tx);
+    	assertEquals("2w 3d", $hd, "Test if integers convert to human duration.");
+    	
+    	# To int
+    	$t = Time::humanToSeconds($hd);
+    	assertEquals($tx, $t, "Test if human duration converts to seconds.");
+    }
+    
 }
