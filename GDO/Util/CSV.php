@@ -33,7 +33,7 @@ final class CSV
     
     public function withHeader($withHeader=true)
     {
-        $this->$withHeader = $withHeader;
+        $this->withHeader = $withHeader;
         return $this;
     }
     
