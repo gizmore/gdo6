@@ -2,7 +2,7 @@
 namespace GDO\Util;
 
 /**
- * Password hash object.
+ * @TODO: Move to module Crypto: BCrypt password hash object.
  * 
  * @author gizmore
  * @version 6.10.6

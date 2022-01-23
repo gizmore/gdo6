@@ -552,6 +552,5 @@ final class Time
 	
 }
 	
-date_default_timezone_set('UTC');
 Time::$UTC = new \DateTimeZone('UTC');
 Time::$TIMEZONE_OBJECTS[Time::UTC] = Time::$UTC;

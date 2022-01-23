@@ -34,7 +34,7 @@ $noSession = true;
 if (@class_exists('\\GDO\\Session\\GDO_Session', true))
 {
     $noSession = false;
-    GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS);
+    GDO_Session::init(GDO_SESS_NAME, GDO_SESS_DOMAIN, GDO_SESS_TIME, !GDO_SESS_JS, GDO_SESS_HTTPS, GDO_SESS_SAMESITE);
 }
 
 # Bootstrap
@@ -212,6 +212,7 @@ if ($url = @$_GET['_url'])
 try
 {
 	$rqmethod = @$_SERVER['REQUEST_METHOD'];
+	$isOptions = $rqmethod === 'OPTIONS';
 	if (!in_array($rqmethod, ['GET', 'POST', 'HEAD', 'OPTIONS'], true))
 	{
 		$_REQUEST['mo'] = 'Core';
@@ -242,6 +243,11 @@ try
     if ($err = GDT_Response::globalError())
     {
     	# do nothing
+    }
+    
+    elseif ($isOptions)
+    {
+    	die(0); # do nothing
     }
     	
     elseif (GDO_DB_ENABLED && GDO_SESS_LOCK && $method && $method->isLockingSession() && $session)

@@ -10,7 +10,7 @@ use GDO\Session\GDO_Session;
  * Holds registered themes.
  * 
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.3
  * @since 6.0.0
  */
 class Application
@@ -57,8 +57,6 @@ class Application
 	public function __construct()
 	{
 		self::$instance = $this;
-        ini_set('date.timezone', 'UTC');
-		date_default_timezone_set('UTC');
         $this->loader = ModuleLoader::instance() ?
             ModuleLoader::instance() :
             new ModuleLoader(GDO_PATH . 'GDO/');
@@ -163,4 +161,6 @@ class Application
 }
 
 # setup current time.
+ini_set('date.timezone', 'UTC');
+date_default_timezone_set('UTC');
 Application::updateTime();

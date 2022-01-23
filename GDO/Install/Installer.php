@@ -217,9 +217,9 @@ class Installer
 							$query = "INSERT INTO $tablename ($columns) SELECT $columns FROM $temptable";
 							$db->queryWrite($query);
 							
-// 							# drop temp after all succeded.
-// 							$query = "DROP TABLE $temptable";
-// 							$db->queryWrite($query);
+							# drop temp after all succeded.
+							$query = "DROP TABLE $temptable";
+							$db->queryWrite($query);
 						}
 					}
 				}

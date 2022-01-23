@@ -155,3 +155,28 @@ window.GDO.xhr = function(url, method, data) {
 		body: JSON.stringify(data)
 	});
 };
+
+var origOpen = XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open = function () {
+	origOpen.apply(this, arguments);
+	let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+	this.setRequestHeader('X-CSRF-TOKEN', token);
+	this.withCredentials = true;
+};
+
+/**
+ * Get URL GET parameter.
+ * @since 6.11.3
+ */
+window.GDO.GET = function(sParam, def) {
+    let sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName;
+    for (let i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return def;
+};

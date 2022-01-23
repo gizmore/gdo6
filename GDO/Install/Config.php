@@ -18,6 +18,7 @@ use GDO\DB\GDT_String;
 use GDO\Core\GDT_Template;
 use GDO\Core\Logger;
 use GDO\DB\GDT_UInt;
+use GDO\Core\Website;
 
 /**
  * Configuration helper during install wizard.
@@ -26,7 +27,7 @@ use GDO\DB\GDT_UInt;
  * Holds fields for a configuration form.
  * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.3
  * @since 6.0.0
  */
 class Config
@@ -132,8 +133,9 @@ class Config
 		if (!defined('GDO_SESS_NAME')) define('GDO_SESS_NAME', 'GDO6');
 		if (!defined('GDO_SESS_DOMAIN')) define('GDO_SESS_DOMAIN', GDO_DOMAIN);
 		if (!defined('GDO_SESS_TIME')) define('GDO_SESS_TIME', Time::ONE_DAY*2);
-		if (!defined('GDO_SESS_JS')) define('GDO_SESS_JS', true);
-		if (!defined('GDO_SESS_HTTPS')) define('GDO_SESS_HTTPS', false);
+		if (!defined('GDO_SESS_JS')) define('GDO_SESS_JS', false);
+		if (!defined('GDO_SESS_HTTPS')) define('GDO_SESS_HTTPS', Website::isTLS());
+		if (!defined('GDO_SESS_SAMESITE')) define('GDO_SESS_SAMESITE', 'Lax');
 		if (!defined('GDO_SESS_LOCK')) define('GDO_SESS_LOCK', GDO_DB_ENABLED);
 		
 		# Email
@@ -206,8 +208,9 @@ class Config
 			GDT_UInt::make('sess_time')->initialValue(GDO_SESS_TIME)->required()->min(30),
 			GDT_Checkbox::make('sess_js')->initialValue(GDO_SESS_JS),
 		    GDT_Checkbox::make('sess_https')->initialValue(GDO_SESS_HTTPS),
-		    GDT_Checkbox::make('sess_lock')->initialValue(GDO_SESS_LOCK),
-		    # Email
+			GDT_Checkbox::make('sess_lock')->initialValue(GDO_SESS_LOCK),
+			GDT_Checkbox::make('sess_samesite')->initialValue(GDO_SESS_SAMESITE),
+			# Email
 			GDT_Divider::make()->label('install_config_section_email'),
 		    GDT_Checkbox::make('enable_email')->initialValue(GDO_ENABLE_EMAIL),
 		    GDT_Realname::make('bot_name')->required()->initialValue(GDO_BOT_NAME)->label('bot_name'),

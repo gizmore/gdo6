@@ -16,7 +16,7 @@ use GDO\Util\Strings;
  * @TODO: check, on an out of memory fatal error, if a shutdown function would draw a stack trace.
  * 
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.3
  * @since 3.0.1
  */
 final class Debug
@@ -63,23 +63,11 @@ final class Debug
 		}
 	}
 	
-// 	public static function enableStubErrorHandler()
-// 	{
-// 		self::disableErrorHandler();
-// 		set_error_handler([self::class, 'error_handler_stub']);
-// 		self::$ENABLED = true;
-// 	}
-	
 	#####################
 	## Error Handlers ###
 	#####################
-// 	public static function error_handler_stub($errno, $errstr, $errfile, $errline, $errcontext)
-// 	{
-// 		return false;
-// 	}
-	
 // 	/**
-// 	 * This one get's called on a fatal.
+// 	 * @TODO: shutdown function shall show debug stacktrace on fatal error. If an error was already shown, print nothing.
 // 	 * No stacktrace available and some vars are messed up.
 // 	 */
 // 	public static function shutdown_function()
@@ -223,6 +211,8 @@ final class Debug
 	        Logger::flush();
 	    }
 	    
+	    hdrc('HTTP/1.1 500 Server Error');
+	    
 	    if ($render)
 	    {
 	        return self::renderError($message);
@@ -231,7 +221,6 @@ final class Debug
 	
 	private static function renderError($message)
 	{
-		hdrc('HTTP/1.1 409 Conflict');
 		$app = Application::instance();
 		if (!$app)
 		{
@@ -245,18 +234,7 @@ final class Debug
 		{
 		    return "$message\n";
 		}
-		else
-		{
-// 		    $message = html($message);
-		}
-// 		if ($app->isAjax() || (!defined('GDO_CORE_STABLE')))
-// 		{
-		    return $message;
-// 		}
-// 		else
-// 		{
-// 		    return GDT_Page::$INSTANCE->html($message)->render();
-// 		}
+	    return $message;
 	}
 	
 	public static function disableExceptionHandler()
@@ -273,7 +251,8 @@ final class Debug
 		if (!self::$EXCEPTION)
 		{
 			self::$EXCEPTION = true;
-			set_exception_handler(array('GDO\\Core\\Debug', 'exception_handler'));
+			$handler = ['GDO\\Core\\Debug', 'exception_handler'];
+			set_exception_handler($handler);
 		}
 	}
 	
@@ -471,10 +450,11 @@ final class Debug
 		
 		$copy = [];
 		$cli = Application::instance()->isCLI();
+		$ajax = Application::instance()->isAjax();
 		foreach ($implode as $imp)
 		{
 			list ($func, $file, $line) = $imp;
-			if (!$cli)
+			if ( (!$cli) && (!$ajax) )
 			{
 				$len = mb_strlen($func);
 				$func .= ' ' . str_repeat('.', $longest - $len);

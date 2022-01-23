@@ -2,13 +2,20 @@
 
 Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
 
-## Improvements for v6.11.3 (t.b.a.)
+
+## Improvements for v6.11.3 (23.01.2022)
+
+ - [CORS](https://github.com/gizmore/gdo6-currency) does now work for cross domain cookies.
+
+ - [SessionDB](https://github.com/gizmore/gdo6-session-db) and [SessionCookie](https://github.com/gizmore/gdo6-session-cookie) introduce GDO_SESS_SAMESITE config value for cross domain settings.
+
+ - [Currency](https://github.com/gizmore/gdo6-currency) now can configure a site's default currency.
 
  - [BasicAuth](https://github.com/gizmore/gdo6-basic-auth) now allows authentication with your user credentials.
 
- - New [GDT_Classname](https://github.com/gizmore/gdo6/tree/master/GDO/DB/GDT_Classname.php) to reflect a classname variable. Simliar to a GDT_Name, but longer and with a different string pattern.
+ - [GDT_Classname](https://github.com/gizmore/gdo6/tree/master/GDO/DB/GDT_Classname.php) is a new GDT to reflect a classname variable. Simliar to a GDT_Name, but more chars and a different validation pattern.
  
- - New `gdoadm.sh migrate <module>` and `migrate_all` to force run auto-migrations. This can also be triggered via reinstall in the www admin panel.
+ - New `gdoadm.sh migrate <module>` and `gdoadm.sh migrate_all` to force running auto-migrations. This can also be triggered via reinstall in the www admin panel.
 
 
 ## Improvements for v6.11.2 (23.12.2021)

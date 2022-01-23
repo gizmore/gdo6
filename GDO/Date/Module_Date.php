@@ -14,7 +14,7 @@ use GDO\Date\Method\Timezone;
  * - Keeps timezone after user logout.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.3
  * @since 6.10.1
  */
 final class Module_Date extends GDO_Module
@@ -48,7 +48,7 @@ final class Module_Date extends GDO_Module
     public function onInit()
     {
         $user = GDO_User::current();
-        $this->timezone =  $user->hasTimezone() ?
+        $this->timezone = $user->hasTimezone() ?
             $user->getTimezone() : $this->timezone;
         Time::setTimezone($this->timezone);
     }

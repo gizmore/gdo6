@@ -26,6 +26,7 @@ use GDO\Install\Method\InstallCronjob;
 use GDO\Install\Method\SystemTest;
 use GDO\Core\GDT_Error;
 use GDO\Core\GDT_Success;
+use GDO\Core\Website;
 
 /**
  * The gdoadm.php executable manages modules and config via the CLI.
@@ -77,6 +78,8 @@ function printUsage($code=1)
     echo "php $exe wipe <module> - To uninstall modules\n";
     echo "php $exe wipe_all - To erase the whole database\n";
     echo "php $exe update - Is automatically called after gdo_update.sh - it re-installs all installed modules.\n";
+    echo "php $exe migrate <module> - To force-migrate gdo tables for a module.\n";
+    echo "php $exe migrate_all> - To force-migrate all gdo tables for all modules.\n";
     echo "\n--- Module config ---\n";
     echo "php $exe config <module> - To show the config variables for a module\n";
     echo "php $exe config <module> <key> - To show the description for a module variable\n";
@@ -674,6 +677,7 @@ elseif ($argv[1] === 'migrate')
 	{
 		Installer::installModule($module, true);
 	}
+	GDT_Success::responseWith('msg_gdoadm_migrated', [$module->displayName()]);
 }
 
 elseif ($argv[1] === 'migrate_all')
@@ -691,5 +695,8 @@ else
     echo "Unknown command {$argv[1]}\n\n";
     printUsage();
 }
+
+echo GDT_Response::make()->render();
+echo Website::topResponse()->render();
 
 die(GDT_Response::globalError() ? 1 : 0);

@@ -7,9 +7,11 @@ use GDO\Core\Application;
 
 /**
  * Get all translation data for the current language.
+ * Javascript applications use this if enabled.
+ * 
  * @author gizmore
- * @version 6.10
- * @since 6.02
+ * @version 6.11.3
+ * @since 6.2.0
  */
 final class GetTransData extends MethodAjax
 {

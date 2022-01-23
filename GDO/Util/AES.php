@@ -2,7 +2,7 @@
 namespace GDO\Util;
 
 /**
- * Helper for AES-256 encryption.
+ * @TODO: Move to module Crypto: Helper for AES-256 encryption.
  * @author gizmore
  * @version 6.11.0
  * @since 3.0.1

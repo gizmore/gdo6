@@ -40,7 +40,7 @@ final class Website
 	
 	public static function isTLS()
 	{
-		return (!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off');
+		return (!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] !== 'off');
 	}
 	
 	/**

@@ -29,7 +29,7 @@ use GDO\Session\GDO_Session;
  * @author gizmore
  * @link https://www.wechall.net
  * @link https://mettwitze.gizmore.org
- * @version 6.11.1
+ * @version 6.11.3
  * @since 1.0.0
  */
 final class GDO_User extends GDO
@@ -430,7 +430,7 @@ final class GDO_User extends GDO
 	    return $pre . $this->displayNameLabel();
 	}
 	
-	public function renderJSON()
+	public function toJSON()
 	{
 		return [
 			'user_id' => (int)$this->getID(),

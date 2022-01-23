@@ -5,8 +5,8 @@ namespace GDO\DB;
  * A classname.
  * 
  * @author gizmore
- * @version 6.11.2
- * @since 6.11.2
+ * @version 6.11.3
+ * @since 6.11.3
  */
 class GDT_Classname extends GDT_String
 {

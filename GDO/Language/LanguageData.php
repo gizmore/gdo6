@@ -14,7 +14,8 @@ final class LanguageData
 	{
 		foreach (self::getLanguages() as $data)
 		{
-			list($en, $native, $iso3, $iso2) = $data;
+// 			list($en, $native, $iso3, $iso2) = $data;
+			$iso2 = $data[3];
 			if (FileUtil::isFile(GDO_PATH . 'GDO/Language/img/'.strtolower($iso2).'.png'))
 			{
 			    if (!GDO_Language::getById($iso2))

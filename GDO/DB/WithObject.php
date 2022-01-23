@@ -55,17 +55,6 @@ trait WithObject
 	    return empty($var) ? null : $var;
 	}
 
-// 	/**
-//      * @return GDO
-// 	 */
-// 	public function getValue()
-// 	{
-// 	    if ($id = $this->getVar())
-// 	    {
-//     		return parent::getValue();
-// 	    }
-// 	}
-	
 	public function toVar($value)
 	{
 		return $value !== null ? $value->getID() : null;

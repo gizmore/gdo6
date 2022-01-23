@@ -6,8 +6,9 @@ use GDO\DB\GDT_String;
 /**
  * IP column and rendering.
  * Current IP is assigned at the very bottom.
+ * 
  * @author gizmore
- * @version 6.10.4
+ * @version 6.11.3
  * @since 6.0.0
  */
 final class GDT_IP extends GDT_String
@@ -36,23 +37,20 @@ final class GDT_IP extends GDT_String
 		$ip = $ip ? $ip : self::$CURRENT;
 		return
 		  ($ip === '::1') ||
-		  (substr($ip, 0, 4) === '127.') ||
-		  (substr($ip, 0, 8) === '192.168.') ||
-		  (substr($ip, 0, 8) === '169.254.') ||
-		  (substr($ip, 0, 3) === '10.') ||
+		  (str_starts_with($ip, '127')) ||
+		  (str_starts_with($ip, '192.168')) ||
+		  (str_starts_with($ip, '169.254')) ||
+		  (str_starts_with($ip, '10.')) ||
 		  ((ip2long($ip) & self::netmask(12)) === bindec('10101100000100000000000000000000'));
 	}
 	
+	###############
+	### Current ###
+	###############
 	public function useCurrent($useCurrent=true)
 	{
-	    if (!$useCurrent)
-	    {
-	        return $this->initial(null);
-	    }
-	    else
-	    {
-    	    return $this->initial(self::current());
-	    }
+		$initial = $useCurrent ? self::$CURRENT : null;
+        return $this->initial($initial);
 	}
 
 	##############
@@ -62,22 +60,13 @@ final class GDT_IP extends GDT_String
 	public $max = 45;
 	public $encoding = self::ASCII;
 	public $caseSensitive = true;
-	public $pattern = "/^[.:0-9A-F]{3,45}$/";
+	public $pattern = "/^[.:0-9A-Fa-f]{3,45}$/";
 	public $writable = false;
 	public $editable = false;
 	public $icon = 'url';
 	
 	public function defaultLabel() { return $this->label('ip'); }
-	
-	/**
-	 * Uppercase IPv6 to speed up DB lookups.
-	 * {@inheritDoc}
-	 * @see \GDO\DB\GDT_String::getVar()
-	 */
-	public function getVar()
-	{
-		return strtoupper(parent::getVar());
-	}
+
 }
 
 # Assign current IP.

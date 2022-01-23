@@ -15,6 +15,7 @@ use GDO\File\Filewalker;
 use GDO\CLI\CLI;
 use GDO\Form\GDT_Submit;
 use GDO\User\PermissionException;
+use GDO\Net\GDT_Url;
 
 /**
  * Abstract baseclass for all methods.
@@ -31,7 +32,7 @@ use GDO\User\PermissionException;
  * @see MethodCronjob
  *
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.3
  * @since 3.0.0
  */
 abstract class Method
@@ -344,6 +345,7 @@ abstract class Method
 	public function getMethodName() { return $this->gdoShortName(); }
 	public function getModuleName() { $c = static::class; return substr($c, 4, strpos($c, '\\', 6) - 4); }
 	public function href($app='') { return href($this->getModuleName(), $this->getMethodName(), $app); }
+	public function url($app='') { return GDT_Url::absolute($this->href($app)); }
 	
 	public function error($key, array $args=null, $code=409, $log=true)
 	{
@@ -772,6 +774,20 @@ abstract class Method
 	            unlink($path);
 	        }
 	    });
+	}
+
+	##############
+	### Pathes ###
+	##############
+	/**
+	 * Get a path for this module in it's GDO folder.
+	 * @param string $path
+	 * @return string
+	 */
+	public function filePath($path='')
+	{
+		$module = $this->getModule();
+	    return $module->filePath($path);
 	}
 
 	/**

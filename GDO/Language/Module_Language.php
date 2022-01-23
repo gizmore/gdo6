@@ -6,7 +6,6 @@ use GDO\Util\Strings;
 use GDO\Core\Application;
 use GDO\User\GDO_User;
 use GDO\Session\GDO_Session;
-use GDO\Util\Common;
 use GDO\Core\Website;
 use GDO\UI\GDT_Divider;
 use GDO\DB\GDT_Checkbox;
@@ -97,7 +96,7 @@ final class Module_Language extends GDO_Module
 	    {
     		# Add js trans
     		$href = sprintf(
-    			'%sindex.php?mo=Language&me=GetTransData&iso=%s&_ajax=1&_fmt=html&%s',
+    			'%sindex.php?mo=Language&me=GetTransData&_lang=%s&_ajax=1&_fmt=html&%s',
     			GDO_WEB_ROOT, Trans::$ISO, $this->nocacheVersion());
     		$href = GDT_Url::absolute($href);
     		Javascript::addJS($href);
@@ -112,7 +111,7 @@ final class Module_Language extends GDO_Module
 	#################
 	public function detectISO()
 	{
-		if ($iso = Common::getRequestString('_lang'))
+		if ($iso = (string) @$_REQUEST['_lang'])
 		{
 			return $iso;
 		}
@@ -120,11 +119,15 @@ final class Module_Language extends GDO_Module
 		{
 			return $iso;
 		}
-		if (!($iso = $this->detectAcceptLanguage()))
+		if ($iso = $this->detectAcceptLanguage())
 		{
-			$iso = GDO_User::current()->getLangISO();
+			return $iso;
 		}
-		return $iso ? $iso : GDO_LANGUAGE;
+		if ($iso = GDO_User::current()->getLangISO())
+		{
+			return $iso;
+		}
+		return GDO_LANGUAGE;
 	}
 	
 	public function detectAcceptLanguage()

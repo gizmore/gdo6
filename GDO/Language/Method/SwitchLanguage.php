@@ -15,7 +15,7 @@ use GDO\Net\GDT_Url;
  * Stores your choice in your session.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.3
  * @since 6.9.0
  * 
  * @see Module_Language
