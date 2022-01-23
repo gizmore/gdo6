@@ -80,11 +80,11 @@ class GDT_ObjectSelect extends GDT_Select
 				$back = '';
 				foreach ($obj as $gdo)
 				{
-					$back .= $gdo->renderCell();
+					$back .= $gdo->displayName();
 				}
 				return $back;
 			}
-			return $obj->renderCell();
+			return $obj->displayName();
 		}
 		return $obj;
 	}
