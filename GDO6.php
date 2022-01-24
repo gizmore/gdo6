@@ -2,11 +2,13 @@
 use GDO\Language\Trans;
 use GDO\Core\GDO;
 use GDO\Net\GDT_Url;
+use GDO\User\GDO_User;
 use GDO\Util\Common;
 use GDO\Core\ModuleLoader;
 use GDO\Core\Env;
 use GDO\Core\Application;
 use GDO\Core\GDT_Response;
+use GDO\Date\Time;
 
 /**
  * GDO6 autoloader and public functions.
@@ -182,3 +184,51 @@ function module_enabled($moduleName)
     $module = ModuleLoader::instance()->getModule($moduleName);
     return $module ? $module->isEnabled() : false;
 }
+
+#######################
+### Translation API ###
+#######################
+
+/**
+ * Global translate function to translate into current language ISO.
+ * @param string $key
+ * @param array $args
+ * @return string
+ */
+function t($key, array $args=null) { return Trans::t($key, $args); }
+
+/**
+ * Global translate function to translate into english.
+ * @see t()
+ * @param string $key
+ * @param array $args
+ * @return string
+ */
+function ten($key, array $args=null) { return Trans::tiso('en', $key, $args); }
+
+/**
+ * Global translate function to translate into an ISO language code.
+ * @param string $iso
+ * @param string $key
+ * @param array $args
+ * @return string
+ */
+function tiso($iso, $key, array $args=null) { return Trans::tiso($iso, $key, $args); }
+
+/**
+ * Global translate function to translate into a user's language.
+ * @param GDO_User $user
+ * @param string $key
+ * @param array $args
+ * @return string
+ */
+function tusr(GDO_User $user, $key, array $args=null) { return Trans::tiso($user->getLangISO(), $key, $args); }
+
+/**
+ * Display a date value into current language iso.
+ * @param string $date Date in DB format.
+ * @param string $format format key from trans file; e.g: 'short', 'long', 'date', 'exact'.
+ * @param string $default the default string to display when date is null or invalid.
+ * @return string
+ */
+function tt($date=null, $format='short', $default='---') { return Time::displayDate($date, $format, $default); }
