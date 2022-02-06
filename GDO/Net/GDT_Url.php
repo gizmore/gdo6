@@ -24,8 +24,22 @@ class GDT_Url extends GDT_String
     ### Static ###
     ##############
 	public static function host() { return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : GDO_DOMAIN; }
+	public static function port() { return defined('GDO_PORT') ? GDO_PORT : @$_SERVER['SERVER_PORT']; }
+	public static function hostWithPort()
+	{
+		$port = self::port();
+		if (GDO_PROTOCOL === 'https')
+		{
+			$port = $port == 443 ? '' : ":{$port}";
+		}
+		else
+		{
+			$port = $port == 80 ? '' : ":{$port}";
+		}
+		return host() . $port;
+	}
 	public static function protocol() { return isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] !== 'off') ? 'https' : 'http'; }
-	public static function absolute($url) { return sprintf('%s://%s%s', self::protocol(), self::host(), $url); }
+	public static function absolute($url) { return sprintf('%s://%s%s', self::protocol(), self::hostWithPort(), $url); }
 	public static function relative($url) { return GDO_WEB_ROOT . $url; }
 	
 	public function defaultLabel() { return $this->label('url'); }

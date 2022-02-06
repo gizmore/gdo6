@@ -103,6 +103,7 @@ class Config
 		if (!defined('GDO_DOMAIN')) define('GDO_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
 		if (!defined('GDO_SERVER')) define('GDO_SERVER', self::detectServerSoftware());
 		if (!defined('GDO_PROTOCOL')) define('GDO_PROTOCOL', @$_SERVER['HTTPS'] === 'on' ? 'https' : 'http');
+		if (!defined('GDO_PORT')) define('GDO_SERVER', @$_SERVER['SERVER_PORT'] ? $_SERVER['SERVER_PORT'] : (GDO_PROTOCOL === 'https' ? 443 : 80));
 		if (!defined('GDO_WEB_ROOT')) define('GDO_WEB_ROOT', Strings::substrTo($_SERVER['SCRIPT_NAME'], 'install/wizard.php'));
 		# Files
 		if (!defined('GDO_CHMOD')) define('GDO_CHMOD', 0770);

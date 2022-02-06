@@ -13,6 +13,7 @@ use GDO\UI\GDT_Page;
 use GDO\File\FileUtil;
 use GDO\User\GDO_UserPermission;
 use GDO\Date\GDO_Timezone;
+use GDO\Net\GDT_Url;
 
 /**
  * The first module by priority, and it *HAS* to be installed for db driven sites,
@@ -36,10 +37,8 @@ final class Module_Core extends GDO_Module
      * 
      * 6.11.4 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
-     * 
-     * @var string
      */
-	const GDO_REVISION = '6.11.3-r6313';
+	const GDO_REVISION = '6.11.3-r6315';
 
 	##############
 	### Module ###
@@ -155,10 +154,11 @@ final class Module_Core extends GDO_Module
 		    "window.GDO_CONFIG = {};
 window.GDO_PROTOCOL = '%s';
 window.GDO_DOMAIN = '%s';
+window.GDO_PORT = '%s';
 window.GDO_WEB_ROOT = '%s';
 window.GDO_LANGUAGE = '%s';
 window.GDO_REVISION = '%s';
-", GDO_PROTOCOL, GDO_DOMAIN,
+", GDO_PROTOCOL, GDO_DOMAIN, GDT_Url::port(),
    GDO_WEB_ROOT, Trans::$ISO,
    $this->nocacheVersion());
 	}
