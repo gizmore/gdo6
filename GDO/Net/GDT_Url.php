@@ -36,7 +36,7 @@ class GDT_Url extends GDT_String
 		{
 			$port = $port == 80 ? '' : ":{$port}";
 		}
-		return host() . $port;
+		return self::host() . $port;
 	}
 	public static function protocol() { return isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] !== 'off') ? 'https' : 'http'; }
 	public static function absolute($url) { return sprintf('%s://%s%s', self::protocol(), self::hostWithPort(), $url); }
