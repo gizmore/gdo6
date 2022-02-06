@@ -23,7 +23,7 @@ class GDT_Url extends GDT_String
     ##############
     ### Static ###
     ##############
-	public static function host() { return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : GDO_DOMAIN; }
+	public static function host() { return isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : GDO_DOMAIN; }
 	public static function port() { return defined('GDO_PORT') ? GDO_PORT : @$_SERVER['SERVER_PORT']; }
 	public static function hostWithPort()
 	{
