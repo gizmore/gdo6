@@ -34,7 +34,7 @@ final class HTTP
 	{
 		if (@$url[0] === '/')
 		{
-			$url = GDO_PROTOCOL . '://' . GDO_DOMAIN . $url;
+			$url = GDO_PROTOCOL . '://' . GDT_Url::hostWithPort() . $url;
 		}
 
 		if (!($ch = curl_init($url)))
