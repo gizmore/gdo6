@@ -161,7 +161,7 @@ abstract class MethodForm extends Method
 					    unset($_REQUEST['nojs']);
 					    if ($field->click)
 					    {
-					    	$field->click();
+					    	$response = $field->click();
 					    }
 					    else
 					    {
