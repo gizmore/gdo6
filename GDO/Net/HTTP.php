@@ -9,7 +9,7 @@ use GDO\Core\GDT_Error;
  * - simple HTTP Nocache headers.
  * 
  * @author gizmore
- * @version 6.11.2
+ * @version 6.11.3
  * @since 3.0.0
  */
 final class HTTP
@@ -130,7 +130,6 @@ final class HTTP
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeaders);
 		}
 		
-		
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
 		
 		# Try to follow redirects
@@ -241,12 +240,7 @@ final class HTTP
 		
 		if (is_array($postdata))
 		{
-			$data = [];
-			foreach ($postdata as $key => $value)
-			{
-				$data[] = urlencode($key).'='.urlencode($value);
-			}
-			$postdata = implode("&", $data);
+			$postdata = http_build_query($postdata);
 		}
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
 		if (false === ($received = curl_exec($ch)))
