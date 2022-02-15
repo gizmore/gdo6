@@ -35,7 +35,7 @@ use GDO\Core\Website;
  * @see ./gdoadm.sh
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.3
  * @since 6.10.0
  * 
  * @see gdo_update.sh - to update your gdo6 installation
@@ -676,8 +676,8 @@ elseif ($argv[1] === 'migrate')
 	else
 	{
 		Installer::installModule($module, true);
+		GDT_Success::responseWith('msg_gdoadm_migrated', [$module->displayName()]);
 	}
-	GDT_Success::responseWith('msg_gdoadm_migrated', [$module->displayName()]);
 }
 
 elseif ($argv[1] === 'migrate_all')

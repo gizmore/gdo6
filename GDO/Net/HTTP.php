@@ -153,7 +153,6 @@ final class HTTP
 		
  		curl_setopt($ch, CURLOPT_URL, $url);
  		
-// 		$returnHeader = true;
  		if (is_bool($returnHeader))
  		{
  			curl_setopt($ch, CURLOPT_HEADER, $returnHeader);
