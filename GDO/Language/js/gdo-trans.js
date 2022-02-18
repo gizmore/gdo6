@@ -6,7 +6,7 @@ function GDO_Trans() {
 	this.t = function(key) {
 		try {
 			key = this.CACHE[key] || key;
-			if (key.slice) {
+			if (key instanceof Array) {
 				return key;
 			}
 			var args = Array.prototype.slice.call(arguments);

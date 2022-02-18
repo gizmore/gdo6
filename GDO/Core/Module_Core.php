@@ -38,7 +38,7 @@ final class Module_Core extends GDO_Module
      * 6.11.4 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
      */
-	const GDO_REVISION = '6.11.3-r6319';
+	const GDO_REVISION = '6.11.3-r6321';
 
 	##############
 	### Module ###
