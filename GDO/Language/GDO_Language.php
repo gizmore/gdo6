@@ -11,8 +11,8 @@ use GDO\Core\GDT_Template;
  * @see self::allSupported()
  * 
  * @author gizmore
- * @version 6.10
- * @since 3.00
+ * @version 6.10.3
+ * @since 3.0.0
  */
 final class GDO_Language extends GDO
 {
@@ -90,6 +90,11 @@ final class GDO_Language extends GDO
 	public function allSupported()
 	{
 		return Module_Language::instance()->cfgSupported();
+	}
+	
+	public static function getMainLanguage()
+	{
+		return self::getById(GDO_LANGUAGE);
 	}
 	
 }
