@@ -23,7 +23,7 @@ use GDO\DB\GDT_Enum;
  * etc...)
  *
  * @author gizmore
- * @version 6.11.2
+ * @version 6.11.4
  * @since 6.0.0
  *       
  * @see \GDO\DB\GDT_Int - Database supporting integer baseclass
@@ -64,15 +64,12 @@ abstract class GDT
 	# DB
 	public $primary = false;
 
-	# DB
-	public $readable = false;
-
 	# can see
 	public $writable = false;
 
 	# can change
 	public $editable = false;
-
+	
 	# user can change
 	public $hidden = false;
 
@@ -200,15 +197,9 @@ abstract class GDT
 		return $this->name ? sprintf('for="%s"', $this->id()) : '';
 	}
 
-	# ##########
-	# ## RWE ###
-	# ##########
-	public function readable($readable = true)
-	{
-		$this->readable = $readable;
-		return $this;
-	}
-
+	# ###############
+	# ## Writable ###
+	# ###############
 	public function writable($writable = true)
 	{
 		$this->writable = $this->editable = $writable;
@@ -1165,7 +1156,6 @@ abstract class GDT
 			'unique' => $this->unique,
 			'primary' => $this->primary,
 			'notNull' => $this->notNull,
-			'readable' => $this->readable,
 			'writable' => $this->writable,
 			'editable' => $this->editable,
 			'orderable' => $this->orderable,

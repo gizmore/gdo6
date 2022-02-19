@@ -5,11 +5,18 @@ use GDO\Core\GDT;
 
 /**
  * A navigation tab menu.
+ * 
  * @author gizmore
- *
+ * @version 6.11.4
+ * @since 6.2.0
  */
 final class GDT_Tabs extends GDT
 {
+	public function defaultName()
+	{
+		return 'tabs';
+	}
+	
 	/**
 	 * @var GDT_Tab[]
 	 */
@@ -42,4 +49,5 @@ final class GDT_Tabs extends GDT
 	{
 		return GDT_Template::php('UI', 'cell/tabs.php', ['field' => $this, 'cell' => true]);
 	}
+
 }

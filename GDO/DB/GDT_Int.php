@@ -57,7 +57,6 @@ class GDT_Int extends GDT
 	public $searchable = true;
 	public $orderable = true;
 	public $orderDefaultAsc = true;
-	public $readable = true;
 	public $editable = true;
 	public $writable = true;
 	public $focusable = true;

@@ -45,7 +45,7 @@ final class GDO_Language extends GDO
 	public function gdoColumns()
 	{
 		return [
-		    GDT_Char::make('lang_iso')->primary()->ascii()->length(2),
+		    GDT_Char::make('lang_iso')->primary()->ascii()->caseS()->length(2),
 		];
 	}
 	

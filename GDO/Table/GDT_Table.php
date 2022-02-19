@@ -15,6 +15,7 @@ use GDO\UI\WithTitle;
 use GDO\UI\WithActions;
 use GDO\Core\WithFields;
 use GDO\Core\GDOException;
+use GDO\DB\WithCrud;
 
 /**
  * A filterable, searchable, orderable, paginatable, sortable collection of GDT[] in headers.
@@ -42,7 +43,7 @@ use GDO\Core\GDOException;
  *
  * @author gizmore
  *        
- * @version 6.10.3
+ * @version 6.11.3
  * @since 6.0.0
  *       
  * @see GDO
@@ -59,10 +60,11 @@ class GDT_Table extends GDT
 	use WithHeaders;
 	use WithActions;
 	use WithFields;
+	use WithCrud;
 
 	public function defaultName()
 	{
-		'table';
+		return 'table';
 	}
 
 	# ##########
@@ -71,14 +73,13 @@ class GDT_Table extends GDT
 	protected function __construct()
 	{
 		parent::__construct();
-		$this->action = @$_SERVER['REQUEST_URI'];
-		// $this->makeHeaders();
+		$this->action = urldecode($_SERVER['REQUEST_URI']);
 	}
 
 	public function gdo(GDO $gdo = null)
 	{
 		$this->gdtTable = $gdo->table();
-		return parent::gdo();
+		return parent::gdo($gdo);
 	}
 
 	# ####################
@@ -89,6 +90,10 @@ class GDT_Table extends GDT
 		return $this->headers ? $this->headers->getFields() : [];
 	}
 
+	/**
+	 * @param string $name
+	 * @return \GDO\Core\GDT
+	 */
 	public function getHeaderField($name)
 	{
 		return $this->headers->getField($name);

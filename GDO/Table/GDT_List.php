@@ -7,13 +7,14 @@ use GDO\Core\GDT;
 /**
  * Similiar to a table, a list displays multiple cards or list items.
  * 
- * Control ->itemTemplate(GDT) which defaults to GDT_GWF.
+ * Control ->itemTemplate(GDT) which defaults to GDT_GDO.
  * Control ->listMode(1|2) for cards or list items.
  * 
  * @author gizmore
- * @version 6.10
+ * @version 6.11.4
  * @since 5.0
  * 
+ * @see GDT_GDO
  * @see GDT_Table
  */
 class GDT_List extends GDT_Table
@@ -40,7 +41,7 @@ class GDT_List extends GDT_Table
 	
 	public function getItemTemplate()
 	{
-		return $this->itemTemplate ? $this->itemTemplate : GDT_GWF::make();
+		return $this->itemTemplate ? $this->itemTemplate : GDT_GDO::make();
 	}
 	
 	##############

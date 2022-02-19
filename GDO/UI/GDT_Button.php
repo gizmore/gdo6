@@ -58,7 +58,11 @@ class GDT_Button extends GDT_Submit
 	    }
 	    if ($this->gdo)
 	    {
-			return call_user_func([$this->gdo, 'href_' . $this->name]);
+	    	$method_name = 'href_' . $this->name;
+	    	if (method_exists($this->gdo, $method_name))
+	    	{
+				return call_user_func([$this->gdo, $method_name]);
+	    	}
 	    }
 	}
 	

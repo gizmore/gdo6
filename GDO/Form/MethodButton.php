@@ -1,6 +1,11 @@
 <?php
 namespace GDO\Form;
 
+/**
+ * A simple fieldless form for simple click methods.
+ * 
+ * @author gizmore
+ */
 abstract class MethodButton extends MethodForm
 {
 	public function createForm(GDT_Form $form)
@@ -8,11 +13,9 @@ abstract class MethodButton extends MethodForm
 		$form->addFields([
 			GDT_AntiCSRF::make(),
 		]);
-		$form->actions()->addField([
+		$form->actions()->addField(
 			GDT_Submit::make(),
-		]);
+		);
 	}
-	
-	public abstract function formValidated(GDT_Form $form);
 	
 }

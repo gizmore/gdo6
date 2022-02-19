@@ -240,7 +240,10 @@ final class Trans
 				    $pathEN= "{$path}_en.php";
 					try
 					{
-					    $trans2[] = include($pathEN);
+						if ($t2 = @include($pathEN))
+						{
+							$trans2[] = $t2;
+						}
 					}
 					catch (\Throwable $e)
 					{

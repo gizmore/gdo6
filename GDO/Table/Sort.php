@@ -8,8 +8,8 @@ use GDO\DB\ArrayResult;
  * Utility class to sort GDOs.
  * 
  * @author gizmore
- * @version 6.10
- * @since 6.10
+ * @version 6.11.4
+ * @since 6.10.0
  */
 final class Sort
 {

@@ -67,7 +67,7 @@ final class Page403 extends MethodPage
             sitename(),
             GDT_IP::current(),
             GDO_User::current()->displayNameLabel(),
-            GDT_Link::make()->href(GDT_Url::absolute($_SERVER['REQUEST_URI']))->render(),
+            GDT_Link::make()->href(GDT_Url::absolute(urldecode($_SERVER['REQUEST_URI'])))->render(),
             GDT_Link::make()->href(GDT_Url::absolute(Website::hrefBack()))->render(),
         ];
         return tusr($user, 'mail_body_404', $args);

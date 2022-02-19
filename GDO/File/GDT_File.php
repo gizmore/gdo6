@@ -147,7 +147,7 @@ class GDT_File extends GDT_Object
 	{
 		if (!$this->action)
 		{
-			$this->action(@$_SERVER['REQUEST_URI']);
+			$this->action(urldecode($_SERVER['REQUEST_URI']));
 		}
 		return $this->action;
 	}

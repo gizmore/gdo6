@@ -74,7 +74,7 @@ final class Logger
 	{
 		$back = $_SERVER['REQUEST_METHOD'];
 		$back .= ' ';
-		$back .= $_SERVER['REQUEST_URI'];
+		$back .= urldecode($_SERVER['REQUEST_URI']);
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		{
 			$back .= self::$POST_DELIMITER .'POSTDATA: '.self::stripPassword($_REQUEST);

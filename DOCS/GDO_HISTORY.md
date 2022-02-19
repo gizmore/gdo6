@@ -3,6 +3,15 @@
 Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
 
 
+## Improvements for v6.11.4 (t.b.a.)
+
+ - $_SERVER['REQUEST_URI'] is decoded correctly now. Results in a bit more readable urls.
+
+ - [Module_LanguageEditor](https://github.com/gizmore/gdo6-language-editor) got implemented. Upload CSV files and/or edit  translations via the web.
+ 
+ - [MethodQueryTable](https://github.com/gizmore/gdo6/blob/master/GDO/Table/MethodQueryTable.php) now announces editing/crud permissions. A theme's table implementation can allow inline editing.
+ 
+
 ## Improvements for v6.11.3 (23.01.2022)
 
  - [CORS](https://github.com/gizmore/gdo6-currency) does now work for cross domain cookies.

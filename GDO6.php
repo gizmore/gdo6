@@ -14,7 +14,7 @@ use GDO\Date\Time;
  * GDO6 autoloader and public functions.
  * 
  * @author gizmore
- * @version 6.11.3
+ * @version 6.11.4
  * @since 6.0.0
  */
 
@@ -145,6 +145,11 @@ function hdr($header, $replace=true)
     {
         header($header, $replace);
     }
+}
+
+function uridecode($url)
+{ 
+	return urldecode($url);
 }
 
 ##################

@@ -19,7 +19,7 @@ trait WithOrder
 			$o = $table->headers->name;
 			$oo = $o . "[o][{$name}]";
 			
-			$url = @$_SERVER['REQUEST_URI'];
+			$url = urldecode($_SERVER['REQUEST_URI']);
 			
 			# Check if one arrow is selected
 			$is_asc = strpos($url, "&$oo=1") !== false;

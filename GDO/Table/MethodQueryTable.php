@@ -4,12 +4,15 @@ namespace GDO\Table;
 use GDO\DB\Query;
 use GDO\Core\GDOException;
 use GDO\Core\GDT_Hook;
+use GDO\Form\GDT_DeleteButton;
+use GDO\User\GDO_User;
+use GDO\UI\GDT_EditButton;
 
 /**
  * A method that displays a table via a query.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.4
  * @since 3.0.0
  * @see GDT_Table
  */
@@ -19,7 +22,24 @@ abstract class MethodQueryTable extends MethodTable
     
     public function gdoHeaders()
     {
-        return $this->gdoTable()->gdoColumnsCache();
+    	return array_merge(
+    		$this->gdoButtonHeaders(),
+    		$this->gdoTable()->gdoColumnsCache());
+    }
+    
+    protected function gdoButtonHeaders()
+    {
+    	$user = GDO_User::current();
+    	$headers = [];
+    	if ($this->isDeleteable($user))
+    	{
+    		$headers[] = GDT_DeleteButton::make();
+    	}
+    	if ($this->isUpdateable($user))
+    	{
+    		$headers[] = GDT_EditButton::make();
+    	}
+    	return $headers;
     }
     
 	################

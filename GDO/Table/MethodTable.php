@@ -7,6 +7,7 @@ use GDO\Core\GDT;
 use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Fields;
 use GDO\Core\GDO;
+use GDO\User\GDO_User;
 
 /**
  * A method that displays a table from memory via ArrayResult.
@@ -14,7 +15,7 @@ use GDO\Core\GDO;
  * The basic API is identical for static memory results and queried data.
  * 
  * @author gizmore
- * @version 6.11.2
+ * @version 6.11.3
  * @since 5.0.0
  * @see ArrayResult
  * @see GDT_Table
@@ -181,6 +182,14 @@ abstract class MethodTable extends Method
 	 */
 	public function isSorted() { return true; } # Uses js/ajax and GDO needs to have GDT_Sort column.
 	
+	############
+	### CRUD ###
+	############
+	public function isCreateable(GDO_User $user) { return false; }
+	public function isReadable(GDO_User $user) { return false; }
+	public function isUpdateable(GDO_User $user) { return false; }
+	public function isDeleteable(GDO_User $user) { return false; }
+	
 	###
 	public function getDefaultOrder()
 	{
@@ -249,7 +258,14 @@ abstract class MethodTable extends Method
 	    $table->searched($this->isSearched());
 	    $table->sorted($this->isSorted());
 	    $table->paginated($this->isPaginated(), null, $this->getIPP());
-
+	    
+	    # 4 editor permissions
+	    $user = GDO_User::current();
+	    $table->creatable($this->isCreateable($user));
+	    $table->readable($this->isReadable($user));
+	    $table->updatable($this->isUpdateable($user));
+	    $table->deletable($this->isDeleteable($user));
+	    
 	    # 1 speedup
 	    $table->fetchInto($this->useFetchInto());
 	}

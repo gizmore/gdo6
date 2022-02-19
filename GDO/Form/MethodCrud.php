@@ -18,7 +18,7 @@ use GDO\DB\GDT_CreatedBy;
  * Abstract Create|Update|Delete for a GDO using MethodForm.
  * 
  * @author gizmore
- * @version 6.11.2
+ * @version 6.11.4
  * @since 5.1.0
  */
 abstract class MethodCrud extends MethodForm
@@ -152,10 +152,6 @@ abstract class MethodCrud extends MethodForm
 	        {
 	            $this->crudMode = self::EDITED;
 	        }
-// 	        if (!$this->canUpdate($this->gdo))
-// 	        {
-// 	            throw new PermissionException('err_permission_update');
-// 	        }
 	    }
 	    elseif (!$this->canCreate($table))
 	    {
@@ -163,7 +159,6 @@ abstract class MethodCrud extends MethodForm
 	    }
 	    
 	    $this->getForm();
-// 	    $this->resetForm();
 	}
 	
 	##############
@@ -174,7 +169,6 @@ abstract class MethodCrud extends MethodForm
 	    $table = $this->gdoTable();
 	    $form->gdo($this->gdo);
 	    foreach ($table->gdoColumnsCache() as $gdt)
-// 	    foreach ($table->gdoColumnsCopyExcept() as $gdt)
 	    {
 		    $gdo = $this->gdo ? $this->gdo : $table;
 	        $this->createFormRec($form, $gdt->gdo($gdo));
@@ -188,23 +182,6 @@ abstract class MethodCrud extends MethodForm
 		if ($gdt->editable)
 		{
 	        $gdt->writable = $this->crudMode !== self::READ;
-
-// 			if ( ($gdt instanceof GDT_Object) ||
-// 				 ($gdt instanceof GDT_ObjectSelect) )
-// 			{
-// 				if ($gdt->composition)
-// 				{
-// 					foreach ($gdt->table->gdoColumnsCache() as $gdt2)
-// 					{
-// 						$this->createFormRec($form, $gdt2);
-// 					}
-// 				}
-// 				else
-// 				{
-// 				    $form->addField($gdt);
-// 				}
-// 			}
-// 			else
 			if (!$gdt->virtual)
 			{
 			    $form->addField($gdt);
@@ -277,28 +254,16 @@ abstract class MethodCrud extends MethodForm
 
 	public function onSubmit_create(GDT_Form $form)
 	{
-// 	    if (!$this->canCreate($this->gdoTable()))
-// 	    {
-// 	        throw new GDOError('err_permission_create');
-// 	    }
 	    return $this->onCreate($form);
 	}
 	
 	public function onSubmit_edit(GDT_Form $form)
 	{
-// 	    if (!$this->canUpdate($this->gdo))
-// 	    {
-// 	        throw new GDOError('err_permission_update');
-// 	    }
 	    return $this->onUpdate($form);
 	}
 	
 	public function onSubmit_delete(GDT_Form $form)
 	{
-// 		if (!$this->canDelete($this->gdo))
-// 		{
-// 			throw new GDOError('err_permission_delete');
-// 		}
 		return $this->onDelete($form);
 	}
 	

@@ -507,7 +507,7 @@ abstract class Method
 		{
 			if (module_enabled('Register') && Module_Register::instance()->cfgGuestSignup())
 			{
-				$hrefGuest = href('Register', 'Guest', "&_backto=".urlencode($_SERVER['REQUEST_URI']));
+				$hrefGuest = href('Register', 'Guest', "&_backto=".$_SERVER['REQUEST_URI']);
 				return GDT_Error::responseWith('err_user_required', [$hrefGuest]);
 			}
 			else
@@ -698,7 +698,10 @@ abstract class Method
     	        if ( (!Application::instance()->isAjax()) && (!$this->isAjax()) )
     	        {
     	            # Will be saved on process exit.
-    	            $session->setVar('sess_last_url', @$_SERVER['REQUEST_URI']);
+    	            if (isset($_SERVER['REQUEST_URI']))
+    	            {
+	    	            $session->setVar('sess_last_url', urldecode($_SERVER['REQUEST_URI']));
+    	            }
     	        }
     	    }
 	    }

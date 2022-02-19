@@ -9,7 +9,7 @@ if ($pagemenu = $field->getPageMenu())
 $result = $field->getResult();
 ?>
 <?php if (!$form) : ?>
-<form method="get" action="<?= $field->href; ?>" class="b">
+<form method="get" action="<?=html($field->action)?>" class="b">
 <?=GDT_Form::hiddenMoMe()?>
 <?php endif; ?>
 <div class="gdt-table" id="<?=$field->name?>">

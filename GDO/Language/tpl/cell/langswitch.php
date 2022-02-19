@@ -9,7 +9,7 @@ $languages = Module_Language::instance()->cfgSupported();
  <form method="get">
   <input type="hidden" name="mo" value="Language" />
   <input type="hidden" name="me" value="SwitchLanguage" />
-  <input type="hidden" name="ref" value="<?=html($_SERVER['REQUEST_URI'])?>" />
+  <input type="hidden" name="ref" value="<?=html(urldecode($_SERVER['REQUEST_URI']))?>" />
   <label><?php echo t('lbl_langswitch'); ?></label>
   <select name="_lang">
 <?php

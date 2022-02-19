@@ -14,7 +14,7 @@ use GDO\Util\Arrays;
  * - Implements @\GDO\Core\ArrayResult multisort for use in @\GDO\Table\MethodTable.
  * 
  * @author gizmore
- * @version 6.11.1
+ * @version 6.11.4
  * @since 6.5.0
  */
 trait WithHeaders
@@ -44,10 +44,10 @@ trait WithHeaders
 		return $this;
 	}
 	
-	public static $ORDER_NAME = 1;
+	public static $ORDER_NAME = 0;
 	public function nextOrderName()
 	{
-		return $this->headerName ? $this->headerName : ("o" . (self::$ORDER_NAME++));
+		return $this->headerName ? $this->headerName : ("o" . (++self::$ORDER_NAME));
 	}
 	
 	###############

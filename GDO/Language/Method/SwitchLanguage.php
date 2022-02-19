@@ -66,7 +66,7 @@ final class SwitchLanguage extends Method
 	{
 		# Set new ISO language
 		$iso = $this->getLanguage()->getISO();
-		$_SERVER['REQUEST_URI'] = preg_replace("/_lang=[a-z]{2}/", "_lang=".$iso , $_SERVER['REQUEST_URI']);
+		$_SERVER['REQUEST_URI'] = preg_replace("/_lang=[a-z]{2}/", "_lang=".$iso , urldecode($_SERVER['REQUEST_URI']));
 		$_REQUEST['_lang'] = $iso;
 		GDO_Session::set('gdo-language', $iso);
 		Trans::setISO($iso);

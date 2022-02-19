@@ -38,7 +38,7 @@ final class GDT_LangSwitch extends GDT_Select
 	    {
 	        $q = $q ? ($q.'&_lang=' . $iso) : ('_lang=' .  $iso);
 	    }
-	    $u = $_SERVER['REQUEST_URI'];
+	    $u = urldecode($_SERVER['REQUEST_URI']);
 	    $u = Strings::substrTo($u, '?', $u);
 	    return $u . '?' . $q;
 	}

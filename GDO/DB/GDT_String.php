@@ -49,7 +49,6 @@ class GDT_String extends GDT
 	public $orderable = true;
 	public $filterable = true;
 	public $searchable = true;
-	public $readable = true;
 	public $editable = true;
 	public $writable = true;
 	public $focusable = true;
