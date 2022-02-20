@@ -10,3 +10,4 @@ Noteworthy gdo6 design decisions.
 
 - GDT are shared and moved around. This does funny and evil bugs, but it gives a performance boost. For example the GDT_User from a GDO_Comment can be put in a GDT_Form to render a comment form.
 
+- Less is more. The less you do, the less errors can occure, and the faster the application runs. Re-Using code is a must for less code.
