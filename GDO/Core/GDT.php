@@ -702,7 +702,7 @@ abstract class GDT
 			$next = trim($next, '[]');
 			if ( !isset($arr[$next]))
 			{
-				return $default;
+				return $this->inputToVar($default);
 			}
 			$arr = $arr[$next];
 			$firstLevel = '[' . Strings::substrFrom($firstLevel, '[');
@@ -721,7 +721,7 @@ abstract class GDT
 				$next = ltrim($next, '[');
 				if ( !isset($arr[$next]))
 				{
-					return $default;
+					return $this->inputToVar($default);
 				}
 				$arr = $arr[$next];
 				$firstLevel = Strings::substrFrom($firstLevel, ']');

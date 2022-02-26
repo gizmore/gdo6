@@ -47,7 +47,7 @@ class GDT_Form extends GDT
 	{
 	    parent::__construct();
 	    
-		if (!($this->action = urldecode($_SERVER['REQUEST_URI'])))
+		if (!($this->action = urldecode(@$_SERVER['REQUEST_URI'])))
 		{
 			$this->action = Website::hrefBack();
 		}
