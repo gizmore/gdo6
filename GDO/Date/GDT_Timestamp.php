@@ -63,8 +63,11 @@ class GDT_Timestamp extends GDT
 	
 	public function getVar()
 	{
-		$var = trim(parent::getVar());
-		return $var ? $var : null;
+		if ($var = parent::getVar())
+		{
+			$var = trim($var);
+			return $var ? $var : null;
+		}
 	}
 	
 	public function initialSnap($mod)
