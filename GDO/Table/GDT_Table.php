@@ -73,7 +73,7 @@ class GDT_Table extends GDT
 	protected function __construct()
 	{
 		parent::__construct();
-		$this->action = urldecode(@$_SERVER['REQUEST_URI']);
+		$this->action = @urldecode(@$_SERVER['REQUEST_URI']);
 	}
 
 	public function gdo(GDO $gdo = null)
