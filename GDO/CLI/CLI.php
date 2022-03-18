@@ -61,6 +61,7 @@ final class CLI
         $_SERVER['SERVER_SOFTWARE']	= 'Apache/2.4.41 (Win64) PHP/7.4.0';
         $_SERVER['HTTPS'] = 'off';
         $_SERVER['PHP_SELF'] = '/index.php';
+        $_SERVER['REQUEST_URI'] = '/index.php';
         $_SERVER['QUERY_STRING'] = 'mo=' . GDO_MODULE . '&me=' . GDO_METHOD;
         $_SERVER['REQUEST_METHOD'] = 'GET';
         # @TODO use output of locale command?
