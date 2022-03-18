@@ -78,7 +78,7 @@ class GDT_String extends GDT
 	{
 		if ($var === null)
 		{
-			return null;
+			return $this;
 		}
 	    return parent::var(trim($var, "\r\n\t "));
 	}

@@ -424,9 +424,16 @@ class GDO_Module extends GDO
 	    {
 	        if ($config = $this->getConfig())
 	        {
+// 	        	var_dump($config);
                 $this->configCache = [];
 	            foreach ($config as $gdt)
 	            {
+	            	if (!$gdt)
+	            	{
+	            		var_dump($config);
+	            		echo 1;
+	            		
+	            	}
 	                $this->configCache[$gdt->name] = $gdt; #->gdo($this);
 	            }
 	        }
