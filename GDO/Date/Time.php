@@ -396,7 +396,7 @@ final class Time
 	#################
 	public static function weekTimestamp($year, $week)
 	{
-	    $week_start = new DateTime(null, Time::$UTC);
+	    $week_start = new DateTime('now', Time::$UTC);
 	    $week_start->setISODate(intval($year, 10), intval($week, 10));
 	    $week_start = $week_start->format('U');
 	    return $week_start;
