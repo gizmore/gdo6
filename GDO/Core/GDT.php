@@ -725,7 +725,7 @@ abstract class GDT
 						return $this->inputToVar($default);
 					}
 				}
-				$arr = $arr[$next];
+				$arr = (string) @$arr[$next];
 				$firstLevel = Strings::substrFrom($firstLevel, ']');
 			}
 			else
