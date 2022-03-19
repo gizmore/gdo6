@@ -47,7 +47,10 @@ class GDT_DateTime extends GDT_Date
 	{
 	    $input = str_replace('T', ' ', $input); # remove RFC decorations
 	    $input = str_replace('Z', '', $input);
-	    $d = Time::parseDateTime($input); # parse user timezone
+	    if (!$d = Time::parseDateTime($input))
+	    {
+	    	$d = Time::parseDateTimeDB($input);
+	    }
 	    $d->setTimezone(Time::$UTC); # convert to UTC
 	    $var = $d->format('Y-m-d H:i:s.u'); # output UTC
 	    return $var;

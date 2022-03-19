@@ -718,10 +718,12 @@ abstract class GDT
 			if (is_array($arr))
 			{
 				$next = Strings::substrTo($firstLevel, ']');
-				$next = @ltrim($next, '[');
-				if ( !isset($arr[$next]))
+				if ($next = @ltrim($next, '['))
 				{
-					return $this->inputToVar($default);
+					if ( !isset($arr[$next]))
+					{
+						return $this->inputToVar($default);
+					}
 				}
 				$arr = $arr[$next];
 				$firstLevel = Strings::substrFrom($firstLevel, ']');
