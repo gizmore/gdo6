@@ -718,7 +718,7 @@ abstract class GDT
 			if (is_array($arr))
 			{
 				$next = Strings::substrTo($firstLevel, ']');
-				$next = ltrim($next, '[');
+				$next = @ltrim($next, '[');
 				if ( !isset($arr[$next]))
 				{
 					return $this->inputToVar($default);
