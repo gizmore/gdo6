@@ -3,11 +3,13 @@
 Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
 
 
-## Improvements for v6.11.4 (t.b.a.)
+## Improvements for v6.11.4 (20.03.2022)
+
+ - [PHP-8.1](https://www.php.net/releases/8.1/en.php) support. Quite a few [deprecation](https://www.php.net/releases/8.1/en.php#deprecations_and_bc_breaks) errors fixed, which resulted in an application halt in gdo6.
 
  - $_SERVER['REQUEST_URI'] is decoded correctly now. Results in a bit more readable urls.
 
- - [Module_LanguageEditor](https://github.com/gizmore/gdo6-language-editor) got implemented. Upload CSV files and/or edit  translations via the web.
+ - [Module_LanguageEditor](https://github.com/gizmore/gdo6-language-editor) got implemented. Upload CSV files and/or edit translations via the web.
  
  - [MethodQueryTable](https://github.com/gizmore/gdo6/blob/master/GDO/Table/MethodQueryTable.php) now announces editing/crud permissions. A theme's table implementation can allow inline editing.
  

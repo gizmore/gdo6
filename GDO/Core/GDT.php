@@ -417,8 +417,11 @@ abstract class GDT
 
 	public function _inputToVar($input)
 	{
-		$input = trim($input, "\r\n\t ");
-		return $input === '' ? null : $input;
+		if (!$input)
+		{
+			return null;
+		}
+		return trim($input, "\r\n\t ");
 	}
 
 	public function toValue($var)
@@ -677,11 +680,11 @@ abstract class GDT
 	 *        - might differ from GDT name when filter fields do magic?
 	 * @return string|string[]
 	 */
-	public function _getRequestVar($firstLevel = null, $default = null,
-	$name = null)
+	public function _getRequestVar($firstLevel = null, $default = null, $name = null)
 	{
 		$name = $name === null ? $this->name : $name;
-
+		$name = $name === null ? '' : $name;
+		
 		# Bring hackery in the firstlevel format
 		if (strpos($name, ']'))
 		{

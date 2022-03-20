@@ -124,7 +124,7 @@ function html($html)
     return Application::instance()->isCLI() ?
         $html :
         str_replace(['&', '"', "'", '<', '>'],
-            ['&amp;', '&quot;', '&#39;', '&lt;', '&gt;'], $html);
+            ['&amp;', '&quot;', '&#39;', '&lt;', '&gt;'], (string)$html);
 }
 function env($key, $default=null) { return Env::get($key, $default); }
 function def($key, $default=null) { return defined($key) ? constant($key) : $default; }

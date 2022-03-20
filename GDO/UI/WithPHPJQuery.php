@@ -5,7 +5,8 @@ namespace GDO\UI;
  * Should be extended to reflect a jQuery API on PHP objects.
  * 
  * @author gizmore
- * @since 6.07
+ * @version 6.11.4
+ * @since 6.7.0
  */
 trait WithPHPJQuery
 {
@@ -22,7 +23,7 @@ trait WithPHPJQuery
 		if ($value === null)
 		{
 			return isset($this->htmlAttributes[$attribute]) ? 
-			    $this->htmlAttributes[$attribute] : null;
+			    $this->htmlAttributes[$attribute] : '';
 		}
 		$this->htmlAttributes[$attribute] = $value;
 		return $this;
