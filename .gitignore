@@ -6,6 +6,7 @@
 # HTTP
 .htaccess
 .htpasswd
+.well-known/
  
 # Generated folders
 files/
