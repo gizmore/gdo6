@@ -192,7 +192,7 @@ if ($url = @$_GET['_url'])
         	
         	# cache hit
         	if (@strtotime(@$_SERVER['HTTP_IF_MODIFIED_SINCE']) == $last_modified_time ||
-        	    trim(@$_SERVER['HTTP_IF_NONE_MATCH']) == $etag)
+        	    trim((string)@$_SERVER['HTTP_IF_NONE_MATCH']) == $etag)
         	{
         		hdrc('HTTP/1.1 304 Not Modified');
         		timingHeader();

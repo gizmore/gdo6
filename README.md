@@ -3,9 +3,9 @@
 A modern approach to the 're-inventing the framework wheel' game. I chose PHP because development with it is quite fast. It's also a reasonably performant language, and thanks to type hinting code completion works very well.
 
 
-## Gizmore Data Objects 6.10
+## Gizmore Data Objects 6.11
 
-GDO6 v6.10 is a PHP framework made to easen the development of websites.
+GDO6 v6.11 is a PHP framework made to easen the development of websites.
 The main audience is creators of highly dynamic webpages such as game sites.
 All code and modules are currently written by myself, ensuring the same code style and "quality".
 That said, everyone is welcome to contribute! You can use pull requests on github or send me a patch file via email if you prefer.

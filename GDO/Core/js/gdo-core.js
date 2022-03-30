@@ -158,10 +158,12 @@ window.GDO.xhr = function(url, method, data) {
 
 var origOpen = XMLHttpRequest.prototype.open;
 XMLHttpRequest.prototype.open = function () {
-	origOpen.apply(this, arguments);
-	let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+	let result = origOpen.apply(this, arguments);
+	let token = document.querySelector('meta[name="csrf-token"]');
+	token = token ? token.getAttribute('content') : 'not-there';
 	this.setRequestHeader('X-CSRF-TOKEN', token);
 	this.withCredentials = true;
+	return result;
 };
 
 /**
