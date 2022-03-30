@@ -507,7 +507,7 @@ abstract class Method
 		{
 			if (module_enabled('Register') && Module_Register::instance()->cfgGuestSignup())
 			{
-				$hrefGuest = href('Register', 'Guest', "&_backto=".$_SERVER['REQUEST_URI']);
+				$hrefGuest = href('Register', 'Guest', "&_backto=".urlencode($_SERVER['REQUEST_URI']));
 				return GDT_Error::responseWith('err_user_required', [$hrefGuest]);
 			}
 			else
