@@ -1,13 +1,13 @@
 # gdo6 History
 
-Before you read the history, please take your time to actually [install gdo6](https://github.com/gizmore/gdo6/blob/master/DOCS/GDO_INSTALL_CLI.md).
+Before you read the history, please take your time to actually [install gdo6](GDO_INSTALL_CLI.md).
 
 
-## Improvements for v6.11.4 (20.03.2022)
+## Improvements for v6.11.4 (30.03.2022)
 
 - [GDO_Module](https://github.com/gizmore/gdo6/blob/master/GDO/Core/GDO_Module.php) has a new trigger ``onAfterInstall()``.
 
-- [Module_Favicon](https://github.com/gizmore/gdo6-favicon) now enhances the html header with various icon formats. theme-color is used.
+- [Module_Favicon](https://github.com/gizmore/gdo6-favicon) now enhances the html header with various icon formats.
 
  - [PHP-8.1](https://www.php.net/releases/8.1/en.php) support. Quite a few [deprecation](https://www.php.net/releases/8.1/en.php#deprecations_and_bc_breaks) errors fixed, which resulted in an application halt in gdo6.
 
