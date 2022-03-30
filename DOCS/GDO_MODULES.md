@@ -16,6 +16,8 @@ Each of these modules are a project / website / gdo6 demo.
  - [DogWebsite](https://github.com/gizmore/gdo6-dog-website)
  - [Diary](https://diary.gizmore.org) [Classic theme]
  - [DogWebsite](https://dog.gizmore.org) [Bootstrap5 theme]
+ - [Aalwitze](https://aalwitze.gizmore.org) [This is a Mettwitze clone]
+
 
 ## Theme modules
 

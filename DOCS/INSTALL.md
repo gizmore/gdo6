@@ -83,6 +83,7 @@ Copy this list and remove / add modules.
 
     cd www/gdo6/GDO # switch to modules dir
 
+    ## git clone --recursive https://git@github.com/gizmore/gdo6-aalwitze Aalwitze
     git clone --recursive https://github.com/gizmore/gdo6-account Account
     git clone --recursive https://github.com/gizmore/gdo6-activation-alert ActivationAlert
     git clone --recursive https://github.com/gizmore/gdo6-address Address

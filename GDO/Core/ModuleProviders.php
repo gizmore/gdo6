@@ -10,7 +10,7 @@ namespace GDO\Core;
  * You can generate providers and dependenices with providers.php and provider_dependenciews.php
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.4
  * @since 6.10.0
  */
 final class ModuleProviders
@@ -42,6 +42,7 @@ final class ModuleProviders
     public static $PROVIDERS = [
     	'Captcha' => ['gdo6-captcha', 'gdo6-recaptcha2'],
     	'Session' => ['gdo6-session-db', 'gdo6-session-cookie'],
+    	'Aalwitze' => 'gdo6-aalwitze',
     	'Account' => 'gdo6-account',
     	'ActivationAlert' => 'gdo6-activation-alert',
     	'Address' => 'gdo6-address',
@@ -190,6 +191,7 @@ final class ModuleProviders
     ];
     
     public static $DEPENDENCIES = [
+    	'Aalwitze' => ['Mettwitze'],
     	'Account' => [],
     	'ActivationAlert' => [],
     	'Address' => [],
