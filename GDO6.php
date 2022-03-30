@@ -98,6 +98,10 @@ function href($module, $method, $append=null, $lang=true)
             {
                 $href .= '?_lang=' . Trans::$ISO;
             }
+            else
+            {
+            	$href .= '?v=1';
+            }
             if ($hash)
             {
                 $href .= "#{$hash}";
