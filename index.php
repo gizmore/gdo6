@@ -17,6 +17,7 @@ use GDO\UI\GDT_HTML;
 use GDO\File\FileUtil;
 use GDO\Core\Module_Core;
 use GDO\Date\Time;
+use GDO\Core\GDOException;
 
 require 'GDO6.php';
 
@@ -397,6 +398,9 @@ switch ($app->getFormat())
             $session->commit();
         }
         break;
+        
+    default:
+    	throw new GDOException('Invalid "_fmt" parameter ' . html($app->getFormat()));
 }
 
 if ($method && $method->fileCached() && (!$cacheLoad))
