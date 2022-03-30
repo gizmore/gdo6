@@ -117,6 +117,14 @@ final class InstallModules extends Method
 					Database::instance()->transactionEnd();
 				}
 			}
+			
+			foreach ($this->modules as $module)
+			{
+				if ($module->isEnabled())
+				{
+					$module->onAfterInstall();
+				}
+			}
 		}
 		catch (\Exception $e)
 		{

@@ -168,4 +168,18 @@ REGEX;
 	    return $args;
 	}
 	
+	###################
+	### Trim dotted ###
+	###################
+	public static function dotted($text, $maxlen=50, $dots='…')
+	{
+		$len = mb_strlen($text);
+		if ($len > $maxlen)
+		{
+			$text = mb_substr($text, 0, $maxlen-1);
+			$text .= $dots;
+		}
+		return $text;
+	}
+
 }

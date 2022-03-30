@@ -25,7 +25,7 @@ use GDO\Net\GDT_Url;
  * Very basic vanilla JS is loaded.
  * 
  * @author gizmore
- * @version 6.11.3
+ * @version 6.11.4
  * @since 6.0.0
  */
 final class Module_Core extends GDO_Module
@@ -38,7 +38,7 @@ final class Module_Core extends GDO_Module
      * 6.11.5 will be the first stable version.
      * 6.12.0 will be the GIZ edition.
      */
-	const GDO_REVISION = '6.11.4-r6331';
+	const GDO_REVISION = '6.11.4-r6333';
 
 	##############
 	### Module ###

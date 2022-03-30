@@ -47,7 +47,10 @@ A starting point might be:
     </VirtualHost>
 ```
 
+Note that MultiViews should be disabled.
+
+
 ## letsencrypt
 
-I use acme.sh
+I use [acme.sh](https://github.com/acmesh-official/acme.sh)
 Try `acme.sh --issue --domain gdo6.com --web-root /home/gdo6/www/gdo6 --apache`

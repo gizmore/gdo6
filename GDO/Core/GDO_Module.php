@@ -233,6 +233,7 @@ class GDO_Module extends GDO
 	public function onInit() {}
 	public function onInitSidebar() {}
 	public function onInstall() {}
+	public function onAfterInstall() {}
 	public function onWipe() {}
 	public function onLoad() {}
 	public function onLoadLanguage() {}

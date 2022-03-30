@@ -1,3 +1,3 @@
-# gdo6 on nginx
+# gdo6 and nginx
 
-This document requires more experience.
+This document (me) requires more experience with nginx :P
