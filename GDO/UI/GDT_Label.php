@@ -28,6 +28,11 @@ class GDT_Label extends GDT
 		return $this->displayLabel();
 	}
 	
+	public function getVar()
+	{
+		return $this->displayLabel();
+	}
+	
 	public function renderCard()
 	{
 	    return '<div class="gdt-card-label">' . $this->displayLabel() . '</div>';

@@ -760,7 +760,7 @@ abstract class GDT
 	public function renderXML()
 	{
 		return $this->name ? sprintf('<%1$s>%2$s</%1$s>' . PHP_EOL, $this->name,
-		html($this->getVar())) : '';
+		$this->displayVar($this->getVar())) : $this->displayVar($this->getVar());
 	}
 
 	public function renderJSON()
