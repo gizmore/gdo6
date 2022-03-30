@@ -50,7 +50,7 @@ final class GetFile extends Method
 			Common::getRequestString('variant', ''));
 	}
 	
-	public function executeWithId($id, $variant='')
+	public function executeWithId($id, $variant='', $nodisp=null)
 	{
 		if (!($file = GDO_File::getById($id)))
 		{
@@ -63,7 +63,9 @@ final class GetFile extends Method
 			return $this->error('err_file_not_found', [htmlspecialchars($path)]);
 		}
 		
-		Stream::serve($file, $variant, (!isset($_REQUEST['nodisposition'])));
+		$nodisp = $nodisp === null ? (!isset($_REQUEST['nodisposition'])) : $nodisp;
+		
+		Stream::serve($file, $variant, !$nodisp);
 	}
 	
 }

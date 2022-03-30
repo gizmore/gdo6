@@ -21,6 +21,12 @@ A starting point might be:
         ServerName gdo6.com
         DocumentRoot /home/gizmore/www/gdo6
         AllowEncodedSlashes NoDecode
+        Alias /.well-known/ /home/gizmore/www/gdo6/.well-known/
+        <Directory "/home/gizmore/www/gdo6/.well-known">
+                AllowOverride None
+                Require all granted
+                Satisfy Any
+        </Directory>
         <Directory "/home/gizmore/www/gdo6">
                 Options +Indexes +FollowSymLinks -MultiViews
                 AllowOverride All
@@ -47,8 +53,11 @@ A starting point might be:
     </VirtualHost>
 ```
 
-Note that MultiViews should be disabled.
+Note that...
 
+ - MultiViews should be disabled.
+ - AllowEncodedSlashes NoDecode
+ 
 
 ## letsencrypt
 

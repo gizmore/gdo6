@@ -101,7 +101,11 @@ define('GDO_CORE_STABLE', 1);
 # File other than index.php requested
 if ($url = @$_GET['_url'])
 {
-    # For directories, show the index, if configured
+	# Ugly bug in apache? $_GET['_url'] is not properly set via .htaccess rewrites
+// 	$url = urldecode($_SERVER['REDIRECT_URL']);
+// 	$url = substr($url, strlen(GDO_WEB_ROOT));
+
+	# For directories, show the index, if configured
     if (is_dir($url))
     {
         $_REQUEST['mo'] = 'Core';
