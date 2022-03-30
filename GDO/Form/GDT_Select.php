@@ -58,9 +58,17 @@ class GDT_Select extends GDT_ComboBox
 		        return null;
 		    }
 		}
-		else 
+		elseif ($value === $this->emptyValue) 
 		{
-			return $value === $this->emptyValue ? null : $value;
+			return null;
+		}
+		elseif (false === ($var = array_search($value, $this->choices, true)))
+		{
+			return null;
+		}
+		else
+		{
+			return $var;
 		}
 	}
 
