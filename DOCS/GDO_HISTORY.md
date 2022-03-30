@@ -5,6 +5,8 @@ Before you read the history, please take your time to actually [install gdo6](ht
 
 ## Improvements for v6.11.4 (20.03.2022)
 
+- [Module_Favicon](https://github.com/gizmore/gdo6-favicon) now enhances the html header with various icon formats. theme-color is used.
+
  - [PHP-8.1](https://www.php.net/releases/8.1/en.php) support. Quite a few [deprecation](https://www.php.net/releases/8.1/en.php#deprecations_and_bc_breaks) errors fixed, which resulted in an application halt in gdo6.
 
  - $_SERVER['REQUEST_URI'] is decoded correctly now. Results in a bit more readable urls.

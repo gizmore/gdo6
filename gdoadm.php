@@ -35,7 +35,7 @@ use GDO\Core\Website;
  * @see ./gdoadm.sh
  * 
  * @author gizmore
- * @version 6.11.3
+ * @version 6.11.4
  * @since 6.10.0
  * 
  * @see gdo_update.sh - to update your gdo6 installation
@@ -621,6 +621,12 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_all') || ($argv[1] =
             }
             echo "You should now have all dependencies cloned in your GDO/ folder.\n";
             echo "You can now:\n./gdoadm.sh install {$argv[2]}\n";
+            $r = readline("Shall i do this now? [Y/n]");
+            $r = $r ? $r : 'y';
+            if ( ($r[0]==='y') || ($r[0]==='Y') )
+            {
+            	system("./gdoadm.sh install {$argv[2]}");
+            }
         }
     }
     else
@@ -632,6 +638,19 @@ elseif ( ($argv[1] === 'provide') || ($argv[1] === 'provide_all') || ($argv[1] =
     	else
     	{
     		echo "Your filesystem has all the required modules. You can: ./gdoadm.sh install {$argv[2]}\n";
+    	}
+    	$r = readline("Shall i do this now? [Y/n]");
+    	$r = $r ? $r : 'y';
+    	if ( ($r[0]==='y') || ($r[0]==='Y') )
+    	{
+    		if ($argv[1] === 'provide_all')
+    		{
+    			system("./gdoadm.sh install_all");
+    		}
+    		else
+    		{
+	    		system("./gdoadm.sh install {$argv[2]}");
+    		}
     	}
     }
 }

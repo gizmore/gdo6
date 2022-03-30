@@ -7,7 +7,6 @@ use GDO\Date\GDT_Duration;
 use GDO\DB\GDT_String;
 use GDO\Core\GDOError;
 use GDO\Core\GDT_Template;
-use GDO\Util\Strings;
 use GDO\Core\GDOException;
 use GDO\DB\GDT_UInt;
 use GDO\Core\Debug;

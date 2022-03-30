@@ -14,7 +14,7 @@ For a more complete todo, please see [GDO_TODO_AUTO_GENERATED.md](https://github
 
 - @TODO: Make gdo6 sqlite compatible. Avoid IFs but pass closures around.
 
-- @TODO: Use a real mailer library. Make two modules. gdo6-mail and gdo6-mail-foomailer. Make Mail a normal module, not a core module.
+- @TODO: Use a real mailer library. Make new modules to provide MailProvider: gdo6-mail-provider and gdo6-mail-symfony gdo6-mail-swift-etc. Make Mail a normal module, not a core module. UserSetting is mail address. Feature mail change.
 
 - @TODO: Write module gdo6-impressum. Remove impressum stuff from core. Allow only an url to be set. default is a page with a translation key used?
 

@@ -15,6 +15,9 @@ final class GDT_Image extends GDT
 {
 	use WithPHPJQuery;
 	
+	const PNG = 'image/png';
+	const JPG = 'image/jpeg';
+	
 	############
 	### Vars ###
 	############

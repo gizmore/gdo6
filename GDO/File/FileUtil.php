@@ -19,9 +19,19 @@ final class FileUtil
     ##############
     ### Basics ###
     ##############
-    public static function isFile($filename) { return stream_resolve_include_path($filename) !== false; } # fast check
     public static function isDir($filename) { return is_dir($filename); }
-	public static function createDir($path) { return (self::isDir($path) && is_writable($path)) ? true : mkdir($path, GDO_CHMOD, true); }
+
+    public static function isFile($filename) { return stream_resolve_include_path($filename) !== false; } # fast check
+
+	public static function createDir($path)
+	{
+		if (self::isDir($path) && is_writable($path))
+		{
+			return true;
+		}
+		return mkdir($path, GDO_CHMOD, true);
+	}
+
 	public static function createFile($path)
 	{
 	    if (!self::isFile($path))

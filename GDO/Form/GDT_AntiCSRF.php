@@ -102,8 +102,10 @@ class GDT_AntiCSRF extends GDT_Hidden
 	###################
 	private function loadCSRFTokens()
 	{
-	    $csrf = GDO_Session::get('csrfs');
-	    $csrf = json_decode($csrf, true);
+	    if ($csrf = GDO_Session::get('csrfs'))
+	    {
+		    $csrf = json_decode($csrf, true);
+	    }
 	    return $csrf ? $csrf : [];
 	}
 	

@@ -29,7 +29,10 @@ if (!defined('GDO_CONFIGURED'))
     die(1);
 }
 
-Database::init();
+if (GDO_DB_ENABLED)
+{
+	Database::init();
+}
 $noSession = true;
 if (@class_exists('\\GDO\\Session\\GDO_Session', true))
 {
