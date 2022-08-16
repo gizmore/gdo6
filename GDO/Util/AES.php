@@ -59,8 +59,8 @@ final class AES
 	public static function decryptIV($data, $password)
 	{
 	    $iv_size = openssl_cipher_iv_length(self::CIPHER);
-	    $iv64 = ((4 * floor($iv_size / 3)) + 3) & ~3;
-        $hmac = substr($data,-64);
+  	    $iv64 = ((int)((4 * $iv_size / 3) + 3)) & ~3;
+		$hmac = substr($data,-64);
         $data = substr($data,0,-64);
         $key = hash('SHA256', $password, true);
         if($hmac !== hash_hmac("sha256",$data, $key)) //only decrypt if cookie has not been tampered
