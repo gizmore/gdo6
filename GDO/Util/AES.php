@@ -31,7 +31,7 @@ final class AES
 	 */
 	public static function encrypt4($data, $key, $iv)
 	{
-	    return openssl_encrypt($data, self::CIPHER, $key, null, $iv);
+	    return openssl_encrypt($data, self::CIPHER, $key, 0, $iv);
 	}
 
 	/**
@@ -46,7 +46,7 @@ final class AES
 	    $iv_size = openssl_cipher_iv_length(self::CIPHER);
 	    $iv = openssl_random_pseudo_bytes($iv_size);
 		$key = hash('SHA256', $password, true);
-        $encrypted = base64_encode($iv).openssl_encrypt($data, self::CIPHER, $key, null, $iv);
+        $encrypted = base64_encode($iv).openssl_encrypt($data, self::CIPHER, $key, 0, $iv);
 	    return $encrypted.hash_hmac("sha256",$encrypted,$key);
 	}
 	
@@ -70,7 +70,7 @@ final class AES
 	    $iv = substr($data, 0, $iv64);
 	    $iv = base64_decode($iv);
 	    $data = substr($data, $iv64);
-	    return openssl_decrypt($data, self::CIPHER, $key, null, $iv);
+	    return openssl_decrypt($data, self::CIPHER, $key, 0, $iv);
 	}
 
 	/**
@@ -92,7 +92,7 @@ final class AES
 	 */
 	public static function decrypt4($data, $key, $iv)
 	{
-	    return openssl_decrypt($data, self::CIPHER, $key, null, $iv);
+	    return openssl_decrypt($data, self::CIPHER, $key, 0, $iv);
 	}
 
 }
