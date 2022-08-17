@@ -71,8 +71,8 @@ class Cache
      * @param mixed $value
      * @param integer $expire
      */
-    public static function set($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->set(MEMCACHEPREFIX.$key, $value, $expire); }
-    public static function replace($key, $value, $expire=null) { if (GDO_MEMCACHE) self::$MEMCACHED->replace(MEMCACHEPREFIX.$key, $value, $expire); }
+    public static function set($key, $value, $expire=0) { if (GDO_MEMCACHE) self::$MEMCACHED->set(MEMCACHEPREFIX.$key, $value, $expire); }
+    public static function replace($key, $value, $expire=0) { if (GDO_MEMCACHE) self::$MEMCACHED->replace(MEMCACHEPREFIX.$key, $value, $expire); }
     public static function remove($key) { if (GDO_MEMCACHE) self::$MEMCACHED->delete(MEMCACHEPREFIX.$key); }
 	public static function flush() { if (GDO_MEMCACHE) self::$MEMCACHED->flush(); }
 	public static function init()
