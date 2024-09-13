@@ -22,8 +22,8 @@ final class Install
 				])->insert(false);
 			}
 		}
-		$refresh = RefreshOffsets::make();
-		$refresh->run();
+#		$refresh = RefreshOffsets::make();
+#		$refresh->run();
 	}
 	
 }
