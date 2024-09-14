@@ -20,6 +20,7 @@ final class RefreshOffsets extends MethodCronjob
 	
 	public function run()
 	{
+        return;
 		$result = GDO_Timezone::table()->select()->exec();
 		while ($tz = $result->fetchObject())
 		{
